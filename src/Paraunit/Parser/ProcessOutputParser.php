@@ -33,9 +33,6 @@ class ProcessOutputParser
     public function evaluateAndSetProcessResult(ProcessResultInterface $process)
     {
 
-        var_dump($process->getOutput());
-        die();
-
         foreach($this->parsers as $parser) {
             if (!$parser->parseAndContinue($process)) {
                 return;
