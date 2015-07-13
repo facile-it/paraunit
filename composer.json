@@ -24,7 +24,7 @@
     "symfony/dependency-injection": ">=2.3,<=2.6",
     "symfony/config": ">=2.3,<=2.6",
     "symfony/process": ">=2.3,<=2.6",
-    "phpunit/phpunit": ">=3.7,<=4.6"
+    "phpunit/phpunit": ">=3.7,<5"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0",
