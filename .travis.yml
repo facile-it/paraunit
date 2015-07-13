@@ -11,5 +11,12 @@ allow_failures:
 fast_finish: true
 
 before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - php composer.phar install
+  - if [[ $TRAVIS_PHP_VERSION = '5.5' ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; else PHPUNIT_FLAGS=""; fi
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+
+script:
+  - phpunit -v $PHPUNIT_FLAGS
+
+after_script:
+  - php vendor/bin/coveralls -v

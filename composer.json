@@ -27,7 +27,8 @@
     "phpunit/phpunit": ">=3.7,<=4.6"
   },
   "require-dev": {
-    "phpspec/phpspec": "~2.0"
+    "phpspec/phpspec": "~2.0",
+    "satooshi/php-coveralls": "dev-master"
   },
   "config": {
     "bin-dir": "bin"
