@@ -19,7 +19,7 @@ class ProcessOutputParser
 
     function __construct()
     {
-        $this->parsers = [];
+        $this->parsers = array();
     }
 
     public function addParser(ProcessOutputParserChainElementInterface $parser)

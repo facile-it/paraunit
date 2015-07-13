@@ -16,7 +16,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $results = [];
+        $results = array();
         preg_match(self::PHPUNIT_TEST_RESULTS_REGEX, $process->getOutput(), $results);
 
         if (!empty($results)) {

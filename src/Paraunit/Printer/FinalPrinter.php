@@ -57,7 +57,7 @@ class FinalPrinter
         $this->skipped = new OutputContainer('skipped', 'SKIPPED');
         $this->incomplete = new OutputContainer('incomplete', 'INCOMPLETE');
 
-        $this->outputContainers = [
+        $this->outputContainers = array(
             $this->segmentationFaults,
             $this->unknownStatus,
             $this->fatalErrors,
@@ -65,7 +65,7 @@ class FinalPrinter
             $this->failures,
             $this->skipped,
             $this->incomplete,
-        ];
+        );
     }
 
     /**

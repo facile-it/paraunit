@@ -36,9 +36,9 @@ class OutputContainer implements \Countable
     {
         $this->tag = $tag;
         $this->title = $title;
-        $this->fileNames = [];
-        $this->fileNames = [];
-        $this->outputBuffer = [];
+        $this->fileNames = array();
+        $this->fileNames = array();
+        $this->outputBuffer = array();
     }
 
     /**

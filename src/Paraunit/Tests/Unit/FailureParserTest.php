@@ -22,11 +22,11 @@ class FailureParserTest extends StubbedPHPUnitBaseTestCase
 
     public function processProvider()
     {
-        return [
-            [$this->getTestWithSingleError(), 0],
-            [$this->getTestWith2Errors2Failures(), 2],
-            [$this->getTestWithAllGreen(), 0],
-            [$this->getTestWithFatalError(), 0],
-        ];
+        return array(
+            array($this->getTestWithSingleError(), 0),
+            array($this->getTestWith2Errors2Failures(), 2),
+            array($this->getTestWithAllGreen(), 0),
+            array($this->getTestWithFatalError(), 0),
+        );
     }
 }

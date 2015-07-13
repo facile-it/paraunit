@@ -15,7 +15,7 @@ class FailureParser implements ProcessOutputParserChainElementInterface
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $failuresBlob = [];
+        $failuresBlob = array();
         preg_match(self::FAILURE_REGEX, $process->getOutput(), $failuresBlob);
         if (isset($failuresBlob[1])) {
             $failures = preg_split('/\d+\) /', $failuresBlob[1]);

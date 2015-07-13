@@ -69,18 +69,18 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     {
         $this->uniqueId = md5($commandLine);
 
-        $filename = [];
+        $filename = array();
         preg_match('/[A-z]*\.php/', $commandLine, $filename);
         if (is_array($filename)) {
             $this->filename = $filename[0];
         }
 
-        $this->testResults = [];
-        $this->segmentationFaults = [];
-        $this->unknownStatus = [];
-        $this->fatalErrors = [];
-        $this->errors = [];
-        $this->failures = [];
+        $this->testResults = array();
+        $this->segmentationFaults = array();
+        $this->unknownStatus = array();
+        $this->fatalErrors = array();
+        $this->errors = array();
+        $this->failures = array();
     }
 
     /**

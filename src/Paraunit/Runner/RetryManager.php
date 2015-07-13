@@ -38,10 +38,10 @@ class RetryManager
             return false;
         }
 
-        $deadlocks = [];
+        $deadlocks = array();
         @preg_match(self::MYSQL_LOCK_EXCEPTION, $process->getOutput(), $deadlocks);
 
-        $entityManagerClosed = [];
+        $entityManagerClosed = array();
         @preg_match(self::DOCTRINE_EM_CLOSED, $process->getOutput(), $entityManagerClosed);
 
         if (

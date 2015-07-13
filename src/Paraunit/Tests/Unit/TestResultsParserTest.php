@@ -21,12 +21,12 @@ class TestResultsParserTest extends StubbedPHPUnitBaseTestCase
 
     public function processProvider()
     {
-        return [
-            [$this->getTestWithSingleError(), str_split('....E....')],
-            [$this->getTestWith2Errors2Failures(), str_split('FF..E...E')],
-            [$this->getTestWithAllGreen(), str_split('.........')],
-            [$this->getTestWithFatalError(), []],
-        ];
+        return array(
+            array($this->getTestWithSingleError(), str_split('....E....')),
+            array($this->getTestWith2Errors2Failures(), str_split('FF..E...E')),
+            array($this->getTestWithAllGreen(), str_split('.........')),
+            array($this->getTestWithFatalError(), []),
+        );
     }
 
     public function testParseAndContinueWithVeryLongOutput()

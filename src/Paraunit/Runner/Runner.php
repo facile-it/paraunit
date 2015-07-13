@@ -88,9 +88,9 @@ class Runner
 
         $this->maxProcessNumber = $maxProcessNumber;
 
-        $this->processStack = [];
-        $this->processCompleted = [];
-        $this->processRunning = [];
+        $this->processStack = array();
+        $this->processCompleted = array();
+        $this->processRunning = array();
     }
 
     /**

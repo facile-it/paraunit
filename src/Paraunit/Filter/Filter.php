@@ -18,7 +18,7 @@ class Filter
      */
     public function filterTestFiles($configFile, $testsuite)
     {
-        $files = [];
+        $files = array();
 
         $iterator = \PHPUnit_Util_Configuration
             ::getInstance($configFile)

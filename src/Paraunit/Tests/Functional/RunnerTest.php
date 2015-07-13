@@ -39,15 +39,15 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
 
-        $fileArray = [
+        $fileArray = array(
             'src/Paraunit/Tests/Stub/EntityManagerClosedTestStub.php',
-        ];
+        );
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
 
-        $retryCount = [];
+        $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
-        $errorCount = [];
+        $errorCount = array();
         preg_match_all("/<error>E<\/error>/", $outputInterface->getOutput(), $errorCount);
 
         $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
@@ -60,15 +60,15 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
 
-        $fileArray = [
+        $fileArray = array(
             'src/Paraunit/Tests/Stub/DeadLockTestStub.php',
-        ];
+        );
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
 
-        $retryCount = [];
+        $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
-        $errorCount = [];
+        $errorCount = array();
         preg_match_all("/<error>E<\/error>/", $outputInterface->getOutput(), $errorCount);
 
         $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
@@ -83,17 +83,17 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
 
-        $fileArray = [
+        $fileArray = array(
             'src/Paraunit/Tests/Stub/SegFaultTestStub.php',
-        ];
+        );
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
 
-        $errorCount = [];
+        $errorCount = array();
         preg_match_all("/<error>X<\/error>/", $outputInterface->getOutput(), $errorCount);
         $this->assertCount(1, $errorCount[0], 'Manca la X');
 
-        $fileRecap = [];
+        $fileRecap = array();
         preg_match_all('/1 files with SEGMENTATION FAULTS:/', $outputInterface->getOutput(), $fileRecap);
         $this->assertCount(1, $fileRecap[0], 'Manca il titolo del recap');
         preg_match_all('/<error>SegFaultTestStub.php<\/error>/', $outputInterface->getOutput(), $fileRecap);

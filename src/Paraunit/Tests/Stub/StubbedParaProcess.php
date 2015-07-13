@@ -31,12 +31,12 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     {
         $this->commandLine = $commandLine;
 
-        $this->testResults = [];
-        $this->segmentationFaults = [];
-        $this->unknownStatus = [];
-        $this->fatalErrors = [];
-        $this->errors = [];
-        $this->failures = [];
+        $this->testResults = array();
+        $this->segmentationFaults = array();
+        $this->unknownStatus = array();
+        $this->fatalErrors = array();
+        $this->errors = array();
+        $this->failures = array();
     }
 
     /**

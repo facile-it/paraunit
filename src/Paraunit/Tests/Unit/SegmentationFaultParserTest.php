@@ -21,12 +21,12 @@ class SegmentationFaultParserTest extends StubbedPHPUnitBaseTestCase
 
     public function processProvider()
     {
-        return [
-            [$this->getTestWithSingleError(), true],
-            [$this->getTestWith2Errors2Failures(), true],
-            [$this->getTestWithAllGreen(), true],
-            [$this->getTestWithFatalError(), true],
-            [$this->getTestWithSegFault(), false],
-        ];
+        return array(
+            array($this->getTestWithSingleError(), true),
+            array($this->getTestWith2Errors2Failures(), true),
+            array($this->getTestWithAllGreen(), true),
+            array($this->getTestWithFatalError(), true),
+            array($this->getTestWithSegFault(), false),
+        );
     }
 }

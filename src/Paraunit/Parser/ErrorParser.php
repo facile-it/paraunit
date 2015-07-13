@@ -15,7 +15,7 @@ class ErrorParser implements ProcessOutputParserChainElementInterface
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $errorsBlob = [];
+        $errorsBlob = array();
         preg_match(self::ERROR_REGEX, $process->getOutput(), $errorsBlob);
 
         if (isset($errorsBlob[1])) {
