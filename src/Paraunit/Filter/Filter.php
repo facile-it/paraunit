@@ -28,8 +28,6 @@ class Filter
             $files = array_merge($files + $this->extractTests($testSuite));
         }
 
-        $files =  array_unique($files);
-
         return $files;
     }
 
@@ -47,7 +45,7 @@ class Filter
                 $files = array_merge($files, $this->extractTests($t));
             } else {
                 $class   = new \ReflectionClass($t);
-                $files[] = $class->getFileName();
+                $files[crc32($class->getFileName())] = $class->getFileName();
             }
 
         }
