@@ -21,4 +21,4 @@ script:
   - phpunit -v $PHPUNIT_FLAGS
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - php bin/coveralls -v
