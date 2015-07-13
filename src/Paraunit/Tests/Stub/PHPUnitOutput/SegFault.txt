@@ -1,0 +1,5 @@
+PHPUnit 3.7.38 by Sebastian Bergmann.
+
+Configuration read from /var/www/collaboratori2/app/phpunit.xml.dist
+
+[1]    22123 segmentation fault (core dumped)  bin/phpunit -c app src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php

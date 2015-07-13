@@ -1,0 +1,37 @@
+PHPUnit 3.7.38 by Sebastian Bergmann.
+
+Configuration read from /var/www/collaboratori2/app/phpunit.xml.dist
+
+FF..E...E
+
+Time: 56 ms, Memory: 6.25Mb
+
+There were 2 errors:
+
+1) Facile\Cbr\MailBundle\Tests\Unit\AmazonTest::testVerifyEmailIdentityByUserProfile
+Exception:
+
+/var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php:69
+
+2) Facile\Cbr\MailBundle\Tests\Unit\AmazonTest::testVerifyEmailIdentityByUserProfileAlreadyVerified
+Exception:
+
+/var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php:120
+
+--
+
+
+There were 2 failures:
+
+1) Facile\Cbr\MailBundle\Tests\Unit\AmazonTest::testVerifyEmailIdentity
+Failed asserting that false is true.
+
+/var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php:35
+
+2) Facile\Cbr\MailBundle\Tests\Unit\AmazonTest::testVerifyEmailIdentityForEmptyEmailAddress
+Failed asserting that false is true.
+
+/var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php:43
+
+FAILURES!
+Tests: 9, Assertions: 12, Failures: 2, Errors: 2.

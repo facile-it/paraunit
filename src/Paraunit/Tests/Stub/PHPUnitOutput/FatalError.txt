@@ -1,0 +1,7 @@
+PHPUnit 3.7.38 by Sebastian Bergmann.
+
+Configuration read from /var/www/collaboratori2/app/phpunit.xml.dist
+
+PHP Fatal error:  Call to undefined function Facile\Cbr\MailBundle\Tests\Unit\puppa() in /var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php on line 35
+
+Fatal error: Call to undefined function Facile\Cbr\MailBundle\Tests\Unit\puppa() in /var/www/collaboratori2/src/Facile/Cbr/MailBundle/Tests/Unit/AmazonTest.php on line 35

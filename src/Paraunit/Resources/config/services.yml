@@ -1,0 +1,63 @@
+parameters:
+    paraunit.max_retry_count: 3
+    kernel.root_dir: 'src'
+
+services:
+
+    facile.cbr.parallel_test_bundle.filter.filter:
+        class: Paraunit\Filter\Filter
+
+    facile.cbr.parallel_test_bundle.runner.retry_manager:
+        class: Paraunit\Runner\RetryManager
+        arguments:
+            - %paraunit.max_retry_count%
+
+    facile.cbr.parallel_test_bundle.runner.runner:
+        class: Paraunit\Runner\Runner
+        scope: prototype
+        arguments:
+            - @facile.cbr.parallel_test_bundle.runner.retry_manager
+            - @facile.cbr.parallel_test_bundle.parser.process_output_parser
+            - @facile.cbr.parallel_test_bundle.printer.shark_printer
+            - @facile.cbr.parallel_test_bundle.printer.process_printer
+            - @facile.cbr.parallel_test_bundle.printer.final_printer
+
+    facile.cbr.parallel_test_bundle.printer.shark_printer:
+        class: Paraunit\Printer\SharkPrinter
+
+    facile.cbr.parallel_test_bundle.printer.process_printer:
+        class: Paraunit\Printer\ProcessPrinter
+
+    facile.cbr.parallel_test_bundle.printer.final_printer:
+        class: Paraunit\Printer\FinalPrinter
+        scope: prototype
+
+    ## OUTPUT PARSERS ##
+
+    facile.cbr.parallel_test_bundle.parser.process_output_parser:
+        class: Paraunit\Parser\ProcessOutputParser
+        calls:
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.retry_parser"]]
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.segmentation_fault_parser"]]
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.fatal_error_parser"]]
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.error_parser"]]
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.failure_parser"]]
+            - [addParser, ["@facile.cbr.parallel_test_bundle.parser.test_result_parser"]]
+
+    facile.cbr.parallel_test_bundle.parser.error_parser:
+        class: Paraunit\Parser\ErrorParser
+
+    facile.cbr.parallel_test_bundle.parser.failure_parser:
+        class: Paraunit\Parser\FailureParser
+
+    facile.cbr.parallel_test_bundle.parser.fatal_error_parser:
+        class: Paraunit\Parser\FatalErrorParser
+
+    facile.cbr.parallel_test_bundle.parser.retry_parser:
+        class: Paraunit\Parser\RetryParser
+
+    facile.cbr.parallel_test_bundle.parser.segmentation_fault_parser:
+        class: Paraunit\Parser\SegmentationFaultParser
+
+    facile.cbr.parallel_test_bundle.parser.test_result_parser:
+        class: Paraunit\Parser\TestResultsParser

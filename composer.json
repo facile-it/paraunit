@@ -1,0 +1,42 @@
+{
+  "name": "facile-it/paraunit",
+  "type": "library",
+  "description": "paraunit",
+  "keywords": [
+    "parallel test",
+    "testing",
+    "phpunit"
+  ],
+  "homepage": "http://github.com/ranpafin/paraunit",
+  "license": "Apache License Version 2.0",
+  "authors": [
+    {
+      "name": "Panina Francesco",
+      "email": "francesco.panina@gmail.com"
+    },
+    {
+      "name": "Alessandro Lai",
+      "email": "alessandro.lai@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/console": "2.6.@stable",
+    "symfony/dependency-injection": "2.6.@stable",
+    "symfony/config": "2.6.@stable",
+    "symfony/process": "2.6.@stable",
+    "phpunit/phpunit": ">=3.7,<5"
+  },
+  "require-dev": {
+    "doctrine/orm": "2.6.*",
+    "phpspec/phpspec": "~2.0"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
