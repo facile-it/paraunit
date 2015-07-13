@@ -27,7 +27,6 @@
     "phpunit/phpunit": ">=3.7,<=4.6"
   },
   "require-dev": {
-    "doctrine/orm": "~2.6",
     "phpspec/phpspec": "~2.0"
   },
   "config": {
