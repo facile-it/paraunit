@@ -43,7 +43,7 @@ class ParallelCommand extends Command
     {
         $this
             ->setName('run')
-            ->addOption('config', null, InputOption::VALUE_REQUIRED, '', 'phpunit.xml.dist')
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', 'phpunit.xml.dist')
             ->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Functional|Unit|All')
             ->addOption('debug', null, InputOption::VALUE_REQUIRED, 'Functional|Unit|All');
     }
@@ -63,7 +63,7 @@ class ParallelCommand extends Command
             $testsuite = $input->getOption('testsuite');
         }
 
-        $config = $input->getOption('config');
+        $config = $input->getOption('configuration');
 
         $testArray = $this->filter->filterTestFiles($config, $testsuite);
 

@@ -10,7 +10,6 @@ use Symfony\Component\Process\Process;
  */
 class Filter
 {
-
     /**
      * @param string $configFile
      * @param        $testsuite
@@ -25,29 +24,34 @@ class Filter
             ->getTestSuiteConfiguration($testsuite)
             ->getIterator();
 
-
-        /** @var \PHPUnit_Framework_TestSuite $testSuite */
         foreach ($iterator as $testSuite) {
-
-            $tests = $testSuite->getIterator();
-
-            foreach ($tests as $test) {
-
-                if ($test instanceof \PHPUnit_Framework_TestSuite_DataProvider) {
-
-                    $actualTests = $test->tests();
-                    foreach ($actualTests as $actualTest) {
-                        $class   = new \ReflectionClass($actualTest);
-                        $files[] = $class->getFileName();
-                    }
-                } else {
-                    $class   = new \ReflectionClass($test);
-                    $files[] = $class->getFileName();
-                }
-            }
+            $files = array_merge($files + $this->extractTests($testSuite));
         }
 
-        return array_unique($files);
+        $files =  array_unique($files);
 
+        return $files;
+    }
+
+    /**
+     * @param \PHPUnit_Framework_TestSuite $testSuite
+     * @return string[]
+     */
+    protected function extractTests(\PHPUnit_Framework_TestSuite $testSuite)
+    {
+        $files = array();
+
+        foreach($testSuite->tests() as $t) {
+            if ($t instanceof \PHPUnit_Framework_TestSuite) {
+                // WARNING -- recursive function
+                $files = array_merge($files, $this->extractTests($t));
+            } else {
+                $class   = new \ReflectionClass($t);
+                $files[] = $class->getFileName();
+            }
+
+        }
+
+        return $files;
     }
 }

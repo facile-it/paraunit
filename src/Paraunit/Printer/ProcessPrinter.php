@@ -29,6 +29,9 @@ class ProcessPrinter
                     $this->printSingleTestResult($output, $testResult);
                 }
             } else {
+                // TODO --- this operation should be done somewhere else!
+                $process->setTestResults(array('X'));
+
                 $this->printWithCounter($output, "<error>X</error>");
             }
         }
