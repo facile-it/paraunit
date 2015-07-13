@@ -66,6 +66,9 @@ class Runner
     /** @var  string */
     protected $phpunitConfigFile;
 
+    /** @var  string */
+    protected $phpunitBin;
+
     /**
      * @param RetryManager $retryManager
      * @param ProcessOutputParser $processOutputParser
@@ -94,6 +97,15 @@ class Runner
         $this->processStack = array();
         $this->processCompleted = array();
         $this->processRunning = array();
+
+        if (file_exists(__DIR__ . '/../../../../../bin/phpunit')) {
+            $this->phpunitBin = __DIR__ . '/../../../../../bin/phpunit';
+        } elseif (file_exists(__DIR__ . '/../../../vendor/bin/phpunit')) {
+            $this->phpunitBin = __DIR__ . '/../../../vendor/bin/phpunit';
+        } else {
+            throw new \Exception('Phpunit not found');
+        }
+
     }
 
     /**
@@ -170,13 +182,10 @@ class Runner
      */
     protected function createProcess($fileName)
     {
-
-        $phpunitBin =  __DIR__ . '/../../../../../bin/phpunit';
-
         $configurationFile = getcwd() . '/'. $this->phpunitConfigFile;
 
         $command =
-            $phpunitBin .
+            $this->phpunitBin .
             ' -c ' . $configurationFile  . ' ' .
             $fileName .
             ' 2>&1' ;
