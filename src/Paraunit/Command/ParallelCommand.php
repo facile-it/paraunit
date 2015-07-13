@@ -42,7 +42,7 @@ class ParallelCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('parallel:run:test')
+            ->setName('run')
             ->addOption('config', null, InputOption::VALUE_REQUIRED, '', 'phpunit.xml.dist')
             ->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Functional|Unit|All')
             ->addOption('debug', null, InputOption::VALUE_REQUIRED, 'Functional|Unit|All');
