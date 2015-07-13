@@ -14,7 +14,7 @@ class RetryParser implements ProcessOutputParserChainElementInterface
     public function parseAndContinue(ProcessResultInterface $process)
     {
         if ($process->isToBeRetried()) {
-            $process->setTestResults(['R']);
+            $process->setTestResults(array('R'));
 
             return false;
         } else {

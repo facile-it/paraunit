@@ -16,7 +16,7 @@ class RetryParserTest extends \PHPUnit_Framework_TestCase
         $parser = new RetryParser();
 
         $this->assertFalse($parser->parseAndContinue($process));
-        $this->assertEquals(['R'], $process->getTestResults());
+        $this->assertEquals(array('R'), $process->getTestResults());
     }
 
     public function testParseAndContinueWithNoRetry()
@@ -27,6 +27,6 @@ class RetryParserTest extends \PHPUnit_Framework_TestCase
         $parser = new RetryParser();
 
         $this->assertTrue($parser->parseAndContinue($process));
-        $this->assertEquals([], $process->getTestResults());
+        $this->assertEquals(array(), $process->getTestResults());
     }
 }
