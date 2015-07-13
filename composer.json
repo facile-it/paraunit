@@ -33,6 +33,7 @@
   "config": {
     "bin-dir": "bin"
   },
+  "bin": ["src/Paraunit/Bin/paraunit"],
   "autoload": {
     "psr-4": {
       "": "src/"

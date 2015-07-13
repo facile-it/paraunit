@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+if (!file_exists(__DIR__ . '/../../../../autoload.php')) {
+    throw new \Exception('Autoload not found');
+}
+require_once __DIR__ . '/../../../../autoload.php';
+
+if (!ini_get('date.timezone') && !date_default_timezone_get()) {
+    date_default_timezone_set('UTC');
+}
+
+use Symfony\Component\Console\Application;
+use Paraunit\Command\ParallelCommand;
+
+require '../../../Container.php';
+
+$loader->load('services.yml');
+
+$command = new ParallelCommand(
+    $container->get('facile.cbr.parallel_test_bundle.filter.filter'),
+    $container->get('facile.cbr.parallel_test_bundle.runner.runner')
+);
+
+$application = new Application('Paraunit', '0.4');
+$application->add($command);
+$application->run();
