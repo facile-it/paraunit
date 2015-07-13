@@ -18,6 +18,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Runner
 {
+    // I'm using Paraunit as a vendor package
+    const PHPUNIT_RELPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
+    // I'm using Paraunit standalone (developing)
+    const PHPUNIT_RELPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
+
     /**
      * @var RetryManager
      */
@@ -76,6 +81,7 @@ class Runner
      * @param ProcessPrinter $processPrinter
      * @param FinalPrinter $finalPrinter
      * @param int $maxProcessNumber
+     * @throws \Exception
      */
     function __construct(
         RetryManager $retryManager,
@@ -98,10 +104,10 @@ class Runner
         $this->processCompleted = array();
         $this->processRunning = array();
 
-        if (file_exists(__DIR__ . '/../../../../../bin/phpunit')) {
-            $this->phpunitBin = __DIR__ . '/../../../../../bin/phpunit';
-        } elseif (file_exists(__DIR__ . '/../../../vendor/bin/phpunit')) {
-            $this->phpunitBin = __DIR__ . '/../../../vendor/bin/phpunit';
+        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR)) {
+            $this->phpunitBin = __DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR;
+        } elseif (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
+            $this->phpunitBin = __DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE;
         } else {
             throw new \Exception('Phpunit not found');
         }
