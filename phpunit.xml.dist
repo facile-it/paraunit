@@ -23,7 +23,7 @@
             <directory>./src/Paraunit/</directory>
             <exclude>
                 <directory>./src/Paraunit/Resources</directory>
-                <directory>./src/Paraunit/Tests/Stub</directory>
+                <directory>./src/Paraunit/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
