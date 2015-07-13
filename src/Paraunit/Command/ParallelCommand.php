@@ -67,7 +67,7 @@ class ParallelCommand extends Command
 
         $testArray = $this->filter->filterTestFiles($config, $testsuite);
 
-        return $this->runner->run($testArray, $output);
+        return $this->runner->run($testArray, $output, $config);
     }
 
 }

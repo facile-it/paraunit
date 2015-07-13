@@ -63,6 +63,9 @@ class Runner
      */
     protected $processRunning;
 
+    /** @var  string */
+    protected $phpunitConfigFile;
+
     /**
      * @param RetryManager $retryManager
      * @param ProcessOutputParser $processOutputParser
@@ -98,8 +101,11 @@ class Runner
      * @param OutputInterface $outputInterface
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface)
+    public function run($files, OutputInterface $outputInterface, $phpunitConfigFile)
     {
+
+        $this->phpunitConfigFile = $phpunitConfigFile;
+
         $this->formatOutputInterface($outputInterface);
 
         $this->sharkPrinter->printSharkLogo($outputInterface);
@@ -164,7 +170,18 @@ class Runner
      */
     protected function createProcess($fileName)
     {
-        return new SymfonyProcessWrapper('./bin/phpunit ' . $fileName . ' 2>&1');
+
+        $phpunitBin =  __DIR__ . '/../../../../../bin/phpunit';
+
+        $configurationFile = getcwd() . '/'. $this->phpunitConfigFile;
+
+        $command =
+            $phpunitBin .
+            ' -c ' . $configurationFile  . ' ' .
+            $fileName .
+            ' 2>&1' ;
+
+        return new SymfonyProcessWrapper($command);
     }
 
     protected function runProcess()

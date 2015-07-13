@@ -40,7 +40,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/EntityManagerClosedTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface,'phpunit.xml.dist'));
 
         $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
@@ -61,7 +61,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/DeadLockTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface,'phpunit.xml.dist'));
 
         $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
@@ -84,7 +84,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/SegFaultTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
         $errorCount = array();
         preg_match_all("/<error>X<\/error>/", $outputInterface->getOutput(), $errorCount);
