@@ -20,7 +20,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
         $results = $this->getResultsFromOutput($process->getOutput());
 
         if ($results != '') {
-            $cleanResults = preg_replace('/[^FIES.]+/', '', $results);
+            $cleanResults = preg_replace('/[^FIESR.]+/', '', $results);
             $process->setTestResults(str_split($cleanResults));
         }
 
@@ -33,7 +33,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
      */
     private function getResultsFromOutput($output)
     {
-        $matches = [];
+        $matches = array();
         preg_match(self::PHPUNIT_TEST_RESULTS_REGEX, $output, $matches);
 
         $results = '';
