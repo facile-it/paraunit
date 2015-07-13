@@ -2,6 +2,7 @@
 
 namespace Paraunit\Tests\Functional;
 
+use Paraunit\Runner\Runner;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -15,28 +16,24 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class RunnerTest extends \PHPUnit_Framework_TestCase
 {
-    
     protected $container = null;
 
-    /**
-     *
-     */
-    public function setUp(){
-         parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
         $container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config/'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config/'));
         $loader->load('services.yml');
         $this->container = $container;
-
     }
-
 
     public function testMaxRetryEntityManagerIsClosed()
     {
         $outputInterface = new ConsoleOutputStub();
 
+        /** @var Runner $runner */
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
 
         $fileArray = array(

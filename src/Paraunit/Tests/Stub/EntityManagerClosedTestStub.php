@@ -2,8 +2,6 @@
 
 namespace Paraunit\Tests\Stub;
 
-use Doctrine\ORM\ORMException;
-
 class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     /**
@@ -11,7 +9,7 @@ class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestIn
      */
     function testBrokenTest()
     {
-        throw ORMException::entityManagerClosed();
+        throw new \Exception("Blah Blah The EntityManager is closed Blah Blah");
     }
 
 }

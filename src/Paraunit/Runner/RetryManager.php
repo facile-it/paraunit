@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RetryManager
 {
-
     const MYSQL_LOCK_EXCEPTION = '/(Deadlock found|Lock wait timeout exceeded)/';
     const DOCTRINE_EM_CLOSED = '/(The EntityManager is closed)/';
 
@@ -53,7 +52,5 @@ class RetryManager
         }
 
         return $process->isToBeRetried();
-
     }
-
 }
