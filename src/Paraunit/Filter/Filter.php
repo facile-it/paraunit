@@ -12,44 +12,39 @@ class Filter
 {
     /**
      * @param string $configFile
-     * @param        $testsuite
+     * @param $testSuiteFilter
      * @return array
+     * @internal param $testsuite
      */
-    public function filterTestFiles($configFile, $testsuite)
+    public function filterTestFiles($configFile, $testSuiteFilter)
     {
-        $files = array();
 
-        $iterator = \PHPUnit_Util_Configuration
-            ::getInstance($configFile)
-            ->getTestSuiteConfiguration($testsuite)
-            ->getIterator();
+        $aggregatedFiles = array();
 
-        foreach ($iterator as $testSuite) {
-            $files = array_merge($files + $this->extractTests($testSuite));
-        }
+        $document = \PHPUnit_Util_XML::loadFile($configFile, false, true, true);
+        $xpath    = new \DOMXPath($document);
 
-        return $files;
-    }
+        $fileIteratorFacade = new \File_Iterator_Facade;
 
-    /**
-     * @param \PHPUnit_Framework_TestSuite $testSuite
-     * @return string[]
-     */
-    protected function extractTests(\PHPUnit_Framework_TestSuite $testSuite)
-    {
-        $files = array();
+        foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode){
 
-        foreach($testSuite->tests() as $t) {
-            if ($t instanceof \PHPUnit_Framework_TestSuite) {
-                // WARNING -- recursive function
-                $files = array_merge($files, $this->extractTests($t));
-            } else {
-                $class   = new \ReflectionClass($t);
-                $files[crc32($class->getFileName())] = $class->getFileName();
+            foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
+
+                $directory = (string) $directoryNode->nodeValue;
+
+                $files = $fileIteratorFacade->getFilesAsArray(
+                    $directory,
+                    'Test.php',
+                    '',
+                    array()
+                );
+
+                $aggregatedFiles = array_merge($aggregatedFiles,$files);
+
             }
-
         }
 
-        return $files;
+        return $aggregatedFiles;
     }
+
 }
