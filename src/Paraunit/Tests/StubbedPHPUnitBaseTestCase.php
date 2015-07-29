@@ -3,7 +3,6 @@
 namespace Paraunit\Tests;
 
 use Paraunit\Tests\Stub\StubbedParaProcess;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
 {
@@ -81,6 +80,7 @@ abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $filename
+     *
      * @return string
      */
     protected function getOutputFileContent($filename)

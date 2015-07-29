@@ -2,7 +2,6 @@
 
 namespace Paraunit\Parser;
 
-
 use Paraunit\Process\ProcessResultInterface;
 
 class FailureParser implements ProcessOutputParserChainElementInterface
@@ -11,6 +10,7 @@ class FailureParser implements ProcessOutputParserChainElementInterface
 
     /**
      * @param ProcessResultInterface $process
+     *
      * @return bool True if chain should continue
      */
     public function parseAndContinue(ProcessResultInterface $process)
@@ -29,5 +29,4 @@ class FailureParser implements ProcessOutputParserChainElementInterface
 
         return true;
     }
-
 }

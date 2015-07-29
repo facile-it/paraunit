@@ -6,21 +6,20 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class QueueConsoleOutput
+ * Class QueueConsoleOutput.
  */
 class ConsoleOutputStub extends ConsoleOutput implements OutputInterface
 {
-
     protected $outputBuffer;
 
-    function __construct()
+    public function __construct()
     {
         $this->outputBuffer = '';
     }
 
     /**
      * @param array|string $messages
-     * @param int $type
+     * @param int          $type
      */
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
@@ -29,8 +28,8 @@ class ConsoleOutputStub extends ConsoleOutput implements OutputInterface
 
     /**
      * @param array|string $messages
-     * @param bool $newline
-     * @param int $type
+     * @param bool         $newline
+     * @param int          $type
      */
     public function write($messages, $newline = false, $type = 0)
     {
@@ -41,5 +40,4 @@ class ConsoleOutputStub extends ConsoleOutput implements OutputInterface
     {
         return $this->outputBuffer;
     }
-
 }

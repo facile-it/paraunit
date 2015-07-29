@@ -2,7 +2,6 @@
 
 namespace Paraunit\Tests\Unit;
 
-
 use Paraunit\Parser\RetryParser;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 

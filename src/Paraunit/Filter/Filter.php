@@ -3,11 +3,9 @@
 namespace Paraunit\Filter;
 
 use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
-use Symfony\Component\Process\Process;
 
 /**
- * Class Filter
- * @package Paraunit\Filter
+ * Class Filter.
  */
 class Filter
 {
@@ -19,7 +17,7 @@ class Filter
 
     /**
      * @param PHPUnit_Util_XML_Proxy $utilXml
-     * @param \File_Iterator_Facade $fileIteratorFacade
+     * @param \File_Iterator_Facade  $fileIteratorFacade
      */
     public function __construct(PHPUnit_Util_XML_Proxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
     {
@@ -28,8 +26,9 @@ class Filter
     }
 
     /**
-     * @param string $configFile
+     * @param string        $configFile
      * @param string | null $testSuiteFilter
+     *
      * @return array
      */
     public function filterTestFiles($configFile, $testSuiteFilter = null)
@@ -37,11 +36,10 @@ class Filter
         $aggregatedFiles = array();
 
         $document = $this->utilXml->loadFile($configFile, false, true, true);
-        $xpath    = new \DOMXPath($document);
+        $xpath = new \DOMXPath($document);
 
         /** @var \DOMNode $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
-
             if (is_null($testSuiteFilter) || $testSuiteFilter == $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
                 // optimized array_unique
                 foreach ($this->extractFileFromTestSuite($testSuiteNode) as $file) {
@@ -55,6 +53,7 @@ class Filter
 
     /**
      * @param \DOMNode $testSuiteNode
+     *
      * @return array | string[]
      */
     private function extractFileFromTestSuite(\DOMNode $testSuiteNode)
@@ -62,7 +61,6 @@ class Filter
         $aggregatedFiles = array();
 
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
-
             $directory = (string) $directoryNode->nodeValue;
 
             $files = $this->fileIteratorFacade->getFilesAsArray(
@@ -82,16 +80,17 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
-     * @param string $nodeName
+     * @param \DOMNode      $testSuiteNode
+     * @param string        $nodeName
      * @param string | null $defaultValue
+     *
      * @return string
      */
     private function getDOMNodeAttribute(\DOMNode $testSuiteNode, $nodeName, $defaultValue = null)
     {
         /**
-         * @var string $attrName
-         * @var \DOMAttr $attrNode
+         * @var string
+         * @var \DOMAttr
          */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
             if ($attrName == $nodeName) {

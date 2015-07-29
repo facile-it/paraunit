@@ -3,8 +3,7 @@
 namespace Paraunit\Printer;
 
 /**
- * Class OutputContainer
- * @package Paraunit\Printer
+ * Class OutputContainer.
  */
 class OutputContainer implements \Countable
 {
@@ -32,7 +31,7 @@ class OutputContainer implements \Countable
      * @param string $tag
      * @param string $title
      */
-    function __construct($tag, $title)
+    public function __construct($tag, $title)
     {
         $this->tag = $tag;
         $this->title = $title;

@@ -3,8 +3,7 @@
 namespace Paraunit\Process;
 
 /**
- * Interface RetryAwareInterface
- * @package Paraunit\Process
+ * Interface RetryAwareInterface.
  */
 interface ProcessResultInterface extends OutputAwareInterface
 {

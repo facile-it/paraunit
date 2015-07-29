@@ -2,13 +2,8 @@
 
 namespace Paraunit\Process;
 
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
-
 /**
- * Class SymfonyProcessWrapper
- * @package Paraunit\Process
+ * Class SymfonyProcessWrapper.
  */
 abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface
 {
@@ -65,7 +60,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /**
      * @param string $commandLine
      */
-    function __construct($commandLine)
+    public function __construct($commandLine)
     {
         $this->uniqueId = md5($commandLine);
 
@@ -100,15 +95,13 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return null
      */
     public function increaseRetryCount()
     {
-        $this->retryCount++;
+        ++$this->retryCount;
     }
 
     /**
-     * @return null
      */
     public function markAsToBeRetried()
     {

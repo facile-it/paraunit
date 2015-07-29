@@ -8,5 +8,3 @@ $container = new ContainerBuilder();
 
 $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/src/Paraunit/Resources/config/'));
 $loader->load('services.yml');
-
-

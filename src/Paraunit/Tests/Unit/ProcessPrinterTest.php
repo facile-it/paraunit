@@ -2,7 +2,6 @@
 
 namespace Paraunit\Tests\Unit;
 
-
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;

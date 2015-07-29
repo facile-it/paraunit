@@ -2,7 +2,6 @@
 
 namespace Paraunit\Parser;
 
-
 use Paraunit\Process\ProcessResultInterface;
 
 class TestResultsParser implements ProcessOutputParserChainElementInterface
@@ -13,6 +12,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
 
     /**
      * @param ProcessResultInterface $process
+     *
      * @return bool True if chain should continue
      */
     public function parseAndContinue(ProcessResultInterface $process)
@@ -29,6 +29,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
 
     /**
      * @param string $output
+     *
      * @return string
      */
     private function getResultsFromOutput($output)

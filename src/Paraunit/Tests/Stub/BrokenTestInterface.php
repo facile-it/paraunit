@@ -2,13 +2,10 @@
 
 namespace Paraunit\Tests\Stub;
 
-
 interface BrokenTestInterface
 {
-
     /**
      * @throws \Exception
      */
-    function testBrokenTest();
-
+    public function testBrokenTest();
 }

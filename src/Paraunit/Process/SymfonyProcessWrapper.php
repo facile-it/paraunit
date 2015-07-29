@@ -2,27 +2,22 @@
 
 namespace Paraunit\Process;
 
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * Class SymfonyProcessWrapper
- * @package Paraunit\Process
+ * Class SymfonyProcessWrapper.
  */
 class SymfonyProcessWrapper extends ParaunitProcessAbstract
 {
-
     /**
      * @var Process
      */
     protected $process;
 
-
     /**
      * @param $commandLine
      */
-    function __construct($commandLine)
+    public function __construct($commandLine)
     {
         parent::__construct($commandLine);
         $this->process = new Process($commandLine);
@@ -68,7 +63,6 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
         $this->reset()->start();
 
         return $this;
-
     }
 
     /**
@@ -99,6 +93,4 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     {
         return $this->process->isRunning();
     }
-
-
 }

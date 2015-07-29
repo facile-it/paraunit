@@ -2,16 +2,13 @@
 
 namespace Paraunit\Filter;
 
-use Symfony\Component\Process\Process;
-
 /**
- * Class Filter
- * @package Paraunit\Filter
+ * Class Filter.
  */
 interface FilterInterface
 {
     /**
      * @return mixed
      */
-    function getFiles();
+    public function getFiles();
 }

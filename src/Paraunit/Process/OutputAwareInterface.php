@@ -3,8 +3,7 @@
 namespace Paraunit\Process;
 
 /**
- * Interface OutputAwareInterface
- * @package Paraunit\Process
+ * Interface OutputAwareInterface.
  */
 interface OutputAwareInterface
 {

@@ -1,25 +1,22 @@
 <?php
+
 namespace Paraunit\Process;
 
 /**
- * Interface RetryAwareInterface
- * @package Paraunit\Process
+ * Interface RetryAwareInterface.
  */
 interface RetryAwareInterface extends OutputAwareInterface
 {
-
     /**
      * @return int
      */
     public function getRetryCount();
 
     /**
-     * @return null
      */
     public function increaseRetryCount();
 
     /**
-     * @return null
      */
     public function markAsToBeRetried();
 
@@ -27,5 +24,4 @@ interface RetryAwareInterface extends OutputAwareInterface
      * @return bool
      */
     public function isToBeRetried();
-
 }

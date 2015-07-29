@@ -13,8 +13,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Runner
- * @package Paraunit\Runner
+ * Class Runner.
  */
 class Runner
 {
@@ -75,23 +74,23 @@ class Runner
     protected $phpunitBin;
 
     /**
-     * @param RetryManager $retryManager
+     * @param RetryManager        $retryManager
      * @param ProcessOutputParser $processOutputParser
-     * @param SharkPrinter $sharkPrinter
-     * @param ProcessPrinter $processPrinter
-     * @param FinalPrinter $finalPrinter
-     * @param int $maxProcessNumber
+     * @param SharkPrinter        $sharkPrinter
+     * @param ProcessPrinter      $processPrinter
+     * @param FinalPrinter        $finalPrinter
+     * @param int                 $maxProcessNumber
+     *
      * @throws \Exception
      */
-    function __construct(
+    public function __construct(
         RetryManager $retryManager,
         ProcessOutputParser $processOutputParser,
         SharkPrinter $sharkPrinter,
         ProcessPrinter $processPrinter,
         FinalPrinter $finalPrinter,
         $maxProcessNumber = 10
-    )
-    {
+    ) {
         $this->retryManager = $retryManager;
         $this->processOutputParser = $processOutputParser;
         $this->sharkPrinter = $sharkPrinter;
@@ -104,24 +103,23 @@ class Runner
         $this->processCompleted = array();
         $this->processRunning = array();
 
-        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR)) {
-            $this->phpunitBin = __DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR;
-        } elseif (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
-            $this->phpunitBin = __DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE;
+        if (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR)) {
+            $this->phpunitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR;
+        } elseif (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
+            $this->phpunitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE;
         } else {
             throw new \Exception('Phpunit not found');
         }
-
     }
 
     /**
      * @param $files
      * @param OutputInterface $outputInterface
+     *
      * @return int
      */
     public function run($files, OutputInterface $outputInterface, $phpunitConfigFile)
     {
-
         $this->phpunitConfigFile = $phpunitConfigFile;
 
         $this->formatOutputInterface($outputInterface);
@@ -131,9 +129,7 @@ class Runner
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 
-
         while (!empty($this->processStack) || !empty($this->processRunning)) {
-
             $this->runProcess();
 
             foreach ($this->processRunning as $process) {
@@ -184,17 +180,18 @@ class Runner
 
     /**
      * @param string $fileName
+     *
      * @return ParaunitProcessInterface
      */
     protected function createProcess($fileName)
     {
-        $configurationFile = getcwd() . '/'. $this->phpunitConfigFile;
+        $configurationFile = getcwd().'/'.$this->phpunitConfigFile;
 
         $command =
-            $this->phpunitBin .
-            ' -c ' . $configurationFile  . ' ' .
-            $fileName .
-            ' 2>&1' ;
+            $this->phpunitBin.
+            ' -c '.$configurationFile.' '.
+            $fileName.
+            ' 2>&1';
 
         return new SymfonyProcessWrapper($command);
     }
@@ -231,7 +228,6 @@ class Runner
     protected function formatOutputInterface(OutputInterface $outputInterface)
     {
         if ($outputInterface->getFormatter()) {
-
             $style = new OutputFormatterStyle('green', null, array('bold', 'blink'));
             $outputInterface->getFormatter()->setStyle('ok', $style);
 

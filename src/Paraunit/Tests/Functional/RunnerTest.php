@@ -5,14 +5,11 @@ namespace Paraunit\Tests\Functional;
 use Paraunit\Runner\Runner;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
- * Class RunnerTest
- * @package Paraunit\Tests\Functional
+ * Class RunnerTest.
  */
 class RunnerTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +21,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config/'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config/'));
         $loader->load('services.yml');
         $this->container = $container;
     }
@@ -40,7 +37,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/EntityManagerClosedTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface,'phpunit.xml.dist'));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
         $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
@@ -61,7 +58,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/DeadLockTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface,'phpunit.xml.dist'));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
         $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);

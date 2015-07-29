@@ -2,15 +2,13 @@
 
 namespace Paraunit\Printer;
 
-
 use Paraunit\Process\ProcessResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class FinalPrinter
- * @package Paraunit\Printer
+ * Class FinalPrinter.
  */
-class FinalPrinter 
+class FinalPrinter
 {
     /**
      * @var OutputContainer[]
@@ -47,7 +45,7 @@ class FinalPrinter
      */
     protected $unknownStatus;
 
-    function __construct()
+    public function __construct()
     {
         $this->segmentationFaults = new OutputContainer('error', 'SEGMENTATION FAULTS');
         $this->unknownStatus = new OutputContainer('error', 'UNKNOWN STATUS');
@@ -70,16 +68,16 @@ class FinalPrinter
 
     /**
      * @param ProcessResultInterface[] $completedProcesses
-     * @param \DateInterval $elapsedTime
+     * @param \DateInterval            $elapsedTime
      */
     public function printFinalResults(OutputInterface $outputInterface, array $completedProcesses, \DateInterval $elapsedTime)
     {
         $outputInterface->writeln('');
         $outputInterface->writeln('');
-        $outputInterface->writeln($elapsedTime->format("Execution time -- %H:%I:%S "));
+        $outputInterface->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
 
         $outputInterface->writeln('');
-        $outputInterface->writeln('Executed: ' . count($completedProcesses) . ' tests');
+        $outputInterface->writeln('Executed: '.count($completedProcesses).' tests');
 
         foreach ($completedProcesses as $process) {
             $this->analyzeProcess($process);
@@ -158,7 +156,6 @@ class FinalPrinter
             foreach ($outputContainer->getFileNames() as $fileName) {
                 $outputInterface->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
             }
-
         }
     }
 

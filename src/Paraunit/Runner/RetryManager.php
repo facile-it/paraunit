@@ -1,13 +1,11 @@
 <?php
+
 namespace Paraunit\Runner;
 
 use Paraunit\Process\RetryAwareInterface;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class RetryManager
- * @package Paraunit\Runner
+ * Class RetryManager.
  */
 class RetryManager
 {
@@ -22,13 +20,14 @@ class RetryManager
     /**
      * @param int $maxRetry
      */
-    function __construct($maxRetry = 3)
+    public function __construct($maxRetry = 3)
     {
         $this->maxRetry = $maxRetry;
     }
 
     /**
      * @param RetryAwareInterface $process
+     *
      * @return bool
      */
     public function setRetryStatus(RetryAwareInterface $process)

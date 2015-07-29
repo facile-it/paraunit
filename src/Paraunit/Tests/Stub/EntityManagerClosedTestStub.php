@@ -7,9 +7,8 @@ class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestIn
     /**
      * @throws \Exception
      */
-    function testBrokenTest()
+    public function testBrokenTest()
     {
-        throw new \Exception("Blah Blah The EntityManager is closed Blah Blah");
+        throw new \Exception('Blah Blah The EntityManager is closed Blah Blah');
     }
-
 }

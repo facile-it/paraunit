@@ -3,12 +3,9 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
-use Symfony\Component\Process\Process;
-
 
 /**
- * Class ProcessOutputParser
- * @package Paraunit\Filter
+ * Class ProcessOutputParser.
  */
 class ProcessOutputParser
 {
@@ -17,7 +14,7 @@ class ProcessOutputParser
      */
     protected $parsers;
 
-    function __construct()
+    public function __construct()
     {
         $this->parsers = array();
     }
@@ -32,8 +29,7 @@ class ProcessOutputParser
      */
     public function evaluateAndSetProcessResult(ProcessResultInterface $process)
     {
-
-        foreach($this->parsers as $parser) {
+        foreach ($this->parsers as $parser) {
             if (!$parser->parseAndContinue($process)) {
                 return;
             }

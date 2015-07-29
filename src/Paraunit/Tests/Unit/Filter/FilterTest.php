@@ -3,14 +3,11 @@
 namespace Paraunit\Tests\Unit\Filter;
 
 use Paraunit\Filter\Filter;
-use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
-
-    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnit_Util_XML_Proxy' ;
-    const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade' ;
-
+    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnit_Util_XML_Proxy';
+    const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade';
 
     public function testFilterTestFiles_gets_only_requested_testsuite()
     {
@@ -110,15 +107,17 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $fileName
+     *
      * @return string
+     *
      * @throws \Exception
      */
     private function getStubbedXMLConf($fileName)
     {
-        $filePath = realpath(__DIR__. '/../../Stub/StubbedXMLConfigs/' . $fileName);
+        $filePath = realpath(__DIR__.'/../../Stub/StubbedXMLConfigs/'.$fileName);
 
         if (!file_exists($filePath)) {
-            throw new \Exception('Stub XML config file missing: '. $filePath);
+            throw new \Exception('Stub XML config file missing: '.$filePath);
         }
 
         return \PHPUnit_Util_XML::loadFile($filePath, false, true, true);

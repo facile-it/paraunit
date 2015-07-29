@@ -5,20 +5,15 @@ namespace Paraunit\Command;
 use Paraunit\Filter\Filter;
 use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ParallelCommand
- * @package Paraunit\CommandDeadLockTestStub.php
+ * Class ParallelCommand.
  */
 class ParallelCommand extends Command
 {
-
     /** @var Filter */
     protected $filter;
 
@@ -30,9 +25,8 @@ class ParallelCommand extends Command
      * @param Runner $runner
      * @param string $name
      */
-    function __construct(Filter $filter, Runner $runner, $name = 'Paraunit')
+    public function __construct(Filter $filter, Runner $runner, $name = 'Paraunit')
     {
-
         parent::__construct($name);
 
         $this->filter = $filter;
@@ -49,14 +43,15 @@ class ParallelCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null
+     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $testsuite = null;
 
         if ($input->getOption('testsuite')) {
@@ -69,5 +64,4 @@ class ParallelCommand extends Command
 
         return $this->runner->run($testArray, $output, $config);
     }
-
 }

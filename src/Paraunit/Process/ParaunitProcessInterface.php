@@ -1,10 +1,9 @@
 <?php
-namespace Paraunit\Process;
 
+namespace Paraunit\Process;
 
 interface ParaunitProcessInterface
 {
-
     /**
      * @return bool
      */
