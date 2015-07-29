@@ -7,17 +7,22 @@ use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
+
+    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnit_Util_XML_Proxy' ;
+    const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade' ;
+
+
     public function testFilterTestFiles_gets_only_requested_testsuite()
     {
         $configFile = 'stubbed_for_filter_test.xml';
         $testSuiteName = 'test_only_requested_testsuite';
 
-        $utilXml = $this->prophesize(PHPUnit_Util_XML_Proxy::class);
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
         $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
             ->willReturn(array('OnlyTestSuiteTest.php'))
             ->shouldBeCalledTimes(1);
@@ -37,12 +42,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $configFile = 'stubbed_for_suffix_test.xml';
 
-        $utilXml = $this->prophesize(PHPUnit_Util_XML_Proxy::class);
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
         $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'TestSuffix.php', null, array())
             ->willReturn(array('OneTestSuffix.php'))
             ->shouldBeCalledTimes(1);
@@ -60,12 +65,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $configFile = 'stubbed_for_prefix_test.xml';
 
-        $utilXml = $this->prophesize(PHPUnit_Util_XML_Proxy::class);
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
         $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
             ->willReturn(array('TestPrefixOneTest.php'))
             ->shouldBeCalledTimes(1);
@@ -83,12 +88,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $configFile = 'stubbed_for_filter_test.xml';
 
-        $utilXml = $this->prophesize(PHPUnit_Util_XML_Proxy::class);
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
         $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
             ->willReturn(array('SameFile.php'))
             ->shouldBeCalledTimes(1);
