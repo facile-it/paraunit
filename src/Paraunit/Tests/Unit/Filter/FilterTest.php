@@ -18,11 +18,11 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, [])
-            ->willReturn(['OnlyTestSuiteTest.php'])
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
+            ->willReturn(array('OnlyTestSuiteTest.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', [])
-            ->willReturn(['OtherTest.php'])
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array('OtherTest.php'))
             ->shouldNotBeCalled();
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
@@ -30,7 +30,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $result = $filter->filterTestFiles($configFile, $testSuiteName);
 
         $this->assertCount(1, $result);
-        $this->assertEquals(['OnlyTestSuiteTest.php'], $result);
+        $this->assertEquals(array('OnlyTestSuiteTest.php'), $result);
     }
 
     public function testFilterTestFiles_supports_suffix_attribute()
@@ -43,17 +43,17 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'TestSuffix.php', null, [])
-            ->willReturn(['OneTestSuffix.php'])
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'TestSuffix.php', null, array())
+            ->willReturn(array('OneTestSuffix.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, [])
-            ->willReturn(['OtherTest.php'])
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+            ->willReturn(array('OtherTest.php'))
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
 
         $result = $filter->filterTestFiles($configFile);
-        $this->assertEquals(['OneTestSuffix.php', 'OtherTest.php'], $result);
+        $this->assertEquals(array('OneTestSuffix.php', 'OtherTest.php'), $result);
     }
 
     public function testFilterTestFiles_supports_prefix_attribute()
@@ -66,17 +66,17 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', 'TestPrefix', [])
-            ->willReturn(['TestPrefixOneTest.php'])
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
+            ->willReturn(array('TestPrefixOneTest.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, [])
-            ->willReturn(['OtherTest.php'])
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+            ->willReturn(array('OtherTest.php'))
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
 
         $result = $filter->filterTestFiles($configFile);
-        $this->assertEquals(['TestPrefixOneTest.php', 'OtherTest.php'], $result);
+        $this->assertEquals(array('TestPrefixOneTest.php', 'OtherTest.php'), $result);
     }
 
     public function testFilterTestFiles_avoids_duplicate_runs()
@@ -89,18 +89,18 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, [])
-            ->willReturn(['SameFile.php'])
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
+            ->willReturn(array('SameFile.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, [])
-            ->willReturn(['SameFile.php'])
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+            ->willReturn(array('SameFile.php'))
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
 
         $result = $filter->filterTestFiles($configFile);
         $this->assertCount(1, $result);
-        $this->assertEquals(['SameFile.php'], $result);
+        $this->assertEquals(array('SameFile.php'), $result);
     }
 
     /**
