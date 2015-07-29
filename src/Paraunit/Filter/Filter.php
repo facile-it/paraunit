@@ -2,6 +2,7 @@
 
 namespace Paraunit\Filter;
 
+use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
 use Symfony\Component\Process\Process;
 
 /**
@@ -10,41 +11,74 @@ use Symfony\Component\Process\Process;
  */
 class Filter
 {
+    /** @var  PHPUnit_Util_XML_Proxy */
+    protected $utilXml;
+
+    /** @var  \File_Iterator_Facade */
+    protected $fileIteratorFacade;
+
+    /**
+     * @param PHPUnit_Util_XML_Proxy $utilXml
+     * @param \File_Iterator_Facade $fileIteratorFacade
+     */
+    public function __construct(PHPUnit_Util_XML_Proxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
+    {
+        $this->utilXml = $utilXml;
+        $this->fileIteratorFacade = $fileIteratorFacade;
+    }
+
     /**
      * @param string $configFile
-     * @param $testSuiteFilter
+     * @param string | null $testSuiteFilter
      * @return array
-     * @internal param $testsuite
      */
-    public function filterTestFiles($configFile, $testSuiteFilter)
+    public function filterTestFiles($configFile, $testSuiteFilter = null)
     {
-
         $aggregatedFiles = array();
 
-        $document = \PHPUnit_Util_XML::loadFile($configFile, false, true, true);
+        $document = $this->utilXml->loadFile($configFile, false, true, true);
         $xpath    = new \DOMXPath($document);
 
-        $fileIteratorFacade = new \File_Iterator_Facade;
+        /** @var \DOMNode $testSuiteNode */
+        foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
 
-        foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode){
+            if (is_null($testSuiteFilter) || $testSuiteFilter == $this->getTestSuiteName($testSuiteNode)) {
 
-            foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
+                foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
 
-                $directory = (string) $directoryNode->nodeValue;
+                    $directory = (string) $directoryNode->nodeValue;
 
-                $files = $fileIteratorFacade->getFilesAsArray(
-                    $directory,
-                    'Test.php',
-                    '',
-                    array()
-                );
+                    $files = $this->fileIteratorFacade->getFilesAsArray(
+                        $directory,
+                        'Test.php',
+                        '',
+                        array()
+                    );
 
-                $aggregatedFiles = array_merge($aggregatedFiles,$files);
-
+                    $aggregatedFiles = array_merge($aggregatedFiles,$files);
+                }
             }
         }
 
         return $aggregatedFiles;
     }
 
+    /**
+     * @param \DOMNode $testSuiteNode
+     * @return string
+     */
+    private function getTestSuiteName(\DOMNode $testSuiteNode)
+    {
+        /**
+         * @var string $attrName
+         * @var \DOMAttr $attrNode
+         */
+        foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
+            if ($attrName == 'name') {
+                return $attrNode->value;
+            }
+        }
+
+        return '';
+    }
 }
