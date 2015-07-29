@@ -12,10 +12,10 @@
     </php>
 
     <testsuites>
-        <testsuite name="test_only_requested_testsuite">
-            <directory>./only/selected/test/suite/</directory>
+        <testsuite>
+            <directory suffix="TestSuffix.php">./only/selected/test/suite/</directory>
         </testsuite>
-        <testsuite name="an_other_test_suite">
+        <testsuite>
             <directory>./other/test/suite/</directory>
         </testsuite>
     </testsuites>

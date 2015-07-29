@@ -42,21 +42,39 @@ class Filter
         /** @var \DOMNode $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
 
-            if (is_null($testSuiteFilter) || $testSuiteFilter == $this->getTestSuiteName($testSuiteNode)) {
-
-                foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
-
-                    $directory = (string) $directoryNode->nodeValue;
-
-                    $files = $this->fileIteratorFacade->getFilesAsArray(
-                        $directory,
-                        'Test.php',
-                        '',
-                        array()
-                    );
-
-                    $aggregatedFiles = array_merge($aggregatedFiles,$files);
+            if (is_null($testSuiteFilter) || $testSuiteFilter == $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
+                // optimized array_unique
+                foreach ($this->extractFileFromTestSuite($testSuiteNode) as $file) {
+                    $aggregatedFiles[$file] = $file;
                 }
+            }
+        }
+
+        return array_values($aggregatedFiles);
+    }
+
+    /**
+     * @param \DOMNode $testSuiteNode
+     * @return array | string[]
+     */
+    private function extractFileFromTestSuite(\DOMNode $testSuiteNode)
+    {
+        $aggregatedFiles = array();
+
+        foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
+
+            $directory = (string) $directoryNode->nodeValue;
+
+            $files = $this->fileIteratorFacade->getFilesAsArray(
+                $directory,
+                $this->getDOMNodeAttribute($directoryNode, 'suffix', 'Test.php'),
+                $this->getDOMNodeAttribute($directoryNode, 'prefix'),
+                array()
+            );
+
+            // optimized array_unique
+            foreach ($files as $file) {
+                $aggregatedFiles[$file] = $file;
             }
         }
 
@@ -65,20 +83,22 @@ class Filter
 
     /**
      * @param \DOMNode $testSuiteNode
+     * @param string $nodeName
+     * @param string | null $defaultValue
      * @return string
      */
-    private function getTestSuiteName(\DOMNode $testSuiteNode)
+    private function getDOMNodeAttribute(\DOMNode $testSuiteNode, $nodeName, $defaultValue = null)
     {
         /**
          * @var string $attrName
          * @var \DOMAttr $attrNode
          */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
-            if ($attrName == 'name') {
+            if ($attrName == $nodeName) {
                 return $attrNode->value;
             }
         }
 
-        return '';
+        return $defaultValue;
     }
 }
