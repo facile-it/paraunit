@@ -27,9 +27,8 @@
     "phpunit/phpunit": ">=3.7,<5"
   },
   "require-dev": {
-    "codeclimate/php-test-reporter": "dev-master",
     "phpspec/phpspec": "~2.0",
-    "satooshi/php-coveralls": "*"
+    "satooshi/php-coveralls": "dev-master"
   },
   "config": {
     "bin-dir": "bin"
