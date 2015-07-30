@@ -71,8 +71,6 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testSegFault()
     {
-        $this->markTestSkipped();
-
         $outputInterface = new ConsoleOutputStub();
 
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
@@ -83,14 +81,8 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
-        $errorCount = array();
-        preg_match_all("/<error>X<\/error>/", $outputInterface->getOutput(), $errorCount);
-        $this->assertCount(1, $errorCount[0], 'Manca la X');
-
-        $fileRecap = array();
-        preg_match_all('/1 files with SEGMENTATION FAULTS:/', $outputInterface->getOutput(), $fileRecap);
-        $this->assertCount(1, $fileRecap[0], 'Manca il titolo del recap');
-        preg_match_all('/<error>SegFaultTestStub.php<\/error>/', $outputInterface->getOutput(), $fileRecap);
-        $this->assertCount(1, $fileRecap[0], 'Manca il nome del file che ha fallito');
+        $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('1 files with SEGMENTATION FAULTS:', $outputInterface->getOutput(), 'Missing recap title');
+        $this->assertContains('<error>SegFaultTestStub.php</error>', $outputInterface->getOutput(), 'Missing failing filename');
     }
 }
