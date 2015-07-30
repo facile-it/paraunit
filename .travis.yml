@@ -1,5 +1,8 @@
 language: php
 
+env:
+  - CODECLIMATE_REPO_TOKEN=8c560bd57df8d9409ef8d6c077538025cd023256211b5d08f8892910c6ed6b5f
+
 php:
   - 5.3
   - 5.4
@@ -22,3 +25,4 @@ script:
 
 after_script:
   - php bin/coveralls -v
+  - php bin/test-reporter
