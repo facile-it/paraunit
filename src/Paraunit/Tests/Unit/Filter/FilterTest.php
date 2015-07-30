@@ -20,7 +20,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array('OnlyTestSuiteTest.php'))
             ->shouldBeCalledTimes(1);
         $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
@@ -45,10 +45,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'TestSuffix.php', null, array())
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'TestSuffix.php', '', array())
             ->willReturn(array('OneTestSuffix.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
             ->willReturn(array('OtherTest.php'))
             ->shouldBeCalledTimes(1);
 
@@ -71,7 +71,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
             ->willReturn(array('TestPrefixOneTest.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
             ->willReturn(array('OtherTest.php'))
             ->shouldBeCalledTimes(1);
 
@@ -91,10 +91,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled();
 
         $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
-        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', null, array())
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array('SameFile.php'))
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', null, array())
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
             ->willReturn(array('SameFile.php'))
             ->shouldBeCalledTimes(1);
 

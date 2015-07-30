@@ -66,7 +66,7 @@ class Filter
             $files = $this->fileIteratorFacade->getFilesAsArray(
                 $directory,
                 $this->getDOMNodeAttribute($directoryNode, 'suffix', 'Test.php'),
-                $this->getDOMNodeAttribute($directoryNode, 'prefix'),
+                $this->getDOMNodeAttribute($directoryNode, 'prefix', ''),
                 array()
             );
 
