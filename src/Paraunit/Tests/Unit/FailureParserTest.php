@@ -24,6 +24,7 @@ class FailureParserTest extends StubbedPHPUnitBaseTestCase
     {
         return array(
             array($this->getTestWithSingleError(), 0),
+            array($this->getTestWithParserRegression(), 2),
             array($this->getTestWith2Errors2Failures(), 2),
             array($this->getTestWithAllGreen(), 0),
             array($this->getTestWithFatalError(), 0),

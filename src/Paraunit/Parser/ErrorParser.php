@@ -19,7 +19,7 @@ class ErrorParser implements ProcessOutputParserChainElementInterface
         preg_match(self::ERROR_REGEX, $process->getOutput(), $errorsBlob);
 
         if (isset($errorsBlob[1])) {
-            $errors = preg_split('/\d+\) /', $errorsBlob[1]);
+            $errors = preg_split('/^\d+\) /m', $errorsBlob[1]);
             // il primo è sempre vuoto a causa dello split
             unset($errors[0]);
 

@@ -33,6 +33,18 @@ abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return StubbedParaProcess
      */
+    public function getTestWithParserRegression()
+    {
+        $process = new StubbedParaProcess();
+        $process->setExitCode(-1);
+        $process->setOutput($this->getOutputFileContent('2Errors2Failures_parser_regression.txt'));
+
+        return $process;
+    }
+
+    /**
+     * @return StubbedParaProcess
+     */
     public function getTestWithAllGreen()
     {
         $process = new StubbedParaProcess();

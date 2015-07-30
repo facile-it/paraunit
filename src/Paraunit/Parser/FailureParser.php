@@ -18,7 +18,7 @@ class FailureParser implements ProcessOutputParserChainElementInterface
         $failuresBlob = array();
         preg_match(self::FAILURE_REGEX, $process->getOutput(), $failuresBlob);
         if (isset($failuresBlob[1])) {
-            $failures = preg_split('/\d+\) /', $failuresBlob[1]);
+            $failures = preg_split('/^\d+\) /m', $failuresBlob[1]);
             // il primo è sempre vuoto a causa dello split
             unset($failures[0]);
 
