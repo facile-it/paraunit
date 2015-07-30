@@ -79,7 +79,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/SegFaultTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'), 'Exit code should not be 0');
 
         $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains('1 files with SEGMENTATION FAULTS:', $outputInterface->getOutput(), 'Missing recap title');
