@@ -77,11 +77,16 @@ class FinalPrinter
         $outputInterface->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
 
         $outputInterface->writeln('');
-        $outputInterface->writeln('Executed: '.count($completedProcesses).' tests');
+        $outputInterface->write('Executed: ');
+        $outputInterface->write(count($completedProcesses).' test classes, ');
 
+        $testsCount = 0;
         foreach ($completedProcesses as $process) {
             $this->analyzeProcess($process);
+            $testsCount += count($process->getTestResults());
         }
+
+        $outputInterface->writeln($testsCount.' tests');
 
         foreach ($this->outputContainers as $outputContainer) {
             $this->printFailuresOutput($outputInterface, $outputContainer);
