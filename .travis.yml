@@ -1,4 +1,5 @@
 language: php
+sudo: false
 
 php:
   - 5.3
@@ -21,4 +22,4 @@ script:
   - phpunit -v $PHPUNIT_FLAGS
 
 after_script:
-  - php bin/coveralls -v
+  - if [[ $TRAVIS_PHP_VERSION = '5.5' ]]; then php bin/coveralls -v; fi
