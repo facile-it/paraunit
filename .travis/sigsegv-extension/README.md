@@ -14,7 +14,7 @@ This is an extension written for testing purposes.
 
 ```
 phpize
-./configure --with-sigsegv
+./configure --enable-sigsegv
 make -j
 ```
 
