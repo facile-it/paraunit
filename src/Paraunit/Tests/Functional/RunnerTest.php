@@ -71,6 +71,10 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testSegFault()
     {
+        if (!extension_loaded('sigsegv')) {
+            $this->markTestIncomplete('The segfault cannot be reproduced in this environment');
+        }
+
         $outputInterface = new ConsoleOutputStub();
 
         $runner = $this->container->get('facile.cbr.parallel_test_bundle.runner.runner');
