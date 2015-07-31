@@ -7,16 +7,16 @@
     "testing",
     "phpunit"
   ],
-  "homepage": "http://github.com/ranpafin/paraunit",
+  "homepage": "http://github.com/facile-it/paraunit",
   "license": "Apache License Version 2.0",
   "authors": [
     {
-      "name": "Panina Francesco",
+      "name": "Francesco Panina",
       "email": "francesco.panina@gmail.com"
     },
     {
       "name": "Alessandro Lai",
-      "email": "alessandro.lai@gmail.com"
+      "email": "alessandro.lai85@gmail.com"
     }
   ],
   "require": {
