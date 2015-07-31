@@ -71,6 +71,10 @@ abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public function getTestWithSegFault()
     {
+        if (!extension_loaded('sigsegv')) {
+            $this->markTestIncomplete('The segfault cannot be reproduced in this environment');
+        }
+
         $process = new StubbedParaProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('SegFault.txt'));
