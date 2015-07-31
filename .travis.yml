@@ -22,6 +22,7 @@ before_script:
 
 script:
   - phpunit -v $PHPUNIT_FLAGS
+  - ./bin/phpspec run
 
 after_script:
   - if [[ $TRAVIS_PHP_VERSION = '5.5' ]]; then php bin/coveralls -v; fi
