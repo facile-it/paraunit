@@ -32,7 +32,7 @@ class RetryManager
      */
     public function setRetryStatus(RetryAwareInterface $process)
     {
-        if ($process->getRetryCount() > $this->maxRetry) {
+        if ($process->getRetryCount() >= $this->maxRetry) {
             return false;
         }
 

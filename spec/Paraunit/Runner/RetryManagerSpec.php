@@ -47,7 +47,7 @@ class RetryManagerSpec extends ObjectBehavior
 
         $process->getOutput()->willReturn(RetryManager::MYSQL_LOCK_EXCEPTION);
 
-        $process->getRetryCount()->willReturn($maxRetryCount);
+        $process->getRetryCount()->willReturn($maxRetryCount - 1); // third call
         $process->markAsToBeRetried()->shouldBeCalled();
         $process->increaseRetryCount()->shouldBeCalled();
         $process->isToBeRetried()->willReturn(true)->shouldBeCalled();
