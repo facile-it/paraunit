@@ -8,4 +8,4 @@ make -j
 
 phpenv config-add /home/travis/build/facile-it/paraunit/.travis/sigsegv.ini
 
-cd home/travis/build/facile-it/paraunit/
+cd /home/travis/build/facile-it/paraunit/
