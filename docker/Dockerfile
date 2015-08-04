@@ -10,7 +10,7 @@ RUN apt-get install -y ssh
 RUN apt-get install -y git
 RUN apt-get install -y supervisor
 RUN apt-get install -y sudo
-RUN apt-get install -y php5 php5-curl php5-intl php5-mysql php5-xdebug php5-apcu php5-dev
+RUN apt-get install -y php5 php5-curl php5-intl php5-mysql php5-xdebug php5-dev
 RUN apt-get install -y git
 RUN apt-get install -y less vim-tiny
 RUN apt-get install -y apg
@@ -33,7 +33,7 @@ RUN sudo curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer
 RUN sudo chmod a+x php-cs-fixer
 RUN sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
-#Zsh minial installation
+#Zsh minimal installation
 RUN git clone --depth=1 git://github.com/robbyrussell/oh-my-zsh.git  ~/.oh-my-zsh
 RUN cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 RUN sudo chsh -s /bin/zsh
@@ -46,13 +46,9 @@ RUN phpize
 RUN ./configure --enable-sigsegv
 RUN make -j
 COPY sigsegv/sigsegv.ini /etc/php5/cli/conf.d/
-#-----
+#----- END Enable sigsegv extension
 
 WORKDIR /home/paraunit/projects
 VOLUME ["/home/paraunit/projects"]
 
-EXPOSE 80
-
 CMD sudo /usr/bin/supervisord
-
-
