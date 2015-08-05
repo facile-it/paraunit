@@ -19,8 +19,6 @@ use Paraunit\Command\ParallelCommand;
 
 require_once __DIR__ . '/../../../Container.php';
 
-$loader->load('services.yml');
-
 $command = new ParallelCommand(
     $container->get('facile.cbr.parallel_test_bundle.filter.filter'),
     $container->get('facile.cbr.parallel_test_bundle.runner.runner')

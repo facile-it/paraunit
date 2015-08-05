@@ -9,8 +9,10 @@ use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Process\SymfonyProcessWrapper;
+use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Runner.
@@ -74,28 +76,30 @@ class Runner
     protected $phpunitBin;
 
     /**
-     * @param RetryManager        $retryManager
+     * @param RetryManager $retryManager
      * @param ProcessOutputParser $processOutputParser
-     * @param SharkPrinter        $sharkPrinter
-     * @param ProcessPrinter      $processPrinter
-     * @param FinalPrinter        $finalPrinter
-     * @param int                 $maxProcessNumber
+     * @param SharkPrinter $sharkPrinter
+     * @param ProcessPrinter $processPrinter
+     * @param FinalPrinter $finalPrinter
+     * @param int $maxProcessNumber
      *
+     * @param EventDispatcherInterface $eventDispatcher
      * @throws \Exception
      */
     public function __construct(
         RetryManager $retryManager,
         ProcessOutputParser $processOutputParser,
-        SharkPrinter $sharkPrinter,
         ProcessPrinter $processPrinter,
         FinalPrinter $finalPrinter,
-        $maxProcessNumber = 10
+        $maxProcessNumber = 10,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->retryManager = $retryManager;
         $this->processOutputParser = $processOutputParser;
         $this->sharkPrinter = $sharkPrinter;
         $this->processPrinter = $processPrinter;
         $this->finalPrinter = $finalPrinter;
+        $this->eventDispatcher = $eventDispatcher;
 
         $this->maxProcessNumber = $maxProcessNumber;
 
@@ -122,9 +126,8 @@ class Runner
     {
         $this->phpunitConfigFile = $phpunitConfigFile;
 
-        $this->formatOutputInterface($outputInterface);
-
-        $this->sharkPrinter->printSharkLogo($outputInterface);
+        $this->eventDispatcher
+            ->dispatch(EngineEvent::BEFORE_START, EngineEvent::buildFromContext($files, $outputInterface));
 
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
@@ -222,26 +225,4 @@ class Runner
         }
     }
 
-    /**
-     * @param OutputInterface $outputInterface
-     */
-    protected function formatOutputInterface(OutputInterface $outputInterface)
-    {
-        if ($outputInterface->getFormatter()) {
-            $style = new OutputFormatterStyle('green', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('ok', $style);
-
-            $style = new OutputFormatterStyle('yellow', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('skipped', $style);
-
-            $style = new OutputFormatterStyle('blue', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('incomplete', $style);
-
-            $style = new OutputFormatterStyle('red', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('fail', $style);
-
-            $style = new OutputFormatterStyle('red', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('error', $style);
-        }
-    }
 }

@@ -2,12 +2,19 @@
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class SharkPrinter
+ * @package Paraunit\Printer
+ */
 class SharkPrinter
 {
-    public function printSharkLogo(OutputInterface $outputInterface)
+    public function onEngineStart(EngineEvent $engineEvent)
     {
+        $outputInterface = $engineEvent->getOutputInterface();
+
         $outputInterface->writeln('                                                   B>                           ');
         $outputInterface->writeln('                                                   B "Bp                        ');
         $outputInterface->writeln('.pp..                                              B    9p                      ');
@@ -22,6 +29,6 @@ class SharkPrinter
         $outputInterface->writeln('            .6BSERGIOBBBB B666666B B     B B     B B       9 P      7 9BBBBP    ');
 
         $outputInterface->writeln('');
-        $outputInterface->writeln('PARAUNIT TEST 0.4 -- by Shark Dev Team @ Facile.it');
+        $outputInterface->writeln('PARAUNIT V0.4 -- by Francesco Panina, Alessandro Lai and Shark Dev Team @ Facile.it');
     }
 }

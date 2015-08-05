@@ -1,5 +1,6 @@
 parameters:
     paraunit.max_retry_count: 3
+    paraunit.default_max_process: 10
     kernel.root_dir: 'src'
 
 services:
@@ -21,12 +22,15 @@ services:
         arguments:
             - @facile.cbr.parallel_test_bundle.runner.retry_manager
             - @facile.cbr.parallel_test_bundle.parser.process_output_parser
-            - @facile.cbr.parallel_test_bundle.printer.shark_printer
             - @facile.cbr.parallel_test_bundle.printer.process_printer
             - @facile.cbr.parallel_test_bundle.printer.final_printer
+            - %paraunit.default_max_process%
+            - @event_dispatcher
 
     facile.cbr.parallel_test_bundle.printer.shark_printer:
         class: Paraunit\Printer\SharkPrinter
+        tags:
+          - { name: paraunit.event_listener, event: engine_event.before_start, method: onEngineStart }
 
     facile.cbr.parallel_test_bundle.printer.process_printer:
         class: Paraunit\Printer\ProcessPrinter
@@ -64,6 +68,18 @@ services:
 
     facile.cbr.parallel_test_bundle.parser.test_result_parser:
         class: Paraunit\Parser\TestResultsParser
+
+    event_dispatcher:
+        class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+        arguments:
+          - @service_container
+
+    ##LISTENERS
+
+    paraunit.printer.console_formatter:
+        class: Paraunit\Printer\ConsoleFormatter
+        tags:
+          - { name: paraunit.event_listener, event: engine_event.before_start, method: onEngineStart }
 
     ## EXTERNAL DEPs -- proxies ##
 

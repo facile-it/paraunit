@@ -19,11 +19,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $container = new ContainerBuilder();
+        require_once getcwd(). '/Container.php';
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config/'));
-        $loader->load('services.yml');
-        $this->container = $container;
+        $this->container = getContainer();
     }
 
     public function testMaxRetryEntityManagerIsClosed()
