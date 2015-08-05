@@ -78,7 +78,6 @@ class Runner
     /**
      * @param RetryManager $retryManager
      * @param ProcessOutputParser $processOutputParser
-     * @param SharkPrinter $sharkPrinter
      * @param ProcessPrinter $processPrinter
      * @param FinalPrinter $finalPrinter
      * @param int $maxProcessNumber
@@ -96,7 +95,6 @@ class Runner
     ) {
         $this->retryManager = $retryManager;
         $this->processOutputParser = $processOutputParser;
-        $this->sharkPrinter = $sharkPrinter;
         $this->processPrinter = $processPrinter;
         $this->finalPrinter = $finalPrinter;
         $this->eventDispatcher = $eventDispatcher;
