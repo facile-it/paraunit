@@ -5,6 +5,7 @@ namespace Paraunit\Tests\Unit;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;
+use Prophecy\Argument;
 
 class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
 {
@@ -57,5 +58,33 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer->printProcessResult($output, $process);
 
         $this->assertEquals('<error>X</error>', $output->getOutput());
+    }
+
+    /**
+     * @dataProvider newLineTimesProvider
+     */
+    public function testPrintProcessResult_new_line_after_80_chars($times, $newLineTimes)
+    {
+        $process = new StubbedParaProcess();
+        $process->setTestResults(array_fill(0, $times, 'F'));
+
+        $printer = new ProcessPrinter();
+        $output = $this->prophesize('Paraunit\Tests\Stub\ConsoleOutputStub');
+        $output->write('<fail>F</fail>')->willReturn()->shouldBeCalledTimes($times);
+        $output->writeln('')->willReturn()->shouldBeCalledTimes($newLineTimes);
+
+        $printer->printProcessResult($output->reveal(), $process);
+    }
+
+    public function newLineTimesProvider()
+    {
+        return array(
+            array(79, 0),
+            array(80, 0),
+            array(81, 1),
+            array(200, 2),
+            array(240, 2),
+            array(241, 3),
+        );
     }
 }
