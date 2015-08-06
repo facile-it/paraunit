@@ -87,4 +87,31 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
             array(241, 3),
         );
     }
+
+    /**
+     * @dataProvider testResultProvider
+     */
+    public function testPrintProcessResult_proper_output_with_normal_testresults($testResult, $expectedOutput)
+    {
+        $process = new StubbedParaProcess();
+        $process->setTestResults(array($testResult));
+
+        $printer = new ProcessPrinter();
+        $output = new ConsoleOutputStub();
+
+        $printer->printProcessResult($output, $process);
+
+        $this->assertEquals($expectedOutput, $output->getOutput());
+    }
+
+    public function testResultProvider()
+    {
+        return array(
+            array('F', '<fail>F</fail>'),
+            array('E', '<error>E</error>'),
+            array('I', '<incomplete>I</incomplete>'),
+            array('UNKNOWN', '<error>X</error>'),
+            array(null, '<error>X</error>'),
+        );
+    }
 }
