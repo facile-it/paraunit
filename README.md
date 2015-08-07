@@ -1,4 +1,8 @@
 #paraunit
+Paraunit is a tool faster executions of PHPUnit test suites. It makes this possible running multiple test in parallel with single PHPUnit processes.
+
+Paraunit is developed using Symfony components.
+
 
 | [Master][Master build link] |
 |:----------------:|
