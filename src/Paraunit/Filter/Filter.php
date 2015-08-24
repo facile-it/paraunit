@@ -60,6 +60,11 @@ class Filter
     {
         $aggregatedFiles = array();
 
+        $excludes = array();
+        foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
+            $excludes[] = (string) $excludeNode->nodeValue;
+        }
+
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
             $directory = (string) $directoryNode->nodeValue;
 
@@ -67,7 +72,7 @@ class Filter
                 $directory,
                 $this->getDOMNodeAttribute($directoryNode, 'suffix', 'Test.php'),
                 $this->getDOMNodeAttribute($directoryNode, 'prefix', ''),
-                array()
+                $excludes
             );
 
             // optimized array_unique

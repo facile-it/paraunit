@@ -81,6 +81,39 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('TestPrefixOneTest.php', 'OtherTest.php'), $result);
     }
 
+    public function testFilterTestFiles_supports_exclude_nodes()
+    {
+        $configFile = 'stubbed_for_node_exclude.xml';
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $excludeArray1 = array(
+            '/path/to/exclude1',
+            '/path/to/exclude2',
+        );
+
+        $excludeArray2 = array(
+            '/path/to/exclude3',
+            '/path/to/exclude4',
+        );
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', 'TestPrefix', $excludeArray1)
+            ->willReturn(array('TestPrefixOneTest.php'))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', $excludeArray2)
+            ->willReturn(array('OtherTest.php'))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFile);
+        $this->assertEquals(array('TestPrefixOneTest.php', 'OtherTest.php'), $result);
+    }
+
     public function testFilterTestFiles_avoids_duplicate_runs()
     {
         $configFile = 'stubbed_for_filter_test.xml';
