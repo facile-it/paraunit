@@ -138,6 +138,29 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('SameFile.php'), $result);
     }
 
+    public function testFilterTestFiles_supports_file_nodes()
+    {
+        $configFile = 'stubbed_for_node_file.xml';
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray('./only/selected/test/suite/', 'Test.php', '', array())
+            ->willReturn(array('TestPrefixOneTest.php'))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray('./other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array('OtherTest.php'))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFile);
+        $this->assertEquals(array('TestPrefixOneTest.php', './this/file.php', './this/file2.php', 'OtherTest.php'), $result);
+    }
+
     /**
      * @param string $fileName
      *
