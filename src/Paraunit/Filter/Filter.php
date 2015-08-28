@@ -38,12 +38,8 @@ class Filter
     public function filterTestFiles($configFile, $testSuiteFilter = null)
     {
         $aggregatedFiles = array();
+        $this->relativePath = realpath(dirname($configFile)) . DIRECTORY_SEPARATOR;
 
-        if (dirname($configFile) != '.') {
-            $this->relativePath = dirname($configFile) . DIRECTORY_SEPARATOR;
-        } else {
-            $this->relativePath = null;
-        }
         $document = $this->utilXml->loadFile($configFile, false, true, true);
         $xpath = new \DOMXPath($document);
 
@@ -97,7 +93,7 @@ class Filter
             $directory = (string)$directoryNode->nodeValue;
 
             $files = $this->fileIteratorFacade->getFilesAsArray(
-                $directory,
+                $this->relativePath . $directory,
                 $this->getDOMNodeAttribute($directoryNode, 'suffix', 'Test.php'),
                 $this->getDOMNodeAttribute($directoryNode, 'prefix', ''),
                 $excludes
@@ -116,7 +112,7 @@ class Filter
     private function addTestsFromFileNodes(\DOMNode $testSuiteNode, array &$aggregatedFiles)
     {
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
-            $fileName = (string)$fileNode->nodeValue;
+            $fileName = $this->relativePath . (string)$fileNode->nodeValue;
             $this->addFileToAggregateArray($aggregatedFiles, $fileName);
         }
     }
@@ -127,10 +123,6 @@ class Filter
      */
     private function addFileToAggregateArray(array &$aggregatedFiles, $fileName)
     {
-        if ($this->relativePath) {
-            $fileName = $this->relativePath . $fileName;
-        }
-
         // optimized array_unique
         $aggregatedFiles[$fileName] = $fileName;
     }
