@@ -113,6 +113,8 @@ class Runner
         } else {
             throw new \Exception('Phpunit not found');
         }
+
+        $this->phpunitBin = realpath($this->phpunitBin);
     }
 
     /**
