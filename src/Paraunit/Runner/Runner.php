@@ -3,6 +3,7 @@
 namespace Paraunit\Runner;
 
 use Paraunit\Parser\ProcessOutputParser;
+use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
@@ -120,7 +121,7 @@ class Runner
      *
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, $phpunitConfigFile)
+    public function run($files, OutputInterface $outputInterface, $phpunitConfigFile, $debug = false)
     {
         $this->phpunitConfigFile = $phpunitConfigFile;
 
@@ -131,7 +132,7 @@ class Runner
         $this->createProcessStackFromFiles($files);
 
         while (!empty($this->processStack) || !empty($this->processRunning)) {
-            $this->runProcess();
+            $this->runProcess($debug);
 
             foreach ($this->processRunning as $process) {
                 if ($process->isTerminated()) {
@@ -197,13 +198,20 @@ class Runner
         return new SymfonyProcessWrapper($command);
     }
 
-    protected function runProcess()
+    /**
+     * @param bool $debug
+     */
+    protected function runProcess($debug)
     {
         if ($this->maxProcessNumber > count($this->processRunning) && !empty($this->processStack)) {
             /** @var ParaunitProcessInterface $process */
             $process = array_pop($this->processStack);
             $process->start();
             $this->processRunning[md5($process->getCommandLine())] = $process;
+
+            if ($debug) {
+                DebugPrinter::printDebugOutput($process, $this->processRunning);
+            }
         }
     }
 
