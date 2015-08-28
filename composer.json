@@ -20,11 +20,11 @@
     }
   ],
   "require": {
-    "symfony/console": ">=2.3,<=2.6",
-    "symfony/dependency-injection": ">=2.3,<=2.6",
-    "symfony/config": ">=2.3,<=2.6",
-    "symfony/process": ">=2.3,<=2.6",
-    "symfony/event-dispatcher": ">=2.3,<=2.6",
+    "symfony/console": ">=2.3,<3",
+    "symfony/dependency-injection": ">=2.3,<3",
+    "symfony/config": ">=2.3,<3",
+    "symfony/process": ">=2.3,<3",
+    "symfony/event-dispatcher": ">=2.3,<3",
     "phpunit/phpunit": ">=3.7,<5"
   },
   "require-dev": {
