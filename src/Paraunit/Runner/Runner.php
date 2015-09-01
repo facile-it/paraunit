@@ -192,9 +192,10 @@ class Runner
         $configurationFile = getcwd().'/'.$this->phpunitConfigFile;
 
         $command =
-            $this->phpunitBin.
-            ' -c '.$configurationFile.' '.
-            $fileName.
+            $this->phpunitBin .
+            ' -c '.$configurationFile . ' ' .
+            ' --colors=never ' .
+            $fileName .
             ' 2>&1';
 
         return new SymfonyProcessWrapper($command);

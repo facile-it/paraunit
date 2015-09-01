@@ -9,7 +9,7 @@ Paraunit is a tool for faster executions of PHPUnit test suites. It makes this p
 Paraunit is developed using Symfony2 components.
 
 ## Requirements
-Paraunit reads PHPUnit's .xml configuration file, so it's needed to know which test to load; if you have colored output in your xml config, you should disable it, to avoid parsing problems.
+Paraunit reads PHPUnit's .xml configuration file, so it's needed to know which test to load.
 
 If you are testing a Symfony2+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing.
 

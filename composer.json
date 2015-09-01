@@ -25,7 +25,7 @@
     "symfony/config": ">=2.3,<3",
     "symfony/process": ">=2.3,<3",
     "symfony/event-dispatcher": ">=2.3,<3",
-    "phpunit/phpunit": ">=3.7,<5"
+    "phpunit/phpunit": ">=4.6,<5"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0",
@@ -40,7 +40,7 @@
       "": "src/"
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "suggest": {
     "facile-it/paraunit-testcase": "Useful for Symfony2+Doctrine functional testing, providing DB isolation"
   }

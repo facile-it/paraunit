@@ -14,15 +14,17 @@ if (!ini_get('date.timezone') && !date_default_timezone_get()) {
     date_default_timezone_set('UTC');
 }
 
-use Symfony\Component\Console\Application;
 use Paraunit\Command\ParallelCommand;
+use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../../../Container.php';
 
-$command = new ParallelCommand(
-    $container->get('facile.cbr.parallel_test_bundle.filter.filter'),
-    $container->get('facile.cbr.parallel_test_bundle.runner.runner')
-);
+/** @var \Paraunit\Filter\Filter $filter */
+$filter = $container->get('paraunit.filter.filter');
+/** @var \Paraunit\Runner\Runner $runner */
+$runner = $container->get('paraunit.runner.runner');
+
+$command = new ParallelCommand($filter, $runner);
 
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
