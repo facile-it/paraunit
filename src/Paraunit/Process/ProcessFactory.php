@@ -3,6 +3,7 @@
 namespace Paraunit\Process;
 
 use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
 
@@ -12,8 +13,11 @@ use Paraunit\Configuration\PHPUnitConfigFile;
  */
 class ProcessFactory
 {
-    /** @var  string */
+    /** @var  PHPUnitBinFile */
     private $phpUnitBin;
+
+    /** @var  PHPDbgBinFile */
+    private $phpDbgFile;
 
     /** @var  JSONLogFilename */
     private $jsonLogFilename;
@@ -23,11 +27,14 @@ class ProcessFactory
 
     /**
      * ProcessFactory constructor.
-     * @param PHPUnitBinFile $phpUnitBinFile
+     * @param PHPUnitBinFile $phpUnitBin
+     * @param PHPDbgBinFile $phpDbgFile
+     * @param JSONLogFilename $jsonLogFilename
      */
-    public function __construct(PHPUnitBinFile $phpUnitBinFile, JSONLogFilename $jsonLogFilename)
+    public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $phpDbgFile, JSONLogFilename $jsonLogFilename)
     {
-        $this->phpUnitBin = $phpUnitBinFile->getPhpUnitBin();
+        $this->phpUnitBin = $phpUnitBin;
+        $this->phpDbgFile = $phpDbgFile;
         $this->jsonLogFilename = $jsonLogFilename;
     }
 
@@ -63,11 +70,18 @@ class ProcessFactory
      */
     private function createCommandLine($testFilePath, $uniqueId)
     {
-        return $this->phpUnitBin .
-        ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-        ' --colors=never' .
-        ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
-        ' ' . $testFilePath;
+        $commandLine = '';
+        if ($this->phpDbgFile->isAvailable()) {
+            $commandLine .= $this->phpDbgFile->getPhpDbgBin() . ' -qrr ';
+        }
+
+        $commandLine .= $this->phpUnitBin->getPhpUnitBin() .
+            ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
+            ' --colors=never' .
+            ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
+            ' ' . $testFilePath;
+
+        return $commandLine;
     }
 
     /**

@@ -5,6 +5,9 @@ services:
   paraunit.configuration.phpunit_bin_file:
     class: Paraunit\Configuration\PHPUnitBinFile
 
+  paraunit.configuration.phpdbg_bin_file:
+    class: Paraunit\Configuration\PHPDbgBinFile
+
   paraunit.configuration.json_log_filename:
     class: Paraunit\Configuration\JSONLogFilename
     arguments:
