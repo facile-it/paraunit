@@ -1,5 +1,7 @@
 #facile-it/paraunit
 
+[![Stable release][Last stable image]][Packagist link]
+[![Unstable release][Last unstable image]][Packagist link]
 [![Build status][Master build image]][Master build link]
 [![Coverage Status][Master coverage image]][Master coverage link]
 [![Code Climate][Master climate image]][Master climate link]
@@ -57,10 +59,13 @@ Paraunit prints a parsed result from the single PHPUnit processes. This parsing 
 
 Anyhow, Paraunit doesn't rely on the parser's results to provide the final exit code; instead, it looks only to the processes' exit codes: **it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code**. So you can safely use it in your CI build ;)
 
+[Last stable image]: https://poser.pugx.org/facile-it/paraunit/version.svg
+[Last unstable image]: https://poser.pugx.org/facile-it/paraunit/v/unstable.svg
 [Master build image]: https://travis-ci.org/facile-it/paraunit.svg
 [Master climate image]: https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg
 [Master coverage image]: https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&service=github
 
+[Packagist link]: https://packagist.org/packages/facile-it/paraunit
 [Master build link]: https://travis-ci.org/facile-it/paraunit
 [Master climate link]: https://codeclimate.com/github/facile-it/paraunit
 [Master coverage link]: https://coveralls.io/github/facile-it/paraunit?branch=master
