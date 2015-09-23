@@ -37,7 +37,7 @@ class ParallelCommand extends Command
     {
         $this
             ->setName('run')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'The PHPUnit XML config file', 'phpunit.xml.dist')
+            ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config file', 'phpunit.xml.dist')
             ->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Choice a specific testsuite from your XML config file')
             ->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
     }
