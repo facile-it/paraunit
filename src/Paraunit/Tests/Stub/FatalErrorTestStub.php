@@ -4,13 +4,14 @@ namespace Paraunit\Tests\Stub;
 
 class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    /**
-     * @throws \Exception
-     */
     public function testBrokenTest()
     {
-        $var = null;
+        ini_set('memory_limit', '2M');
 
-        $var->nonExistendMethod();
+        $arr = array();
+
+        while(true) {
+            $arr[] = "Allocated memory... allocated memory everywhere!";
+        }
     }
 }
