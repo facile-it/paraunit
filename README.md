@@ -25,7 +25,7 @@ To use this package, use composer:
 ``` 
 {
     "require": {
-        "facile-it/paraunit": "dev-master"
+        "facile-it/paraunit": "~0.4"
     }
 }
 ```
