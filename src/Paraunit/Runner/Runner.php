@@ -2,16 +2,13 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Parser\ProcessOutputParser;
 use Paraunit\Printer\DebugPrinter;
-use Paraunit\Printer\FinalPrinter;
-use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Paraunit\Lifecycle\EngineEvent;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,49 +22,19 @@ class Runner
     // I'm using Paraunit standalone (developing)
     const PHPUNIT_RELPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
 
-    /**
-     * @var RetryManager
-     */
-    protected $retryManager;
-
-    /**
-     * @var ProcessOutputParser
-     */
-    protected $processOutputParser;
-
-    /**
-     * @var SharkPrinter
-     */
+    /** @var SharkPrinter */
     protected $sharkPrinter;
 
-    /**
-     * @var ProcessPrinter
-     */
-    protected $processPrinter;
-
-    /**
-     * @var FinalPrinter
-     */
-    protected $finalPrinter;
-
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $maxProcessNumber;
 
-    /**
-     * @var ParaunitProcessAbstract[]
-     */
+    /** @var ParaunitProcessAbstract[] */
     protected $processStack;
 
-    /**
-     * @var ParaunitProcessAbstract[]
-     */
+    /** @var ParaunitProcessAbstract[] */
     protected $processCompleted;
 
-    /**
-     * @var ParaunitProcessAbstract[]
-     */
+    /** @var ParaunitProcessAbstract[] */
     protected $processRunning;
 
     /** @var  string */
@@ -77,31 +44,17 @@ class Runner
     protected $phpunitBin;
 
     /**
-     * @param RetryManager $retryManager
-     * @param ProcessOutputParser $processOutputParser
-     * @param ProcessPrinter $processPrinter
-     * @param FinalPrinter $finalPrinter
-     * @param int $maxProcessNumber
-     *
+     * @param int                      $maxProcessNumber
      * @param EventDispatcherInterface $eventDispatcher
+     *
      * @throws \Exception
      */
     public function __construct(
-        RetryManager $retryManager,
-        ProcessOutputParser $processOutputParser,
-        ProcessPrinter $processPrinter,
-        FinalPrinter $finalPrinter,
         $maxProcessNumber = 10,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->retryManager = $retryManager;
-        $this->processOutputParser = $processOutputParser;
-        $this->processPrinter = $processPrinter;
-        $this->finalPrinter = $finalPrinter;
         $this->eventDispatcher = $eventDispatcher;
-
         $this->maxProcessNumber = $maxProcessNumber;
-
         $this->processStack = array();
         $this->processCompleted = array();
         $this->processRunning = array();
@@ -118,7 +71,7 @@ class Runner
     }
 
     /**
-     * @param $files
+     * @param                 $files
      * @param OutputInterface $outputInterface
      *
      * @return int
@@ -127,22 +80,31 @@ class Runner
     {
         $this->phpunitConfigFile = $phpunitConfigFile;
 
-        $this->eventDispatcher
-            ->dispatch(EngineEvent::BEFORE_START, EngineEvent::buildFromContext($files, $outputInterface));
+        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($files, $outputInterface));
 
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 
+        $this->eventDispatcher->dispatch(
+            EngineEvent::START,
+            new EngineEvent($files, $outputInterface, array('start' => $start,))
+        );
+
         while (!empty($this->processStack) || !empty($this->processRunning)) {
-            $this->runProcess($debug);
+
+            if ($process = $this->runProcess($debug)) {
+                $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($process));
+            }
 
             foreach ($this->processRunning as $process) {
-                if ($process->isTerminated()) {
-                    $this->retryManager->setRetryStatus($process);
-                    $this->processOutputParser->evaluateAndSetProcessResult($process);
-                    $this->processPrinter->printProcessResult($outputInterface, $process);
 
-                    // Completato o reset e stack
+                if ($process->isTerminated()) {
+
+                    $this->eventDispatcher->dispatch(
+                        ProcessEvent::PROCESS_TERMINATED,
+                        new ProcessEvent($process, array('output_interface' => $outputInterface,))
+                    );
+                    // Completed or back to the stack
                     $this->markProcessCompleted($process);
                 }
 
@@ -152,7 +114,14 @@ class Runner
 
         $end = new \Datetime('now');
 
-        $this->finalPrinter->printFinalResults($outputInterface, $this->processCompleted, $start->diff($end));
+        $this->eventDispatcher->dispatch(
+            EngineEvent::END,
+            new EngineEvent(
+                $files,
+                $outputInterface,
+                array('end' => $end, 'start' => $start, 'process_completed' => $this->processCompleted)
+            )
+        );
 
         return $this->getReturnCode();
     }
@@ -192,17 +161,19 @@ class Runner
         $configurationFile = getcwd().'/'.$this->phpunitConfigFile;
 
         $command =
-            $this->phpunitBin .
-            ' -c '.$configurationFile . ' ' .
-            ' --colors=never ' .
-            $fileName .
+            $this->phpunitBin.
+            ' -c '.$configurationFile.' '.
+            ' --colors=never '.
+            $fileName.
             ' 2>&1';
 
         return new SymfonyProcessWrapper($command);
     }
 
     /**
-     * @param bool $debug
+     * @param $debug
+     *
+     * @return ParaunitProcessAbstract
      */
     protected function runProcess($debug)
     {
@@ -215,6 +186,8 @@ class Runner
             if ($debug) {
                 DebugPrinter::printDebugOutput($process, $this->processRunning);
             }
+
+            return $process;
         }
     }
 

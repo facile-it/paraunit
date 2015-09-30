@@ -2,7 +2,7 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Process\RetryAwareInterface;
+use Paraunit\Lifecycle\ProcessEvent;
 
 /**
  * Class RetryManager.
@@ -26,12 +26,15 @@ class RetryManager
     }
 
     /**
-     * @param RetryAwareInterface $process
+     * @param ProcessEvent $processEvent
      *
      * @return bool
      */
-    public function setRetryStatus(RetryAwareInterface $process)
+    public function onProcessTerminated(ProcessEvent $processEvent)
     {
+
+        $process = $processEvent->getProcess();
+
         if ($process->getRetryCount() >= $this->maxRetry) {
             return false;
         }

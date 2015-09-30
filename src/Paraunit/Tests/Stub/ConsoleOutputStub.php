@@ -23,7 +23,7 @@ class ConsoleOutputStub extends ConsoleOutput implements OutputInterface
      */
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
-        $this->outputBuffer .= $messages;
+        $this->outputBuffer .= "\n".$messages;
     }
 
     /**

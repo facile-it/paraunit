@@ -2,6 +2,7 @@
 
 namespace Paraunit\Tests\Unit;
 
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;
@@ -17,7 +18,8 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
 
-        $printer->printProcessResult($output, $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals('<ok>A</ok>', $output->getOutput());
     }
@@ -30,7 +32,8 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
 
-        $printer->printProcessResult($output, $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals('<error>X</error>', $output->getOutput());
     }
@@ -43,7 +46,8 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
 
-        $printer->printProcessResult($output, $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals('<error>X</error>', $output->getOutput());
     }
@@ -55,7 +59,8 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
 
-        $printer->printProcessResult($output, $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals('<error>X</error>', $output->getOutput());
     }
@@ -73,7 +78,9 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $output->write('<fail>F</fail>')->willReturn()->shouldBeCalledTimes($times);
         $output->writeln('')->willReturn()->shouldBeCalledTimes($newLineTimes);
 
-        $printer->printProcessResult($output->reveal(), $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output->reveal()));
+        $printer->onProcessTerminated($processEvent);
+
     }
 
     public function newLineTimesProvider()
@@ -99,7 +106,8 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
 
-        $printer->printProcessResult($output, $process);
+        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals($expectedOutput, $output->getOutput());
     }

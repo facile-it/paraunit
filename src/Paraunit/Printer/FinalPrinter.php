@@ -2,6 +2,7 @@
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Process\ProcessResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -67,11 +68,19 @@ class FinalPrinter
     }
 
     /**
-     * @param ProcessResultInterface[] $completedProcesses
-     * @param \DateInterval            $elapsedTime
+     * @param EngineEvent $engineEvent
      */
-    public function printFinalResults(OutputInterface $outputInterface, array $completedProcesses, \DateInterval $elapsedTime)
+    public function onEngineEnd(EngineEvent $engineEvent)
     {
+
+        if (!$engineEvent->has('start') || !$engineEvent->has('end') || !$engineEvent->has('process_completed')){
+            throw new \BadMethodCallException('missing argument/s');
+        }
+
+        $outputInterface =  $engineEvent->getOutputInterface();
+        $elapsedTime =  $engineEvent->get('start')->diff($engineEvent->get('end'));
+        $completedProcesses =  $engineEvent->get('process_completed');
+
         $outputInterface->writeln('');
         $outputInterface->writeln('');
         $outputInterface->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));

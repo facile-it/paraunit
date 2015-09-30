@@ -2,16 +2,14 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Lifecycle\ProcessEvent;
 
 /**
  * Class ProcessOutputParser.
  */
 class ProcessOutputParser
 {
-    /**
-     * @var ProcessOutputParserChainElementInterface[]
-     */
+    /** @var ProcessOutputParserChainElementInterface[] */
     protected $parsers;
 
     public function __construct()
@@ -25,12 +23,12 @@ class ProcessOutputParser
     }
 
     /**
-     * @param ProcessResultInterface $process
+     * @param ProcessEvent $processEvent
      */
-    public function evaluateAndSetProcessResult(ProcessResultInterface $process)
+    public function onProcessTerminated(ProcessEvent $processEvent)
     {
         foreach ($this->parsers as $parser) {
-            if (!$parser->parseAndContinue($process)) {
+            if (!$parser->parseAndContinue($processEvent->getProcess())) {
                 return;
             }
         }

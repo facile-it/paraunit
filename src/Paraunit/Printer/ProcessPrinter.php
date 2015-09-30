@@ -2,7 +2,7 @@
 
 namespace Paraunit\Printer;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -14,11 +14,23 @@ class ProcessPrinter
     protected $counter = 0;
 
     /**
-     * @param OutputInterface        $output
-     * @param ProcessResultInterface $process
+     * @param ProcessEvent $processEvent
      */
-    public function printProcessResult(OutputInterface $output, ProcessResultInterface $process)
+    public function onProcessTerminated(ProcessEvent $processEvent)
     {
+
+        $process = $processEvent->getProcess();
+
+        if (!$processEvent->has('output_interface')){
+            throw new \BadMethodCallException('missing output_interface');
+        }
+
+        $output = $processEvent->get('output_interface');
+
+        if (!$output instanceof OutputInterface){
+            throw new \BadMethodCallException('output_interace wrong type');
+        }
+
         if ($process->isToBeRetried()) {
             $this->printWithCounter($output, '<ok>A</ok>');
         } else {
