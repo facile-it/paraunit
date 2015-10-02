@@ -21,6 +21,24 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->container = getContainer();
     }
 
+    public function testAllGreen()
+    {
+        $outputInterface = new ConsoleOutputStub();
+
+        /** @var Runner $runner */
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array(
+            'src/Paraunit/Tests/Stub/ThreeGreenTestStub.php',
+        );
+
+        $this->assertEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
+
+        $greenCount = preg_match_all("/<ok>.<\/ok>/", $outputInterface->getOutput());
+
+        $this->assertEquals(3, $greenCount);
+    }
+
     public function testMaxRetryEntityManagerIsClosed()
     {
         $outputInterface = new ConsoleOutputStub();

@@ -73,7 +73,8 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     *
+     * @param $phpunitConfigFile
+     * @param bool $debug
      * @return int
      */
     public function run($files, OutputInterface $outputInterface, $phpunitConfigFile, $debug = false)

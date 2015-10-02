@@ -16,7 +16,7 @@ services:
         arguments:
             - %paraunit.max_retry_count%
         tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
+          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 999 }
 
     paraunit.runner.runner:
         class: Paraunit\Runner\Runner
@@ -33,7 +33,7 @@ services:
     paraunit.printer.process_printer:
         class: Paraunit\Printer\ProcessPrinter
         tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
+          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 100 }
 
     paraunit.printer.final_printer:
         class: Paraunit\Printer\FinalPrinter
@@ -53,7 +53,7 @@ services:
             - [addParser, ["@paraunit.parser.failure_parser"]]
             - [addParser, ["@paraunit.parser.test_result_parser"]]
         tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
+          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
     paraunit.parser.error_parser:
         class: Paraunit\Parser\ErrorParser
