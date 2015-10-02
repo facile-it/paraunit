@@ -34,7 +34,8 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
-        $greenCount = preg_match_all("/<ok>.<\/ok>/", $outputInterface->getOutput());
+        $dumpster = array(); // PHP 5.3 needs this crap
+        $greenCount = preg_match_all("/<ok>.<\/ok>/", $outputInterface->getOutput(), $dumpster);
 
         $this->assertEquals(3, $greenCount);
     }
