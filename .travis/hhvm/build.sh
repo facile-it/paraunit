@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-apt-get install hhvm-dev g++ -y
+sudo apt-get install hhvm-dev g++
+
 cd /home/travis/build/facile-it/paraunit/.travis/hhvm
 
 hphpize
