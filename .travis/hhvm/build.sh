@@ -2,7 +2,7 @@
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get -qq update
-sudo apt-get -qq install g++-4.8
+sudo apt-get -qq install g++-4.8 hhvm-dev
 
 cd /home/travis/build/facile-it/paraunit/.travis/hhvm
 
