@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt-get install hhvm-dev g++
+sudo apt-get install hhvm-dev g++4.8
 
 cd /home/travis/build/facile-it/paraunit/.travis/hhvm
 
