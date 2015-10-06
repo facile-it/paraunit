@@ -1,17 +1,21 @@
+#include "hphp/runtime/ext/extension.h"
+#include <signal.h>
+
 namespace HPHP {
+
 void HHVM_FUNCTION(sigsegv) {
-  char *damn_pointer = "I am a damn pointer";
-  *damn_pointer = "So bad!";
+    raise(SIGSEGV);
 }
 
-class SigsegvExtension : public Extension {
-  public:
-    SigSegvExtension(): Extension("sigsegv", "0.0.1") {}
-    void moduleInit() override {
-      HHVM_FE(sigsegv);
-      loadSystemLib();
-    }
+static class SigSegvExtension : public Extension {
+ public:
+  SigSegvExtension() : Extension("sigsegv") {}
+  virtual void moduleInit() {
+    HHVM_FE(sigsegv);
+    loadSystemlib();
+  }
 } s_sigsegv_extension;
 
 HHVM_GET_MODULE(sigsegv)
+
 } // namespace HPHP
