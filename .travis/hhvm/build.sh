@@ -6,4 +6,4 @@ hphpize
 cmake .
 make -j
 
-echo "extension=sigsegv.so" >> /etc/hhvm/php.ini
+echo "hhvm.dynamic_extensions[sigsegv] = sigsegv.so" > /etc/hhvm/php.ini
