@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+apt-get install hhvm-dev g++ -y
 cd /home/travis/build/facile-it/paraunit/.travis/hhvm
 
 hphpize
