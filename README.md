@@ -6,7 +6,7 @@
 [![Coverage Status][Master coverage image]][Master coverage link]
 [![Code Climate][Master climate image]][Master climate link]
 
-Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible launching multiple test in parallel with single PHPUnit processes.
+Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible by launching multiple test in parallel with single PHPUnit processes.
 
 Paraunit is developed using Symfony2 components.
 
