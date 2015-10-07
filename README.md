@@ -14,7 +14,7 @@ Paraunit is developed using Symfony2 components.
 Paraunit reads PHPUnit's .xml configuration file, so it's needed to know which test to load.
 
 If you are testing a Symfony2+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing;
-also, if your want to run functional tests, remember to **warm up the cache before**, or the firsts of them will encounter a mass cache miss with concurrency problems, and subsequent random failures. 
+also, if your want to run functional tests, remember to **warm up the cache before**. in order to avoid a mass cache miss with concurrency problems, and subsequent random failures. 
 
 ## Installation
 To use this package, use composer:
