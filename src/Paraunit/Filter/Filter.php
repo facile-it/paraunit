@@ -2,6 +2,7 @@
 
 namespace Paraunit\Filter;
 
+use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
 
 /**
@@ -30,17 +31,17 @@ class Filter
     }
 
     /**
-     * @param string $configFile
+     * @param PHPUnitConfigFile $configFile
      * @param string | null $testSuiteFilter
      *
      * @return array
      */
-    public function filterTestFiles($configFile, $testSuiteFilter = null)
+    public function filterTestFiles(PHPUnitConfigFile $configFile, $testSuiteFilter = null)
     {
         $aggregatedFiles = array();
-        $this->relativePath = realpath(dirname($configFile)) . DIRECTORY_SEPARATOR;
+        $this->relativePath = $configFile->getDirectory() . DIRECTORY_SEPARATOR;
 
-        $document = $this->utilXml->loadFile($configFile, false, true, true);
+        $document = $this->utilXml->loadFile($configFile->getFileFullPath(), false, true, true);
         $xpath = new \DOMXPath($document);
 
         /** @var \DOMNode $testSuiteNode */
