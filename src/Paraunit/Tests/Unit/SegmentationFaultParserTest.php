@@ -25,6 +25,7 @@ class SegmentationFaultParserTest extends StubbedPHPUnitBaseTestCase
             array($this->getTestWithSingleError(), true),
             array($this->getTestWith2Errors2Failures(), true),
             array($this->getTestWithAllGreen(), true),
+            array($this->getTestWithAllGreen5(), true),
             array($this->getTestWithFatalError(), true),
             array($this->getTestWithSegFault(), false),
         );

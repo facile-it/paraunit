@@ -48,8 +48,20 @@ abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
     public function getTestWithAllGreen()
     {
         $process = new StubbedParaProcess();
-        $process->setExitCode(-1);
+        $process->setExitCode(0);
         $process->setOutput($this->getOutputFileContent('AllGreen.txt'));
+
+        return $process;
+    }
+
+    /**
+     * @return StubbedParaProcess
+     */
+    public function getTestWithAllGreen5()
+    {
+        $process = new StubbedParaProcess();
+        $process->setExitCode(0);
+        $process->setOutput($this->getOutputFileContent('AllGreen5.txt'));
 
         return $process;
     }
