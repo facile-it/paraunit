@@ -2,10 +2,11 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.4.2] - 2015-09-23
+## [0.4.2] - 2015-10-19
 
 ### Changed
 
+* Unlocked supporto for PHPUnit >= 5.x
 * README changed to suggest stable version of package in `composer.json` example
 
 ### Fixed
