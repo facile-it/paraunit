@@ -40,21 +40,23 @@ class Runner
     /** @var  string */
     protected $phpunitConfigFile;
 
+    /** @var bool */
+    protected $debugMode;
+
     /** @var  string */
     protected $phpunitBin;
 
     /**
-     * @param int                      $maxProcessNumber
      * @param EventDispatcherInterface $eventDispatcher
      *
      * @throws \Exception
      */
     public function __construct(
-        $maxProcessNumber = 10,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->maxProcessNumber = $maxProcessNumber;
+        $this->maxProcessNumber = 10;
+        $this->debugMode = false;
         $this->processStack = array();
         $this->processCompleted = array();
         $this->processRunning = array();
@@ -66,21 +68,15 @@ class Runner
         } else {
             throw new \Exception('Phpunit not found');
         }
-
-        $this->phpunitBin = realpath($this->phpunitBin);
     }
 
     /**
-     * @param                 $files
+     * @param array $files
      * @param OutputInterface $outputInterface
-     * @param $phpunitConfigFile
-     * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, $phpunitConfigFile, $debug = false)
+    public function run(array $files, OutputInterface $outputInterface)
     {
-        $this->phpunitConfigFile = $phpunitConfigFile;
-
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($files, $outputInterface));
 
         $start = new \Datetime('now');
@@ -93,7 +89,7 @@ class Runner
 
         while (!empty($this->processStack) || !empty($this->processRunning)) {
 
-            if ($process = $this->runProcess($debug)) {
+            if ($process = $this->runProcess()) {
                 $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($process));
             }
 
@@ -125,6 +121,30 @@ class Runner
         );
 
         return $this->getReturnCode();
+    }
+
+    /**
+     * @param int $number
+     */
+    public function setMaxProcessNumber($number)
+    {
+        $this->maxProcessNumber = $number;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPhpunitConfigFile($path)
+    {
+        $this->phpunitConfigFile = $path;
+    }
+
+    /**
+     * Sets debug to true
+     */
+    public function enableDebugMode()
+    {
+        $this->debugMode = true;
     }
 
     /**
@@ -172,11 +192,9 @@ class Runner
     }
 
     /**
-     * @param $debug
-     *
      * @return ParaunitProcessAbstract
      */
-    protected function runProcess($debug)
+    protected function runProcess()
     {
         if ($this->maxProcessNumber > count($this->processRunning) && !empty($this->processStack)) {
             /** @var ParaunitProcessInterface $process */
@@ -184,7 +202,7 @@ class Runner
             $process->start();
             $this->processRunning[md5($process->getCommandLine())] = $process;
 
-            if ($debug) {
+            if ($this->debugMode) {
                 DebugPrinter::printDebugOutput($process, $this->processRunning);
             }
 

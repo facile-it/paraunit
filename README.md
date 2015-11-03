@@ -52,6 +52,19 @@ If you have problem running the tests, or the execution stops before the results
 
 It will show a verbose output with the full running test queue.
 
+###Environment Variables
+Paraunit supports environment variables to setup it's functionalities between different environments like local development machine and remote CI tools.
+With this method you can also avoid writing very long commands on your console or your CI script.
+If yuo can't access env variables on your systems, all you need is an ".env" file placed at your project root, that contains some configuration parameters.
+
+The ".env" file is usefull when you can't modify environment variables, but if you can please use them instead of the file.
+
+#####Supported Paramenters
+```
+PARAUNIT_PHPUNIT_XML_PATH -> sets the phpunit configuration file path
+PARAUNIT_MAX_PROCESS_NUMBER -> sets the number of processes that parauni will use to run your tests
+```
+
 ## Parsing results
 
 Paraunit prints a parsed result from the single PHPUnit processes. This parsing is a delicate process, and it could sometimes fail; if you are expiriencing any problems, try the `--debug` option, identify the problematic test, and try running it alone; if it's ok and the parser is at fault, please open an issue here on GitHub with the full single test output.

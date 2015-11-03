@@ -1,6 +1,5 @@
 parameters:
     paraunit.max_retry_count: 3
-    paraunit.default_max_process: 10
     kernel.root_dir: 'src'
 
 services:
@@ -22,7 +21,6 @@ services:
         class: Paraunit\Runner\Runner
         scope: prototype
         arguments:
-            - %paraunit.default_max_process%
             - @event_dispatcher
 
     paraunit.printer.shark_printer:
