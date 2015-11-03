@@ -10,21 +10,30 @@ if (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     throw new \Exception('Autoload not found');
 }
 
-if (!ini_get('date.timezone') && !date_default_timezone_get()) {
+if (!ini_get('date.timezone')) {
     date_default_timezone_set('UTC');
 }
 
+use Dotenv\Dotenv;
 use Paraunit\Command\ParallelCommand;
 use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../../../Container.php';
+
+define('DOT_ENV_PATH', __DIR__ . '/../../../../../../');
+if (is_file(DOT_ENV_PATH . '.env')) {
+    $dotEnv = new Dotenv(DOT_ENV_PATH);
+    $dotEnv->load();
+}
+
+require_once __DIR__ . '/../config.php';
 
 /** @var \Paraunit\Filter\Filter $filter */
 $filter = $container->get('paraunit.filter.filter');
 /** @var \Paraunit\Runner\Runner $runner */
 $runner = $container->get('paraunit.runner.runner');
 
-$command = new ParallelCommand($filter, $runner);
+$command = new ParallelCommand($filter, $runner, $configuration);
 
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';

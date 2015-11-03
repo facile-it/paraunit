@@ -32,7 +32,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/ThreeGreenTestStub.php',
         );
 
-        $this->assertEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
+        $runner->setPhpunitConfigFile('phpunit.xml.dist');
+        $runner->setMaxProcessNumber(10);
+        $this->assertEquals(0, $runner->run($fileArray, $outputInterface));
 
         $dumpster = array(); // PHP 5.3 needs this crap
         $greenCount = preg_match_all("/<ok>.<\/ok>/", $outputInterface->getOutput(), $dumpster);
@@ -51,7 +53,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/EntityManagerClosedTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
+        $runner->setPhpunitConfigFile('phpunit.xml.dist');
+        $runner->setMaxProcessNumber(10);
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface));
 
         $retryCount = array();
         preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
@@ -66,12 +70,15 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     {
         $outputInterface = new ConsoleOutputStub();
 
+        /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
         $fileArray = array(
             'src/Paraunit/Tests/Stub/DeadLockTestStub.php',
         );
 
+        $runner->setPhpunitConfigFile('phpunit.xml.dist');
+        $runner->setMaxProcessNumber(10);
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'));
 
         $retryCount = array();
@@ -91,15 +98,19 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $outputInterface = new ConsoleOutputStub();
 
+        /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
         $fileArray = array(
             'src/Paraunit/Tests/Stub/SegFaultTestStub.php',
         );
 
+        $runner->setPhpunitConfigFile('phpunit.xml.dist');
+        $runner->setMaxProcessNumber(10);
+
         $this->assertNotEquals(
             0,
-            $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'),
+            $runner->run($fileArray, $outputInterface),
             'Exit code should not be 0'
         );
 
