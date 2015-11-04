@@ -2,6 +2,7 @@
 
 namespace Paraunit\Runner;
 
+use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\ParaunitProcessAbstract;
@@ -37,7 +38,7 @@ class Runner
     /** @var ParaunitProcessAbstract[] */
     protected $processRunning;
 
-    /** @var  string */
+    /** @var  PHPUnitConfigFile */
     protected $phpunitConfigFile;
 
     /** @var  string */
@@ -73,11 +74,11 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     * @param $phpunitConfigFile
+     * @param PHPUnitConfigFile $phpunitConfigFile
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, $phpunitConfigFile, $debug = false)
+    public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
     {
         $this->phpunitConfigFile = $phpunitConfigFile;
 
@@ -159,11 +160,9 @@ class Runner
      */
     protected function createProcess($fileName)
     {
-        $configurationFile = getcwd().'/'.$this->phpunitConfigFile;
-
         $command =
             $this->phpunitBin.
-            ' -c '.$configurationFile.' '.
+            ' -c '.$this->phpunitConfigFile->getFileFullPath().' '.
             ' --colors=never '.
             $fileName.
             ' 2>&1';
