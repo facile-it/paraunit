@@ -40,11 +40,19 @@ This command will launch all the tests in all your configured testsuites.
 ###Optional parameters
 If your `phpunit.xml.dist` file is not in the default base dir, you can specify it by:
 
-`--configuration=relPath/to/phpunit.xml.dist`
+`vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist`
+
+or with the short version:
+
+`vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist`
+
+Also it's possible to provide only a directory, in such case paraunit will look for the 'phpunit.xml.dist':
+
+`vendor/bin/paraunit run -c=relPath/to/xml/file/`
 
 You can run a single test suite using:
 
-`--testsuite=testSuiteName`
+`vendor/bin/paraunit run --testsuite=testSuiteName`
 
 If you have problem running the tests, or the execution stops before the results are printed out, you can launch paraunit in debug mode, with:
 
