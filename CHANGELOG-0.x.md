@@ -2,6 +2,20 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.4.4] - 2015-11-15
+
+### Fixed
+
+* Merged previous `v0.4` branch, there were missing fixes in previous release
+
+## [0.4.3] - 2015-11-04
+
+### Changed
+
+*  `--configuration` behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename,
+   and has a `-c` shortcut (default filename is `phpunit.xml.dist`) [#19]
+* Added `-c` shortcut to README
+
 ## [0.4.2] - 2015-10-19
 
 ### Changed
