@@ -29,6 +29,6 @@ $command = new ParallelCommand($filter, $runner);
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-$application = new Application('Paraunit', '0.4');
+$application = new Application('Paraunit', '0.4.4');
 $application->add($command);
 $application->run();

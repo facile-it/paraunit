@@ -119,14 +119,12 @@ class FinalPrinter
             $this->segmentationFaults->addFileName($filename);
         }
 
-        if (in_array('X', $process->getTestResults())) {
-            $this->unknownStatus->addFileName($filename);
-            $this->unknownStatus->addToOutputBuffer($process->getOutput());
-        }
-
         if ($process->hasFatalErrors()) {
             $this->fatalErrors->addFileName($filename);
             $this->fatalErrors->addToOutputBuffer($process->getFatalErrors());
+        } else if (in_array('X', $process->getTestResults())) {
+            $this->unknownStatus->addFileName($filename);
+            $this->unknownStatus->addToOutputBuffer($process->getOutput());
         }
 
         if ($process->hasErrors()) {

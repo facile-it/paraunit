@@ -25,7 +25,7 @@
     "symfony/config": ">=2.3,<3",
     "symfony/process": ">=2.3,<3",
     "symfony/event-dispatcher": ">=2.3,<3",
-    "phpunit/phpunit": ">=4.6,<5"
+    "phpunit/phpunit": ">=4.6"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0",

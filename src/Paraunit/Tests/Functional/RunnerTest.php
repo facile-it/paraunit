@@ -116,4 +116,22 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'Missing failing filename'
         );
     }
+
+    public function testRegressionFatalErrorsRecognizedAsUnknownResults()
+    {
+        $outputInterface = new ConsoleOutputStub();
+
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array(
+            'src/Paraunit/Tests/Stub/FatalErrorTestStub.php',
+        );
+
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'), 'Exit code should not be 0');
+
+        $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('1 files with FATAL ERRORS:', $outputInterface->getOutput(), 'Missing fatal error recap title');
+        $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaker for unknown result');
+
+    }
 }

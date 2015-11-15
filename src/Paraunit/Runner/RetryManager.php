@@ -40,10 +40,10 @@ class RetryManager
         }
 
         $deadlocks = array();
-        @preg_match(self::MYSQL_LOCK_EXCEPTION, $process->getOutput(), $deadlocks);
+        preg_match(self::MYSQL_LOCK_EXCEPTION, $process->getOutput(), $deadlocks);
 
         $entityManagerClosed = array();
-        @preg_match(self::DOCTRINE_EM_CLOSED, $process->getOutput(), $entityManagerClosed);
+        preg_match(self::DOCTRINE_EM_CLOSED, $process->getOutput(), $entityManagerClosed);
 
         if (
             !empty($deadlocks) ||
