@@ -127,7 +127,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'src/Paraunit/Tests/Stub/FatalErrorTestStub.php',
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, 'phpunit.xml.dist'), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains('1 files with FATAL ERRORS:', $outputInterface->getOutput(), 'Missing fatal error recap title');
