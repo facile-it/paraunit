@@ -9,7 +9,7 @@ use Paraunit\Lifecycle\ProcessEvent;
  */
 class RetryManager
 {
-    const MYSQL_LOCK_EXCEPTION = '/(Deadlock found|Lock wait timeout exceeded)/';
+    const MYSQL_LOCK_EXCEPTION = '/(Deadlock found|Lock wait timeout exceeded|General error: 5 database is locked)/';
     const DOCTRINE_EM_CLOSED = '/(The EntityManager is closed)/';
 
     /**

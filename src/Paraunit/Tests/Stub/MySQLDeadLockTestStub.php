@@ -2,7 +2,7 @@
 
 namespace Paraunit\Tests\Stub;
 
-class DeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
+class MySQLDeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     /**
      * @throws \Exception

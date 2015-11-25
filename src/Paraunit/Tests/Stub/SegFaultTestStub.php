@@ -2,6 +2,10 @@
 
 namespace Paraunit\Tests\Stub;
 
+/**
+ * Class SegFaultTestStub
+ * @package Paraunit\Tests\Stub
+ */
 class SegFaultTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     public function testBrokenTest()

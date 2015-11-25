@@ -2,6 +2,10 @@
 
 namespace Paraunit\Tests\Stub;
 
+/**
+ * Class EntityManagerClosedTestStub
+ * @package Paraunit\Tests\Stub
+ */
 class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     /**

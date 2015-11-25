@@ -4,6 +4,10 @@ namespace Paraunit\Tests\Stub;
 
 use Paraunit\Process\ParaunitProcessAbstract;
 
+/**
+ * Class StubbedParaProcess
+ * @package Paraunit\Tests\Stub
+ */
 class StubbedParaProcess extends ParaunitProcessAbstract
 {
     /**
@@ -26,6 +30,9 @@ class StubbedParaProcess extends ParaunitProcessAbstract
      */
     protected $isToBeRetried;
 
+    /**
+     * @param string $commandLine
+     */
     public function __construct($commandLine = 'testCommandLine')
     {
         $this->commandLine = $commandLine;
