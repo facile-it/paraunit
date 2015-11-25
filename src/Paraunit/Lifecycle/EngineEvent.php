@@ -69,5 +69,4 @@ class EngineEvent extends Event
 
         return $this->context[$contextParameterName];
     }
-
 }

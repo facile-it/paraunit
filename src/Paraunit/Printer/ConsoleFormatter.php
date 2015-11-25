@@ -4,7 +4,6 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ConsoleFormatter
@@ -15,7 +14,8 @@ class ConsoleFormatter
     /**
      * @param EngineEvent $engineEvent
      */
-    public function onEngineStart(EngineEvent $engineEvent){
+    public function onEngineStart(EngineEvent $engineEvent)
+    {
 
         $outputInterface= $engineEvent->getOutputInterface();
 
@@ -35,7 +35,5 @@ class ConsoleFormatter
             $style = new OutputFormatterStyle('red', null, array('bold', 'blink'));
             $outputInterface->getFormatter()->setStyle('error', $style);
         }
-
     }
-
 }

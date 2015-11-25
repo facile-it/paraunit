@@ -206,5 +206,4 @@ class Runner
             $this->processCompleted[$pHash] = $process;
         }
     }
-
 }

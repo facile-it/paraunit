@@ -12,7 +12,7 @@ class SegFaultTestStub extends BrokenTestBase implements BrokenTestInterface
     {
         if (extension_loaded('sigsegv')) {
             sigsegv();
-        }else{
+        } else {
             preg_match("/http:\/\/(.)+\.ru/i", str_repeat('http://google.ru', 2000));
         }
     }

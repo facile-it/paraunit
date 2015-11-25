@@ -45,10 +45,7 @@ class RetryManager
         $entityManagerClosed = array();
         preg_match(self::DOCTRINE_EM_CLOSED, $process->getOutput(), $entityManagerClosed);
 
-        if (
-            !empty($deadlocks) ||
-            !empty($entityManagerClosed)
-        ) {
+        if ( ! empty($deadlocks) || ! empty($entityManagerClosed)) {
             $process->markAsToBeRetried();
             $process->increaseRetryCount();
         }
