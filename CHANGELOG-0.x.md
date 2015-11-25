@@ -2,6 +2,12 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.5] - 2015-12-TBA
+
+### Changed
+
+* SqLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux)
+
 ## [0.4.4] - 2015-11-15
 
 ### Fixed
