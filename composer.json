@@ -3,7 +3,7 @@
   "type": "library",
   "description": "paraunit",
   "support": {
-    "issues": "https://github.com/facile-it/paraunit/issues",
+    "issues": "https://github.com/facile-it/paraunit/issues"
   },
   "keywords": [
     "parallel test",
