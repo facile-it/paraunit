@@ -31,7 +31,6 @@
     "phpunit/phpunit": ">=4.6,<6"
   },
   "require-dev": {
-    "phpspec/phpspec": "~2.0",
     "squizlabs/php_codesniffer": "2.*",
     "satooshi/php-coveralls": "dev-master"
   },
