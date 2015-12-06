@@ -8,8 +8,8 @@ services:
     paraunit.filter.filter:
         class: Paraunit\Filter\Filter
         arguments:
-            - @paraunit.proxy.phpunit_util_xml_proxy
-            - @phpunit.file_iterator_facade
+            - "@paraunit.proxy.phpunit_util_xml_proxy"
+            - "@phpunit.file_iterator_facade"
 
     paraunit.runner.retry_manager:
         class: Paraunit\Runner\RetryManager
@@ -23,7 +23,7 @@ services:
         scope: prototype
         arguments:
             - %paraunit.default_max_process%
-            - @event_dispatcher
+            - "@event_dispatcher"
 
     paraunit.printer.shark_printer:
         class: Paraunit\Printer\SharkPrinter
@@ -76,7 +76,7 @@ services:
     event_dispatcher:
         class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
         arguments:
-          - @service_container
+          - "@service_container"
 
     ##LISTENERS
 
