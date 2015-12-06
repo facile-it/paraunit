@@ -201,6 +201,7 @@ class Runner
 
         if ($process->isToBeRetried()) {
             $process->reset();
+            $process->increaseRetryCount();
             $this->processStack[$pHash] = $process;
         } else {
             $this->processCompleted[$pHash] = $process;

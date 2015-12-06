@@ -26,11 +26,6 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     protected $exitCode = 0;
 
     /**
-     * @var bool
-     */
-    protected $isToBeRetried;
-
-    /**
      * @param string $commandLine
      */
     public function __construct($commandLine = 'testCommandLine')
@@ -46,19 +41,11 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return bool
-     */
-    public function isToBeRetried()
-    {
-        return $this->isToBeRetried;
-    }
-
-    /**
      * @param bool $isToBeRetried
      */
     public function setIsToBeRetried($isToBeRetried)
     {
-        $this->isToBeRetried = $isToBeRetried;
+        $this->shouldBeRetried = $isToBeRetried;
     }
 
     /**

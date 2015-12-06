@@ -91,7 +91,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('src/Paraunit/Tests/Stub/MySQLDeadLockTestStub.php'),
-            array('src/Paraunit/Tests/Stub/SqLiteDeadLockTestStub.php'),
+            array('src/Paraunit/Tests/Stub/SQLiteDeadLockTestStub.php'),
         );
     }
 

@@ -11,13 +11,6 @@ services:
             - "@paraunit.proxy.phpunit_util_xml_proxy"
             - "@phpunit.file_iterator_facade"
 
-    paraunit.runner.retry_manager:
-        class: Paraunit\Runner\RetryManager
-        arguments:
-            - %paraunit.max_retry_count%
-        tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 999 }
-
     paraunit.runner.runner:
         class: Paraunit\Runner\Runner
         scope: prototype
@@ -66,6 +59,8 @@ services:
 
     paraunit.parser.retry_parser:
         class: Paraunit\Parser\RetryParser
+        arguments:
+            - %paraunit.max_retry_count%
 
     paraunit.parser.segmentation_fault_parser:
         class: Paraunit\Parser\SegmentationFaultParser
