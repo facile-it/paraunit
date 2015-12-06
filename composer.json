@@ -2,6 +2,9 @@
   "name": "facile-it/paraunit",
   "type": "library",
   "description": "paraunit",
+  "support": {
+    "issues": "https://github.com/facile-it/paraunit/issues",
+  },
   "keywords": [
     "parallel test",
     "testing",
