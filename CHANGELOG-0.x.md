@@ -11,6 +11,10 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 * Symfony 3.0 components are now supported and compatible with Paraunit
 * Retry parsing and management is improved
 
+### Fixed
+
+* Removed double generation of MD5 hash of process
+
 ## [0.4.4] - 2015-11-15
 
 ### Fixed

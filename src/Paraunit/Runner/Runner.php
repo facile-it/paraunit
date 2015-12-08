@@ -149,7 +149,7 @@ class Runner
     {
         foreach ($files as $file) {
             $process = $this->createProcess($file);
-            $this->processStack[md5($process->getCommandLine())] = $process;
+            $this->processStack[$process->getUniqueId()] = $process;
         }
     }
 
