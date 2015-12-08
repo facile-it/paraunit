@@ -17,6 +17,9 @@ services:
         arguments:
             - %paraunit.default_max_process%
             - "@event_dispatcher"
+            - "@paraunit.process.process_factory"
+
+    ## OUTPUT PRINTERS ##
 
     paraunit.printer.shark_printer:
         class: Paraunit\Printer\SharkPrinter
@@ -73,7 +76,17 @@ services:
         arguments:
           - "@service_container"
 
-    ##LISTENERS
+    ## PROCESS HANDLING ##
+
+    paraunit.configuration.phpunit_bin_file:
+        class: Paraunit\Configuration\PHPUnitBinFile
+
+    paraunit.process.process_factory:
+        class: Paraunit\Process\ProcessFactory
+        arguments:
+            - "@paraunit.configuration.phpunit_bin_file"
+
+    ## LISTENERS ##
 
     paraunit.printer.console_formatter:
         class: Paraunit\Printer\ConsoleFormatter
