@@ -36,6 +36,9 @@ class ConsoleOutputStub extends ConsoleOutput implements OutputInterface
         $this->outputBuffer .= $messages;
     }
 
+    /**
+     * @return string
+     */
     public function getOutput()
     {
         return $this->outputBuffer;

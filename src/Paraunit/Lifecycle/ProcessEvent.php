@@ -63,5 +63,4 @@ class ProcessEvent extends Event
 
         return $this->context[$contextParameterName];
     }
-
 }

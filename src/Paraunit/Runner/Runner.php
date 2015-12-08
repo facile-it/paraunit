@@ -4,10 +4,9 @@ namespace Paraunit\Runner;
 
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Printer\DebugPrinter;
-use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ParaunitProcessInterface;
-use Paraunit\Process\SymfonyProcessWrapper;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,14 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Runner
 {
-    // I'm using Paraunit as a vendor package
-    const PHPUNIT_RELPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
-    // I'm using Paraunit standalone (developing)
-    const PHPUNIT_RELPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
-
-    /** @var SharkPrinter */
-    protected $sharkPrinter;
-
     /** @var int */
     protected $maxProcessNumber;
 
@@ -38,37 +29,27 @@ class Runner
     /** @var ParaunitProcessAbstract[] */
     protected $processRunning;
 
-    /** @var  PHPUnitConfigFile */
-    protected $phpunitConfigFile;
-
-    /** @var  string */
-    protected $phpunitBin;
+    /** @var  ProcessFactory */
+    protected $processFactory;
 
     /**
-     * @param int                      $maxProcessNumber
+     * @param int $maxProcessNumber
      * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @throws \Exception
+     * @param ProcessFactory $processFactory
      */
     public function __construct(
         $maxProcessNumber = 10,
-        EventDispatcherInterface $eventDispatcher
-    ) {
+        EventDispatcherInterface $eventDispatcher,
+        ProcessFactory $processFactory
+    )
+    {
         $this->eventDispatcher = $eventDispatcher;
         $this->maxProcessNumber = $maxProcessNumber;
+        $this->processFactory = $processFactory;
+
         $this->processStack = array();
         $this->processCompleted = array();
         $this->processRunning = array();
-
-        if (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR)) {
-            $this->phpunitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR;
-        } elseif (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
-            $this->phpunitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE;
-        } else {
-            throw new \Exception('Phpunit not found');
-        }
-
-        $this->phpunitBin = realpath($this->phpunitBin);
     }
 
     /**
@@ -80,10 +61,9 @@ class Runner
      */
     public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
     {
-        $this->phpunitConfigFile = $phpunitConfigFile;
-
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($files, $outputInterface));
 
+        $this->processFactory->setConfigFile($phpunitConfigFile);
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 
@@ -92,7 +72,7 @@ class Runner
             new EngineEvent($files, $outputInterface, array('start' => $start,))
         );
 
-        while (!empty($this->processStack) || !empty($this->processRunning)) {
+        while ( ! empty($this->processStack) || ! empty($this->processRunning)) {
 
             if ($process = $this->runProcess($debug)) {
                 $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($process));
@@ -148,26 +128,9 @@ class Runner
     protected function createProcessStackFromFiles($files)
     {
         foreach ($files as $file) {
-            $process = $this->createProcess($file);
-            $this->processStack[md5($process->getCommandLine())] = $process;
+            $process = $this->processFactory->createProcess($file);
+            $this->processStack[$process->getUniqueId()] = $process;
         }
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return ParaunitProcessInterface
-     */
-    protected function createProcess($fileName)
-    {
-        $command =
-            $this->phpunitBin.
-            ' -c '.$this->phpunitConfigFile->getFileFullPath().' '.
-            ' --colors=never '.
-            $fileName.
-            ' 2>&1';
-
-        return new SymfonyProcessWrapper($command);
     }
 
     /**
@@ -177,7 +140,7 @@ class Runner
      */
     protected function runProcess($debug)
     {
-        if ($this->maxProcessNumber > count($this->processRunning) && !empty($this->processStack)) {
+        if ($this->maxProcessNumber > count($this->processRunning) && ! empty($this->processStack)) {
             /** @var ParaunitProcessInterface $process */
             $process = array_pop($this->processStack);
             $process->start();
@@ -201,10 +164,10 @@ class Runner
 
         if ($process->isToBeRetried()) {
             $process->reset();
+            $process->increaseRetryCount();
             $this->processStack[$pHash] = $process;
         } else {
             $this->processCompleted[$pHash] = $process;
         }
     }
-
 }

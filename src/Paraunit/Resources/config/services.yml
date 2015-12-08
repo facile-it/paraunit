@@ -8,22 +8,18 @@ services:
     paraunit.filter.filter:
         class: Paraunit\Filter\Filter
         arguments:
-            - @paraunit.proxy.phpunit_util_xml_proxy
-            - @phpunit.file_iterator_facade
-
-    paraunit.runner.retry_manager:
-        class: Paraunit\Runner\RetryManager
-        arguments:
-            - %paraunit.max_retry_count%
-        tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 999 }
+            - "@paraunit.proxy.phpunit_util_xml_proxy"
+            - "@phpunit.file_iterator_facade"
 
     paraunit.runner.runner:
         class: Paraunit\Runner\Runner
         scope: prototype
         arguments:
             - %paraunit.default_max_process%
-            - @event_dispatcher
+            - "@event_dispatcher"
+            - "@paraunit.process.process_factory"
+
+    ## OUTPUT PRINTERS ##
 
     paraunit.printer.shark_printer:
         class: Paraunit\Printer\SharkPrinter
@@ -66,6 +62,8 @@ services:
 
     paraunit.parser.retry_parser:
         class: Paraunit\Parser\RetryParser
+        arguments:
+            - %paraunit.max_retry_count%
 
     paraunit.parser.segmentation_fault_parser:
         class: Paraunit\Parser\SegmentationFaultParser
@@ -76,9 +74,19 @@ services:
     event_dispatcher:
         class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
         arguments:
-          - @service_container
+          - "@service_container"
 
-    ##LISTENERS
+    ## PROCESS HANDLING ##
+
+    paraunit.configuration.phpunit_bin_file:
+        class: Paraunit\Configuration\PHPUnitBinFile
+
+    paraunit.process.process_factory:
+        class: Paraunit\Process\ProcessFactory
+        arguments:
+            - "@paraunit.configuration.phpunit_bin_file"
+
+    ## LISTENERS ##
 
     paraunit.printer.console_formatter:
         class: Paraunit\Printer\ConsoleFormatter

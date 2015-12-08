@@ -72,8 +72,7 @@ class FinalPrinter
      */
     public function onEngineEnd(EngineEvent $engineEvent)
     {
-
-        if (!$engineEvent->has('start') || !$engineEvent->has('end') || !$engineEvent->has('process_completed')){
+        if (!$engineEvent->has('start') || !$engineEvent->has('end') || !$engineEvent->has('process_completed')) {
             throw new \BadMethodCallException('missing argument/s');
         }
 
@@ -122,7 +121,7 @@ class FinalPrinter
         if ($process->hasFatalErrors()) {
             $this->fatalErrors->addFileName($filename);
             $this->fatalErrors->addToOutputBuffer($process->getFatalErrors());
-        } else if (in_array('X', $process->getTestResults())) {
+        } elseif (in_array('X', $process->getTestResults())) {
             $this->unknownStatus->addFileName($filename);
             $this->unknownStatus->addToOutputBuffer($process->getOutput());
         }

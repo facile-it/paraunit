@@ -63,14 +63,17 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $errorCount[0]);
     }
 
-    public function testMaxRetryDeadlock()
+    /**
+     * @dataProvider stubFilePathProvider
+     */
+    public function testMaxRetryDeadlock($stubFilePath)
     {
         $outputInterface = new ConsoleOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
         $fileArray = array(
-            'src/Paraunit/Tests/Stub/DeadLockTestStub.php',
+            $stubFilePath,
         );
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
@@ -82,6 +85,14 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
         $this->assertCount(1, $errorCount[0]);
+    }
+
+    public function stubFilePathProvider()
+    {
+        return array(
+            array('src/Paraunit/Tests/Stub/MySQLDeadLockTestStub.php'),
+            array('src/Paraunit/Tests/Stub/SQLiteDeadLockTestStub.php'),
+        );
     }
 
     public function testSegFault()

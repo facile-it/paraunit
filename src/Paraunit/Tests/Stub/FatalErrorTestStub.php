@@ -2,6 +2,10 @@
 
 namespace Paraunit\Tests\Stub;
 
+/**
+ * Class FatalErrorTestStub
+ * @package Paraunit\Tests\Stub
+ */
 class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     public function testBrokenTest()
@@ -10,7 +14,7 @@ class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 
         $arr = array();
 
-        while(true) {
+        while (true) {
             $arr[] = "Allocated memory... allocated memory everywhere!";
         }
     }

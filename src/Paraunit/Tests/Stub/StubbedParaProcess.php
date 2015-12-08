@@ -4,6 +4,10 @@ namespace Paraunit\Tests\Stub;
 
 use Paraunit\Process\ParaunitProcessAbstract;
 
+/**
+ * Class StubbedParaProcess
+ * @package Paraunit\Tests\Stub
+ */
 class StubbedParaProcess extends ParaunitProcessAbstract
 {
     /**
@@ -22,10 +26,8 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     protected $exitCode = 0;
 
     /**
-     * @var bool
+     * @param string $commandLine
      */
-    protected $isToBeRetried;
-
     public function __construct($commandLine = 'testCommandLine')
     {
         $this->commandLine = $commandLine;
@@ -39,19 +41,11 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return bool
-     */
-    public function isToBeRetried()
-    {
-        return $this->isToBeRetried;
-    }
-
-    /**
      * @param bool $isToBeRetried
      */
     public function setIsToBeRetried($isToBeRetried)
     {
-        $this->isToBeRetried = $isToBeRetried;
+        $this->shouldBeRetried = $isToBeRetried;
     }
 
     /**

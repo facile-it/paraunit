@@ -3,12 +3,12 @@
 namespace Paraunit\Tests\Stub;
 
 /**
- * Class EntityManagerClosedTestStub
+ * Class MySQLDeadLockTestStub
  * @package Paraunit\Tests\Stub
  */
-class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestInterface
+class MySQLDeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    const OUTPUT = 'Blah Blah The EntityManager is closed Blah Blah';
+    const OUTPUT = 'SQLSTATE[HY000]: General error: Deadlock found; try restarting transaction';
 
     /**
      * @throws \Exception
