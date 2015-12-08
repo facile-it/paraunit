@@ -6,7 +6,7 @@ use Paraunit\Process\ProcessResultInterface;
 
 class SegmentationFaultParser implements ProcessOutputParserChainElementInterface
 {
-    const SEGFAULT_REGEX = '/segmentation fault \(core dumped\)/i';
+    const SEGFAULT_REGEX = '/segmentation fault/i';
 
     /**
      * @param ProcessResultInterface $process

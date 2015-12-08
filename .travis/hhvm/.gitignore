@@ -1,0 +1,8 @@
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+run-test
+*.so
+install_manifest.txt
+CMakeLists.txt
+CMakeFiles/
