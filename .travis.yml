@@ -18,9 +18,9 @@ before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
 
-
 script:
   - phpunit -v $PHPUNIT_FLAGS
 
-after_script:
-  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php bin/coveralls -v; wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
+after_success:
+  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php bin/coveralls -v; fi
+  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
