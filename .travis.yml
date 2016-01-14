@@ -14,7 +14,7 @@ fast_finish: true
 
 before_script:
   - /home/travis/build/facile-it/paraunit/.travis/sigsegv-extension/build-for-travis.sh
-  - if [[ $TRAVIS_PHP_VERSION = '5.5' ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; else PHPUNIT_FLAGS=""; fi
+  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; else PHPUNIT_FLAGS=""; fi
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
 
@@ -23,6 +23,4 @@ script:
   - phpunit -v $PHPUNIT_FLAGS
 
 after_script:
-  - if [[ $TRAVIS_PHP_VERSION = '5.5' ]]; then php bin/coveralls -v; fi
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
+  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php bin/coveralls -v; wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
