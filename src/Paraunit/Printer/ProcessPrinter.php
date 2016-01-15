@@ -37,7 +37,7 @@ class ProcessPrinter
             return;
         }
 
-        if (empty($process->getTestResults())) {
+        if (0 == count($process->getTestResults())) {
             // TODO --- this operation should be done somewhere else!
             $process->setTestResults(array('X'));
         }
