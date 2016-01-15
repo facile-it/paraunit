@@ -11,40 +11,29 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FinalPrinter
 {
-    /**
-     * @var OutputContainer[]
-     */
+    /** @var OutputContainer[] */
     protected $outputContainers;
 
-    /**
-     * @var OutputContainer
-     */
+    /** @var OutputContainer */
+    protected $segmentationFaults;
+
+    /** @var OutputContainer */
+    protected $unknownStatus;
+
+    /** @var OutputContainer */
     protected $fatalErrors;
 
-    /**
-     * @var OutputContainer
-     */
+    /** @var OutputContainer */
     protected $errors;
 
-    /**
-     * @var OutputContainer
-     */
+    /** @var OutputContainer */
     protected $failures;
 
-    /**
-     * @var OutputContainer
-     */
+    /** @var OutputContainer */
     protected $skipped;
 
-    /**
-     * @var OutputContainer
-     */
+    /** @var OutputContainer */
     protected $incomplete;
-
-    /**
-     * @var OutputContainer
-     */
-    protected $unknownStatus;
 
     public function __construct()
     {

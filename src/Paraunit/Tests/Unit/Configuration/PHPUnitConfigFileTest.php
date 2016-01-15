@@ -56,7 +56,7 @@ class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('InvalidArgumentException', PHPUnitConfigFile::DEFAULT_FILE_NAME . ' does not exist');
 
-        $config = new PHPUnitConfigFile($dir);
+        new PHPUnitConfigFile($dir);
     }
 
     public function testInvalidDirectoryProvidedThrowException()
@@ -65,6 +65,6 @@ class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('InvalidArgumentException', 'Config path/file provided is not valid');
 
-        $config = new PHPUnitConfigFile($dir);
+        new PHPUnitConfigFile($dir);
     }
 }

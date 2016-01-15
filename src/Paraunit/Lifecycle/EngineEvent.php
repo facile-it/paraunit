@@ -26,6 +26,9 @@ class EngineEvent extends Event
     /** @var  OutputInterface */
     protected $outputInterface;
 
+    /** @var  array */
+    protected $context;
+
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface

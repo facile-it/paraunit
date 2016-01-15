@@ -32,6 +32,9 @@ class Runner
     /** @var  ProcessFactory */
     protected $processFactory;
 
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
+
     /**
      * @param int $maxProcessNumber
      * @param EventDispatcherInterface $eventDispatcher
