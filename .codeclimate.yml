@@ -16,4 +16,4 @@ ratings:
   - src/**
 
 exclude_paths:
-  - "src/Paraunit/Tests/*"
+  - src/Paraunit/Tests/*

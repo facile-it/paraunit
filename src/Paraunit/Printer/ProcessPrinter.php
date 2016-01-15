@@ -6,7 +6,8 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ProcessPrinter.
+ * Class ProcessPrinter
+ * @package Paraunit\Printer
  */
 class ProcessPrinter
 {
@@ -18,72 +19,65 @@ class ProcessPrinter
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
-
         $process = $processEvent->getProcess();
 
-        if (!$processEvent->has('output_interface')){
+        if ( ! $processEvent->has('output_interface')) {
             throw new \BadMethodCallException('missing output_interface');
         }
 
         $output = $processEvent->get('output_interface');
 
-        if (!$output instanceof OutputInterface){
-            throw new \BadMethodCallException('output_interace wrong type');
+        if ( ! $output instanceof OutputInterface) {
+            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($output));
         }
 
         if ($process->isToBeRetried()) {
             $this->printWithCounter($output, '<ok>A</ok>');
-        } else {
-            if (count($process->getTestResults())) {
-                foreach ($process->getTestResults() as $testResult) {
-                    $this->printSingleTestResult($output, $testResult);
-                }
-            } else {
-                // TODO --- this operation should be done somewhere else!
-                $process->setTestResults(array('X'));
 
-                $this->printWithCounter($output, '<error>X</error>');
-            }
+            return;
+        }
+
+        if (empty($process->getTestResults())) {
+            // TODO --- this operation should be done somewhere else!
+            $process->setTestResults(array('X'));
+        }
+
+        foreach ($process->getTestResults() as $testResult) {
+            $this->printSingleTestResult($output, $testResult);
         }
     }
 
     /**
      * @param OutputInterface $output
-     * @param int             $testResult
+     * @param int $testResult
      */
     protected function printSingleTestResult(OutputInterface $output, $testResult)
     {
         switch ($testResult) {
-            case 'E' : {
+            case 'E': 
                 $this->printWithCounter($output, '<error>E</error>');
                 break;
-            }
-            case 'F' : {
+            case 'F':
                 $this->printWithCounter($output, '<fail>F</fail>');
                 break;
-            }
-            case 'I' : {
+            case 'I':
                 $this->printWithCounter($output, '<incomplete>I</incomplete>');
                 break;
-            }
-            case 'S' : {
+            case 'S':
                 $this->printWithCounter($output, '<skipped>S</skipped>');
                 break;
-            }
-            case '.' : {
+            case '.':
                 $this->printWithCounter($output, '<ok>.</ok>');
                 break;
-            }
-            default: {
+            default:
                 $this->printWithCounter($output, '<error>X</error>');
                 break;
-            }
         }
     }
 
     /**
      * @param OutputInterface $output
-     * @param string          $string
+     * @param string $string
      */
     protected function printWithCounter(OutputInterface $output, $string)
     {
