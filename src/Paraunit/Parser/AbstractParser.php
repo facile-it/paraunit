@@ -1,6 +1,7 @@
 <?php
 
 namespace Paraunit\Parser;
+
 use Paraunit\Printer\OutputContainer;
 use Paraunit\Process\ProcessResultInterface;
 
@@ -8,7 +9,7 @@ use Paraunit\Process\ProcessResultInterface;
  * Class AbstractParser
  * @package Paraunit\Parser
  */
-abstract class AbstractParser
+abstract class AbstractParser implements ProcessOutputParserChainElementInterface, OutputContainerBearerInterface
 {
     /** @var  OutputContainer */
     protected $outputContainer;
@@ -23,6 +24,14 @@ abstract class AbstractParser
         $this->assertConstantExist('PARSING_REGEX');
 
         $this->outputContainer = new OutputContainer(static::TAG, static::TITLE);
+    }
+
+    /**
+     * @return OutputContainer
+     */
+    public function getOutputContainer()
+    {
+        return $this->outputContainer;
     }
 
     /**
@@ -53,7 +62,13 @@ abstract class AbstractParser
      */
     protected function parsingFoundSomething(ProcessResultInterface $process)
     {
-        return count($this->parse($process)) > 0;
+        if (count($this->parse($process)) > 0) {
+            $this->outputContainer->addFileName($process->getFilename());
+
+            return true;
+        }
+
+        return false;
     }
 
     private function parse(ProcessResultInterface $process)

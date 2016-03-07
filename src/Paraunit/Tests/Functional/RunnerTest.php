@@ -122,7 +122,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'Missing recap title'
         );
         $this->assertContains(
-            '<error>SegFaultTestStub.php</error>',
+            'SegFaultTestStub.php',
             $outputInterface->getOutput(),
             'Missing failing filename'
         );

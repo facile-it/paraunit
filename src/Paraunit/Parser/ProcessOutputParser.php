@@ -17,9 +17,20 @@ class ProcessOutputParser
         $this->parsers = array();
     }
 
+    /**
+     * @param ProcessOutputParserChainElementInterface $parser
+     */
     public function addParser(ProcessOutputParserChainElementInterface $parser)
     {
         $this->parsers[] = $parser;
+    }
+
+    /**
+     * @return ProcessOutputParserChainElementInterface[]
+     */
+    public function getParsers()
+    {
+        return $this->parsers;
     }
 
     /**
