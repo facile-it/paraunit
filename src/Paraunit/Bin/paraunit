@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-const PARAUNIT_VERSION = '0.5.1';
-
 if (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     require_once __DIR__ . '/../../../../../autoload.php';
 } elseif (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
@@ -17,6 +15,7 @@ if (!ini_get('date.timezone') && !date_default_timezone_get()) {
 }
 
 use Paraunit\Command\ParallelCommand;
+use Paraunit\Configuration\Paraunit;
 use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../../../Container.php';
@@ -31,6 +30,6 @@ $command = new ParallelCommand($filter, $runner);
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-$application = new Application('Paraunit', PARAUNIT_VERSION);
+$application = new Application('Paraunit', Paraunit::PARAUNIT_VERSION);
 $application->add($command);
 $application->run();
