@@ -4,9 +4,11 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class SegmentationFaultParser implements ProcessOutputParserChainElementInterface
+class SegmentationFaultParser extends AbstractParser implements ProcessOutputParserChainElementInterface
 {
-    const SEGFAULT_REGEX = '/segmentation fault \(core dumped\)/i';
+    const TAG = 'segfault';
+    const TITLE = 'Segmentation Faults';
+    const PARSING_REGEX = '/segmentation fault \(core dumped\)/i';
 
     /**
      * @param ProcessResultInterface $process
@@ -15,17 +17,6 @@ class SegmentationFaultParser implements ProcessOutputParserChainElementInterfac
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $output = $process->getOutput();
-
-        // SEGFAULT
-        $segFault = array();
-        preg_match(self::SEGFAULT_REGEX, $output, $segFault);
-        if (!empty($segFault)) {
-            $process->addSegmentationFault($process->getFilename().' - '.$segFault[0]);
-
-            return false;
-        }
-
-        return true;
+        return ! $this->parsingFoundSomething($process);
     }
 }

@@ -4,9 +4,11 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class ErrorParser implements ProcessOutputParserChainElementInterface
+class ErrorParser extends AbstractParser implements ProcessOutputParserChainElementInterface
 {
-    const ERROR_REGEX = '/(?:There (?:was|were) \d+ errors?:\n\n)((?:.|\n)+)(?:\n--|FAILURES)/U';
+    const TAG = 'error';
+    const TITLE = 'Errors';
+    const PARSING_REGEX = '/(?:There (?:was|were) \d+ errors?:\n\n)((?:.|\n)+)(?:\n--|FAILURES)/U';
 
     /**
      * @param ProcessResultInterface $process
@@ -15,18 +17,7 @@ class ErrorParser implements ProcessOutputParserChainElementInterface
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $errorsBlob = array();
-        preg_match(self::ERROR_REGEX, $process->getOutput(), $errorsBlob);
-
-        if (isset($errorsBlob[1])) {
-            $errors = preg_split('/^\d+\) /m', $errorsBlob[1]);
-            // il primo è sempre vuoto a causa dello split
-            unset($errors[0]);
-
-            foreach ($errors as $singleError) {
-                $process->addError(trim($singleError));
-            }
-        }
+        $this->storeParsedBlocks($process);
 
         return true;
     }

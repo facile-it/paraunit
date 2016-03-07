@@ -4,9 +4,11 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class FatalErrorParser implements ProcessOutputParserChainElementInterface
+class FatalErrorParser extends AbstractParser implements ProcessOutputParserChainElementInterface
 {
-    const FATAL_ERROR_REGEX = '/Fatal error(?s:.)*/';
+    const TAG = 'fatal';
+    const TITLE = 'Fatal Errors';
+    const PARSING_REGEX = '/Fatal error(?s:.)*/';
 
     /**
      * @param ProcessResultInterface $process
@@ -15,15 +17,6 @@ class FatalErrorParser implements ProcessOutputParserChainElementInterface
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $fatalError = array();
-        preg_match(self::FATAL_ERROR_REGEX, $process->getOutput(), $fatalError);
-
-        if (!empty($fatalError)) {
-            $process->addFatalError($fatalError[0]);
-
-            return false;
-        } else {
-            return true;
-        }
+        return ! $this->parsingFoundSomething($process);
     }
 }

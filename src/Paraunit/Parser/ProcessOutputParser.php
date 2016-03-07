@@ -28,7 +28,7 @@ class ProcessOutputParser
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
         foreach ($this->parsers as $parser) {
-            if (!$parser->parseAndContinue($processEvent->getProcess())) {
+            if ( ! $parser->parseAndContinue($processEvent->getProcess())) {
                 return;
             }
         }
