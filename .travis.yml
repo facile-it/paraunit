@@ -19,7 +19,7 @@ before_script:
   - php composer.phar install
 
 script:
-  - phpunit -v $PHPUNIT_FLAGS
+  - vendor/phpunit/phpunit/phpunit -v $PHPUNIT_FLAGS
 
 after_success:
   - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php bin/coveralls -v; fi
