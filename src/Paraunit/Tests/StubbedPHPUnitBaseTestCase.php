@@ -21,6 +21,18 @@ abstract class StubbedPHPUnitBaseTestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return StubbedParaProcess
      */
+    public function getTestWithSingleWarning()
+    {
+        $process = new StubbedParaProcess();
+        $process->setExitCode(-1);
+        $process->setOutput($this->getOutputFileContent('SingleWarning.txt'));
+
+        return $process;
+    }
+
+    /**
+     * @return StubbedParaProcess
+     */
     public function getTestWith2Errors2Failures()
     {
         $process = new StubbedParaProcess();

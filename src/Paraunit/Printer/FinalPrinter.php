@@ -30,6 +30,9 @@ class FinalPrinter
     protected $failures;
 
     /** @var OutputContainer */
+    protected $warnings;
+
+    /** @var OutputContainer */
     protected $skipped;
 
     /** @var OutputContainer */
@@ -42,6 +45,7 @@ class FinalPrinter
         $this->fatalErrors = new OutputContainer('error', 'FATAL ERRORS');
         $this->errors = new OutputContainer('error', 'ERRORS');
         $this->failures = new OutputContainer('fail', 'FAILURES');
+        $this->warnings = new OutputContainer('warning', 'WARNINGS');
         $this->skipped = new OutputContainer('skipped', 'SKIPPED');
         $this->incomplete = new OutputContainer('incomplete', 'INCOMPLETE');
 
@@ -51,6 +55,7 @@ class FinalPrinter
             $this->fatalErrors,
             $this->errors,
             $this->failures,
+            $this->warnings,
             $this->skipped,
             $this->incomplete,
         );
@@ -123,6 +128,11 @@ class FinalPrinter
         if ($process->hasFailures()) {
             $this->failures->addFileName($filename);
             $this->failures->addToOutputBuffer($process->getFailures());
+        }
+
+        if ($process->hasWarnings()) {
+            $this->warnings->addFileName($filename);
+            $this->warnings->addToOutputBuffer($process->getWarnings());
         }
 
         if (in_array('S', $process->getTestResults())) {

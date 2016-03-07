@@ -38,6 +38,11 @@ interface ProcessResultInterface extends OutputAwareInterface
     public function addFailure($fatalError);
 
     /**
+     * @param string $warning
+     */
+    public function addWarning($warning);
+
+    /**
      * @return string[]
      */
     public function getFatalErrors();
@@ -51,6 +56,11 @@ interface ProcessResultInterface extends OutputAwareInterface
      * @return string[]
      */
     public function getFailures();
+
+    /**
+     * @return string[]
+     */
+    public function getWarnings();
 
     /**
      * @return bool
@@ -71,6 +81,11 @@ interface ProcessResultInterface extends OutputAwareInterface
      * @return bool
      */
     public function hasFailures();
+
+    /**
+     * @return bool
+     */
+    public function hasWarnings();
 
     /**
      * @return bool

@@ -98,7 +98,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     public function testSegFault()
     {
         if (!extension_loaded('sigsegv')) {
-            $this->markTestIncomplete('The segfault cannot be reproduced in this environment');
+            $this->markTestSkipped('The segfault cannot be reproduced in this environment');
         }
 
         $outputInterface = new ConsoleOutputStub();
@@ -125,6 +125,44 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             '<error>SegFaultTestStub.php</error>',
             $outputInterface->getOutput(),
             'Missing failing filename'
+        );
+    }
+
+    /**
+     * @group this
+     */
+    public function testWarning()
+    {
+        $phpunitVersion = new \PHPUnit_Runner_Version();
+
+        if ( ! preg_match('/^5\./', $phpunitVersion->id())) {
+            $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
+        }
+
+        $outputInterface = new ConsoleOutputStub();
+
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array(
+            'src/Paraunit/Tests/Stub/MissingProviderTestStub.php',
+        );
+
+        $this->assertEquals(
+            0,
+            $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')),
+            'Exit code should be 0'
+        );
+
+        $this->assertContains('<warning>W</warning>', $outputInterface->getOutput(), 'Missing W output');
+        $this->assertContains(
+            '1 files with WARNINGS:',
+            $outputInterface->getOutput(),
+            'Missing recap title'
+        );
+        $this->assertContains(
+            '<warning>MissingProviderTestStub.php</warning>',
+            $outputInterface->getOutput(),
+            'Missing warned filename'
         );
     }
 

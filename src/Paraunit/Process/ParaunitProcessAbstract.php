@@ -58,6 +58,11 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     protected $failures;
 
     /**
+     * @var string[]
+     */
+    protected $warnings;
+
+    /**
      * @param string $commandLine
      */
     public function __construct($commandLine)
@@ -75,6 +80,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         $this->fatalErrors = array();
         $this->errors = array();
         $this->failures = array();
+        $this->warnings = array();
     }
 
     /**
@@ -164,6 +170,14 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
+     * @return string[]
+     */
+    public function getWarnings()
+    {
+        return $this->warnings;
+    }
+
+    /**
      * @param string[] $testResults
      */
     public function setTestResults(array $testResults)
@@ -204,6 +218,14 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
+     * @param string $warning
+     */
+    public function addWarning($warning)
+    {
+        $this->warnings[] = $warning;
+    }
+
+    /**
      * @return bool
      */
     public function hasSegmentationFaults()
@@ -233,5 +255,13 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     public function hasFailures()
     {
         return count($this->failures) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasWarnings()
+    {
+        return count($this->warnings) > 0;
     }
 }

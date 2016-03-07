@@ -7,7 +7,6 @@ use Paraunit\Process\ProcessResultInterface;
 class TestResultsParser implements ProcessOutputParserChainElementInterface
 {
     const PHPUNIT_TEST_RESULTS_REGEX = '/(?<=by Sebastian Bergmann and contributors.\n\n)(.*?)+(?=\n\nTime:)/s';
-    const PHPUNIT_TEST_SINGLE_RESULTS_REGEX = '/[FIES.]+/';
     const PHPUNIT_CONFIG_LOAD = 'Configuration read from ';
 
     /**
@@ -20,7 +19,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
         $results = $this->getResultsFromOutput($process->getOutput());
 
         if ($results != '') {
-            $cleanResults = preg_replace('/[^FIESR.]+/', '', $results);
+            $cleanResults = preg_replace('/[^WFIESR.]+/', '', $results);
             $process->setTestResults(str_split($cleanResults));
         }
 

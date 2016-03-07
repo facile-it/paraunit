@@ -47,6 +47,7 @@ services:
             - [addParser, ["@paraunit.parser.fatal_error_parser"]]
             - [addParser, ["@paraunit.parser.error_parser"]]
             - [addParser, ["@paraunit.parser.failure_parser"]]
+            - [addParser, ["@paraunit.parser.warning_parser"]]
             - [addParser, ["@paraunit.parser.test_result_parser"]]
         tags:
           - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
@@ -56,6 +57,9 @@ services:
 
     paraunit.parser.failure_parser:
         class: Paraunit\Parser\FailureParser
+
+    paraunit.parser.warning_parser:
+        class: Paraunit\Parser\WarningParser
 
     paraunit.parser.fatal_error_parser:
         class: Paraunit\Parser\FatalErrorParser

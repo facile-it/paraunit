@@ -22,6 +22,7 @@ class TestResultsParserTest extends StubbedPHPUnitBaseTestCase
     public function processProvider()
     {
         return array(
+            array($this->getTestWithSingleWarning(), str_split('.....W...')),
             array($this->getTestWithSingleError(), str_split('....E....')),
             array($this->getTestWith2Errors2Failures(), str_split('FF..E...E')),
             array($this->getTestWithAllGreen(), str_split('.........')),

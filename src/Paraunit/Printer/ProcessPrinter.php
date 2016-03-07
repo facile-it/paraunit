@@ -60,6 +60,9 @@ class ProcessPrinter
             case 'F':
                 $this->printWithCounter($output, '<fail>F</fail>');
                 break;
+            case 'W':
+                $this->printWithCounter($output, '<warning>W</warning>');
+                break;
             case 'I':
                 $this->printWithCounter($output, '<incomplete>I</incomplete>');
                 break;

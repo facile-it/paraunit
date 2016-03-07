@@ -30,14 +30,9 @@ class StubbedParaProcess extends ParaunitProcessAbstract
      */
     public function __construct($commandLine = 'testCommandLine')
     {
-        $this->commandLine = $commandLine;
+        parent::__construct($commandLine);
 
-        $this->testResults = array();
-        $this->segmentationFaults = array();
-        $this->unknownStatus = array();
-        $this->fatalErrors = array();
-        $this->errors = array();
-        $this->failures = array();
+        $this->commandLine = $commandLine;
     }
 
     /**
