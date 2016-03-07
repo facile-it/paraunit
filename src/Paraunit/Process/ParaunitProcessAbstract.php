@@ -141,4 +141,12 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     {
         return $this->fatalError;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (bool) count($this->filename);
+    }
 }

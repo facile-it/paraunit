@@ -12,32 +12,25 @@ interface ProcessResultInterface extends OutputAwareInterface
      */
     public function getTestResults();
 
-    /**
-     * @param int[] $testResults
-     */
+    /** @param int[] $testResults */
     public function setTestResults(array $testResults);
 
     public function reportSegmentationFault();
 
     public function reportFatalError();
 
-    /**
-     * @return bool
-     */
+    /** @return bool */
     public function hasSegmentationFaults();
 
-    /**
-     * @return bool
-     */
+    /** @return bool */
     public function hasFatalErrors();
 
-    /**
-     * @return bool
-     */
+    /** @return bool */
     public function isToBeRetried();
 
-    /**
-     * @return string
-     */
+    /** @return bool */
+    public function isEmpty();
+
+    /** @return string */
     public function getFilename();
 }

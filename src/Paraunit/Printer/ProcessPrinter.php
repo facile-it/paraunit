@@ -44,7 +44,7 @@ class ProcessPrinter
             case $process->hasFatalErrors():
                 $this->printWithCounter('<fatal>X</fatal>');
                 break;
-            case empty($process->getTestResults()):
+            case count($process->getTestResults()) == 0:
                 $this->printWithCounter('<warning>?</warning>');
                 break;
             default:
