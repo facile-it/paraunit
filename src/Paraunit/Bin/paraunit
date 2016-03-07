@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+const PARAUNIT_VERSION = '0.5.1';
+
 if (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     require_once __DIR__ . '/../../../../../autoload.php';
 } elseif (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
@@ -29,6 +31,6 @@ $command = new ParallelCommand($filter, $runner);
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-$application = new Application('Paraunit', '0.5');
+$application = new Application('Paraunit', PARAUNIT_VERSION);
 $application->add($command);
 $application->run();

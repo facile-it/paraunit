@@ -28,6 +28,10 @@ class SharkPrinter
         $outputInterface->writeln('            .6BSERGIOBBBB B666666B B     B B     B B       9 P      7 9BBBBP    ');
 
         $outputInterface->writeln('');
-        $outputInterface->writeln('PARAUNIT v0.5 - by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it');
+        $outputInterface->writeln(
+            'PARAUNIT v' .
+            PARAUNIT_VERSION .
+            ' - by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it'
+        );
     }
 }

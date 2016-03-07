@@ -2,6 +2,12 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.5.1] - TBA
+
+### Changed
+
+* Added support for warnings, introduced in PHPUnit 5.1 (#30)
+
 ## [0.5] - 2015-12-08
 
 ### Changed
