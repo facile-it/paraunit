@@ -11,8 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProcessPrinter
 {
+    /** @var  OutputInterface */
+    private $output;
+    
     /** @var int */
-    protected $counter = 0;
+    private $counter = 0;
 
     /**
      * @param ProcessEvent $processEvent
@@ -25,71 +28,76 @@ class ProcessPrinter
             throw new \BadMethodCallException('missing output_interface');
         }
 
-        $output = $processEvent->get('output_interface');
+        $this->output = $processEvent->get('output_interface');
 
-        if ( ! $output instanceof OutputInterface) {
-            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($output));
+        if ( ! $this->output instanceof OutputInterface) {
+            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($this->output));
         }
 
-        if ($process->isToBeRetried()) {
-            $this->printWithCounter($output, '<ok>A</ok>');
-
-            return;
-        }
-
-        if (0 == count($process->getTestResults())) {
-            // TODO --- this operation should be done somewhere else!
-            $process->setTestResults(array('X'));
-        }
-
-        foreach ($process->getTestResults() as $testResult) {
-            $this->printSingleTestResult($output, $testResult);
+        switch (true) {
+            case $process->isToBeRetried():
+                $this->printWithCounter('<ok>A</ok>');
+                break;
+            case $process->hasSegmentationFaults():
+                $this->printWithCounter('<segfault>X</segfault>');
+                break;
+            case $process->hasFatalErrors():
+                $this->printWithCounter('<fatal>X</fatal>');
+                break;
+            case empty($process->getTestResults()):
+                $this->printWithCounter('<warning>?</warning>');
+                break;
+            default:
+                foreach ($process->getTestResults() as $testResult) {
+                    $this->printSingleTestResult($testResult);
+                }
         }
     }
 
     /**
-     * @param OutputInterface $output
-     * @param int $testResult
+     * @param string $testResult
      */
-    protected function printSingleTestResult(OutputInterface $output, $testResult)
+    private function printSingleTestResult($testResult)
     {
         switch ($testResult) {
             case 'E': 
-                $this->printWithCounter($output, '<error>E</error>');
+                $this->printWithCounter('<error>E</error>');
                 break;
             case 'F':
-                $this->printWithCounter($output, '<fail>F</fail>');
+                $this->printWithCounter('<fail>F</fail>');
                 break;
             case 'W':
-                $this->printWithCounter($output, '<warning>W</warning>');
+                $this->printWithCounter('<warning>W</warning>');
                 break;
             case 'I':
-                $this->printWithCounter($output, '<incomplete>I</incomplete>');
+                $this->printWithCounter('<incomplete>I</incomplete>');
                 break;
             case 'S':
-                $this->printWithCounter($output, '<skipped>S</skipped>');
+                $this->printWithCounter('<skipped>S</skipped>');
+                break;
+           case 'R':
+                $this->printWithCounter('<risky>R</risky>');
                 break;
             case '.':
-                $this->printWithCounter($output, '<ok>.</ok>');
+                $this->printWithCounter('<ok>.</ok>');
                 break;
             default:
-                $this->printWithCounter($output, '<error>X</error>');
+                $this->printWithCounter('<warning>?</warning>');
                 break;
         }
     }
 
     /**
-     * @param OutputInterface $output
      * @param string $string
      */
-    protected function printWithCounter(OutputInterface $output, $string)
+    private function printWithCounter($string)
     {
         if ($this->counter % 80 == 0 && $this->counter > 1) {
-            $output->writeln('');
+            $this->output->writeln('');
         }
 
         ++$this->counter;
 
-        $output->write($string);
+        $this->output->write($string);
     }
 }

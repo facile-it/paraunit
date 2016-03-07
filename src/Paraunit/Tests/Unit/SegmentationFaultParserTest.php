@@ -16,7 +16,7 @@ class SegmentationFaultParserTest extends StubbedPHPUnitBaseTestCase
         $parser = new SegmentationFaultParser();
 
         $this->assertEquals($expectedResult, $parser->parseAndContinue($process));
-        $this->assertEquals(!$expectedResult, $process->hasSegmentationFaults());
+        $this->assertEquals( ! $expectedResult, $process->hasSegmentationFaults());
     }
 
     public function processProvider()

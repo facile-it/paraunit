@@ -36,7 +36,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
         $dumpster = array(); // PHP 5.3 needs this crap
-        $greenCount = preg_match_all("/<ok>.<\/ok>/", $outputInterface->getOutput(), $dumpster);
+        $greenCount = preg_match_all('/<ok>.<\/ok>/', $outputInterface->getOutput(), $dumpster);
 
         $this->assertEquals(3, $greenCount);
     }
@@ -55,9 +55,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
         $retryCount = array();
-        preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
+        preg_match_all('/<ok>A<\/ok>/', $outputInterface->getOutput(), $retryCount);
         $errorCount = array();
-        preg_match_all("/<error>X|E<\/error>/", $outputInterface->getOutput(), $errorCount);
+        preg_match_all('/<error>X|E<\/error>/', $outputInterface->getOutput(), $errorCount);
 
         $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
         $this->assertCount(1, $errorCount[0]);
@@ -79,9 +79,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
         $retryCount = array();
-        preg_match_all("/<ok>A<\/ok>/", $outputInterface->getOutput(), $retryCount);
+        preg_match_all('/<ok>A<\/ok>/', $outputInterface->getOutput(), $retryCount);
         $errorCount = array();
-        preg_match_all("/<error>X|E<\/error>/", $outputInterface->getOutput(), $errorCount);
+        preg_match_all('/<error>X|E<\/error>/', $outputInterface->getOutput(), $errorCount);
 
         $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
         $this->assertCount(1, $errorCount[0]);
@@ -115,7 +115,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             'Exit code should not be 0'
         );
 
-        $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('<segfault>X</segfault>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains(
             '1 files with SEGMENTATION FAULTS:',
             $outputInterface->getOutput(),
@@ -178,9 +178,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
-        $this->assertContains('<error>X</error>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('<fatal>X</fatal>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains('1 files with FATAL ERRORS:', $outputInterface->getOutput(), 'Missing fatal error recap title');
-        $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaker for unknown result');
+        $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaken for unknown result');
 
     }
 }

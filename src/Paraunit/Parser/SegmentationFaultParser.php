@@ -17,6 +17,12 @@ class SegmentationFaultParser extends AbstractParser implements ProcessOutputPar
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        return ! $this->parsingFoundSomething($process);
+        if ($this->parsingFoundSomething($process)) {
+            $process->reportSegmentationFault();
+
+            return false;
+        }
+
+        return true;
     }
 }

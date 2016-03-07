@@ -5,7 +5,7 @@ namespace Paraunit\Printer;
 /**
  * Class OutputContainer.
  */
-class OutputContainer implements \Countable
+class OutputContainer
 {
     /**
      * @var string[]
@@ -81,7 +81,7 @@ class OutputContainer implements \Countable
     /**
      * @return int
      */
-    public function count()
+    public function countFiles()
     {
         return count($this->fileNames);
     }

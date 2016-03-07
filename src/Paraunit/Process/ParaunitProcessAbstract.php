@@ -7,60 +7,26 @@ namespace Paraunit\Process;
  */
 abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $retryCount = 0;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $shouldBeRetried = false;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $uniqueId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $filename;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $testResults;
 
-    /**
-     * @var string[]
-     */
-    protected $segmentationFaults;
+    /** @var bool */
+    protected $segmentationFault;
 
-    /**
-     * @var string[]
-     */
-    protected $unknownStatus;
-
-    /**
-     * @var string[]
-     */
-    protected $fatalErrors;
-
-    /**
-     * @var string[]
-     */
-    protected $errors;
-
-    /**
-     * @var string[]
-     */
-    protected $failures;
-
-    /**
-     * @var string[]
-     */
-    protected $warnings;
+    /** @var bool */
+    protected $fatalError;
 
     /**
      * @param string $commandLine
@@ -75,12 +41,9 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         }
 
         $this->testResults = array();
-        $this->segmentationFaults = array();
-        $this->unknownStatus = array();
-        $this->fatalErrors = array();
-        $this->errors = array();
-        $this->failures = array();
-        $this->warnings = array();
+
+        $this->segmentationFault = false;
+        $this->fatalErrors = false;
     }
 
     /**
@@ -146,38 +109,6 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return string[]
-     */
-    public function getFatalErrors()
-    {
-        return $this->fatalErrors;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFailures()
-    {
-        return $this->failures;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getWarnings()
-    {
-        return $this->warnings;
-    }
-
-    /**
      * @param string[] $testResults
      */
     public function setTestResults(array $testResults)
@@ -185,44 +116,14 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         $this->testResults = $testResults;
     }
 
-    /**
-     * @param string $segmentationFault
-     */
-    public function addSegmentationFault($segmentationFault)
+    public function reportSegmentationFault()
     {
-        $this->segmentationFaults[] = $segmentationFault;
+        $this->segmentationFault = true;
     }
 
-    /**
-     * @param string $fatalError
-     */
-    public function addFatalError($fatalError)
+    public function reportFatalError()
     {
-        $this->fatalErrors[] = $fatalError;
-    }
-
-    /**
-     * @param string $error
-     */
-    public function addError($error)
-    {
-        $this->errors[] = $error;
-    }
-
-    /**
-     * @param string $failure
-     */
-    public function addFailure($failure)
-    {
-        $this->failures[] = $failure;
-    }
-
-    /**
-     * @param string $warning
-     */
-    public function addWarning($warning)
-    {
-        $this->warnings[] = $warning;
+        $this->fatalError = true;
     }
 
     /**
@@ -230,7 +131,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
      */
     public function hasSegmentationFaults()
     {
-        return count($this->segmentationFaults) > 0;
+        return $this->segmentationFault;
     }
 
     /**
@@ -238,30 +139,6 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
      */
     public function hasFatalErrors()
     {
-        return count($this->fatalErrors) > 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasErrors()
-    {
-        return count($this->errors) > 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasFailures()
-    {
-        return count($this->failures) > 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasWarnings()
-    {
-        return count($this->warnings) > 0;
+        return $this->fatalError;
     }
 }

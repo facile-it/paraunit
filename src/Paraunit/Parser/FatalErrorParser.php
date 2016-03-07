@@ -17,6 +17,12 @@ class FatalErrorParser extends AbstractParser implements ProcessOutputParserChai
      */
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        return ! $this->parsingFoundSomething($process);
+        if ($this->parsingFoundSomething($process)) {
+            $process->reportFatalError();
+
+            return false;
+        }
+
+        return true;
     }
 }

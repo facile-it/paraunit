@@ -77,8 +77,8 @@ class FinalPrinter
     private function printFailuresOutput(OutputContainer $outputContainer)
     {
         $buffer = $outputContainer->getOutputBuffer();
-        $tag = $outputContainer->getTag();
         if (count($buffer)) {
+            $tag = $outputContainer->getTag();
             $this->output->writeln('');
             $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, $outputContainer->getTitle(), $tag));
 
@@ -107,14 +107,14 @@ class FinalPrinter
      */
     private function printFileRecap(OutputContainer $outputContainer)
     {
-        if ($outputContainer->count()) {
+        if ($outputContainer->countFiles()) {
             $tag = $outputContainer->getTag();
             $this->output->writeln('');
             $this->output->writeln(
                 sprintf(
                     '<%s>%d files with %s:</%s>',
                     $tag,
-                    $outputContainer->count(),
+                    $outputContainer->countFiles(),
                     strtoupper($outputContainer->getTitle()),
                     $tag
                 )

@@ -27,7 +27,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
     public function testPrintProcessResultWithSegFault()
     {
         $process = new StubbedParaProcess();
-        $process->addSegmentationFault('test');
+        $process->reportSegmentationFault();
 
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
@@ -35,13 +35,13 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $processEvent = new ProcessEvent($process, array('output_interface' => $output));
         $printer->onProcessTerminated($processEvent);
 
-        $this->assertEquals('<error>X</error>', $output->getOutput());
+        $this->assertEquals('<segfault>X</segfault>', $output->getOutput());
     }
 
     public function testPrintProcessResultWithFatalError()
     {
         $process = new StubbedParaProcess();
-        $process->addFatalError('test');
+        $process->reportFatalError();
 
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
@@ -49,7 +49,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $processEvent = new ProcessEvent($process, array('output_interface' => $output));
         $printer->onProcessTerminated($processEvent);
 
-        $this->assertEquals('<error>X</error>', $output->getOutput());
+        $this->assertEquals('<fatal>X</fatal>', $output->getOutput());
     }
 
     public function testPrintProcessResultUnknownResult()
@@ -62,7 +62,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $processEvent = new ProcessEvent($process, array('output_interface' => $output));
         $printer->onProcessTerminated($processEvent);
 
-        $this->assertEquals('<error>X</error>', $output->getOutput());
+        $this->assertEquals('<warning>?</warning>', $output->getOutput());
     }
 
     /**
@@ -118,8 +118,10 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
             array('F', '<fail>F</fail>'),
             array('E', '<error>E</error>'),
             array('I', '<incomplete>I</incomplete>'),
-            array('UNKNOWN', '<error>X</error>'),
-            array(null, '<error>X</error>'),
+            array('S', '<skipped>S</skipped>'),
+            array('R', '<risky>R</risky>'),
+            array('W', '<warning>W</warning>'),
+            array(null, '<warning>?</warning>'),
         );
     }
 }

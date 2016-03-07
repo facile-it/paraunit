@@ -17,11 +17,7 @@ class FatalErrorParserTest extends StubbedPHPUnitBaseTestCase
 
         $this->assertEquals($expectedResult, $parser->parseAndContinue($process));
 
-        if ($expectedResult) {
-            $this->assertEmpty($process->getFatalErrors());
-        } else {
-            $this->assertNotEmpty($process->getFatalErrors());
-        }
+        $this->assertEquals($expectedResult, ! $process->hasFatalErrors());
     }
 
     public function processProvider()

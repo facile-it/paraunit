@@ -28,6 +28,7 @@ class TestResultsParserTest extends StubbedPHPUnitBaseTestCase
             array($this->getTestWithAllGreen(), str_split('.........')),
             array($this->getTestWithAllGreen5(), str_split('....................................................')),
             array($this->getTestWithFatalError(), array()),
+            array($this->getTestWithSegFault(), array()),
         );
     }
 
