@@ -137,7 +137,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /**
      * @return bool
      */
-    public function hasfatalError()
+    public function hasfatalErrors()
     {
         return $this->fatalError;
     }
