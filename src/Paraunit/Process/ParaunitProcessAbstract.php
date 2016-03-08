@@ -43,7 +43,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         $this->testResults = array();
 
         $this->segmentationFault = false;
-        $this->fatalErrors = false;
+        $this->fatalError = false;
     }
 
     /**
@@ -137,7 +137,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /**
      * @return bool
      */
-    public function hasFatalErrors()
+    public function hasfatalError()
     {
         return $this->fatalError;
     }
