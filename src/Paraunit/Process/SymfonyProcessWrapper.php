@@ -5,21 +5,20 @@ namespace Paraunit\Process;
 use Symfony\Component\Process\Process;
 
 /**
- * Class SymfonyProcessWrapper.
+ * Class SymfonyProcessWrapper
+ * @package Paraunit\Process
  */
 class SymfonyProcessWrapper extends ParaunitProcessAbstract
 {
-    /**
-     * @var Process
-     */
+    /** @var Process */
     protected $process;
 
     /**
-     * @param $commandLine
+     * {@inheritdoc}
      */
-    public function __construct($commandLine)
+    public function __construct($commandLine, $uniqueId)
     {
-        parent::__construct($commandLine);
+        parent::__construct($commandLine, $uniqueId);
         $this->process = new Process($commandLine);
     }
 

@@ -30,7 +30,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
      */
     public function __construct($commandLine = 'testCommandLine')
     {
-        parent::__construct($commandLine);
+        parent::__construct($commandLine, md5($commandLine));
 
         $this->commandLine = $commandLine;
     }

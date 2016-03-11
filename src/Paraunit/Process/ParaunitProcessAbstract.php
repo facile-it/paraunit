@@ -30,10 +30,11 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
 
     /**
      * @param string $commandLine
+     * @param string $uniqueId An MD5 hash of the full path of the test file, issued by the ProcessFactory
      */
-    public function __construct($commandLine)
+    public function __construct($commandLine, $uniqueId)
     {
-        $this->uniqueId = md5($commandLine);
+        $this->uniqueId = $uniqueId;
 
         $filename = array();
         if (preg_match('/[A-z]*\.php/', $commandLine, $filename) === 1) {

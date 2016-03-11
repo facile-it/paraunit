@@ -24,10 +24,16 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new ProcessFactory($phpUnitBin->reveal());
         $factory->setConfigFile($phpUnitConfigFile->reveal());
 
-        $process = $factory->createProcess("TestTest.php");
+        $process = $factory->createProcess('TestTest.php');
 
         $this->assertInstanceOf('Paraunit\Process\ParaunitProcessAbstract', $process);
-        $this->assertEquals('phpunit -c configFile.xml --colors=never TestTest.php 2>&1', $process->getCommandLine());
+        $expectedCmdLine = 'phpunit '
+            . '-c configFile.xml '
+            . '--colors=never '
+            . '--log-json=/dev/shm/paraunit/logs/' . $process->getUniqueId() . '.json.log'
+            . ' TestTest.php '
+            . '2>&1';
+        $this->assertEquals($expectedCmdLine, $process->getCommandLine());
     }
 
     public function testCreateProcessThrowsExceptionIfConfigIsMissing()
