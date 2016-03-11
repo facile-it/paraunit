@@ -26,11 +26,15 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     protected $exitCode = 0;
 
     /**
-     * @param string $commandLine
+     * {@inheritdoc}
      */
-    public function __construct($commandLine = 'testCommandLine')
+    public function __construct($commandLine = 'testCommandLine', $uniqueId = null)
     {
-        parent::__construct($commandLine, md5($commandLine));
+        if (is_null($uniqueId)) {
+            $uniqueId = md5($commandLine);
+        }
+
+        parent::__construct($commandLine, $uniqueId);
 
         $this->commandLine = $commandLine;
     }

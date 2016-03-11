@@ -63,9 +63,9 @@ class ProcessFactory
     {
         return $this->phpUnitBin .
         ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-        ' --colors=never ' .
-        ' --log-json=/dev/shm/paraunit/logs/' . $uniqueId . '.json.log ' .
-        $testFilePath .
+        ' --colors=never' .
+        ' --log-json=/dev/shm/paraunit/logs/' . $uniqueId . '.json.log' .
+        ' ' . $testFilePath .
         ' 2>&1';
     }
 

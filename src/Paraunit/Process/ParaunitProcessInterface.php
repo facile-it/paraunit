@@ -5,6 +5,12 @@ namespace Paraunit\Process;
 interface ParaunitProcessInterface
 {
     /**
+     * @param string $commandLine
+     * @param string $uniqueId
+     */
+    public function __construct($commandLine, $uniqueId);
+
+    /**
      * @return bool
      */
     public function isTerminated();

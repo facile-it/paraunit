@@ -29,8 +29,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     protected $fatalError;
 
     /**
-     * @param string $commandLine
-     * @param string $uniqueId An MD5 hash of the full path of the test file, issued by the ProcessFactory
+     * {@inheritdoc}
      */
     public function __construct($commandLine, $uniqueId)
     {
