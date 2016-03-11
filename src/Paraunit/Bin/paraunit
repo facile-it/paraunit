@@ -14,17 +14,9 @@ if (!ini_get('date.timezone') && !date_default_timezone_get()) {
     date_default_timezone_set('UTC');
 }
 
-use Paraunit\Command\ParallelCommand;
-use Paraunit\Configuration\Paraunit;
-use Symfony\Component\Console\Application;
-
-$container = Paraunit::buildContainer();
-/** @var ParallelCommand $command */
-$command = $container->get('paraunit.command.parallel_command');
-
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-$application = new Application('Paraunit', Paraunit::PARAUNIT_VERSION);
-$application->add($command);
-$application->run();
+Paraunit\Configuration\Paraunit::buildContainer()
+    ->get('paraunit.application')
+    ->run();
