@@ -8,6 +8,11 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 * Added support for warnings, introduced in PHPUnit 5.1 (#30)
 
+### Fixed
+
+* Removed `Container.php` file and `CompilerPass` class in favor of proper usage of Symfony's components
+* `paraunit` bin now uses the container better
+
 ## [0.5] - 2015-12-08
 
 ### Changed
