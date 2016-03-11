@@ -3,11 +3,11 @@
 namespace Paraunit\Proxy;
 
 /**
- * Class PHPUnit_Util_XML_Proxy.
+ * Class PHPUnitUtilXMLProxy.
  *
  * This class exists just as a proxy, 'cause you can't mock a static method with Prophecy
  */
-class PHPUnit_Util_XML_Proxy
+class PHPUnitUtilXMLProxy
 {
     /**
      * @param $filename

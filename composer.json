@@ -11,7 +11,7 @@
     "phpunit"
   ],
   "homepage": "http://github.com/facile-it/paraunit",
-  "license": "Apache License Version 2.0",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Francesco Panina",
@@ -40,7 +40,7 @@
   "bin": ["src/Paraunit/Bin/paraunit"],
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "Paraunit\\": "src/Paraunit"
     }
   },
   "minimum-stability": "stable",
