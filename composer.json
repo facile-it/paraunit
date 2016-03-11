@@ -40,7 +40,7 @@
   "bin": ["src/Paraunit/Bin/paraunit"],
   "autoload": {
     "psr-4": {
-      "Paraunit": "src/Paraunit"
+      "Paraunit\\": "src/Paraunit"
     }
   },
   "minimum-stability": "stable",
