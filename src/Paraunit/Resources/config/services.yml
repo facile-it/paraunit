@@ -100,7 +100,7 @@ services:
     ## EXTERNAL DEPs -- proxies ##
 
     paraunit.proxy.phpunit_util_xml_proxy:
-        class: Paraunit\Proxy\PHPUnit_Util_XML_Proxy
+        class: Paraunit\Proxy\PHPUnitUtilXMLProxy
 
     phpunit.file_iterator_facade:
         class: \File_Iterator_Facade

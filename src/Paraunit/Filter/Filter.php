@@ -3,7 +3,7 @@
 namespace Paraunit\Filter;
 
 use Paraunit\Configuration\PHPUnitConfigFile;
-use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
+use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 
 /**
  * Class Filter
@@ -11,7 +11,7 @@ use Paraunit\Proxy\PHPUnit_Util_XML_Proxy;
  */
 class Filter
 {
-    /** @var  PHPUnit_Util_XML_Proxy */
+    /** @var  PHPUnitUtilXMLProxy */
     protected $utilXml;
 
     /** @var  \File_Iterator_Facade */
@@ -21,10 +21,10 @@ class Filter
     protected $relativePath;
 
     /**
-     * @param PHPUnit_Util_XML_Proxy $utilXml
+     * @param PHPUnitUtilXMLProxy $utilXml
      * @param \File_Iterator_Facade $fileIteratorFacade
      */
-    public function __construct(PHPUnit_Util_XML_Proxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
+    public function __construct(PHPUnitUtilXMLProxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
     {
         $this->utilXml = $utilXml;
         $this->fileIteratorFacade = $fileIteratorFacade;

@@ -7,7 +7,7 @@ use Paraunit\Filter\Filter;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
-    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnit_Util_XML_Proxy';
+    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnitUtilXMLProxy';
     const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade';
 
     /** @var  string */

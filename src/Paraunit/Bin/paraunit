@@ -18,7 +18,7 @@ use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\Paraunit;
 use Symfony\Component\Console\Application;
 
-require_once __DIR__ . '/../../../Container.php';
+require_once __DIR__ . '/../../../TestContainer.php';
 
 /** @var \Paraunit\Filter\Filter $filter */
 $filter = $container->get('paraunit.filter.filter');

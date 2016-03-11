@@ -5,6 +5,7 @@ namespace Paraunit\Tests\Functional;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Runner\Runner;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
+use Paraunit\Tests\TestContainer;
 
 /**
  * Class RunnerTest.
@@ -17,9 +18,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        require_once getcwd().'/Container.php';
-
-        $this->container = getContainer();
+        $this->container = TestContainer::getContainer();
     }
 
     public function testAllGreen()
