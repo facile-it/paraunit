@@ -5,6 +5,12 @@ parameters:
 
 services:
 
+    paraunit.command.parallel_command:
+        class: Paraunit\Command\ParallelCommand
+        arguments:
+            - "@paraunit.filter.filter"
+            - "@paraunit.runner.runner"
+
     paraunit.filter.filter:
         class: Paraunit\Filter\Filter
         arguments:
@@ -24,18 +30,18 @@ services:
     paraunit.printer.shark_printer:
         class: Paraunit\Printer\SharkPrinter
         tags:
-          - { name: paraunit.event_listener, event: engine_event.before_start, method: onEngineStart }
+          - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
 
     paraunit.printer.process_printer:
         class: Paraunit\Printer\ProcessPrinter
         tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 100 }
+          - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 100 }
 
     paraunit.printer.final_printer:
         class: Paraunit\Printer\FinalPrinter
         scope: prototype
         tags:
-          - { name: paraunit.event_listener, event: engine_event.end, method: onEngineEnd }
+          - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd }
 
     ## OUTPUT PARSERS ##
 
@@ -50,7 +56,7 @@ services:
             - [addParser, ["@paraunit.parser.warning_parser"]]
             - [addParser, ["@paraunit.parser.test_result_parser"]]
         tags:
-          - { name: paraunit.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
+          - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
     paraunit.parser.error_parser:
         class: Paraunit\Parser\ErrorParser
@@ -95,7 +101,7 @@ services:
     paraunit.printer.console_formatter:
         class: Paraunit\Printer\ConsoleFormatter
         tags:
-          - { name: paraunit.event_listener, event: engine_event.before_start, method: onEngineStart }
+          - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
 
     ## EXTERNAL DEPs -- proxies ##
 
