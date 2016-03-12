@@ -47,7 +47,7 @@ services:
     paraunit.printer.final_printer:
         class: Paraunit\Printer\FinalPrinter
         arguments:
-          - "@paraunit.parser.process_output_parser"
+          - "@paraunit.parser.json_log_parser"
         tags:
           - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd }
 
@@ -61,14 +61,14 @@ services:
     paraunit.configuration.phpunit_bin_file:
         class: Paraunit\Configuration\PHPUnitBinFile
 
-    paraunit.process.json_log_filename:
+    paraunit.configuration.json_log_filename:
         class: Paraunit\Configuration\JSONLogFilename
 
     paraunit.process.process_factory:
         class: Paraunit\Process\ProcessFactory
         arguments:
             - "@paraunit.configuration.phpunit_bin_file"
-            - "@paraunit.process.json_log_filename"
+            - "@paraunit.configuration.json_log_filename"
 
     ## LISTENERS ##
 

@@ -8,49 +8,29 @@ namespace Paraunit\Tests\Stub\PHPUnitOutput\JSONLogs;
  */
 class JSONLogStub
 {
-    public static function get2Errors2Failures()
-    {
-        return self::getOutputFileContent('2Errors2Failures');
-    }
+    const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
+    const ALL_GREEN = 'AllGreen';
+    const FATAL_ERROR = 'FatalError';
+    const SEGFAULT = 'SegFault';
+    const ONE_ERROR = 'SingleError';
+    const ONE_INCOMPLETE = 'SingleIncomplete';
+    const ONE_RISKY = 'SingleRisky';
+    const ONE_SKIP = 'SingleSkip';
+    const ONE_WARNING = 'SingleWarning';
 
-    public static function getAllGreen()
+    /**
+     * @param $filename
+     * @return string
+     * @throws \Exception
+     */
+    public static function getCleanOutputFileContent($filename)
     {
-        return self::getOutputFileContent('AllGreen');
-    }
+        $fullFilename =  __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';
+        if ( ! file_exists($fullFilename)) {
+            throw new \Exception('Unknown file stub: ' . $filename);
+        }
 
-    public static function getFatalError()
-    {
-        return self::getOutputFileContent('FatalError');
-    }
-
-    public static function getSegFault()
-    {
-        return self::getOutputFileContent('SegFault');
-    }
-
-    public static function getSingleError()
-    {
-        return self::getOutputFileContent('SingleError');
-    }
-
-    public static function getSingleIncomplete()
-    {
-        return self::getOutputFileContent('SingleIncomplete');
-    }
-
-    public static function getSingleRisky()
-    {
-        return self::getOutputFileContent('SingleRisky');
-    }
-
-    public static function getSingleSkip()
-    {
-        return self::getOutputFileContent('SingleSkip');
-    }
-
-    public static function getSingleWarning()
-    {
-        return self::getOutputFileContent('SingleWarning');
+        return self::cleanLog(file_get_contents($fullFilename));
     }
 
     /**
@@ -62,15 +42,5 @@ class JSONLogStub
         $splitted = preg_replace('/\}\{/', '},{', $jsonString);
 
         return '[' . $splitted . ']';
-    }
-
-    /**
-     * @param $filename
-     *
-     * @return string
-     */
-    private static function getOutputFileContent($filename)
-    {
-        return self::cleanLog(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $filename . '.json'));
     }
 }

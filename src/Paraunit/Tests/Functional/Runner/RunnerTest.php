@@ -1,26 +1,18 @@
 <?php
 
-namespace Paraunit\Tests\Functional;
+namespace Paraunit\Tests\Functional\Runner;
 
 use Paraunit\Configuration\Paraunit;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Runner\Runner;
+use Paraunit\Tests\BaseFunctionalTestCase;
 use Paraunit\Tests\Stub\ConsoleOutputStub;
 
 /**
  * Class RunnerTest.
  */
-class RunnerTest extends \PHPUnit_Framework_TestCase
+class RunnerTest extends BaseFunctionalTestCase
 {
-    protected $container = null;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->container = Paraunit::buildContainer();
-    }
-
     public function testAllGreen()
     {
         $outputInterface = new ConsoleOutputStub();

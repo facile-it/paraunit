@@ -1,38 +1,83 @@
 services:
   ## OUTPUT PARSERS ##
 
-  paraunit.parser.process_output_parser:
+  paraunit.parser.json_log_parser:
     class: Paraunit\Parser\JSONLogParser
-    calls:
-      - [addParser, ["@paraunit.parser.retry_parser"]]
-      - [addParser, ["@paraunit.parser.segmentation_fault_parser"]]
-      - [addParser, ["@paraunit.parser.fatal_error_parser"]]
-      - [addParser, ["@paraunit.parser.error_parser"]]
+    arguments:
+      - "@paraunit.parser.json_log_fetcher"
+#    calls:
       - [addParser, ["@paraunit.parser.failure_parser"]]
-      - [addParser, ["@paraunit.parser.warning_parser"]]
-      - [addParser, ["@paraunit.parser.test_result_parser"]]
+      - [addParser, ["@paraunit.parser.retry_parser"]]
+      - [addParser, ["@paraunit.parser.error_parser"]]
+#      - [addParser, ["@paraunit.parser.segmentation_fault_parser"]]
+#      - [addParser, ["@paraunit.parser.fatal_error_parser"]]
+#      - [addParser, ["@paraunit.parser.warning_parser"]]
+#      - [addParser, ["@paraunit.parser.test_result_parser"]]
     tags:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
+  paraunit.parser.json_log_fetcher:
+    class: Paraunit\Parser\JSONLogFetcher
+    arguments:
+      - "@paraunit.configuration.json_log_filename"
+
   paraunit.parser.error_parser:
     class: Paraunit\Parser\ErrorParser
+    arguments:
+      - "@paraunit.output_container.error"
 
   paraunit.parser.failure_parser:
     class: Paraunit\Parser\FailureParser
+    arguments:
+      - "@paraunit.output_container.failure"
 
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\WarningParser
-
-  paraunit.parser.fatal_error_parser:
-    class: Paraunit\Parser\FatalErrorParser
+    arguments:
+      - "@paraunit.output_container.warning"
 
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
       - %paraunit.max_retry_count%
 
-  paraunit.parser.segmentation_fault_parser:
-    class: Paraunit\Parser\SegmentationFaultParser
-
   paraunit.parser.test_result_parser:
     class: Paraunit\Parser\TestResultsParser
+
+ ### OUTPUT CONTAINERS ###
+
+  paraunit.output_container.error:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "error"
+      - "errors"
+
+  paraunit.output_container.failure:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "fail"
+      - "failures"
+
+  paraunit.output_container.warning:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "warning"
+      - "warnings"
+
+  paraunit.output_container.risky:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "warning"
+      - "risky outcome"
+
+  paraunit.output_container.skipped:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "skip"
+      - "skipped outcome"
+
+  paraunit.output_container.incomplete:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "incomplete"
+      - "incomplete outcome"

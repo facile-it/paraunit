@@ -38,14 +38,10 @@ class JSONLogParser
 
     public function parse(ProcessResultInterface $process)
     {
-        try {
-            $logs = json_decode($this->logLocator->fetch($process));
+        $logs = json_decode($this->logLocator->fetch($process));
 
-            foreach ($logs as $singleLog) {
-                $this->extractTestResult($process, $singleLog);
-            }
-        } catch (JSONLogNotFoundException $exception) {
-            return;
+        foreach ($logs as $singleLog) {
+            $this->extractTestResult($process, $singleLog);
         }
     }
 

@@ -18,12 +18,12 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider parsableResultsProvider
      */
-    public function testParse($chainedParsersResults, $expectedResult)
+    public function testParse($chainedParsersResults)
     {
         $chainedParsers = $this->mockChainedParsers($chainedParsersResults);
         $process = new StubbedParaProcess();
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $logLocator->fetch($process)->willReturn(JSONLogStub::getAllGreen());
+        $logLocator->fetch($process)->willReturn(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN));
         $parser = new JSONLogParser($logLocator->reveal());
         foreach ($chainedParsers as $chainedParser) {
             $parser->addParser($chainedParser);
@@ -37,9 +37,9 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
     public function parsableResultsProvider()
     {
         return array(
-            array(array(true), true),
-            array(array(false, true), true),
-            array(array(false, false), false),
+            array(array(true)),
+            array(array(false, true)),
+            array(array(false, false)),
         );
     }
 
@@ -55,37 +55,6 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
 
         return $mocks;
     }
-
-//    /**
-//     * @dataProvider parsableResultsProvider
-//     */
-//    public function testParseAndContinue($log, $expectedResult)
-//    {
-//        $process = new StubbedParaProcess();
-//        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-//        $logLocator->fetch($process)->willReturn(JSONLogStub::cleanLog($log));
-//
-//        $parser = new JSONLogParser($logLocator->reveal());
-//
-//        $this->assertFalse($parser->parse($process));
-//
-//        $this->assertEquals($expectedResult, $process->getTestResults());
-//    }
-//
-//    public function parsableResultsProvider()
-//    {
-//        return array(
-//            array(JSONLogStub::get2Errors2Failures(), str_split('FF..E...E')),
-//            array(JSONLogStub::getAllGreen(), str_split('.........')),
-//            array(JSONLogStub::getFatalError(), str_split('...')),
-//            array(JSONLogStub::getSegFault(), str_split('...')),
-//            array(JSONLogStub::getSingleError(), str_split('.E.')),
-//            array(JSONLogStub::getSingleIncomplete(), str_split('..I.')),
-//            array(JSONLogStub::getSingleRisky(), str_split('..R.')),
-//            array(JSONLogStub::getSingleSkip(), str_split('..S.')),
-//            array(JSONLogStub::getSingleWarning(), str_split('...W')),
-//        );
-//    }
 
     public function testLogNotFound()
     {

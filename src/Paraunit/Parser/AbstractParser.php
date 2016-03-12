@@ -15,27 +15,46 @@ abstract class AbstractParser implements JSONParserChainElementInterface, Output
     protected $outputContainer;
 
     /** @var  string */
-    protected $tag;
+    protected $singleResultMarker;
 
     /** @var  string */
     protected $title;
+
+    /** @var  string */
+    protected $status;
 
     /** @var  string */
     protected $messageStartsWith;
 
     /**
      * AbstractParser constructor.
-     * @param string $tag
-     * @param string $title
-     * @param string | null $messageStartsWith The log result is distinguishable with the start of the message
+     *
+     * @param OutputContainer $outputContainer
+     * @param string $singleResultMarker The output of the single test result (.FERW etc)
+     * @param string $status The status that the parser should catch
+     * @param string | null $messageStartsWith The start of the message that the parser should look for
      */
-    public function __construct($tag, $title, $messageStartsWith = null)
+    public function __construct(OutputContainer $outputContainer, $singleResultMarker, $status, $messageStartsWith = null)
     {
-        $this->tag = $tag;
-        $this->title = $title;
+        $this->outputContainer = $outputContainer;
+        $this->singleResultMarker = $singleResultMarker;
+        $this->status = $status;
         $this->messageStartsWith = $messageStartsWith;
+    }
 
-        $this->outputContainer = new OutputContainer($this->tag, $this->title);
+    /**
+     * {@inheritdoc}
+     */
+    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
+    {
+        if ($log->status == $this->status) {
+            $process->addTestResult($this->singleResultMarker);
+            $this->outputContainer->addToOutputBuffer($process, $log->message);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

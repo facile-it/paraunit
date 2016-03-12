@@ -1,30 +1,21 @@
 <?php
 
 namespace Paraunit\Printer;
+use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Class OutputContainer.
  */
 class OutputContainer
 {
-    /**
-     * @var string[]
-     */
-    protected $fileNames;
-
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $outputBuffer;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $tag;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
     /**
@@ -35,31 +26,16 @@ class OutputContainer
     {
         $this->tag = $tag;
         $this->title = $title;
-        $this->fileNames = array();
-        $this->fileNames = array();
         $this->outputBuffer = array();
     }
 
     /**
-     * @param string $fileName
+     * @param ProcessResultInterface $process
+     * @param string $message
      */
-    public function addFileName($fileName)
+    public function addToOutputBuffer(ProcessResultInterface $process, $message)
     {
-        $this->fileNames[] = $fileName;
-    }
-
-    /**
-     * @param string|array $output
-     */
-    public function addToOutputBuffer($output)
-    {
-        if (is_array($output)) {
-            foreach ($output as $single) {
-                $this->outputBuffer[] = $single;
-            }
-        } else {
-            $this->outputBuffer[] = $output;
-        }
+        $this->outputBuffer[$process->getFilename()][] = $message;
     }
 
     /**
@@ -67,7 +43,8 @@ class OutputContainer
      */
     public function getFileNames()
     {
-        return $this->fileNames;
+        // TODO test
+        return array_keys($this->outputBuffer);
     }
 
     /**
@@ -83,7 +60,21 @@ class OutputContainer
      */
     public function countFiles()
     {
-        return count($this->fileNames);
+        // TODO test
+        return count($this->outputBuffer);
+    }
+
+    /**
+     * @return int
+     */
+    public function countMessages()
+    {
+        $messageCount = 0;
+        foreach ($this->outputBuffer as $fileName => $fileMessages) {
+            $messageCount += count($fileMessages);
+        }
+
+        return $messageCount;
     }
 
     /**

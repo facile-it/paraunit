@@ -3,6 +3,7 @@
 namespace Paraunit\Tests\Unit\Parser;
 
 use Paraunit\Parser\RetryParser;
+use Paraunit\Tests\BaseUnitTestCase;
 use Paraunit\Tests\Stub\EntityManagerClosedTestStub;
 use Paraunit\Tests\Stub\MySQLDeadLockTestStub;
 use Paraunit\Tests\Stub\MySQLLockTimeoutTestStub;
@@ -15,7 +16,7 @@ use Paraunit\Tests\StubbedPHPUnitBaseTestCase;
  * Class RetryParserTest
  * @package Paraunit\Tests\Unit
  */
-class RetryParserTest extends StubbedPHPUnitBaseTestCase
+class RetryParserTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider toBeRetriedTestsProvider
@@ -75,15 +76,15 @@ class RetryParserTest extends StubbedPHPUnitBaseTestCase
     public function notToBeRetriedTestLogsProvider()
     {
         return array(
-            array(JSONLogStub::get2Errors2Failures()),
-            array(JSONLogStub::getAllGreen()),
-            array(JSONLogStub::getFatalError()),
-            array(JSONLogStub::getSegFault()),
-            array(JSONLogStub::getSingleError()),
-            array(JSONLogStub::getSingleIncomplete()),
-            array(JSONLogStub::getSingleRisky()),
-            array(JSONLogStub::getSingleSkip()),
-            array(JSONLogStub::getSingleWarning()),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::TWO_ERRORS_TWO_FAILURES)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::FATAL_ERROR)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::SEGFAULT)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_INCOMPLETE)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_RISKY)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
     }
 
@@ -93,7 +94,7 @@ class RetryParserTest extends StubbedPHPUnitBaseTestCase
      */
     private function getLogWithError($testOutput)
     {
-        $jsonLogs = JSONLogStub::getSingleError();
+        $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         $logs = json_decode($jsonLogs);
         foreach ($logs as $log) {
             if ($log->event == 'test' && $log->status == 'error') {

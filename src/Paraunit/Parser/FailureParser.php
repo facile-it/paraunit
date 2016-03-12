@@ -2,8 +2,12 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Printer\OutputContainer;
 
+/**
+ * Class FailureParser
+ * @package Paraunit\Parser
+ */
 class FailureParser extends AbstractParser implements JSONParserChainElementInterface
 {
     const TAG = 'failure';
@@ -11,14 +15,12 @@ class FailureParser extends AbstractParser implements JSONParserChainElementInte
     const PARSING_REGEX = '/(?:There (?:was|were) \d+ failures?:\n\n)((?:.|\n)+)(?=\nFAILURES)/';
 
     /**
-     * @param ProcessResultInterface $process
+     * AbstractParser constructor.
      *
-     * @return bool True if chain should continue
+     * @param OutputContainer $outputContainer
      */
-    public function parsingFoundResult(ProcessResultInterface $process)
+    public function __construct(OutputContainer $outputContainer)
     {
-        $this->storeParsedBlocks($process);
-
-        return true;
+        parent::__construct($outputContainer, 'F', 'fail');
     }
 }
