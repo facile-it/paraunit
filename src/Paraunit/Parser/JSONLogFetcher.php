@@ -48,6 +48,8 @@ class JSONLogFetcher
      */
     private static function cleanLog($jsonString)
     {
-        return preg_replace('/\}\{/', '},{', $jsonString);
+        $splitted = preg_replace('/\}\{/', '},{', $jsonString);
+
+        return '[' . $splitted . ']';
     }
 }

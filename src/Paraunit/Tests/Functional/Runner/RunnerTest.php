@@ -2,7 +2,6 @@
 
 namespace Paraunit\Tests\Functional\Runner;
 
-use Paraunit\Configuration\Paraunit;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Runner\Runner;
 use Paraunit\Tests\BaseFunctionalTestCase;
@@ -106,7 +105,7 @@ class RunnerTest extends BaseFunctionalTestCase
             'Exit code should not be 0'
         );
 
-        $this->assertContains('<segfault>X</segfault>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains(
             '1 files with SEGMENTATION FAULTS:',
             $outputInterface->getOutput(),
@@ -119,9 +118,6 @@ class RunnerTest extends BaseFunctionalTestCase
         );
     }
 
-    /**
-     * @group this
-     */
     public function testWarning()
     {
         $phpunitVersion = new \PHPUnit_Runner_Version();
@@ -169,7 +165,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
-        $this->assertContains('<fatal>X</fatal>', $outputInterface->getOutput(), 'Missing X output');
+        $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains('1 files with FATAL ERRORS:', $outputInterface->getOutput(), 'Missing fatal error recap title');
         $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaken for unknown result');
 

@@ -24,10 +24,10 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<ok>A</ok>', $output->getOutput());
     }
 
-    public function testPrintProcessResultWithSegFault()
+    public function testPrintProcessResultWithAbnormalTermination()
     {
         $process = new StubbedParaProcess();
-        $process->reportSegmentationFault();
+        $process->reportAbnormalTerminationInFunction('die()');
 
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();
@@ -35,34 +35,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
         $processEvent = new ProcessEvent($process, array('output_interface' => $output));
         $printer->onProcessTerminated($processEvent);
 
-        $this->assertEquals('<segfault>X</segfault>', $output->getOutput());
-    }
-
-    public function testPrintProcessResultWithFatalError()
-    {
-        $process = new StubbedParaProcess();
-        $process->reportFatalError();
-
-        $printer = new ProcessPrinter();
-        $output = new ConsoleOutputStub();
-
-        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
-        $printer->onProcessTerminated($processEvent);
-
-        $this->assertEquals('<fatal>X</fatal>', $output->getOutput());
-    }
-
-    public function testPrintProcessResultUnknownResult()
-    {
-        $process = new StubbedParaProcess();
-
-        $printer = new ProcessPrinter();
-        $output = new ConsoleOutputStub();
-
-        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
-        $printer->onProcessTerminated($processEvent);
-
-        $this->assertEquals('<warning>?</warning>', $output->getOutput());
+        $this->assertEquals('<halted>X</halted>', $output->getOutput());
     }
 
     /**
@@ -80,7 +53,6 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
 
         $processEvent = new ProcessEvent($process, array('output_interface' => $output->reveal()));
         $printer->onProcessTerminated($processEvent);
-
     }
 
     public function newLineTimesProvider()

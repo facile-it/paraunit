@@ -2,7 +2,7 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Printer\OutputContainer;
+use Paraunit\Printer\OutputContainerInterface;
 
 /**
  * Interface OutputContainerBearerInterface
@@ -11,7 +11,7 @@ use Paraunit\Printer\OutputContainer;
 interface OutputContainerBearerInterface
 {
     /**
-     * @return OutputContainer
+     * @return OutputContainerInterface
      */
     public function getOutputContainer();
 }

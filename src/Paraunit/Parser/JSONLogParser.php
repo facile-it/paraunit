@@ -4,6 +4,8 @@ namespace Paraunit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Exception\RecoverableTestErrorException;
+use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ProcessResultInterface;
 
 /**
@@ -36,11 +38,38 @@ class JSONLogParser
         $this->parsers[] = $parser;
     }
 
-    public function parse(ProcessResultInterface $process)
+    /**
+     * @return JSONParserChainElementInterface[]
+     */
+    public function getParsers()
     {
-        $logs = $this->logLocator->fetch($process);
+        return $this->parsers;
+    }
+
+    /**
+     * @param ProcessEvent $processEvent
+     */
+    public function onProcessTerminated(ProcessEvent $processEvent)
+    {
+        $this->parse($processEvent->getProcess());
+    }
+
+    /**
+     * @param ParaunitProcessAbstract $process
+     */
+    public function parse(ParaunitProcessAbstract $process)
+    {
+        try {
+            $logs = $this->logLocator->fetch($process);
+        } catch (JSONLogNotFoundException $exception) {
+            $process->addTestResult('X');
+            $process->reportAbnormalTerminationInFunction('Unknown function -- test log not found');
+
+            return;
+        }
 
         $expectingTestResult = false;
+
         foreach ($logs as $singleLog) {
             if ($singleLog->event == 'test') {
                 $expectingTestResult = false;
@@ -68,6 +97,7 @@ class JSONLogParser
                 return true;
             }
         }
+
         return false;
     }
 }

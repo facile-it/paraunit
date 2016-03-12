@@ -85,10 +85,7 @@ services:
  ### OUTPUT CONTAINERS ###
 
   paraunit.output_container.pass:
-    class: Paraunit\Printer\OutputContainer
-    arguments:
-      - "pass"
-      - "OK"
+    class: Paraunit\Printer\NullOutputContainer
 
   paraunit.output_container.error:
     class: Paraunit\Printer\OutputContainer

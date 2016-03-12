@@ -23,7 +23,7 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndSetRetry($testOutput)
     {
-        $log = $this->getLogWithError($testOutput);
+        $log = $this->getLogWithStatus('error', $testOutput);
         
         $process = new StubbedParaProcess();
         $parser = new RetryParser();
@@ -52,7 +52,7 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndContinueWithNoRetryAfterLimit()
     {
         $process = new StubbedParaProcess();
-        $log = $this->getLogWithError(EntityManagerClosedTestStub::OUTPUT);
+        $log = $this->getLogWithStatus('error', EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());
@@ -86,24 +86,5 @@ class RetryParserTest extends BaseUnitTestCase
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
-    }
-
-    /**
-     * @param $testOutput
-     * @return \stdClass
-     */
-    private function getLogWithError($testOutput)
-    {
-        $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
-        $logs = json_decode($jsonLogs);
-        foreach ($logs as $log) {
-            if ($log->event == 'test' && $log->status == 'error') {
-                $log->message = $testOutput;
-
-                return $log;
-            }
-        }
-
-        $this->fail('Feasible log message not found for test');
     }
 }

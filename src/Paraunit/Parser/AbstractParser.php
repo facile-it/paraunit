@@ -2,7 +2,7 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Printer\OutputContainer;
+use Paraunit\Printer\OutputContainerInterface;
 use Paraunit\Process\ProcessResultInterface;
 
 /**
@@ -11,7 +11,7 @@ use Paraunit\Process\ProcessResultInterface;
  */
 class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
-    /** @var  OutputContainer */
+    /** @var  OutputContainerInterface */
     protected $outputContainer;
 
     /** @var  string */
@@ -29,12 +29,12 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     /**
      * AbstractParser constructor.
      *
-     * @param OutputContainer $outputContainer
+     * @param OutputContainerInterface $outputContainer
      * @param string $singleResultMarker The output of the single test result (.FERW etc)
      * @param string $status The status that the parser should catch
      * @param string | null $messageStartsWith The start of the message that the parser should look for
      */
-    public function __construct(OutputContainer $outputContainer, $singleResultMarker, $status, $messageStartsWith = null)
+    public function __construct(OutputContainerInterface $outputContainer, $singleResultMarker, $status, $messageStartsWith = null)
     {
         $this->outputContainer = $outputContainer;
         $this->singleResultMarker = $singleResultMarker;
@@ -43,7 +43,7 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     }
 
     /**
-     * @return OutputContainer
+     * @return OutputContainerInterface
      */
     public function getOutputContainer()
     {

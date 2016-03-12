@@ -118,11 +118,18 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
 
     /**
      * @return bool
-     * @deprecated
      */
     public function hasAbnormalTermination()
     {
         return $this->abnormalTerminatedFunction !== null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbnormalTerminatedFunction()
+    {
+        return $this->abnormalTerminatedFunction;
     }
 
     /**

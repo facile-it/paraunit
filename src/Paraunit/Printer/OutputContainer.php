@@ -1,13 +1,13 @@
 <?php
 
 namespace Paraunit\Printer;
-use Paraunit\Process\ParaunitProcessInterface;
+
 use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Class OutputContainer.
  */
-class OutputContainer
+class OutputContainer implements OutputContainerInterface
 {
     /** @var string[] */
     protected $outputBuffer;

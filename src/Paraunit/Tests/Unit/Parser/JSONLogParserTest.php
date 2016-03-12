@@ -15,44 +15,16 @@ use Prophecy\Argument;
  */
 class JSONLogParserTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @dataProvider parsableResultsProvider
-     */
-    public function testParse($chainedParsersResults)
+    public function testParseHandlesMissingLogs()
     {
-        $chainedParsers = $this->mockChainedParsers($chainedParsersResults);
         $process = new StubbedParaProcess();
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $logLocator->fetch($process)->willReturn(JSONLogStub::getLogs(JSONLogStub::ALL_GREEN));
+        $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
         $parser = new JSONLogParser($logLocator->reveal());
-        foreach ($chainedParsers as $chainedParser) {
-            $parser->addParser($chainedParser);
-        }
 
         $parser->parse($process);
 
-        $this->markTestIncomplete('non so cosa controllare');
-    }
-
-    public function parsableResultsProvider()
-    {
-        return array(
-            array(array(true)),
-            array(array(false, true)),
-            array(array(false, false)),
-        );
-    }
-
-    private function mockChainedParsers(array $results)
-    {
-        $mocks = array();
-        foreach ($results as $result) {
-            $parser = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
-            $parser->parsingFoundResult(Argument::cetera())->willReturn($result);
-
-            $mocks[] = $parser->reveal();
-        }
-
-        return $mocks;
+        $this->assertTrue($process->hasAbnormalTermination());
+        $this->assertEquals('Unknown function -- test log not found', $process->getAbnormalTerminatedFunction());
     }
 }

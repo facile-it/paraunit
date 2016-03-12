@@ -39,13 +39,7 @@ class ProcessPrinter
                 $this->printWithCounter('<ok>A</ok>');
                 break;
             case $process->hasAbnormalTermination():
-                $this->printWithCounter('<segfault>X</segfault>');
-                break;
-            case $process->hasFatalErrors():
-                $this->printWithCounter('<fatal>X</fatal>');
-                break;
-            case count($process->getTestResults()) == 0:
-                $this->printWithCounter('<warning>?</warning>');
+                $this->printWithCounter('<halted>X</halted>');
                 break;
             default:
                 foreach ($process->getTestResults() as $testResult) {

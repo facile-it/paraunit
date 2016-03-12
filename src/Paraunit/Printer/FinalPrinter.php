@@ -3,9 +3,9 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
-use Paraunit\Parser\ProcessOutputParser;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ParaunitProcessAbstract;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -13,19 +13,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FinalPrinter
 {
-    /** @var  ProcessOutputParser */
-    private $processOutputParser;
+    /** @var  JSONLogParser */
+    private $logParser;
     
     /** @var  OutputInterface */
     private $output;
 
     /**
      * FinalPrinter constructor.
-     * @param ProcessOutputParser $processOutputParser
+     * @param JSONLogParser $logParser
      */
-    public function __construct(ProcessOutputParser $processOutputParser)
+    public function __construct(JSONLogParser $logParser)
     {
-        $this->processOutputParser = $processOutputParser;
+        $this->logParser = $logParser;
     }
 
     /**
@@ -38,8 +38,9 @@ class FinalPrinter
         }
 
         $this->output = $engineEvent->getOutputInterface();
+        /** @var \DateInterval $elapsedTime */
         $elapsedTime = $engineEvent->get('start')->diff($engineEvent->get('end'));
-        $completedProcesses =  $engineEvent->get('process_completed');
+        $completedProcesses = $engineEvent->get('process_completed');
 
         $this->output->writeln('');
         $this->output->writeln('');
@@ -50,6 +51,7 @@ class FinalPrinter
         $this->output->write(count($completedProcesses).' test classes, ');
 
         $testsCount = 0;
+        /** @var ParaunitProcessAbstract $process */
         foreach ($completedProcesses as $process) {
             $testsCount += count($process->getTestResults());
         }
@@ -64,7 +66,7 @@ class FinalPrinter
 
     private function printAllFailuresOutput()
     {
-        foreach ($this->processOutputParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsers() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFailuresOutput($parser->getOutputContainer());
             }
@@ -72,9 +74,9 @@ class FinalPrinter
     }
 
     /**
-     * @param OutputContainer $outputContainer
+     * @param OutputContainerInterface $outputContainer
      */
-    private function printFailuresOutput(OutputContainer $outputContainer)
+    private function printFailuresOutput(OutputContainerInterface $outputContainer)
     {
         $buffer = $outputContainer->getOutputBuffer();
         if (count($buffer)) {
@@ -84,18 +86,20 @@ class FinalPrinter
 
             $i = 1;
 
-            foreach ($buffer as $line) {
-                $this->output->writeln('');
-                $this->output->writeln(
-                    sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $line)
-                );
+            foreach ($buffer as $filename => $messages) {
+                foreach($messages as $message) {
+                    $this->output->writeln('');
+                    $this->output->writeln(
+                        sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $message)
+                    );
+                }
             }
         }
     }
 
     private function printAllFilesRecap()
     {
-        foreach ($this->processOutputParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsers() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFileRecap($parser->getOutputContainer());
             }
@@ -103,9 +107,9 @@ class FinalPrinter
     }
 
     /**
-     * @param OutputContainer $outputContainer
+     * @param OutputContainerInterface $outputContainer
      */
-    private function printFileRecap(OutputContainer $outputContainer)
+    private function printFileRecap(OutputContainerInterface $outputContainer)
     {
         if ($outputContainer->countFiles()) {
             $tag = $outputContainer->getTag();
