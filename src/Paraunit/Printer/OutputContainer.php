@@ -39,16 +39,15 @@ class OutputContainer implements OutputContainerInterface
     }
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getFileNames()
     {
-        // TODO test
         return array_keys($this->outputBuffer);
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getOutputBuffer()
     {
@@ -60,7 +59,6 @@ class OutputContainer implements OutputContainerInterface
      */
     public function countFiles()
     {
-        // TODO test
         return count($this->outputBuffer);
     }
 

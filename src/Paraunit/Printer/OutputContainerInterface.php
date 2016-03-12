@@ -22,7 +22,7 @@ interface OutputContainerInterface
     public function getFileNames();
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getOutputBuffer();
 

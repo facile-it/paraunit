@@ -3,7 +3,6 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
-use Paraunit\Exception\RecoverableTestErrorException;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\OutputContainerInterface;
 use Paraunit\Process\ParaunitProcessAbstract;

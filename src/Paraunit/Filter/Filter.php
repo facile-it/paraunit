@@ -131,7 +131,7 @@ class Filter
     /**
      * @param \DOMNode $testSuiteNode
      * @param string $nodeName
-     * @param string | null $defaultValue
+     * @param string $defaultValue
      *
      * @return string
      */

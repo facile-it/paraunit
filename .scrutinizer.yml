@@ -1,6 +1,14 @@
 tools:
-    external_code_coverage: true
+  external_code_coverage: true
 
 filter:
-    excluded_paths:
-        - src/Paraunit/Bin/Tests/*
+  excluded_paths:
+    - src/Paraunit/Tests/*
+
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        negation: true
+      other:
+        after_type_cast: false
