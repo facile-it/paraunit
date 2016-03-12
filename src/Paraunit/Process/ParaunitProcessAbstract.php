@@ -121,11 +121,17 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         $this->testResults[] = $testResult;
     }
 
+    /**
+     * @deprecated
+     */
     public function reportSegmentationFault()
     {
         $this->segmentationFault = true;
     }
 
+    /**
+     * @deprecated
+     */
     public function reportFatalError()
     {
         $this->fatalError = true;
@@ -133,6 +139,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
 
     /**
      * @return bool
+     * @deprecated
      */
     public function hasSegmentationFaults()
     {
@@ -141,6 +148,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
 
     /**
      * @return bool
+     * @deprecated
      */
     public function hasfatalErrors()
     {
@@ -149,6 +157,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
 
     /**
      * @return bool
+     * @deprecated
      */
     public function isEmpty()
     {

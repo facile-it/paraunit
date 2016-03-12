@@ -99,10 +99,14 @@ services:
     paraunit.configuration.phpunit_bin_file:
         class: Paraunit\Configuration\PHPUnitBinFile
 
+    paraunit.process.json_log_filename:
+        class: Paraunit\Configuration\JSONLogFilename
+
     paraunit.process.process_factory:
         class: Paraunit\Process\ProcessFactory
         arguments:
             - "@paraunit.configuration.phpunit_bin_file"
+            - "@paraunit.process.json_log_filename"
 
     ## LISTENERS ##
 

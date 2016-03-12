@@ -2,6 +2,7 @@
 
 namespace Paraunit\Tests\Unit\Parser;
 
+use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Tests\Stub\PHPUnitOutput\JSONLogs\JSONLogStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;
@@ -42,4 +43,17 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
             array(JSONLogStub::getSingleWarning(), str_split('...W')),
         );
     }
+
+    public function testLogNotFound()
+    {
+        $process = new StubbedParaProcess();
+        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
+        $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
+
+        $parser = new JSONLogParser($logLocator->reveal());
+
+        $this->assertTrue($parser->parseAndContinue($process));
+
+        $this->assertEmpty($process->getTestResults());
+   }
 }

@@ -2,6 +2,7 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
 
@@ -14,6 +15,9 @@ class ProcessFactory
     /** @var  string */
     private $phpUnitBin;
 
+    /** @var  JSONLogFilename */
+    private $jsonLogFilename;
+
     /** @var  PHPUnitConfigFile */
     private $phpunitConfigFile;
 
@@ -21,9 +25,10 @@ class ProcessFactory
      * ProcessFactory constructor.
      * @param PHPUnitBinFile $phpUnitBinFile
      */
-    public function __construct(PHPUnitBinFile $phpUnitBinFile)
+    public function __construct(PHPUnitBinFile $phpUnitBinFile, JSONLogFilename $jsonLogFilename)
     {
         $this->phpUnitBin = $phpUnitBinFile->getPhpUnitBin();
+        $this->jsonLogFilename = $jsonLogFilename;
     }
 
     /**
@@ -64,7 +69,7 @@ class ProcessFactory
         return $this->phpUnitBin .
         ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
         ' --colors=never' .
-        ' --log-json=/dev/shm/paraunit/logs/' . $uniqueId . '.json.log' .
+        ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
         ' ' . $testFilePath .
         ' 2>&1';
     }

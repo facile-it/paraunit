@@ -2,6 +2,7 @@
 
 namespace Paraunit\Parser;
 
+use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Process\ProcessResultInterface;
 
 /**
@@ -24,7 +25,11 @@ class JSONLogParser implements ProcessOutputParserChainElementInterface
 
     public function parseAndContinue(ProcessResultInterface $process)
     {
-        $logs = json_decode($this->logLocator->fetch($process));
+        try {
+            $logs = json_decode($this->logLocator->fetch($process));
+        } catch (JSONLogNotFoundException $exception) {
+            return true;
+        }
 
         foreach ($logs as $singleLog) {
             $this->handleLogItem($process, $singleLog);
