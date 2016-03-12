@@ -5,7 +5,7 @@ namespace Paraunit\Tests\Functional\Runner;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Runner\Runner;
 use Paraunit\Tests\BaseFunctionalTestCase;
-use Paraunit\Tests\Stub\ConsoleOutputStub;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Class RunnerTest.
@@ -14,7 +14,7 @@ class RunnerTest extends BaseFunctionalTestCase
 {
     public function testAllGreen()
     {
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
@@ -25,15 +25,13 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
-        $dumpster = array(); // PHP 5.3 needs this crap
-        $greenCount = preg_match_all('/<ok>.<\/ok>/', $outputInterface->getOutput(), $dumpster);
-
-        $this->assertEquals(3, $greenCount);
+        $output = $outputInterface->fetch();
+        $this->assertContains('...', $output);
     }
 
     public function testMaxRetryEntityManagerIsClosed()
     {
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
@@ -44,21 +42,19 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
-        $retryCount = array();
-        preg_match_all('/<ok>A<\/ok>/', $outputInterface->getOutput(), $retryCount);
-        $errorCount = array();
-        preg_match_all('/<error>X|E<\/error>/', $outputInterface->getOutput(), $errorCount);
-
-        $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
-        $this->assertCount(1, $errorCount[0]);
+        $output = $outputInterface->fetch();
+        $retryCount = $this->container->getParameter('paraunit.max_retry_count');
+        $this->assertContains(str_repeat('A', $retryCount) . 'E', $output);
     }
 
     /**
+     * @group this
+     *
      * @dataProvider stubFilePathProvider
      */
     public function testMaxRetryDeadlock($stubFilePath)
     {
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -68,13 +64,8 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
-        $retryCount = array();
-        preg_match_all('/<ok>A<\/ok>/', $outputInterface->getOutput(), $retryCount);
-        $errorCount = array();
-        preg_match_all('/<error>X|E<\/error>/', $outputInterface->getOutput(), $errorCount);
-
-        $this->assertCount($this->container->getParameter('paraunit.max_retry_count'), $retryCount[0]);
-        $this->assertCount(1, $errorCount[0]);
+        $output = $outputInterface->fetch();
+        $this->assertContains(str_repeat('A', 3) . 'E', $output);
     }
 
     public function stubFilePathProvider()
@@ -91,7 +82,7 @@ class RunnerTest extends BaseFunctionalTestCase
             $this->markTestSkipped('The segfault cannot be reproduced in this environment');
         }
 
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -105,15 +96,16 @@ class RunnerTest extends BaseFunctionalTestCase
             'Exit code should not be 0'
         );
 
-        $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
+        $output = $outputInterface->fetch();
+        $this->assertContains('<halted>X</halted>', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
-            $outputInterface->getOutput(),
+            $output,
             'Missing recap title'
         );
         $this->assertContains(
             'SegFaultTestStub.php',
-            $outputInterface->getOutput(),
+            $output,
             'Missing failing filename'
         );
     }
@@ -126,7 +118,7 @@ class RunnerTest extends BaseFunctionalTestCase
             $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
         }
 
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -140,22 +132,23 @@ class RunnerTest extends BaseFunctionalTestCase
             'Exit code should be 0'
         );
 
-        $this->assertContains('<warning>W</warning>', $outputInterface->getOutput(), 'Missing W output');
+        $output = $outputInterface->fetch();
+        $this->assertContains('<warning>W</warning>', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
-            $outputInterface->getOutput(),
+            $output,
             'Missing recap title'
         );
         $this->assertContains(
             '<warning>MissingProviderTestStub.php</warning>',
-            $outputInterface->getOutput(),
+            $output,
             'Missing warned filename'
         );
     }
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults()
     {
-        $outputInterface = new ConsoleOutputStub();
+        $outputInterface = new BufferedOutput();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -165,9 +158,10 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
-        $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
-        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $outputInterface->getOutput(), 'Missing fatal error recap title');
-        $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaken for unknown result');
+        $output = $outputInterface->fetch();
+        $this->assertContains('<halted>X</halted>', $output, 'Missing X output');
+        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
+        $this->assertNotContains('1 files with UNKNOWN STATUS:', $output, 'REGRESSION: fatal error mistaken for unknown result');
 
     }
 }

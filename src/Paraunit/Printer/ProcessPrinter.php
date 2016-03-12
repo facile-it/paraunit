@@ -54,7 +54,7 @@ class ProcessPrinter
     private function printSingleTestResult($testResult)
     {
         switch ($testResult) {
-            case 'E': 
+            case 'E':
                 $this->printWithCounter('<error>E</error>');
                 break;
             case 'F':
@@ -69,7 +69,7 @@ class ProcessPrinter
             case 'S':
                 $this->printWithCounter('<skipped>S</skipped>');
                 break;
-           case 'R':
+            case 'R':
                 $this->printWithCounter('<risky>R</risky>');
                 break;
             case '.':

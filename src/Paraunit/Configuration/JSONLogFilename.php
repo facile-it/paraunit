@@ -10,6 +10,18 @@ use Paraunit\Process\ParaunitProcessInterface;
  */
 class JSONLogFilename
 {
+    /** @var  Paraunit */
+    private $configuration;
+
+    /**
+     * JSONLogFilename constructor.
+     * @param Paraunit $configuration
+     */
+    public function __construct(Paraunit $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     public function generate(ParaunitProcessInterface $process)
     {
         return $this->generateFromUniqueId($process->getUniqueId());
@@ -17,6 +29,6 @@ class JSONLogFilename
 
     public function generateFromUniqueId($uniqueId)
     {
-        return '/dev/shm/paraunit/logs/' . $uniqueId . '.json.log';
+        return $this->configuration->getTempDirForThisExecution() . '/logs/' . $uniqueId . '.json.log';
     }
 }

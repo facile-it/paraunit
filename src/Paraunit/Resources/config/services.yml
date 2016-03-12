@@ -57,13 +57,6 @@ services:
           - "@service_container"
 
     ## PROCESS HANDLING ##
-
-    paraunit.configuration.phpunit_bin_file:
-        class: Paraunit\Configuration\PHPUnitBinFile
-
-    paraunit.configuration.json_log_filename:
-        class: Paraunit\Configuration\JSONLogFilename
-
     paraunit.process.process_factory:
         class: Paraunit\Process\ProcessFactory
         arguments:

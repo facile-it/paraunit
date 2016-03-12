@@ -4,21 +4,23 @@ namespace Paraunit\Tests\Unit\Configuration;
 
 
 use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Configuration\Paraunit;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 
 /**
- * Class JSONLogFileNameTest
+ * Class JSONLogFilenameTest
  * @package Paraunit\Tests\Unit\Configuration
  */
-class JSONLogFileNameTest extends \PHPUnit_Framework_TestCase
+class JSONLogFilenameTest extends \PHPUnit_Framework_TestCase
 {
     public function testGenerate()
     {
         $process = new StubbedParaProcess();
-        $fileName = new JSONLogFilename();
+        $config = new Paraunit();
+        $fileName = new JSONLogFilename($config);
 
         $fileName = $fileName->generate($process);
 
-        $this->assertEquals('/dev/shm/paraunit/logs/' . $process->getUniqueId() . '.json.log', $fileName);
+        $this->assertEquals($config->getTempDirForThisExecution() . '/logs/' . $process->getUniqueId() . '.json.log', $fileName);
     }
 }
