@@ -23,7 +23,7 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $chainedParsers = $this->mockChainedParsers($chainedParsersResults);
         $process = new StubbedParaProcess();
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $logLocator->fetch($process)->willReturn(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN));
+        $logLocator->fetch($process)->willReturn(JSONLogStub::getLogs(JSONLogStub::ALL_GREEN));
         $parser = new JSONLogParser($logLocator->reveal());
         foreach ($chainedParsers as $chainedParser) {
             $parser->addParser($chainedParser);

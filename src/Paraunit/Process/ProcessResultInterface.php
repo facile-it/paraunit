@@ -20,15 +20,13 @@ interface ProcessResultInterface extends OutputAwareInterface
 
     public function addTestResult($testResult);
 
-    public function reportSegmentationFault();
-
-    public function reportFatalError();
-
     /** @return bool */
-    public function hasSegmentationFaults();
+    public function hasAbnormalTermination();
 
-    /** @return bool */
-    public function hasFatalErrors();
+    /**
+     * @param string $test The test function that halted the process
+     */
+    public function reportAbnormalTerminationInFunction($test);
 
     /** @return bool */
     public function isToBeRetried();

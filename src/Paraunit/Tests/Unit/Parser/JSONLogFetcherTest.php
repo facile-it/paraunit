@@ -25,4 +25,20 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 
         $fetcher->fetch($process);
     }
+
+    public function testFetch()
+    {
+        $process = new StubbedParaProcess();
+
+        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
+        $fileName->generate($process)->willReturn(__DIR__ . '/../../Stub/PHPUnitOutput/JSONLogs/AllGreen.json');
+
+        $fetcher = new JSONLogFetcher($fileName->reveal());
+
+        $logs = $fetcher->fetch($process);
+
+        $this->assertTrue(is_array($logs), 'Fetcher returning a non-array');
+        $this->assertCount(20, $logs);
+        $this->assertContainsOnlyInstancesOf('\stdClass', $logs);
+    }
 }

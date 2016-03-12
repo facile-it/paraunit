@@ -38,7 +38,7 @@ class ProcessPrinter
             case $process->isToBeRetried():
                 $this->printWithCounter('<ok>A</ok>');
                 break;
-            case $process->hasSegmentationFaults():
+            case $process->hasAbnormalTermination():
                 $this->printWithCounter('<segfault>X</segfault>');
                 break;
             case $process->hasFatalErrors():

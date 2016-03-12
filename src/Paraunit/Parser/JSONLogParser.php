@@ -38,10 +38,21 @@ class JSONLogParser
 
     public function parse(ProcessResultInterface $process)
     {
-        $logs = json_decode($this->logLocator->fetch($process));
+        $logs = $this->logLocator->fetch($process);
 
+        $expectingTestResult = false;
         foreach ($logs as $singleLog) {
-            $this->extractTestResult($process, $singleLog);
+            if ($singleLog->event == 'test') {
+                $expectingTestResult = false;
+                $this->extractTestResult($process, $singleLog);
+            } else {
+                $expectingTestResult = true;
+            }
+        }
+
+        if ($expectingTestResult) {
+            $process->addTestResult('X');
+            $process->reportAbnormalTerminationInFunction($singleLog->test);
         }
     }
 
@@ -57,21 +68,6 @@ class JSONLogParser
                 return true;
             }
         }
-
         return false;
-    }
-
-    private function checkErrorMessage(\stdClass $logItem)
-    {
-        switch (true) {
-            case preg_match('/^Incomplete Test: /', $logItem->message):
-                return 'I';
-            case preg_match('/^Skipped Test: /', $logItem->message):
-                return 'S';
-            case preg_match('/^Risky Test: /', $logItem->message):
-                return 'R';
-            default:
-                return 'E';
-        }
     }
 }

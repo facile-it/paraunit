@@ -26,7 +26,7 @@ class JSONLogFetcher
 
     /**
      * @param ParaunitProcessInterface $process
-     * @return string The full JSON log
+     * @return array
      * @throws JSONLogNotFoundException
      */
     public function fetch(ParaunitProcessInterface $process)
@@ -37,6 +37,17 @@ class JSONLogFetcher
             throw new JSONLogNotFoundException($process);
         }
 
-        return file_get_contents($filePath);
+        return json_decode(
+            $this->cleanLog(file_get_contents($filePath))
+        );
+    }
+
+    /**
+     * @param string $jsonString The dirty output
+     * @return string            The normalized log, as an array of JSON objects
+     */
+    private static function cleanLog($jsonString)
+    {
+        return preg_replace('/\}\{/', '},{', $jsonString);
     }
 }

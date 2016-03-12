@@ -23,6 +23,16 @@ class JSONLogStub
      * @return string
      * @throws \Exception
      */
+    public static function getLogs($filename)
+    {
+        return json_decode(self::getCleanOutputFileContent($filename));
+    }
+
+    /**
+     * @param $filename
+     * @return string
+     * @throws \Exception
+     */
     public static function getCleanOutputFileContent($filename)
     {
         $fullFilename =  __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';

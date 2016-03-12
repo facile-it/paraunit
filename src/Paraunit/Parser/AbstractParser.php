@@ -9,7 +9,7 @@ use Paraunit\Process\ProcessResultInterface;
  * Class AbstractParser
  * @package Paraunit\Parser
  */
-abstract class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
+class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
     /** @var  OutputContainer */
     protected $outputContainer;
@@ -43,21 +43,6 @@ abstract class AbstractParser implements JSONParserChainElementInterface, Output
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
-    {
-        if ($log->status == $this->status) {
-            $process->addTestResult($this->singleResultMarker);
-            $this->outputContainer->addToOutputBuffer($process, $log->message);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @return OutputContainer
      */
     public function getOutputContainer()
@@ -66,20 +51,17 @@ abstract class AbstractParser implements JSONParserChainElementInterface, Output
     }
 
     /**
-     * @param ProcessResultInterface $process
-     * @return bool
+     * {@inheritdoc}
      */
-    protected function storeParsedBlocks(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
     {
-        $parsedBlob = $this->parse($process);
+        if ($log->status != $this->status) {
+            return false;
+        }
 
-        if (isset($parsedBlob[1])) {
-            $parsedBlocks = preg_split('/^\d+\) /m', $parsedBlob[1]);
-            // il primo è sempre vuoto a causa dello split
-            unset($parsedBlocks[0]);
-
-            $this->outputContainer->addToOutputBuffer($parsedBlocks);
-            $this->outputContainer->addFileName($process->getFilename());
+        if ($this->checkMessageStart($log)) {
+            $process->addTestResult($this->singleResultMarker);
+            $this->outputContainer->addToOutputBuffer($process, $log->message);
 
             return true;
         }
@@ -88,25 +70,19 @@ abstract class AbstractParser implements JSONParserChainElementInterface, Output
     }
 
     /**
-     * @param ProcessResultInterface $process
+     * @param \stdClass $log
      * @return bool
      */
-    protected function parsingFoundSomething(ProcessResultInterface $process)
+    private function checkMessageStart(\stdClass $log)
     {
-        if (count($this->parse($process)) > 0) {
-            $this->outputContainer->addFileName($process->getFilename());
-
+        if (is_null($this->messageStartsWith)) {
             return true;
         }
 
-        return false;
-    }
+        if ( ! property_exists($log, 'message')) {
+            return false;
+        }
 
-    private function parse(ProcessResultInterface $process)
-    {
-        $parsedBlob = array();
-        preg_match(static::PARSING_REGEX, $process->getOutput(), $parsedBlob);
-
-        return $parsedBlob;
+        return 0 === strpos($log->message, $this->messageStartsWith);
     }
 }
