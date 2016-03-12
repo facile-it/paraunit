@@ -55,15 +55,15 @@ class JSONLogParserTest extends BaseFunctionalTestCase
     public function parsableResultsProvider()
     {
         return array(
-            array(JSONLogStub::get2Errors2Failures(), str_split('FF..E...E')),
-            array(JSONLogStub::getAllGreen(), str_split('.........')),
-            array(JSONLogStub::getFatalError(), str_split('...')),
-            array(JSONLogStub::getSegFault(), str_split('...')),
-            array(JSONLogStub::getSingleError(), str_split('.E.')),
-            array(JSONLogStub::getSingleIncomplete(), str_split('..I.')),
-            array(JSONLogStub::getSingleRisky(), str_split('..R.')),
-            array(JSONLogStub::getSingleSkip(), str_split('..S.')),
-            array(JSONLogStub::getSingleWarning(), str_split('...W')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::TWO_ERRORS_TWO_FAILURES), str_split('FF..E...E')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN), str_split('.........')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::FATAL_ERROR), str_split('...')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::SEGFAULT), str_split('...')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR), str_split('.E.')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_INCOMPLETE), str_split('..I.')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_RISKY), str_split('..R.')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP), str_split('..S.')),
+            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING), str_split('...W')),
         );
     }
 }

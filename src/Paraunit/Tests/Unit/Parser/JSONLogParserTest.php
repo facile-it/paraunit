@@ -55,21 +55,4 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
 
         return $mocks;
     }
-
-    public function testLogNotFound()
-    {
-        $chainedParser = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
-        $chainedParser->parsingFoundResult(Argument::cetera())->shouldNotBeCalled();
-
-        $process = new StubbedParaProcess();
-        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
-
-        $parser = new JSONLogParser($logLocator->reveal());
-        $parser->addParser($chainedParser->reveal());
-
-        $parser->parse($process);
-
-        $this->assertEmpty($process->getTestResults());
-   }
 }
