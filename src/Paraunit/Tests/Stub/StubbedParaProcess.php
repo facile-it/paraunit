@@ -37,6 +37,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
         parent::__construct($commandLine, $uniqueId);
 
         $this->commandLine = $commandLine;
+        $this->filename = 'Test.php';
     }
 
     /**

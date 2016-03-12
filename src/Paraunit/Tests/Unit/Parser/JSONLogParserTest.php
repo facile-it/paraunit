@@ -3,9 +3,8 @@
 namespace Paraunit\Tests\Unit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
-use Paraunit\Exception\RecoverableTestErrorException;
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Tests\Stub\PHPUnitOutput\JSONLogs\JSONLogStub;
+use Paraunit\Printer\OutputContainer;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 use Prophecy\Argument;
 
@@ -18,13 +17,41 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
     public function testParseHandlesMissingLogs()
     {
         $process = new StubbedParaProcess();
+        $process->setOutput('Test output (core dumped)');
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
         $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
-        $parser = new JSONLogParser($logLocator->reveal());
+
+        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', ''));
 
         $parser->parse($process);
 
         $this->assertTrue($process->hasAbnormalTermination());
         $this->assertEquals('Unknown function -- test log not found', $process->getAbnormalTerminatedFunction());
+        $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
+        $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
+        $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
+        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()]);
+    }
+
+    public function testParseHandlesTruncatedLogs()
+    {
+        $process = new StubbedParaProcess();
+        $process->setOutput('Test output (core dumped)');
+        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
+        $log1 = new \stdClass();
+        $log1->event = 'testStart';
+        $log1->test = 'testSomething';
+        $logLocator->fetch($process)->willReturn(array($log1));
+
+        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', ''));
+
+        $parser->parse($process);
+
+        $this->assertTrue($process->hasAbnormalTermination());
+        $this->assertEquals('testSomething', $process->getAbnormalTerminatedFunction());
+        $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
+        $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
+        $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
+        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()]);
     }
 }

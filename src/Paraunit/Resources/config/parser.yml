@@ -5,6 +5,7 @@ services:
     class: Paraunit\Parser\JSONLogParser
     arguments:
       - "@paraunit.parser.json_log_fetcher"
+      - "@paraunit.output_container.abnormal_terminated"
     calls:
       - [addParser, ["@paraunit.parser.pass_parser"]]
       - [addParser, ["@paraunit.parser.retry_parser"]]
@@ -86,6 +87,12 @@ services:
 
   paraunit.output_container.null:
     class: Paraunit\Printer\NullOutputContainer
+
+  paraunit.output_container.abnormal_terminated:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "abnormal"
+      - "abnormal terminated (fatal/segfault)"
 
   paraunit.output_container.error:
     class: Paraunit\Printer\OutputContainer

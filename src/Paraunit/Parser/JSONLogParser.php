@@ -5,6 +5,7 @@ namespace Paraunit\Parser;
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Exception\RecoverableTestErrorException;
 use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Printer\OutputContainerInterface;
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ProcessResultInterface;
 
@@ -18,15 +19,20 @@ class JSONLogParser
     private $logLocator;
 
     /** @var JSONParserChainElementInterface[] */
-    protected $parsers;
+    private $parsers;
+
+    /** @var  OutputContainerInterface */
+    private $abnormalTerminatedOutputContainer;
 
     /**
      * JSONLogParser constructor.
      * @param JSONLogFetcher $logLocator
+     * @param OutputContainerInterface $abnormalTerminatedOutputContainer
      */
-    public function __construct(JSONLogFetcher $logLocator)
+    public function __construct(JSONLogFetcher $logLocator, OutputContainerInterface $abnormalTerminatedOutputContainer)
     {
         $this->logLocator = $logLocator;
+        $this->abnormalTerminatedOutputContainer = $abnormalTerminatedOutputContainer;
         $this->parsers = array();
     }
 
@@ -47,6 +53,14 @@ class JSONLogParser
     }
 
     /**
+     * @return OutputContainerInterface
+     */
+    public function getAbnormalTerminatedOutputContainer()
+    {
+        return $this->abnormalTerminatedOutputContainer;
+    }
+
+    /**
      * @param ProcessEvent $processEvent
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
@@ -64,6 +78,7 @@ class JSONLogParser
         } catch (JSONLogNotFoundException $exception) {
             $process->addTestResult('X');
             $process->reportAbnormalTerminationInFunction('Unknown function -- test log not found');
+            $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, $process->getOutput());
 
             return;
         }
@@ -82,6 +97,7 @@ class JSONLogParser
         if ($expectingTestResult) {
             $process->addTestResult('X');
             $process->reportAbnormalTerminationInFunction($singleLog->test);
+            $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, $process->getOutput());
         }
     }
 
