@@ -20,9 +20,6 @@ class EngineEvent extends Event
     // This Event will be triggered when paraunit finished all test execution
     const END = 'engine_event.end';
 
-    /** @var  array */
-    protected $files;
-
     /** @var  OutputInterface */
     protected $outputInterface;
 
@@ -30,13 +27,11 @@ class EngineEvent extends Event
     protected $context;
 
     /**
-     * @param                 $files
      * @param OutputInterface $outputInterface
      * @param array           $context
      */
-    public function __construct($files, OutputInterface $outputInterface, $context = array())
+    public function __construct(OutputInterface $outputInterface, $context = array())
     {
-        $this->files = $files;
         $this->outputInterface = $outputInterface;
         $this->context = $context;
     }

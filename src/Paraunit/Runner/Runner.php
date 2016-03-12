@@ -64,7 +64,7 @@ class Runner
      */
     public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
     {
-        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($files, $outputInterface));
+        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
         $this->processFactory->setConfigFile($phpunitConfigFile);
         $start = new \Datetime('now');
@@ -72,7 +72,7 @@ class Runner
 
         $this->eventDispatcher->dispatch(
             EngineEvent::START,
-            new EngineEvent($files, $outputInterface, array('start' => $start,))
+            new EngineEvent($outputInterface, array('start' => $start,))
         );
 
         while ( ! empty($this->processStack) || ! empty($this->processRunning)) {
@@ -102,7 +102,6 @@ class Runner
         $this->eventDispatcher->dispatch(
             EngineEvent::END,
             new EngineEvent(
-                $files,
                 $outputInterface,
                 array('end' => $end, 'start' => $start, 'process_completed' => $this->processCompleted)
             )

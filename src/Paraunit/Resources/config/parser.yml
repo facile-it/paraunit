@@ -8,11 +8,11 @@ services:
     calls:
       - [addParser, ["@paraunit.parser.pass_parser"]]
       - [addParser, ["@paraunit.parser.retry_parser"]]
-      - [addParser, ["@paraunit.parser.failure_parser"]]
-      - [addParser, ["@paraunit.parser.warning_parser"]]
       - [addParser, ["@paraunit.parser.incomplete_parser"]]
       - [addParser, ["@paraunit.parser.skipped_parser"]]
       - [addParser, ["@paraunit.parser.risky_parser"]]
+      - [addParser, ["@paraunit.parser.warning_parser"]]
+      - [addParser, ["@paraunit.parser.failure_parser"]]
       - [addParser, ["@paraunit.parser.error_parser"]]
     tags:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
@@ -25,7 +25,7 @@ services:
   paraunit.parser.pass_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.pass"
+      - "@paraunit.output_container.null"
       - "."
       - "pass"
 
@@ -84,7 +84,7 @@ services:
 
  ### OUTPUT CONTAINERS ###
 
-  paraunit.output_container.pass:
+  paraunit.output_container.null:
     class: Paraunit\Printer\NullOutputContainer
 
   paraunit.output_container.error:

@@ -41,9 +41,9 @@ class JSONLogParser
     /**
      * @return JSONParserChainElementInterface[]
      */
-    public function getParsers()
+    public function getParsersForPrinting()
     {
-        return $this->parsers;
+        return array_reverse($this->parsers);
     }
 
     /**

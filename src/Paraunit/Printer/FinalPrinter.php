@@ -15,7 +15,7 @@ class FinalPrinter
 {
     /** @var  JSONLogParser */
     private $logParser;
-    
+
     /** @var  OutputInterface */
     private $output;
 
@@ -33,7 +33,7 @@ class FinalPrinter
      */
     public function onEngineEnd(EngineEvent $engineEvent)
     {
-        if (!$engineEvent->has('start') || !$engineEvent->has('end') || !$engineEvent->has('process_completed')) {
+        if ( ! $engineEvent->has('start') || ! $engineEvent->has('end') || ! $engineEvent->has('process_completed')) {
             throw new \BadMethodCallException('missing argument/s');
         }
 
@@ -46,17 +46,14 @@ class FinalPrinter
         $this->output->writeln('');
         $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
 
-        $this->output->writeln('');
-        $this->output->write('Executed: ');
-        $this->output->write(count($completedProcesses).' test classes, ');
-
         $testsCount = 0;
         /** @var ParaunitProcessAbstract $process */
         foreach ($completedProcesses as $process) {
             $testsCount += count($process->getTestResults());
         }
 
-        $this->output->writeln($testsCount.' tests');
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
 
         $this->printAllFailuresOutput();
         $this->printAllFilesRecap();
@@ -66,7 +63,7 @@ class FinalPrinter
 
     private function printAllFailuresOutput()
     {
-        foreach ($this->logParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFailuresOutput($parser->getOutputContainer());
             }
@@ -82,12 +79,12 @@ class FinalPrinter
         if (count($buffer)) {
             $tag = $outputContainer->getTag();
             $this->output->writeln('');
-            $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, $outputContainer->getTitle(), $tag));
+            $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($outputContainer->getTitle()), $tag));
 
             $i = 1;
 
             foreach ($buffer as $filename => $messages) {
-                foreach($messages as $message) {
+                foreach ($messages as $message) {
                     $this->output->writeln('');
                     $this->output->writeln(
                         sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $message)
@@ -99,7 +96,7 @@ class FinalPrinter
 
     private function printAllFilesRecap()
     {
-        foreach ($this->logParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFileRecap($parser->getOutputContainer());
             }
