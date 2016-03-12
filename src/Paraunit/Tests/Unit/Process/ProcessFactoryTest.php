@@ -18,7 +18,7 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $phpUnitConfigFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
         $phpUnitConfigFile->getFileFullPath()->shouldBeCalled()->willReturn('configFile.xml');
 
-        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFileName');
+        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
         $fileName->generateFromUniqueId(md5('TestTest.php'))->willReturn('log.json');
 
         $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());

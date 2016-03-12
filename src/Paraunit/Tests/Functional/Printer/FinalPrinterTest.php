@@ -64,6 +64,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         /** @var JSONLogParser $logParser */
         $logParser = $this->container->get('paraunit.parser.json_log_parser');
 
+        $logParser->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, 'Test');
         foreach ($logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $parser->getOutputContainer()->addToOutputBuffer($process, 'Test');
@@ -77,12 +78,14 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
         $this->assertNotEmpty($output->getOutput());
         $this->assertOutputOrder($output, array(
+            'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
             'Risky Outcome output:',
             'Skipped Outcome output:',
             'Incomplete Outcome output:',
+            'files with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS)',
             'files with ERRORS',
             'files with FAILURES',
             'files with WARNING',

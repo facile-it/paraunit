@@ -63,6 +63,8 @@ class FinalPrinter
 
     private function printAllFailuresOutput()
     {
+        $this->printFailuresOutput($this->logParser->getAbnormalTerminatedOutputContainer());
+
         foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFailuresOutput($parser->getOutputContainer());
@@ -96,6 +98,8 @@ class FinalPrinter
 
     private function printAllFilesRecap()
     {
+        $this->printFileRecap($this->logParser->getAbnormalTerminatedOutputContainer());
+
         foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
                 $this->printFileRecap($parser->getOutputContainer());

@@ -92,7 +92,7 @@ services:
     class: Paraunit\Printer\OutputContainer
     arguments:
       - "abnormal"
-      - "abnormal terminated (fatal/segfault)"
+      - "abnormal terminations (fatal errors, segfaults)"
 
   paraunit.output_container.error:
     class: Paraunit\Printer\OutputContainer

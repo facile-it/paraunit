@@ -107,7 +107,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
         $this->assertContains(
-            '1 files with SEGMENTATION FAULTS:',
+            '1 files with ABNORMAL TERMINATIONS',
             $outputInterface->getOutput(),
             'Missing recap title'
         );
@@ -166,7 +166,7 @@ class RunnerTest extends BaseFunctionalTestCase
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $this->assertContains('<halted>X</halted>', $outputInterface->getOutput(), 'Missing X output');
-        $this->assertContains('1 files with FATAL ERRORS:', $outputInterface->getOutput(), 'Missing fatal error recap title');
+        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $outputInterface->getOutput(), 'Missing fatal error recap title');
         $this->assertNotContains('1 files with UNKNOWN STATUS:', $outputInterface->getOutput(), 'REGRESSION: fatal error mistaken for unknown result');
 
     }
