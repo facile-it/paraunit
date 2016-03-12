@@ -1,0 +1,38 @@
+services:
+  ## OUTPUT PARSERS ##
+
+  paraunit.parser.process_output_parser:
+    class: Paraunit\Parser\JSONLogParser
+    calls:
+      - [addParser, ["@paraunit.parser.retry_parser"]]
+      - [addParser, ["@paraunit.parser.segmentation_fault_parser"]]
+      - [addParser, ["@paraunit.parser.fatal_error_parser"]]
+      - [addParser, ["@paraunit.parser.error_parser"]]
+      - [addParser, ["@paraunit.parser.failure_parser"]]
+      - [addParser, ["@paraunit.parser.warning_parser"]]
+      - [addParser, ["@paraunit.parser.test_result_parser"]]
+    tags:
+      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
+
+  paraunit.parser.error_parser:
+    class: Paraunit\Parser\ErrorParser
+
+  paraunit.parser.failure_parser:
+    class: Paraunit\Parser\FailureParser
+
+  paraunit.parser.warning_parser:
+    class: Paraunit\Parser\WarningParser
+
+  paraunit.parser.fatal_error_parser:
+    class: Paraunit\Parser\FatalErrorParser
+
+  paraunit.parser.retry_parser:
+    class: Paraunit\Parser\RetryParser
+    arguments:
+      - %paraunit.max_retry_count%
+
+  paraunit.parser.segmentation_fault_parser:
+    class: Paraunit\Parser\SegmentationFaultParser
+
+  paraunit.parser.test_result_parser:
+    class: Paraunit\Parser\TestResultsParser

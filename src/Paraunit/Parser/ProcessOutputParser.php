@@ -9,7 +9,7 @@ use Paraunit\Lifecycle\ProcessEvent;
  */
 class ProcessOutputParser
 {
-    /** @var ProcessOutputParserChainElementInterface[] */
+    /** @var JSONParserChainElementInterface[] */
     protected $parsers;
 
     public function __construct()
@@ -18,15 +18,15 @@ class ProcessOutputParser
     }
 
     /**
-     * @param ProcessOutputParserChainElementInterface $parser
+     * @param JSONParserChainElementInterface $parser
      */
-    public function addParser(ProcessOutputParserChainElementInterface $parser)
+    public function addParser(JSONParserChainElementInterface $parser)
     {
         $this->parsers[] = $parser;
     }
 
     /**
-     * @return ProcessOutputParserChainElementInterface[]
+     * @return JSONParserChainElementInterface[]
      */
     public function getParsers()
     {
@@ -39,7 +39,7 @@ class ProcessOutputParser
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
         foreach ($this->parsers as $parser) {
-            if ( ! $parser->parseAndContinue($processEvent->getProcess())) {
+            if ( ! $parser->parsingFoundResult($processEvent->getProcess())) {
                 return;
             }
         }

@@ -26,6 +26,7 @@ class Paraunit
 
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
         $loader->load('services.yml');
+        $loader->load('parser.yml');
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 

@@ -9,21 +9,33 @@ use Paraunit\Process\ProcessResultInterface;
  * Class AbstractParser
  * @package Paraunit\Parser
  */
-abstract class AbstractParser implements ProcessOutputParserChainElementInterface, OutputContainerBearerInterface
+abstract class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
     /** @var  OutputContainer */
     protected $outputContainer;
 
+    /** @var  string */
+    protected $tag;
+
+    /** @var  string */
+    protected $title;
+
+    /** @var  string */
+    protected $messageStartsWith;
+
     /**
      * AbstractParser constructor.
+     * @param string $tag
+     * @param string $title
+     * @param string | null $messageStartsWith The log result is distinguishable with the start of the message
      */
-    public function __construct()
+    public function __construct($tag, $title, $messageStartsWith = null)
     {
-        $this->assertConstantExist('TAG');
-        $this->assertConstantExist('TITLE');
-        $this->assertConstantExist('PARSING_REGEX');
+        $this->tag = $tag;
+        $this->title = $title;
+        $this->messageStartsWith = $messageStartsWith;
 
-        $this->outputContainer = new OutputContainer(static::TAG, static::TITLE);
+        $this->outputContainer = new OutputContainer($this->tag, $this->title);
     }
 
     /**
@@ -77,16 +89,5 @@ abstract class AbstractParser implements ProcessOutputParserChainElementInterfac
         preg_match(static::PARSING_REGEX, $process->getOutput(), $parsedBlob);
 
         return $parsedBlob;
-    }
-
-    /**
-     * @param $constantName
-     * @throws \Exception
-     */
-    private function assertConstantExist($constantName)
-    {
-        if ( ! defined('static::' . $constantName)) {
-            throw new \Exception('Missing ' .$constantName . ' constant in ' . get_class($this));
-        }
     }
 }

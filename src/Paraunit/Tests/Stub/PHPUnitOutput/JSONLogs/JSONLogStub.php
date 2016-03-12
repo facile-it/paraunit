@@ -8,17 +8,6 @@ namespace Paraunit\Tests\Stub\PHPUnitOutput\JSONLogs;
  */
 class JSONLogStub
 {
-    /**
-     * @param string $jsonString The dirty output
-     * @return string            The normalized log, as an array of JSON objects
-     */
-    public static function cleanLog($jsonString)
-    {
-        $splitted = preg_replace('/\}\{/', '},{', $jsonString);
-
-        return '[' . $splitted . ']';
-    }
-
     public static function get2Errors2Failures()
     {
         return self::getOutputFileContent('2Errors2Failures');
@@ -65,12 +54,23 @@ class JSONLogStub
     }
 
     /**
+     * @param string $jsonString The dirty output
+     * @return string            The normalized log, as an array of JSON objects
+     */
+    private static function cleanLog($jsonString)
+    {
+        $splitted = preg_replace('/\}\{/', '},{', $jsonString);
+
+        return '[' . $splitted . ']';
+    }
+
+    /**
      * @param $filename
      *
      * @return string
      */
-    protected static function getOutputFileContent($filename)
+    private static function getOutputFileContent($filename)
     {
-        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $filename . '.json');
+        return self::cleanLog(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $filename . '.json'));
     }
 }

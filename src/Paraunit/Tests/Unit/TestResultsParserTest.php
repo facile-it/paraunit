@@ -15,7 +15,7 @@ class TestResultsParserTest extends StubbedPHPUnitBaseTestCase
     {
         $parser = new TestResultsParser();
 
-        $this->assertTrue($parser->parseAndContinue($process));
+        $this->assertTrue($parser->parsingFoundResult($process));
         $this->assertEquals($expectedResult, $process->getTestResults());
     }
 
@@ -38,7 +38,7 @@ class TestResultsParserTest extends StubbedPHPUnitBaseTestCase
 
         $parser = new TestResultsParser();
 
-        $this->assertTrue($parser->parseAndContinue($process));
+        $this->assertTrue($parser->parsingFoundResult($process));
         $this->assertEquals(str_repeat('.', 77), implode($process->getTestResults()));
     }
 }

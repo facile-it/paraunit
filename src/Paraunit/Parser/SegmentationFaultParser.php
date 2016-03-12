@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class SegmentationFaultParser extends AbstractParser implements ProcessOutputParserChainElementInterface
+class SegmentationFaultParser extends AbstractParser implements JSONParserChainElementInterface
 {
     const TAG = 'segfault';
     const TITLE = 'Segmentation Faults';
@@ -15,7 +15,7 @@ class SegmentationFaultParser extends AbstractParser implements ProcessOutputPar
      *
      * @return bool True if chain should continue
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process)
     {
         if ($this->parsingFoundSomething($process)) {
             $process->reportSegmentationFault();

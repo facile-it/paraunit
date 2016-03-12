@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class FatalErrorParser extends AbstractParser implements ProcessOutputParserChainElementInterface
+class FatalErrorParser extends AbstractParser implements JSONParserChainElementInterface
 {
     const TAG = 'fatal';
     const TITLE = 'Fatal Errors';
@@ -15,7 +15,7 @@ class FatalErrorParser extends AbstractParser implements ProcessOutputParserChai
      *
      * @return bool True if chain should continue
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process)
     {
         if ($this->parsingFoundSomething($process)) {
             $process->reportFatalError();

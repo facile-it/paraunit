@@ -15,7 +15,7 @@ class WarningParserTest extends StubbedPHPUnitBaseTestCase
     {
         $parser = new WarningParser();
 
-        $this->assertTrue($parser->parseAndContinue($process));
+        $this->assertTrue($parser->parsingFoundResult($process));
 
         $this->assertCount($expectedWarningCount, $parser->getOutputContainer()->getOutputBuffer());
     }

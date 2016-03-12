@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class TestResultsParser implements ProcessOutputParserChainElementInterface
+class TestResultsParser implements JSONParserChainElementInterface
 {
     const PHPUNIT_TEST_RESULTS_REGEX = '/(?<=by Sebastian Bergmann and contributors.\n\n)(.*?)+(?=\n\nTime:)/s';
     const PHPUNIT_CONFIG_LOAD = 'Configuration read from ';
@@ -14,7 +14,7 @@ class TestResultsParser implements ProcessOutputParserChainElementInterface
      *
      * @return bool True if chain should continue
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process)
     {
         $results = $this->getResultsFromOutput($process->getOutput());
 

@@ -3,16 +3,20 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
+use Paraunit\Exception\RecoverableTestErrorException;
 use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Class JSONLogParser
  * @package Paraunit\Parser
  */
-class JSONLogParser implements ProcessOutputParserChainElementInterface
+class JSONLogParser
 {
     /** @var  JSONLogFetcher */
     private $logLocator;
+
+    /** @var JSONParserChainElementInterface[] */
+    protected $parsers;
 
     /**
      * JSONLogParser constructor.
@@ -21,47 +25,44 @@ class JSONLogParser implements ProcessOutputParserChainElementInterface
     public function __construct(JSONLogFetcher $logLocator)
     {
         $this->logLocator = $logLocator;
+        $this->parsers = array();
     }
 
-    public function parseAndContinue(ProcessResultInterface $process)
+    /**
+     * @param JSONParserChainElementInterface $parser
+     */
+    public function addParser(JSONParserChainElementInterface $parser)
+    {
+        $this->parsers[] = $parser;
+    }
+
+    public function parse(ProcessResultInterface $process)
     {
         try {
             $logs = json_decode($this->logLocator->fetch($process));
+
+            foreach ($logs as $singleLog) {
+                $this->extractTestResult($process, $singleLog);
+            }
         } catch (JSONLogNotFoundException $exception) {
-            return true;
+            return;
         }
-
-        foreach ($logs as $singleLog) {
-            $this->handleLogItem($process, $singleLog);
-        }
-
-        return false;
     }
 
     /**
      * @param ProcessResultInterface $process
      * @param \stdClass $logItem
+     * @return bool False if the parsing is still waiting for a test to give results
      */
-    private function handleLogItem(ProcessResultInterface $process, \stdClass $logItem)
+    private function extractTestResult(ProcessResultInterface $process, \stdClass $logItem)
     {
-        if ($logItem->event == 'test') {
-            switch ($logItem->status) {
-                case 'pass':
-                    $process->addTestResult('.');
-                    break;
-                case 'fail':
-                    $process->addTestResult('F');
-                    break;
-                case 'error':
-                    $process->addTestResult($this->checkErrorMessage($logItem));
-                    break;
-                case 'warning':
-                    $process->addTestResult('W');
-                    break;
-                default:
-                    var_dump($logItem->status);
+        foreach ($this->parsers as $parser) {
+            if ($parser->parsingFoundResult($process, $logItem)) {
+                return true;
             }
         }
+
+        return false;
     }
 
     private function checkErrorMessage(\stdClass $logItem)

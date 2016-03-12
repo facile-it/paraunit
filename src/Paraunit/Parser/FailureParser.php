@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class FailureParser extends AbstractParser implements ProcessOutputParserChainElementInterface
+class FailureParser extends AbstractParser implements JSONParserChainElementInterface
 {
     const TAG = 'failure';
     const TITLE = 'failures';
@@ -15,7 +15,7 @@ class FailureParser extends AbstractParser implements ProcessOutputParserChainEl
      *
      * @return bool True if chain should continue
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process)
     {
         $this->storeParsedBlocks($process);
 

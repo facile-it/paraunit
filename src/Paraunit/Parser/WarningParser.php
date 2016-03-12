@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessResultInterface;
 
-class WarningParser extends AbstractParser implements ProcessOutputParserChainElementInterface
+class WarningParser extends AbstractParser implements JSONParserChainElementInterface
 {
     const TAG = 'warning';
     const TITLE = 'Warnings';
@@ -15,7 +15,7 @@ class WarningParser extends AbstractParser implements ProcessOutputParserChainEl
      *
      * @return bool True if chain should continue
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function parsingFoundResult(ProcessResultInterface $process)
     {
         $this->storeParsedBlocks($process);
 

@@ -15,7 +15,7 @@ class FailureParserTest extends StubbedPHPUnitBaseTestCase
     {
         $parser = new FailureParser();
 
-        $this->assertTrue($parser->parseAndContinue($process));
+        $this->assertTrue($parser->parsingFoundResult($process));
 
         $this->assertCount($expectedFailureCount, $parser->getOutputContainer()->getOutputBuffer());
     }

@@ -15,7 +15,7 @@ class ErrorParserTest extends StubbedPHPUnitBaseTestCase
     {
         $parser = new ErrorParser();
 
-        $this->assertTrue($parser->parseAndContinue($process));
+        $this->assertTrue($parser->parsingFoundResult($process));
 
         $this->assertCount($expectedErrorCount, $parser->getOutputContainer()->getOutputBuffer());
     }
