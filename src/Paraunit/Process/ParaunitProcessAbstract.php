@@ -116,6 +116,11 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         $this->testResults = $testResults;
     }
 
+    public function addTestResult($testResult)
+    {
+        $this->testResults[] = $testResult;
+    }
+
     public function reportSegmentationFault()
     {
         $this->segmentationFault = true;

@@ -12,8 +12,13 @@ interface ProcessResultInterface extends OutputAwareInterface
      */
     public function getTestResults();
 
-    /** @param int[] $testResults */
+    /**
+     * @param int[] $testResults
+     * @deprecated We should use just addTestResult
+     */
     public function setTestResults(array $testResults);
+
+    public function addTestResult($testResult);
 
     public function reportSegmentationFault();
 
