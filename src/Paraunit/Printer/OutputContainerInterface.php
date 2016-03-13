@@ -17,7 +17,7 @@ interface OutputContainerInterface
     public function addToOutputBuffer(ProcessResultInterface $process, $message);
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getFileNames();
 

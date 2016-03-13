@@ -39,7 +39,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getOutput()
     {

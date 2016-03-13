@@ -73,7 +73,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getOutput()
     {

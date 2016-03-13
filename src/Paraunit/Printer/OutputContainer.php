@@ -22,7 +22,7 @@ class OutputContainer extends AbstractOutputContainer implements OutputContainer
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getFileNames()
     {
@@ -30,7 +30,7 @@ class OutputContainer extends AbstractOutputContainer implements OutputContainer
     }
 
     /**
-     * @return string[][]
+     * {@inheritdoc}
      */
     public function getOutputBuffer()
     {
@@ -38,7 +38,7 @@ class OutputContainer extends AbstractOutputContainer implements OutputContainer
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function countFiles()
     {

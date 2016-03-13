@@ -3,13 +3,12 @@
 namespace Paraunit\Lifecycle;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /***
  * Class EngineEvent
  * @package Paraunit\Lifecycle
  */
-class EngineEvent extends Event
+class EngineEvent extends AbstractEvent
 {
     // This Event will be triggered before the whole paraunit engine is started
     const BEFORE_START = 'engine_event.before_start';
@@ -23,12 +22,9 @@ class EngineEvent extends Event
     /** @var  OutputInterface */
     protected $outputInterface;
 
-    /** @var  array */
-    protected $context;
-
     /**
      * @param OutputInterface $outputInterface
-     * @param array           $context
+     * @param array $context
      */
     public function __construct(OutputInterface $outputInterface, $context = array())
     {
@@ -42,29 +38,5 @@ class EngineEvent extends Event
     public function getOutputInterface()
     {
         return $this->outputInterface;
-    }
-
-    /**
-     * @param $contextParameterName
-     *
-     * @return bool
-     */
-    public function has($contextParameterName)
-    {
-        return isset($this->context[$contextParameterName]);
-    }
-
-    /**
-     * @param $contextParameterName
-     *
-     * @return mixed
-     */
-    public function get($contextParameterName)
-    {
-        if (!$this->has($contextParameterName)) {
-            throw new \LogicException('Cannot find parameter: '.$contextParameterName);
-        }
-
-        return $this->context[$contextParameterName];
     }
 }

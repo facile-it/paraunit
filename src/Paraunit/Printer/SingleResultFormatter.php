@@ -42,6 +42,9 @@ class SingleResultFormatter
         return $singleResult;
     }
 
+    /**
+     * @param $parser
+     */
     private function addToMap($parser)
     {
         if ($parser instanceof OutputContainerBearerInterface) {

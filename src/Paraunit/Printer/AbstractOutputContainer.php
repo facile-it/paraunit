@@ -28,7 +28,6 @@ class AbstractOutputContainer
         $this->tag = $tag;
         $this->title = $title;
         $this->singleResultMarker = $singleResultMarker;
-        $this->outputBuffer = array();
     }
 
     /**
