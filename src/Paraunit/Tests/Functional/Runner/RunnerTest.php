@@ -168,4 +168,18 @@ class RunnerTest extends BaseFunctionalTestCase
         $this->assertNotContains('UNKNOWN STATUS', $output, 'REGRESSION: fatal error mistaken for unknown result');
 
     }
+
+    public function testRegressionFatalErrorsShouldNotLeakToOutput()
+    {
+        $outputInterface = new UnformattedOutputStub();
+
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array(
+            'src/Paraunit/Tests/Stub/RaisingNoticeTestStub.php',
+        );
+
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
+        $this->assertNotContains('YOU SHOULD NOT SEE THIS', $outputInterface->getOutput(), 'REGRESSION: an error raised from PHP is seen in output');
+    }
 }
