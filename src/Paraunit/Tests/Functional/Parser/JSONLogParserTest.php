@@ -34,11 +34,13 @@ class JSONLogParserTest extends BaseFunctionalTestCase
         $parser = $this->container->get('paraunit.parser.json_log_parser');
 
         $parser->parse($process);
-        unlink($filename); // TODO -- cancellare tutto nel teardown
 
         $this->assertEquals($expectedResult, $process->getTestResults());
         if ($hasAbnormalTermination) {
             $this->assertTrue($process->hasAbnormalTermination());
+            $this->markTestIncomplete('Print function that is causing the fatal');
+            $output = $parser->getAbnormalTerminatedOutputContainer();
+            $this->assertContains('Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output);
         }
     }
 

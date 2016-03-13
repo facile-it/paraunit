@@ -61,7 +61,7 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
 
         if ($this->checkMessageStart($log)) {
             $process->addTestResult($this->singleResultMarker);
-            $this->outputContainer->addToOutputBuffer($process, $log->message);
+            $this->outputContainer->addToOutputBuffer($process, $this->createMessageFromLog($log));
 
             return true;
         }
@@ -84,5 +84,22 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
         }
 
         return 0 === strpos($log->message, $this->messageStartsWith);
+    }
+
+    /**
+     * @param \stdClass $log
+     * @return string
+     */
+    private function createMessageFromLog(\stdClass $log)
+    {
+        $stackTrace = '';
+
+        foreach ($log->trace as $step) {
+            $stackTrace .=  "\n" . $step->file . ':' . $step->line;
+        }
+
+        return $log->test . "\n"
+            . $log->message . "\n"
+            . $stackTrace;
     }
 }

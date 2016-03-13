@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Class BaseFunctionalTestCase
  * @package Paraunit\Tests
  */
-abstract class BaseFunctionalTestCase extends BaseTestCase
+abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
 {
     /** @var ContainerBuilder */
     protected $container = null;
@@ -20,6 +20,14 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
         parent::setUp();
 
         $this->container = Paraunit::buildContainer();
+        $this->cleanUpTempDirForThisExecution();
+    }
+
+    protected function tearDown()
+    {
+        $this->cleanUpTempDirForThisExecution();
+
+        parent::tearDown();
     }
 
     /**
@@ -142,5 +150,31 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
     protected function getOutputFileContent($filename)
     {
         return file_get_contents(__DIR__ . '/Stub/PHPUnitOutput/' . $filename);
+    }
+
+    private function cleanUpTempDirForThisExecution()
+    {
+        /** @var Paraunit $configuration */
+        $configuration = $this->container->get('paraunit.configuration.paraunit');
+        $this->cleanUpDir($configuration->getTempDirForThisExecution());
+    }
+
+    /**
+     * @param string $dir
+     */
+    private function cleanUpDir($dir)
+    {
+        $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach($files as $file) {
+            if ($file->isDir()){
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+
+        rmdir($dir);
     }
 }
