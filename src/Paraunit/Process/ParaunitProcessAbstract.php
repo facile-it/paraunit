@@ -22,8 +22,8 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /** @var string[] */
     protected $testResults;
 
-    /** @var string */
-    protected $abnormalTerminatedFunction;
+    /** @var bool */
+    protected $abnormalTermination;
 
     /**
      * {@inheritdoc}
@@ -38,7 +38,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         }
 
         $this->testResults = array();
-        $this->abnormalTerminatedFunction = null;
+        $this->abnormalTermination = false;
     }
 
     /**
@@ -121,23 +121,12 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
      */
     public function hasAbnormalTermination()
     {
-        return $this->abnormalTerminatedFunction !== null;
+        return $this->abnormalTermination;
     }
 
-    /**
-     * @return string
-     */
-    public function getAbnormalTerminatedFunction()
+    public function reportAbnormalTermination()
     {
-        return $this->abnormalTerminatedFunction;
-    }
-
-    /**
-     * @param string $test
-     */
-    public function reportAbnormalTerminationInFunction($test)
-    {
-        $this->abnormalTerminatedFunction = $test;
+        $this->abnormalTermination = true;
     }
 
     /**

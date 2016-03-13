@@ -38,9 +38,11 @@ class JSONLogParserTest extends BaseFunctionalTestCase
         $this->assertEquals($expectedResult, $process->getTestResults());
         if ($hasAbnormalTermination) {
             $this->assertTrue($process->hasAbnormalTermination());
-            $this->markTestIncomplete('Print function that is causing the fatal');
-            $output = $parser->getAbnormalTerminatedOutputContainer();
-            $this->assertContains('Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output);
+
+            $output = $parser->getAbnormalTerminatedOutputContainer()->getOutputBuffer(); // PHP 5.3 crap, again
+            $output = array_pop($output);
+            $this->assertNotNull($output[0]);
+            $this->assertStringStartsWith('Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output[0]);
         }
     }
 

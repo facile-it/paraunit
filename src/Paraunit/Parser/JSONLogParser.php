@@ -75,9 +75,7 @@ class JSONLogParser
         try {
             $logs = $this->logLocator->fetch($process);
         } catch (JSONLogNotFoundException $exception) {
-            $process->addTestResult('X');
-            $process->reportAbnormalTerminationInFunction('Unknown function -- test log not found');
-            $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, $process->getOutput());
+            $this->reportAbnormalTermination($process);
 
             return;
         }
@@ -94,9 +92,7 @@ class JSONLogParser
         }
 
         if ($expectingTestResult) {
-            $process->addTestResult('X');
-            $process->reportAbnormalTerminationInFunction($singleLog->test);
-            $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, $process->getOutput());
+            $this->reportAbnormalTermination($process, $singleLog->test);
         }
     }
 
@@ -114,5 +110,19 @@ class JSONLogParser
         }
 
         return false;
+    }
+
+    /**
+     * @param ParaunitProcessAbstract $process
+     * @param string $culpableFunctionName
+     */
+    private function reportAbnormalTermination(ParaunitProcessAbstract $process, $culpableFunctionName = 'Unknown function -- test log not found')
+    {
+        $process->addTestResult('X');
+        $process->reportAbnormalTermination();
+        $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer(
+            $process,
+            'Culpable test function: ' . $culpableFunctionName . " -- complete test output:\n\n" . $process->getOutput()
+        );
     }
 }

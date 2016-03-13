@@ -27,7 +27,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
     public function testPrintProcessResultWithAbnormalTermination()
     {
         $process = new StubbedParaProcess();
-        $process->reportAbnormalTerminationInFunction('die()');
+        $process->reportAbnormalTermination('die()');
 
         $printer = new ProcessPrinter();
         $output = new ConsoleOutputStub();

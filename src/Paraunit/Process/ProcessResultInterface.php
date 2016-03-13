@@ -23,12 +23,7 @@ interface ProcessResultInterface extends OutputAwareInterface
     /** @return bool */
     public function hasAbnormalTermination();
 
-    /** @return string */
-    public function getAbnormalTerminatedFunction();
-    /**
-     * @param string $test The test function that halted the process
-     */
-    public function reportAbnormalTerminationInFunction($test);
+    public function reportAbnormalTermination();
 
     /** @return bool */
     public function isToBeRetried();

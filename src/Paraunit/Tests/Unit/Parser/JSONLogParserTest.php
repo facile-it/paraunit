@@ -26,11 +26,11 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $parser->parse($process);
 
         $this->assertTrue($process->hasAbnormalTermination());
-        $this->assertEquals('Unknown function -- test log not found', $process->getAbnormalTerminatedFunction());
         $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
         $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
         $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
-        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()]);
+        $this->assertContains('Unknown function -- test log not found', $buffer[$process->getFilename()][0]);
+        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()][0]);
     }
 
     public function testParseHandlesTruncatedLogs()
@@ -48,10 +48,10 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $parser->parse($process);
 
         $this->assertTrue($process->hasAbnormalTermination());
-        $this->assertEquals('testSomething', $process->getAbnormalTerminatedFunction());
         $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
         $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
         $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
-        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()]);
+        $this->assertContains('testSomething', $buffer[$process->getFilename()][0]);
+        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()][0]);
     }
 }
