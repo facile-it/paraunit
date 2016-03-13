@@ -12,12 +12,8 @@ interface RetryAwareInterface extends OutputAwareInterface
      */
     public function getRetryCount();
 
-    /**
-     */
     public function increaseRetryCount();
 
-    /**
-     */
     public function markAsToBeRetried();
 
     /**

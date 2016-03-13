@@ -1,0 +1,69 @@
+{
+    "event": "suiteStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
+    "tests": 4
+}{
+    "event": "suiteStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "tests": 4
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
+    "status": "pass",
+    "time": 0.00066995620727539,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
+    "status": "pass",
+    "time": 0.0001370906829834,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (false)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (false)",
+    "status": "error",
+    "time": 0.0006251335144043,
+    "trace": [
+        {
+            "file": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php",
+            "line": 18,
+            "function": "markTestSkipped",
+            "class": "PHPUnit_Framework_Assert",
+            "type": "::"
+        }
+    ],
+    "message": "Skipped Test: Skipped test",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)",
+    "status": "pass",
+    "time": 0.00017881393432617,
+    "trace": [],
+    "message": "",
+    "output": ""
+}

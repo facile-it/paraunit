@@ -2,9 +2,6 @@
 
 namespace Paraunit\Tests\Unit\Process;
 
-use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
-use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ProcessFactory;
 
 /**
@@ -21,20 +18,29 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $phpUnitConfigFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
         $phpUnitConfigFile->getFileFullPath()->shouldBeCalled()->willReturn('configFile.xml');
 
-        $factory = new ProcessFactory($phpUnitBin->reveal());
+        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
+        $fileName->generateFromUniqueId(md5('TestTest.php'))->willReturn('log.json');
+
+        $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());
         $factory->setConfigFile($phpUnitConfigFile->reveal());
 
-        $process = $factory->createProcess("TestTest.php");
+        $process = $factory->createProcess('TestTest.php');
 
         $this->assertInstanceOf('Paraunit\Process\ParaunitProcessAbstract', $process);
-        $this->assertEquals('phpunit -c configFile.xml --colors=never TestTest.php 2>&1', $process->getCommandLine());
+        $expectedCmdLine = 'phpunit '
+            . '-c configFile.xml '
+            . '--colors=never '
+            . '--log-json=log.json '
+            . 'TestTest.php';
+        $this->assertEquals($expectedCmdLine, $process->getCommandLine());
     }
 
     public function testCreateProcessThrowsExceptionIfConfigIsMissing()
     {
         $phpUnitBin = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
+        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFileName');
 
-        $factory = new ProcessFactory($phpUnitBin->reveal());
+        $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());
 
         $this->setExpectedException('\Exception', 'config missing');
         $factory->createProcess('test');

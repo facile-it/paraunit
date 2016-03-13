@@ -2,6 +2,7 @@
 
 namespace Paraunit\Parser;
 
+use Paraunit\Printer\OutputContainerInterface;
 use Paraunit\Process\ProcessResultInterface;
 use Paraunit\Process\RetryAwareInterface;
 
@@ -9,8 +10,11 @@ use Paraunit\Process\RetryAwareInterface;
  * Class RetryParser
  * @package Paraunit\Parser
  */
-class RetryParser implements ProcessOutputParserChainElementInterface
+class RetryParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
+    /** @var  OutputContainerInterface */
+    private $outputContainer;
+
     /** @var  int */
     private $maxRetryCount;
 
@@ -19,10 +23,12 @@ class RetryParser implements ProcessOutputParserChainElementInterface
 
     /**
      * RetryParser constructor.
+     * @param OutputContainerInterface $outputContainer
      * @param int $maxRetryCount
      */
-    public function __construct($maxRetryCount = 3)
+    public function __construct(OutputContainerInterface $outputContainer, $maxRetryCount = 3)
     {
+        $this->outputContainer = $outputContainer;
         $this->maxRetryCount = $maxRetryCount;
 
         $patterns = array(
@@ -38,28 +44,44 @@ class RetryParser implements ProcessOutputParserChainElementInterface
     }
 
     /**
-     * @param ProcessResultInterface $process
-     *
-     * @return bool True if chain should continue
+     * @return OutputContainerInterface
      */
-    public function parseAndContinue(ProcessResultInterface $process)
+    public function getOutputContainer()
     {
-        if ($process instanceof RetryAwareInterface && $this->isToBeRetried($process)) {
-            $process->markAsToBeRetried();
-
-            return false;
-        }
-
-        return true;
+        return $this->outputContainer;
     }
 
     /**
-     * @param RetryAwareInterface $process
+     * {@inheritdoc}
+     */
+    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
+    {
+        if ($process instanceof RetryAwareInterface
+            && $this->isToBeRetried($log)
+            && $this->hasNotExceededRetryCount($process)
+        ) {
+            $process->markAsToBeRetried();
+            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \stdClass $log
      * @return bool
      */
-    private function isToBeRetried(RetryAwareInterface $process)
+    private function isToBeRetried(\stdClass $log)
     {
-        return $process->getRetryCount() < $this->maxRetryCount && preg_match($this->regexPattern, $process->getOutput());
+        return $log->status == 'error' && preg_match($this->regexPattern, $log->message);
+    }
+
+
+    private function hasNotExceededRetryCount(RetryAwareInterface $process)
+    {
+        return $process->getRetryCount() < $this->maxRetryCount;
     }
 
     /**

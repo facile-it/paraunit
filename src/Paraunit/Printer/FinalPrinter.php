@@ -3,7 +3,9 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Parser\JSONLogParser;
+use Paraunit\Parser\OutputContainerBearerInterface;
+use Paraunit\Process\ParaunitProcessAbstract;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -11,54 +13,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FinalPrinter
 {
-    /** @var OutputContainer[] */
-    protected $outputContainers;
+    /** @var  JSONLogParser */
+    private $logParser;
 
-    /** @var OutputContainer */
-    protected $segmentationFaults;
+    /** @var  OutputInterface */
+    private $output;
 
-    /** @var OutputContainer */
-    protected $unknownStatus;
-
-    /** @var OutputContainer */
-    protected $fatalErrors;
-
-    /** @var OutputContainer */
-    protected $errors;
-
-    /** @var OutputContainer */
-    protected $failures;
-
-    /** @var OutputContainer */
-    protected $warnings;
-
-    /** @var OutputContainer */
-    protected $skipped;
-
-    /** @var OutputContainer */
-    protected $incomplete;
-
-    public function __construct()
+    /**
+     * FinalPrinter constructor.
+     * @param JSONLogParser $logParser
+     */
+    public function __construct(JSONLogParser $logParser)
     {
-        $this->segmentationFaults = new OutputContainer('error', 'SEGMENTATION FAULTS');
-        $this->unknownStatus = new OutputContainer('error', 'UNKNOWN STATUS');
-        $this->fatalErrors = new OutputContainer('error', 'FATAL ERRORS');
-        $this->errors = new OutputContainer('error', 'ERRORS');
-        $this->failures = new OutputContainer('fail', 'FAILURES');
-        $this->warnings = new OutputContainer('warning', 'WARNINGS');
-        $this->skipped = new OutputContainer('skipped', 'SKIPPED');
-        $this->incomplete = new OutputContainer('incomplete', 'INCOMPLETE');
-
-        $this->outputContainers = array(
-            $this->segmentationFaults,
-            $this->unknownStatus,
-            $this->fatalErrors,
-            $this->errors,
-            $this->failures,
-            $this->warnings,
-            $this->skipped,
-            $this->incomplete,
-        );
+        $this->logParser = $logParser;
     }
 
     /**
@@ -66,128 +33,100 @@ class FinalPrinter
      */
     public function onEngineEnd(EngineEvent $engineEvent)
     {
-        if (!$engineEvent->has('start') || !$engineEvent->has('end') || !$engineEvent->has('process_completed')) {
+        if ( ! $engineEvent->has('start') || ! $engineEvent->has('end') || ! $engineEvent->has('process_completed')) {
             throw new \BadMethodCallException('missing argument/s');
         }
 
-        $outputInterface =  $engineEvent->getOutputInterface();
-        $elapsedTime =  $engineEvent->get('start')->diff($engineEvent->get('end'));
-        $completedProcesses =  $engineEvent->get('process_completed');
+        $this->output = $engineEvent->getOutputInterface();
+        /** @var \DateInterval $elapsedTime */
+        $elapsedTime = $engineEvent->get('start')->diff($engineEvent->get('end'));
+        $completedProcesses = $engineEvent->get('process_completed');
 
-        $outputInterface->writeln('');
-        $outputInterface->writeln('');
-        $outputInterface->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
-
-        $outputInterface->writeln('');
-        $outputInterface->write('Executed: ');
-        $outputInterface->write(count($completedProcesses).' test classes, ');
+        $this->output->writeln('');
+        $this->output->writeln('');
+        $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
 
         $testsCount = 0;
+        /** @var ParaunitProcessAbstract $process */
         foreach ($completedProcesses as $process) {
-            $this->analyzeProcess($process);
             $testsCount += count($process->getTestResults());
         }
 
-        $outputInterface->writeln($testsCount.' tests');
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
 
-        foreach ($this->outputContainers as $outputContainer) {
-            $this->printFailuresOutput($outputInterface, $outputContainer);
-        }
+        $this->printAllFailuresOutput();
+        $this->printAllFilesRecap();
 
-        foreach ($this->outputContainers as $outputContainer) {
-            $this->printFileRecap($outputInterface, $outputContainer);
-        }
-
-        $outputInterface->writeln('');
+        $this->output->writeln('');
     }
 
-    /**
-     * @param ProcessResultInterface $process
-     */
-    protected function analyzeProcess(ProcessResultInterface $process)
+    private function printAllFailuresOutput()
     {
-        $filename = $process->getFilename();
+        $this->printFailuresOutput($this->logParser->getAbnormalTerminatedOutputContainer());
 
-        if ($process->hasSegmentationFaults()) {
-            $this->segmentationFaults->addFileName($filename);
-        }
-
-        if ($process->hasFatalErrors()) {
-            $this->fatalErrors->addFileName($filename);
-            $this->fatalErrors->addToOutputBuffer($process->getFatalErrors());
-        } elseif (in_array('X', $process->getTestResults())) {
-            $this->unknownStatus->addFileName($filename);
-            $this->unknownStatus->addToOutputBuffer($process->getOutput());
-        }
-
-        if ($process->hasErrors()) {
-            $this->errors->addFileName($filename);
-            $this->errors->addToOutputBuffer($process->getErrors());
-        }
-
-        if ($process->hasFailures()) {
-            $this->failures->addFileName($filename);
-            $this->failures->addToOutputBuffer($process->getFailures());
-        }
-
-        if ($process->hasWarnings()) {
-            $this->warnings->addFileName($filename);
-            $this->warnings->addToOutputBuffer($process->getWarnings());
-        }
-
-        if (in_array('S', $process->getTestResults())) {
-            $this->skipped->addFileName($filename);
-        }
-
-        if (in_array('I', $process->getTestResults())) {
-            $this->incomplete->addFileName($filename);
-        }
-    }
-
-    /**
-     * @param OutputInterface $outputInterface
-     * @param OutputContainer $outputContainer
-     */
-    protected function printFileRecap(OutputInterface $outputInterface, OutputContainer $outputContainer)
-    {
-        $tag = $outputContainer->getTag();
-        if ($outputContainer->count()) {
-            $outputInterface->writeln('');
-            $outputInterface->writeln(
-                sprintf(
-                    '<%s>%d files with %s:</%s>',
-                    $tag,
-                    $outputContainer->count(),
-                    $outputContainer->getTitle(),
-                    $tag
-                )
-            );
-
-            foreach ($outputContainer->getFileNames() as $fileName) {
-                $outputInterface->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
+            if ($parser instanceof OutputContainerBearerInterface) {
+                $this->printFailuresOutput($parser->getOutputContainer());
             }
         }
     }
 
     /**
-     * @param OutputInterface $outputInterface
-     * @param OutputContainer $outputContainer
+     * @param OutputContainerInterface $outputContainer
      */
-    protected function printFailuresOutput(OutputInterface $outputInterface, OutputContainer $outputContainer)
+    private function printFailuresOutput(OutputContainerInterface $outputContainer)
     {
         $buffer = $outputContainer->getOutputBuffer();
-        $tag = $outputContainer->getTag();
         if (count($buffer)) {
-            $outputInterface->writeln('');
-            $outputInterface->writeln(sprintf('<%s>%s output:</%s>', $tag, $outputContainer->getTitle(), $tag));
+            $tag = $outputContainer->getTag();
+            $this->output->writeln('');
+            $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($outputContainer->getTitle()), $tag));
 
             $i = 1;
 
-            foreach ($buffer as $line) {
-                $outputInterface->writeln('');
-                $outputInterface->writeln(
-                    sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $line)
-                );
+            foreach ($buffer as $filename => $messages) {
+                foreach ($messages as $message) {
+                    $this->output->writeln('');
+                    $this->output->writeln(
+                        sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $message)
+                    );
+                }
+            }
+        }
+    }
+
+    private function printAllFilesRecap()
+    {
+        $this->printFileRecap($this->logParser->getAbnormalTerminatedOutputContainer());
+
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
+            if ($parser instanceof OutputContainerBearerInterface) {
+                $this->printFileRecap($parser->getOutputContainer());
+            }
+        }
+    }
+
+    /**
+     * @param OutputContainerInterface $outputContainer
+     */
+    private function printFileRecap(OutputContainerInterface $outputContainer)
+    {
+        if ($outputContainer->countFiles()) {
+            $tag = $outputContainer->getTag();
+            $this->output->writeln('');
+            $this->output->writeln(
+                sprintf(
+                    '<%s>%d files with %s:</%s>',
+                    $tag,
+                    $outputContainer->countFiles(),
+                    strtoupper($outputContainer->getTitle()),
+                    $tag
+                )
+            );
+
+            foreach ($outputContainer->getFileNames() as $fileName) {
+                $this->output->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
             }
         }
     }

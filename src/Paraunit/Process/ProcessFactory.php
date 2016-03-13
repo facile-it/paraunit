@@ -2,6 +2,7 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
 
@@ -14,6 +15,9 @@ class ProcessFactory
     /** @var  string */
     private $phpUnitBin;
 
+    /** @var  JSONLogFilename */
+    private $jsonLogFilename;
+
     /** @var  PHPUnitConfigFile */
     private $phpunitConfigFile;
 
@@ -21,9 +25,10 @@ class ProcessFactory
      * ProcessFactory constructor.
      * @param PHPUnitBinFile $phpUnitBinFile
      */
-    public function __construct(PHPUnitBinFile $phpUnitBinFile)
+    public function __construct(PHPUnitBinFile $phpUnitBinFile, JSONLogFilename $jsonLogFilename)
     {
         $this->phpUnitBin = $phpUnitBinFile->getPhpUnitBin();
+        $this->jsonLogFilename = $jsonLogFilename;
     }
 
     /**
@@ -37,9 +42,10 @@ class ProcessFactory
             throw new \Exception('PHPUnit config missing');
         }
 
-        $command = $this->createCommandLine($testFilePath);
+        $uniqueId = $this->createUniqueId($testFilePath);
+        $command = $this->createCommandLine($testFilePath, $uniqueId);
 
-        return new SymfonyProcessWrapper($command);
+        return new SymfonyProcessWrapper($command, $uniqueId);
     }
 
     /**
@@ -51,18 +57,28 @@ class ProcessFactory
     }
 
     /**
-     * @param $testFilePath
+     * @param string $testFilePath
+     * @param string $uniqueId
      * @return string
      *
      * @todo Separate with appends and prepends, maybe in multiple dedicate classes;
      *       we will need it for PHP7 code coverage with PHPDbg
      */
-    private function createCommandLine($testFilePath)
+    private function createCommandLine($testFilePath, $uniqueId)
     {
         return $this->phpUnitBin .
         ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-        ' --colors=never ' .
-        $testFilePath .
-        ' 2>&1';
+        ' --colors=never' .
+        ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
+        ' ' . $testFilePath;
+    }
+
+    /**
+     * @param string $testFilePath
+     * @return string
+     */
+    private function createUniqueId($testFilePath)
+    {
+        return md5($testFilePath);
     }
 }

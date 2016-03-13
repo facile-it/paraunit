@@ -2,76 +2,35 @@
 
 namespace Paraunit\Printer;
 
+use Paraunit\Process\ProcessResultInterface;
+
 /**
  * Class OutputContainer.
  */
-class OutputContainer implements \Countable
+class OutputContainer extends AbstractOutputContainer implements OutputContainerInterface
 {
-    /**
-     * @var string[]
-     */
-    protected $fileNames;
-
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $outputBuffer;
 
     /**
-     * @var string
+     * @param ProcessResultInterface $process
+     * @param string $message
      */
-    protected $tag;
-
-    /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @param string $tag
-     * @param string $title
-     */
-    public function __construct($tag, $title)
+    public function addToOutputBuffer(ProcessResultInterface $process, $message)
     {
-        $this->tag = $tag;
-        $this->title = $title;
-        $this->fileNames = array();
-        $this->fileNames = array();
-        $this->outputBuffer = array();
+        $this->outputBuffer[$process->getFilename()][] = $message;
     }
 
     /**
-     * @param string $fileName
-     */
-    public function addFileName($fileName)
-    {
-        $this->fileNames[] = $fileName;
-    }
-
-    /**
-     * @param string|array $output
-     */
-    public function addToOutputBuffer($output)
-    {
-        if (is_array($output)) {
-            foreach ($output as $single) {
-                $this->outputBuffer[] = $single;
-            }
-        } else {
-            $this->outputBuffer[] = $output;
-        }
-    }
-
-    /**
-     * @return \string[]
+     * {@inheritdoc}
      */
     public function getFileNames()
     {
-        return $this->fileNames;
+        return array_keys($this->outputBuffer);
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getOutputBuffer()
     {
@@ -79,26 +38,23 @@ class OutputContainer implements \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function countFiles()
+    {
+        return count($this->outputBuffer);
+    }
+
+    /**
      * @return int
      */
-    public function count()
+    public function countMessages()
     {
-        return count($this->fileNames);
-    }
+        $messageCount = 0;
+        foreach ($this->outputBuffer as $fileName => $fileMessages) {
+            $messageCount += count($fileMessages);
+        }
 
-    /**
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
+        return $messageCount;
     }
 }

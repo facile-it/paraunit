@@ -11,8 +11,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProcessPrinter
 {
+    /** @var  SingleResultFormatter */
+    private $singleResultFormatter;
+
+    /** @var  OutputInterface */
+    private $output;
+    
     /** @var int */
-    protected $counter = 0;
+    private $counter = 0;
+
+    /**
+     * ProcessPrinter constructor.
+     * @param SingleResultFormatter $singleResultFormatter
+     */
+    public function __construct(SingleResultFormatter $singleResultFormatter)
+    {
+        $this->singleResultFormatter = $singleResultFormatter;
+    }
 
     /**
      * @param ProcessEvent $processEvent
@@ -25,71 +40,30 @@ class ProcessPrinter
             throw new \BadMethodCallException('missing output_interface');
         }
 
-        $output = $processEvent->get('output_interface');
+        $this->output = $processEvent->get('output_interface');
 
-        if ( ! $output instanceof OutputInterface) {
-            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($output));
-        }
-
-        if ($process->isToBeRetried()) {
-            $this->printWithCounter($output, '<ok>A</ok>');
-
-            return;
-        }
-
-        if (0 == count($process->getTestResults())) {
-            // TODO --- this operation should be done somewhere else!
-            $process->setTestResults(array('X'));
+        if ( ! $this->output instanceof OutputInterface) {
+            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($this->output));
         }
 
         foreach ($process->getTestResults() as $testResult) {
-            $this->printSingleTestResult($output, $testResult);
+            $this->printFormattedWithCounter($testResult);
         }
     }
 
     /**
-     * @param OutputInterface $output
-     * @param int $testResult
+     * @param string $singleTestResult
      */
-    protected function printSingleTestResult(OutputInterface $output, $testResult)
-    {
-        switch ($testResult) {
-            case 'E': 
-                $this->printWithCounter($output, '<error>E</error>');
-                break;
-            case 'F':
-                $this->printWithCounter($output, '<fail>F</fail>');
-                break;
-            case 'W':
-                $this->printWithCounter($output, '<warning>W</warning>');
-                break;
-            case 'I':
-                $this->printWithCounter($output, '<incomplete>I</incomplete>');
-                break;
-            case 'S':
-                $this->printWithCounter($output, '<skipped>S</skipped>');
-                break;
-            case '.':
-                $this->printWithCounter($output, '<ok>.</ok>');
-                break;
-            default:
-                $this->printWithCounter($output, '<error>X</error>');
-                break;
-        }
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param string $string
-     */
-    protected function printWithCounter(OutputInterface $output, $string)
+    private function printFormattedWithCounter($singleTestResult)
     {
         if ($this->counter % 80 == 0 && $this->counter > 1) {
-            $output->writeln('');
+            $this->output->writeln('');
         }
 
         ++$this->counter;
 
-        $output->write($string);
+        $this->output->write(
+            $this->singleResultFormatter->formatSingleResult($singleTestResult)
+        );
     }
 }

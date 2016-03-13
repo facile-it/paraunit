@@ -1,0 +1,158 @@
+{
+    "event": "suiteStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
+    "tests": 9
+}{
+    "event": "suiteStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "tests": 9
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (false)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (false)",
+    "status": "fail",
+    "time": 0.0016591548919678,
+    "trace": [
+        {
+            "file": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php",
+            "line": 19,
+            "function": "assertTrue",
+            "class": "PHPUnit_Framework_Assert",
+            "type": "::"
+        }
+    ],
+    "message": "Failed asserting that false is true.",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (false)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (false)",
+    "status": "fail",
+    "time": 0.00036907196044922,
+    "trace": [
+        {
+            "file": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php",
+            "line": 19,
+            "function": "assertTrue",
+            "class": "PHPUnit_Framework_Assert",
+            "type": "::"
+        }
+    ],
+    "message": "Failed asserting that false is true.",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
+    "status": "pass",
+    "time": 0.00014805793762207,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)",
+    "status": "pass",
+    "time": 0.00024509429931641,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "status": "error",
+    "time": 0.00033283233642578,
+    "trace": [
+        {
+            "file": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php",
+            "line": 14,
+            "function": "handleError",
+            "class": "PHPUnit_Util_ErrorHandler",
+            "type": "::"
+        }
+    ],
+    "message": "Missing argument 1 for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne()",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)",
+    "status": "pass",
+    "time": 0.00015401840209961,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)",
+    "status": "pass",
+    "time": 0.00013208389282227,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)",
+    "status": "pass",
+    "time": 0.0001370906829834,
+    "trace": [],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
+}{
+    "event": "test",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+    "status": "error",
+    "time": 0.00030803680419922,
+    "trace": [
+        {
+            "file": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php",
+            "line": 14,
+            "function": "handleError",
+            "class": "PHPUnit_Util_ErrorHandler",
+            "type": "::"
+        }
+    ],
+    "message": "Missing argument 1 for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne()",
+    "output": ""
+}

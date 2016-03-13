@@ -1,118 +1,53 @@
 parameters:
-    paraunit.version: "0.5.1"
-    paraunit.max_retry_count: 3
-    paraunit.default_max_process: 10
-    kernel.root_dir: 'src'
+  paraunit.version: "0.5.1"
+  paraunit.max_retry_count: 3
+  paraunit.default_max_process: 10
+  kernel.root_dir: 'src'
 
 services:
-    paraunit.application:
-        class: Symfony\Component\Console\Application
-        arguments:
-            - 'Paraunit'
-            - %paraunit.version%
-        calls:
-            - [add, ["@paraunit.command.parallel_command"]]
+  paraunit.application:
+    class: Symfony\Component\Console\Application
+    arguments:
+      - 'Paraunit'
+      - %paraunit.version%
+    calls:
+      - [add, ["@paraunit.command.parallel_command"]]
 
-    paraunit.command.parallel_command:
-        class: Paraunit\Command\ParallelCommand
-        arguments:
-            - "@paraunit.filter.filter"
-            - "@paraunit.runner.runner"
+  paraunit.command.parallel_command:
+    class: Paraunit\Command\ParallelCommand
+    arguments:
+      - "@paraunit.filter.filter"
+      - "@paraunit.runner.runner"
 
-    paraunit.filter.filter:
-        class: Paraunit\Filter\Filter
-        arguments:
-            - "@paraunit.proxy.phpunit_util_xml_proxy"
-            - "@phpunit.file_iterator_facade"
+  paraunit.filter.filter:
+    class: Paraunit\Filter\Filter
+    arguments:
+      - "@paraunit.proxy.phpunit_util_xml_proxy"
+      - "@phpunit.file_iterator_facade"
 
-    paraunit.runner.runner:
-        class: Paraunit\Runner\Runner
-        arguments:
-            - %paraunit.default_max_process%
-            - "@event_dispatcher"
-            - "@paraunit.process.process_factory"
+  paraunit.runner.runner:
+    class: Paraunit\Runner\Runner
+    arguments:
+      - %paraunit.default_max_process%
+      - "@event_dispatcher"
+      - "@paraunit.process.process_factory"
 
-    ## OUTPUT PRINTERS ##
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - "@service_container"
 
-    paraunit.printer.shark_printer:
-        class: Paraunit\Printer\SharkPrinter
-        tags:
-          - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
+  ## PROCESS HANDLING ##
+  paraunit.process.process_factory:
+    class: Paraunit\Process\ProcessFactory
+    arguments:
+      - "@paraunit.configuration.phpunit_bin_file"
+      - "@paraunit.configuration.json_log_filename"
 
-    paraunit.printer.process_printer:
-        class: Paraunit\Printer\ProcessPrinter
-        tags:
-          - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 100 }
+  ## EXTERNAL DEPs -- proxies ##
 
-    paraunit.printer.final_printer:
-        class: Paraunit\Printer\FinalPrinter
-        tags:
-          - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd }
+  paraunit.proxy.phpunit_util_xml_proxy:
+    class: Paraunit\Proxy\PHPUnitUtilXMLProxy
 
-    ## OUTPUT PARSERS ##
-
-    paraunit.parser.process_output_parser:
-        class: Paraunit\Parser\ProcessOutputParser
-        calls:
-            - [addParser, ["@paraunit.parser.retry_parser"]]
-            - [addParser, ["@paraunit.parser.segmentation_fault_parser"]]
-            - [addParser, ["@paraunit.parser.fatal_error_parser"]]
-            - [addParser, ["@paraunit.parser.error_parser"]]
-            - [addParser, ["@paraunit.parser.failure_parser"]]
-            - [addParser, ["@paraunit.parser.warning_parser"]]
-            - [addParser, ["@paraunit.parser.test_result_parser"]]
-        tags:
-          - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
-
-    paraunit.parser.error_parser:
-        class: Paraunit\Parser\ErrorParser
-
-    paraunit.parser.failure_parser:
-        class: Paraunit\Parser\FailureParser
-
-    paraunit.parser.warning_parser:
-        class: Paraunit\Parser\WarningParser
-
-    paraunit.parser.fatal_error_parser:
-        class: Paraunit\Parser\FatalErrorParser
-
-    paraunit.parser.retry_parser:
-        class: Paraunit\Parser\RetryParser
-        arguments:
-            - %paraunit.max_retry_count%
-
-    paraunit.parser.segmentation_fault_parser:
-        class: Paraunit\Parser\SegmentationFaultParser
-
-    paraunit.parser.test_result_parser:
-        class: Paraunit\Parser\TestResultsParser
-
-    event_dispatcher:
-        class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
-        arguments:
-          - "@service_container"
-
-    ## PROCESS HANDLING ##
-
-    paraunit.configuration.phpunit_bin_file:
-        class: Paraunit\Configuration\PHPUnitBinFile
-
-    paraunit.process.process_factory:
-        class: Paraunit\Process\ProcessFactory
-        arguments:
-            - "@paraunit.configuration.phpunit_bin_file"
-
-    ## LISTENERS ##
-
-    paraunit.printer.console_formatter:
-        class: Paraunit\Printer\ConsoleFormatter
-        tags:
-          - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
-
-    ## EXTERNAL DEPs -- proxies ##
-
-    paraunit.proxy.phpunit_util_xml_proxy:
-        class: Paraunit\Proxy\PHPUnitUtilXMLProxy
-
-    phpunit.file_iterator_facade:
-        class: \File_Iterator_Facade
+  phpunit.file_iterator_facade:
+    class: \File_Iterator_Facade

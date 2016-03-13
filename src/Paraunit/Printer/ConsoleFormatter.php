@@ -16,24 +16,25 @@ class ConsoleFormatter
      */
     public function onEngineStart(EngineEvent $engineEvent)
     {
+        $formatter = $engineEvent->getOutputInterface()->getFormatter();
 
-        $outputInterface= $engineEvent->getOutputInterface();
-
-        if ($outputInterface->getFormatter()) {
-            $style = new OutputFormatterStyle('green', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('ok', $style);
-
-            $style = new OutputFormatterStyle('yellow', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('skipped', $style);
-
-            $style = new OutputFormatterStyle('blue', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('incomplete', $style);
-
-            $style = new OutputFormatterStyle('red', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('fail', $style);
-
-            $style = new OutputFormatterStyle('red', null, array('bold', 'blink'));
-            $outputInterface->getFormatter()->setStyle('error', $style);
+        if ($formatter) {
+            $formatter->setStyle('ok', $this->createNewStyle('green'));
+            $formatter->setStyle('skip', $this->createNewStyle('yellow'));
+            $formatter->setStyle('warning', $this->createNewStyle('yellow'));
+            $formatter->setStyle('incomplete', $this->createNewStyle('blue'));
+            $formatter->setStyle('fail', $this->createNewStyle('red'));
+            $formatter->setStyle('error', $this->createNewStyle('red'));
+            $formatter->setStyle('abnormal', $this->createNewStyle('magenta'));
         }
+    }
+
+    /**
+     * @param string $color
+     * @return OutputFormatterStyle
+     */
+    private function createNewStyle($color)
+    {
+        return new OutputFormatterStyle($color, null, array('bold', 'blink'));
     }
 }

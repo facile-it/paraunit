@@ -14,86 +14,23 @@ interface ProcessResultInterface extends OutputAwareInterface
 
     /**
      * @param int[] $testResults
+     * @deprecated We should use just addTestResult
      */
     public function setTestResults(array $testResults);
 
-    /**
-     * @param string $unknownStatus
-     */
-    public function addSegmentationFault($unknownStatus);
+    public function addTestResult($testResult);
 
-    /**
-     * @param string $fatalError
-     */
-    public function addFatalError($fatalError);
+    /** @return bool */
+    public function hasAbnormalTermination();
 
-    /**
-     * @param string $error
-     */
-    public function addError($error);
+    public function reportAbnormalTermination();
 
-    /**
-     * @param string $fatalError
-     */
-    public function addFailure($fatalError);
-
-    /**
-     * @param string $warning
-     */
-    public function addWarning($warning);
-
-    /**
-     * @return string[]
-     */
-    public function getFatalErrors();
-
-    /**
-     * @return string[]
-     */
-    public function getErrors();
-
-    /**
-     * @return string[]
-     */
-    public function getFailures();
-
-    /**
-     * @return string[]
-     */
-    public function getWarnings();
-
-    /**
-     * @return bool
-     */
-    public function hasSegmentationFaults();
-
-    /**
-     * @return bool
-     */
-    public function hasFatalErrors();
-
-    /**
-     * @return bool
-     */
-    public function hasErrors();
-
-    /**
-     * @return bool
-     */
-    public function hasFailures();
-
-    /**
-     * @return bool
-     */
-    public function hasWarnings();
-
-    /**
-     * @return bool
-     */
+    /** @return bool */
     public function isToBeRetried();
 
-    /**
-     * @return string
-     */
+    /** @return bool */
+    public function isEmpty();
+
+    /** @return string */
     public function getFilename();
 }

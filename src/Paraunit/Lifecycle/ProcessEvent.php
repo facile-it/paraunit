@@ -4,13 +4,12 @@ namespace Paraunit\Lifecycle;
 
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ParaunitProcessInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /***
  * Class ProcessEvent
  * @package Paraunit\Lifecycle
  */
-class ProcessEvent extends Event
+class ProcessEvent extends AbstractEvent
 {
     const PROCESS_STARTED = 'process_event.process_started';
 
@@ -24,7 +23,7 @@ class ProcessEvent extends Event
 
     /**
      * @param ParaunitProcessAbstract $process
-     * @param array                   $context
+     * @param array $context
      */
     public function __construct(ParaunitProcessAbstract $process, $context = array())
     {
@@ -38,29 +37,5 @@ class ProcessEvent extends Event
     public function getProcess()
     {
         return $this->process;
-    }
-
-    /**
-     * @param $contextParameterName
-     *
-     * @return bool
-     */
-    public function has($contextParameterName)
-    {
-        return isset($this->context[$contextParameterName]);
-    }
-
-    /**
-     * @param $contextParameterName
-     *
-     * @return mixed
-     */
-    public function get($contextParameterName)
-    {
-        if (!$this->has($contextParameterName)) {
-            throw new \LogicException('Cannot find parameter: '.$contextParameterName);
-        }
-
-        return $this->context[$contextParameterName];
     }
 }

@@ -64,7 +64,7 @@ class Runner
      */
     public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
     {
-        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($files, $outputInterface));
+        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
         $this->processFactory->setConfigFile($phpunitConfigFile);
         $start = new \Datetime('now');
@@ -72,7 +72,7 @@ class Runner
 
         $this->eventDispatcher->dispatch(
             EngineEvent::START,
-            new EngineEvent($files, $outputInterface, array('start' => $start,))
+            new EngineEvent($outputInterface, array('start' => $start,))
         );
 
         while ( ! empty($this->processStack) || ! empty($this->processRunning)) {
@@ -102,7 +102,6 @@ class Runner
         $this->eventDispatcher->dispatch(
             EngineEvent::END,
             new EngineEvent(
-                $files,
                 $outputInterface,
                 array('end' => $end, 'start' => $start, 'process_completed' => $this->processCompleted)
             )
@@ -147,7 +146,7 @@ class Runner
             /** @var ParaunitProcessInterface $process */
             $process = array_pop($this->processStack);
             $process->start();
-            $this->processRunning[md5($process->getCommandLine())] = $process;
+            $this->processRunning[$process->getUniqueId()] = $process;
 
             if ($debug) {
                 DebugPrinter::printDebugOutput($process, $this->processRunning);
@@ -159,11 +158,17 @@ class Runner
 
     /**
      * @param ParaunitProcessAbstract $process
+     * @throws \Exception
      */
     protected function markProcessCompleted(ParaunitProcessAbstract $process)
     {
         $pHash = $process->getUniqueId();
-        unset($this->processRunning[$pHash]);
+
+        if (array_key_exists($pHash, $this->processRunning)) {
+            unset($this->processRunning[$pHash]);
+        } else {
+            throw new \Exception('Trying to remove a non-existing process from running stack\! ID: ' . $pHash);
+        }
 
         if ($process->isToBeRetried()) {
             $process->reset();

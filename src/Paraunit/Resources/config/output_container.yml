@@ -1,0 +1,66 @@
+services:
+  paraunit.output_container.pass:
+    class: Paraunit\Printer\NullOutputContainer
+    arguments:
+      - "ok"
+      - "PASSED"
+      - "."
+
+  paraunit.output_container.retry:
+    class: Paraunit\Printer\NullOutputContainer
+    arguments:
+      - "ok"
+      - "RETRIED"
+      - "A"
+
+  paraunit.output_container.null:
+    class: Paraunit\Printer\NullOutputContainer
+
+  paraunit.output_container.abnormal_terminated:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "abnormal"
+      - "abnormal terminations (fatal errors, segfaults)"
+      - "X"
+
+  paraunit.output_container.error:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "error"
+      - "errors"
+      - "E"
+
+  paraunit.output_container.failure:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "fail"
+      - "failures"
+      - "F"
+
+  paraunit.output_container.warning:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "warning"
+      - "warnings"
+      - "W"
+
+  paraunit.output_container.risky:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "warning"
+      - "risky outcome"
+      - "R"
+
+  paraunit.output_container.skipped:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "skip"
+      - "skipped outcome"
+      - "S"
+
+  paraunit.output_container.incomplete:
+    class: Paraunit\Printer\OutputContainer
+    arguments:
+      - "incomplete"
+      - "incomplete outcome"
+      - "I"
