@@ -12,8 +12,13 @@
     </php>
 
     <testsuites>
-        <testsuite name="Default testsuite">
+        <testsuite name="unit">
             <directory>./src/Paraunit/Tests/Unit/</directory>
+        </testsuite>
+    </testsuites>
+
+    <testsuites>
+        <testsuite name="functional">
             <directory>./src/Paraunit/Tests/Functional/</directory>
         </testsuite>
     </testsuites>

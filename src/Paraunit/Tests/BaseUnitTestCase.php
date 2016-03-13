@@ -7,7 +7,7 @@ use Paraunit\Tests\Stub\PHPUnitOutput\JSONLogs\JSONLogStub;
  * Class BaseUnitTestCase
  * @package Paraunit\Tests
  */
-abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
+abstract class BaseUnitTestCase extends BaseTestCase
 {
     /**
      * @param $testOutput

@@ -10,17 +10,16 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Class BaseFunctionalTestCase
  * @package Paraunit\Tests
  */
-abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
+abstract class BaseFunctionalTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder */
     protected $container = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         $this->container = Paraunit::buildContainer();
-        $this->cleanUpTempDir(Paraunit::getTempBaseDir());
     }
 
     /**
@@ -143,24 +142,5 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     protected function getOutputFileContent($filename)
     {
         return file_get_contents(__DIR__ . '/Stub/PHPUnitOutput/' . $filename);
-    }
-
-    /**
-     * @param string $dir
-     */
-    private function cleanUpTempDir($dir)
-    {
-        $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach($files as $file) {
-            if ($file->isDir()){
-                rmdir($file->getRealPath());
-            } else {
-                unlink($file->getRealPath());
-            }
-        }
-
-        rmdir($dir);
     }
 }
