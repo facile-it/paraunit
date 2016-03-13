@@ -44,6 +44,7 @@ class Paraunit
         $loader->load('services.yml');
         $loader->load('parser.yml');
         $loader->load('configuration.yml');
+        $loader->load('output_container.yml');
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 
