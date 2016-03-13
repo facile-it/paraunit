@@ -11,11 +11,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProcessPrinter
 {
+    /** @var  SingleResultFormatter */
+    private $singleResultFormatter;
+
     /** @var  OutputInterface */
     private $output;
     
     /** @var int */
     private $counter = 0;
+
+    /**
+     * ProcessPrinter constructor.
+     * @param SingleResultFormatter $singleResultFormatter
+     */
+    public function __construct(SingleResultFormatter $singleResultFormatter)
+    {
+        $this->singleResultFormatter = $singleResultFormatter;
+    }
 
     /**
      * @param ProcessEvent $processEvent
@@ -34,57 +46,15 @@ class ProcessPrinter
             throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($this->output));
         }
 
-        switch (true) {
-            case $process->isToBeRetried():
-                $this->printWithCounter('<ok>A</ok>');
-                break;
-            case $process->hasAbnormalTermination():
-                $this->printWithCounter('<halted>X</halted>');
-                break;
-            default:
-                foreach ($process->getTestResults() as $testResult) {
-                    $this->printSingleTestResult($testResult);
-                }
+        foreach ($process->getTestResults() as $testResult) {
+            $this->printFormattedWithCounter($testResult);
         }
     }
 
     /**
-     * @param string $testResult
+     * @param string $singleTestResult
      */
-    private function printSingleTestResult($testResult)
-    {
-        switch ($testResult) {
-            case 'E':
-                $this->printWithCounter('<error>E</error>');
-                break;
-            case 'F':
-                $this->printWithCounter('<fail>F</fail>');
-                break;
-            case 'W':
-                $this->printWithCounter('<warning>W</warning>');
-                break;
-            case 'I':
-                $this->printWithCounter('<incomplete>I</incomplete>');
-                break;
-            case 'S':
-                $this->printWithCounter('<skipped>S</skipped>');
-                break;
-            case 'R':
-                $this->printWithCounter('<risky>R</risky>');
-                break;
-            case '.':
-                $this->printWithCounter('<ok>.</ok>');
-                break;
-            default:
-                $this->printWithCounter('<warning>?</warning>');
-                break;
-        }
-    }
-
-    /**
-     * @param string $string
-     */
-    private function printWithCounter($string)
+    private function printFormattedWithCounter($singleTestResult)
     {
         if ($this->counter % 80 == 0 && $this->counter > 1) {
             $this->output->writeln('');
@@ -92,6 +62,8 @@ class ProcessPrinter
 
         ++$this->counter;
 
-        $this->output->write($string);
+        $this->output->write(
+            $this->singleResultFormatter->formatSingleResult($singleTestResult)
+        );
     }
 }

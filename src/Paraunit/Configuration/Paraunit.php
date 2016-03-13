@@ -41,10 +41,11 @@ class Paraunit
         $containerBuilder = new ContainerBuilder();
 
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
-        $loader->load('services.yml');
-        $loader->load('parser.yml');
         $loader->load('configuration.yml');
         $loader->load('output_container.yml');
+        $loader->load('parser.yml');
+        $loader->load('printer.yml');
+        $loader->load('services.yml');
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 

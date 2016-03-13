@@ -8,7 +8,7 @@ use Paraunit\Process\ProcessResultInterface;
  * Class NullOutputContainer
  * @package Paraunit\Printer
  */
-class NullOutputContainer implements OutputContainerInterface
+class NullOutputContainer extends AbstractOutputContainer implements OutputContainerInterface
 {
     public function addToOutputBuffer(ProcessResultInterface $process, $message)
     {
@@ -27,15 +27,5 @@ class NullOutputContainer implements OutputContainerInterface
     public function countFiles()
     {
         return 0;
-    }
-
-    public function getTag()
-    {
-        return 'null';
-    }
-
-    public function getTitle()
-    {
-        return '---';
     }
 }

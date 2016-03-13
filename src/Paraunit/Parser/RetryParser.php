@@ -2,6 +2,7 @@
 
 namespace Paraunit\Parser;
 
+use Paraunit\Printer\OutputContainerInterface;
 use Paraunit\Process\ProcessResultInterface;
 use Paraunit\Process\RetryAwareInterface;
 
@@ -9,8 +10,11 @@ use Paraunit\Process\RetryAwareInterface;
  * Class RetryParser
  * @package Paraunit\Parser
  */
-class RetryParser implements JSONParserChainElementInterface
+class RetryParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
+    /** @var  OutputContainerInterface */
+    private $outputContainer;
+
     /** @var  int */
     private $maxRetryCount;
 
@@ -19,10 +23,12 @@ class RetryParser implements JSONParserChainElementInterface
 
     /**
      * RetryParser constructor.
+     * @param OutputContainerInterface $outputContainer
      * @param int $maxRetryCount
      */
-    public function __construct($maxRetryCount = 3)
+    public function __construct(OutputContainerInterface $outputContainer, $maxRetryCount = 3)
     {
+        $this->outputContainer = $outputContainer;
         $this->maxRetryCount = $maxRetryCount;
 
         $patterns = array(
@@ -38,6 +44,14 @@ class RetryParser implements JSONParserChainElementInterface
     }
 
     /**
+     * @return OutputContainerInterface
+     */
+    public function getOutputContainer()
+    {
+        return $this->outputContainer;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
@@ -47,6 +61,7 @@ class RetryParser implements JSONParserChainElementInterface
             && $this->hasNotExceededRetryCount($process)
         ) {
             $process->markAsToBeRetried();
+            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
 
             return true;
         }

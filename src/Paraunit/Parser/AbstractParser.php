@@ -15,9 +15,6 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     protected $outputContainer;
 
     /** @var  string */
-    protected $singleResultMarker;
-
-    /** @var  string */
     protected $title;
 
     /** @var  string */
@@ -30,14 +27,12 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
      * AbstractParser constructor.
      *
      * @param OutputContainerInterface $outputContainer
-     * @param string $singleResultMarker The output of the single test result (.FERW etc)
      * @param string $status The status that the parser should catch
      * @param string | null $messageStartsWith The start of the message that the parser should look for
      */
-    public function __construct(OutputContainerInterface $outputContainer, $singleResultMarker, $status, $messageStartsWith = null)
+    public function __construct(OutputContainerInterface $outputContainer, $status, $messageStartsWith = null)
     {
         $this->outputContainer = $outputContainer;
-        $this->singleResultMarker = $singleResultMarker;
         $this->status = $status;
         $this->messageStartsWith = $messageStartsWith;
     }
@@ -60,7 +55,7 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
         }
 
         if ($this->checkMessageStart($log)) {
-            $process->addTestResult($this->singleResultMarker);
+            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
             $this->outputContainer->addToOutputBuffer($process, $this->createMessageFromLog($log));
 
             return true;
@@ -95,11 +90,9 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
         $stackTrace = '';
 
         foreach ($log->trace as $step) {
-            $stackTrace .=  "\n" . $step->file . ':' . $step->line;
+            $stackTrace .= "\n" . $step->file . ':' . $step->line;
         }
 
-        return $log->test . "\n"
-            . $log->message . "\n"
-            . $stackTrace;
+        return $log->test . "\n" . $log->message . "\n" . $stackTrace;
     }
 }

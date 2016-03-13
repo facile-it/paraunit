@@ -15,8 +15,8 @@ class AbstractParserTest extends BaseUnitTestCase
 {
     public function testParsingFoundResultIncludesFunctionNameInOutputContainer()
     {
-        $container = new OutputContainer('tag', 'title');
-        $parser = new AbstractParser($container, 'e', 'error');
+        $container = new OutputContainer('tag', 'title', 'e');
+        $parser = new AbstractParser($container, 'error');
         $log = $this->getLogWithStatus('error');
 
         $parser->parsingFoundResult(new StubbedParaProcess(), $log);

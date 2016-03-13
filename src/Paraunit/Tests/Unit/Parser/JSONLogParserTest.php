@@ -21,7 +21,7 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
         $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
 
-        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', ''));
+        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', '', ''));
 
         $parser->parse($process);
 
@@ -43,7 +43,7 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $log1->test = 'testSomething';
         $logLocator->fetch($process)->willReturn(array($log1));
 
-        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', ''));
+        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', '', ''));
 
         $parser->parse($process);
 

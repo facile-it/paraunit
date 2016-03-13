@@ -12,7 +12,7 @@ use Paraunit\Process\ProcessResultInterface;
  * Class JSONLogParser
  * @package Paraunit\Parser
  */
-class JSONLogParser
+class JSONLogParser implements OutputContainerBearerInterface
 {
     /** @var  JSONLogFetcher */
     private $logLocator;
@@ -49,6 +49,14 @@ class JSONLogParser
     public function getParsersForPrinting()
     {
         return array_reverse($this->parsers);
+    }
+
+    /**
+     * @return OutputContainerInterface
+     */
+    public function getOutputContainer()
+    {
+        return $this->getAbnormalTerminatedOutputContainer();
     }
 
     /**

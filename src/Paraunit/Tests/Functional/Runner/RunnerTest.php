@@ -5,6 +5,7 @@ namespace Paraunit\Tests\Functional\Runner;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Runner\Runner;
 use Paraunit\Tests\BaseFunctionalTestCase;
+use Paraunit\Tests\Stub\UnformattedOutputStub;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
@@ -12,9 +13,12 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class RunnerTest extends BaseFunctionalTestCase
 {
+    /**
+     * @group this
+     */
     public function testAllGreen()
     {
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
@@ -31,7 +35,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
     public function testMaxRetryEntityManagerIsClosed()
     {
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
@@ -82,7 +86,7 @@ class RunnerTest extends BaseFunctionalTestCase
             $this->markTestSkipped('The segfault cannot be reproduced in this environment');
         }
 
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -97,7 +101,7 @@ class RunnerTest extends BaseFunctionalTestCase
         );
 
         $output = $outputInterface->fetch();
-        $this->assertContains('<halted>X</halted>', $output, 'Missing X output');
+        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
@@ -118,7 +122,7 @@ class RunnerTest extends BaseFunctionalTestCase
             $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
         }
 
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -133,14 +137,14 @@ class RunnerTest extends BaseFunctionalTestCase
         );
 
         $output = $outputInterface->fetch();
-        $this->assertContains('<warning>W</warning>', $output, 'Missing W output');
+        $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
             $output,
             'Missing recap title'
         );
         $this->assertContains(
-            '<warning>MissingProviderTestStub.php</warning>',
+            'MissingProviderTestStub.php',
             $output,
             'Missing warned filename'
         );
@@ -148,7 +152,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults()
     {
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
@@ -159,9 +163,9 @@ class RunnerTest extends BaseFunctionalTestCase
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $output = $outputInterface->fetch();
-        $this->assertContains('<halted>X</halted>', $output, 'Missing X output');
+        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
-        $this->assertNotContains('1 files with UNKNOWN STATUS:', $output, 'REGRESSION: fatal error mistaken for unknown result');
+        $this->assertNotContains('UNKNOWN STATUS', $output, 'REGRESSION: fatal error mistaken for unknown result');
 
     }
 }

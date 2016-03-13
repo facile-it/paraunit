@@ -26,34 +26,31 @@ services:
   paraunit.parser.pass_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.null"
-      - "."
+      - "@paraunit.output_container.pass"
       - "pass"
 
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
+      - "@paraunit.output_container.retry"
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.failure"
-      - "F"
       - "fail"
 
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.warning"
-      - "W"
       - "warning"
 
   paraunit.parser.incomplete_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.incomplete"
-      - "I"
       - "error"
       - "Incomplete Test: "
 
@@ -61,7 +58,6 @@ services:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.skipped"
-      - "S"
       - "error"
       - "Skipped Test: "
 
@@ -69,7 +65,6 @@ services:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.risky"
-      - "R"
       - "error"
       - "Risky Test: "
 
@@ -77,7 +72,6 @@ services:
     class: Paraunit\Parser\AbstractParser
     arguments:
       - "@paraunit.output_container.error"
-      - "E"
       - "error"
 
   paraunit.parser.test_result_parser:

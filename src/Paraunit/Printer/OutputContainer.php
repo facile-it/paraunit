@@ -7,27 +7,10 @@ use Paraunit\Process\ProcessResultInterface;
 /**
  * Class OutputContainer.
  */
-class OutputContainer implements OutputContainerInterface
+class OutputContainer extends AbstractOutputContainer implements OutputContainerInterface
 {
     /** @var string[] */
     protected $outputBuffer;
-
-    /** @var string */
-    protected $tag;
-
-    /** @var string */
-    protected $title;
-
-    /**
-     * @param string $tag
-     * @param string $title
-     */
-    public function __construct($tag, $title)
-    {
-        $this->tag = $tag;
-        $this->title = $title;
-        $this->outputBuffer = array();
-    }
 
     /**
      * @param ProcessResultInterface $process
@@ -73,21 +56,5 @@ class OutputContainer implements OutputContainerInterface
         }
 
         return $messageCount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 }

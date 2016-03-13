@@ -40,4 +40,9 @@ interface OutputContainerInterface
      * @return string
      */
     public function getTitle();
+
+    /**
+     * @return string
+     */
+    public function getSingleResultMarker();
 }

@@ -8,7 +8,7 @@ use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\Tests\BaseFunctionalTestCase;
-use Paraunit\Tests\Stub\ConsoleOutputStub;
+use Paraunit\Tests\Stub\UnformattedOutputStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 
 /**
@@ -24,7 +24,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         $process->addTestResult('.');
         $process->addTestResult('.');
 
-        $output = new ConsoleOutputStub();
+        $output = new UnformattedOutputStub();
         $context = array(
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
@@ -52,7 +52,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
     public function testOnEngineEndPrintsInTheRightOrder()
     {
-        $output = new ConsoleOutputStub();
+        $output = new UnformattedOutputStub();
         $process = new StubbedParaProcess();
         $context = array(
             'start' => new \DateTime('-1 minute'),
@@ -95,7 +95,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         ));
     }
 
-    private function assertOutputOrder(ConsoleOutputStub $output, array $strings)
+    private function assertOutputOrder(UnformattedOutputStub $output, array $strings)
     {
         $previousPosition = 0;
         $previousString = '<beginning of output>';
