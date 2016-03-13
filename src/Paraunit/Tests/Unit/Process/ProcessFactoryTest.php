@@ -31,8 +31,7 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
             . '-c configFile.xml '
             . '--colors=never '
             . '--log-json=log.json '
-            . 'TestTest.php '
-            . '2>&1';
+            . 'TestTest.php';
         $this->assertEquals($expectedCmdLine, $process->getCommandLine());
     }
 

@@ -70,8 +70,7 @@ class ProcessFactory
         ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
         ' --colors=never' .
         ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
-        ' ' . $testFilePath .
-        ' 2>&1';
+        ' ' . $testFilePath;
     }
 
     /**
