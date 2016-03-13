@@ -49,7 +49,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getCommandLine()
     {
@@ -81,7 +81,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isTerminated()
     {
@@ -89,7 +89,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function start()
     {
@@ -97,7 +97,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return $this
+     * {@inheritdoc}
      */
     public function restart()
     {
@@ -105,7 +105,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isRunning()
     {
@@ -113,7 +113,7 @@ class StubbedParaProcess extends ParaunitProcessAbstract
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getExitCode()
     {

@@ -47,7 +47,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getExitCode()
     {
@@ -55,7 +55,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return $this
+     * {@inheritdoc}
      */
     public function restart()
     {
@@ -65,7 +65,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return $this
+     * {@inheritdoc}
      */
     public function reset()
     {
@@ -78,7 +78,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getCommandLine()
     {
@@ -86,7 +86,7 @@ class SymfonyProcessWrapper extends ParaunitProcessAbstract
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function isRunning()
     {

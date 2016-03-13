@@ -4,7 +4,6 @@ namespace Paraunit\Lifecycle;
 
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ParaunitProcessInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /***
  * Class ProcessEvent
@@ -24,7 +23,7 @@ class ProcessEvent extends AbstractEvent
 
     /**
      * @param ParaunitProcessAbstract $process
-     * @param array                   $context
+     * @param array $context
      */
     public function __construct(ParaunitProcessAbstract $process, $context = array())
     {

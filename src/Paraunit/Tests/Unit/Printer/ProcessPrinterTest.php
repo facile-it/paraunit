@@ -8,6 +8,10 @@ use Paraunit\Tests\Stub\UnformattedOutputStub;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 use Prophecy\Argument;
 
+/**
+ * Class ProcessPrinterTest
+ * @package Paraunit\Tests\Unit\Printer
+ */
 class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
 {
     public function testPrintProcessGoesToFormatting()

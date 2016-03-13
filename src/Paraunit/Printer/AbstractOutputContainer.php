@@ -1,12 +1,13 @@
 <?php
 
 namespace Paraunit\Printer;
+use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Class AbstractOutputContainer
  * @package Paraunit\Printer
  */
-class AbstractOutputContainer
+abstract class AbstractOutputContainer implements OutputContainerInterface
 {
     /** @var string */
     protected $singleResultMarker;
@@ -53,4 +54,12 @@ class AbstractOutputContainer
     {
         return $this->singleResultMarker;
     }
+
+    abstract public function addToOutputBuffer(ProcessResultInterface $process, $message);
+
+    abstract public function getFileNames();
+
+    abstract public function getOutputBuffer();
+
+    abstract public function countFiles();
 }

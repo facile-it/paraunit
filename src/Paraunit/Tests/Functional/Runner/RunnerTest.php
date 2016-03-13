@@ -13,9 +13,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class RunnerTest extends BaseFunctionalTestCase
 {
-    /**
-     * @group this
-     */
     public function testAllGreen()
     {
         $outputInterface = new UnformattedOutputStub();
@@ -52,8 +49,6 @@ class RunnerTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @group this
-     *
      * @dataProvider stubFilePathProvider
      */
     public function testMaxRetryDeadlock($stubFilePath)
