@@ -16,8 +16,7 @@ before_script:
   - /home/travis/build/facile-it/paraunit/.travis/sigsegv-extension/build-for-travis.sh
   - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; else PHPUNIT_FLAGS=""; fi
   - if [[ $TRAVIS_PHP_VERSION != '5.6' ]]; then phpenv config-rm xdebug.ini; fi
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --prefer-dist
+  - composer install --prefer-dist
 
 script:
   - vendor/phpunit/phpunit/phpunit -v $PHPUNIT_FLAGS
