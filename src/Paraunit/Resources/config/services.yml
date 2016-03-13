@@ -44,14 +44,6 @@ services:
       - "@paraunit.configuration.phpunit_bin_file"
       - "@paraunit.configuration.json_log_filename"
 
-  paraunit.file.cleaner:
-    class: Paraunit\File\Cleaner
-    arguments:
-      - "@paraunit.configuration.paraunit"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: purgeCurrentTempDir }
-      - { name: kernel.event_listener, event: engine_event.end, method: purgeCurrentTempDir }
-
   ## EXTERNAL DEPs -- proxies ##
 
   paraunit.proxy.phpunit_util_xml_proxy:

@@ -8,4 +8,4 @@ services:
   paraunit.configuration.json_log_filename:
     class: Paraunit\Configuration\JSONLogFilename
     arguments:
-      - "@paraunit.configuration.paraunit"
+      - "@paraunit.file.temp_directory"

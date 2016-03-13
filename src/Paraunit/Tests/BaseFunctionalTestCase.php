@@ -4,6 +4,7 @@ namespace Paraunit\Tests;
 
 use Paraunit\Configuration\Paraunit;
 use Paraunit\File\Cleaner;
+use Paraunit\File\TempDirectory;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -155,8 +156,8 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
 
     private function cleanUpTempDirForThisExecution()
     {
-        /** @var Paraunit $configuration */
-        $configuration = $this->container->get('paraunit.configuration.paraunit');
-        Cleaner::cleanUpDir($configuration->getTempDirForThisExecution());
+        /** @var TempDirectory $tempDirectory */
+        $tempDirectory = $this->container->get('paraunit.file.temp_directory');
+        Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
     }
 }

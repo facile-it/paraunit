@@ -2,30 +2,27 @@
 
 namespace Paraunit\File;
 
-
-use Paraunit\Configuration\Paraunit;
-
 /**
  * Class Cleaner
  * @package Paraunit\File
  */
 class Cleaner
 {
-    /** @var  Paraunit */
-    private $configuration;
+    /** @var  TempDirectory */
+    private $tempDirectory;
 
     /**
      * Cleaner constructor.
-     * @param Paraunit $configuration
+     * @param TempDirectory $tempDirectory
      */
-    public function __construct(Paraunit $configuration)
+    public function __construct(TempDirectory $tempDirectory)
     {
-        $this->configuration = $configuration;
+        $this->tempDirectory = $tempDirectory;
     }
 
     public function purgeCurrentTempDir()
     {
-        self::cleanUpDir($this->configuration->getTempDirForThisExecution());
+        self::cleanUpDir($this->tempDirectory->getTempDirForThisExecution());
     }
 
     /**

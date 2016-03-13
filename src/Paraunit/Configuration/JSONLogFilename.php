@@ -1,8 +1,9 @@
 <?php
 
 namespace Paraunit\Configuration;
-use Paraunit\Process\ParaunitProcessInterface;
 
+use Paraunit\File\TempDirectory;
+use Paraunit\Process\ParaunitProcessInterface;
 
 /**
  * Class JSONLogFilename
@@ -10,16 +11,16 @@ use Paraunit\Process\ParaunitProcessInterface;
  */
 class JSONLogFilename
 {
-    /** @var  Paraunit */
-    private $configuration;
+    /** @var  TempDirectory */
+    private $tempDirectory;
 
     /**
      * JSONLogFilename constructor.
-     * @param Paraunit $configuration
+     * @param TempDirectory $tempDirectory
      */
-    public function __construct(Paraunit $configuration)
+    public function __construct(TempDirectory $tempDirectory)
     {
-        $this->configuration = $configuration;
+        $this->tempDirectory = $tempDirectory;
     }
 
     public function generate(ParaunitProcessInterface $process)
@@ -29,6 +30,6 @@ class JSONLogFilename
 
     public function generateFromUniqueId($uniqueId)
     {
-        return $this->configuration->getTempDirForThisExecution() . '/logs/' . $uniqueId . '.json.log';
+        return $this->tempDirectory->getTempDirForThisExecution() . '/logs/' . $uniqueId . '.json.log';
     }
 }
