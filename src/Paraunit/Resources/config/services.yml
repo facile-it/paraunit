@@ -1,53 +1,61 @@
 parameters:
-    paraunit.version: "0.5.1"
-    paraunit.max_retry_count: 3
-    paraunit.default_max_process: 10
-    kernel.root_dir: 'src'
+  paraunit.version: "0.5.1"
+  paraunit.max_retry_count: 3
+  paraunit.default_max_process: 10
+  kernel.root_dir: 'src'
 
 services:
-    paraunit.application:
-        class: Symfony\Component\Console\Application
-        arguments:
-            - 'Paraunit'
-            - %paraunit.version%
-        calls:
-            - [add, ["@paraunit.command.parallel_command"]]
+  paraunit.application:
+    class: Symfony\Component\Console\Application
+    arguments:
+      - 'Paraunit'
+      - %paraunit.version%
+    calls:
+      - [add, ["@paraunit.command.parallel_command"]]
 
-    paraunit.command.parallel_command:
-        class: Paraunit\Command\ParallelCommand
-        arguments:
-            - "@paraunit.filter.filter"
-            - "@paraunit.runner.runner"
+  paraunit.command.parallel_command:
+    class: Paraunit\Command\ParallelCommand
+    arguments:
+      - "@paraunit.filter.filter"
+      - "@paraunit.runner.runner"
 
-    paraunit.filter.filter:
-        class: Paraunit\Filter\Filter
-        arguments:
-            - "@paraunit.proxy.phpunit_util_xml_proxy"
-            - "@phpunit.file_iterator_facade"
+  paraunit.filter.filter:
+    class: Paraunit\Filter\Filter
+    arguments:
+      - "@paraunit.proxy.phpunit_util_xml_proxy"
+      - "@phpunit.file_iterator_facade"
 
-    paraunit.runner.runner:
-        class: Paraunit\Runner\Runner
-        arguments:
-            - %paraunit.default_max_process%
-            - "@event_dispatcher"
-            - "@paraunit.process.process_factory"
+  paraunit.runner.runner:
+    class: Paraunit\Runner\Runner
+    arguments:
+      - %paraunit.default_max_process%
+      - "@event_dispatcher"
+      - "@paraunit.process.process_factory"
 
-    event_dispatcher:
-        class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
-        arguments:
-          - "@service_container"
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - "@service_container"
 
-    ## PROCESS HANDLING ##
-    paraunit.process.process_factory:
-        class: Paraunit\Process\ProcessFactory
-        arguments:
-            - "@paraunit.configuration.phpunit_bin_file"
-            - "@paraunit.configuration.json_log_filename"
+  ## PROCESS HANDLING ##
+  paraunit.process.process_factory:
+    class: Paraunit\Process\ProcessFactory
+    arguments:
+      - "@paraunit.configuration.phpunit_bin_file"
+      - "@paraunit.configuration.json_log_filename"
 
-    ## EXTERNAL DEPs -- proxies ##
+  paraunit.file.cleaner:
+    class: Paraunit\File\Cleaner
+    arguments:
+      - "@paraunit.configuration.paraunit"
+    tags:
+      - { name: kernel.event_listener, event: engine_event.before_start, method: purgeCurrentTempDir }
+      - { name: kernel.event_listener, event: engine_event.end, method: purgeCurrentTempDir }
 
-    paraunit.proxy.phpunit_util_xml_proxy:
-        class: Paraunit\Proxy\PHPUnitUtilXMLProxy
+  ## EXTERNAL DEPs -- proxies ##
 
-    phpunit.file_iterator_facade:
-        class: \File_Iterator_Facade
+  paraunit.proxy.phpunit_util_xml_proxy:
+    class: Paraunit\Proxy\PHPUnitUtilXMLProxy
+
+  phpunit.file_iterator_facade:
+    class: \File_Iterator_Facade

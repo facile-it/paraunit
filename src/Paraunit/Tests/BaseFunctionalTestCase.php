@@ -3,6 +3,7 @@
 namespace Paraunit\Tests;
 
 use Paraunit\Configuration\Paraunit;
+use Paraunit\File\Cleaner;
 use Paraunit\Tests\Stub\StubbedParaProcess;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -156,25 +157,6 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     {
         /** @var Paraunit $configuration */
         $configuration = $this->container->get('paraunit.configuration.paraunit');
-        $this->cleanUpDir($configuration->getTempDirForThisExecution());
-    }
-
-    /**
-     * @param string $dir
-     */
-    private function cleanUpDir($dir)
-    {
-        $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach($files as $file) {
-            if ($file->isDir()){
-                rmdir($file->getRealPath());
-            } else {
-                unlink($file->getRealPath());
-            }
-        }
-
-        rmdir($dir);
+        Cleaner::cleanUpDir($configuration->getTempDirForThisExecution());
     }
 }
