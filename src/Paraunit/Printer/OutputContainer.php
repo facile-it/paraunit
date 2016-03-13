@@ -9,7 +9,7 @@ use Paraunit\Process\ProcessResultInterface;
  */
 class OutputContainer extends AbstractOutputContainer implements OutputContainerInterface
 {
-    /** @var string[] */
+    /** @var string[][] */
     protected $outputBuffer;
 
     /**

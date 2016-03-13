@@ -60,9 +60,6 @@ class ProcessFactory
      * @param string $testFilePath
      * @param string $uniqueId
      * @return string
-     *
-     * @todo Separate with appends and prepends, maybe in multiple dedicate classes;
-     *       we will need it for PHP7 code coverage with PHPDbg
      */
     private function createCommandLine($testFilePath, $uniqueId)
     {
