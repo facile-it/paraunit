@@ -1,7 +1,0 @@
-PHPUnit 5.0.6 by Sebastian Bergmann and contributors.
-
-....................................................              52 / 52 (100%)
-
-Time: 1.09 seconds, Memory: 10.00Mb
-
-OK (52 tests, 111 assertions)

@@ -13,13 +13,13 @@
 
     <testsuites>
         <testsuite name="unit">
-            <directory>./src/Paraunit/Tests/Unit/</directory>
+            <directory>./tests/Unit/</directory>
         </testsuite>
     </testsuites>
 
     <testsuites>
         <testsuite name="functional">
-            <directory>./src/Paraunit/Tests/Functional/</directory>
+            <directory>./tests/Functional/</directory>
         </testsuite>
     </testsuites>
 
@@ -28,7 +28,6 @@
             <directory>./src/Paraunit/</directory>
             <exclude>
                 <directory>./src/Paraunit/Resources</directory>
-                <directory>./src/Paraunit/Tests</directory>
             </exclude>
         </whitelist>
     </filter>

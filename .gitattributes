@@ -1,5 +1,4 @@
 docker              export-ignore
-src/Paraunit/Tests  export-ignore
 .gitattributes      export-ignore
 .gitignore          export-ignore
 .travis             export-ignore
@@ -8,3 +7,4 @@ src/Paraunit/Tests  export-ignore
 .coveralls.yml      export-ignore
 .scrutinizer.yml    export-ignore
 phpunit.xml.dist    export-ignore
+tests               export-ignore

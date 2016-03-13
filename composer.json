@@ -34,13 +34,15 @@
     "squizlabs/php_codesniffer": "2.*",
     "satooshi/php-coveralls": "~1.0"
   },
-  "config": {
-    "bin-dir": "bin"
-  },
   "bin": ["src/Paraunit/Bin/paraunit"],
   "autoload": {
     "psr-4": {
       "Paraunit\\": "src/Paraunit"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
     }
   },
   "minimum-stability": "stable",

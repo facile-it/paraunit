@@ -1,0 +1,223 @@
+<?php
+
+namespace Tests\Unit\Filter;
+
+use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Filter\Filter;
+
+class FilterTest extends \PHPUnit_Framework_TestCase
+{
+    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnitUtilXMLProxy';
+    const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade';
+
+    /** @var  string */
+    private $absoluteConfigBaseDir;
+
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->absoluteConfigBaseDir = realpath(__DIR__ . '/../../Stub/StubbedXMLConfigs/') . DIRECTORY_SEPARATOR;
+    }
+
+    public function testFilterTestFiles_gets_only_requested_testsuite()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $testSuiteName = 'test_only_requested_testsuite';
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file1))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file2))
+            ->shouldNotBeCalled();
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit, $testSuiteName);
+
+        $this->assertCount(1, $result);
+        $this->assertEquals(array($file1), $result);
+    }
+
+    public function testFilterTestFiles_supports_suffix_attribute()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_suffix_test.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'TestSuffix.php', '', array())
+            ->willReturn(array($file1))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file2))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $this->assertEquals(array($file1, $file2), $result);
+    }
+
+    public function testFilterTestFiles_supports_prefix_attribute()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_prefix_test.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
+            ->willReturn(array($file1))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file2))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $this->assertEquals(array($file1, $file2), $result);
+    }
+
+    public function testFilterTestFiles_supports_exclude_nodes()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_exclude.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $excludeArray1 = array(
+            '/path/to/exclude1',
+            '/path/to/exclude2',
+        );
+
+        $excludeArray2 = array(
+            '/path/to/exclude3',
+            '/path/to/exclude4',
+        );
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', $excludeArray1)
+            ->willReturn(array($file1))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', $excludeArray2)
+            ->willReturn(array($file2))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $this->assertEquals(array($file1, $file2), $result);
+    }
+
+    public function testFilterTestFiles_avoids_duplicate_runs()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file = $this->absoluteConfigBaseDir . './only/selected/test/suite/SameFile.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $this->assertCount(1, $result);
+        $this->assertEquals(array($file), $result);
+    }
+
+    public function testFilterTestFiles_supports_file_nodes()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_file.xml';
+        $configFilePhpUnit = new PHPUnitConfigFile($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file1))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file2))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $this->assertEquals(
+            array(
+                $file1,
+                $this->absoluteConfigBaseDir . './this/file.php',
+                $this->absoluteConfigBaseDir . './this/file2.php',
+                $file2,
+            ),
+            $result
+        );
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    private function getStubbedXMLConf($fileName)
+    {
+        $filePath = realpath($fileName);
+
+        if (!file_exists($filePath)) {
+            throw new \Exception('Stub XML config file missing: ' . $fileName);
+        }
+
+        return \PHPUnit_Util_XML::loadFile($filePath, false, true, true);
+    }
+}

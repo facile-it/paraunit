@@ -7,7 +7,7 @@ use Paraunit\Process\ParaunitProcessInterface;
 
 /**
  * Class JSONLogFilename
- * @package Paraunit\Tests\Unit\Parser
+ * @package Tests\Unit\Parser
  */
 class JSONLogFilename
 {

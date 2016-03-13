@@ -3,7 +3,7 @@ tools:
 
 filter:
   excluded_paths:
-    - src/Paraunit/Tests/*
+    - tests/*
 
 coding_style:
   php:
