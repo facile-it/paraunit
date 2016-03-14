@@ -175,6 +175,7 @@ class RunnerTest extends BaseFunctionalTestCase
         );
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
-        $this->assertNotContains('YOU SHOULD NOT SEE THIS', $outputInterface->getOutput(), 'REGRESSION: an error raised from PHP is seen in output');
+        $output = $outputInterface->getOutput();
+        $this->assertGreaterThan(strpos($output, 'Execution time'), strpos($output, 'YOU SHOULD NOT SEE THIS'), 'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)');
     }
 }

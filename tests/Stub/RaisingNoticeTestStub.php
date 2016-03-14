@@ -6,7 +6,7 @@ namespace Tests\Stub;
  * Class RaisingNoticeTestStub
  * @package Tests\Stub
  */
-class RaisingNoticeTestStub
+class RaisingNoticeTestStub extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider errorProvider
@@ -14,6 +14,7 @@ class RaisingNoticeTestStub
     public function testRaise($errorMessage, $errorLevel)
     {
         trigger_error($errorMessage, $errorLevel);
+        $this->fail();
     }
 
     public function errorProvider()
@@ -23,5 +24,11 @@ class RaisingNoticeTestStub
             array('YOU SHOULD NOT SEE THIS -- E_USER_WARNING', E_USER_WARNING),
             array('YOU SHOULD NOT SEE THIS -- E_USER_ERROR', E_USER_ERROR),
         );
+    }
+
+    public function testVarDump()
+    {
+        var_dump('YOU SHOULD NOT SEE THIS -- var_dump');
+        $this->fail();
     }
 }
