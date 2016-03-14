@@ -13,7 +13,7 @@ use Tests\Stub\StubbedParaProcess;
  */
 class AbstractParserTest extends BaseUnitTestCase
 {
-    public function testParsingFoundResultIncludesFunctionNameInOutputContainer()
+    public function testParsingFoundResult()
     {
         $container = new OutputContainer('tag', 'title', 'e');
         $parser = new AbstractParser($container, 'error');
@@ -21,7 +21,7 @@ class AbstractParserTest extends BaseUnitTestCase
 
         $parser->parsingFoundResult(new StubbedParaProcess(), $log);
 
-        $this->assertNotEmpty($container->getOutputBuffer(), 'No output generated');
+        $this->assertCOnlyNotEmpty($container->getOutputBuffer(), 'No output generated');
         $outputBuffer = $container->getOutputBuffer(); // PHP 5.3 crap
         $finalResult = array_pop($outputBuffer); // PHP 5.3 crap, again
         $finalResult = $finalResult[0];
