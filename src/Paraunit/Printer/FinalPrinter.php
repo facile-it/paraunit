@@ -77,8 +77,8 @@ class FinalPrinter
      */
     private function printFailuresOutput(OutputContainerInterface $outputContainer)
     {
-        $buffer = $outputContainer->getOutputBuffer();
-        if (count($buffer)) {
+        if ($outputContainer->countMessages()) {
+            $buffer = $outputContainer->getOutputBuffer();
             $tag = $outputContainer->getTag();
             $this->output->writeln('');
             $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($outputContainer->getTitle()), $tag));

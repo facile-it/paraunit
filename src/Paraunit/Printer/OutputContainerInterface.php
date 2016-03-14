@@ -32,6 +32,11 @@ interface OutputContainerInterface
     public function countFiles();
 
     /**
+     * @return int
+     */
+    public function countMessages();
+
+   /**
      * @return string
      */
     public function getTag();

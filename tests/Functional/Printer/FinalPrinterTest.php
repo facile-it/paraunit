@@ -50,6 +50,37 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         $this->assertContains('Executed: 15 test classes, 45 tests', $output->getOutput());
     }
 
+    public function testOnEngineEndHandlesEmptyMessagesCorrectly()
+    {
+        $process = new StubbedParaProcess();
+        $process->addTestResult('S');
+        $process->addTestResult('I');
+
+        $output = new UnformattedOutputStub();
+        $context = array(
+            'start' => new \DateTime('-1 minute'),
+            'end' => new \DateTime(),
+            'process_completed' => array_fill(0, 15, $process),
+        );
+        $engineEvent = new EngineEvent($output, $context);
+
+        /** @var JSONLogParser $logParser */
+        $logParser = $this->container->get('paraunit.parser.json_log_parser');
+
+        foreach ($logParser->getParsersForPrinting() as $parser) {
+            if ($parser instanceof OutputContainerBearerInterface) {
+                $parser->getOutputContainer()->addToOutputBuffer($process, null);
+            }
+        }
+
+        /** @var FinalPrinter $printer */
+        $printer = $this->container->get('paraunit.printer.final_printer');
+
+        $printer->onEngineEnd($engineEvent);
+
+        $this->assertNotContains('output', $output->getOutput());
+    }
+
     public function testOnEngineEndPrintsInTheRightOrder()
     {
         $output = new UnformattedOutputStub();
