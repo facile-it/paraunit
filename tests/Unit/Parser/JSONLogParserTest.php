@@ -4,7 +4,7 @@ namespace Tests\Unit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Printer\OutputContainer;
+use Paraunit\Output\OutputContainer;
 use Tests\Stub\StubbedParaProcess;
 use Prophecy\Argument;
 

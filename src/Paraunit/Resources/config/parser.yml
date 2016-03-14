@@ -5,7 +5,7 @@ services:
     class: Paraunit\Parser\JSONLogParser
     arguments:
       - "@paraunit.parser.json_log_fetcher"
-      - "@paraunit.output_container.abnormal_terminated"
+      - "@paraunit.output.abnormal_terminated_container"
     calls:
       - [addParser, ["@paraunit.parser.pass_parser"]]
       - [addParser, ["@paraunit.parser.retry_parser"]]
@@ -26,52 +26,52 @@ services:
   paraunit.parser.pass_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.pass"
+      - "@paraunit.output.pass_container"
       - "pass"
 
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
-      - "@paraunit.output_container.retry"
+      - "@paraunit.output.retry_container"
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.failure"
+      - "@paraunit.output.failure_container"
       - "fail"
 
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.warning"
+      - "@paraunit.output.warning_container"
       - "warning"
 
   paraunit.parser.incomplete_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.incomplete"
+      - "@paraunit.output.incomplete_container"
       - "error"
       - "Incomplete Test: "
 
   paraunit.parser.skipped_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.skipped"
+      - "@paraunit.output.skipped_container"
       - "error"
       - "Skipped Test: "
 
   paraunit.parser.risky_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.risky"
+      - "@paraunit.output.risky_container"
       - "error"
       - "Risky Test: "
 
   paraunit.parser.error_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.error"
+      - "@paraunit.output.error_container"
       - "error"
 
   paraunit.parser.test_result_parser:

@@ -1,65 +1,65 @@
 services:
-  paraunit.output_container.pass:
-    class: Paraunit\Printer\NullOutputContainer
+  paraunit.output.pass_container:
+    class: Paraunit\Output\NullOutputContainer
     arguments:
       - "ok"
       - "PASSED"
       - "."
 
-  paraunit.output_container.retry:
-    class: Paraunit\Printer\NullOutputContainer
+  paraunit.output.retry_container:
+    class: Paraunit\Output\NullOutputContainer
     arguments:
       - "ok"
       - "RETRIED"
       - "A"
 
-  paraunit.output_container.null:
-    class: Paraunit\Printer\NullOutputContainer
+  paraunit.output.null_container:
+    class: Paraunit\Output\NullOutputContainer
 
-  paraunit.output_container.abnormal_terminated:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.abnormal_terminated_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "abnormal"
       - "abnormal terminations (fatal errors, segfaults)"
       - "X"
 
-  paraunit.output_container.error:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.error_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "error"
       - "errors"
       - "E"
 
-  paraunit.output_container.failure:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.failure_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "fail"
       - "failures"
       - "F"
 
-  paraunit.output_container.warning:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.warning_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "warning"
       - "warnings"
       - "W"
 
-  paraunit.output_container.risky:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.risky_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "warning"
       - "risky outcome"
       - "R"
 
-  paraunit.output_container.skipped:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.skipped_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "skip"
       - "skipped outcome"
       - "S"
 
-  paraunit.output_container.incomplete:
-    class: Paraunit\Printer\OutputContainer
+  paraunit.output.incomplete_container:
+    class: Paraunit\Output\OutputContainer
     arguments:
       - "incomplete"
       - "incomplete outcome"

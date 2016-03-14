@@ -3,7 +3,7 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\AbstractParser;
-use Paraunit\Printer\OutputContainer;
+use Paraunit\Output\OutputContainer;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaProcess;
 

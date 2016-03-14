@@ -4,7 +4,7 @@ namespace Tests\Functional\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\ConsoleFormatter;
-use Paraunit\Printer\OutputContainerInterface;
+use Paraunit\Output\OutputContainerInterface;
 use Tests\BaseFunctionalTestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -40,14 +40,14 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     public function serviceTagsProvider()
     {
         return array(
-//            array('paraunit.output_container.null'),
-            array('paraunit.output_container.abnormal_terminated'),
-            array('paraunit.output_container.error'),
-            array('paraunit.output_container.failure'),
-            array('paraunit.output_container.warning'),
-            array('paraunit.output_container.risky'),
-            array('paraunit.output_container.skipped'),
-            array('paraunit.output_container.incomplete'),
+//            array('paraunit.output.null_container'),
+            array('paraunit.output.abnormal_terminated_container'),
+            array('paraunit.output.error_container'),
+            array('paraunit.output.failure_container'),
+            array('paraunit.output.warning_container'),
+            array('paraunit.output.risky_container'),
+            array('paraunit.output.skipped_container'),
+            array('paraunit.output.incomplete_container'),
         );
     }
 }

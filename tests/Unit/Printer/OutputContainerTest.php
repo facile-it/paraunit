@@ -2,7 +2,7 @@
 
 namespace Unit\Printer;
 
-use Paraunit\Printer\OutputContainer;
+use Paraunit\Output\OutputContainer;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaProcess;
 

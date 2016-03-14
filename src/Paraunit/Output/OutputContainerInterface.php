@@ -1,12 +1,12 @@
 <?php
 
-namespace Paraunit\Printer;
+namespace Paraunit\Output;
 
 use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Interface OutputContainerInterface
- * @package Paraunit\Printer
+ * @package Paraunit\Output
  */
 interface OutputContainerInterface
 {

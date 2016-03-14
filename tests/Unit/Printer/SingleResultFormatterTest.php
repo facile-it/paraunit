@@ -15,7 +15,7 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     {
         $tag = 'tag';
         $singleResult = '.';
-        $outputContainer = $this->prophesize('Paraunit\Printer\OutputContainerInterface');
+        $outputContainer = $this->prophesize('Paraunit\Output\OutputContainerInterface');
         $outputContainer->getTag()->willReturn($tag);
         $outputContainer->getSingleResultMarker()->willReturn($singleResult);
 
@@ -35,7 +35,7 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     public function testFormatSingleResultDoesNothingForUnknownTags()
     {
         $singleResult = '.';
-        $outputContainer = $this->prophesize('Paraunit\Printer\OutputContainerInterface');
+        $outputContainer = $this->prophesize('Paraunit\Output\OutputContainerInterface');
         $outputContainer->getTag()->willReturn('abnormal');
         $outputContainer->getSingleResultMarker()->willReturn('A');
 

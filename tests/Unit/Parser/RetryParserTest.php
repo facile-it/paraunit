@@ -3,7 +3,7 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\RetryParser;
-use Paraunit\Printer\NullOutputContainer;
+use Paraunit\Output\NullOutputContainer;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;

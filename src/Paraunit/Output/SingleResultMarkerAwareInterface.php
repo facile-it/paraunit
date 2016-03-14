@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\Printer;
+namespace Paraunit\Output;
 
 /**
  * Interface SingleResultMarkerAwareInterface
- * @package Paraunit\Printer
+ * @package Paraunit\Output
  */
 interface SingleResultMarkerAwareInterface
 {

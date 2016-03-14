@@ -3,6 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Process\ParaunitProcessAbstract;

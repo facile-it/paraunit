@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Printer\OutputContainerInterface;
+use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Process\ParaunitProcessAbstract;
 use Paraunit\Process\ProcessResultInterface;
 

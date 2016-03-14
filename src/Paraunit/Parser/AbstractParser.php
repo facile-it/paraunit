@@ -2,7 +2,7 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Printer\OutputContainerInterface;
+use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Process\ProcessResultInterface;
 
 /**

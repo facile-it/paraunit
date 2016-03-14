@@ -1,11 +1,11 @@
 <?php
 
-namespace Paraunit\Printer;
+namespace Paraunit\Output;
 use Paraunit\Process\ProcessResultInterface;
 
 /**
  * Class AbstractOutputContainer
- * @package Paraunit\Printer
+ * @package Paraunit\Output
  */
 abstract class AbstractOutputContainer implements OutputContainerInterface
 {
