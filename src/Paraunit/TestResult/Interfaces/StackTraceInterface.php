@@ -1,10 +1,11 @@
 <?php
 
-namespace Paraunit\TestResult;
+namespace Paraunit\TestResult\Interfaces;
+use Paraunit\TestResult\TraceStep;
 
 /**
  * Interface StackTraceInterface
- * @package Paraunit\TestResult
+ * @package Paraunit\TestResult\Interfaces
  */
 interface StackTraceInterface
 {

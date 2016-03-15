@@ -3,16 +3,12 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\FailureMessageInterface;
-use Paraunit\TestResult\FunctionNameInterface;
-use Paraunit\TestResult\StackTraceInterface;
+use Paraunit\TestResult\Interfaces\FailureMessageInterface;
+use Paraunit\TestResult\Interfaces\FunctionNameInterface;
+use Paraunit\TestResult\Interfaces\StackTraceInterface;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultContainerInterface;
-use Paraunit\TestResult\TestResultWithMessage;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -88,7 +84,7 @@ class FinalPrinter
 
                 if ($testResult instanceof StackTraceInterface) {
                     foreach ($testResult->getTrace() as $traceStep) {
-                        $this->output->writeln((string) $traceStep);
+                        $this->output->writeln((string)$traceStep);
                     }
                 }
             }

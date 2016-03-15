@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\TestResult;
+namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Class TestResultContainer
- * @package Paraunit\TestResult
+ * @package Paraunit\TestResult\Interfaces
  */
 interface TestResultContainerInterface
 {

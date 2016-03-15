@@ -1,10 +1,11 @@
 <?php
 
-namespace Paraunit\TestResult;
+namespace Paraunit\TestResult\Interfaces;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Interface PrintableTestResultInterface
- * @package Paraunit\Output\MuteTestResult
+ * @package Paraunit\TestResult\Interfaces
  */
 interface PrintableTestResultInterface extends TestResultInterface
 {

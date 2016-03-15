@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\TestResult;
+namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Interface TestResultContainerBearerInterface
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\Interfaces
  */
 interface TestResultContainerBearerInterface
 {

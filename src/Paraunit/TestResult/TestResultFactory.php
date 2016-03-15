@@ -1,7 +1,9 @@
 <?php
 
 namespace Paraunit\TestResult;
+
 use Paraunit\Parser\JSONLogFetcher;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class TestResultFactory

@@ -3,8 +3,8 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessWithResultsInterface;
-use Paraunit\TestResult\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
  * Interface JSONParserChainElementInterface

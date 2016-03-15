@@ -5,6 +5,9 @@ namespace Paraunit\TestResult;
 use Paraunit\Parser\JSONParserChainElementInterface;
 use Paraunit\Process\OutputAwareInterface;
 use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
  * Class TestResultContainer

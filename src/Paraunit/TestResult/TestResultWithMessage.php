@@ -2,6 +2,10 @@
 
 namespace Paraunit\TestResult;
 
+use Paraunit\TestResult\Interfaces\FailureMessageInterface;
+use Paraunit\TestResult\Interfaces\FunctionNameInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+
 /**
  * Class TestResultWithMessage
  * @package Paraunit\TestResult
@@ -22,7 +26,7 @@ class TestResultWithMessage extends MuteTestResult implements PrintableTestResul
      */
     public function __construct(TestResultFormat $testResultFormat, $functionName, $failureMessage)
     {
-        parent::__construct($testResultFormat);
+        $this->setTestResultFormat($testResultFormat);
         $this->functionName = $functionName;
         $this->failureMessage = $failureMessage;
     }

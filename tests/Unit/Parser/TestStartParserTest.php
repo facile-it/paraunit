@@ -29,7 +29,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $return = $parser->handleLogItem($process, $log);
 
         if ($chainInterrupted) {
-            $this->assertInstanceOf('Paraunit\TestResult\TestResultInterface', $return);
+            $this->assertInstanceOf('Paraunit\TestResult\Interfaces\TestResultInterface', $return);
         } else {
             $this->assertNull($return);
         }
@@ -60,7 +60,7 @@ class TestStartParserTest extends BaseUnitTestCase
 
         $return = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\TestResultInterface', $return);
+        $this->assertInstanceOf('Paraunit\TestResult\Interfaces\TestResultInterface', $return);
     }
 
     public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog()

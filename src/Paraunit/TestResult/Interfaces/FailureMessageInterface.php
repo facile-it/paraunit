@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\TestResult;
+namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Interface FailureMessageInterface
- * @package Paraunit\TestResult
+ * @package Paraunit\TestResult\Interfaces
  */
 interface FailureMessageInterface
 {

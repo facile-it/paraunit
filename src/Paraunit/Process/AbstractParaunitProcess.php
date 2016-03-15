@@ -2,7 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\TestResult\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class AbstractParaunitProcess

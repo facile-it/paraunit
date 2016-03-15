@@ -3,7 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\TestResult\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

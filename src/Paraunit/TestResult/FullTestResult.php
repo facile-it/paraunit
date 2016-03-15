@@ -1,6 +1,10 @@
 <?php
 
 namespace Paraunit\TestResult;
+use Paraunit\TestResult\Interfaces\FailureMessageInterface;
+use Paraunit\TestResult\Interfaces\FunctionNameInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\StackTraceInterface;
 
 /**
  * Class FullTestResult

@@ -2,8 +2,8 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\TestResult\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 
 /**
  * Interface RetryAwareInterface.

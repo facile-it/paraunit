@@ -4,8 +4,6 @@ namespace Paraunit\Printer;
 
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultContainerBearerInterface;
-use Paraunit\TestResult\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultFormat;
 
 /**
