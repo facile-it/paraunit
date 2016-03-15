@@ -5,6 +5,7 @@ namespace Paraunit\Parser;
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultInterface;
 
 /**
@@ -38,7 +39,7 @@ class JSONLogParser
     }
 
     /**
-     * @return \Paraunit\TestResult\TestResultContainerInterface[]
+     * @return TestResultContainerInterface[]
      */
     public function getParsers()
     {

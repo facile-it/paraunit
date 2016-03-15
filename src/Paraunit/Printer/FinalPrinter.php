@@ -7,6 +7,12 @@ use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\FailureMessageInterface;
+use Paraunit\TestResult\FunctionNameInterface;
+use Paraunit\TestResult\StackTraceInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultWithMessage;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -34,28 +40,11 @@ class FinalPrinter
      */
     public function onEngineEnd(EngineEvent $engineEvent)
     {
-        if ( ! $engineEvent->has('start') || ! $engineEvent->has('end') || ! $engineEvent->has('process_completed')) {
-            throw new \BadMethodCallException('missing argument/s');
-        }
-
         $this->output = $engineEvent->getOutputInterface();
         /** @var \DateInterval $elapsedTime */
-        $elapsedTime = $engineEvent->get('start')->diff($engineEvent->get('end'));
-        $completedProcesses = $engineEvent->get('process_completed');
 
-        $this->output->writeln('');
-        $this->output->writeln('');
-        $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
-
-        $testsCount = 0;
-        /** @var AbstractParaunitProcess $process */
-        foreach ($completedProcesses as $process) {
-            $testsCount += count($process->getTestResults());
-        }
-
-        $this->output->writeln('');
-        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
-
+        $this->printExecutionTime($engineEvent);
+        $this->printTestCounters($engineEvent);
         $this->printAllFailuresOutput();
         $this->printAllFilesRecap();
 
@@ -64,34 +53,43 @@ class FinalPrinter
 
     private function printAllFailuresOutput()
     {
-        $this->printFailuresOutput($this->logParser->getAbnormalTerminatedTestResultContainer());
-
-        foreach ($this->logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $this->printFailuresOutput($parser->getTestResultContainer());
+        foreach ($this->logParser->getParsers() as $parser) {
+            if ($parser instanceof TestResultContainer) {
+                $this->printFailuresOutput($parser);
             }
         }
     }
 
     /**
-     * @param OutputContainerInterface $outputContainer
+     * @param TestResultContainer $testResultContainer
+     * @todo Refactor
      */
-    private function printFailuresOutput(OutputContainerInterface $outputContainer)
+    private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
-        if ($outputContainer->countMessages()) {
-            $buffer = $outputContainer->getOutputBuffer();
-            $tag = $outputContainer->getTag();
-            $this->output->writeln('');
-            $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($outputContainer->getTitle()), $tag));
+        $tag = $testResultContainer->getTestResultFormat()->getTag();
+        $title = $testResultContainer->getTestResultFormat()->getTitle();
+        $i = 1;
 
-            $i = 1;
-
-            foreach ($buffer as $filename => $messages) {
-                foreach ($messages as $message) {
+        foreach ($testResultContainer->getTestResults() as $testResult) {
+            if ($testResult instanceof FunctionNameInterface) {
+                if ($i == 1) {
                     $this->output->writeln('');
-                    $this->output->writeln(
-                        sprintf('<%s>%d)</%s> %s', $tag, $i++, $tag, $message)
-                    );
+                    $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
+                }
+
+                $this->output->writeln('');
+                $this->output->writeln(
+                    sprintf('<%s>%d) %s</%s>', $tag, $i++, $testResult->getFunctionName(), $tag)
+                );
+
+                if ($testResult instanceof FailureMessageInterface) {
+                    $this->output->writeln($testResult->getFailureMessage());
+                }
+
+                if ($testResult instanceof StackTraceInterface) {
+                    foreach ($testResult->getTrace() as $traceStep) {
+                        $this->output->writeln((string) $traceStep);
+                    }
                 }
             }
         }
@@ -99,36 +97,68 @@ class FinalPrinter
 
     private function printAllFilesRecap()
     {
-        $this->printFileRecap($this->logParser->getAbnormalTerminatedTestResultContainer());
-
-        foreach ($this->logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $this->printFileRecap($parser->getTestResultContainer());
+        foreach ($this->logParser->getParsers() as $parser) {
+            if ($parser instanceof TestResultContainer) {
+                $this->printFileRecap($parser);
             }
         }
     }
 
     /**
-     * @param OutputContainerInterface $outputContainer
+     * @param TestResultContainer $testResultContainer
      */
-    private function printFileRecap(OutputContainerInterface $outputContainer)
+    private function printFileRecap(TestResultContainer $testResultContainer)
     {
-        if ($outputContainer->countFiles()) {
-            $tag = $outputContainer->getTag();
+        $filenames = $testResultContainer->getFileNames();
+
+        if (count($filenames)) {
+            $tag = $testResultContainer->getTestResultFormat()->getTag();
+            $title = $testResultContainer->getTestResultFormat()->getTitle();
             $this->output->writeln('');
             $this->output->writeln(
                 sprintf(
                     '<%s>%d files with %s:</%s>',
                     $tag,
-                    $outputContainer->countFiles(),
-                    strtoupper($outputContainer->getTitle()),
+                    count($filenames),
+                    strtoupper($title),
                     $tag
                 )
             );
 
-            foreach ($outputContainer->getFileNames() as $fileName) {
+            foreach ($filenames as $fileName) {
                 $this->output->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
             }
         }
+    }
+
+    /**
+     * @param EngineEvent $engineEvent
+     */
+    private function printExecutionTime(EngineEvent $engineEvent)
+    {
+        /** @var \DateInterval $elapsedTime */
+        $elapsedTime = $engineEvent->get('start')->diff($engineEvent->get('end'));
+
+        $this->output->writeln('');
+        $this->output->writeln('');
+        $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
+    }
+
+    /**
+     * @param EngineEvent $engineEvent
+     */
+    private function printTestCounters(EngineEvent $engineEvent)
+    {
+        $completedProcesses = $engineEvent->get('process_completed');
+        $testsCount = 0;
+        /** @var AbstractParaunitProcess $process */
+        foreach ($this->logParser->getParsers() as $parser) {
+            if ($parser instanceof TestResultContainer) {
+                $testsCount += $parser->countTestResults();
+            }
+        }
+
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
     }
 }

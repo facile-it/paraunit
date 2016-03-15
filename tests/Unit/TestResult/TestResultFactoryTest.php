@@ -82,4 +82,19 @@ class TestResultFactoryTest extends BaseUnitTestCase
             $this->assertEquals($log->trace[$i]->line, $trace[$i]->getLine());
         } while(++$i < count($log->trace));
     }
+
+    public function testCreateFromLogWithAbnormalTermination()
+    {
+        $log = $this->getLogWithStatus('error');
+        $log->trace[] = clone $log->trace[0];
+        $log->test = 'testFunction()';
+
+        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
+        $result = $factory->createFromLog($log);
+
+        $this->assertInstanceOf('Paraunit\TestResult\TestResultWithFullTestOutput', $result);
+        $this->assertInstanceOf('Paraunit\TestResult\TestResultFormat', $result->getTestResultFormat());
+        // TestStartParser injects the last launched test function name
+        $this->assertEquals('Culpable test function: ' . $log->test, $result->getFailureMessage());
+    }
 }

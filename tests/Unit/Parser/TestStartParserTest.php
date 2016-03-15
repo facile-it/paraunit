@@ -48,4 +48,64 @@ class TestStartParserTest extends BaseUnitTestCase
             array(JSONLogFetcher::LOG_ENDING_STATUS, false, false),
         );
     }
+
+    public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog()
+    {
+        $process = new StubbedParaunitProcess();
+        $parser = new TestStartParser();
+        $log = new \stdClass();
+        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+
+        $return = $parser->handleLogItem($process, $log);
+
+        $this->assertNull($return);
+        $this->assertEquals('UNKNOWN -- log not found', $log->test);
+    }
+
+    /**
+     * @dataProvider logsProvider
+     */
+    public function testHandleLogItemAppendsCulpableFunction($status, $chainInterrupted)
+    {
+        $process = new StubbedParaunitProcess();
+        $parser = new TestStartParser();
+        $log = new \stdClass();
+        $log->status = $status;
+        $log->test = 'testFunction';
+
+        $parser->handleLogItem($process, $log);
+
+        if ($chainInterrupted) {
+            $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+            $return = $parser->handleLogItem($process, $log);
+
+            $this->assertNull($return);
+            $this->assertEquals('testFunction', $log->test);
+        }
+    }
+
+    /**
+     * @dataProvider logsProvider
+     */
+    public function testHandleLogItemAppendsCulpableFunctionToRightProcess($status, $chainInterrupted)
+    {
+        $process = new StubbedParaunitProcess();
+        $parser = new TestStartParser();
+        $log = new \stdClass();
+        $log->status = $status;
+        $log->test = 'testFunction';
+
+        $parser->handleLogItem(new StubbedParaunitProcess(), $log);
+
+        $log->test = 'culpableFunction';
+        $parser->handleLogItem($process, $log);
+
+        if ($chainInterrupted) {
+            $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+            $return = $parser->handleLogItem($process, $log);
+
+            $this->assertNull($return);
+            $this->assertEquals('culpableFunction', $log->test);
+        }
+    }
 }

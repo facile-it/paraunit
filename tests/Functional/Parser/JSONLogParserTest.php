@@ -6,6 +6,8 @@ namespace Tests\Functional\Parser;
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultWithMessage;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -36,14 +38,28 @@ class JSONLogParserTest extends BaseFunctionalTestCase
 
         $parser->onProcessTerminated(new ProcessEvent($process));
 
-        $this->assertEquals($expectedResult, $process->getTestResults());
+        $results = $process->getTestResults();
+        $this->assertEquals(count($expectedResult), count($results));
+        $i = 0;
+        do {
+            $this->assertEquals($expectedResult[$i], $results[0]->getTestResultFormat()->getTestResultSymbol());
+        } while (++$i < count($results));
+
+
         if ($hasAbnormalTermination) {
             $this->assertTrue($process->hasAbnormalTermination());
 
-            $output = $parser->getAbnormalTerminatedTestResultContainer()->getOutputBuffer(); // PHP 5.3 crap, again
-            $output = array_pop($output);
-            $this->assertNotNull($output[0]);
-            $this->assertStringStartsWith('Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output[0]);
+            /** @var TestResultContainer $testResultContainer */
+            $testResultContainer = $this->container->get('paraunit.test_result.abnormal_terminated_container');
+            $results = $testResultContainer->getTestResults(); // PHP 5.3 crap, again
+            $this->assertNotEmpty($results);
+            $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\TestResultWithMessage', $results);
+            /** @var TestResultWithMessage $result */
+            $result = end($results);
+            $this->assertStringStartsWith(
+                'Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)',
+                $result->getFailureMessage()
+            );
         }
     }
 
@@ -60,5 +76,10 @@ class JSONLogParserTest extends BaseFunctionalTestCase
             array(JSONLogStub::FATAL_ERROR, str_split('...X'), true),
             array(JSONLogStub::SEGFAULT, str_split('...X'), true),
         );
+    }
+
+    public function testParseHandlesUnknownResults()
+    {
+        $this->markTestIncomplete();
     }
 }

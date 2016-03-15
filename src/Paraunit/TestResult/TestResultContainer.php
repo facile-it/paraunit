@@ -19,6 +19,9 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     /** @var  TestResultInterface[] */
     private $testResults;
 
+    /** @var  string[] */
+    private $filenames;
+
     /**
      * TestResultContainer constructor.
      * @param JSONParserChainElementInterface $parser
@@ -28,6 +31,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     {
         $this->parser = $parser;
         $this->testResultFormat = $testResultFormat;
+        $this->filenames = array();
     }
 
     /**
@@ -40,7 +44,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
         $result = $this->parser->handleLogItem($process, $logItem);
 
         if ($result instanceof TestResultInterface) {
-            $this->addTestResult($result);
+            $this->addTestResult($process, $result);
             $process->addTestResult($result);
 
             return $result;
@@ -68,8 +72,35 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     /**
      * @param TestResultInterface $testResult
      */
-    protected function addTestResult(TestResultInterface $testResult)
+    protected function addTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
+        // trick for unique
+        $this->filenames[$process->getFilename()] = $process->getFilename();
+    }
+
+    /**
+     * @return int
+     * @todo test
+     */
+    public function countFilenames()
+    {
+        return count($this->filenames);
+    }
+
+    /**
+     * @return int
+     */
+    public function countTestResults()
+    {
+        return count($this->testResults);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFileNames()
+    {
+        return $this->filenames;
     }
 }

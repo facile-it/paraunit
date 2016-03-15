@@ -7,6 +7,8 @@ use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Printer\FinalPrinter;
+use Paraunit\TestResult\NullTestResult;
+use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
@@ -17,72 +19,9 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class FinalPrinterTest extends BaseFunctionalTestCase
 {
-    public function testOnEngineEndPrintsTheRightCountSummary()
-    {
-        $process = new StubbedParaunitProcess();
-        $process->addTestResult('.');
-        $process->addTestResult('.');
-        $process->addTestResult('.');
-
-        $output = new UnformattedOutputStub();
-        $context = array(
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => array_fill(0, 15, $process),
-        );
-        $engineEvent = new EngineEvent($output, $context);
-
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
-
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getTestResultContainer()->addToOutputBuffer($process, 'Test');
-            }
-        }
-
-        /** @var FinalPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.final_printer');
-
-        $printer->onEngineEnd($engineEvent);
-
-        $this->assertContains('Execution time -- 00:01:00', $output->getOutput());
-        $this->assertContains('Executed: 15 test classes, 45 tests', $output->getOutput());
-    }
-
-    public function testOnEngineEndHandlesEmptyMessagesCorrectly()
-    {
-        $process = new StubbedParaunitProcess();
-        $process->addTestResult('S');
-        $process->addTestResult('I');
-
-        $output = new UnformattedOutputStub();
-        $context = array(
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => array_fill(0, 15, $process),
-        );
-        $engineEvent = new EngineEvent($output, $context);
-
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
-
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getTestResultContainer()->addToOutputBuffer($process, null);
-            }
-        }
-
-        /** @var FinalPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.final_printer');
-
-        $printer->onEngineEnd($engineEvent);
-
-        $this->assertNotContains('output', $output->getOutput());
-    }
-
     public function testOnEngineEndPrintsInTheRightOrder()
     {
+        $this->markTestIncomplete('need a stub with all the possible outcomes..');
         $output = new UnformattedOutputStub();
         $process = new StubbedParaunitProcess();
         $context = array(
@@ -109,6 +48,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
         $this->assertNotEmpty($output->getOutput());
         $this->assertOutputOrder($output, array(
+            'Unknown',
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
@@ -116,7 +56,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
             'Risky Outcome output:',
             'Skipped Outcome output:',
             'Incomplete Outcome output:',
-            'files with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS)',
+            'files with UNKNOWN',
             'files with ERRORS',
             'files with FAILURES',
             'files with WARNING',
