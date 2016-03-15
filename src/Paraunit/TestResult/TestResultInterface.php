@@ -8,8 +8,4 @@ namespace Paraunit\TestResult;
  */
 interface TestResultInterface
 {
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat();
 }

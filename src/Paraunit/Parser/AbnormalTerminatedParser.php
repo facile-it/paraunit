@@ -2,8 +2,6 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Process\ProcessWithResultsInterface;
-use Paraunit\TestResult\FullTestResult;
 use Paraunit\TestResult\TestResultFactory;
 
 /**

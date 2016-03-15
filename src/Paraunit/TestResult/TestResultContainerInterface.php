@@ -9,7 +9,7 @@ namespace Paraunit\TestResult;
 interface TestResultContainerInterface
 {
     /**
-     * @return TestResultInterface[]
+     * @return PrintableTestResultInterface[]
      */
     public function getTestResults();
 }

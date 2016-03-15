@@ -20,6 +20,7 @@ class TestStartParserTest extends BaseUnitTestCase
     public function testHandleLogItem($status, $chainInterrupted, $processExpectsTestResult = false)
     {
         $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
         $log->status = $status;
@@ -49,9 +50,23 @@ class TestStartParserTest extends BaseUnitTestCase
         );
     }
 
+    public function testHandleLogItemCatchesEndingIfGraceful()
+    {
+        $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(false);
+        $parser = new TestStartParser();
+        $log = new \stdClass();
+        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+
+        $return = $parser->handleLogItem($process, $log);
+
+        $this->assertInstanceOf('Paraunit\TestResult\TestResultInterface', $return);
+    }
+
     public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog()
     {
         $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
         $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
@@ -62,50 +77,42 @@ class TestStartParserTest extends BaseUnitTestCase
         $this->assertEquals('UNKNOWN -- log not found', $log->test);
     }
 
-    /**
-     * @dataProvider logsProvider
-     */
-    public function testHandleLogItemAppendsCulpableFunction($status, $chainInterrupted)
+    public function testHandleLogItemAppendsCulpableFunction()
     {
         $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = $status;
+        $log->status = 'testStart';
         $log->test = 'testFunction';
 
         $parser->handleLogItem($process, $log);
 
-        if ($chainInterrupted) {
-            $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
-            $return = $parser->handleLogItem($process, $log);
+        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
 
-            $this->assertNull($return);
-            $this->assertEquals('testFunction', $log->test);
-        }
+        $return = $parser->handleLogItem($process, $log);
+
+        $this->assertNull($return, 'Parsing should not be interrupted');
+        $this->assertEquals('testFunction', $log->test);
     }
 
-    /**
-     * @dataProvider logsProvider
-     */
-    public function testHandleLogItemAppendsCulpableFunctionToRightProcess($status, $chainInterrupted)
+    public function testHandleLogItemAppendsCulpableFunctionToRightProcess()
     {
-        $process = new StubbedParaunitProcess();
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = $status;
+        $log->status = 'testStart';
         $log->test = 'testFunction';
 
         $parser->handleLogItem(new StubbedParaunitProcess(), $log);
 
-        $log->test = 'culpableFunction';
-        $parser->handleLogItem($process, $log);
+        $log = new \stdClass();
+        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
 
-        if ($chainInterrupted) {
-            $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
-            $return = $parser->handleLogItem($process, $log);
+        $return = $parser->handleLogItem($process, $log);
 
-            $this->assertNull($return);
-            $this->assertEquals('culpableFunction', $log->test);
-        }
+        $this->assertNull($return, 'Parsing should not be interrupted');
+        $this->assertEquals('UNKNOWN -- log not found', $log->test);
     }
 }

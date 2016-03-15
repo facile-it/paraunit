@@ -16,7 +16,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     /** @var  TestResultFormat */
     private $testResultFormat;
 
-    /** @var  TestResultInterface[] */
+    /** @var  PrintableTestResultInterface[] */
     private $testResults;
 
     /** @var  string[] */
@@ -37,20 +37,18 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     /**
      * @param ProcessWithResultsInterface $process
      * @param \stdClass $logItem
-     * @return null|TestResultInterface A result is returned when identified (and the chain needs to stop)
+     * @return null|TestResultInterface|PrintableTestResultInterface Returned when the chain needs to stop
      */
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
         $result = $this->parser->handleLogItem($process, $logItem);
 
-        if ($result instanceof TestResultInterface) {
+        if ($result instanceof PrintableTestResultInterface) {
             $this->addTestResult($process, $result);
             $process->addTestResult($result);
-
-            return $result;
         }
 
-        return null;
+        return $result;
     }
 
     /**
@@ -62,7 +60,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     }
 
     /**
-     * @return TestResultInterface[]
+     * @return PrintableTestResultInterface[]
      */
     public function getTestResults()
     {
@@ -70,9 +68,10 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     }
 
     /**
-     * @param TestResultInterface $testResult
+     * @param ProcessWithResultsInterface $process
+     * @param PrintableTestResultInterface $testResult
      */
-    protected function addTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult)
+    protected function addTestResult(ProcessWithResultsInterface $process, PrintableTestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
         // trick for unique

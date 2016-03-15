@@ -12,6 +12,8 @@ use Paraunit\TestResult\NullTestResult;
  */
 class TestStartParser implements JSONParserChainElementInterface
 {
+    const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
+
     /** @var ProcessWithResultsInterface */
     private $lastProcess;
 
@@ -28,7 +30,13 @@ class TestStartParser implements JSONParserChainElementInterface
 
                 return new NullTestResult();
             case JSONLogFetcher::LOG_ENDING_STATUS:
-                $this->injectLastFunctionInEndingLog($process, $logItem);
+                if ($process->isWaitingForTestResult()) {
+                    $this->injectLastFunctionInEndingLog($process, $logItem);
+
+                    return null;
+                } else {
+                    return new NullTestResult();
+                }
             default:
                 return null;
         }
@@ -41,7 +49,7 @@ class TestStartParser implements JSONParserChainElementInterface
     private function saveProcessFunction(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
         $this->lastProcess = $process;
-        $this->lastFunction = property_exists($logItem, 'test') ? $logItem->test : null;
+        $this->lastFunction = property_exists($logItem, 'test') ? $logItem->test : self::UNKNOWN_FUNCTION;
     }
 
     /**
@@ -50,8 +58,10 @@ class TestStartParser implements JSONParserChainElementInterface
      */
     private function injectLastFunctionInEndingLog(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
-        if (is_null($this->lastProcess) || $process === $this->lastProcess) {
-            $logItem->test = $this->lastFunction ?: 'UNKNOWN -- log not found';
+        $logItem->test = $this->lastFunction;
+
+        if (is_null($this->lastFunction) || $process !== $this->lastProcess) {
+            $logItem->test = self::UNKNOWN_FUNCTION;
         }
     }
 }

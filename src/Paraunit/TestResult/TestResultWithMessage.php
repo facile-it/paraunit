@@ -6,7 +6,7 @@ namespace Paraunit\TestResult;
  * Class TestResultWithMessage
  * @package Paraunit\TestResult
  */
-class TestResultWithMessage extends MuteTestResult implements TestResultInterface, FunctionNameInterface, FailureMessageInterface
+class TestResultWithMessage extends MuteTestResult implements PrintableTestResultInterface, FunctionNameInterface, FailureMessageInterface
 {
     /** @var  string */
     private $functionName;

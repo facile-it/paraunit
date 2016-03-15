@@ -3,7 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\TestResult\TestResultInterface;
+use Paraunit\TestResult\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -53,9 +53,9 @@ class ProcessPrinter
     }
 
     /**
-     * @param TestResultInterface $testResult
+     * @param PrintableTestResultInterface $testResult
      */
-    private function printFormattedWithCounter(TestResultInterface $testResult)
+    private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
     {
         if ($this->counter % 80 == 0 && $this->counter > 1) {
             $this->output->writeln('');

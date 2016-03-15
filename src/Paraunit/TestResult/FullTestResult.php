@@ -6,7 +6,7 @@ namespace Paraunit\TestResult;
  * Class FullTestResult
  * @package Paraunit\TestResult
  */
-class FullTestResult extends TestResultWithMessage implements TestResultInterface, FunctionNameInterface, FailureMessageInterface, StackTraceInterface
+class FullTestResult extends TestResultWithMessage implements PrintableTestResultInterface, FunctionNameInterface, FailureMessageInterface, StackTraceInterface
 {
     /** @var TraceStep[] */
     private $trace;

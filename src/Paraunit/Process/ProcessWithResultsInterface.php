@@ -2,8 +2,8 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\TestResult\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultContainerInterface;
-use Paraunit\TestResult\TestResultInterface;
 
 /**
  * Interface RetryAwareInterface.
@@ -11,9 +11,9 @@ use Paraunit\TestResult\TestResultInterface;
 interface ProcessWithResultsInterface extends TestResultContainerInterface
 {
     /**
-     * @param TestResultInterface $testResult
+     * @param PrintableTestResultInterface $testResult
      */
-    public function addTestResult(TestResultInterface $testResult);
+    public function addTestResult(PrintableTestResultInterface $testResult);
 
     /** @return bool */
     public function hasAbnormalTermination();

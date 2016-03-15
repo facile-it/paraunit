@@ -2,8 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\TestResult\TestResultContainerInterface;
-use Paraunit\TestResult\TestResultInterface;
+use Paraunit\TestResult\PrintableTestResultInterface;
 
 /**
  * Class AbstractParaunitProcess
@@ -23,7 +22,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     /** @var string */
     protected $filename;
 
-    /** @var TestResultInterface[] */
+    /** @var PrintableTestResultInterface[] */
     protected $testResults;
 
     /** @var  bool */
@@ -99,7 +98,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return TestResultInterface[]
+     * @return PrintableTestResultInterface[]
      */
     public function getTestResults()
     {
@@ -107,9 +106,9 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @param TestResultInterface $testResult
+     * @param PrintableTestResultInterface $testResult
      */
-    public function addTestResult(TestResultInterface $testResult)
+    public function addTestResult(PrintableTestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
     }
