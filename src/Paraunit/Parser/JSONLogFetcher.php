@@ -12,6 +12,8 @@ use Paraunit\Process\ParaunitProcessInterface;
  */
 class JSONLogFetcher
 {
+    const LOG_ENDING_STATUS = 'paraunitEnd';
+
     /** @var  JSONLogFilename */
     private $fileName;
 
@@ -32,14 +34,16 @@ class JSONLogFetcher
     public function fetch(ParaunitProcessInterface $process)
     {
         $filePath = $this->fileName->generate($process);
+        $fileContent = '';
 
-        if ( ! file_exists($filePath)) {
-            throw new JSONLogNotFoundException($process);
+        if (file_exists($filePath)) {
+            $fileContent = file_get_contents($filePath);
         }
 
-        return json_decode(
-            $this->cleanLog(file_get_contents($filePath))
-        );
+        $logs = json_decode($this->cleanLog($fileContent));
+        $logs[] = $this->createLogEnding();
+
+        return $logs;
     }
 
     /**
@@ -51,5 +55,13 @@ class JSONLogFetcher
         $splitted = preg_replace('/\}\{/', '},{', $jsonString);
 
         return '[' . $splitted . ']';
+    }
+
+    private function createLogEnding()
+    {
+        $logEnding = new \stdClass();
+        $logEnding->status = self::LOG_ENDING_STATUS;
+
+        return $logEnding;
     }
 }

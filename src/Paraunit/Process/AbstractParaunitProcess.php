@@ -26,8 +26,8 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     /** @var TestResultInterface[] */
     protected $testResults;
 
-    /** @var bool */
-    protected $abnormalTermination;
+    /** @var  bool */
+    private $waitingForTestResult;
 
     /**
      * {@inheritdoc}
@@ -42,7 +42,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         }
 
         $this->testResults = array();
-        $this->abnormalTermination = false;
+        $this->waitingForTestResult = false;
     }
 
     /**
@@ -120,12 +120,21 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     public function hasAbnormalTermination()
     {
         // TODO -- cambiare
-        return $this->abnormalTermination;
     }
 
-    public function reportAbnormalTermination(TestResultInterface $testResult)
+    /**
+     * @return bool
+     */
+    public function isWaitingForTestResult()
     {
-        $this->addTestResult($testResult);
-        $this->abnormalTermination = true;
+        return $this->waitingForTestResult;
+    }
+
+    /**
+     * @param boolean $waitingForTestResult
+     */
+    public function setWaitingForTestResult($waitingForTestResult)
+    {
+        $this->waitingForTestResult = (bool) $waitingForTestResult;
     }
 }

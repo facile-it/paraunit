@@ -15,9 +15,7 @@ interface ProcessWithResultsInterface extends TestResultContainerInterface
      */
     public function addTestResult(TestResultInterface $testResult);
 
-    /**
-     * @return bool
-     */
+    /** @return bool */
     public function hasAbnormalTermination();
 
     /** @return bool */
@@ -25,4 +23,12 @@ interface ProcessWithResultsInterface extends TestResultContainerInterface
 
     /** @return string */
     public function getFilename();
+
+    /** @return bool */
+    public function isWaitingForTestResult();
+
+    /**
+     * @param boolean $waitingForTestResult
+     */
+    public function setWaitingForTestResult($waitingForTestResult);
 }

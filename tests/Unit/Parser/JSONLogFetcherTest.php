@@ -12,7 +12,7 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class JSONLogFetcherTest extends BaseUnitTestCase
 {
-    public function testFetchThrowsExceptionWithMissingLog()
+    public function testFetchAppendsLogEndingAnywayWithMissingLog()
     {
         $process = new StubbedParaunitProcess();
 
@@ -21,9 +21,16 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 
         $fetcher = new JSONLogFetcher($fileName->reveal());
 
-        $this->setExpectedException('Paraunit\Exception\JSONLogNotFoundException');
+        $logs = $fetcher->fetch($process);
 
-        $fetcher->fetch($process);
+        $this->assertNotNull($logs, 'Fetcher returning a non-array');
+        $this->assertTrue(is_array($logs), 'Fetcher returning a non-array');
+        $this->assertCount(1, $logs, 'Log ending missing');
+        $this->assertContainsOnlyInstancesOf('\stdClass', $logs);
+
+        $endingLog = end($logs);
+        $this->assertTrue(property_exists($endingLog, 'status'));
+        $this->assertEquals(JSONLogFetcher::LOG_ENDING_STATUS, $endingLog->status);
     }
 
     public function testFetch()
@@ -35,14 +42,17 @@ class JSONLogFetcherTest extends BaseUnitTestCase
         $fileNameService = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
         $fileNameService->generate($process)->willReturn($filename);
 
-
         $fetcher = new JSONLogFetcher($fileNameService->reveal());
 
         $logs = $fetcher->fetch($process);
 
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertTrue(is_array($logs), 'Fetcher returning a non-array');
-        $this->assertCount(20, $logs);
+        $this->assertCount(20 + 1, $logs, 'Log ending missing');
         $this->assertContainsOnlyInstancesOf('\stdClass', $logs);
+
+        $endingLog = end($logs);
+        $this->assertTrue(property_exists($endingLog, 'status'));
+        $this->assertEquals(JSONLogFetcher::LOG_ENDING_STATUS, $endingLog->status);
     }
 }

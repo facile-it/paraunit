@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\Printer;
+namespace Tests\Unit\Printer;
 
 use Paraunit\Output\OutputContainer;
 use Tests\BaseUnitTestCase;

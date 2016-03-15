@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\TestResult;
+namespace Tests\Unit\TestResult;
 
 use Paraunit\TestResult\TraceStep;
 use Tests\BaseUnitTestCase;
