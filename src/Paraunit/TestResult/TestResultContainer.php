@@ -1,7 +1,9 @@
 <?php
 
 namespace Paraunit\TestResult;
+
 use Paraunit\Parser\JSONParserChainElementInterface;
+use Paraunit\Process\OutputAwareInterface;
 use Paraunit\Process\ProcessWithResultsInterface;
 
 /**
@@ -42,6 +44,10 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
         $result = $this->parser->handleLogItem($process, $logItem);
+
+        if ($result instanceof TestResultWithAbnormalTermination && $process instanceof OutputAwareInterface) {
+            $result->setTestOutput($process->getOutput());
+        }
 
         if ($result instanceof PrintableTestResultInterface) {
             $this->addTestResult($process, $result);

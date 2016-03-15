@@ -1,6 +1,7 @@
 <?php
 
 namespace Paraunit\TestResult;
+use Paraunit\Parser\JSONLogFetcher;
 
 /**
  * Class TestResultFactory
@@ -20,20 +21,29 @@ class TestResultFactory
         $this->format = $format;
     }
 
+    /**
+     * @param \stdClass $log
+     * @return PrintableTestResultInterface
+     */
     public function createFromLog(\stdClass $log)
     {
-        if (property_exists($log, 'message')) {
-            if (property_exists($log, 'trace')) {
-                $result = new FullTestResult($this->format, $log->test, $log->message);
-                $this->addTraceToResult($result, $log);
-
-                return $result;
-            } else {
-                return new TestResultWithMessage($this->format, $log->test, $log->message);
-            }
+        if ($log->status == JSONLogFetcher::LOG_ENDING_STATUS) {
+            return new TestResultWithAbnormalTermination($this->format, $log->test, 'Abnormal termination -- complete test output:');
         }
 
-        return new MuteTestResult($this->format);
+        if ( ! property_exists($log, 'message')) {
+            return new MuteTestResult($this->format);
+
+        }
+
+        if (property_exists($log, 'trace')) {
+            $result = new FullTestResult($this->format, $log->test, $log->message);
+            $this->addTraceToResult($result, $log);
+
+            return $result;
+        }
+
+        return new TestResultWithMessage($this->format, $log->test, $log->message);
     }
 
     /**

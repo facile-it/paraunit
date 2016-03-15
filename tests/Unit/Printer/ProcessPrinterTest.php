@@ -18,7 +18,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
 {
     public function testPrintProcessGoesToFormatting()
     {
-        $testResult = $this->mockTestResult();
+        $testResult = $this->mockPrintableTestResult();
         $process = new StubbedParaunitProcess();
         $process->addTestResult($testResult);
 
@@ -41,7 +41,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {
-            $process->addTestResult($this->mockTestResult());
+            $process->addTestResult($this->mockPrintableTestResult());
         }
 
         $printer = new ProcessPrinter($this->prophesize('Paraunit\Printer\SingleResultFormatter')->reveal());

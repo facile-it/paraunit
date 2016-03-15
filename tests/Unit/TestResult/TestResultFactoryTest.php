@@ -3,6 +3,7 @@
 namespace Tests\Unit\TestResult;
 
 
+use Paraunit\Parser\JSONLogFetcher;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
@@ -13,17 +14,6 @@ use Tests\BaseUnitTestCase;
  */
 class TestResultFactoryTest extends BaseUnitTestCase
 {
-    public function testCreateFromLogNull()
-    {
-        $log = new \stdClass();
-
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
-        $result = $factory->createFromLog($log);
-
-        $this->assertInstanceOf('Paraunit\TestResult\NullTestResult', $result);
-        $this->assertInstanceOf('Paraunit\TestResult\TestResultFormat', $result->getTestResultFormat());
-    }
-
     public function testCreateFromLogMuteWithoutTestName()
     {
         $log = new \stdClass();
@@ -59,7 +49,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
 
         $this->assertInstanceOf('Paraunit\TestResult\TestResultWithMessage', $result);
         $this->assertInstanceOf('Paraunit\TestResult\TestResultFormat', $result->getTestResultFormat());
-        $this->assertEquals($log->message, $result->getFailureMessage());
+        $this->assertEquals($log->test, $result->getFunctionName());
     }
 
     public function testCreateFromLogWithTrace()
@@ -80,21 +70,22 @@ class TestResultFactoryTest extends BaseUnitTestCase
         do {
             $this->assertEquals($log->trace[$i]->file, $trace[$i]->getFilePath());
             $this->assertEquals($log->trace[$i]->line, $trace[$i]->getLine());
-        } while(++$i < count($log->trace));
+        } while (++$i < count($log->trace));
     }
 
     public function testCreateFromLogWithAbnormalTermination()
     {
         $log = $this->getLogWithStatus('error');
-        $log->trace[] = clone $log->trace[0];
+        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
         $log->test = 'testFunction()';
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
         $result = $factory->createFromLog($log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\TestResultWithFullTestOutput', $result);
+        $this->assertInstanceOf('Paraunit\TestResult\TestResultWithAbnormalTermination', $result);
         $this->assertInstanceOf('Paraunit\TestResult\TestResultFormat', $result->getTestResultFormat());
         // TestStartParser injects the last launched test function name
-        $this->assertEquals('Culpable test function: ' . $log->test, $result->getFailureMessage());
+        $this->assertEquals($log->test, $result->getFunctionName());
+        $this->assertStringStartsWith('Abnormal termination -- complete test output:', $result->getFailureMessage());
     }
 }

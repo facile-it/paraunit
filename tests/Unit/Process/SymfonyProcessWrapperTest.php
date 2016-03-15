@@ -17,7 +17,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $process->setWaitingForTestResult(true);
         $this->assertTrue($process->isWaitingForTestResult());
 
-        $process->addTestResult($this->mockTestResult());
+        $process->addTestResult($this->mockPrintableTestResult());
 
         $this->assertFalse($process->isWaitingForTestResult());
     }

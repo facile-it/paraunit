@@ -40,4 +40,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
     {
         return $this->prophesize('Paraunit\TestResult\TestResultInterface')->reveal();
     }
+
+    protected function mockPrintableTestResult()
+    {
+        return $this->prophesize('Paraunit\TestResult\PrintableTestResultInterface')->reveal();
+    }
 }

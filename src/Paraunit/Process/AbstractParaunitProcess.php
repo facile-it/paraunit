@@ -111,6 +111,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     public function addTestResult(PrintableTestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
+        $this->waitingForTestResult = false;
     }
 
     /**

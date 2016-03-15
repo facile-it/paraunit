@@ -3,10 +3,10 @@
 namespace Paraunit\TestResult;
 
 /**
- * Class TestResultWithFullTestOutput
+ * Class TestResultWithAbnormalTermination
  * @package Paraunit\TestResult
  */
-class TestResultWithFullTestOutput extends TestResultWithMessage
+class TestResultWithAbnormalTermination extends TestResultWithMessage
 {
     /** @var string */
     private $testOutput;
