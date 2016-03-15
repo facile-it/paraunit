@@ -8,7 +8,7 @@ use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Printer\FinalPrinter;
 use Tests\BaseFunctionalTestCase;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
@@ -19,7 +19,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 {
     public function testOnEngineEndPrintsTheRightCountSummary()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->addTestResult('.');
         $process->addTestResult('.');
         $process->addTestResult('.');
@@ -52,7 +52,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
     public function testOnEngineEndHandlesEmptyMessagesCorrectly()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->addTestResult('S');
         $process->addTestResult('I');
 
@@ -84,7 +84,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
     public function testOnEngineEndPrintsInTheRightOrder()
     {
         $output = new UnformattedOutputStub();
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $context = array(
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),

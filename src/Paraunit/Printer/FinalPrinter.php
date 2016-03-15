@@ -6,7 +6,7 @@ use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
-use Paraunit\Process\ParaunitProcessAbstract;
+use Paraunit\Process\AbstractParaunitProcess;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -48,7 +48,7 @@ class FinalPrinter
         $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
 
         $testsCount = 0;
-        /** @var ParaunitProcessAbstract $process */
+        /** @var AbstractParaunitProcess $process */
         foreach ($completedProcesses as $process) {
             $testsCount += count($process->getTestResults());
         }

@@ -12,9 +12,4 @@ interface TestResultContainerInterface
      * @return TestResultInterface[]
      */
     public function getTestResults();
-
-    /**
-     * @param TestResultInterface $testResult
-     */
-    public function addTestResult(TestResultInterface $testResult);
 }

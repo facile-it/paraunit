@@ -10,7 +10,7 @@ use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\MySQLLockTimeoutTestStub;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class RetryParserTest
@@ -25,15 +25,12 @@ class RetryParserTest extends BaseUnitTestCase
     {
         $log = $this->getLogWithStatus('error', $testOutput);
 
-        $process = new StubbedParaProcess();
-        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 3);
-        $result = $parser->parseLog($process, $log);
+        $process = new StubbedParaunitProcess();
+        $parser = new RetryParser('error', 3);
+        $result = $parser->handleLogItem($process, $log);
 
         $this->assertInstanceOf('Paraunit\TestResult\MuteTestResult', $result);
-        $this->assertEquals('A', $result->getTestResultSymbol());
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
-        $this->assertCount(1, $process->getTestResults());
-        $this->assertEquals(array($result), $process->getTestResults(), 'Process should include the result!');
     }
 
     /**
@@ -41,32 +38,30 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndContinueWithNoRetry($jsonLogs)
     {
-        $process = new StubbedParaProcess();
-        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 3);
+        $process = new StubbedParaunitProcess();
+        $parser = new RetryParser('error', 3);
 
         $logs = json_decode($jsonLogs);
         foreach ($logs as $singlelog) {
             if ($singlelog->event == 'test') {
-                $this->assertNull($parser->parseLog($process, $singlelog), 'Parsing should continue!');
+                $this->assertNull($parser->handleLogItem($process, $singlelog), 'Parsing should continue!');
                 $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
-                $this->assertEmpty($process->getTestResults());
             }
         }
     }
 
     public function testParseAndContinueWithNoRetryAfterLimit()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $log = $this->getLogWithStatus('error', EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());
 
-        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 0);
+        $parser = new RetryParser('error', 0);
 
-        $this->assertNull($parser->parseLog($process, $log), 'Parsing should continue!');
+        $this->assertNull($parser->handleLogItem($process, $log), 'Parsing should continue!');
         $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
-        $this->assertEmpty($process->getTestResults());
     }
 
     public function toBeRetriedTestsProvider()

@@ -6,6 +6,7 @@ use Paraunit\Parser\JSONLogParser;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultContainerBearerInterface;
 use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Class SingleResultFormatter
@@ -22,11 +23,11 @@ class SingleResultFormatter
      */
     public function __construct(JSONLogParser $logParser)
     {
-        $this->addToMap($logParser->getTestResultContainer());
+        $this->tagMap = array();
 
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof TestResultContainerBearerInterface) {
-                $this->addToMap($parser->getTestResultContainer());
+        foreach ($logParser->getParsers() as $parser) {
+            if ($parser instanceof TestResultContainer) {
+                $this->addToMap($parser->getTestResultFormat());
             }
         }
     }
@@ -47,13 +48,10 @@ class SingleResultFormatter
     }
 
     /**
-     * @param TestResultContainerInterface $container
+     * @param TestResultFormat $format
      */
-    private function addToMap(TestResultContainerInterface $container)
+    private function addToMap(TestResultFormat $format)
     {
-        if ($container instanceof TestResultContainer) {
-            $format = $container->getTestResultFormat();
-            $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
-        }
+        $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
     }
 }

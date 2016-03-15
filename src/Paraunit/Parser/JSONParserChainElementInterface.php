@@ -2,7 +2,7 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\TestResultInterface;
 
 /**
@@ -12,9 +12,9 @@ use Paraunit\TestResult\TestResultInterface;
 interface JSONParserChainElementInterface
 {
     /**
-     * @param TestResultContainerInterface $process
-     * @param \stdClass $log
+     * @param ProcessWithResultsInterface $process
+     * @param \stdClass $logItem
      * @return null|TestResultInterface A result is returned when identified (and the chain needs to stop)
      */
-    public function parseLog(TestResultContainerInterface $process, \stdClass $log);
+    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem);
 }

@@ -5,7 +5,7 @@ namespace Tests;
 use Paraunit\Configuration\Paraunit;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -33,11 +33,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithSingleError()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('SingleError.txt'));
 
@@ -45,11 +45,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithSingleWarning()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('SingleWarning.txt'));
 
@@ -57,11 +57,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWith2Errors2Failures()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('2Errors2Failures.txt'));
 
@@ -69,11 +69,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithParserRegression()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('2Errors2Failures_parser_regression.txt'));
 
@@ -81,11 +81,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithAllGreen()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(0);
         $process->setOutput($this->getOutputFileContent('AllGreen.txt'));
 
@@ -93,11 +93,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithAllGreen5()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(0);
         $process->setOutput($this->getOutputFileContent('AllGreen5.txt'));
 
@@ -105,11 +105,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithFatalError()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('FatalError.txt'));
 
@@ -117,7 +117,7 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithSegFault()
     {
@@ -125,7 +125,7 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
             $this->markTestIncomplete('The segfault cannot be reproduced in this environment');
         }
 
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(-1);
         $process->setOutput($this->getOutputFileContent('SegFault.txt'));
 
@@ -133,11 +133,11 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StubbedParaProcess
+     * @return StubbedParaunitProcess
      */
     public function getTestWithVeryLongOutput()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setExitCode(0);
         $process->setOutput($this->getOutputFileContent('VeryLongOutput.txt'));
 

@@ -6,9 +6,10 @@ use Paraunit\TestResult\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultInterface;
 
 /**
- * Class SymfonyProcessWrapper.
+ * Class AbstractParaunitProcess
+ * @package Paraunit\Process
  */
-abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface, TestResultContainerInterface
+abstract class AbstractParaunitProcess implements ParaunitProcessInterface, RetryAwareInterface, ProcessWithResultsInterface
 {
     /** @var int */
     protected $retryCount = 0;
@@ -114,10 +115,11 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasAbnormalTermination()
     {
+        // TODO -- cambiare
         return $this->abnormalTermination;
     }
 

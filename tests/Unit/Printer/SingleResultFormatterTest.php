@@ -19,12 +19,8 @@ class SingleResultFormatterTest extends BaseUnitTestCase
         $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
         $testResultContainer->getTestResultFormat()->willReturn(new TestResultFormat($singleResult, $tag, 'title'));
 
-        $parser = $this->prophesize('Paraunit\Parser\AbstractParser');
-        $parser->getTestResultContainer()->willReturn($testResultContainer->reveal());
-
         $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $jsonParser->getParsersForPrinting()->willReturn(array($parser->reveal(), $this->prophesize()->reveal()));
-        $jsonParser->getTestResultContainer()->willReturn($testResultContainer->reveal());
+        $jsonParser->getParsers()->willReturn(array($testResultContainer->reveal()));
 
         $formatter = new SingleResultFormatter($jsonParser->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);
@@ -35,12 +31,8 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     public function testFormatSingleResultDoesNothingForUnknownTags()
     {
         $singleResult = '.';
-        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
-        $testResultContainer->getTestResultFormat()->willReturn(new TestResultFormat('abnormal', 'A', 'title'));
-
         $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $jsonParser->getParsersForPrinting()->willReturn(array());
-        $jsonParser->getTestResultContainer()->willReturn($testResultContainer->reveal());
+        $jsonParser->getParsers()->willReturn(array());
 
         $formatter = new SingleResultFormatter($jsonParser->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);

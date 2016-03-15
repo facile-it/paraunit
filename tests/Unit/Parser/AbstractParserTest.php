@@ -7,7 +7,7 @@ use Paraunit\TestResult\FullTestResult;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class AbstractParserTest
@@ -23,14 +23,12 @@ class AbstractParserTest extends BaseUnitTestCase
         $log = $this->getLogWithStatus($status, $message);
         $result = new FullTestResult('a', 'b', 'c');
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
-        $factory->setResultSymbol('E')->shouldBeCalled();
         $factory->createFromLog($log)->willReturn($result);
 
-        $container = new TestResultContainer(new TestResultFormat('E', 'tag', 'title'));
-        $parser = new AbstractParser($factory->reveal(), $container, $statusToMatch, $startsWithToMatch);
+        $parser = new AbstractParser($factory->reveal(), $statusToMatch, $startsWithToMatch);
 
         /** @var FullTestResult $result */
-        $parsedResult = $parser->parseLog(new StubbedParaProcess(), $log);
+        $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
 
         if ($shouldMatch) {
             $this->assertEquals($result, $parsedResult);

@@ -1,7 +1,7 @@
 <?php
 
 namespace Paraunit\Output;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 
 /**
  * Class AbstractOutputContainer
@@ -55,7 +55,7 @@ abstract class AbstractOutputContainer implements OutputContainerInterface
         return $this->singleResultMarker;
     }
 
-    abstract public function addToOutputBuffer(ProcessResultInterface $process, $message);
+    abstract public function addToOutputBuffer(ProcessWithResultsInterface $process, $message);
 
     abstract public function getFileNames();
 

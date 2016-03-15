@@ -6,7 +6,7 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\TestResult\MuteTestResult;
 use Tests\Stub\UnformattedOutputStub;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 use Prophecy\Argument;
 
 /**
@@ -17,7 +17,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
 {
     public function testPrintProcessGoesToFormatting()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->addTestResult(new MuteTestResult('.'));
 
         $formatter = $this->prophesize('Paraunit\Printer\SingleResultFormatter');
@@ -37,7 +37,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
      */
     public function testPrintProcessResult_new_line_after_80_chars($times, $newLineTimes)
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {
             $process->addTestResult(new MuteTestResult('F'));
         }

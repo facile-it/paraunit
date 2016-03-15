@@ -5,7 +5,7 @@ namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\File\TempDirectory;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogFilenameTest
@@ -15,7 +15,7 @@ class JSONLogFilenameTest extends \PHPUnit_Framework_TestCase
 {
     public function testGenerate()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $config = new TempDirectory();
         $fileName = new JSONLogFilename($config);
 

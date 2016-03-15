@@ -21,6 +21,14 @@ class MuteTestResult implements TestResultInterface
     }
 
     /**
+     * @param string $testResultSymbol
+     */
+    public function setTestResultSymbol($testResultSymbol)
+    {
+        $this->testResultSymbol = $testResultSymbol;
+    }
+
+    /**
      * @return string
      */
     public function getTestResultSymbol()

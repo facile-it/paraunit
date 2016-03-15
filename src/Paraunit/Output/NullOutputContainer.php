@@ -2,7 +2,7 @@
 
 namespace Paraunit\Output;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 
 /**
  * Class NullOutputContainer
@@ -13,7 +13,7 @@ class NullOutputContainer extends AbstractOutputContainer implements OutputConta
     /**
      * {@inheritdoc}
      */
-    public function addToOutputBuffer(ProcessResultInterface $process, $message)
+    public function addToOutputBuffer(ProcessWithResultsInterface $process, $message)
     {
     }
 

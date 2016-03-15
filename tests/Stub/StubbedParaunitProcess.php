@@ -2,13 +2,13 @@
 
 namespace Tests\Stub;
 
-use Paraunit\Process\ParaunitProcessAbstract;
+use Paraunit\Process\AbstractParaunitProcess;
 
 /**
- * Class StubbedParaProcess
+ * Class StubbedParaunitProcess
  * @package Tests\Stub
  */
-class StubbedParaProcess extends ParaunitProcessAbstract
+class StubbedParaunitProcess extends AbstractParaunitProcess
 {
     /**
      * @var string

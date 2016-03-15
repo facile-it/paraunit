@@ -8,7 +8,7 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogParserTest
@@ -21,7 +21,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
      */
     public function testParse($stubLog, $expectedResult, $hasAbnormalTermination = false)
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $stubLogFilename = __DIR__ . '/../../Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
         $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing!');
 

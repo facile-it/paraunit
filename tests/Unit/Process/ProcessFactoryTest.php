@@ -26,7 +26,7 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
 
         $process = $factory->createProcess('TestTest.php');
 
-        $this->assertInstanceOf('Paraunit\Process\ParaunitProcessAbstract', $process);
+        $this->assertInstanceOf('Paraunit\Process\AbstractParaunitProcess', $process);
         $expectedCmdLine = 'phpunit '
             . '-c configFile.xml '
             . '--colors=never '

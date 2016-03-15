@@ -4,7 +4,7 @@ namespace Paraunit\Runner;
 
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Printer\DebugPrinter;
-use Paraunit\Process\ParaunitProcessAbstract;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Lifecycle\EngineEvent;
@@ -20,13 +20,13 @@ class Runner
     /** @var int */
     protected $maxProcessNumber;
 
-    /** @var ParaunitProcessAbstract[] */
+    /** @var AbstractParaunitProcess[] */
     protected $processStack;
 
-    /** @var ParaunitProcessAbstract[] */
+    /** @var AbstractParaunitProcess[] */
     protected $processCompleted;
 
-    /** @var ParaunitProcessAbstract[] */
+    /** @var AbstractParaunitProcess[] */
     protected $processRunning;
 
     /** @var  ProcessFactory */
@@ -138,7 +138,7 @@ class Runner
     /**
      * @param $debug
      *
-     * @return ParaunitProcessAbstract
+     * @return AbstractParaunitProcess
      */
     protected function runProcess($debug)
     {
@@ -157,10 +157,10 @@ class Runner
     }
 
     /**
-     * @param ParaunitProcessAbstract $process
+     * @param AbstractParaunitProcess $process
      * @throws \Exception
      */
-    protected function markProcessCompleted(ParaunitProcessAbstract $process)
+    protected function markProcessCompleted(AbstractParaunitProcess $process)
     {
         $pHash = $process->getUniqueId();
 

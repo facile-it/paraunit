@@ -2,7 +2,7 @@
 
 namespace Paraunit\Output;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 
 /**
  * Interface OutputContainerInterface
@@ -11,10 +11,10 @@ use Paraunit\Process\ProcessResultInterface;
 interface OutputContainerInterface
 {
     /**
-     * @param ProcessResultInterface $process
+     * @param ProcessWithResultsInterface $process
      * @param string $message
      */
-    public function addToOutputBuffer(ProcessResultInterface $process, $message);
+    public function addToOutputBuffer(ProcessWithResultsInterface $process, $message);
 
     /**
      * @return string[]

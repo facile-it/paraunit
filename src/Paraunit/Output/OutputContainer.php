@@ -2,7 +2,7 @@
 
 namespace Paraunit\Output;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 
 /**
  * Class OutputContainer
@@ -24,10 +24,10 @@ class OutputContainer extends AbstractOutputContainer implements OutputContainer
     }
 
     /**
-     * @param ProcessResultInterface $process
+     * @param ProcessWithResultsInterface $process
      * @param string $message
      */
-    public function addToOutputBuffer(ProcessResultInterface $process, $message)
+    public function addToOutputBuffer(ProcessWithResultsInterface $process, $message)
     {
         if ($this->isEmptyMessage($message)) {
             $this->addFileNameOnly($process);
@@ -37,9 +37,9 @@ class OutputContainer extends AbstractOutputContainer implements OutputContainer
     }
 
     /**
-     * @param ProcessResultInterface $process
+     * @param ProcessWithResultsInterface $process
      */
-    private function addFileNameOnly(ProcessResultInterface $process)
+    private function addFileNameOnly(ProcessWithResultsInterface $process)
     {
         if ( ! array_key_exists($process->getFilename(), $this->outputBuffer)) {
             $this->outputBuffer[$process->getFilename()] = array();

@@ -4,7 +4,7 @@ namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\JSONLogFetcher;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogFetcherTest
@@ -14,7 +14,7 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 {
     public function testFetchThrowsExceptionWithMissingLog()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
 
         $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
         $fileName->generate($process)->willReturn('non-existent-log.json');
@@ -28,7 +28,7 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 
     public function testFetch()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $filename = __DIR__ . '/../../Stub/PHPUnitJSONLogOutput/AllGreen.json';
         $this->assertTrue(file_exists($filename), 'Test malformed, stub log file not found');
 

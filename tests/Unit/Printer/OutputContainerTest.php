@@ -4,7 +4,7 @@ namespace Unit\Printer;
 
 use Paraunit\Output\OutputContainer;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class OutputContainerTest
@@ -19,7 +19,7 @@ class OutputContainerTest extends BaseUnitTestCase
     {
         $container = new OutputContainer('', '', '');
 
-        $container->addToOutputBuffer(new StubbedParaProcess(), $message);
+        $container->addToOutputBuffer(new StubbedParaunitProcess(), $message);
 
         $this->assertEquals(1, $container->countMessages());
         $this->assertEquals(1, $container->countFiles());
@@ -40,7 +40,7 @@ class OutputContainerTest extends BaseUnitTestCase
     public function testAddToOutputBufferWithPreexistentMessages($emptyMessage)
     {
         $container = new OutputContainer('', '', '');
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
 
         $container->addToOutputBuffer($process, 'Not empty message');
         $container->addToOutputBuffer($process, $emptyMessage);
@@ -58,7 +58,7 @@ class OutputContainerTest extends BaseUnitTestCase
     {
         $container = new OutputContainer('', '', '');
 
-        $container->addToOutputBuffer(new StubbedParaProcess(), $emptyMessage);
+        $container->addToOutputBuffer(new StubbedParaunitProcess(), $emptyMessage);
 
         $this->assertEquals(0, $container->countMessages());
         $this->assertEquals(1, $container->countFiles());
