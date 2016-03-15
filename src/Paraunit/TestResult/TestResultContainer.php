@@ -69,7 +69,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     /**
      * @param TestResultInterface $testResult
      */
-    private function addTestResult(TestResultInterface $testResult)
+    protected function addTestResult(TestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
     }

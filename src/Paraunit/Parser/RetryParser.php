@@ -14,9 +14,6 @@ use Paraunit\TestResult\TestResultFormat;
  */
 class RetryParser implements JSONParserChainElementInterface
 {
-    /** @var  string */
-    protected $status;
-
     /** @var  int */
     private $maxRetryCount;
 
@@ -24,12 +21,10 @@ class RetryParser implements JSONParserChainElementInterface
     private $regexPattern;
 
     /**
-     * @param string $status
      * @param int $maxRetryCount
      */
-    public function __construct($status, $maxRetryCount = 3)
+    public function __construct($maxRetryCount = 3)
     {
-        $this->status = $status;
         $this->maxRetryCount = $maxRetryCount;
 
         $patterns = array(
