@@ -6,33 +6,14 @@ namespace Paraunit\TestResult;
  * Class MuteTestResult
  * @package Paraunit\Output\MuteTestResult
  */
-class MuteTestResult implements TestResultInterface
+class MuteTestResult extends NullTestResult implements TestResultInterface
 {
-    /** @var string */
-    private $testResultSymbol;
-
     /**
      * MuteTestResult constructor.
-     * @param string $testResultSymbol
+     * @param TestResultFormat $testResultFormat
      */
-    public function __construct($testResultSymbol)
+    public function __construct(TestResultFormat $testResultFormat)
     {
-        $this->testResultSymbol = $testResultSymbol;
-    }
-
-    /**
-     * @param string $testResultSymbol
-     */
-    public function setTestResultSymbol($testResultSymbol)
-    {
-        $this->testResultSymbol = $testResultSymbol;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTestResultSymbol()
-    {
-        return $this->testResultSymbol;
+        $this->setTestResultFormat($testResultFormat);
     }
 }

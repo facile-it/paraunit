@@ -79,3 +79,5 @@ services:
 
   paraunit.parser.abnormal_terminated_parser:
     class: Paraunit\Parser\AbnormalTerminatedParser
+    arguments:
+      - "@paraunit.test_result.test_result_factory"

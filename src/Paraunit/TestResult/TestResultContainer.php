@@ -40,7 +40,6 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
         $result = $this->parser->handleLogItem($process, $logItem);
 
         if ($result instanceof TestResultInterface) {
-            $result->setTestResultSymbol($this->testResultFormat->getTestResultSymbol());
             $this->addTestResult($result);
             $process->addTestResult($result);
 

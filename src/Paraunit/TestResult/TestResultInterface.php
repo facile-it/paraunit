@@ -9,12 +9,7 @@ namespace Paraunit\TestResult;
 interface TestResultInterface
 {
     /**
-     * @param $symbol
+     * @return TestResultFormat
      */
-    public function setTestResultSymbol($symbol);
-
-    /**
-     * @return string
-     */
-    public function getTestResultSymbol();
+    public function getTestResultFormat();
 }

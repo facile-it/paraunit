@@ -8,13 +8,30 @@ namespace Paraunit\TestResult;
  */
 class NullTestResult implements TestResultInterface
 {
-    public function setTestResultSymbol($symbol) {}
+    /** @var  TestResultFormat */
+    private $testResultFormat;
 
     /**
-     * @return string
+     * AbstractTestResult constructor.
      */
-    public function getTestResultSymbol()
+    public function __construct()
     {
-        return '';
+        $this->testResultFormat = new TestResultFormat('?', 'null', '');
+    }
+
+    /**
+     * @param TestResultFormat $testResultFormat
+     */
+    public function setTestResultFormat(TestResultFormat $testResultFormat)
+    {
+        $this->testResultFormat = $testResultFormat;
+    }
+
+    /**
+     * @return TestResultFormat
+     */
+    public function getTestResultFormat()
+    {
+        return $this->testResultFormat;
     }
 }

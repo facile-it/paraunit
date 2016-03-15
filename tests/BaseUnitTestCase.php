@@ -30,4 +30,14 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
 
         $this->fail('Feasible log message not found for test');
     }
+
+    protected function mockTestFormat()
+    {
+        return $this->prophesize('Paraunit\TestResult\TestResultFormat')->reveal();
+    }
+
+    protected function mockTestResult()
+    {
+        return $this->prophesize('Paraunit\TestResult\TestResultInterface')->reveal();
+    }
 }

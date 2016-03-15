@@ -5,6 +5,7 @@ namespace Tests\Unit\Printer;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\TestResult\MuteTestResult;
+use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Prophecy\Argument;
@@ -13,15 +14,16 @@ use Prophecy\Argument;
  * Class ProcessPrinterTest
  * @package Tests\Unit\Printer
  */
-class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
+class ProcessPrinterTest extends BaseUnitTestCase
 {
     public function testPrintProcessGoesToFormatting()
     {
+        $testResult = $this->mockTestResult();
         $process = new StubbedParaunitProcess();
-        $process->addTestResult(new MuteTestResult('.'));
+        $process->addTestResult($testResult);
 
         $formatter = $this->prophesize('Paraunit\Printer\SingleResultFormatter');
-        $formatter->formatSingleResult('.')->shouldBeCalled()->willReturn('<ok>.</ok>');
+        $formatter->formatSingleResult($testResult)->shouldBeCalled()->willReturn('<ok>.</ok>');
 
         $printer = new ProcessPrinter($formatter->reveal());
         $output = new UnformattedOutputStub();
@@ -39,7 +41,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {
-            $process->addTestResult(new MuteTestResult('F'));
+            $process->addTestResult($this->mockTestResult());
         }
 
         $printer = new ProcessPrinter($this->prophesize('Paraunit\Printer\SingleResultFormatter')->reveal());

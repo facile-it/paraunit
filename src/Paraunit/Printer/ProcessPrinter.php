@@ -64,7 +64,7 @@ class ProcessPrinter
         ++$this->counter;
 
         $this->output->write(
-            $this->singleResultFormatter->formatSingleResult($testResult->getTestResultSymbol())
+            $this->singleResultFormatter->formatSingleResult($testResult)
         );
     }
 }

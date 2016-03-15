@@ -10,13 +10,14 @@ use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
+use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogParserTest
  * @package Tests\Unit\Parser
  */
-class JSONLogParserTest extends \PHPUnit_Framework_TestCase
+class JSONLogParserTest extends BaseUnitTestCase
 {
     public function testOnProcessTerminatedHasProperChainInterruption()
     {
@@ -25,7 +26,7 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
         $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn(null);
         $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
-        $parser2->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn(new MuteTestResult('.'));
+        $parser2->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn($this->mockTestResult());
         $parser3 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
         $parser3->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
         $parser = $this->createParser(true, false);
@@ -41,7 +42,7 @@ class JSONLogParserTest extends \PHPUnit_Framework_TestCase
         $process = new StubbedParaunitProcess();
         $process->setOutput('Test output (core dumped)');
         $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
-        $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(1)->willReturn(new MuteTestResult('.'));
+        $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(1)->willReturn($this->mockTestResult());
         $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
         $parser2->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
 

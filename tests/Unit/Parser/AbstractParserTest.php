@@ -21,7 +21,7 @@ class AbstractParserTest extends BaseUnitTestCase
     public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
         $log = $this->getLogWithStatus($status, $message);
-        $result = new FullTestResult('a', 'b', 'c');
+        $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);
 

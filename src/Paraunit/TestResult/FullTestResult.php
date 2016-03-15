@@ -13,13 +13,13 @@ class FullTestResult extends TestResultWithMessage implements TestResultInterfac
 
     /**
      * FullTestResult constructor.
-     * @param string $testResultSymbol
+     * @param TestResultFormat $testResultFormat
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct($testResultSymbol, $functionName, $failureMessage)
+    public function __construct($testResultFormat, $functionName, $failureMessage)
     {
-        parent::__construct($testResultSymbol, $functionName, $failureMessage);
+        parent::__construct($testResultFormat, $functionName, $failureMessage);
         $this->trace = array();
     }
 

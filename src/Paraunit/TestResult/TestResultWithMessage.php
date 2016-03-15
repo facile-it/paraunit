@@ -16,13 +16,13 @@ class TestResultWithMessage extends MuteTestResult implements TestResultInterfac
 
     /**
      * TestResultWithMessage constructor.
-     * @param string $testResultSymbol
+     * @param TestResultFormat $testResultFormat
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct($testResultSymbol, $functionName, $failureMessage)
+    public function __construct(TestResultFormat $testResultFormat, $functionName, $failureMessage)
     {
-        parent::__construct($testResultSymbol);
+        parent::__construct($testResultFormat);
         $this->functionName = $functionName;
         $this->failureMessage = $failureMessage;
     }

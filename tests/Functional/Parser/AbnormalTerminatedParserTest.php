@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Parser;
 
+use Paraunit\Parser\AbnormalTerminatedParser;
 use Paraunit\Parser\JSONLogFetcher;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -18,6 +19,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $log = new \stdClass();
         $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
         $log->message = 'message';
+        /** @var AbnormalTerminatedParser $parser */
         $parser = $this->container->get('paraunit.parser.abnormal_terminated_parser');
 
         $parsedResult = $parser->handleLogItem($process, $log);
@@ -35,6 +37,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $log = new \stdClass();
         $log->status = $otherStatuses;
         $log->message = 'message';
+        /** @var AbnormalTerminatedParser $parser */
         $parser = $this->container->get('paraunit.parser.abnormal_terminated_parser');
 
         $parsedResult = $parser->handleLogItem($process, $log);
