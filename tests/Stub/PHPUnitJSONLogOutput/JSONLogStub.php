@@ -17,6 +17,7 @@ class JSONLogStub
     const ONE_RISKY = 'SingleRisky';
     const ONE_SKIP = 'SingleSkip';
     const ONE_WARNING = 'SingleWarning';
+    const UNKNOWN = 'Unknown';
 
     /**
      * @param $filename

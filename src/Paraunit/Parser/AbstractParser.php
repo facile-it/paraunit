@@ -50,9 +50,9 @@ class AbstractParser implements JSONParserChainElementInterface
      * @param \stdClass $log
      * @return bool
      */
-    private function logMatches(\stdClass $log)
+    protected function logMatches(\stdClass $log)
     {
-        if ($log->status != $this->status) {
+        if (property_exists($log, 'status') && $log->status != $this->status) {
             return false;
         }
 

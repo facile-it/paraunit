@@ -47,18 +47,20 @@ class JSONLogParser
     }
 
     /**
+     * @return TestResultContainerInterface[]
+     */
+    public function getParsersForPrinting()
+    {
+        return array_reverse($this->parsers);
+    }
+
+    /**
      * @param ProcessEvent $processEvent
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
-
-        try {
-            $logs = $this->logLocator->fetch($process);
-        } catch (JSONLogNotFoundException $exception) {
-            // empty log
-            $logs = array(new \stdClass());
-        }
+        $logs = $this->logLocator->fetch($process);
 
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);

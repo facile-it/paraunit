@@ -29,7 +29,7 @@ class TestResultFactory
      */
     public function createFromLog(\stdClass $log)
     {
-        if ($log->status == JSONLogFetcher::LOG_ENDING_STATUS) {
+        if (property_exists($log, 'status') && $log->status == JSONLogFetcher::LOG_ENDING_STATUS) {
             return new TestResultWithAbnormalTermination($this->format, $log->test, 'Abnormal termination -- complete test output:');
         }
 

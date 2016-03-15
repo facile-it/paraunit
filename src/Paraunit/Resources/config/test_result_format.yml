@@ -5,6 +5,8 @@ services:
       - "."
       - "ok"
       - "PASSED"
+      - false
+      - false
 
   paraunit.test_result.retry_test_result_format:
     class: Paraunit\TestResult\TestResultFormat
@@ -12,9 +14,14 @@ services:
       - "A"
       - "ok"
       - "RETRIED"
+      - false
 
-  paraunit.test_result.null_test_result_format:
+  paraunit.test_result.unknown_result_format:
     class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "?"
+      - "unknown"
+      - "unknown results (log parsing failed)"
 
   paraunit.test_result.abnormal_terminated_test_result_format:
     class: Paraunit\TestResult\TestResultFormat
@@ -57,6 +64,7 @@ services:
       - "S"
       - "skip"
       - "skipped outcome"
+      - false
 
   paraunit.test_result.incomplete_test_result_format:
     class: Paraunit\TestResult\TestResultFormat
@@ -64,6 +72,7 @@ services:
       - "I"
       - "incomplete"
       - "incomplete outcome"
+      - false
 
   paraunit.test_result.null_format:
     class: Paraunit\TestResult\TestResultFormat
@@ -71,3 +80,5 @@ services:
       - "?"
       - "null"
       - ""
+      - false
+      - false

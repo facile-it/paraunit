@@ -36,6 +36,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     {
         $this->parser = $parser;
         $this->testResultFormat = $testResultFormat;
+        $this->testResults = array();
         $this->filenames = array();
     }
 

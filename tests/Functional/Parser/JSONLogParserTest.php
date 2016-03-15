@@ -24,14 +24,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
     public function testParse($stubLog, $expectedResult, $hasAbnormalTermination = false)
     {
         $process = new StubbedParaunitProcess();
-        $stubLogFilename = __DIR__ . '/../../Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
-        $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing!');
-
-        /** @var JSONLogFilename $filename */
-        $filenameService = $this->container->get('paraunit.configuration.json_log_filename');
-        $filename = $filenameService->generate($process);
-
-        copy($stubLogFilename, $filename);
+        $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
         /** @var JSONLogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
@@ -45,22 +38,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
             $this->assertEquals($expectedResult[$i], $results[0]->getTestResultFormat()->getTestResultSymbol());
         } while (++$i < count($results));
 
-
-        if ($hasAbnormalTermination) {
-            $this->assertTrue($process->hasAbnormalTermination());
-
-            /** @var TestResultContainer $testResultContainer */
-            $testResultContainer = $this->container->get('paraunit.test_result.abnormal_terminated_container');
-            $results = $testResultContainer->getTestResults(); // PHP 5.3 crap, again
-            $this->assertNotEmpty($results);
-            $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\TestResultWithMessage', $results);
-            /** @var TestResultWithMessage $result */
-            $result = end($results);
-            $this->assertStringStartsWith(
-                'Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)',
-                $result->getFailureMessage()
-            );
-        }
+        $this->assertEquals($hasAbnormalTermination, $process->hasAbnormalTermination());
     }
 
     public function parsableResultsProvider()
@@ -75,6 +53,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
             array(JSONLogStub::ONE_WARNING, str_split('...W')),
             array(JSONLogStub::FATAL_ERROR, str_split('...X'), true),
             array(JSONLogStub::SEGFAULT, str_split('...X'), true),
+            array(JSONLogStub::UNKNOWN, str_split('?'), true),
         );
     }
 

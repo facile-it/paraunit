@@ -41,6 +41,14 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     }
 
     /**
+     * @param string $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
      * @param bool $isToBeRetried
      */
     public function setIsToBeRetried($isToBeRetried)

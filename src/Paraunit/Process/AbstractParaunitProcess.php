@@ -3,6 +3,7 @@
 namespace Paraunit\Process;
 
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 /**
  * Class AbstractParaunitProcess
@@ -119,7 +120,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
      */
     public function hasAbnormalTermination()
     {
-        // TODO -- cambiare
+        return end($this->testResults) instanceof TestResultWithAbnormalTermination;
     }
 
     /**

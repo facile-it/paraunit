@@ -2,13 +2,9 @@
 
 namespace Tests\Unit\Parser;
 
-use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Parser\JSONLogFetcher;
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\TestResult\MuteTestResult;
-use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -56,13 +52,15 @@ class JSONLogParserTest extends BaseUnitTestCase
     private function createParser($logFound = true, $abnormal = true)
     {
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
+        $endLog = new \stdClass();
+        $endLog->status = JSONLogFetcher::LOG_ENDING_STATUS;
         if ($logFound) {
             $log1 = new \stdClass();
             $log1->event = $abnormal ? 'testStart' : 'test';
             $log1->test = 'testSomething';
-            $logLocator->fetch(Argument::cetera())->willReturn(array($log1, clone $log1));
+            $logLocator->fetch(Argument::cetera())->willReturn(array($log1, $endLog));
         } else {
-            $logLocator->fetch(Argument::cetera())->willThrow(new JSONLogNotFoundException(new StubbedParaunitProcess()));
+            $logLocator->fetch(Argument::cetera())->willReturn(array($endLog));
         }
 
         return new JSONLogParser($logLocator->reveal());

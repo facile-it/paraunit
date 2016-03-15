@@ -4,8 +4,6 @@ namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\AbstractParser;
 use Paraunit\TestResult\FullTestResult;
-use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -20,7 +18,7 @@ class AbstractParserTest extends BaseUnitTestCase
      */
     public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
-        $log = $this->getLogWithStatus($status, $message);
+        $log = $this->getLogFromStub('test', $status, $message);
         $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);

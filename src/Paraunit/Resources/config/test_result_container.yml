@@ -3,7 +3,7 @@ services:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
       - "@paraunit.parser.test_start_parser"
-      - "@paraunit.test_result.null_test_result_format"
+      - "@paraunit.test_result.null_format"
 
   paraunit.test_result.pass_container:
     class: Paraunit\TestResult\TestResultContainer
@@ -16,6 +16,12 @@ services:
     arguments:
       - "@paraunit.parser.retry_parser"
       - "@paraunit.test_result.retry_test_result_format"
+
+  paraunit.test_result.unknown_result_container:
+    class: Paraunit\TestResult\TestResultContainer
+    arguments:
+      - "@paraunit.parser.unknown_result_parser"
+      - "@paraunit.test_result.unknown_result_format"
 
   paraunit.test_result.abnormal_terminated_container:
     class: Paraunit\TestResult\TestResultContainer

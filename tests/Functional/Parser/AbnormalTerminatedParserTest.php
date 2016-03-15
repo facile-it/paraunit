@@ -18,14 +18,13 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
         $log = new \stdClass();
         $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
-        $log->message = 'message';
+        $log->test = 'testFunction()';
         /** @var AbnormalTerminatedParser $parser */
         $parser = $this->container->get('paraunit.parser.abnormal_terminated_parser');
 
         $parsedResult = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\TestResultInterface', $parsedResult);
-        $this->assertTrue($process->hasAbnormalTermination());
+        $this->assertInstanceOf('Paraunit\TestResult\TestResultWithAbnormalTermination', $parsedResult);
     }
 
     /**
@@ -36,7 +35,6 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
         $log = new \stdClass();
         $log->status = $otherStatuses;
-        $log->message = 'message';
         /** @var AbnormalTerminatedParser $parser */
         $parser = $this->container->get('paraunit.parser.abnormal_terminated_parser');
 

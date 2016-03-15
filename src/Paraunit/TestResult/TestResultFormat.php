@@ -17,17 +17,26 @@ class TestResultFormat
     /** @var string */
     private $title;
 
+    /** @var  bool */
+    private $shouldPrintTestOutput;
+
+    /** @var  bool */
+    private $shouldPrintFilesRecap;
+
     /**
      * TestResultFormat constructor.
      * @param string $testResultSymbol
      * @param string $tag
      * @param string $title
+     * @param bool $shouldPrintTestOutput
      */
-    public function __construct($testResultSymbol, $tag, $title)
+    public function __construct($testResultSymbol, $tag, $title, $shouldPrintTestOutput = true, $shouldPrintFilesRecap = true)
     {
         $this->testResultSymbol = $testResultSymbol;
         $this->tag = $tag;
         $this->title = $title;
+        $this->shouldPrintTestOutput = $shouldPrintTestOutput;
+        $this->shouldPrintFilesRecap = $shouldPrintFilesRecap;
     }
 
     /**
@@ -52,5 +61,13 @@ class TestResultFormat
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShouldPrintTestOutput()
+    {
+        return $this->shouldPrintTestOutput;
     }
 }

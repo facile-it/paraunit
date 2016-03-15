@@ -17,7 +17,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
     public function testCreateFromLogMuteWithoutTestName()
     {
         $log = new \stdClass();
-        $log->status = 'status';
+        $log->event = 'test';
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
         $result = $factory->createFromLog($log);
@@ -29,8 +29,8 @@ class TestResultFactoryTest extends BaseUnitTestCase
     public function testCreateFromLogMute()
     {
         $log = new \stdClass();
-        $log->test = 'test';
-        $log->status = 'status';
+        $log->test = 'testFunction()';
+        $log->event = 'test';
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
         $result = $factory->createFromLog($log);
@@ -41,7 +41,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
 
     public function testCreateFromLogWithMessage()
     {
-        $log = $this->getLogWithStatus('error');
+        $log = $this->getLogFromStub('test', 'error');
         unset($log->trace);
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
@@ -54,7 +54,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
 
     public function testCreateFromLogWithTrace()
     {
-        $log = $this->getLogWithStatus('error');
+        $log = $this->getLogWithTrace();
         $log->trace[] = clone $log->trace[0];
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));
@@ -75,7 +75,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
 
     public function testCreateFromLogWithAbnormalTermination()
     {
-        $log = $this->getLogWithStatus('error');
+        $log = $this->getLogFromStub();
         $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
         $log->test = 'testFunction()';
 

@@ -23,7 +23,7 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndSetRetry($testOutput)
     {
-        $log = $this->getLogWithStatus('error', $testOutput);
+        $log = $this->getLogFromStub('test', 'error', $testOutput);
 
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->mockTestFormat(), 3);
@@ -53,7 +53,7 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndContinueWithNoRetryAfterLimit()
     {
         $process = new StubbedParaunitProcess();
-        $log = $this->getLogWithStatus('error', EntityManagerClosedTestStub::OUTPUT);
+        $log = $this->getLogFromStub('test', 'error', EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());

@@ -17,13 +17,13 @@ class TestStartParserTest extends BaseUnitTestCase
     /**
      * @dataProvider logsProvider
      */
-    public function testHandleLogItem($status, $chainInterrupted, $processExpectsTestResult = false)
+    public function testHandleLogItem($event, $chainInterrupted, $processExpectsTestResult = false)
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = $status;
+        $log->event = $event;
         $log->test = 'testFunction';
 
         $return = $parser->handleLogItem($process, $log);
@@ -44,9 +44,8 @@ class TestStartParserTest extends BaseUnitTestCase
         return array(
             array('testStart', true, true),
             array('suiteStart', true, true),
-            array('test', false),
-            array('aaaa', false),
-            array(JSONLogFetcher::LOG_ENDING_STATUS, false, false),
+            array('test', false, false),
+            array('aaaa', false, false),
         );
     }
 
@@ -83,7 +82,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = 'testStart';
+        $log->event = 'testStart';
         $log->test = 'testFunction';
 
         $parser->handleLogItem($process, $log);
@@ -100,7 +99,7 @@ class TestStartParserTest extends BaseUnitTestCase
     {
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = 'testStart';
+        $log->event = 'testStart';
         $log->test = 'testFunction';
 
         $parser->handleLogItem(new StubbedParaunitProcess(), $log);

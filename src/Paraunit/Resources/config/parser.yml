@@ -16,6 +16,7 @@ services:
       - [addParser, ["@paraunit.test_result.failure_container"]]
       - [addParser, ["@paraunit.test_result.error_container"]]
       - [addParser, ["@paraunit.test_result.abnormal_terminated_container"]]
+      - [addParser, ["@paraunit.test_result.unknown_result_container"]]
     tags:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
@@ -36,6 +37,7 @@ services:
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
+      - "@paraunit.test_result.retry_test_result_format"
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
@@ -82,3 +84,9 @@ services:
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "paraunitEnd"
+
+  paraunit.parser.unknown_result_parser:
+    class: Paraunit\Parser\UnknownResultParser
+    arguments:
+      - "@paraunit.test_result.test_result_factory"
+      - ""

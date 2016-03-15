@@ -49,7 +49,7 @@ class FinalPrinter
 
     private function printAllFailuresOutput()
     {
-        foreach ($this->logParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof TestResultContainer) {
                 $this->printFailuresOutput($parser);
             }
@@ -62,30 +62,36 @@ class FinalPrinter
      */
     private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
+        if ( ! $testResultContainer->getTestResultFormat()->isShouldPrintTestOutput()) {
+            return;
+        }
+
         $tag = $testResultContainer->getTestResultFormat()->getTag();
         $title = $testResultContainer->getTestResultFormat()->getTitle();
         $i = 1;
 
         foreach ($testResultContainer->getTestResults() as $testResult) {
-            if ($testResult instanceof FunctionNameInterface) {
-                if ($i == 1) {
-                    $this->output->writeln('');
-                    $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
-                }
-
+            if ($i == 1) {
                 $this->output->writeln('');
-                $this->output->writeln(
-                    sprintf('<%s>%d) %s</%s>', $tag, $i++, $testResult->getFunctionName(), $tag)
-                );
+                $this->output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
+            }
 
-                if ($testResult instanceof FailureMessageInterface) {
-                    $this->output->writeln($testResult->getFailureMessage());
-                }
+            $this->output->writeln('');
+            $this->output->write(sprintf('<%s>%d) ', $tag, $i++));
 
-                if ($testResult instanceof StackTraceInterface) {
-                    foreach ($testResult->getTrace() as $traceStep) {
-                        $this->output->writeln((string)$traceStep);
-                    }
+            if ($testResult instanceof FunctionNameInterface) {
+                $this->output->writeln($testResult->getFunctionName());
+            }
+
+            $this->output->write(sprintf('</%s>', $tag));
+
+            if ($testResult instanceof FailureMessageInterface) {
+                $this->output->writeln($testResult->getFailureMessage());
+            }
+
+            if ($testResult instanceof StackTraceInterface) {
+                foreach ($testResult->getTrace() as $traceStep) {
+                    $this->output->writeln((string)$traceStep);
                 }
             }
         }
@@ -93,7 +99,7 @@ class FinalPrinter
 
     private function printAllFilesRecap()
     {
-        foreach ($this->logParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof TestResultContainer) {
                 $this->printFileRecap($parser);
             }

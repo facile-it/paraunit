@@ -3,7 +3,6 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Configuration\JSONLogFilename;
-use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Process\ParaunitProcessInterface;
 
 /**
@@ -29,7 +28,6 @@ class JSONLogFetcher
     /**
      * @param ParaunitProcessInterface $process
      * @return array
-     * @throws JSONLogNotFoundException
      */
     public function fetch(ParaunitProcessInterface $process)
     {
