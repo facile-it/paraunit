@@ -3,7 +3,9 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Parser\OutputContainerBearerInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultContainerBearerInterface;
+use Paraunit\TestResult\TestResultContainerInterface;
 
 /**
  * Class SingleResultFormatter
@@ -20,10 +22,12 @@ class SingleResultFormatter
      */
     public function __construct(JSONLogParser $logParser)
     {
-        $this->addToMap($logParser);
+        $this->addToMap($logParser->getTestResultContainer());
 
         foreach ($logParser->getParsersForPrinting() as $parser) {
-            $this->addToMap($parser);
+            if ($parser instanceof TestResultContainerBearerInterface) {
+                $this->addToMap($parser->getTestResultContainer());
+            }
         }
     }
 
@@ -43,13 +47,13 @@ class SingleResultFormatter
     }
 
     /**
-     * @param $parser
+     * @param TestResultContainerInterface $container
      */
-    private function addToMap($parser)
+    private function addToMap(TestResultContainerInterface $container)
     {
-        if ($parser instanceof OutputContainerBearerInterface) {
-            $container = $parser->getOutputContainer();
-            $this->tagMap[$container->getSingleResultMarker()] = $container->getTag();
+        if ($container instanceof TestResultContainer) {
+            $format = $container->getTestResultFormat();
+            $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
         }
     }
 }

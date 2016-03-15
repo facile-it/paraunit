@@ -1,12 +1,10 @@
 <?php
 
-namespace Paraunit\Output\TestResult;
-
-use Paraunit\Output\TraceStep;
+namespace Paraunit\TestResult;
 
 /**
  * Class FullTestResult
- * @package Paraunit\Output\TestResult
+ * @package Paraunit\TestResult
  */
 class FullTestResult extends TestResultWithMessage implements TestResultInterface, FunctionNameInterface, FailureMessageInterface, StackTraceInterface
 {

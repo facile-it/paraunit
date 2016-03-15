@@ -13,5 +13,5 @@ interface OutputContainerBearerInterface
     /**
      * @return OutputContainerInterface
      */
-    public function getOutputContainer();
+    public function getTestResultContainer();
 }

@@ -2,14 +2,19 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultInterface;
 
+/**
+ * Interface JSONParserChainElementInterface
+ * @package Paraunit\Parser
+ */
 interface JSONParserChainElementInterface
 {
     /**
-     * @param ProcessResultInterface $process
+     * @param TestResultContainerInterface $process
      * @param \stdClass $log
-     * @return bool True if the parser found a definitive result of a test execution
+     * @return null|TestResultInterface A result is returned when identified (and the chain needs to stop)
      */
-    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log);
+    public function parseLog(TestResultContainerInterface $process, \stdClass $log);
 }

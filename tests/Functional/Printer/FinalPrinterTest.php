@@ -8,8 +8,8 @@ use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Printer\FinalPrinter;
 use Tests\BaseFunctionalTestCase;
-use Tests\Stub\UnformattedOutputStub;
 use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class FinalPrinterTest
@@ -37,7 +37,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
         foreach ($logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, 'Test');
+                $parser->getTestResultContainer()->addToOutputBuffer($process, 'Test');
             }
         }
 
@@ -69,7 +69,7 @@ class FinalPrinterTest extends BaseFunctionalTestCase
 
         foreach ($logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, null);
+                $parser->getTestResultContainer()->addToOutputBuffer($process, null);
             }
         }
 
@@ -95,10 +95,10 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         /** @var JSONLogParser $logParser */
         $logParser = $this->container->get('paraunit.parser.json_log_parser');
 
-        $logParser->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, 'Test');
+        $logParser->getAbnormalTerminatedTestResultContainer()->addToOutputBuffer($process, 'Test');
         foreach ($logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, 'Test');
+                $parser->getTestResultContainer()->addToOutputBuffer($process, 'Test');
             }
         }
 

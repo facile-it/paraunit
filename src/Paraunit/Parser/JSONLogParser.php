@@ -4,15 +4,17 @@ namespace Paraunit\Parser;
 
 use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Output\OutputContainerInterface;
 use Paraunit\Process\ParaunitProcessAbstract;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\TestResult\TestResultContainerBearerInterface;
+use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultInterface;
+use Paraunit\TestResult\TestResultWithMessage;
 
 /**
  * Class JSONLogParser
  * @package Paraunit\Parser
  */
-class JSONLogParser implements OutputContainerBearerInterface
+class JSONLogParser implements TestResultContainerBearerInterface
 {
     /** @var  JSONLogFetcher */
     private $logLocator;
@@ -20,18 +22,18 @@ class JSONLogParser implements OutputContainerBearerInterface
     /** @var JSONParserChainElementInterface[] */
     private $parsers;
 
-    /** @var  OutputContainerInterface */
-    private $abnormalTerminatedOutputContainer;
+    /** @var  TestResultContainerInterface */
+    private $abnormalTerminatedTestResultContainer;
 
     /**
      * JSONLogParser constructor.
      * @param JSONLogFetcher $logLocator
-     * @param OutputContainerInterface $abnormalTerminatedOutputContainer
+     * @param TestResultContainerInterface $abnormalTerminatedTestResultContainer
      */
-    public function __construct(JSONLogFetcher $logLocator, OutputContainerInterface $abnormalTerminatedOutputContainer)
+    public function __construct(JSONLogFetcher $logLocator, TestResultContainerInterface $abnormalTerminatedTestResultContainer)
     {
         $this->logLocator = $logLocator;
-        $this->abnormalTerminatedOutputContainer = $abnormalTerminatedOutputContainer;
+        $this->abnormalTerminatedTestResultContainer = $abnormalTerminatedTestResultContainer;
         $this->parsers = array();
     }
 
@@ -52,19 +54,19 @@ class JSONLogParser implements OutputContainerBearerInterface
     }
 
     /**
-     * @return OutputContainerInterface
+     * @return TestResultContainerInterface
      */
-    public function getOutputContainer()
+    public function getTestResultContainer()
     {
-        return $this->getAbnormalTerminatedOutputContainer();
+        return $this->getAbnormalTerminatedTestResultContainer();
     }
 
     /**
-     * @return OutputContainerInterface
+     * @return TestResultContainerInterface
      */
-    public function getAbnormalTerminatedOutputContainer()
+    public function getAbnormalTerminatedTestResultContainer()
     {
-        return $this->abnormalTerminatedOutputContainer;
+        return $this->abnormalTerminatedTestResultContainer;
     }
 
     /**
@@ -72,14 +74,8 @@ class JSONLogParser implements OutputContainerBearerInterface
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
-        $this->parse($processEvent->getProcess());
-    }
+        $process = $processEvent->getProcess();
 
-    /**
-     * @param ParaunitProcessAbstract $process
-     */
-    public function parse(ParaunitProcessAbstract $process)
-    {
         try {
             $logs = $this->logLocator->fetch($process);
         } catch (JSONLogNotFoundException $exception) {
@@ -88,31 +84,31 @@ class JSONLogParser implements OutputContainerBearerInterface
             return;
         }
 
-        $expectingTestResult = false;
+        $stillExpectingTestResult = false;
 
         foreach ($logs as $singleLog) {
+            $stillExpectingTestResult = true;
+
             if ($singleLog->event == 'test') {
-                $expectingTestResult = false;
-                $this->extractTestResult($process, $singleLog);
-            } else {
-                $expectingTestResult = true;
+                $stillExpectingTestResult = ! $this->testResultFound($process, $singleLog);
             }
         }
 
-        if ($expectingTestResult) {
+        if ($stillExpectingTestResult) {
+            /** @var \stdClass $singleLog No issue here: the if is true only if the foreach went at least once */
             $this->reportAbnormalTermination($process, $singleLog->test);
         }
     }
 
     /**
-     * @param ProcessResultInterface $process
+     * @param ParaunitProcessAbstract $process
      * @param \stdClass $logItem
      * @return bool False if the parsing is still waiting for a test to give results
      */
-    private function extractTestResult(ProcessResultInterface $process, \stdClass $logItem)
+    private function testResultFound(ParaunitProcessAbstract $process, \stdClass $logItem)
     {
         foreach ($this->parsers as $parser) {
-            if ($parser->parsingFoundResult($process, $logItem)) {
+            if ($parser->parseLog($process, $logItem) instanceof TestResultInterface) {
                 return true;
             }
         }
@@ -126,11 +122,8 @@ class JSONLogParser implements OutputContainerBearerInterface
      */
     private function reportAbnormalTermination(ParaunitProcessAbstract $process, $culpableFunctionName = 'Unknown function -- test log not found')
     {
-        $process->addTestResult('X');
-        $process->reportAbnormalTermination();
-        $this->getAbnormalTerminatedOutputContainer()->addToOutputBuffer(
-            $process,
-            'Culpable test function: ' . $culpableFunctionName . " -- complete test output:\n\n" . $process->getOutput()
-        );
+        $testResult = new TestResultWithMessage('X', $culpableFunctionName, "Complete test output:\n\n" . $process->getOutput());
+        $process->reportAbnormalTermination($testResult);
+        $this->abnormalTerminatedTestResultContainer->addTestResult($testResult);
     }
 }

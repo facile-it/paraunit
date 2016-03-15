@@ -2,10 +2,13 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultInterface;
+
 /**
  * Class SymfonyProcessWrapper.
  */
-abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface
+abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface, TestResultContainerInterface
 {
     /** @var int */
     protected $retryCount = 0;
@@ -19,7 +22,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /** @var string */
     protected $filename;
 
-    /** @var string[] */
+    /** @var TestResultInterface[] */
     protected $testResults;
 
     /** @var bool */
@@ -64,11 +67,10 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         ++$this->retryCount;
     }
 
-    /**
-     */
     public function markAsToBeRetried()
     {
         $this->shouldBeRetried = true;
+        $this->testResults = array();
     }
 
     /**
@@ -96,7 +98,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return string[]
+     * @return TestResultInterface[]
      */
     public function getTestResults()
     {
@@ -104,14 +106,9 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @param string[] $testResults
+     * @param TestResultInterface $testResult
      */
-    public function setTestResults(array $testResults)
-    {
-        $this->testResults = $testResults;
-    }
-
-    public function addTestResult($testResult)
+    public function addTestResult(TestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
     }
@@ -124,17 +121,9 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         return $this->abnormalTermination;
     }
 
-    public function reportAbnormalTermination()
+    public function reportAbnormalTermination(TestResultInterface $testResult)
     {
+        $this->addTestResult($testResult);
         $this->abnormalTermination = true;
-    }
-
-    /**
-     * @return bool
-     * @deprecated
-     */
-    public function isEmpty()
-    {
-        return (bool) count($this->filename);
     }
 }

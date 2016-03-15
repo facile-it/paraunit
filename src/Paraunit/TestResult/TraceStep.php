@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\Output;
+namespace Paraunit\TestResult;
 
 /**
  * Class TraceStep
- * @package Paraunit\Output
+ * @package Paraunit\TestResult
  */
 class TraceStep
 {
@@ -39,5 +39,13 @@ class TraceStep
     public function getLine()
     {
         return $this->line;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->filePath . ':' . $this->line;
     }
 }

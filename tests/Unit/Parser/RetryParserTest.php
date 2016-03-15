@@ -3,7 +3,7 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\RetryParser;
-use Paraunit\Output\NullOutputContainer;
+use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
@@ -24,13 +24,16 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndSetRetry($testOutput)
     {
         $log = $this->getLogWithStatus('error', $testOutput);
-        
-        $process = new StubbedParaProcess();
-        $parser = $this->createParserToBeTested();
 
-        $this->assertTrue($parser->parsingFoundResult($process, $log), 'Parsing shouldn\'t continue!');
+        $process = new StubbedParaProcess();
+        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 3);
+        $result = $parser->parseLog($process, $log);
+
+        $this->assertInstanceOf('Paraunit\TestResult\MuteTestResult', $result);
+        $this->assertEquals('A', $result->getTestResultSymbol());
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
-        $this->assertContains('A', $process->getTestResults(), 'Test results should include an A!');
+        $this->assertCount(1, $process->getTestResults());
+        $this->assertEquals(array($result), $process->getTestResults(), 'Process should include the result!');
     }
 
     /**
@@ -39,14 +42,14 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndContinueWithNoRetry($jsonLogs)
     {
         $process = new StubbedParaProcess();
-        $parser = $this->createParserToBeTested();
+        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 3);
 
         $logs = json_decode($jsonLogs);
         foreach ($logs as $singlelog) {
             if ($singlelog->event == 'test') {
-                $this->assertFalse($parser->parsingFoundResult($process, $singlelog), 'Parsing should continue!');
+                $this->assertNull($parser->parseLog($process, $singlelog), 'Parsing should continue!');
                 $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
-                $this->assertNotContains('A', $process->getTestResults(), 'Test results should NOT include an A!');
+                $this->assertEmpty($process->getTestResults());
             }
         }
     }
@@ -59,11 +62,11 @@ class RetryParserTest extends BaseUnitTestCase
 
         $this->assertEquals(1, $process->getRetryCount());
 
-        $parser = $this->createParserToBeTested(0);
+        $parser = new RetryParser(new TestResultFormat('A', '', ''), 'error', 0);
 
-        $this->assertFalse($parser->parsingFoundResult($process, $log), 'Parsing should continue!');
-        $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t retry no more!');
-        $this->assertNotContains('A', $process->getTestResults(), 'Test results should NOT include an A!');
+        $this->assertNull($parser->parseLog($process, $log), 'Parsing should continue!');
+        $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
+        $this->assertEmpty($process->getTestResults());
     }
 
     public function toBeRetriedTestsProvider()
@@ -89,16 +92,5 @@ class RetryParserTest extends BaseUnitTestCase
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
-    }
-
-    /**
-     * @param int $maxRetryCount
-     * @return RetryParser
-     */
-    private function createParserToBeTested($maxRetryCount = 3)
-    {
-        $container = new NullOutputContainer('', '', 'A');
-
-        return new RetryParser($container, $maxRetryCount);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Paraunit\Output\TestResult;
+namespace Paraunit\TestResult;
 
 /**
  * Class MuteTestResult

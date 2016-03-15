@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\Output\TestResult;
+namespace Paraunit\TestResult;
 
 /**
  * Interface FunctionNameInterface
- * @package Paraunit\Output\TestResult
+ * @package Paraunit\TestResult
  */
 interface FunctionNameInterface
 {

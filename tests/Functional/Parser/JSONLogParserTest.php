@@ -4,6 +4,7 @@ namespace Tests\Functional\Parser;
 
 
 use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
@@ -33,19 +34,18 @@ class JSONLogParserTest extends BaseFunctionalTestCase
         /** @var JSONLogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
 
-        $parser->parse($process);
+        $parser->onProcessTerminated(new ProcessEvent($process));
 
         $this->assertEquals($expectedResult, $process->getTestResults());
         if ($hasAbnormalTermination) {
             $this->assertTrue($process->hasAbnormalTermination());
 
-            $output = $parser->getAbnormalTerminatedOutputContainer()->getOutputBuffer(); // PHP 5.3 crap, again
+            $output = $parser->getAbnormalTerminatedTestResultContainer()->getOutputBuffer(); // PHP 5.3 crap, again
             $output = array_pop($output);
             $this->assertNotNull($output[0]);
             $this->assertStringStartsWith('Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output[0]);
         }
     }
-
 
     public function parsableResultsProvider()
     {

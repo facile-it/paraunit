@@ -3,7 +3,9 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\AbstractParser;
-use Paraunit\Output\OutputContainer;
+use Paraunit\TestResult\FullTestResult;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaProcess;
 
@@ -13,21 +15,39 @@ use Tests\Stub\StubbedParaProcess;
  */
 class AbstractParserTest extends BaseUnitTestCase
 {
-    public function testParsingFoundResult()
+    /**
+     * @dataProvider matchesProvider
+     */
+    public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
-        $container = new OutputContainer('tag', 'title', 'e');
-        $parser = new AbstractParser($container, 'error');
-        $log = $this->getLogWithStatus('error');
+        $log = $this->getLogWithStatus($status, $message);
+        $result = new FullTestResult('a', 'b', 'c');
+        $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
+        $factory->setResultSymbol('E')->shouldBeCalled();
+        $factory->createFromLog($log)->willReturn($result);
 
-        $parser->parsingFoundResult(new StubbedParaProcess(), $log);
+        $container = new TestResultContainer(new TestResultFormat('E', 'tag', 'title'));
+        $parser = new AbstractParser($factory->reveal(), $container, $statusToMatch, $startsWithToMatch);
 
-        $this->assertCOnlyNotEmpty($container->getOutputBuffer(), 'No output generated');
-        $outputBuffer = $container->getOutputBuffer(); // PHP 5.3 crap
-        $finalResult = array_pop($outputBuffer); // PHP 5.3 crap, again
-        $finalResult = $finalResult[0];
+        /** @var FullTestResult $result */
+        $parsedResult = $parser->parseLog(new StubbedParaProcess(), $log);
 
-        $this->assertContains('Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenTwo', $finalResult);
-        $this->assertContains('Undefined variable: asd', $finalResult);
-        $this->assertContains('/home/paraunit/projects/src/Paraunit/Tests/Stub/ThreeGreenTestStub.php:18', $finalResult);
+        if ($shouldMatch) {
+            $this->assertEquals($result, $parsedResult);
+        } else {
+            $this->assertNull($parsedResult);
+        }
+    }
+
+    public function matchesProvider()
+    {
+        return array(
+            array('error', null, 'error', 'anyMessage'),
+            array('error', 'Error found', 'error', 'Error found'),
+
+            array('error', null, 'pass', 'anyMessage', false),
+            array('error', 'Error found', 'error', 'anoherMessage', false),
+            array('error', 'Error found', 'pass', 'anoherMessage', false),
+        );
     }
 }

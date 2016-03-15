@@ -2,8 +2,10 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Output\OutputContainerInterface;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultFactory;
+use Paraunit\TestResult\TestResultInterface;
 
 /**
  * Class AbstractParser
@@ -11,11 +13,11 @@ use Paraunit\Process\ProcessResultInterface;
  */
 class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
 {
-    /** @var  OutputContainerInterface */
-    protected $outputContainer;
+    /** @var  TestResultFactory */
+    protected $testResultFactory;
 
-    /** @var  string */
-    protected $title;
+    /** @var  TestResultContainer */
+    protected $testResultContainer;
 
     /** @var  string */
     protected $status;
@@ -26,50 +28,54 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     /**
      * AbstractParser constructor.
      *
-     * @param OutputContainerInterface $outputContainer
+     * @param TestResultFactory $testResultFactory
+     * @param TestResultContainer $outputContainer
      * @param string $status The status that the parser should catch
-     * @param string | null $messageStartsWith The start of the message that the parser should look for
+     * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
-    public function __construct(OutputContainerInterface $outputContainer, $status, $messageStartsWith = null)
+    public function __construct(TestResultFactory $testResultFactory, TestResultContainer $outputContainer, $status, $messageStartsWith = null)
     {
-        $this->outputContainer = $outputContainer;
+        $this->testResultContainer = $outputContainer;
+        $this->testResultFactory = $testResultFactory;
+        $this->testResultFactory->setResultSymbol($this->testResultContainer->getTestResultFormat()->getTestResultSymbol());
         $this->status = $status;
         $this->messageStartsWith = $messageStartsWith;
     }
 
     /**
-     * @return OutputContainerInterface
+     * @return TestResultContainer
      */
-    public function getOutputContainer()
+    public function getTestResultContainer()
     {
-        return $this->outputContainer;
+        return $this->testResultContainer;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
+    public function parseLog(TestResultContainerInterface $process, \stdClass $log)
+    {
+        if ($this->logMatches($process, $log)) {
+            $result = $this->testResultFactory->createFromLog($log);
+            $this->storeTestResults($process, $result);
+
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param TestResultContainerInterface $process
+     * @param \stdClass $log
+     * @return bool
+     */
+    protected function logMatches(TestResultContainerInterface $process, \stdClass $log)
     {
         if ($log->status != $this->status) {
             return false;
         }
 
-        if ($this->checkMessageStart($log)) {
-            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
-            $this->outputContainer->addToOutputBuffer($process, $this->createMessageFromLog($log));
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \stdClass $log
-     * @return bool
-     */
-    private function checkMessageStart(\stdClass $log)
-    {
         if (is_null($this->messageStartsWith)) {
             return true;
         }
@@ -82,17 +88,12 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     }
 
     /**
-     * @param \stdClass $log
-     * @return string
+     * @param TestResultContainerInterface $process
+     * @param TestResultInterface $result
      */
-    private function createMessageFromLog(\stdClass $log)
+    protected function storeTestResults(TestResultContainerInterface $process, TestResultInterface $result)
     {
-        $stackTrace = '';
-
-        foreach ($log->trace as $step) {
-            $stackTrace .= "\n" . $step->file . ':' . $step->line;
-        }
-
-        return $log->test . "\n" . $log->message . "\n" . $stackTrace;
+        $this->testResultContainer->addTestResult($result);
+        $process->addTestResult($result);
     }
 }

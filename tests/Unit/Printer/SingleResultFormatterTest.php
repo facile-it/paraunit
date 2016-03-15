@@ -3,6 +3,7 @@
 namespace Tests\Unit\Printer;
 
 use Paraunit\Printer\SingleResultFormatter;
+use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -15,16 +16,15 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     {
         $tag = 'tag';
         $singleResult = '.';
-        $outputContainer = $this->prophesize('Paraunit\Output\OutputContainerInterface');
-        $outputContainer->getTag()->willReturn($tag);
-        $outputContainer->getSingleResultMarker()->willReturn($singleResult);
+        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $testResultContainer->getTestResultFormat()->willReturn(new TestResultFormat($singleResult, $tag, 'title'));
 
         $parser = $this->prophesize('Paraunit\Parser\AbstractParser');
-        $parser->getOutputContainer()->willReturn($outputContainer->reveal());
+        $parser->getTestResultContainer()->willReturn($testResultContainer->reveal());
 
         $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
         $jsonParser->getParsersForPrinting()->willReturn(array($parser->reveal(), $this->prophesize()->reveal()));
-        $jsonParser->getOutputContainer()->willReturn($outputContainer->reveal());
+        $jsonParser->getTestResultContainer()->willReturn($testResultContainer->reveal());
 
         $formatter = new SingleResultFormatter($jsonParser->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);
@@ -35,13 +35,12 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     public function testFormatSingleResultDoesNothingForUnknownTags()
     {
         $singleResult = '.';
-        $outputContainer = $this->prophesize('Paraunit\Output\OutputContainerInterface');
-        $outputContainer->getTag()->willReturn('abnormal');
-        $outputContainer->getSingleResultMarker()->willReturn('A');
+        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $testResultContainer->getTestResultFormat()->willReturn(new TestResultFormat('abnormal', 'A', 'title'));
 
         $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
         $jsonParser->getParsersForPrinting()->willReturn(array());
-        $jsonParser->getOutputContainer()->willReturn($outputContainer->reveal());
+        $jsonParser->getTestResultContainer()->willReturn($testResultContainer->reveal());
 
         $formatter = new SingleResultFormatter($jsonParser->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);

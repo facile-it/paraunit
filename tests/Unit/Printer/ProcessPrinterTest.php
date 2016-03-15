@@ -4,6 +4,7 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\ProcessPrinter;
+use Paraunit\TestResult\MuteTestResult;
 use Tests\Stub\UnformattedOutputStub;
 use Tests\Stub\StubbedParaProcess;
 use Prophecy\Argument;
@@ -17,7 +18,7 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
     public function testPrintProcessGoesToFormatting()
     {
         $process = new StubbedParaProcess();
-        $process->addTestResult('.');
+        $process->addTestResult(new MuteTestResult('.'));
 
         $formatter = $this->prophesize('Paraunit\Printer\SingleResultFormatter');
         $formatter->formatSingleResult('.')->shouldBeCalled()->willReturn('<ok>.</ok>');
@@ -37,7 +38,9 @@ class ProcessPrinterTest extends \PHPUnit_Framework_TestCase
     public function testPrintProcessResult_new_line_after_80_chars($times, $newLineTimes)
     {
         $process = new StubbedParaProcess();
-        $process->setTestResults(array_fill(0, $times, 'F'));
+        for ($i = 0; $i < $times; $i++) {
+            $process->addTestResult(new MuteTestResult('F'));
+        }
 
         $printer = new ProcessPrinter($this->prophesize('Paraunit\Printer\SingleResultFormatter')->reveal());
         $output = $this->prophesize('Symfony\Component\Console\Output\Output');

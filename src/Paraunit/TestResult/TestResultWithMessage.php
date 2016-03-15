@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\Output\TestResult;
+namespace Paraunit\TestResult;
 
 /**
  * Class TestResultWithMessage
- * @package Paraunit\Output\TestResult
+ * @package Paraunit\TestResult
  */
 class TestResultWithMessage extends MuteTestResult implements TestResultInterface, FunctionNameInterface, FailureMessageInterface
 {
