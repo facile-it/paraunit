@@ -2,7 +2,7 @@
 
 namespace Paraunit\Lifecycle;
 
-use Paraunit\Process\ParaunitProcessAbstract;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
 
 /***
@@ -22,17 +22,17 @@ class ProcessEvent extends AbstractEvent
     protected $context;
 
     /**
-     * @param ParaunitProcessAbstract $process
+     * @param AbstractParaunitProcess $process
      * @param array $context
      */
-    public function __construct(ParaunitProcessAbstract $process, $context = array())
+    public function __construct(AbstractParaunitProcess $process, $context = array())
     {
         $this->process = $process;
         $this->context = $context;
     }
 
     /**
-     * @return ParaunitProcessAbstract
+     * @return AbstractParaunitProcess
      */
     public function getProcess()
     {

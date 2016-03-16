@@ -3,7 +3,9 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Parser\OutputContainerBearerInterface;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Class SingleResultFormatter
@@ -20,36 +22,37 @@ class SingleResultFormatter
      */
     public function __construct(JSONLogParser $logParser)
     {
-        $this->addToMap($logParser);
+        $this->tagMap = array();
 
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            $this->addToMap($parser);
+        foreach ($logParser->getParsers() as $parser) {
+            if ($parser instanceof TestResultContainer) {
+                $this->addToMap($parser->getTestResultFormat());
+            }
         }
     }
 
     /**
-     * @param $singleResult
+     * @param PrintableTestResultInterface $singleResult
      * @return string
      */
-    public function formatSingleResult($singleResult)
+    public function formatSingleResult(PrintableTestResultInterface $singleResult)
     {
-        if (array_key_exists($singleResult, $this->tagMap)) {
-            $tag = $this->tagMap[$singleResult];
+        $resultSymbol = $singleResult->getTestResultFormat()->getTestResultSymbol();
 
-            return sprintf('<%s>%s</%s>', $tag, $singleResult, $tag);
+        if (array_key_exists($resultSymbol, $this->tagMap)) {
+            $tag = $this->tagMap[$resultSymbol];
+
+            return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
         }
 
-        return $singleResult;
+        return $resultSymbol;
     }
 
     /**
-     * @param $parser
+     * @param TestResultFormat $format
      */
-    private function addToMap($parser)
+    private function addToMap(TestResultFormat $format)
     {
-        if ($parser instanceof OutputContainerBearerInterface) {
-            $container = $parser->getOutputContainer();
-            $this->tagMap[$container->getSingleResultMarker()] = $container->getTag();
-        }
+        $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
     }
 }

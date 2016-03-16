@@ -3,14 +3,14 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\RetryParser;
-use Paraunit\Printer\NullOutputContainer;
+use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\MySQLLockTimeoutTestStub;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class RetryParserTest
@@ -23,14 +23,14 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndSetRetry($testOutput)
     {
-        $log = $this->getLogWithStatus('error', $testOutput);
-        
-        $process = new StubbedParaProcess();
-        $parser = $this->createParserToBeTested();
+        $log = $this->getLogFromStub('test', 'error', $testOutput);
 
-        $this->assertTrue($parser->parsingFoundResult($process, $log), 'Parsing shouldn\'t continue!');
+        $process = new StubbedParaunitProcess();
+        $parser = new RetryParser($this->mockTestFormat(), 3);
+        $result = $parser->handleLogItem($process, $log);
+
+        $this->assertInstanceOf('Paraunit\TestResult\MuteTestResult', $result);
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
-        $this->assertContains('A', $process->getTestResults(), 'Test results should include an A!');
     }
 
     /**
@@ -38,32 +38,30 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndContinueWithNoRetry($jsonLogs)
     {
-        $process = new StubbedParaProcess();
-        $parser = $this->createParserToBeTested();
+        $process = new StubbedParaunitProcess();
+        $parser = new RetryParser($this->mockTestFormat(), 3);
 
         $logs = json_decode($jsonLogs);
         foreach ($logs as $singlelog) {
             if ($singlelog->event == 'test') {
-                $this->assertFalse($parser->parsingFoundResult($process, $singlelog), 'Parsing should continue!');
+                $this->assertNull($parser->handleLogItem($process, $singlelog), 'Parsing should continue!');
                 $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
-                $this->assertNotContains('A', $process->getTestResults(), 'Test results should NOT include an A!');
             }
         }
     }
 
     public function testParseAndContinueWithNoRetryAfterLimit()
     {
-        $process = new StubbedParaProcess();
-        $log = $this->getLogWithStatus('error', EntityManagerClosedTestStub::OUTPUT);
+        $process = new StubbedParaunitProcess();
+        $log = $this->getLogFromStub('test', 'error', EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());
 
-        $parser = $this->createParserToBeTested(0);
+        $parser = new RetryParser($this->mockTestFormat(), 0);
 
-        $this->assertFalse($parser->parsingFoundResult($process, $log), 'Parsing should continue!');
-        $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t retry no more!');
-        $this->assertNotContains('A', $process->getTestResults(), 'Test results should NOT include an A!');
+        $this->assertNull($parser->handleLogItem($process, $log), 'Parsing should continue!');
+        $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
     }
 
     public function toBeRetriedTestsProvider()
@@ -89,16 +87,5 @@ class RetryParserTest extends BaseUnitTestCase
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
-    }
-
-    /**
-     * @param int $maxRetryCount
-     * @return RetryParser
-     */
-    private function createParserToBeTested($maxRetryCount = 3)
-    {
-        $container = new NullOutputContainer('', '', 'A');
-
-        return new RetryParser($container, $maxRetryCount);
     }
 }

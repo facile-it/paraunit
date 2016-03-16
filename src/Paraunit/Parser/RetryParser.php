@@ -2,18 +2,20 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Printer\OutputContainerInterface;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\Process\RetryAwareInterface;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\MuteTestResult;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Class RetryParser
  * @package Paraunit\Parser
  */
-class RetryParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
+class RetryParser implements JSONParserChainElementInterface
 {
-    /** @var  OutputContainerInterface */
-    private $outputContainer;
+    /** @var  TestResultFormat */
+    private $testResultFormat;
 
     /** @var  int */
     private $maxRetryCount;
@@ -23,12 +25,12 @@ class RetryParser implements JSONParserChainElementInterface, OutputContainerBea
 
     /**
      * RetryParser constructor.
-     * @param OutputContainerInterface $outputContainer
+     * @param TestResultFormat $testResultFormat
      * @param int $maxRetryCount
      */
-    public function __construct(OutputContainerInterface $outputContainer, $maxRetryCount = 3)
+    public function __construct(TestResultFormat $testResultFormat, $maxRetryCount = 3)
     {
-        $this->outputContainer = $outputContainer;
+        $this->testResultFormat = $testResultFormat;
         $this->maxRetryCount = $maxRetryCount;
 
         $patterns = array(
@@ -43,30 +45,25 @@ class RetryParser implements JSONParserChainElementInterface, OutputContainerBea
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
 
-    /**
-     * @return OutputContainerInterface
-     */
-    public function getOutputContainer()
+    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
-        return $this->outputContainer;
+        if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
+            /** @var RetryAwareInterface | TestResultContainerInterface $process */
+            $process->markAsToBeRetried();
+
+            return new MuteTestResult();
+        }
+
+        return null;
     }
 
     /**
-     * {@inheritdoc}
+     * @param TestResultContainerInterface $process
+     * @return bool
      */
-    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
+    private function isRetriable(TestResultContainerInterface $process)
     {
-        if ($process instanceof RetryAwareInterface
-            && $this->isToBeRetried($log)
-            && $this->hasNotExceededRetryCount($process)
-        ) {
-            $process->markAsToBeRetried();
-            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
-
-            return true;
-        }
-
-        return false;
+        return $process instanceof RetryAwareInterface && $process->getRetryCount() < $this->maxRetryCount;
     }
 
     /**
@@ -75,13 +72,7 @@ class RetryParser implements JSONParserChainElementInterface, OutputContainerBea
      */
     private function isToBeRetried(\stdClass $log)
     {
-        return $log->status == 'error' && preg_match($this->regexPattern, $log->message);
-    }
-
-
-    private function hasNotExceededRetryCount(RetryAwareInterface $process)
-    {
-        return $process->getRetryCount() < $this->maxRetryCount;
+        return property_exists($log, 'status') && $log->status == 'error' && preg_match($this->regexPattern, $log->message);
     }
 
     /**

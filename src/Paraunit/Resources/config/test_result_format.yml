@@ -1,0 +1,84 @@
+services:
+  paraunit.test_result.pass_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "."
+      - "ok"
+      - "PASSED"
+      - false
+      - false
+
+  paraunit.test_result.retry_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "A"
+      - "ok"
+      - "RETRIED"
+      - false
+
+  paraunit.test_result.unknown_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "?"
+      - "unknown"
+      - "unknown results (log parsing failed)"
+
+  paraunit.test_result.abnormal_terminated_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "X"
+      - "abnormal"
+      - "abnormal terminations (fatal errors, segfaults)"
+
+  paraunit.test_result.error_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "E"
+      - "error"
+      - "errors"
+
+  paraunit.test_result.failure_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "F"
+      - "fail"
+      - "failures"
+
+  paraunit.test_result.warning_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "W"
+      - "warning"
+      - "warnings"
+
+  paraunit.test_result.risky_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "R"
+      - "warning"
+      - "risky outcome"
+
+  paraunit.test_result.skipped_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "S"
+      - "skip"
+      - "skipped outcome"
+      - false
+
+  paraunit.test_result.incomplete_test_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "I"
+      - "incomplete"
+      - "incomplete outcome"
+      - false
+
+  paraunit.test_result.null_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - ""
+      - "null"
+      - ""
+      - false
+      - false

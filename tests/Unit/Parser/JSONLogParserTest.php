@@ -2,56 +2,67 @@
 
 namespace Tests\Unit\Parser;
 
-use Paraunit\Exception\JSONLogNotFoundException;
+use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Parser\JSONLogFetcher;
 use Paraunit\Parser\JSONLogParser;
-use Paraunit\Printer\OutputContainer;
-use Tests\Stub\StubbedParaProcess;
 use Prophecy\Argument;
+use Tests\BaseUnitTestCase;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogParserTest
  * @package Tests\Unit\Parser
  */
-class JSONLogParserTest extends \PHPUnit_Framework_TestCase
+class JSONLogParserTest extends BaseUnitTestCase
 {
-    public function testParseHandlesMissingLogs()
+    public function testOnProcessTerminatedHasProperChainInterruption()
     {
-        $process = new StubbedParaProcess();
-        $process->setOutput('Test output (core dumped)');
-        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $logLocator->fetch($process)->willThrow(new JSONLogNotFoundException($process));
+        $process = new StubbedParaunitProcess();
+        $process->setOutput('All ok');
+        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn(null);
+        $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser2->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn($this->mockTestResult());
+        $parser3 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser3->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
+        $parser = $this->createParser(true, false);
+        $parser->addParser($parser1->reveal());
+        $parser->addParser($parser2->reveal());
+        $parser->addParser($parser3->reveal());
 
-        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', '', ''));
-
-        $parser->parse($process);
-
-        $this->assertTrue($process->hasAbnormalTermination());
-        $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
-        $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
-        $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
-        $this->assertContains('Unknown function -- test log not found', $buffer[$process->getFilename()][0]);
-        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()][0]);
+        $parser->onProcessTerminated(new ProcessEvent($process));
     }
 
-    public function testParseHandlesTruncatedLogs()
+    public function testParseHandlesMissingLogs()
     {
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $process->setOutput('Test output (core dumped)');
+        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(1)->willReturn($this->mockTestResult());
+        $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser2->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
+
+        $parser = $this->createParser(false);
+        $parser->addParser($parser1->reveal());
+        $parser->addParser($parser2->reveal());
+
+        $parser->onProcessTerminated(new ProcessEvent($process));
+    }
+
+    private function createParser($logFound = true, $abnormal = true)
+    {
         $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $log1 = new \stdClass();
-        $log1->event = 'testStart';
-        $log1->test = 'testSomething';
-        $logLocator->fetch($process)->willReturn(array($log1));
+        $endLog = new \stdClass();
+        $endLog->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        if ($logFound) {
+            $log1 = new \stdClass();
+            $log1->event = $abnormal ? 'testStart' : 'test';
+            $log1->test = 'testSomething';
+            $logLocator->fetch(Argument::cetera())->willReturn(array($log1, $endLog));
+        } else {
+            $logLocator->fetch(Argument::cetera())->willReturn(array($endLog));
+        }
 
-        $parser = new JSONLogParser($logLocator->reveal(), new OutputContainer('', '', ''));
-
-        $parser->parse($process);
-
-        $this->assertTrue($process->hasAbnormalTermination());
-        $outputContainer = $parser->getAbnormalTerminatedOutputContainer();
-        $this->assertContains($process->getFilename(), $outputContainer->getFileNames());
-        $buffer = $outputContainer->getOutputBuffer(); // PHP 5.3 workaround to direct call
-        $this->assertContains('testSomething', $buffer[$process->getFilename()][0]);
-        $this->assertContains($process->getOutput(), $buffer[$process->getFilename()][0]);
+        return new JSONLogParser($logLocator->reveal());
     }
 }

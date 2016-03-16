@@ -35,8 +35,10 @@ RUN sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 #Zsh minimal installation
 RUN git clone --depth=1 git://github.com/robbyrussell/oh-my-zsh.git  ~/.oh-my-zsh
-RUN cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 RUN sudo chsh -s /bin/zsh
+ADD config/.zshrc /root/
+ADD config/.zshrc /home/paraunit/
+ENV TERM xterm-256color
 
 #----- BEGIN Enable sigsegv extension
 WORKDIR /tmp/

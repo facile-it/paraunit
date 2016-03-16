@@ -8,7 +8,7 @@ use Symfony\Component\Process\Process;
  * Class SymfonyProcessWrapper
  * @package Paraunit\Process
  */
-class SymfonyProcessWrapper extends ParaunitProcessAbstract
+class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
     /** @var Process */
     protected $process;

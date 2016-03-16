@@ -4,12 +4,16 @@ namespace Tests\Functional\Printer;
 
 
 use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\Parser\OutputContainerBearerInterface;
 use Paraunit\Printer\FinalPrinter;
+use Paraunit\TestResult\NullTestResult;
+use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
+use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
+use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
-use Tests\Stub\StubbedParaProcess;
 
 /**
  * Class FinalPrinterTest
@@ -17,106 +21,36 @@ use Tests\Stub\StubbedParaProcess;
  */
 class FinalPrinterTest extends BaseFunctionalTestCase
 {
-    public function testOnEngineEndPrintsTheRightCountSummary()
-    {
-        $process = new StubbedParaProcess();
-        $process->addTestResult('.');
-        $process->addTestResult('.');
-        $process->addTestResult('.');
-
-        $output = new UnformattedOutputStub();
-        $context = array(
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => array_fill(0, 15, $process),
-        );
-        $engineEvent = new EngineEvent($output, $context);
-
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
-
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, 'Test');
-            }
-        }
-
-        /** @var FinalPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.final_printer');
-
-        $printer->onEngineEnd($engineEvent);
-
-        $this->assertContains('Execution time -- 00:01:00', $output->getOutput());
-        $this->assertContains('Executed: 15 test classes, 45 tests', $output->getOutput());
-    }
-
-    public function testOnEngineEndHandlesEmptyMessagesCorrectly()
-    {
-        $process = new StubbedParaProcess();
-        $process->addTestResult('S');
-        $process->addTestResult('I');
-
-        $output = new UnformattedOutputStub();
-        $context = array(
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => array_fill(0, 15, $process),
-        );
-        $engineEvent = new EngineEvent($output, $context);
-
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
-
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, null);
-            }
-        }
-
-        /** @var FinalPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.final_printer');
-
-        $printer->onEngineEnd($engineEvent);
-
-        $this->assertNotContains('output', $output->getOutput());
-    }
-
     public function testOnEngineEndPrintsInTheRightOrder()
     {
         $output = new UnformattedOutputStub();
-        $process = new StubbedParaProcess();
+        $process = new StubbedParaunitProcess();
         $context = array(
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
             'process_completed' => array($process),
         );
-        $engineEvent = new EngineEvent($output, $context);
 
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
-
-        $logParser->getAbnormalTerminatedOutputContainer()->addToOutputBuffer($process, 'Test');
-        foreach ($logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof OutputContainerBearerInterface) {
-                $parser->getOutputContainer()->addToOutputBuffer($process, 'Test');
-            }
-        }
+        $this->processAllTheStubLogs();
 
         /** @var FinalPrinter $printer */
         $printer = $this->container->get('paraunit.printer.final_printer');
 
-        $printer->onEngineEnd($engineEvent);
+        $printer->onEngineEnd(new EngineEvent($output, $context));
 
         $this->assertNotEmpty($output->getOutput());
+        $this->assertNotContains('PASSED output', $output->getOutput(), null, true);
+        $this->assertNotContains('SKIPPED output', $output->getOutput(), null, true);
+        $this->assertNotContains('INCOMPLETE output', $output->getOutput(), null, true);
+        $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
         $this->assertOutputOrder($output, array(
+            'Unknown',
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
             'Risky Outcome output:',
-            'Skipped Outcome output:',
-            'Incomplete Outcome output:',
-            'files with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS)',
+            'files with UNKNOWN',
             'files with ERRORS',
             'files with FAILURES',
             'files with WARNING',
@@ -136,10 +70,38 @@ class FinalPrinterTest extends BaseFunctionalTestCase
             $this->assertGreaterThan(
                 $previousPosition,
                 $position,
-                'Failed asserting that "' . $string . '" comes before "' . $previousString . '"'
+                'Failed asserting that "' . $string . '" comes after "' . $previousString . '"'
             );
             $previousString = $string;
             $previousPosition = $position;
+        }
+    }
+
+    private function processAllTheStubLogs()
+    {
+        /** @var JSONLogParser $logParser */
+        $logParser = $this->container->get('paraunit.parser.json_log_parser');
+
+        $logsToBeProcessed = array(
+            JSONLogStub::TWO_ERRORS_TWO_FAILURES,
+            JSONLogStub::ALL_GREEN,
+            JSONLogStub::ONE_ERROR,
+            JSONLogStub::ONE_INCOMPLETE,
+            JSONLogStub::ONE_RISKY,
+            JSONLogStub::ONE_SKIP,
+            JSONLogStub::ONE_WARNING,
+            JSONLogStub::FATAL_ERROR,
+            JSONLogStub::SEGFAULT,
+            JSONLogStub::UNKNOWN,
+        );
+
+        $process = new StubbedParaunitProcess();
+        $processEvent = new ProcessEvent($process);
+
+        foreach ($logsToBeProcessed as $logName) {
+            $process->setFilename($logName . '.php');
+            $this->createLogForProcessFromStubbedLog($process, $logName);
+            $logParser->onProcessTerminated($processEvent);
         }
     }
 }

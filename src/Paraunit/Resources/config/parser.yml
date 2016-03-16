@@ -5,16 +5,18 @@ services:
     class: Paraunit\Parser\JSONLogParser
     arguments:
       - "@paraunit.parser.json_log_fetcher"
-      - "@paraunit.output_container.abnormal_terminated"
     calls:
-      - [addParser, ["@paraunit.parser.pass_parser"]]
-      - [addParser, ["@paraunit.parser.retry_parser"]]
-      - [addParser, ["@paraunit.parser.incomplete_parser"]]
-      - [addParser, ["@paraunit.parser.skipped_parser"]]
-      - [addParser, ["@paraunit.parser.risky_parser"]]
-      - [addParser, ["@paraunit.parser.warning_parser"]]
-      - [addParser, ["@paraunit.parser.failure_parser"]]
-      - [addParser, ["@paraunit.parser.error_parser"]]
+      - [addParser, ["@paraunit.test_result.test_start_container"]]
+      - [addParser, ["@paraunit.test_result.pass_container"]]
+      - [addParser, ["@paraunit.test_result.retry_container"]]
+      - [addParser, ["@paraunit.test_result.incomplete_container"]]
+      - [addParser, ["@paraunit.test_result.skipped_container"]]
+      - [addParser, ["@paraunit.test_result.risky_container"]]
+      - [addParser, ["@paraunit.test_result.warning_container"]]
+      - [addParser, ["@paraunit.test_result.failure_container"]]
+      - [addParser, ["@paraunit.test_result.error_container"]]
+      - [addParser, ["@paraunit.test_result.abnormal_terminated_container"]]
+      - [addParser, ["@paraunit.test_result.unknown_result_container"]]
     tags:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
@@ -23,56 +25,68 @@ services:
     arguments:
       - "@paraunit.configuration.json_log_filename"
 
+  paraunit.parser.test_start_parser:
+    class: Paraunit\Parser\TestStartParser
+
   paraunit.parser.pass_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.pass"
+      - "@paraunit.test_result.test_result_factory"
       - "pass"
 
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
-      - "@paraunit.output_container.retry"
+      - "@paraunit.test_result.retry_test_result_format"
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.failure"
+      - "@paraunit.test_result.test_result_factory"
       - "fail"
 
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.warning"
+      - "@paraunit.test_result.test_result_factory"
       - "warning"
 
   paraunit.parser.incomplete_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.incomplete"
+      - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Incomplete Test: "
 
   paraunit.parser.skipped_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.skipped"
+      - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Skipped Test: "
 
   paraunit.parser.risky_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.risky"
+      - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Risky Test: "
 
   paraunit.parser.error_parser:
     class: Paraunit\Parser\AbstractParser
     arguments:
-      - "@paraunit.output_container.error"
+      - "@paraunit.test_result.test_result_factory"
       - "error"
 
-  paraunit.parser.test_result_parser:
-    class: Paraunit\Parser\TestResultsParser
+  paraunit.parser.abnormal_terminated_parser:
+    class: Paraunit\Parser\AbnormalTerminatedParser
+    arguments:
+      - "@paraunit.test_result.test_result_factory"
+      - "paraunitEnd"
+
+  paraunit.parser.unknown_result_parser:
+    class: Paraunit\Parser\UnknownResultParser
+    arguments:
+      - "@paraunit.test_result.test_result_factory"
+      - ""

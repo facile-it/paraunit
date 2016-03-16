@@ -3,9 +3,9 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\AbstractParser;
-use Paraunit\Printer\OutputContainer;
+use Paraunit\TestResult\FullTestResult;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class AbstractParserTest
@@ -13,21 +13,42 @@ use Tests\Stub\StubbedParaProcess;
  */
 class AbstractParserTest extends BaseUnitTestCase
 {
-    public function testParsingFoundResultIncludesFunctionNameInOutputContainer()
+    /**
+     * @dataProvider matchesProvider
+     */
+    public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
-        $container = new OutputContainer('tag', 'title', 'e');
-        $parser = new AbstractParser($container, 'error');
-        $log = $this->getLogWithStatus('error');
+        $log = $this->getLogFromStub('test', $status, $message);
+        if (is_null($message)) {
+            unset($log->message);
+        }
 
-        $parser->parsingFoundResult(new StubbedParaProcess(), $log);
+        $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
+        $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
+        $factory->createFromLog($log)->willReturn($result);
 
-        $this->assertNotEmpty($container->getOutputBuffer(), 'No output generated');
-        $outputBuffer = $container->getOutputBuffer(); // PHP 5.3 crap
-        $finalResult = array_pop($outputBuffer); // PHP 5.3 crap, again
-        $finalResult = $finalResult[0];
+        $parser = new AbstractParser($factory->reveal(), $statusToMatch, $startsWithToMatch);
 
-        $this->assertContains('Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenTwo', $finalResult);
-        $this->assertContains('Undefined variable: asd', $finalResult);
-        $this->assertContains('/home/paraunit/projects/src/Paraunit/Tests/Stub/ThreeGreenTestStub.php:18', $finalResult);
+        /** @var FullTestResult $result */
+        $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
+
+        if ($shouldMatch) {
+            $this->assertEquals($result, $parsedResult);
+        } else {
+            $this->assertNull($parsedResult);
+        }
+    }
+
+    public function matchesProvider()
+    {
+        return array(
+            array('error', null, 'error', 'anyMessage'),
+            array('error', 'Error found', 'error', 'Error found'),
+
+            array('error', null, 'pass', 'anyMessage', false),
+            array('error', 'Error found', 'error', 'anoherMessage', false),
+            array('error', 'Error found', 'error', null, false),
+            array('error', 'Error found', 'pass', 'anoherMessage', false),
+        );
     }
 }

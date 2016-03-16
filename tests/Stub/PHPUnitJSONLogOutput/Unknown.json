@@ -1,0 +1,5 @@
+{
+    "event": "troll",
+    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
+    "tests": 3
+}

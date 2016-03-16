@@ -2,20 +2,17 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Printer\OutputContainerInterface;
-use Paraunit\Process\ProcessResultInterface;
+use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\TestResult\TestResultFactory;
 
 /**
  * Class AbstractParser
  * @package Paraunit\Parser
  */
-class AbstractParser implements JSONParserChainElementInterface, OutputContainerBearerInterface
+class AbstractParser implements JSONParserChainElementInterface
 {
-    /** @var  OutputContainerInterface */
-    protected $outputContainer;
-
-    /** @var  string */
-    protected $title;
+    /** @var  TestResultFactory */
+    protected $testResultFactory;
 
     /** @var  string */
     protected $status;
@@ -26,50 +23,43 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
     /**
      * AbstractParser constructor.
      *
-     * @param OutputContainerInterface $outputContainer
+     * @param TestResultFactory $testResultFactory
      * @param string $status The status that the parser should catch
-     * @param string | null $messageStartsWith The start of the message that the parser should look for
+     * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
-    public function __construct(OutputContainerInterface $outputContainer, $status, $messageStartsWith = null)
+    public function __construct(TestResultFactory $testResultFactory, $status, $messageStartsWith = null)
     {
-        $this->outputContainer = $outputContainer;
+        $this->testResultFactory = $testResultFactory;
         $this->status = $status;
         $this->messageStartsWith = $messageStartsWith;
     }
 
     /**
-     * @return OutputContainerInterface
-     */
-    public function getOutputContainer()
-    {
-        return $this->outputContainer;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function parsingFoundResult(ProcessResultInterface $process, \stdClass $log)
+    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
-        if ($log->status != $this->status) {
-            return false;
+        if ($this->logMatches($logItem)) {
+            return $this->testResultFactory->createFromLog($logItem);
         }
 
-        if ($this->checkMessageStart($log)) {
-            $process->addTestResult($this->getOutputContainer()->getSingleResultMarker());
-            $this->outputContainer->addToOutputBuffer($process, $this->createMessageFromLog($log));
-
-            return true;
-        }
-
-        return false;
+        return null;
     }
 
     /**
      * @param \stdClass $log
      * @return bool
      */
-    private function checkMessageStart(\stdClass $log)
+    protected function logMatches(\stdClass $log)
     {
+        if ( ! property_exists($log, 'status')) {
+            return false;
+        }
+
+        if ($log->status != $this->status) {
+            return false;
+        }
+
         if (is_null($this->messageStartsWith)) {
             return true;
         }
@@ -79,20 +69,5 @@ class AbstractParser implements JSONParserChainElementInterface, OutputContainer
         }
 
         return 0 === strpos($log->message, $this->messageStartsWith);
-    }
-
-    /**
-     * @param \stdClass $log
-     * @return string
-     */
-    private function createMessageFromLog(\stdClass $log)
-    {
-        $stackTrace = '';
-
-        foreach ($log->trace as $step) {
-            $stackTrace .= "\n" . $step->file . ':' . $step->line;
-        }
-
-        return $log->test . "\n" . $log->message . "\n" . $stackTrace;
     }
 }

@@ -1,0 +1,5 @@
+services:
+  paraunit.test_result.test_result_factory:
+    class: Paraunit\TestResult\TestResultFactory
+    arguments:
+      - "@paraunit.test_result.null_format"

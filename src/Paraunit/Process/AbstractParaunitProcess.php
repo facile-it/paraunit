@@ -2,10 +2,14 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResultWithAbnormalTermination;
+
 /**
- * Class SymfonyProcessWrapper.
+ * Class AbstractParaunitProcess
+ * @package Paraunit\Process
  */
-abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, RetryAwareInterface, ProcessResultInterface
+abstract class AbstractParaunitProcess implements ParaunitProcessInterface, RetryAwareInterface, ProcessWithResultsInterface
 {
     /** @var int */
     protected $retryCount = 0;
@@ -19,11 +23,11 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     /** @var string */
     protected $filename;
 
-    /** @var string[] */
+    /** @var PrintableTestResultInterface[] */
     protected $testResults;
 
-    /** @var bool */
-    protected $abnormalTermination;
+    /** @var  bool */
+    private $waitingForTestResult;
 
     /**
      * {@inheritdoc}
@@ -38,7 +42,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         }
 
         $this->testResults = array();
-        $this->abnormalTermination = false;
+        $this->waitingForTestResult = false;
     }
 
     /**
@@ -64,11 +68,10 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
         ++$this->retryCount;
     }
 
-    /**
-     */
     public function markAsToBeRetried()
     {
         $this->shouldBeRetried = true;
+        $this->testResults = array();
     }
 
     /**
@@ -96,7 +99,7 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @return string[]
+     * @return PrintableTestResultInterface[]
      */
     public function getTestResults()
     {
@@ -104,37 +107,35 @@ abstract class ParaunitProcessAbstract implements ParaunitProcessInterface, Retr
     }
 
     /**
-     * @param string[] $testResults
+     * @param PrintableTestResultInterface $testResult
      */
-    public function setTestResults(array $testResults)
-    {
-        $this->testResults = $testResults;
-    }
-
-    public function addTestResult($testResult)
+    public function addTestResult(PrintableTestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
+        $this->waitingForTestResult = false;
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasAbnormalTermination()
     {
-        return $this->abnormalTermination;
-    }
-
-    public function reportAbnormalTermination()
-    {
-        $this->abnormalTermination = true;
+        return end($this->testResults) instanceof TestResultWithAbnormalTermination;
     }
 
     /**
      * @return bool
-     * @deprecated
      */
-    public function isEmpty()
+    public function isWaitingForTestResult()
     {
-        return (bool) count($this->filename);
+        return $this->waitingForTestResult;
+    }
+
+    /**
+     * @param boolean $waitingForTestResult
+     */
+    public function setWaitingForTestResult($waitingForTestResult)
+    {
+        $this->waitingForTestResult = (bool) $waitingForTestResult;
     }
 }

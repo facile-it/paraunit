@@ -4,10 +4,14 @@ namespace Tests\Functional\Parser;
 
 
 use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultWithMessage;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
-use Tests\Stub\StubbedParaProcess;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class JSONLogParserTest
@@ -20,45 +24,40 @@ class JSONLogParserTest extends BaseFunctionalTestCase
      */
     public function testParse($stubLog, $expectedResult, $hasAbnormalTermination = false)
     {
-        $process = new StubbedParaProcess();
-        $stubLogFilename = __DIR__ . '/../../Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
-        $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing!');
-
-        /** @var JSONLogFilename $filename */
-        $filenameService = $this->container->get('paraunit.configuration.json_log_filename');
-        $filename = $filenameService->generate($process);
-
-        copy($stubLogFilename, $filename);
+        $process = new StubbedParaunitProcess();
+        $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
         /** @var JSONLogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
 
-        $parser->parse($process);
+        $parser->onProcessTerminated(new ProcessEvent($process));
 
-        $this->assertEquals($expectedResult, $process->getTestResults());
-        if ($hasAbnormalTermination) {
-            $this->assertTrue($process->hasAbnormalTermination());
-
-            $output = $parser->getAbnormalTerminatedOutputContainer()->getOutputBuffer(); // PHP 5.3 crap, again
-            $output = array_pop($output);
-            $this->assertNotNull($output[0]);
-            $this->assertStringStartsWith('Culpable test function: Paraunit\Tests\Stub\ThreeGreenTestStub::testGreenOne with data set #3 (null)', $output[0]);
+        $results = $process->getTestResults();
+        $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\Interfaces\PrintableTestResultInterface', $results);
+        $textResults = '';
+        /** @var PrintableTestResultInterface $singleResult */
+        foreach ($results as $singleResult) {
+            $textResults .= $singleResult->getTestResultFormat()->getTestResultSymbol();
         }
-    }
+        $this->assertEquals($expectedResult, $textResults);
 
+        $this->assertEquals($hasAbnormalTermination, $process->hasAbnormalTermination());
+    }
 
     public function parsableResultsProvider()
     {
         return array(
-            array(JSONLogStub::TWO_ERRORS_TWO_FAILURES, str_split('FF..E...E')),
-            array(JSONLogStub::ALL_GREEN, str_split('.........')),
-            array(JSONLogStub::ONE_ERROR, str_split('.E.')),
-            array(JSONLogStub::ONE_INCOMPLETE, str_split('..I.')),
-            array(JSONLogStub::ONE_RISKY, str_split('..R.')),
-            array(JSONLogStub::ONE_SKIP, str_split('..S.')),
-            array(JSONLogStub::ONE_WARNING, str_split('...W')),
-            array(JSONLogStub::FATAL_ERROR, str_split('...X'), true),
-            array(JSONLogStub::SEGFAULT, str_split('...X'), true),
+            array(JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'),
+            array(JSONLogStub::ALL_GREEN, '.........'),
+            array(JSONLogStub::ONE_ERROR, '.E.'),
+            array(JSONLogStub::ONE_INCOMPLETE, '..I.'),
+            array(JSONLogStub::ONE_RISKY, '..R.'),
+            array(JSONLogStub::ONE_SKIP, '..S.'),
+            array(JSONLogStub::ONE_WARNING, '...W'),
+            array(JSONLogStub::FATAL_ERROR, '...X', true),
+            array(JSONLogStub::SEGFAULT, '...X', true),
+            array(JSONLogStub::PARSE_ERROR, '...................................................X', true),
+            array(JSONLogStub::UNKNOWN, '?', false),
         );
     }
 }
