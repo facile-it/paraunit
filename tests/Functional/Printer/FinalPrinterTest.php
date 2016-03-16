@@ -49,8 +49,6 @@ class FinalPrinterTest extends BaseFunctionalTestCase
             'Failures output:',
             'Warnings output:',
             'Risky Outcome output:',
-            'Skipped Outcome output:',
-            'Incomplete Outcome output:',
             'files with UNKNOWN',
             'files with ERRORS',
             'files with FAILURES',

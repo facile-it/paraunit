@@ -13,4 +13,9 @@ interface PrintableTestResultInterface extends TestResultInterface
      * @return TestResultFormat
      */
     public function getTestResultFormat();
+
+    /**
+     * @param TestResultFormat $testResultFormat
+     */
+    public function setTestResultFormat(TestResultFormat $testResultFormat);
 }

@@ -32,7 +32,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultContainer->getFileNames()->willReturn(array('Test.php'));
 
         $logParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $logParser->getParsers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $logParser->getParsersForPrinting()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
 
         $printer = new FinalPrinter($logParser->reveal());
 
@@ -60,7 +60,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultContainer->getFileNames()->willReturn(array('Test.php'));
 
         $logParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $logParser->getParsers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $logParser->getParsersForPrinting()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
         $printer = new FinalPrinter($logParser->reveal());
 
         $printer->onEngineEnd($engineEvent);

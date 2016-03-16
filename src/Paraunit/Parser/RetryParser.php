@@ -72,7 +72,7 @@ class RetryParser implements JSONParserChainElementInterface
      */
     private function isToBeRetried(\stdClass $log)
     {
-        return $log->status == 'error' && preg_match($this->regexPattern, $log->message);
+        return property_exists($log, 'status') && $log->status == 'error' && preg_match($this->regexPattern, $log->message);
     }
 
     /**

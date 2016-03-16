@@ -154,7 +154,7 @@ class FinalPrinter
         $completedProcesses = $engineEvent->get('process_completed');
         $testsCount = 0;
         /** @var AbstractParaunitProcess $process */
-        foreach ($this->logParser->getParsers() as $parser) {
+        foreach ($this->logParser->getParsersForPrinting() as $parser) {
             if ($parser instanceof TestResultContainer) {
                 $testsCount += $parser->countTestResults();
             }

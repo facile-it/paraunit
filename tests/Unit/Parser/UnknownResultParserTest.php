@@ -3,11 +3,11 @@
 namespace Tests\Unit\Parser;
 
 
-use Paraunit\Parser\UnknownTestResultParser;
-use Tests\BaseFunctionalTestCase;
+use Paraunit\Parser\UnknownResultParser;
+use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-class UnknownTestResultParserTest extends BaseFunctionalTestCase
+class UnknownResultParserTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider statusesProvider
@@ -17,9 +17,12 @@ class UnknownTestResultParserTest extends BaseFunctionalTestCase
         $log = new \stdClass();
         $log->status = $statuses;
         $log->message = 'message';
-        $parser = new UnknownTestResultParser();
 
-        $parser->handleLogItem(new StubbedParaunitProcess(), $log);
+        $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
+        $factory->createFromLog($log)->shouldBeCalled()->willReturn($this->mockPrintableTestResult());
+
+        $parser = new UnknownResultParser($factory->reveal(), 'no-status-required');
+        $this->assertNotNull($parser->handleLogItem(new StubbedParaunitProcess(), $log));
     }
 
     public function statusesProvider()

@@ -54,6 +54,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
         }
 
         if ($result instanceof PrintableTestResultInterface) {
+            $result->setTestResultFormat($this->testResultFormat);
             $this->addTestResult($process, $result);
             $process->addTestResult($result);
         }
