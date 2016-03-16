@@ -6,11 +6,12 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ### Changed
 
-* MASSIVE refactoring of the result output parsing (#31 & #33): now Paraunit fetches the tests results using PHPUnit's 
-  `--log-json` option (thanks to @taueres for the idea).
+* MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the 
+  tests results using PHPUnit's `--log-json` option (thanks to @taueres for the idea).
   This grants a lot of new features:
+  * Parsing of tests results is more robust, should never fail!
   * Fatal errors or segfaults are now grouped as "Abnormal termination"
-  * When a test has an abnormal termination, the culpable test fuction is indicated
+  * When a test has an abnormal termination, the culpable test function is indicated
   * Tests with abnormal termination are printed out in full output
   * Tests executed in a test class that has a later abnormal termination are showed and counted in results anyhow
 * Added support for warnings, introduced in PHPUnit 5.1 (#30)
