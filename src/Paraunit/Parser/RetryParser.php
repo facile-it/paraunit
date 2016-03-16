@@ -51,7 +51,7 @@ class RetryParser implements JSONParserChainElementInterface
             /** @var RetryAwareInterface | TestResultContainerInterface $process */
             $process->markAsToBeRetried();
 
-            return new MuteTestResult($this->testResultFormat);
+            return new MuteTestResult();
         }
 
         return null;

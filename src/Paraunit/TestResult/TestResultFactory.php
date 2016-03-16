@@ -34,7 +34,7 @@ class TestResultFactory
         }
 
         if ( ! property_exists($log, 'message')) {
-            return new MuteTestResult($this->format);
+            return new MuteTestResult();
 
         }
 

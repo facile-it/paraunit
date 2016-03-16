@@ -114,7 +114,7 @@ class FinalPrinter
         if ( ! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;
         }
-        
+
         $filenames = $testResultContainer->getFileNames();
 
         if (count($filenames)) {

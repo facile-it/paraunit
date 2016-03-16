@@ -19,6 +19,10 @@ class AbstractParserTest extends BaseUnitTestCase
     public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
         $log = $this->getLogFromStub('test', $status, $message);
+        if (is_null($message)) {
+            unset($log->message);
+        }
+
         $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);
@@ -43,6 +47,7 @@ class AbstractParserTest extends BaseUnitTestCase
 
             array('error', null, 'pass', 'anyMessage', false),
             array('error', 'Error found', 'error', 'anoherMessage', false),
+            array('error', 'Error found', 'error', null, false),
             array('error', 'Error found', 'pass', 'anoherMessage', false),
         );
     }

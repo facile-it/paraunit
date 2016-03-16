@@ -9,6 +9,7 @@ coding_style:
   php:
     spaces:
       around_operators:
+        concatenation: true
         negation: true
       other:
         after_type_cast: false
