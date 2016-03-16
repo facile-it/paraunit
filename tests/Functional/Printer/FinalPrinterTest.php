@@ -39,9 +39,10 @@ class FinalPrinterTest extends BaseFunctionalTestCase
         $printer->onEngineEnd(new EngineEvent($output, $context));
 
         $this->assertNotEmpty($output->getOutput());
-        $this->assertNotContains('PASSED output', $output->getOutput());
-        $this->assertNotContains('SKIPPED output', $output->getOutput());
-        $this->assertNotContains('INCOMPLETE output', $output->getOutput());
+        $this->assertNotContains('PASSED output', $output->getOutput(), null, true);
+        $this->assertNotContains('SKIPPED output', $output->getOutput(), null, true);
+        $this->assertNotContains('INCOMPLETE output', $output->getOutput(), null, true);
+        $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
         $this->assertOutputOrder($output, array(
             'Unknown',
             'Abnormal Terminations (fatal Errors, Segfaults) output:',

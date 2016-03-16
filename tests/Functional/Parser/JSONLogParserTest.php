@@ -56,6 +56,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
             array(JSONLogStub::ONE_WARNING, '...W'),
             array(JSONLogStub::FATAL_ERROR, '...X', true),
             array(JSONLogStub::SEGFAULT, '...X', true),
+            array(JSONLogStub::PARSE_ERROR, '...................................................X', true),
             array(JSONLogStub::UNKNOWN, '?', false),
         );
     }

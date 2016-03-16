@@ -29,6 +29,7 @@ class TestResultFormat
      * @param string $tag
      * @param string $title
      * @param bool $shouldPrintTestOutput
+     * @param bool $shouldPrintFilesRecap
      */
     public function __construct($testResultSymbol, $tag, $title, $shouldPrintTestOutput = true, $shouldPrintFilesRecap = true)
     {
@@ -66,8 +67,16 @@ class TestResultFormat
     /**
      * @return boolean
      */
-    public function isShouldPrintTestOutput()
+    public function shouldPrintTestOutput()
     {
         return $this->shouldPrintTestOutput;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function shouldPrintFilesRecap()
+    {
+        return $this->shouldPrintFilesRecap;
     }
 }

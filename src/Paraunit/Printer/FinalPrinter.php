@@ -62,7 +62,7 @@ class FinalPrinter
      */
     private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
-        if ( ! $testResultContainer->getTestResultFormat()->isShouldPrintTestOutput()) {
+        if ( ! $testResultContainer->getTestResultFormat()->shouldPrintTestOutput()) {
             return;
         }
 
@@ -111,6 +111,10 @@ class FinalPrinter
      */
     private function printFileRecap(TestResultContainer $testResultContainer)
     {
+        if ( ! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
+            return;
+        }
+        
         $filenames = $testResultContainer->getFileNames();
 
         if (count($filenames)) {

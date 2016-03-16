@@ -18,6 +18,7 @@ class JSONLogStub
     const ONE_SKIP = 'SingleSkip';
     const ONE_WARNING = 'SingleWarning';
     const UNKNOWN = 'Unknown';
+    const PARSE_ERROR = 'ParseError';
 
     /**
      * @param $filename

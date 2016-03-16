@@ -77,7 +77,7 @@ services:
   paraunit.test_result.null_format:
     class: Paraunit\TestResult\TestResultFormat
     arguments:
-      - "?"
+      - ""
       - "null"
       - ""
       - false

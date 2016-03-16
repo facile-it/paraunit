@@ -3,6 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Parser\JSONLogParser;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 
@@ -31,18 +32,20 @@ class SingleResultFormatter
     }
 
     /**
-     * @param $singleResult
+     * @param PrintableTestResultInterface $singleResult
      * @return string
      */
-    public function formatSingleResult($singleResult)
+    public function formatSingleResult(PrintableTestResultInterface $singleResult)
     {
-        if (array_key_exists($singleResult, $this->tagMap)) {
-            $tag = $this->tagMap[$singleResult];
+        $resultSymbol = $singleResult->getTestResultFormat()->getTestResultSymbol();
 
-            return sprintf('<%s>%s</%s>', $tag, $singleResult, $tag);
+        if (array_key_exists($resultSymbol, $this->tagMap)) {
+            $tag = $this->tagMap[$resultSymbol];
+
+            return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
         }
 
-        return $singleResult;
+        return $resultSymbol;
     }
 
     /**

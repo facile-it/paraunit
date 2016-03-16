@@ -58,8 +58,13 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         return $this->prophesize('Paraunit\TestResult\Interfaces\TestResultInterface')->reveal();
     }
 
-    protected function mockPrintableTestResult()
+    protected function mockPrintableTestResult($symbol = '.')
     {
-        return $this->prophesize('Paraunit\TestResult\Interfaces\PrintableTestResultInterface')->reveal();
+        $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        $format->getTestResultSymbol()->willReturn($symbol);
+        $result = $this->prophesize('Paraunit\TestResult\Interfaces\PrintableTestResultInterface');
+        $result->getTestResultFormat()->willReturn($format->reveal());
+
+        return $result->reveal();
     }
 }
