@@ -1,6 +1,7 @@
 <?php
 
 namespace Paraunit\TestResult;
+
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;

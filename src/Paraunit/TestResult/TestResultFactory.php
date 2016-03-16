@@ -30,12 +30,15 @@ class TestResultFactory
     public function createFromLog(\stdClass $log)
     {
         if (property_exists($log, 'status') && $log->status == JSONLogFetcher::LOG_ENDING_STATUS) {
-            return new TestResultWithAbnormalTermination($this->format, $log->test, 'Abnormal termination -- complete test output:');
+            return new TestResultWithAbnormalTermination(
+                $this->format,
+                $log->test,
+                'Abnormal termination -- complete test output:'
+            );
         }
 
         if ( ! property_exists($log, 'message')) {
             return new MuteTestResult();
-
         }
 
         if (property_exists($log, 'trace')) {

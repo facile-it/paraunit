@@ -18,26 +18,26 @@ class TestResultFormat
     private $title;
 
     /** @var  bool */
-    private $shouldPrintTestOutput;
+    private $printTestOutput;
 
     /** @var  bool */
-    private $shouldPrintFilesRecap;
+    private $printFilesRecap;
 
     /**
      * TestResultFormat constructor.
      * @param string $testResultSymbol
      * @param string $tag
      * @param string $title
-     * @param bool $shouldPrintTestOutput
-     * @param bool $shouldPrintFilesRecap
+     * @param bool $printTestOutput
+     * @param bool $printFilesRecap
      */
-    public function __construct($testResultSymbol, $tag, $title, $shouldPrintTestOutput = true, $shouldPrintFilesRecap = true)
+    public function __construct($testResultSymbol, $tag, $title, $printTestOutput = true, $printFilesRecap = true)
     {
         $this->testResultSymbol = $testResultSymbol;
         $this->tag = $tag;
         $this->title = $title;
-        $this->shouldPrintTestOutput = $shouldPrintTestOutput;
-        $this->shouldPrintFilesRecap = $shouldPrintFilesRecap;
+        $this->printTestOutput = $printTestOutput;
+        $this->printFilesRecap = $printFilesRecap;
     }
 
     /**
@@ -69,7 +69,7 @@ class TestResultFormat
      */
     public function shouldPrintTestOutput()
     {
-        return $this->shouldPrintTestOutput;
+        return $this->printTestOutput;
     }
 
     /**
@@ -77,6 +77,6 @@ class TestResultFormat
      */
     public function shouldPrintFilesRecap()
     {
-        return $this->shouldPrintFilesRecap;
+        return $this->printFilesRecap;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Paraunit\TestResult\Interfaces;
+
 use Paraunit\TestResult\TestResultFormat;
 
 /**
