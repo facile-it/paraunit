@@ -20,9 +20,7 @@ class RunnerTest extends BaseFunctionalTestCase
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/ThreeGreenTestStub.php',
-        );
+        $fileArray = array('tests/Stub/ThreeGreenTestStub.php');
 
         $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
@@ -37,9 +35,7 @@ class RunnerTest extends BaseFunctionalTestCase
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/EntityManagerClosedTestStub.php',
-        );
+        $fileArray = array('tests/Stub/EntityManagerClosedTestStub.php');
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
 
@@ -85,9 +81,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/SegFaultTestStub.php',
-        );
+        $fileArray = array('tests/Stub/SegFaultTestStub.php');
 
         $this->assertNotEquals(
             0,
@@ -121,9 +115,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/MissingProviderTestStub.php',
-        );
+        $fileArray = array('tests/Stub/MissingProviderTestStub.php');
 
         $this->assertEquals(
             0,
@@ -151,17 +143,31 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/FatalErrorTestStub.php',
-        );
+        $fileArray = array('tests/Stub/FatalErrorTestStub.php');
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $output = $outputInterface->fetch();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
-        $this->assertNotContains('UNKNOWN STATUS', $output, 'REGRESSION: fatal error mistaken for unknown result');
+        $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
 
+    }
+
+    public function testRegressionMissingLogAsUnknownResults()
+    {
+        $outputInterface = new UnformattedOutputStub();
+
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array('tests/Stub/ParseErrorTestStub.php');
+
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
+
+        $output = $outputInterface->fetch();
+        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
+        $this->assertContains('UNKNOWN', $output);
+        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing abnormal termination recap title');
     }
 
     public function testRegressionFatalErrorsShouldNotLeakToOutput()
@@ -170,9 +176,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $fileArray = array(
-            'tests/Stub/RaisingNoticeTestStub.php',
-        );
+        $fileArray = array('tests/Stub/RaisingNoticeTestStub.php');
 
         $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
         $output = $outputInterface->getOutput();
