@@ -58,7 +58,6 @@ class FinalPrinter
 
     /**
      * @param TestResultContainer $testResultContainer
-     * @todo Refactor
      */
     private function printFailuresOutput(TestResultContainer $testResultContainer)
     {

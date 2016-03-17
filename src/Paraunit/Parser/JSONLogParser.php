@@ -2,7 +2,6 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Exception\JSONLogNotFoundException;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;

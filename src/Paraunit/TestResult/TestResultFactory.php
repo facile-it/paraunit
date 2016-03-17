@@ -55,7 +55,7 @@ class TestResultFactory
      * @param FullTestResult $result
      * @param \stdClass $log
      */
-    private function addTraceToResult(FullTestResult $result, $log)
+    private function addTraceToResult(FullTestResult $result, \stdClass $log)
     {
         foreach ($log->trace as $traceStep) {
             $result->addTraceStep(new TraceStep($traceStep->file, $traceStep->line));

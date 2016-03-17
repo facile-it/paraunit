@@ -37,7 +37,6 @@ services:
   paraunit.parser.retry_parser:
     class: Paraunit\Parser\RetryParser
     arguments:
-      - "@paraunit.test_result.retry_test_result_format"
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
