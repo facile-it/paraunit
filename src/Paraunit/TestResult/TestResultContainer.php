@@ -91,7 +91,6 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
 
     /**
      * @return int
-     * @todo test
      */
     public function countFilenames()
     {

@@ -6,7 +6,6 @@ use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\Process\RetryAwareInterface;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\MuteTestResult;
-use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Class RetryParser
