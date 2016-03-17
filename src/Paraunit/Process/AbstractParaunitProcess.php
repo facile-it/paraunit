@@ -42,7 +42,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         }
 
         $this->testResults = array();
-        $this->waitingForTestResult = false;
+        $this->waitingForTestResult = true;
     }
 
     /**

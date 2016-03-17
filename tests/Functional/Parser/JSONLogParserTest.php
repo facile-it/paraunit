@@ -60,4 +60,20 @@ class JSONLogParserTest extends BaseFunctionalTestCase
             array(JSONLogStub::UNKNOWN, '?', false),
         );
     }
+
+    public function testParseHandlesMissingLogsAsAbnormalTerminations()
+    {
+        /** @var JSONLogParser $parser */
+        $parser = $this->container->get('paraunit.parser.json_log_parser');
+        $process = new StubbedParaunitProcess();
+
+        $parser->onProcessTerminated(new ProcessEvent($process));
+
+        $results = $process->getTestResults();
+        $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\Interfaces\PrintableTestResultInterface', $results);
+        $this->assertCount(1, $results);
+
+        $this->assertEquals('X', $results[0]->getTestResultFormat()->getTestResultSymbol());
+        $this->assertTrue($process->hasAbnormalTermination());
+    }
 }
