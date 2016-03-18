@@ -1,0 +1,46 @@
+baseurl = "http://paraunit.github.io/"
+title = "Paraunit"
+theme = "blackburn-master"
+canonifyurls = true
+paginate = 5
+
+[indexes]
+  tag = "tags"
+  topic = "topics"
+
+[params]
+  subtitle = "A package for faster PHP testsuites"
+  brand = "Paraunit"
+#  googleAnalytics = "Your Google Analytics tracking ID"
+#  disqus = "Your Disqus shortname"
+  # CSS name for highlight.js
+  highlightjs = "androidstudio"
+  dateFormat = "02 Jan 2006"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    pre = "<i class='fa fa-home fa-fw'></i>"
+    weight = 0
+    identifier = "home"
+    url = "/"
+  [[menu.main]]
+    name = "Releases"
+    pre = "<i class='fa fa-tags fa-fw'></i>"
+    weight = 1
+    identifier = "release"
+    url = "/tags/release"
+  [[menu.main]]
+    name = "Documentation"
+    pre = "<i class='fa fa-book fa-fw'></i>"
+    weight = 2
+    identifier = "documentation"
+    url = "/documentation/"
+  [[menu.main]]
+    name = "Issue tracker"
+    pre = "<i class='fa fa-bug fa-fw'></i>"
+    weight = 2
+    url = "https://github.com/facile-it/paraunit/issues"
+
+[social]
+  github = "facile-it/paraunit"
