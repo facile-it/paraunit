@@ -30,4 +30,23 @@ class TestResultContainerTest extends BaseUnitTestCase
         $this->assertContains('fail message', $testResult->getFailureMessage());
         $this->assertContains('test output', $testResult->getFailureMessage());
     }
+
+    public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty()
+    {
+        $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');
+        $process = new StubbedParaunitProcess();
+        $process->setOutput(null);
+        $logItem = new \stdClass();
+
+        $parser = $this->prophesize('Paraunit\Parser\AbstractParser');
+        $parser->handleLogItem($process, $logItem)->willReturn($testResult);
+        $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        $format->getTag()->willReturn('tag');
+
+        $testResultContainer = new TestResultContainer($parser->reveal(), $format->reveal());
+        $testResultContainer->handleLogItem($process, $logItem);
+
+        $this->assertContains('fail message', $testResult->getFailureMessage());
+        $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
+    }
 }

@@ -50,7 +50,7 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
         $result = $this->parser->handleLogItem($process, $logItem);
 
         if ($result instanceof TestResultWithAbnormalTermination && $process instanceof OutputAwareInterface) {
-            $result->setTestOutput($process->getOutput());
+            $this->addProcessOutputToResult($result, $process);
         }
 
         if ($result instanceof PrintableTestResultInterface) {
@@ -60,6 +60,28 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
         }
 
         return $result;
+    }
+
+    /**
+     * @param TestResultWithAbnormalTermination $result
+     * @param OutputAwareInterface $process
+     */
+    private function addProcessOutputToResult(TestResultWithAbnormalTermination $result, OutputAwareInterface $process)
+    {
+        $tag = $this->testResultFormat->getTag();
+        $output = $process->getOutput() ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
+        $result->setTestOutput($output);
+    }
+
+    /**
+     * @param ProcessWithResultsInterface $process
+     * @param PrintableTestResultInterface $testResult
+     */
+    protected function addTestResult(ProcessWithResultsInterface $process, PrintableTestResultInterface $testResult)
+    {
+        $this->testResults[] = $testResult;
+        // trick for unique
+        $this->filenames[$process->getFilename()] = $process->getFilename();
     }
 
     /**
@@ -79,17 +101,6 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     }
 
     /**
-     * @param ProcessWithResultsInterface $process
-     * @param PrintableTestResultInterface $testResult
-     */
-    protected function addTestResult(ProcessWithResultsInterface $process, PrintableTestResultInterface $testResult)
-    {
-        $this->testResults[] = $testResult;
-        // trick for unique
-        $this->filenames[$process->getFilename()] = $process->getFilename();
-    }
-
-    /**
      * @return int
      */
     public function countFilenames()
@@ -104,7 +115,6 @@ class TestResultContainer implements TestResultContainerInterface, JSONParserCha
     {
         return count($this->testResults);
     }
-
     /**
      * @return string[]
      */
