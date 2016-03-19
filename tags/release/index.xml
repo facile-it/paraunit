@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Release on Paraunit</title>
+    <link>http://paraunit.github.io/tags/release/</link>
+    <description>Recent content in Release on Paraunit</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 08 Dec 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://paraunit.github.io/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.5</title>
+      <link>http://paraunit.github.io/news/release/0.5/</link>
+      <pubDate>Tue, 08 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://paraunit.github.io/news/release/0.5/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.5 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed:b196f06257d15e11549c5898a055280a&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux)&lt;/li&gt;
+&lt;li&gt;Travis is testing on PHP 7.0, no more nightlies or allowed failures&lt;/li&gt;
+&lt;li&gt;Symfony 3.0 components are now supported and compatible with Paraunit&lt;/li&gt;
+&lt;li&gt;Retry parsing and management is improved&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed:b196f06257d15e11549c5898a055280a&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Removed double generation of MD5 hash of process&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Paraunit 0.4.4</title>
+      <link>http://paraunit.github.io/news/release/0.4.4/</link>
+      <pubDate>Sun, 15 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://paraunit.github.io/news/release/0.4.4/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.4.4 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed:47b10b648c7c4d34c57c7551fdef1895&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Merged previous &lt;code&gt;v0.4&lt;/code&gt; branch, there were missing fixes in previous release&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Paraunit 0.4.3</title>
+      <link>http://paraunit.github.io/news/release/0.4.3/</link>
+      <pubDate>Wed, 04 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://paraunit.github.io/news/release/0.4.3/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.4.3 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed:81372b3a4d83f55dd2c2b59e50228f18&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--configuration&lt;/code&gt; behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename,
+and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;phpunit.xml.dist&lt;/code&gt;) (&lt;a href=&#34;[https://github.com/facile-it/paraunit/issues/19]&#34;&gt;#19&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;-c&lt;/code&gt; shortcut to README&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Paraunit 0.4.2</title>
+      <link>http://paraunit.github.io/news/release/0.4.2/</link>
+      <pubDate>Mon, 19 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://paraunit.github.io/news/release/0.4.2/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.4.2 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed:5ed7adfb4ff9f6a05e38fd6e80b1d903&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unlocked supporto for PHPUnit &amp;gt;= 5.x&lt;/li&gt;
+&lt;li&gt;README changed to suggest stable version of package in &lt;code&gt;composer.json&lt;/code&gt; example&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed:5ed7adfb4ff9f6a05e38fd6e80b1d903&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fixed: test stub for fatal errors fixed for HHVM &amp;amp; PHP7&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Paraunit 0.4.1</title>
+      <link>http://paraunit.github.io/news/release/0.4.1/</link>
+      <pubDate>Wed, 23 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://paraunit.github.io/news/release/0.4.1/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.4.1 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed:433cb45309237c24d33aac65d33e55f3&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Improved: &lt;code&gt;--configuration&lt;/code&gt; parameter now has the &lt;code&gt;-c&lt;/code&gt; shortcut&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed:433cb45309237c24d33aac65d33e55f3&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

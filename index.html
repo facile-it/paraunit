@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.15" />
+
+  <title>Paraunit</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="http://paraunit.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="http://paraunit.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://paraunit.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="Paraunit" href="http://paraunit.github.io/index.xml" />
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="http://paraunit.github.io/img/favicon.ico" type="image/x-icon" />
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="http://paraunit.github.io/">Paraunit</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://paraunit.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://paraunit.github.io/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://paraunit.github.io/documentation/"><i class='fa fa-book fa-fw'></i>Documentation</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://github.com/facile-it/paraunit/issues"><i class='fa fa-bug fa-fw'></i>Issue tracker</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://paraunit.github.io/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </li>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div class="pure-g">
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small></small>
+  </div>
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Paraunit</h1>
+  <h2>A package for faster PHP testsuites</h2>
+  <p>
+    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;"></a>
+    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;"></a>
+    <a href="https://travis-ci.org/facile-it/paraunit"><img src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;"></a>
+    <a href="https://coveralls.io/github/facile-it/paraunit?branch=master"><img src="https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&amp;service=github" style="max-width:100%;"></a>
+    <a href="https://scrutinizer-ci.com/g/facile-it/paraunit/?branch=master"><img src="https://scrutinizer-ci.com/g/facile-it/paraunit/badges/quality-score.png?b=master" style="max-width:100%;"></a>
+    <a href="https://codeclimate.com/github/facile-it/paraunit"><img src="https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg" style="max-width:100%;"></a>
+    <a href="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20"><img src="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20/mini.png" style="max-width:100%;"></a>
+  </p>
+</div>
+
+<div class="content">
+
+  
+    <article>
+  <header>
+    <h2><a href="http://paraunit.github.io/news/release/0.5/">Paraunit 0.5</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>08 Dec 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://paraunit.github.io/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.5 has been released! Here&rsquo;s what&rsquo;s changed: Changed SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux) Travis is testing on PHP 7.0, no more nightlies or allowed failures Symfony 3.0 components are now supported and compatible with Paraunit Retry parsing and management is improved Fixed Removed double generation of MD5 hash of process
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="http://paraunit.github.io/news/release/0.4.4/">Paraunit 0.4.4</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>15 Nov 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://paraunit.github.io/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.4.4 has been released! Here&rsquo;s what&rsquo;s changed: Fixed Merged previous v0.4 branch, there were missing fixes in previous release
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="http://paraunit.github.io/news/release/0.4.3/">Paraunit 0.4.3</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>04 Nov 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://paraunit.github.io/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.4.3 has been released! Here&rsquo;s what&rsquo;s changed: Changed --configuration behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename, and has a -c shortcut (default filename is phpunit.xml.dist) (#19) Added -c shortcut to README
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="http://paraunit.github.io/news/release/0.4.2/">Paraunit 0.4.2</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>19 Oct 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://paraunit.github.io/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.4.2 has been released! Here&rsquo;s what&rsquo;s changed: Changed Unlocked supporto for PHPUnit &gt;= 5.x README changed to suggest stable version of package in composer.json example Fixed Fixed: test stub for fatal errors fixed for HHVM &amp; PHP7
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="http://paraunit.github.io/news/release/0.4.1/">Paraunit 0.4.1</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>23 Sep 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://paraunit.github.io/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.4.1 has been released! Here&rsquo;s what&rsquo;s changed: Changed Improved: --configuration parameter now has the -c shortcut Fixed Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results
+  </p>
+
+  
+</article>
+
+  
+
+  
+
+
+</div>
+
+</div>
+</div>
+<script src="http://paraunit.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
