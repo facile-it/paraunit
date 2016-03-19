@@ -16,7 +16,21 @@ services:
     arguments:
       - "@paraunit.parser.json_log_parser"
     tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd }
+      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
+
+  paraunit.printer.failures_printer:
+    class: Paraunit\Printer\FailuresPrinter
+    arguments:
+      - "@paraunit.parser.json_log_parser"
+    tags:
+      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 200 }
+
+  paraunit.printer.files_recap_printer:
+    class: Paraunit\Printer\FilesRecapPrinter
+    arguments:
+      - "@paraunit.parser.json_log_parser"
+    tags:
+      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 100 }
 
   paraunit.printer.console_formatter:
     class: Paraunit\Printer\ConsoleFormatter

@@ -9,7 +9,7 @@ use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
- * Class FinalPrinterTest
+ * Class FailuresPrinterTest
  * @package Tests\Unit\Printer
  */
 class FinalPrinterTest extends BaseUnitTestCase
