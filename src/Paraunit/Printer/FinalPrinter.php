@@ -16,13 +16,8 @@ class FinalPrinter extends AbstractFinalPrinter
      */
     public function onEngineEnd(EngineEvent $engineEvent)
     {
-        $this->output = $engineEvent->getOutputInterface();
-        /** @var \DateInterval $elapsedTime */
-
         $this->printExecutionTime($engineEvent);
         $this->printTestCounters($engineEvent);
-
-        $this->output->writeln('');
     }
 
     /**
@@ -30,12 +25,13 @@ class FinalPrinter extends AbstractFinalPrinter
      */
     private function printExecutionTime(EngineEvent $engineEvent)
     {
+        $output = $engineEvent->getOutputInterface();
         /** @var \DateInterval $elapsedTime */
         $elapsedTime = $engineEvent->get('start')->diff($engineEvent->get('end'));
 
-        $this->output->writeln('');
-        $this->output->writeln('');
-        $this->output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
+        $output->writeln('');
+        $output->writeln('');
+        $output->writeln($elapsedTime->format('Execution time -- %H:%I:%S '));
     }
 
     /**
@@ -43,6 +39,7 @@ class FinalPrinter extends AbstractFinalPrinter
      */
     private function printTestCounters(EngineEvent $engineEvent)
     {
+        $output = $engineEvent->getOutputInterface();
         $completedProcesses = $engineEvent->get('process_completed');
         $testsCount = 0;
         /** @var AbstractParaunitProcess $process */
@@ -52,7 +49,8 @@ class FinalPrinter extends AbstractFinalPrinter
             }
         }
 
-        $this->output->writeln('');
-        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
+        $output->writeln('');
+        $output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
+        $output->writeln('');
     }
 }
