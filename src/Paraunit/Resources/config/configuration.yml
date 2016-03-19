@@ -8,7 +8,7 @@ services:
   paraunit.configuration.phpdbg_bin_file:
     class: Paraunit\Configuration\PHPDbgBinFile
 
-  paraunit.configuration.json_log_filename:
-    class: Paraunit\Configuration\JSONLogFilename
+  paraunit.configuration.temp_filename_factory:
+    class: Paraunit\Configuration\TempFileNameFactory
     arguments:
       - "@paraunit.file.temp_directory"

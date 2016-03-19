@@ -2,7 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Configuration\TempFileNameFactory;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
@@ -13,29 +13,19 @@ use Paraunit\Configuration\PHPUnitConfigFile;
  */
 class ProcessFactory
 {
-    /** @var  PHPUnitBinFile */
-    private $phpUnitBin;
-
-    /** @var  PHPDbgBinFile */
-    private $phpDbgFile;
-
-    /** @var  JSONLogFilename */
-    private $jsonLogFilename;
+    /** @var  CliCommandInterface */
+    private $cliCommand;
 
     /** @var  PHPUnitConfigFile */
     private $phpunitConfigFile;
 
     /**
      * ProcessFactory constructor.
-     * @param PHPUnitBinFile $phpUnitBin
-     * @param PHPDbgBinFile $phpDbgFile
-     * @param JSONLogFilename $jsonLogFilename
+     * @param CliCommandInterface $cliCommand
      */
-    public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $phpDbgFile, JSONLogFilename $jsonLogFilename)
+    public function __construct(CliCommandInterface $cliCommand)
     {
-        $this->phpUnitBin = $phpUnitBin;
-        $this->phpDbgFile = $phpDbgFile;
-        $this->jsonLogFilename = $jsonLogFilename;
+        $this->cliCommand = $cliCommand;
     }
 
     /**
@@ -45,22 +35,10 @@ class ProcessFactory
      */
     public function createProcess($testFilePath)
     {
-        if (! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
-            throw new \Exception('PHPUnit config missing');
-        }
-
         $uniqueId = $this->createUniqueId($testFilePath);
         $command = $this->createCommandLine($testFilePath, $uniqueId);
 
         return new SymfonyProcessWrapper($command, $uniqueId);
-    }
-
-    /**
-     * @param PHPUnitConfigFile $configFile
-     */
-    public function setConfigFile(PHPUnitConfigFile $configFile)
-    {
-        $this->phpunitConfigFile = $configFile;
     }
 
     /**
@@ -70,18 +48,9 @@ class ProcessFactory
      */
     private function createCommandLine($testFilePath, $uniqueId)
     {
-        $commandLine = '';
-        if ($this->phpDbgFile->isAvailable()) {
-            $commandLine .= $this->phpDbgFile->getPhpDbgBin() . ' -qrr ';
-        }
-
-        $commandLine .= $this->phpUnitBin->getPhpUnitBin() .
-            ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-            ' --colors=never' .
-            ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
-            ' ' . $testFilePath;
-
-        return $commandLine;
+        return $this->cliCommand->getExecutable()
+            . ' ' . $this->cliCommand->getOptions($this->phpunitConfigFile, $uniqueId)
+            . ' ' . $testFilePath;
     }
 
     /**
@@ -91,5 +60,10 @@ class ProcessFactory
     private function createUniqueId($testFilePath)
     {
         return md5($testFilePath);
+    }
+
+    public function setPHPUnitConfigFile(PHPUnitConfigFile $phpunitConfigFile)
+    {
+        $this->phpunitConfigFile = $phpunitConfigFile;
     }
 }

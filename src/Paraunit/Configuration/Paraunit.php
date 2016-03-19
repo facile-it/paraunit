@@ -31,6 +31,7 @@ class Paraunit
         $loader->load('file.yml');
         $loader->load('parser.yml');
         $loader->load('printer.yml');
+        $loader->load('process.yml');
         $loader->load('services.yml');
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');

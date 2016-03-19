@@ -12,6 +12,7 @@ services:
       - %paraunit.version%
     calls:
       - [add, ["@paraunit.command.parallel_command"]]
+      - [add, ["@paraunit.command.coverage_command"]]
 
   paraunit.filter.filter:
     class: Paraunit\Filter\Filter
@@ -30,14 +31,6 @@ services:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - "@service_container"
-
-  ## PROCESS HANDLING ##
-  paraunit.process.process_factory:
-    class: Paraunit\Process\ProcessFactory
-    arguments:
-      - "@paraunit.configuration.phpunit_bin_file"
-      - "@paraunit.configuration.phpdbg_bin_file"
-      - "@paraunit.configuration.json_log_filename"
 
   ## EXTERNAL DEPs -- proxies ##
 

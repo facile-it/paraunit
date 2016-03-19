@@ -66,7 +66,7 @@ class Runner
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
-        $this->processFactory->setConfigFile($phpunitConfigFile);
+        $this->processFactory->setPHPUnitConfigFile($phpunitConfigFile);
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 

@@ -1,0 +1,11 @@
+services:
+  paraunit.process.process_factory:
+    class: Paraunit\Process\ProcessFactory
+    arguments:
+      - "@paraunit.process.test_cli_command"
+
+  paraunit.process.test_cli_command:
+    class: Paraunit\Process\TestCliCommand
+    arguments:
+      - "@paraunit.configuration.phpunit_bin_file"
+      - "@paraunit.configuration.temp_filename_factory"
