@@ -35,16 +35,12 @@ class TempFileNameFactory
             . '.json.log';
     }
 
-//    /**
-//     * @deprecated
-//     */
-//    public function generate(ParaunitProcessInterface $process)
-//    {
-//        return $this->generateFromUniqueId($process->getUniqueId());
-//    }
-//
-//    public function generateFromUniqueId($uniqueId)
-//    {
-//        return $this->tempDirectory->getTempDirForThisExecution() . '/logs/' . $uniqueId . '.json.log';
-//    }
+    /**
+     * @param string $uniqueId
+     * @return string
+     */
+    public function getFilenameForCoverage($uniqueId)
+    {
+        return; //todo;
+    }
 }

@@ -16,7 +16,7 @@ class TestCliCommand implements CliCommandInterface
     private $phpUnitBin;
 
     /** @var  TempFileNameFactory */
-    private $filenameFactory;
+    protected $filenameFactory;
 
     /**
      * TestCliCommand constructor.
