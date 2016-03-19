@@ -20,7 +20,8 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 ### Fixed
 
 * Removed `Container.php` file and `CompilerPass` class in favor of proper usage of Symfony's components
-* `paraunit` bin now uses the container better
+* `paraunit` bin now uses the container directly
+* FinalPrinter class splitted in 3 classes 
 
 ## [0.5] - 2015-12-08
 
