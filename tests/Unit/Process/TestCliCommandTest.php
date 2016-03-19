@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Process;
 
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\TestCliCommand;
 use Prophecy\Argument;
 
@@ -16,7 +16,7 @@ class TestCliCommandTest extends \PHPUnit_Framework_TestCase
     {
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
         $cli = new TestCliCommand($phpunit->reveal(), $fileNameFactory->reveal());
 
@@ -29,7 +29,7 @@ class TestCliCommandTest extends \PHPUnit_Framework_TestCase
         $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $uniqueId = 'uniqueIdOfProcess';
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
 
         $cli = new TestCliCommand($phpunit->reveal(), $fileNameFactory->reveal());

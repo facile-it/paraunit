@@ -35,6 +35,28 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $this->fail('Feasible log message not found for test');
     }
 
+    /**
+     * @return string
+     */
+    protected function getCoverageStubFilePath()
+    {
+        $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
+        $this->assertTrue(file_exists($filename), 'CoverageStub file missing!');
+
+        return $filename;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getWrongCoverageStubFilePath()
+    {
+        $filename = __DIR__ . '/Stub/CoverageOutput/WrongCoverageStub.php';
+        $this->assertTrue(file_exists($filename), 'WrongCoverageStub file missing!');
+
+        return $filename;
+    }
+
     protected function getLogWithTrace()
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);

@@ -9,6 +9,6 @@ services:
     class: Paraunit\Configuration\PHPDbgBinFile
 
   paraunit.configuration.temp_filename_factory:
-    class: Paraunit\Configuration\TempFileNameFactory
+    class: Paraunit\Configuration\TempFilenameFactory
     arguments:
       - "@paraunit.file.temp_directory"

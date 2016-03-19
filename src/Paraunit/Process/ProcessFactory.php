@@ -2,7 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Configuration;
 
 
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\TempDirectory;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -17,7 +17,7 @@ class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $processUniqueId = 'asdasdasdasd';
         $tempDir = new TempDirectory();
-        $tempFileNameFactory = new TempFileNameFactory($tempDir);
+        $tempFileNameFactory = new TempFilenameFactory($tempDir);
 
         $tempFileNameFactory = $tempFileNameFactory->getFilenameForLog($processUniqueId);
 

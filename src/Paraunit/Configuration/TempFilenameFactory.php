@@ -6,16 +6,16 @@ use Paraunit\File\TempDirectory;
 use Paraunit\Process\ParaunitProcessInterface;
 
 /**
- * Class TempFileNameFactory
+ * Class TempFilenameFactory
  * @package Tests\Unit\Parser
  */
-class TempFileNameFactory
+class TempFilenameFactory
 {
     /** @var  TempDirectory */
     private $tempDirectory;
 
     /**
-     * TempFileNameFactory constructor.
+     * TempFilenameFactory constructor.
      * @param TempDirectory $tempDirectory
      */
     public function __construct(TempDirectory $tempDirectory)

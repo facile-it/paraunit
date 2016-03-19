@@ -18,7 +18,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpDbg->getPhpDbgBin()->shouldNotBeCalled();
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $phpunit->getPhpUnitBin()->shouldBeCalled()->willReturn('path/to/phpunit');
-        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
         $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
 
@@ -32,7 +32,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpDbg->getPhpDbgBin()->shouldBeCalled()->willReturn('/path/to/phpdbg');
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $phpunit->getPhpUnitBin()->shouldNotBeCalled();
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
         $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
@@ -48,7 +48,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpDbg->getPhpDbgBin()->shouldNotBeCalled();
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $uniqueId = 'uniqueIdOfProcess';
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
         $fileNameFactory->getFilenameForCoverage($uniqueId)->willReturn('/path/to/coverage.php');
 
@@ -70,7 +70,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $phpunit->getPhpUnitBin()->shouldBeCalled()->willReturn('path/to/phpunit');
         $uniqueId = 'uniqueIdOfProcess';
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFileNameFactory');
+        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
         $fileNameFactory->getFilenameForCoverage($uniqueId)->willReturn('/path/to/coverage.php');
 

@@ -6,7 +6,7 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 
 class TestWithCoverageCliCommand extends TestCliCommand implements CliCommandInterface
 {
@@ -17,9 +17,9 @@ class TestWithCoverageCliCommand extends TestCliCommand implements CliCommandInt
      * TestCliCommand constructor.
      * @param PHPUnitBinFile $phpUnitBin
      * @param PHPDbgBinFile $dbgBinFile
-     * @param TempFileNameFactory $filenameFactory
+     * @param TempFilenameFactory $filenameFactory
      */
-    public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $dbgBinFile, TempFileNameFactory $filenameFactory)
+    public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $dbgBinFile, TempFilenameFactory $filenameFactory)
     {
         parent::__construct($phpUnitBin, $filenameFactory);
 

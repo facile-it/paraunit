@@ -4,7 +4,7 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 
 /**
  * Class TestCliCommand
@@ -15,15 +15,15 @@ class TestCliCommand implements CliCommandInterface
     /** @var  PHPUnitBinFile */
     private $phpUnitBin;
 
-    /** @var  TempFileNameFactory */
+    /** @var  TempFilenameFactory */
     protected $filenameFactory;
 
     /**
      * TestCliCommand constructor.
      * @param PHPUnitBinFile $phpUnitBin
-     * @param TempFileNameFactory $filenameFactory
+     * @param TempFilenameFactory $filenameFactory
      */
-    public function __construct(PHPUnitBinFile $phpUnitBin, TempFileNameFactory $filenameFactory)
+    public function __construct(PHPUnitBinFile $phpUnitBin, TempFilenameFactory $filenameFactory)
     {
         $this->phpUnitBin = $phpUnitBin;
         $this->filenameFactory = $filenameFactory;

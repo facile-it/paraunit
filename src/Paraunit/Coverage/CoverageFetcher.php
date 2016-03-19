@@ -2,7 +2,7 @@
 
 namespace Paraunit\Coverage;
 
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 
 /**
@@ -11,14 +11,14 @@ use Paraunit\Process\AbstractParaunitProcess;
  */
 class CoverageFetcher
 {
-    /** @var  TempFileNameFactory */
+    /** @var  TempFilenameFactory */
     private $tempFilenameFactory;
 
     /**
      * CoverageFetcher constructor.
-     * @param TempFileNameFactory $tempFilenameFactory
+     * @param TempFilenameFactory $tempFilenameFactory
      */
-    public function __construct(TempFileNameFactory $tempFilenameFactory)
+    public function __construct(TempFilenameFactory $tempFilenameFactory)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
     }
@@ -29,6 +29,17 @@ class CoverageFetcher
      */
     public function fetch(AbstractParaunitProcess $process)
     {
-        // TODO
+        $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
+        $codeCoverage = null;
+
+        if (file_exists($tempFilename)) {
+            $codeCoverage = require $tempFilename;
+        }
+
+        if ($codeCoverage instanceof \PHP_CodeCoverage) {
+            return $codeCoverage;
+        }
+
+        return new \PHP_CodeCoverage();
     }
 }

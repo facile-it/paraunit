@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Paraunit\Configuration\TempFileNameFactory;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Configuration\Paraunit;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
@@ -45,7 +45,7 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
         $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing! ' . $stubLogFilename);
 
-        /** @var TempFileNameFactory $filenameService */
+        /** @var TempFilenameFactory $filenameService */
         $filenameService = $this->container->get('paraunit.configuration.temp_filename_factory');
         $filename = $filenameService->getFilenameForLog($process->getUniqueId());
 
