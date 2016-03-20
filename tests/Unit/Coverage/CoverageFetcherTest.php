@@ -13,6 +13,15 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class CoverageFetcherTest extends BaseUnitTestCase
 {
+    public function setUp()
+    {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('Coverage driver not present in HHVM');
+        }
+
+        parent::setUp();
+    }
+
     public function testFetch()
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
