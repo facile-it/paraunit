@@ -5,8 +5,49 @@
     <link>http://facile-it.github.io/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 08 Dec 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Mar 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.6</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.6/</link>
+      <pubDate>Sun, 20 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.6/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have
+it working soon and release it in 0.7.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what&amp;rsquo;s changed in 0.6:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed:3e4064403c372484c2470f3a4ca6e139&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the
+tests&amp;rsquo; results using PHPUnit&amp;rsquo;s &lt;code&gt;--log-json&lt;/code&gt; option (thanks to @taueres for the idea).
+This grants a lot of new features:
+
+&lt;ul&gt;
+&lt;li&gt;Parsing of tests results is more robust, it should never fail!&lt;/li&gt;
+&lt;li&gt;Fatal errors or segfaults are now grouped as &amp;ldquo;Abnormal termination&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;When a test has an abnormal termination, the culpable test function is indicated&lt;/li&gt;
+&lt;li&gt;Tests with abnormal termination are printed out in full output&lt;/li&gt;
+&lt;li&gt;Tests executed in a test class that has a later abnormal termination are showed and counted in results anyhow&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Added support for warnings, introduced in PHPUnit 5.1 (#30)&lt;/li&gt;
+&lt;li&gt;Added support for risky outcomes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed:3e4064403c372484c2470f3a4ca6e139&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Removed &lt;code&gt;Container.php&lt;/code&gt; file and &lt;code&gt;CompilerPass&lt;/code&gt; class in favor of proper usage of Symfony&amp;rsquo;s components&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;paraunit&lt;/code&gt; bin now uses the container directly&lt;/li&gt;
+&lt;li&gt;FinalPrinter class splitted in 3 classes&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.5</title>

@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.6 &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,43 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.6</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;6&#41;</span>
-    </li>
-  
-  </ul>
+
+<p>Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have
+it working soon and release it in 0.7.</p>
+
+<p>Here&rsquo;s what&rsquo;s changed in 0.6:</p>
+
+<h3 id="changed:3e4064403c372484c2470f3a4ca6e139">Changed</h3>
+
+<ul>
+<li>MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the
+tests&rsquo; results using PHPUnit&rsquo;s <code>--log-json</code> option (thanks to @taueres for the idea).
+This grants a lot of new features:
+
+<ul>
+<li>Parsing of tests results is more robust, it should never fail!</li>
+<li>Fatal errors or segfaults are now grouped as &ldquo;Abnormal termination&rdquo;</li>
+<li>When a test has an abnormal termination, the culpable test function is indicated</li>
+<li>Tests with abnormal termination are printed out in full output</li>
+<li>Tests executed in a test class that has a later abnormal termination are showed and counted in results anyhow</li>
+</ul></li>
+<li>Added support for warnings, introduced in PHPUnit 5.1 (#30)</li>
+<li>Added support for risky outcomes</li>
+</ul>
+
+<h3 id="fixed:3e4064403c372484c2470f3a4ca6e139">Fixed</h3>
+
+<ul>
+<li>Removed <code>Container.php</code> file and <code>CompilerPass</code> class in favor of proper usage of Symfony&rsquo;s components</li>
+<li><code>paraunit</code> bin now uses the container directly</li>
+<li>FinalPrinter class splitted in 3 classes</li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +219,4 @@
 
 </body>
 </html>
+
