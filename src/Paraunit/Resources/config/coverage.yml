@@ -1,0 +1,26 @@
+services:
+  paraunit.coverage.coverage_fetcher:
+    class: Paraunit\Coverage\CoverageFetcher
+    arguments:
+      - "@paraunit.configuration.temp_filename_factory"
+
+  paraunit.coverage.coverage_merger:
+    class: Paraunit\Coverage\CoverageMerger
+    arguments:
+      - "@paraunit.coverage.coverage_fetcher"
+
+  paraunit.coverage.coverage_result:
+    class: Paraunit\Coverage\CoverageMerger
+    arguments:
+      - "@paraunit.coverage.coverage_merger"
+      - "@paraunit.coverage.coverage_output_paths"
+      - "@paraunit.proxy.coverage.clover_result"
+      - "@paraunit.proxy.coverage.xml_result"
+      - "@paraunit.proxy.coverage.html_result"
+
+  paraunit.coverage.coverage_output_paths:
+    class: Paraunit\Coverage\CoverageOutputPaths
+    arguments:
+      - "@paraunit.configuration.clover_file_path"
+      - "@paraunit.configuration.xml_path"
+      - "@paraunit.configuration.html_path"

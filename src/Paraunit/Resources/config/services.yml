@@ -1,19 +1,9 @@
 parameters:
-  paraunit.version: "0.5.1"
   paraunit.max_retry_count: 3
   paraunit.default_max_process: 10
   kernel.root_dir: 'src'
 
 services:
-  paraunit.application:
-    class: Symfony\Component\Console\Application
-    arguments:
-      - 'Paraunit'
-      - %paraunit.version%
-    calls:
-      - [add, ["@paraunit.command.parallel_command"]]
-      - [add, ["@paraunit.command.coverage_command"]]
-
   paraunit.filter.filter:
     class: Paraunit\Filter\Filter
     arguments:

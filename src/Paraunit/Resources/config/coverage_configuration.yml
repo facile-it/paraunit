@@ -1,0 +1,15 @@
+services:
+  paraunit.configuration.clover_file_path:
+    class: Paraunit\Configuration\OutputFile
+    argument:
+      - %paraunit.coverage.clover_file_path%
+
+  paraunit.configuration.xml_path:
+    class: Paraunit\Configuration\OutputPath
+    argument:
+      - %paraunit.coverage.xml_path%
+
+  paraunit.configuration.html_path:
+    class: Paraunit\Configuration\OutputPath
+    argument:
+      - %paraunit.coverage.html_path%

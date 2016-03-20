@@ -2,13 +2,11 @@
 
 namespace Paraunit\Command;
 
-use Paraunit\Filter\Filter;
+use Paraunit\Configuration\ParallelCoverageConfiguration;
 use Paraunit\Lifecycle\CoverageEvent;
-use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class CoverageCommand
@@ -16,20 +14,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CoverageCommand extends ParallelCommand
 {
-    /** @var  EventDispatcherInterface */
-    private $eventDispatcher;
-
     /**
-     * @param Filter $filter
-     * @param Runner $runner
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param string $name
+     * ParallelCommand constructor.
+     * @param ParallelCoverageConfiguration $configuration
      */
-    public function __construct(Filter $filter, Runner $runner, EventDispatcherInterface $eventDispatcher, $name = 'Paraunit with Coverage')
+    public function __construct(ParallelCoverageConfiguration $configuration)
     {
-        parent::__construct($filter, $runner, $name);
-
-        $this->eventDispatcher = $eventDispatcher;
+        parent::__construct($configuration);
     }
 
     protected function configure()
@@ -55,8 +46,8 @@ class CoverageCommand extends ParallelCommand
     {
         if (is_null($input->getOption('coverage-clover'))
             && is_null($input->getOption('coverage-xml'))
-            && is_null($input->getOption('coverage-html')))
-        {
+            && is_null($input->getOption('coverage-html'))
+        ) {
             throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML or HTML');
         }
 
