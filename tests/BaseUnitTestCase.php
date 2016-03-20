@@ -8,7 +8,7 @@ use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
  * Class BaseUnitTestCase
  * @package Paraunit\Tests
  */
-abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
+abstract class BaseUnitTestCase extends BaseTestCase
 {
     /**
      * @param string $event
@@ -33,17 +33,6 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->fail('Feasible log message not found for test');
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCoverageStubFilePath()
-    {
-        $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
-        $this->assertTrue(file_exists($filename), 'CoverageStub file missing!');
-
-        return $filename;
     }
 
     /**

@@ -8,7 +8,7 @@ use Paraunit\Configuration\OutputPath;
  * Class HTMLResult
  * @package Paraunit\Proxy\Coverage
  */
-class HTMLResult
+class HtmlResult
 {
     /** @var  \PHP_CodeCoverage_Report_HTML */
     private $html;

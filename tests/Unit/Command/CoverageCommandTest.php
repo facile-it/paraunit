@@ -37,7 +37,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
 
         $exitCode = $commandTester->execute(array(
             'command' => $command->getName(),
-            '--coverage-xml' => '.',
+            '--xml' => '.',
         ));
 
         $this->assertEquals(0, $exitCode);

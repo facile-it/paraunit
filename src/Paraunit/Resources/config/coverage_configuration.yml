@@ -1,15 +1,20 @@
+parameters:
+  paraunit.coverage.clover_file_path: './coverage'
+  paraunit.coverage.xml_path: './coverage'
+  paraunit.coverage.html_path: './coverage'
+
 services:
   paraunit.configuration.clover_file_path:
     class: Paraunit\Configuration\OutputFile
-    argument:
-      - %paraunit.coverage.clover_file_path%
+    arguments:
+      - ''
 
   paraunit.configuration.xml_path:
     class: Paraunit\Configuration\OutputPath
-    argument:
-      - %paraunit.coverage.xml_path%
+    arguments:
+      - ''
 
   paraunit.configuration.html_path:
     class: Paraunit\Configuration\OutputPath
-    argument:
-      - %paraunit.coverage.html_path%
+    arguments:
+      - './coverage'

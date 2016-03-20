@@ -2,6 +2,7 @@
 
 namespace Paraunit\Bin;
 
+use Paraunit\Command\CoverageCommand;
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\ParallelCoverageConfiguration;
@@ -22,7 +23,7 @@ class Paraunit
         $parallelCommand = new ParallelCommand(new ParallelConfiguration());
         $application->add($parallelCommand);
 
-        $CoverageCommand = new ParallelCommand(new ParallelCoverageConfiguration());
+        $CoverageCommand = new CoverageCommand(new ParallelCoverageConfiguration());
         $application->add($CoverageCommand);
 
         $application->run();

@@ -3,8 +3,8 @@
 namespace Paraunit\Coverage;
 
 use Paraunit\Proxy\Coverage\CloverResult;
-use Paraunit\Proxy\Coverage\HTMLResult;
-use Paraunit\Proxy\Coverage\XMLResult;
+use Paraunit\Proxy\Coverage\HtmlResult;
+use Paraunit\Proxy\Coverage\XmlResult;
 
 /**
  * Class CoverageResult
@@ -21,10 +21,10 @@ class CoverageResult
     /** @var  CloverResult */
     private $cloverResult;
 
-    /** @var  XMLResult */
+    /** @var  XmlResult */
     private $xmlResult;
 
-    /** @var  HTMLResult */
+    /** @var  HtmlResult */
     private $htmlResult;
 
     /**
@@ -32,15 +32,15 @@ class CoverageResult
      * @param CoverageMerger $coverageMerger
      * @param CoverageOutputPaths $coverageOutputPaths
      * @param CloverResult $cloverResult
-     * @param XMLResult $xmlResult
-     * @param HTMLResult $htmlResult
+     * @param XmlResult $xmlResult
+     * @param HtmlResult $htmlResult
      */
     public function __construct(
         CoverageMerger $coverageMerger,
         CoverageOutputPaths $coverageOutputPaths,
         CloverResult $cloverResult,
-        XMLResult $xmlResult,
-        HTMLResult $htmlResult
+        XmlResult $xmlResult,
+        HtmlResult $htmlResult
     )
     {
         $this->coverageMerger = $coverageMerger;

@@ -29,9 +29,9 @@ class CoverageCommand extends ParallelCommand
 
         $this
             ->setName('coverage')
-            ->addOption('coverage-clover', 'clover', InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result')
-            ->addOption('coverage-xml', 'xml', InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result')
-            ->addOption('coverage-html', 'html', InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
+            ->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result')
+            ->addOption('xml',    null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result')
+            ->addOption('html',   null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
     }
 
     /**
@@ -44,9 +44,9 @@ class CoverageCommand extends ParallelCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (is_null($input->getOption('coverage-clover'))
-            && is_null($input->getOption('coverage-xml'))
-            && is_null($input->getOption('coverage-html'))
+        if (is_null($input->getOption('clover'))
+            && is_null($input->getOption('xml'))
+            && is_null($input->getOption('html'))
         ) {
             throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML or HTML');
         }

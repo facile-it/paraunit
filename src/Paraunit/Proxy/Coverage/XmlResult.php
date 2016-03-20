@@ -8,7 +8,7 @@ use Paraunit\Configuration\OutputPath;
  * Class XMLResult
  * @package Paraunit\Proxy\Coverage
  */
-class XMLResult
+class XmlResult
 {
     /** @var  \PHP_CodeCoverage_Report_XML */
     private $xml;

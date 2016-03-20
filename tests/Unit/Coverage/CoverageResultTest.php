@@ -41,14 +41,14 @@ class CoverageResultTest extends \PHPUnit_Framework_TestCase
             $cloverResult->process($coverageData, $outputPaths->getCloverFilePath())->shouldBeCalled();
         }
 
-        $xmlResult = $this->prophesize('Paraunit\Proxy\Coverage\XMLResult');
+        $xmlResult = $this->prophesize('Paraunit\Proxy\Coverage\XmlResult');
         if ($outputPaths->getXmlPath()->isEmpty()) {
             $xmlResult->process(Argument::cetera())->shouldNotBeCalled();
         } else {
             $xmlResult->process($coverageData, $outputPaths->getXmlPath())->shouldBeCalled();
         }
 
-        $htmlResult = $this->prophesize('Paraunit\Proxy\Coverage\HTMLResult');
+        $htmlResult = $this->prophesize('Paraunit\Proxy\Coverage\HtmlResult');
         if ($outputPaths->getHtmlPath()->isEmpty()) {
             $htmlResult->process(Argument::cetera())->shouldNotBeCalled();
         } else {

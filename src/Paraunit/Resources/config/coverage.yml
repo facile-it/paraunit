@@ -8,15 +8,19 @@ services:
     class: Paraunit\Coverage\CoverageMerger
     arguments:
       - "@paraunit.coverage.coverage_fetcher"
+    tags:
+      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
 
   paraunit.coverage.coverage_result:
-    class: Paraunit\Coverage\CoverageMerger
+    class: Paraunit\Coverage\CoverageResult
     arguments:
       - "@paraunit.coverage.coverage_merger"
       - "@paraunit.coverage.coverage_output_paths"
       - "@paraunit.proxy.coverage.clover_result"
       - "@paraunit.proxy.coverage.xml_result"
       - "@paraunit.proxy.coverage.html_result"
+    tags:
+      - { name: kernel.event_listener, event: engine_event.end, method: generateResults }
 
   paraunit.coverage.coverage_output_paths:
     class: Paraunit\Coverage\CoverageOutputPaths
