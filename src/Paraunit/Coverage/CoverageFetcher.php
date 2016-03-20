@@ -40,6 +40,6 @@ class CoverageFetcher
             return $codeCoverage;
         }
 
-        return new \PHP_CodeCoverage(new CodeCoverageStubDriver());
+        return new \PHP_CodeCoverage();
     }
 }
