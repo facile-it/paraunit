@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Process;
 
-use Paraunit\Process\TestWithCoverageCliCommand;
+use Paraunit\Process\TestWithCoverageCommandLine;
 use Prophecy\Argument;
 
 /**
  * Class TestWithCoverageCliCommandTest
  * @package Tests\Unit\Process
  */
-class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
+class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetExecutableWithoutDbg()
     {
@@ -20,7 +20,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpunit->getPhpUnitBin()->shouldBeCalled()->willReturn('path/to/phpunit');
         $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
-        $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
+        $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
 
         $this->assertEquals('path/to/phpunit', $cli->getExecutable());
     }
@@ -34,7 +34,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpunit->getPhpUnitBin()->shouldNotBeCalled();
         $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
-        $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
+        $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals('/path/to/phpdbg', $cli->getExecutable());
     }
@@ -52,7 +52,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
         $fileNameFactory->getFilenameForCoverage($uniqueId)->willReturn('/path/to/coverage.php');
 
-        $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
+        $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
             '-c /path/to/phpunit.xml --log-json /path/to/log.json --coverage-php /path/to/coverage.php',
@@ -74,7 +74,7 @@ class TestWithCoverageCliCommandTest extends \PHPUnit_Framework_TestCase
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
         $fileNameFactory->getFilenameForCoverage($uniqueId)->willReturn('/path/to/coverage.php');
 
-        $cli = new TestWithCoverageCliCommand($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
+        $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
             '-qrr path/to/phpunit -c /path/to/phpunit.xml --log-json /path/to/log.json --coverage-php /path/to/coverage.php',

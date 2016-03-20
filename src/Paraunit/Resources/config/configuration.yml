@@ -5,9 +5,6 @@ services:
   paraunit.configuration.phpunit_bin_file:
     class: Paraunit\Configuration\PHPUnitBinFile
 
-  paraunit.configuration.phpdbg_bin_file:
-    class: Paraunit\Configuration\PHPDbgBinFile
-
   paraunit.configuration.temp_filename_factory:
     class: Paraunit\Configuration\TempFilenameFactory
     arguments:

@@ -8,7 +8,7 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
 use Paraunit\Configuration\TempFilenameFactory;
 
-class TestWithCoverageCliCommand extends TestCliCommand implements CliCommandInterface
+class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandInterface
 {
     /** @var PHPDbgBinFile */
     private $phpDbgBinFile;

@@ -32,6 +32,7 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('paraunit.coverage.coverage_fetcher', $servicesIds);
         $this->assertContains('paraunit.coverage.coverage_merger', $servicesIds);
         $this->assertContains('paraunit.coverage.coverage_result', $servicesIds);
+        $this->assertContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
         $this->markTestIncomplete();
         $this->assertContains('paraunit.printer.debug_printer', $servicesIds);
         $this->assertContains('paraunit.coverage.coverage_output_paths', $servicesIds);

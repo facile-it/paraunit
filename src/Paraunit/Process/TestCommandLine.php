@@ -10,7 +10,7 @@ use Paraunit\Configuration\TempFilenameFactory;
  * Class TestCliCommand
  * @package Paraunit\Process
  */
-class TestCliCommand implements CliCommandInterface
+class TestCommandLine implements CliCommandInterface
 {
     /** @var  PHPUnitBinFile */
     private $phpUnitBin;

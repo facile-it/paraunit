@@ -29,6 +29,7 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('paraunit.test_result.pass_container', $servicesIds);
         $this->assertContains('paraunit.test_result.pass_test_result_format', $servicesIds);
 
+        $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
         $this->assertNotContains('paraunit.coverage.coverage_fectcher', $servicesIds);
 
         $this->markTestIncomplete();

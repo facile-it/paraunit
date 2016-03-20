@@ -3,14 +3,14 @@
 namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Process\TestCliCommand;
+use Paraunit\Process\TestCommandLine;
 use Prophecy\Argument;
 
 /**
  * Class TestCliCommandTest
  * @package Tests\Unit\Process
  */
-class TestCliCommandTest extends \PHPUnit_Framework_TestCase
+class TestCommandLineTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetExecutable()
     {
@@ -18,7 +18,7 @@ class TestCliCommandTest extends \PHPUnit_Framework_TestCase
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
         $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
 
-        $cli = new TestCliCommand($phpunit->reveal(), $fileNameFactory->reveal());
+        $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals('path/to/phpunit', $cli->getExecutable());
     }
@@ -32,7 +32,7 @@ class TestCliCommandTest extends \PHPUnit_Framework_TestCase
         $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $fileNameFactory->getFilenameForLog($uniqueId)->willReturn('/path/to/log.json');
 
-        $cli = new TestCliCommand($phpunit->reveal(), $fileNameFactory->reveal());
+        $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
             '-c /path/to/phpunit.xml --log-json /path/to/log.json',
