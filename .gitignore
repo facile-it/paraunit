@@ -2,3 +2,5 @@
 *.tgz
 *.phar
 public
+composer.*
+vendor
