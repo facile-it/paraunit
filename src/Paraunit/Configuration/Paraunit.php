@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
  */
 class Paraunit
 {
-    const PARAUNIT_VERSION = '0.5.1';
+    const PARAUNIT_VERSION = '0.6';
 
     /**
      * @return ContainerBuilder
