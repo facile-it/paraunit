@@ -41,6 +41,9 @@ class TempFilenameFactory
      */
     public function getFilenameForCoverage($uniqueId)
     {
-        return; //todo;
+        return $this->tempDirectory->getTempDirForThisExecution()
+        . '/coverage/'
+        . $uniqueId
+        . '.php';
     }
 }

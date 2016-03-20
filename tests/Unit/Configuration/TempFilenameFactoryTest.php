@@ -24,4 +24,16 @@ class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
         $expected = $tempDir->getTempDirForThisExecution() . '/logs/' . $processUniqueId . '.json.log';
         $this->assertEquals($expected, $tempFileNameFactory);
     }
+
+    public function testGetFilenameForCoverage()
+    {
+        $processUniqueId = 'asdasdasdasd';
+        $tempDir = new TempDirectory();
+        $tempFileNameFactory = new TempFilenameFactory($tempDir);
+
+        $tempFileNameFactory = $tempFileNameFactory->getFilenameForCoverage($processUniqueId);
+
+        $expected = $tempDir->getTempDirForThisExecution() . '/coverage/' . $processUniqueId . '.php';
+        $this->assertEquals($expected, $tempFileNameFactory);
+    }
 }
