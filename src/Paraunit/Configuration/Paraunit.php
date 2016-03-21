@@ -2,6 +2,7 @@
 
 namespace Paraunit\Configuration;
 
+use Paraunit\Parser\ParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -35,6 +36,7 @@ class Paraunit
         $loader->load('test_result_format.yml');
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
+        $containerBuilder->addCompilerPass(new ParserCompilerPass());
 
         $containerBuilder->setDefinition(
             'event_dispatcher',
