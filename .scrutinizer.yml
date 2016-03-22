@@ -7,9 +7,5 @@ filter:
 
 coding_style:
   php:
-    spaces:
-      around_operators:
-        concatenation: true
-        negation: true
-      other:
-        after_type_cast: false
+    custom_coding_standard:
+        ruleset_path: 'phpcs.ruleset.xml'
