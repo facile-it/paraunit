@@ -2,6 +2,15 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [Unreleased]
+### Added
+* A new approach for dockerfiles, now they will be based on the standard docker PHP library. This will allow for a
+faster image build, cleaner dockerfiles and a more precise PHP version targering, including:
+  * "dockerfile-php-5.6" with the related  "setup-php-5.6.sh" script that will allow to build a container
+  with PHP 5.6 image
+  * "dockerfile-php-7" with the related  "setup-php-7.sh" script that will allow to build a container
+      with PHP 7 image
+
 ## [0.6] - 2016-03-20
 
 ### Changed
