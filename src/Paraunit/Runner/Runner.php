@@ -44,8 +44,8 @@ class Runner
         $maxProcessNumber = 10,
         EventDispatcherInterface $eventDispatcher,
         ProcessFactory $processFactory
-    )
-    {
+    ) {
+    
         $this->eventDispatcher = $eventDispatcher;
         $this->maxProcessNumber = $maxProcessNumber;
         $this->processFactory = $processFactory;
@@ -75,7 +75,7 @@ class Runner
             new EngineEvent($outputInterface, array('start' => $start,))
         );
 
-        while ( ! empty($this->processStack) || ! empty($this->processRunning)) {
+        while (! empty($this->processStack) || ! empty($this->processRunning)) {
 
             if ($process = $this->runProcess($debug)) {
                 $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($process));

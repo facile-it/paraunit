@@ -24,7 +24,7 @@ class PHPUnitConfigFile
             ? $inputPathOrFileName . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME
             : $inputPathOrFileName;
 
-        if ( ! is_file($configFile) || ! is_readable($configFile)) {
+        if (! is_file($configFile) || ! is_readable($configFile)) {
             throw new \InvalidArgumentException('Config file ' . $configFile . ' does not exist or is not readable');
         }
 

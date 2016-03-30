@@ -35,7 +35,7 @@ class FailuresPrinter extends AbstractFinalPrinter
      */
     private function printFailuresOutput(TestResultContainer $testResultContainer, OutputInterface $output)
     {
-        if ( ! $testResultContainer->getTestResultFormat()->shouldPrintTestOutput()) {
+        if (! $testResultContainer->getTestResultFormat()->shouldPrintTestOutput()) {
             return;
         }
 

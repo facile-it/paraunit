@@ -32,7 +32,7 @@ class FilesRecapPrinter extends AbstractFinalPrinter
      */
     private function printFileRecap(TestResultContainer $testResultContainer, OutputInterface $output)
     {
-        if ( ! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
+        if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;
         }
 

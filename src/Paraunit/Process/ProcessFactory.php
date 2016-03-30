@@ -38,7 +38,7 @@ class ProcessFactory
      */
     public function createProcess($testFilePath)
     {
-        if ( ! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
+        if (! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
             throw new \Exception('PHPUnit config missing');
         }
 

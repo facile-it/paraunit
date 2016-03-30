@@ -59,7 +59,7 @@ class TempDirectory
      */
     private static function mkdirIfNotExists($path)
     {
-        if ( ! file_exists($path)) {
+        if (! file_exists($path)) {
             mkdir($path);
         }
     }

@@ -37,7 +37,7 @@ class TestResultFactory
             );
         }
 
-        if ( ! property_exists($log, 'message')) {
+        if (! property_exists($log, 'message')) {
             return new MuteTestResult();
         }
 

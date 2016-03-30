@@ -37,13 +37,13 @@ class ProcessPrinter
     {
         $process = $processEvent->getProcess();
 
-        if ( ! $processEvent->has('output_interface')) {
+        if (! $processEvent->has('output_interface')) {
             throw new \BadMethodCallException('missing output_interface');
         }
 
         $this->output = $processEvent->get('output_interface');
 
-        if ( ! $this->output instanceof OutputInterface) {
+        if (! $this->output instanceof OutputInterface) {
             throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($this->output));
         }
 
