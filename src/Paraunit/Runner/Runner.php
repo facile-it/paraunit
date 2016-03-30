@@ -41,11 +41,11 @@ class Runner
      * @param ProcessFactory $processFactory
      */
     public function __construct(
-        $maxProcessNumber = 10,
         EventDispatcherInterface $eventDispatcher,
-        ProcessFactory $processFactory
+        ProcessFactory $processFactory,
+        $maxProcessNumber = 10
     ) {
-    
+
         $this->eventDispatcher = $eventDispatcher;
         $this->maxProcessNumber = $maxProcessNumber;
         $this->processFactory = $processFactory;
