@@ -2,7 +2,6 @@
 
 namespace Tests\Functional\Printer;
 
-
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\FailuresPrinter;
 use Tests\BaseFunctionalTestCase;

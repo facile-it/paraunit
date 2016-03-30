@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Parser;
 
-
 use Paraunit\Parser\JSONLogFetcher;
 use Paraunit\Parser\TestStartParser;
 use Tests\BaseUnitTestCase;

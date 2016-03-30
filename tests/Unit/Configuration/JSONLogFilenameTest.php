@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Configuration;
 
-
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\File\TempDirectory;
 use Tests\Stub\StubbedParaunitProcess;

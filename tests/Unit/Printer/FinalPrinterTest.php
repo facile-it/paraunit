@@ -67,5 +67,4 @@ class FinalPrinterTest extends BaseUnitTestCase
 
         $this->assertNotContains('output', $output->getOutput());
     }
-
 }

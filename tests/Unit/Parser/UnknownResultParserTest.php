@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Parser;
 
-
 use Paraunit\Parser\UnknownResultParser;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
