@@ -1,7 +1,10 @@
 # Contributing to Paraunit
 
 ## Dev environment
-Paraunit comes with a containerized environment which makes contributing really easy. The container already has Composer
+Paraunit comes with a containerized environment which makes contributing really easy.
+The project adopted Docker as container tecnology, you can find an useful guide for the installation process [here](https://docs.docker.com/engine/installation/).
+
+The container already has Composer
 installed globally, and [OhMyZsh](https://github.com/robbyrussell/oh-my-zsh) installed as shell for some nice autocompletion features. 
 
 To start contributing:
