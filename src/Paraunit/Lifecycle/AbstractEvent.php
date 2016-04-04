@@ -30,7 +30,7 @@ abstract class AbstractEvent extends Event
      */
     public function get($contextParameterName)
     {
-        if ( ! $this->has($contextParameterName)) {
+        if (! $this->has($contextParameterName)) {
             throw new \LogicException('Cannot find parameter: ' . $contextParameterName);
         }
 

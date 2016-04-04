@@ -19,7 +19,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->absoluteConfigBaseDir = realpath(__DIR__ . '/../../Stub/StubbedXMLConfigs/') . DIRECTORY_SEPARATOR;
     }
 
-    public function testFilterTestFiles_gets_only_requested_testsuite()
+    public function testFilterTestFilesGetsOnlyRequestedTestsuite()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);
@@ -50,7 +50,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($file1), $result);
     }
 
-    public function testFilterTestFiles_supports_suffix_attribute()
+    public function testFilterTestFilesSupportsSuffixAttribute()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_suffix_test.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);
@@ -77,7 +77,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($file1, $file2), $result);
     }
 
-    public function testFilterTestFiles_supports_prefix_attribute()
+    public function testFilterTestFilesSupportsPrefixAttribute()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_prefix_test.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);
@@ -104,7 +104,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($file1, $file2), $result);
     }
 
-    public function testFilterTestFiles_supports_exclude_nodes()
+    public function testFilterTestFilesSupportsExcludeNodes()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_exclude.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);
@@ -141,7 +141,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($file1, $file2), $result);
     }
 
-    public function testFilterTestFiles_avoids_duplicate_runs()
+    public function testFilterTestFilesAvoidsDuplicateRuns()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);
@@ -168,7 +168,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($file), $result);
     }
 
-    public function testFilterTestFiles_supports_file_nodes()
+    public function testFilterTestFilesSupportsFileNodes()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_file.xml';
         $configFilePhpUnit = new PHPUnitConfigFile($configFile);

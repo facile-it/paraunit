@@ -2,7 +2,6 @@
 
 namespace Tests\Stub;
 
-
 class MissingProviderTestStub extends \PHPUnit_Framework_TestCase
 {
     /**

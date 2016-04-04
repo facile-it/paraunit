@@ -31,15 +31,15 @@ class Cleaner
      */
     public static function cleanUpDir($dir)
     {
-        if ( ! file_exists($dir)) {
+        if (! file_exists($dir)) {
             return false;
         }
 
         $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
 
-        foreach($files as $file) {
-            if ($file->isDir()){
+        foreach ($files as $file) {
+            if ($file->isDir()) {
                 rmdir($file->getRealPath());
             } else {
                 unlink($file->getRealPath());

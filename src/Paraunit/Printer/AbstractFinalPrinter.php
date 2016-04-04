@@ -30,5 +30,5 @@ abstract class AbstractFinalPrinter
     /**
      * @param EngineEvent $engineEvent
      */
-    public abstract function onEngineEnd(EngineEvent $engineEvent);
+    abstract public function onEngineEnd(EngineEvent $engineEvent);
 }

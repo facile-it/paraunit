@@ -25,7 +25,7 @@ class ParserCompilerPass implements CompilerPassInterface
 
         uasort(
             $taggedServices,
-            function($a, $b) {
+            function ($a, $b) {
                 return $a[0]['priority'] > $b[0]['priority'];
             }
         );
@@ -36,5 +36,4 @@ class ParserCompilerPass implements CompilerPassInterface
         }
 
     }
-
 }

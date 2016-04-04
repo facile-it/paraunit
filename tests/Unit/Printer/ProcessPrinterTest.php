@@ -37,7 +37,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     /**
      * @dataProvider newLineTimesProvider
      */
-    public function testPrintProcessResult_new_line_after_80_chars($times, $newLineTimes)
+    public function testPrintProcessResultAddsNewlineAfter80Chars($times, $newLineTimes)
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {

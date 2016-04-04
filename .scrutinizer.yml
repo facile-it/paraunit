@@ -1,15 +1,10 @@
 tools:
   external_code_coverage: true
 
+  php_code_sniffer:
+    config:
+      standard: "PSR2"
+
 filter:
   excluded_paths:
     - tests/*
-
-coding_style:
-  php:
-    spaces:
-      around_operators:
-        concatenation: true
-        negation: true
-      other:
-        after_type_cast: false

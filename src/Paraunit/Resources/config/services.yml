@@ -28,9 +28,9 @@ services:
   paraunit.runner.runner:
     class: Paraunit\Runner\Runner
     arguments:
-      - %paraunit.default_max_process%
       - "@event_dispatcher"
       - "@paraunit.process.process_factory"
+      - %paraunit.default_max_process%
 
   event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher

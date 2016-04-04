@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\TestResult;
 
-
 use Paraunit\Parser\JSONLogFetcher;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
