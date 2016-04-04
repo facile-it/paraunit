@@ -2,14 +2,20 @@
 
 All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased]
-### Added
-* A new approach for dockerfiles, now they will be based on the standard docker PHP library. This will allow for a
-faster image build, cleaner dockerfiles and a more precise PHP version targering, including:
-  * "dockerfile-php-5.6" with the related  "setup-php-5.6.sh" script that will allow to build a container
-  with PHP 5.6 image
-  * "dockerfile-php-7" with the related  "setup-php-7.sh" script that will allow to build a container
-      with PHP 7 image
+## [0.7] - TBA
+
+### Changed
+
+* A new approach for dockerfiles, now they will be based on the standard Docker PHP library. This will allow for a
+faster image build, cleaner dockerfiles and a more precise PHP version targeting, including:
+  * `docker/dockerfile-php-5.6` with the related `docker/setup-php-5.6.sh` script that will allow to build a container
+  starting from the PHP 5.6 image
+  * `docker/dockerfile-php-7` with the related  `docker/setup-php-7.sh` script that will allow to build a container
+  starting from the PHP 7.0 image
+* Paraunit now adopts [PSR-2](http://www.php-fig.org/psr/psr-2/) as a coding style
+  * A `contrib/contributing.sh` has been added to tidy the code style, using `phpcbf`
+  * A git pre-commit hook is enabled during the `composer install` command to warn about code style violations
+* CONTRIBUTING.md file has been added, with instructions for coding style and usage of Docker images for development
 
 ## [0.6] - 2016-03-20
 
@@ -19,6 +25,7 @@ faster image build, cleaner dockerfiles and a more precise PHP version targering
   tests' results using PHPUnit's `--log-json` option (thanks to @taueres for the idea).
   This grants a lot of new features:
   * Parsing of tests results is more robust, it should never fail!
+  * Improved performances! The JSON parsing is faster, even with unit tests
   * Fatal errors or segfaults are now grouped as "Abnormal termination"
   * When a test has an abnormal termination, the culpable test function is indicated
   * Tests with abnormal termination are printed out in full output
