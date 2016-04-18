@@ -171,7 +171,83 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
       <guid>http://facile-it.github.io/paraunit/documentation/</guid>
       <description>
 
-&lt;h3 id=&#34;work-in-progress:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Work in progress&lt;/h3&gt;
+&lt;p&gt;Paraunit is a tool for faster executions of PHPUnit test suites.
+It makes this possible by launching multiple test in parallel with single PHPUnit processes.&lt;/p&gt;
+
+&lt;p&gt;Paraunit is developed using &lt;a href=&#34;http://symfony.com/components&#34;&gt;Symfony2 components&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;requirements:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Requirements&lt;/h1&gt;
+
+&lt;p&gt;Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit&amp;rsquo;s .xml configuration file, so it&amp;rsquo;s needed to know which test to load.&lt;/p&gt;
+
+&lt;p&gt;If you are testing a Symfony2+Doctrine application, it&amp;rsquo;s suggested to use also &lt;a href=&#34;https://github.com/facile-it/paraunit-testcase&#34;&gt;facile-it/paraunit-testcase&lt;/a&gt;, to avoid database concurrency problems during functional testing;
+also, if your want to run functional tests, remember to &lt;strong&gt;warm up the cache before&lt;/strong&gt;. in order to avoid a mass cache miss (and relative &lt;a href=&#34;https://en.wikipedia.org/wiki/Cache_stampede&#34;&gt;cache stampede&lt;/a&gt;) with concurrency problems, and subsequent random failures.&lt;/p&gt;
+
+&lt;h1 id=&#34;installation:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Installation&lt;/h1&gt;
+
+&lt;p&gt;To use this package, use &lt;a href=&#34;https://getcomposer.org/&#34;&gt;composer&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;from CLI: &lt;code&gt;composer require facile-it/paraunit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;or, directly in your &lt;code&gt;composer.json&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;require&amp;quot;: {
+        &amp;quot;facile-it/paraunit&amp;quot;: &amp;quot;~0.6&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;usage:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Usage&lt;/h1&gt;
+
+&lt;p&gt;Paraunit starts as a Symfony2 console command, but it&amp;rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&amp;rsquo;s bin dir is &lt;code&gt;vendor/bin&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;vendor/bin/paraunit run&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This command will launch all the tests in all your configured testsuites.&lt;/p&gt;
+
+&lt;h2 id=&#34;optional-parameters:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Optional parameters&lt;/h2&gt;
+
+&lt;h3 id=&#34;configuration:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Configuration&lt;/h3&gt;
+
+&lt;p&gt;If your &lt;code&gt;phpunit.xml.dist&lt;/code&gt; file is not in the default base dir, you can specify it by:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;or with the short version:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Also it&amp;rsquo;s possible to provide only a directory, in such case Paraunit will look for the &amp;lsquo;phpunit.xml.dist&amp;rsquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;vendor/bin/paraunit run -c=relPath/to/xml/file/&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;testsuite:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Testsuite&lt;/h3&gt;
+
+&lt;p&gt;You can run a single test suite (as defined in your configuration file) using:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;vendor/bin/paraunit run --testsuite=testSuiteName&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;debug-mode:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Debug mode&lt;/h3&gt;
+
+&lt;p&gt;If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--debug&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It will show a verbose output with the full running test queue.&lt;/p&gt;
+
+&lt;h1 id=&#34;parsing-results:519b3731c0b3c26bafa462d3efdcc120&#34;&gt;Parsing results&lt;/h1&gt;
+
+&lt;p&gt;Paraunit prints a parsed result from the single PHPUnit processes.
+This parsing is done (since version 0.6) using PHPUnit&amp;rsquo;s JSON log output, so it&amp;rsquo;s a resilient and reliable process.
+It allows to be also resistent to fatal errors and other abnormal process termination.
+If you are experiencing any problems, you can try the &lt;code&gt;--debug&lt;/code&gt; option to identify the problematic test, and try running it alone;
+if it&amp;rsquo;s ok and the parser is at fault, please open an issue here on GitHub with the full single test output.&lt;/p&gt;
+
+&lt;p&gt;Anyhow, Paraunit doesn&amp;rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&amp;rsquo; exit codes:
+ &lt;strong&gt;it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code&lt;/strong&gt;.
+ So you can safely use it in your CI build ;)&lt;/p&gt;
 </description>
     </item>
     
