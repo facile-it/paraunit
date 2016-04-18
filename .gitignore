@@ -2,6 +2,7 @@
 *.tgz
 *.phar
 bin
+public
 vendor
 composer.lock
 build/
