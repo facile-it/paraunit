@@ -4,8 +4,11 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
+## [0.6.1] - 2016-06-03
+
 ### Changed
 
+* Symfony compatibility has been extended to `<4.0`, since Symfony 3.1 has been released; we will rely on [their BC promise](http://symfony.com/doc/current/contributing/code/bc.html)
 * A new approach for dockerfiles, now they will be based on the standard Docker PHP library. This will allow for a
 faster image build, cleaner dockerfiles and a more precise PHP version targeting, including:
   * `docker/dockerfile-php-5.6` with the related `docker/setup-php-5.6.sh` script that will allow to build a container
