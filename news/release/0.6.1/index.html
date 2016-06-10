@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>Paraunit</title>
+  <title>Paraunit 0.6.1 &middot; Paraunit</title>
 
   
   
@@ -171,111 +171,39 @@
 
 
 <div class="header">
-  <h1>Paraunit</h1>
-  <h2>A package for faster PHP testsuites</h2>
-  <p>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;"></a>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;"></a>
-    <a href="https://travis-ci.org/facile-it/paraunit"><img src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;"></a>
-    <a href="https://coveralls.io/github/facile-it/paraunit?branch=master"><img src="https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&amp;service=github" style="max-width:100%;"></a>
-    <a href="https://scrutinizer-ci.com/g/facile-it/paraunit/?branch=master"><img src="https://scrutinizer-ci.com/g/facile-it/paraunit/badges/quality-score.png?b=master" style="max-width:100%;"></a>
-    <a href="https://codeclimate.com/github/facile-it/paraunit"><img src="https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg" style="max-width:100%;"></a>
-    <a href="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20"><img src="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20/mini.png" style="max-width:100%;"></a>
-  </p>
+  <h1>Paraunit 0.6.1</h1>
+  <h2></h2>
 </div>
-
 <div class="content">
-
-  
-    <article>
-  <header>
-    <h2><a href="http://facile-it.github.io/paraunit/news/release/0.4.2/">Paraunit 0.4.2</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>19 Oct 2015</time>
-  </div>
-
   
 
-  
+<p>Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint,
+to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it
+this summer.</p>
 
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="http://facile-it.github.io/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
+<p>Here&rsquo;s the full 0.6.1 changelog:</p>
 
-</div>
+<h3 id="changed:eb248edda385f4fe990f91165e045c4f">Changed</h3>
 
-  </header>
+<ul>
+<li>Symfony compatibility has been extended to <code>&lt;4.0</code>, since Symfony 3.1 has been released; we will rely on <a href="http://symfony.com/doc/current/contributing/code/bc.html">their BC promise</a></li>
+<li>A new approach for dockerfiles, now they will be based on the standard Docker PHP library. This will allow for a
+faster image build, cleaner dockerfiles and a more precise PHP version targeting, including:
 
-  <p>
-  Paraunit 0.4.2 has been released! Here&rsquo;s what&rsquo;s changed: Changed Unlocked supporto for PHPUnit &gt;= 5.x README changed to suggest stable version of package in composer.json example Fixed Fixed: test stub for fatal errors fixed for HHVM &amp; PHP7
-  </p>
+<ul>
+<li><code>docker/dockerfile-php-5.6</code> with the related <code>docker/setup-php-5.6.sh</code> script that will allow to build a container
+starting from the PHP 5.6 image</li>
+<li><code>docker/dockerfile-php-7</code> with the related  <code>docker/setup-php-7.sh</code> script that will allow to build a container
+starting from the PHP 7.0 image</li>
+</ul></li>
+<li>Paraunit now adopts <a href="http://www.php-fig.org/psr/psr-2/">PSR-2</a> as a coding style
 
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="http://facile-it.github.io/paraunit/news/release/0.4.1/">Paraunit 0.4.1</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Sep 2015</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="http://facile-it.github.io/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.4.1 has been released! Here&rsquo;s what&rsquo;s changed: Changed Improved: --configuration parameter now has the -c shortcut Fixed Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results
-  </p>
-
-  
-</article>
-
-  
-
-  
-<nav class="pagination" role="pagination">
-  
-  <a href="http://facile-it.github.io/paraunit/"><i class="fa fa-angle-double-left"></i></a>
-  
-  <span>2 / 2</span>
-  
-</nav>
-
-
+<ul>
+<li>A <code>contrib/contributing.sh</code> has been added to tidy the code style, using <code>phpcbf</code></li>
+<li>A git pre-commit hook is enabled during the <code>composer install</code> command to warn about code style violations</li>
+</ul></li>
+<li>CONTRIBUTING.md file has been added, with instructions for coding style and usage of Docker images for development</li>
+</ul>
 
 </div>
 
