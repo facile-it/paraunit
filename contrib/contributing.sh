@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -d ./src ]
+if [ ! -d ./src ]
 	then
 		echo "src/ folder missing, source code missing"
 		echo "Maybe we are on the gh-pages-source branch?"
