@@ -4,7 +4,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
-## [0.6.1] - 2016-06-03
+## [0.6.1] - 2016-06-10
 
 ### Changed
 
