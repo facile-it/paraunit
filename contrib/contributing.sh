@@ -1,5 +1,13 @@
 #!/bin/sh
 
+if [ -d ./src ]
+	then
+		echo "src/ folder missing, source code missing"
+		echo "Maybe we are on the gh-pages-source branch?"
+		echo "Skipping PHP code cleanup"
+		exit 0
+	fi
+
 echo "### Paraunit: Tidyng up the src/ code ###"
 
 ./vendor/bin/phpcs -p --standard=PSR2 --warning-severity=6 --colors src/
