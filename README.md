@@ -3,6 +3,7 @@
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
 [![Build status][Master build image]][Master build link]
+
 [![Coverage Status][Master coverage image]][Master coverage link]
 [![Scrutinizer][Master scrutinizer image]][Master scrutinizer link]
 [![Code Climate][Master climate image]][Master climate link]
