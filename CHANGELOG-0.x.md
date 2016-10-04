@@ -4,6 +4,14 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
+### Changed
+
+* Binaries moved to the `/bin` dir (#50, thanks @garak)
+
+### Fixed
+
+* Minor fixes to README.md (#48, #49, thanks @garak)
+
 ## [0.6.1] - 2016-06-10
 
 ### Changed
