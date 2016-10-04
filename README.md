@@ -22,7 +22,7 @@ To use this package, use composer:
 ``` 
 {
     "require-dev": {
-        "facile-it/paraunit": "~0.4"
+        "facile-it/paraunit": "~0.6"
     }
 }
 ```
