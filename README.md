@@ -16,12 +16,12 @@ Paraunit is developed using Symfony2 components.
 ## Installation
 To use this package, use composer:
 
- * from CLI: `composer require facile-it/paraunit`
+ * from CLI: `composer require --dev facile-it/paraunit`
  * or, directly in your `composer.json`:
 
 ``` 
 {
-    "require": {
+    "require-dev": {
         "facile-it/paraunit": "~0.4"
     }
 }
