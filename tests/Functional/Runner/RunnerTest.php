@@ -151,7 +151,6 @@ class RunnerTest extends BaseFunctionalTestCase
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
-
     }
 
     public function testRegressionMissingLogAsUnknownResults()
