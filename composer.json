@@ -35,6 +35,9 @@
     "satooshi/php-coveralls": "~1.0"
   },
   "bin": ["src/Paraunit/Bin/paraunit"],
+  "config": {
+    "bin-dir": "bin"
+  },
   "autoload": {
     "psr-4": {
       "Paraunit\\": "src/Paraunit"

@@ -11,7 +11,7 @@
 
 Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible by launching multiple test in parallel with single PHPUnit processes.
 
-Paraunit is developed using Symfony2 components.
+Paraunit is developed using Symfony components.
 
 ## Installation
 To use this package, use composer:
@@ -28,9 +28,9 @@ To use this package, use composer:
 ```
 
 ## Usage
-Paraunit starts as a Symfony2 console command, but it's provided through a bin launcher; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
+Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this:
 
-`vendor/bin/paraunit run`
+`bin/paraunit run`
 
 This command will launch all the tests in all your configured testsuites.
 

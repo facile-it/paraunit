@@ -29,7 +29,7 @@ docker/setup-php-7.sh
 ```
 composer install
 ```
- * If you want, you can launch the testsuite to check if it's all ready! (the shell has `./vendor/bin` in the `$PATH` env variable)
+ * If you want, you can launch the testsuite to check if it's all ready! (the shell has `./bin` in the `$PATH` env variable)
 ```
 phpunit
 ```

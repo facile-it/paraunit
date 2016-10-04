@@ -19,8 +19,8 @@ before_script:
   - composer install --prefer-dist
 
 script:
-  - vendor/bin/phpunit -v $PHPUNIT_FLAGS
+  - bin/phpunit -v $PHPUNIT_FLAGS
 
 after_success:
-  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php vendor/bin/coveralls -v; fi
+  - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then php bin/coveralls -v; fi
   - if [[ $TRAVIS_PHP_VERSION = '5.6' ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi

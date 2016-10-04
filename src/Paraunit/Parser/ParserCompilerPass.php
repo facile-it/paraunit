@@ -20,7 +20,6 @@ class ParserCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-
         $taggedServices = $container->findTaggedServiceIds(self::TAGGED_SERVICES);
 
         uasort(
@@ -34,6 +33,5 @@ class ParserCompilerPass implements CompilerPassInterface
             $service = $container->getDefinition(self::TO_COMPILE);
             $service->addMethodCall('addParser', array(new Reference($id)));
         }
-
     }
 }
