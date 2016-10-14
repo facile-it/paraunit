@@ -1,6 +1,7 @@
 <?php
 
 namespace Paraunit\Coverage;
+
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Configuration\OutputPath;
 

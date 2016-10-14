@@ -41,8 +41,8 @@ class CoverageResult
         CloverResult $cloverResult,
         XmlResult $xmlResult,
         HtmlResult $htmlResult
-    )
-    {
+    ) {
+    
         $this->coverageMerger = $coverageMerger;
         $this->coverageOutputPaths = $coverageOutputPaths;
         $this->cloverResult = $cloverResult;
@@ -55,17 +55,17 @@ class CoverageResult
         $coverageData = $this->coverageMerger->getCoverageData();
 
         $cloverFilePath = $this->coverageOutputPaths->getCloverFilePath();
-        if ( ! $cloverFilePath->isEmpty()) {
+        if (! $cloverFilePath->isEmpty()) {
             $this->cloverResult->process($coverageData, $cloverFilePath);
         }
 
         $xmlPath = $this->coverageOutputPaths->getXmlPath();
-        if ( ! $xmlPath->isEmpty()) {
+        if (! $xmlPath->isEmpty()) {
             $this->xmlResult->process($coverageData, $xmlPath);
         }
 
         $htmlPath = $this->coverageOutputPaths->getHtmlPath();
-        if ( ! $htmlPath->isEmpty()) {
+        if (! $htmlPath->isEmpty()) {
             $this->htmlResult->process($coverageData, $htmlPath);
         }
     }

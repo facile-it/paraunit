@@ -28,7 +28,7 @@ class PHPDbgBinFile
      */
     public function getPhpDbgBin()
     {
-        if ( ! $this->isAvailable()) {
+        if (! $this->isAvailable()) {
             throw new \Exception('PHPDbg is not available!');
         }
 

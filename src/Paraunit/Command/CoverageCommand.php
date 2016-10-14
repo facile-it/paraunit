@@ -30,8 +30,8 @@ class CoverageCommand extends ParallelCommand
         $this
             ->setName('coverage')
             ->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result')
-            ->addOption('xml',    null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result')
-            ->addOption('html',   null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
+            ->addOption('xml', null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result')
+            ->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
     }
 
     /**

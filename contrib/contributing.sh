@@ -21,12 +21,12 @@ if [ $? != 0 ]
 
 echo "### Paraunit: Tidyng up the tests/ code ###"
 
-./bin/phpcs -p --standard=PSR2 --warning-severity=6 --colors tests/
+./bin/phpcs -p --standard=PSR2 --warning-severity=6 --colors tests/ --ignore=tests/Stub
 if [ $? != 0 ]
 	then
 		echo "There are some code style issue in the tests/ folder."
 		echo "Fix them before submitting your code."
-		echo "Try running ./bin/phpcbf --standard=PSR2 tests/"
+		echo "Try running ./bin/phpcbf --standard=PSR2 tests/ --ignore=tests/Stub"
 		exit 1
 	fi
 

@@ -71,7 +71,7 @@ class CoverageResultTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(new CoverageOutputPaths(new OutputFile('file.xml'), $this->mockEmptyPath(), $this->mockEmptyPath())),
-            array(new CoverageOutputPaths($this->mockEmptyFilePath(), new OutputPath('.'),    $this->mockEmptyPath())),
+            array(new CoverageOutputPaths($this->mockEmptyFilePath(), new OutputPath('.'), $this->mockEmptyPath())),
             array(new CoverageOutputPaths($this->mockEmptyFilePath(), $this->mockEmptyPath(), new OutputPath('.'))),
         );
     }

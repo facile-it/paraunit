@@ -34,7 +34,7 @@ class TestCommandLine implements CliCommandInterface
      */
     public function getExecutable()
     {
-       return $this->phpUnitBin->getPhpUnitBin();
+        return $this->phpUnitBin->getPhpUnitBin();
     }
 
     /**

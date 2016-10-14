@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Unit\Coverage;
+
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\CoverageOutputPaths;

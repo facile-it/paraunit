@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Coverage;
 
-
 use Paraunit\Coverage\CoverageFetcher;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;

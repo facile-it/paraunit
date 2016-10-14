@@ -2,7 +2,6 @@
 
 namespace Tests\Functional\Parser;
 
-
 use Paraunit\Configuration\TempFileNameFactory;
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Lifecycle\ProcessEvent;

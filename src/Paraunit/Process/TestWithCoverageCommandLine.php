@@ -2,7 +2,6 @@
 
 namespace Paraunit\Process;
 
-
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfigFile;
