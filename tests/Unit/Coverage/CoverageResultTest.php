@@ -30,7 +30,7 @@ class CoverageResultTest extends \PHPUnit_Framework_TestCase
      */
     private function createCoverageResultWithMocks(CoverageOutputPaths $outputPaths)
     {
-        $coverageData = $this->prophesize('\PHP_CodeCoverage');
+        $coverageData = $this->prophesize('\\PHP_CodeCoverage');
         $merger = $this->prophesize('Paraunit\Coverage\CoverageMerger');
         $merger->getCoverageData()->shouldBeCalled()->willReturn($coverageData);
 
