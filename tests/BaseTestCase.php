@@ -2,12 +2,20 @@
 
 namespace Tests;
 
+use Paraunit\Configuration\PhpCodeCoverageCompat;
+
 /**
  * Class BaseTestCase
  * @package Tests
  */
 class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        PhpCodeCoverageCompat::load();
+    }
+
     /**
      * @return string
      */
