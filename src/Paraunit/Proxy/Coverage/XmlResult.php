@@ -3,6 +3,8 @@
 namespace Paraunit\Proxy\Coverage;
 
 use Paraunit\Configuration\OutputPath;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
 /**
  * Class XMLResult
@@ -10,7 +12,7 @@ use Paraunit\Configuration\OutputPath;
  */
 class XmlResult
 {
-    /** @var  \PHP_CodeCoverage_Report_XML */
+    /** @var  Facade */
     private $xml;
 
     /**
@@ -18,14 +20,14 @@ class XmlResult
      */
     public function __construct()
     {
-        $this->xml = new \PHP_CodeCoverage_Report_XML();
+        $this->xml = new Facade();
     }
 
     /**
-     * @param \PHP_CodeCoverage $codeCoverage
+     * @param CodeCoverage $codeCoverage
      * @param OutputPath $targetPath
      */
-    public function process(\PHP_CodeCoverage $codeCoverage, OutputPath $targetPath)
+    public function process(CodeCoverage $codeCoverage, OutputPath $targetPath)
     {
         $this->xml->process($codeCoverage, $targetPath->getPath());
     }

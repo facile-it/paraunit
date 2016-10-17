@@ -3,6 +3,8 @@
 namespace Paraunit\Proxy\Coverage;
 
 use Paraunit\Configuration\OutputPath;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 /**
  * Class HTMLResult
@@ -10,7 +12,7 @@ use Paraunit\Configuration\OutputPath;
  */
 class HtmlResult
 {
-    /** @var  \PHP_CodeCoverage_Report_HTML */
+    /** @var Facade */
     private $html;
 
     /**
@@ -18,14 +20,14 @@ class HtmlResult
      */
     public function __construct()
     {
-        $this->html = new \PHP_CodeCoverage_Report_HTML();
+        $this->html = new Facade();
     }
 
     /**
-     * @param \PHP_CodeCoverage $codeCoverage
+     * @param CodeCoverage $codeCoverage
      * @param OutputPath $targetPath
      */
-    public function process(\PHP_CodeCoverage $codeCoverage, OutputPath $targetPath)
+    public function process(CodeCoverage $codeCoverage, OutputPath $targetPath)
     {
         $this->html->process($codeCoverage, $targetPath->getPath());
     }

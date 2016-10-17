@@ -10,6 +10,10 @@ class PhpCodeCoverageCompat
 {
     private static $map = array(
         '\\PHP_CodeCoverage' => 'SebastianBergmann\\CodeCoverage\\CodeCoverage',
+        '\\PHP_CodeCoverage_Filter' => 'SebastianBergmann\\CodeCoverage\\Filter',
+        '\\PHP_CodeCoverage_Report_Clover' => 'SebastianBergmann\\CodeCoverage\\Report\\Clover',
+        '\\PHP_CodeCoverage_Report_HTML' => 'SebastianBergmann\\CodeCoverage\\Report\\Html\\Facade',
+        '\\PHP_CodeCoverage_Report_XML' => 'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Facade',
     );
 
     /**

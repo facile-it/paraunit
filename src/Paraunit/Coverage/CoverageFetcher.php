@@ -4,6 +4,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 /**
  * Class CoverageFetcher
@@ -25,7 +26,7 @@ class CoverageFetcher
 
     /**
      * @param AbstractParaunitProcess $process
-     * @return \PHP_CodeCoverage
+     * @return CodeCoverage
      */
     public function fetch(AbstractParaunitProcess $process)
     {
@@ -36,10 +37,10 @@ class CoverageFetcher
             $codeCoverage = require $tempFilename;
         }
 
-        if ($codeCoverage instanceof \PHP_CodeCoverage) {
+        if ($codeCoverage instanceof CodeCoverage) {
             return $codeCoverage;
         }
 
-        return new \PHP_CodeCoverage();
+        return new CodeCoverage();
     }
 }

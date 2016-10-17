@@ -3,6 +3,7 @@
 namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\PHPUnitConfigFile;
+use SebastianBergmann\CodeCoverage\Filter;
 
 /**
  * Class CoverageFilter
@@ -10,7 +11,7 @@ use Paraunit\Configuration\PHPUnitConfigFile;
  */
 class CoverageFilterBuilder
 {
-    /** @var  \PHP_CodeCoverage_Filter */
+    /** @var  Filter */
     private $codeCoverageFilter;
 
     /**
@@ -18,7 +19,7 @@ class CoverageFilterBuilder
      */
     public function __construct()
     {
-        $this->codeCoverageFilter = new \PHP_CodeCoverage_Filter();
+        $this->codeCoverageFilter = new Filter();
     }
 
     public function createFromConfiguration(PHPUnitConfigFile $configFile)

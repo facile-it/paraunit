@@ -4,6 +4,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 /**
  * Class CoverageMerger
@@ -14,7 +15,7 @@ class CoverageMerger
     /** @var  CoverageFetcher */
     private $coverageFetcher;
 
-    /** @var  \PHP_CodeCoverage */
+    /** @var  CodeCoverage */
     private $coverageData;
 
     /**
@@ -41,7 +42,7 @@ class CoverageMerger
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
-        if ($this->coverageData instanceof \PHP_CodeCoverage) {
+        if ($this->coverageData instanceof CodeCoverage) {
             $this->coverageData->merge($newCoverageData);
         } else {
             $this->coverageData = $newCoverageData;
@@ -49,7 +50,7 @@ class CoverageMerger
     }
 
     /**
-     * @return \PHP_CodeCoverage
+     * @return CodeCoverage
      */
     public function getCoverageData()
     {
