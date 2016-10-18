@@ -5,6 +5,7 @@ namespace Paraunit\Coverage;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use Symfony\Component\Process\Process;
 
 /**
  * Class CoverageFetcher
@@ -33,7 +34,7 @@ class CoverageFetcher
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
         $codeCoverage = null;
 
-        if (file_exists($tempFilename)) {
+        if ($this->coverageFileIsValid($tempFilename)) {
             $codeCoverage = require $tempFilename;
         }
 
@@ -42,5 +43,22 @@ class CoverageFetcher
         }
 
         return new CodeCoverage();
+    }
+
+    /**
+     * @param string $tempFilename
+     * @return bool
+     */
+    private function coverageFileIsValid($tempFilename)
+    {
+        if (! file_exists($tempFilename)) {
+            return false;
+        }
+
+        $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
+        $verificationProcess->start();
+        $verificationProcess->wait();
+        
+        return $verificationProcess->getExitCode() == 0;
     }
 }

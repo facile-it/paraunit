@@ -62,7 +62,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('\PHP_CodeCoverage', $result);
+        $this->assertInstanceOf('SebastianBergmann\CodeCoverage\CodeCoverage', $result);
         $this->assertEmpty($result->getData());
     }
 }

@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ParserCompilerPass implements CompilerPassInterface
 {
-
     const TAGGED_SERVICES = 'log_parser';
     const TO_COMPILE      = 'paraunit.parser.json_log_parser';
 
