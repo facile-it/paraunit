@@ -7,12 +7,13 @@ use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\CoverageOutputPaths;
 use Paraunit\Coverage\CoverageResult;
 use Prophecy\Argument;
+use Tests\BaseTestCase;
 
 /**
  * Class CoverageResultTest
  * @package Tests\Unit\Coverage
  */
-class CoverageResultTest extends \PHPUnit_Framework_TestCase
+class CoverageResultTest extends BaseTestCase
 {
     /**
      * @dataProvider outputPathsProvider
