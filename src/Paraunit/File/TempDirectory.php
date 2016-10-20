@@ -8,12 +8,13 @@ namespace Paraunit\File;
  */
 class TempDirectory
 {
+    /** @var array */
     private static $tempDirs = array(
         '/dev/shm',
         '/temp',
     );
 
-    /** @var  string */
+    /** @var string */
     private $timestamp;
 
     /**
@@ -42,7 +43,11 @@ class TempDirectory
      */
     public static function getTempBaseDir()
     {
-        foreach (self::$tempDirs as $directory) {
+        $dirs = self::$tempDirs;
+        // Fallback to sys temp dir
+        $dirs[] = sys_get_temp_dir();
+
+        foreach ($dirs as $directory) {
             if (file_exists($directory)) {
                 $baseDir = $directory . DIRECTORY_SEPARATOR . 'paraunit';
                 self::mkdirIfNotExists($baseDir);
@@ -59,8 +64,14 @@ class TempDirectory
      */
     private static function mkdirIfNotExists($path)
     {
-        if (! file_exists($path)) {
-            mkdir($path);
+        if (file_exists($path)) {
+            return;
+        }
+
+        if (!mkdir($path) && !is_dir($path)) {
+            throw new \RuntimeException(
+                sprintf('Unable to create temporary directory \'%s\'.', $path)
+            );
         }
     }
 }
