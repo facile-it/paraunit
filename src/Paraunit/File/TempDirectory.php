@@ -8,10 +8,9 @@ namespace Paraunit\File;
  */
 class TempDirectory
 {
-    /** @var array */
+    /** @var string[] */
     private static $tempDirs = array(
         '/dev/shm',
-        '/temp',
     );
 
     /** @var string */
@@ -40,6 +39,8 @@ class TempDirectory
 
     /**
      * @return string
+     *
+     * @throws \RuntimeException
      */
     public static function getTempBaseDir()
     {
@@ -50,9 +51,14 @@ class TempDirectory
         foreach ($dirs as $directory) {
             if (file_exists($directory)) {
                 $baseDir = $directory . DIRECTORY_SEPARATOR . 'paraunit';
-                self::mkdirIfNotExists($baseDir);
 
-                return $baseDir;
+                try {
+                    self::mkdirIfNotExists($baseDir);
+
+                    return $baseDir;
+                } catch (\RuntimeException $e) {
+                    // ignore and try next dir
+                }
             }
         }
 
@@ -61,6 +67,8 @@ class TempDirectory
 
     /**
      * @param string $path
+     *
+     * @throws \RuntimeException
      */
     private static function mkdirIfNotExists($path)
     {
