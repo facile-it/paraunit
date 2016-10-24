@@ -4,13 +4,18 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
+## [0.6.2] - 2016-10-24
+
 ### Changed
 
 * Binaries moved to the `/bin` dir (#50, thanks @garak)
 
 ### Fixed
 
+* Temp dir for storing JSON partial logs now works in non-Linux OS too (#52, thanks @thomasvargiu): it previously used a
+wrong dir (`/temp`); now it relies on `sys_get_temp_dir()` as a fallback
 * Minor fixes to README.md (#48, #49, thanks @garak)
+* Paraunit version is shown correctly now when launching it
 
 ## [0.6.1] - 2016-06-10
 
