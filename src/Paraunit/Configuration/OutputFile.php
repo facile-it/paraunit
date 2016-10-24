@@ -17,7 +17,7 @@ class OutputFile
      */
     public function __construct($filePath)
     {
-        if (strlen($filePath)) {
+        if (is_string($filePath) && $filePath !== '') {
             $this->filePath = $filePath;
         }
     }
@@ -27,11 +27,12 @@ class OutputFile
      */
     public function isEmpty()
     {
-        return is_null($this->filePath);
+        return $this->filePath === null;
     }
 
     /**
      * @return string
+     * @throws \RuntimeException
      */
     public function getFilePath()
     {

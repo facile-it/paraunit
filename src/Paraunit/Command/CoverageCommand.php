@@ -44,10 +44,7 @@ class CoverageCommand extends ParallelCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (is_null($input->getOption('clover'))
-            && is_null($input->getOption('xml'))
-            && is_null($input->getOption('html'))
-        ) {
+        if (! $input->hasParameterOption(array('clover', 'xml', 'html'))) {
             throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML or HTML');
         }
 

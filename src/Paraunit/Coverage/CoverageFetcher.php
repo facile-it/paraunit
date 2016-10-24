@@ -55,10 +55,14 @@ class CoverageFetcher
             return false;
         }
 
-        $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
-        $verificationProcess->start();
-        $verificationProcess->wait();
-        
-        return $verificationProcess->getExitCode() == 0;
+        try {
+            $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
+            $verificationProcess->start();
+            $verificationProcess->wait();
+
+            return $verificationProcess->getExitCode() === 0;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
