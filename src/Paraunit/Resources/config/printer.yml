@@ -1,8 +1,6 @@
 services:
   paraunit.printer.shark_printer:
     class: Paraunit\Printer\SharkPrinter
-    arguments:
-      - '%paraunit.version%'
     tags:
       - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
 

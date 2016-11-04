@@ -2,6 +2,7 @@
 
 namespace Paraunit\Printer;
 
+use Paraunit\Configuration\Paraunit;
 use Paraunit\Lifecycle\EngineEvent;
 
 /**
@@ -10,21 +11,6 @@ use Paraunit\Lifecycle\EngineEvent;
  */
 class SharkPrinter
 {
-
-    /** @var string */
-    protected $version;
-
-    /**
-     * @param string $version
-     */
-    public function __construct($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * @param EngineEvent $engineEvent
-     */
     public function onEngineStart(EngineEvent $engineEvent)
     {
         $outputInterface = $engineEvent->getOutputInterface();
@@ -45,7 +31,7 @@ class SharkPrinter
         $outputInterface->writeln('');
         $outputInterface->writeln(
             'PARAUNIT v' .
-            $this->version .
+            Paraunit::PARAUNIT_VERSION .
             ' - by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it'
         );
     }

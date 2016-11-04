@@ -6,6 +6,7 @@ use Paraunit\Parser\ParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -16,6 +17,7 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
  */
 class Paraunit
 {
+    const PARAUNIT_VERSION = '0.6.2';
 
     /**
      * @return ContainerBuilder
@@ -24,15 +26,18 @@ class Paraunit
     {
         $containerBuilder = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
-        $loader->load('configuration.yml');
-        $loader->load('file.yml');
-        $loader->load('parser.yml');
-        $loader->load('printer.yml');
-        $loader->load('services.yml');
-        $loader->load('test_result.yml');
-        $loader->load('test_result_container.yml');
-        $loader->load('test_result_format.yml');
+        $xmlLoader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
+        $xmlLoader->load('config.xml');
+
+        $yamlLoader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
+        $yamlLoader->load('configuration.yml');
+        $yamlLoader->load('file.yml');
+        $yamlLoader->load('parser.yml');
+        $yamlLoader->load('printer.yml');
+        $yamlLoader->load('services.yml');
+        $yamlLoader->load('test_result.yml');
+        $yamlLoader->load('test_result_container.yml');
+        $yamlLoader->load('test_result_format.yml');
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
         $containerBuilder->addCompilerPass(new ParserCompilerPass());

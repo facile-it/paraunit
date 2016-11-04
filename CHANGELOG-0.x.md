@@ -21,7 +21,6 @@ wrong dir (`/temp`); now it relies on `sys_get_temp_dir()` as a fallback
 * Minor fixes to README.md (#48, #49, thanks @garak)
 * Paraunit version is shown correctly now when launching it
 
-
 ## [0.6.1] - 2016-06-10
 
 ### Changed
