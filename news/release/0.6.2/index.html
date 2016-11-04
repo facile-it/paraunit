@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.6.2 &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,38 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.6.2</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;8&#41;</span>
-    </li>
-  
-  </ul>
+
+<p>Paraunit 0.6.2 has been released! This version include a fix in the choice of the dir for the partial test results, that
+caused issues while on non-Linux systems. Some minor fix are present too, and now Paraunit shows the right version when
+launched.</p>
+
+<p>Also, since this release, all commits by me will be GPG signed!</p>
+
+<p>Unfortunately, the coverage feature is still in the works, but it&rsquo;s slowly going on; the feature is working, but release
+0.7 still needs some polishing.</p>
+
+<p>Here&rsquo;s the full 0.6.2 changelog:</p>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+<li>Binaries moved to the <code>/bin</code> dir (#50, thanks @garak)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+<li>Temp dir for storing JSON partial logs now works in non-Linux OS too (#52, thanks @thomasvargiu): it previously used a
+wrong dir (<code>/temp</code>); now it relies on <code>sys_get_temp_dir()</code> as a fallback</li>
+<li>Minor fixes to README.md (#48, #49, thanks @garak)</li>
+<li>Paraunit version is shown correctly now when launching it</li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +214,4 @@
 
 </body>
 </html>
+

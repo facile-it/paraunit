@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
   <title>Documentation &middot; Paraunit</title>
 
@@ -74,7 +74,7 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="http://facile-it.github.io/paraunit/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
+          <a class="pure-menu-link" href="http://facile-it.github.io/paraunit/tags/release"><i class='fa fa-tags fa-fw'></i>Releases</a>
       
         </li>
       
@@ -182,14 +182,14 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 
 <p>Paraunit is developed using <a href="http://symfony.com/components">Symfony2 components</a>.</p>
 
-<h1 id="requirements:519b3731c0b3c26bafa462d3efdcc120">Requirements</h1>
+<h1 id="requirements">Requirements</h1>
 
 <p>Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
 
 <p>If you are testing a Symfony2+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/facile-it/paraunit-testcase">facile-it/paraunit-testcase</a>, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>. in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
 
-<h1 id="installation:519b3731c0b3c26bafa462d3efdcc120">Installation</h1>
+<h1 id="installation">Installation</h1>
 
 <p>To use this package, use <a href="https://getcomposer.org/">composer</a>:</p>
 
@@ -205,7 +205,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 }
 </code></pre>
 
-<h1 id="usage:519b3731c0b3c26bafa462d3efdcc120">Usage</h1>
+<h1 id="usage">Usage</h1>
 
 <p>Paraunit starts as a Symfony2 console command, but it&rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
 
@@ -213,9 +213,9 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>This command will launch all the tests in all your configured testsuites.</p>
 
-<h2 id="optional-parameters:519b3731c0b3c26bafa462d3efdcc120">Optional parameters</h2>
+<h2 id="optional-parameters">Optional parameters</h2>
 
-<h3 id="configuration:519b3731c0b3c26bafa462d3efdcc120">Configuration</h3>
+<h3 id="configuration">Configuration</h3>
 
 <p>If your <code>phpunit.xml.dist</code> file is not in the default base dir, you can specify it by:</p>
 
@@ -229,13 +229,13 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p><code>vendor/bin/paraunit run -c=relPath/to/xml/file/</code></p>
 
-<h3 id="testsuite:519b3731c0b3c26bafa462d3efdcc120">Testsuite</h3>
+<h3 id="testsuite">Testsuite</h3>
 
 <p>You can run a single test suite (as defined in your configuration file) using:</p>
 
 <p><code>vendor/bin/paraunit run --testsuite=testSuiteName</code></p>
 
-<h3 id="debug-mode:519b3731c0b3c26bafa462d3efdcc120">Debug mode</h3>
+<h3 id="debug-mode">Debug mode</h3>
 
 <p>If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:</p>
 
@@ -243,7 +243,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>It will show a verbose output with the full running test queue.</p>
 
-<h1 id="parsing-results:519b3731c0b3c26bafa462d3efdcc120">Parsing results</h1>
+<h1 id="parsing-results">Parsing results</h1>
 
 <p>Paraunit prints a parsed result from the single PHPUnit processes.
 This parsing is done (since version 0.6) using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process.

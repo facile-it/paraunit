@@ -5,8 +5,82 @@
     <link>http://facile-it.github.io/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 20 Mar 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Oct 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.6.2</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.6.2/</link>
+      <pubDate>Mon, 24 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.6.2/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.6.2 has been released! This version include a fix in the choice of the dir for the partial test results, that
+caused issues while on non-Linux systems. Some minor fix are present too, and now Paraunit shows the right version when
+launched.&lt;/p&gt;
+
+&lt;p&gt;Also, since this release, all commits by me will be GPG signed!&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the coverage feature is still in the works, but it&amp;rsquo;s slowly going on; the feature is working, but release
+0.7 still needs some polishing.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full 0.6.2 changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Binaries moved to the &lt;code&gt;/bin&lt;/code&gt; dir (#50, thanks @garak)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Temp dir for storing JSON partial logs now works in non-Linux OS too (#52, thanks @thomasvargiu): it previously used a
+wrong dir (&lt;code&gt;/temp&lt;/code&gt;); now it relies on &lt;code&gt;sys_get_temp_dir()&lt;/code&gt; as a fallback&lt;/li&gt;
+&lt;li&gt;Minor fixes to README.md (#48, #49, thanks @garak)&lt;/li&gt;
+&lt;li&gt;Paraunit version is shown correctly now when launching it&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Paraunit 0.6.1</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.6.1/</link>
+      <pubDate>Fri, 10 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.6.1/</guid>
+      <description>
+
+&lt;p&gt;Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint,
+to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it
+this summer.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full 0.6.1 changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Symfony compatibility has been extended to &lt;code&gt;&amp;lt;4.0&lt;/code&gt;, since Symfony 3.1 has been released; we will rely on &lt;a href=&#34;http://symfony.com/doc/current/contributing/code/bc.html&#34;&gt;their BC promise&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A new approach for dockerfiles, now they will be based on the standard Docker PHP library. This will allow for a
+faster image build, cleaner dockerfiles and a more precise PHP version targeting, including:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;docker/dockerfile-php-5.6&lt;/code&gt; with the related &lt;code&gt;docker/setup-php-5.6.sh&lt;/code&gt; script that will allow to build a container
+starting from the PHP 5.6 image&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docker/dockerfile-php-7&lt;/code&gt; with the related  &lt;code&gt;docker/setup-php-7.sh&lt;/code&gt; script that will allow to build a container
+starting from the PHP 7.0 image&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Paraunit now adopts &lt;a href=&#34;http://www.php-fig.org/psr/psr-2/&#34;&gt;PSR-2&lt;/a&gt; as a coding style
+
+&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;contrib/contributing.sh&lt;/code&gt; has been added to tidy the code style, using &lt;code&gt;phpcbf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;A git pre-commit hook is enabled during the &lt;code&gt;composer install&lt;/code&gt; command to warn about code style violations&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;CONTRIBUTING.md file has been added, with instructions for coding style and usage of Docker images for development&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.6</title>
@@ -21,7 +95,7 @@ it working soon and release it in 0.7.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s what&amp;rsquo;s changed in 0.6:&lt;/p&gt;
 
-&lt;h3 id=&#34;changed:3e4064403c372484c2470f3a4ca6e139&#34;&gt;Changed&lt;/h3&gt;
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the
@@ -39,7 +113,7 @@ This grants a lot of new features:
 &lt;li&gt;Added support for risky outcomes&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;fixed:3e4064403c372484c2470f3a4ca6e139&#34;&gt;Fixed&lt;/h3&gt;
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Removed &lt;code&gt;Container.php&lt;/code&gt; file and &lt;code&gt;CompilerPass&lt;/code&gt; class in favor of proper usage of Symfony&amp;rsquo;s components&lt;/li&gt;
@@ -59,7 +133,7 @@ This grants a lot of new features:
 
 &lt;p&gt;Paraunit 0.5 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
 
-&lt;h3 id=&#34;changed:b196f06257d15e11549c5898a055280a&#34;&gt;Changed&lt;/h3&gt;
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux)&lt;/li&gt;
@@ -68,7 +142,7 @@ This grants a lot of new features:
 &lt;li&gt;Retry parsing and management is improved&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;fixed:b196f06257d15e11549c5898a055280a&#34;&gt;Fixed&lt;/h3&gt;
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Removed double generation of MD5 hash of process&lt;/li&gt;
@@ -86,7 +160,7 @@ This grants a lot of new features:
 
 &lt;p&gt;Paraunit 0.4.4 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
 
-&lt;h3 id=&#34;fixed:47b10b648c7c4d34c57c7551fdef1895&#34;&gt;Fixed&lt;/h3&gt;
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Merged previous &lt;code&gt;v0.4&lt;/code&gt; branch, there were missing fixes in previous release&lt;/li&gt;
@@ -104,7 +178,7 @@ This grants a lot of new features:
 
 &lt;p&gt;Paraunit 0.4.3 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
 
-&lt;h3 id=&#34;changed:81372b3a4d83f55dd2c2b59e50228f18&#34;&gt;Changed&lt;/h3&gt;
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;--configuration&lt;/code&gt; behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename,
@@ -124,14 +198,14 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
 
 &lt;p&gt;Paraunit 0.4.2 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
 
-&lt;h3 id=&#34;changed:5ed7adfb4ff9f6a05e38fd6e80b1d903&#34;&gt;Changed&lt;/h3&gt;
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Unlocked supporto for PHPUnit &amp;gt;= 5.x&lt;/li&gt;
 &lt;li&gt;README changed to suggest stable version of package in &lt;code&gt;composer.json&lt;/code&gt; example&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;fixed:5ed7adfb4ff9f6a05e38fd6e80b1d903&#34;&gt;Fixed&lt;/h3&gt;
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Fixed: test stub for fatal errors fixed for HHVM &amp;amp; PHP7&lt;/li&gt;
@@ -149,13 +223,13 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
 
 &lt;p&gt;Paraunit 0.4.1 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
 
-&lt;h3 id=&#34;changed:433cb45309237c24d33aac65d33e55f3&#34;&gt;Changed&lt;/h3&gt;
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Improved: &lt;code&gt;--configuration&lt;/code&gt; parameter now has the &lt;code&gt;-c&lt;/code&gt; shortcut&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;fixed:433cb45309237c24d33aac65d33e55f3&#34;&gt;Fixed&lt;/h3&gt;
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results&lt;/li&gt;
