@@ -2,6 +2,9 @@
 set -o errexit #abort if any command fails
 me=$(basename "$0")
 
+rm -rf ./public/* # cleanup of previouses generations
+./bin/hugo # generation of the static version of the site
+
 help_message="\
 Usage: $me [-c FILE] [<options>]
 Deploy generated files to a git branch.
