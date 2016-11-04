@@ -1,5 +1,5 @@
 parameters:
-  paraunit.version: "0.5.1"
+  paraunit.version: "0.6.3"
   paraunit.max_retry_count: 3
   paraunit.default_max_process: 10
   kernel.root_dir: 'src'
