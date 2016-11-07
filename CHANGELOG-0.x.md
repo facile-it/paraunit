@@ -4,6 +4,10 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
+### Fixed
+
+* Fixed a minor typo that caused version number to be different in the command help versus the command cli "header"
+
 ## [0.6.2] - 2016-10-24
 
 ### Changed
