@@ -2,16 +2,17 @@
 
 namespace Tests\Stub;
 
-use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\Output;
 
 /**
  * Class UnformattedOutputStub
+ * This class is inspired by Symfony\Component\Console\Output\BufferedOutput, which is not available in Symfony 2.3
  * @package Tests\Stub
  */
-class UnformattedOutputStub extends BufferedOutput
+class UnformattedOutputStub extends Output
 {
     /** @var string */
-    protected $outputBuffer;
+    protected $buffer;
 
     public function __construct()
     {
@@ -23,10 +24,35 @@ class UnformattedOutputStub extends BufferedOutput
      */
     public function getOutput()
     {
-        if (is_null($this->outputBuffer)) {
-            $this->outputBuffer = $this->fetch();
+        if ($this->buffer === null) {
+            $this->buffer = $this->fetch();
         }
 
-        return $this->outputBuffer;
+        return $this->buffer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doWrite($message, $newline)
+    {
+        $this->buffer .= $message;
+
+        if ($newline) {
+            $this->buffer .= "\n";
+        }
+    }
+
+    /**
+     * Empties buffer and returns its content.
+     *
+     * @return string
+     */
+    public function fetch()
+    {
+        $content = $this->buffer;
+        $this->buffer = '';
+
+        return $content;
     }
 }
