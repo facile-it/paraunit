@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Configuration;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 
 class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,10 +30,10 @@ class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
     {
         $dir = 'StubbedXMLConfigs';
 
-        $config = new PHPUnitConfigFile($dir);
+        $config = new PHPUnitConfig($dir);
 
         $filePath = $config->getFileFullPath();
-        $this->assertStringEndsWith(PHPUnitConfigFile::DEFAULT_FILE_NAME, $filePath);
+        $this->assertStringEndsWith(PHPUnitConfig::DEFAULT_FILE_NAME, $filePath);
 
         $directoryPath = $config->getDirectory();
         $this->assertStringEndsWith($dir, $directoryPath);
@@ -43,20 +43,20 @@ class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
     {
         $file = 'StubbedXMLConfigs/stubbed_for_filter_test.xml';
 
-        $config = new PHPUnitConfigFile($file);
+        $config = new PHPUnitConfig($file);
 
         $filePath = $config->getFileFullPath();
 
-        $this->assertStringEndsNotWith(PHPUnitConfigFile::DEFAULT_FILE_NAME, $filePath);
+        $this->assertStringEndsNotWith(PHPUnitConfig::DEFAULT_FILE_NAME, $filePath);
     }
 
     public function testRelativeDirectoryAndDefaultFileDoesNotExistThrowException()
     {
         $dir = 'PHPUnitJSONLogOutput';
 
-        $this->setExpectedException('InvalidArgumentException', PHPUnitConfigFile::DEFAULT_FILE_NAME . ' does not exist');
+        $this->setExpectedException('InvalidArgumentException', PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
 
-        new PHPUnitConfigFile($dir);
+        new PHPUnitConfig($dir);
     }
 
     public function testInvalidDirectoryProvidedThrowException()
@@ -65,6 +65,6 @@ class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('InvalidArgumentException', 'Config path/file provided is not valid');
 
-        new PHPUnitConfigFile($dir);
+        new PHPUnitConfig($dir);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Functional\Runner;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Runner\Runner;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\UnformattedOutputStub;
@@ -22,7 +22,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $fileArray = array('tests/Stub/ThreeGreenTestStub.php');
 
-        $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
+        $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')));
 
         $output = $outputInterface->fetch();
         $this->assertContains('...', $output);
@@ -37,7 +37,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $fileArray = array('tests/Stub/EntityManagerClosedTestStub.php');
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')));
 
         $output = $outputInterface->fetch();
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
@@ -57,7 +57,7 @@ class RunnerTest extends BaseFunctionalTestCase
             $stubFilePath,
         );
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')));
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')));
 
         $output = $outputInterface->fetch();
         $this->assertContains(str_repeat('A', 3) . 'E', $output);
@@ -85,7 +85,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertNotEquals(
             0,
-            $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')),
+            $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')),
             'Exit code should not be 0'
         );
 
@@ -119,7 +119,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertEquals(
             0,
-            $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('')),
+            $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')),
             'Exit code should be 0'
         );
 
@@ -145,7 +145,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $fileArray = array('tests/Stub/FatalErrorTestStub.php');
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $output = $outputInterface->fetch();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
@@ -161,7 +161,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $fileArray = array('tests/Stub/ParseErrorTestStub.php');
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('phpunit.xml.dist')), 'Exit code should not be 0');
 
         $output = $outputInterface->fetch();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
@@ -177,7 +177,7 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $fileArray = array('tests/Stub/RaisingNoticeTestStub.php');
 
-        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfigFile('phpunit.xml.dist')), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('phpunit.xml.dist')), 'Exit code should not be 0');
         $output = $outputInterface->getOutput();
         $this->assertGreaterThan(strpos($output, 'Execution time'), strpos($output, 'YOU SHOULD NOT SEE THIS'), 'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)');
     }

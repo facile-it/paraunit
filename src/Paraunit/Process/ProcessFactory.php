@@ -4,7 +4,7 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 
 /**
  * Class ProcessFactory
@@ -18,7 +18,7 @@ class ProcessFactory
     /** @var  JSONLogFilename */
     private $jsonLogFilename;
 
-    /** @var  PHPUnitConfigFile */
+    /** @var  PHPUnitConfig */
     private $phpunitConfigFile;
 
     /**
@@ -38,7 +38,7 @@ class ProcessFactory
      */
     public function createProcess($testFilePath)
     {
-        if (! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
+        if (! $this->phpunitConfigFile instanceof PHPUnitConfig) {
             throw new \Exception('PHPUnit config missing');
         }
 
@@ -49,9 +49,9 @@ class ProcessFactory
     }
 
     /**
-     * @param PHPUnitConfigFile $configFile
+     * @param PHPUnitConfig $configFile
      */
-    public function setConfigFile(PHPUnitConfigFile $configFile)
+    public function setConfigFile(PHPUnitConfig $configFile)
     {
         $this->phpunitConfigFile = $configFile;
     }

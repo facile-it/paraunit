@@ -2,7 +2,7 @@
 
 namespace Paraunit\Command;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Filter\Filter;
 use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
@@ -38,7 +38,7 @@ class ParallelCommand extends Command
     {
         $this
             ->setName('run')
-            ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config file', PHPUnitConfigFile::DEFAULT_FILE_NAME)
+            ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config file', PHPUnitConfig::DEFAULT_FILE_NAME)
             ->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Choice a specific testsuite from your XML config file')
             ->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
     }
@@ -60,7 +60,7 @@ class ParallelCommand extends Command
         }
 
         $configOption = $input->getOption('configuration');
-        $config = new PHPUnitConfigFile($configOption);
+        $config = new PHPUnitConfig($configOption);
 
         $testArray = $this->filter->filterTestFiles($config, $testsuite);
 

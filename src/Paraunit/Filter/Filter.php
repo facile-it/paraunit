@@ -2,7 +2,7 @@
 
 namespace Paraunit\Filter;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 
 /**
@@ -31,12 +31,12 @@ class Filter
     }
 
     /**
-     * @param PHPUnitConfigFile $configFile
+     * @param PHPUnitConfig $configFile
      * @param string | null $testSuiteFilter
      *
      * @return array
      */
-    public function filterTestFiles(PHPUnitConfigFile $configFile, $testSuiteFilter = null)
+    public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null)
     {
         $aggregatedFiles = array();
         $this->relativePath = $configFile->getDirectory() . DIRECTORY_SEPARATOR;

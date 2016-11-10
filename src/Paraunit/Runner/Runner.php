@@ -2,7 +2,7 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
@@ -58,11 +58,11 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     * @param PHPUnitConfigFile $phpunitConfigFile
+     * @param PHPUnitConfig $phpunitConfigFile
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
+    public function run($files, OutputInterface $outputInterface, PHPUnitConfig $phpunitConfigFile, $debug = false)
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
