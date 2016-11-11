@@ -58,7 +58,7 @@ class JSONLogParser
     {
         $reversedPrinters = array_reverse($this->parsers);
         array_unshift($reversedPrinters, $this->noTestExecutedResultContainer);
-        
+
         return $reversedPrinters;
     }
 
