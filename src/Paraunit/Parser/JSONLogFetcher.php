@@ -27,7 +27,7 @@ class JSONLogFetcher
 
     /**
      * @param ParaunitProcessInterface $process
-     * @return array
+     * @return array | \stdClass[]
      */
     public function fetch(ParaunitProcessInterface $process)
     {

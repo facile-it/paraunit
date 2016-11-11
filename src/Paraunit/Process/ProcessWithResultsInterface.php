@@ -3,12 +3,12 @@
 namespace Paraunit\Process;
 
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 
 /**
  * Interface RetryAwareInterface.
  */
-interface ProcessWithResultsInterface extends TestResultContainerInterface
+interface ProcessWithResultsInterface extends TestResultBearerInterface
 {
     /**
      * @param PrintableTestResultInterface $testResult

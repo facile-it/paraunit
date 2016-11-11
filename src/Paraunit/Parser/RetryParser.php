@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\Process\RetryAwareInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
 /**
@@ -42,7 +42,7 @@ class RetryParser implements JSONParserChainElementInterface
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
         if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
-            /** @var RetryAwareInterface | TestResultContainerInterface $process */
+            /** @var RetryAwareInterface | TestResultBearerInterface $process */
             $process->markAsToBeRetried();
 
             return new MuteTestResult();
@@ -52,10 +52,10 @@ class RetryParser implements JSONParserChainElementInterface
     }
 
     /**
-     * @param TestResultContainerInterface $process
+     * @param TestResultBearerInterface $process
      * @return bool
      */
-    private function isRetriable(TestResultContainerInterface $process)
+    private function isRetriable(TestResultBearerInterface $process)
     {
         return $process instanceof RetryAwareInterface && $process->getRetryCount() < $this->maxRetryCount;
     }

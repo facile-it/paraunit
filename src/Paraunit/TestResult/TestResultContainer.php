@@ -6,14 +6,14 @@ use Paraunit\Parser\JSONParserChainElementInterface;
 use Paraunit\Process\OutputAwareInterface;
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
  * Class TestResultContainer
  * @package Paraunit\TestResult
  */
-class TestResultContainer implements TestResultContainerInterface, JSONParserChainElementInterface
+class TestResultContainer implements TestResultBearerInterface, JSONParserChainElementInterface
 {
     /** @var JSONParserChainElementInterface */
     private $parser;

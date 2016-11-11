@@ -4,7 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
@@ -38,7 +38,7 @@ class JSONLogParser
     }
 
     /**
-     * @return TestResultContainerInterface[]
+     * @return TestResultBearerInterface[]
      */
     public function getParsers()
     {
@@ -46,7 +46,7 @@ class JSONLogParser
     }
 
     /**
-     * @return TestResultContainerInterface[]
+     * @return TestResultBearerInterface[]
      */
     public function getParsersForPrinting()
     {
