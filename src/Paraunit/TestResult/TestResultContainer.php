@@ -13,19 +13,13 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
  * Class TestResultContainer
  * @package Paraunit\TestResult
  */
-class TestResultContainer implements TestResultBearerInterface, JSONParserChainElementInterface
+class TestResultContainer extends DumbTestResultContainer implements TestResultBearerInterface, JSONParserChainElementInterface
 {
     /** @var JSONParserChainElementInterface */
     private $parser;
 
-    /** @var  TestResultFormat */
-    private $testResultFormat;
-
     /** @var  PrintableTestResultInterface[] */
     private $testResults;
-
-    /** @var  string[] */
-    private $filenames;
 
     /**
      * TestResultContainer constructor.
@@ -34,10 +28,9 @@ class TestResultContainer implements TestResultBearerInterface, JSONParserChainE
      */
     public function __construct(JSONParserChainElementInterface $parser, TestResultFormat $testResultFormat)
     {
+        parent::__construct($testResultFormat);
         $this->parser = $parser;
-        $this->testResultFormat = $testResultFormat;
         $this->testResults = array();
-        $this->filenames = array();
     }
 
     /**
@@ -55,7 +48,9 @@ class TestResultContainer implements TestResultBearerInterface, JSONParserChainE
 
         if ($result instanceof PrintableTestResultInterface) {
             $result->setTestResultFormat($this->testResultFormat);
-            $this->addTestResult($process, $result);
+            $this->testResults[] = $result;
+
+            $this->addProcessToFilenames($process);
             $process->addTestResult($result);
         }
 
@@ -74,25 +69,6 @@ class TestResultContainer implements TestResultBearerInterface, JSONParserChainE
     }
 
     /**
-     * @param ProcessWithResultsInterface $process
-     * @param PrintableTestResultInterface $testResult
-     */
-    protected function addTestResult(ProcessWithResultsInterface $process, PrintableTestResultInterface $testResult)
-    {
-        $this->testResults[] = $testResult;
-        // trick for unique
-        $this->filenames[$process->getFilename()] = $process->getFilename();
-    }
-
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat()
-    {
-        return $this->testResultFormat;
-    }
-
-    /**
      * @return PrintableTestResultInterface[]
      */
     public function getTestResults()
@@ -103,23 +79,8 @@ class TestResultContainer implements TestResultBearerInterface, JSONParserChainE
     /**
      * @return int
      */
-    public function countFilenames()
-    {
-        return count($this->filenames);
-    }
-
-    /**
-     * @return int
-     */
     public function countTestResults()
     {
         return count($this->testResults);
-    }
-    /**
-     * @return string[]
-     */
-    public function getFileNames()
-    {
-        return $this->filenames;
     }
 }

@@ -4,6 +4,7 @@ namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\Interfaces\TestFilenameBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
@@ -19,14 +20,19 @@ class JSONLogParser
     /** @var  JSONParserChainElementInterface[] */
     private $parsers;
 
+    /** @var TestFilenameBearerInterface */
+    private $noTestExecutedResultContainer;
+
     /**
      * JSONLogParser constructor.
      * @param JSONLogFetcher $logLocator
+     * @param TestFilenameBearerInterface $noTestExecutedResultContainer
      */
-    public function __construct(JSONLogFetcher $logLocator)
+    public function __construct(JSONLogFetcher $logLocator, TestFilenameBearerInterface $noTestExecutedResultContainer)
     {
         $this->logLocator = $logLocator;
         $this->parsers = array();
+        $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
     }
 
     /**
@@ -50,7 +56,10 @@ class JSONLogParser
      */
     public function getParsersForPrinting()
     {
-        return array_reverse($this->parsers);
+        $reversedPrinters = array_reverse($this->parsers);
+        array_unshift($reversedPrinters, $this->noTestExecutedResultContainer);
+        
+        return $reversedPrinters;
     }
 
     /**
@@ -60,6 +69,12 @@ class JSONLogParser
     {
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
+
+        if ($this->noTestsExecuted($process, $logs)) {
+            $this->noTestExecutedResultContainer->addProcessToFilenames($process);
+
+            return;
+        }
 
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);
@@ -78,5 +93,15 @@ class JSONLogParser
                 return;
             }
         }
+    }
+
+    /**
+     * @param AbstractParaunitProcess $process
+     * @param array $logs
+     * @return bool
+     */
+    private function noTestsExecuted(AbstractParaunitProcess $process, array $logs)
+    {
+        return $process->getExitCode() === 0 && count($logs) === 1;
     }
 }

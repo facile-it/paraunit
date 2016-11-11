@@ -157,7 +157,9 @@ class RunnerTest extends BaseFunctionalTestCase
         $output = $outputInterface->fetch();
         $this->assertNotContains('...', $output);
         $this->assertNotContains('ABNORMAL TERMINATION', $output);
-        $this->assertContains('Executed: 0 test classes, 0 tests', $output);
+        $this->assertContains('Executed: 1 test classes, 0 tests', $output);
+        $this->assertContains('1 files with NO TESTS EXECUTED', $output);
+        $this->assertContains('ThreeGreenTestStub.php', $output);
     }
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults()
