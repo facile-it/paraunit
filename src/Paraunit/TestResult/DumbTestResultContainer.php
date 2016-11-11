@@ -30,7 +30,7 @@ class DumbTestResultContainer implements TestFilenameBearerInterface
     public function addProcessToFilenames(ProcessWithResultsInterface $process)
     {
         // trick for unique
-        $this->filenames[$process->getFilename()] = $process->getFilename();
+        $this->filenames[$process->getUniqueId()] = $process->getFilename();
     }
 
     /**

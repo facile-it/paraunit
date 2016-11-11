@@ -24,6 +24,9 @@ interface ProcessWithResultsInterface extends TestResultBearerInterface
     /** @return string */
     public function getFilename();
 
+    /** @return string */
+    public function getUniqueId();
+
     /** @return bool */
     public function isWaitingForTestResult();
 
