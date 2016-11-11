@@ -3,7 +3,8 @@
 namespace Paraunit\Command;
 
 use Paraunit\Configuration\ParallelConfiguration;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\PHPUnitOption;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,12 +18,42 @@ class ParallelCommand extends Command
     /** @var ParallelConfiguration */
     protected $configuration;
 
+    /** @var  PHPUnitOption[] */
+    private $phpunitOptions;
+
     /**
      * ParallelCommand constructor.
      * @param ParallelConfiguration $configuration
      */
     public function __construct(ParallelConfiguration $configuration)
     {
+        $this->phpunitOptions = array(
+            new PHPUnitOption('filter'),
+            new PHPUnitOption('testsuite'),
+            new PHPUnitOption('group'),
+            new PHPUnitOption('exclude-group'),
+            new PHPUnitOption('test-suffix'),
+
+            new PHPUnitOption('report-useless-tests', false),
+            new PHPUnitOption('strict-global-state', false),
+            new PHPUnitOption('disallow-test-output', false),
+            new PHPUnitOption('enforce-time-limit', false),
+            new PHPUnitOption('disallow-todo-tests', false),
+
+            new PHPUnitOption('process-isolation', false),
+            new PHPUnitOption('no-globals-backup', false),
+            new PHPUnitOption('static-backup', false),
+
+            new PHPUnitOption('loader'),
+            new PHPUnitOption('repeat'),
+            new PHPUnitOption('printer'),
+
+            new PHPUnitOption('bootstrap'),
+            new PHPUnitOption('configuration', true, 'c'),
+            new PHPUnitOption('no-configuration'),
+            new PHPUnitOption('include-path'),
+        );
+
         parent::__construct();
         $this->configuration = $configuration;
     }
@@ -31,9 +62,16 @@ class ParallelCommand extends Command
     {
         $this
             ->setName('run')
-            ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config file', PHPUnitConfigFile::DEFAULT_FILE_NAME)
-            ->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Choice a specific testsuite from your XML config file')
             ->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
+
+        foreach ($this->phpunitOptions as $option) {
+            $this->addOption(
+                $option->getName(),
+                $option->getShortName(),
+                $option->hasValue() ? InputOption::VALUE_OPTIONAL : InputOption::VALUE_NONE,
+                'Option carried over to every single PHPUnit process, see PHPUnit docs for usage'
+            );
+        }
     }
 
     /**
@@ -52,8 +90,7 @@ class ParallelCommand extends Command
             $testsuite = $input->getOption('testsuite');
         }
 
-        $configOption = $input->getOption('configuration');
-        $config = new PHPUnitConfigFile($configOption);
+        $config = $this->createConfig($input);
 
         $container = $this->configuration->buildContainer();
 
@@ -62,5 +99,25 @@ class ParallelCommand extends Command
         $runner = $container->get('paraunit.runner.runner');
 
         return $runner->run($testArray, $output, $config, $input->getOption('debug'));
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return PHPUnitConfig
+     * @throws \InvalidArgumentException
+     */
+    private function createConfig(InputInterface $input)
+    {
+        $config = new PHPUnitConfig($input->getOption('configuration'));
+
+        foreach ($this->phpunitOptions as $option) {
+            $cliOption = $input->getOption($option->getName());
+            if ($cliOption) {
+                $option->setValue($cliOption);
+                $config->addPhpunitOption($option);
+            }
+        }
+
+        return $config;
     }
 }

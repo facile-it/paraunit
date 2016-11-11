@@ -44,12 +44,23 @@ class CoverageCommand extends ParallelCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (! $input->hasParameterOption(array('clover', 'xml', 'html'))) {
+        if (! $this->hasChosenCoverageMethod($input)) {
             throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML or HTML');
         }
 
         PhpCodeCoverageCompat::load();
 
         return parent::execute($input, $output);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     */
+    private function hasChosenCoverageMethod(InputInterface $input)
+    {
+        return $input->getOption('clover')
+            || $input->getOption('html')
+            || $input->getOption('xml');
     }
 }

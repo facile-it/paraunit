@@ -25,7 +25,7 @@ class TestCommandLineTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOptionsFor()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
+        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
         $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $uniqueId = 'uniqueIdOfProcess';

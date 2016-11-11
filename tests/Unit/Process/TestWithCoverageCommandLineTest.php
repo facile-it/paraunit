@@ -41,7 +41,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOptionsForWithoutDbg()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
+        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
         $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
         $phpDbg = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
         $phpDbg->isAvailable()->shouldBeCalled()->willReturn(false);
@@ -62,7 +62,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOptionsForWithDbg()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
+        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
         $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
         $phpDbg = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
         $phpDbg->isAvailable()->shouldBeCalled()->willReturn(true);

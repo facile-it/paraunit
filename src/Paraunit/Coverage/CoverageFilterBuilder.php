@@ -2,7 +2,7 @@
 
 namespace Paraunit\Coverage;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use SebastianBergmann\CodeCoverage\Filter;
 
 /**
@@ -22,7 +22,7 @@ class CoverageFilterBuilder
         $this->codeCoverageFilter = new Filter();
     }
 
-    public function createFromConfiguration(PHPUnitConfigFile $configFile)
+    public function createFromConfiguration(PHPUnitConfig $configFile)
     {
         $filterConfiguration = \PHPUnit_Util_Configuration::getInstance($configFile->getFileFullPath());
 

@@ -3,7 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\Interfaces\TestFilenameBearerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -20,17 +20,17 @@ class FilesRecapPrinter extends AbstractFinalPrinter
         $output = $engineEvent->getOutputInterface();
 
         foreach ($this->logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof TestResultContainer) {
+            if ($parser instanceof TestFilenameBearerInterface) {
                 $this->printFileRecap($parser, $output);
             }
         }
     }
 
     /**
-     * @param TestResultContainer $testResultContainer
+     * @param TestFilenameBearerInterface $testResultContainer
      * @param OutputInterface $output
      */
-    private function printFileRecap(TestResultContainer $testResultContainer, OutputInterface $output)
+    private function printFileRecap(TestFilenameBearerInterface $testResultContainer, OutputInterface $output)
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;

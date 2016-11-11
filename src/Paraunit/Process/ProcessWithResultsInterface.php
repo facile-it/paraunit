@@ -3,12 +3,12 @@
 namespace Paraunit\Process;
 
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 
 /**
  * Interface RetryAwareInterface.
  */
-interface ProcessWithResultsInterface extends TestResultContainerInterface
+interface ProcessWithResultsInterface extends TestResultBearerInterface
 {
     /**
      * @param PrintableTestResultInterface $testResult
@@ -23,6 +23,9 @@ interface ProcessWithResultsInterface extends TestResultContainerInterface
 
     /** @return string */
     public function getFilename();
+
+    /** @return string */
+    public function getUniqueId();
 
     /** @return bool */
     public function isWaitingForTestResult();

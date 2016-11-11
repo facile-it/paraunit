@@ -2,10 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 
 /**
  * Class ProcessFactory
@@ -16,8 +13,8 @@ class ProcessFactory
     /** @var  CliCommandInterface */
     private $cliCommand;
 
-    /** @var  PHPUnitConfigFile */
-    private $phpunitConfigFile;
+    /** @var  PHPUnitConfig */
+    private $phpunitConfig;
 
     /**
      * ProcessFactory constructor.
@@ -49,7 +46,7 @@ class ProcessFactory
     private function createCommandLine($testFilePath, $uniqueId)
     {
         return $this->cliCommand->getExecutable()
-            . ' ' . $this->cliCommand->getOptions($this->phpunitConfigFile, $uniqueId)
+            . ' ' . $this->cliCommand->getOptions($this->phpunitConfig, $uniqueId)
             . ' ' . $testFilePath;
     }
 
@@ -62,8 +59,8 @@ class ProcessFactory
         return md5($testFilePath);
     }
 
-    public function setPHPUnitConfigFile(PHPUnitConfigFile $phpunitConfigFile)
+    public function setPHPUnitConfig(PHPUnitConfig $phpunitConfig)
     {
-        $this->phpunitConfigFile = $phpunitConfigFile;
+        $this->phpunitConfig = $phpunitConfig;
     }
 }

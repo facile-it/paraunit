@@ -232,7 +232,7 @@ $filter->setWhitelistedFiles(array (
   '/home/paraunit/projects/src/Paraunit/Command/ParallelCommand.php' => true,
   '/home/paraunit/projects/src/Paraunit/Configuration/PHPDbgBinFile.php' => true,
   '/home/paraunit/projects/src/Paraunit/Configuration/PHPUnitBinFile.php' => true,
-  '/home/paraunit/projects/src/Paraunit/Configuration/PHPUnitConfigFile.php' => true,
+  '/home/paraunit/projects/src/Paraunit/Configuration/PHPUnitConfig.php' => true,
   '/home/paraunit/projects/src/Paraunit/Configuration/Paraunit.php' => true,
   '/home/paraunit/projects/src/Paraunit/Configuration/TempFilenameFactory.php' => true,
   '/home/paraunit/projects/src/Paraunit/Coverage/CoverageFetcher.php' => true,

@@ -4,7 +4,7 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 
 class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandInterface
@@ -38,11 +38,11 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
     }
 
     /**
-     * @param PHPUnitConfigFile $configFile
+     * @param PHPUnitConfig $configFile
      * @param string $uniqueId
      * @return string
      */
-    public function getOptions(PHPUnitConfigFile $configFile, $uniqueId)
+    public function getOptions(PHPUnitConfig $configFile, $uniqueId)
     {
         $options = '';
         if ($this->phpDbgBinFile->isAvailable()) {

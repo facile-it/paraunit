@@ -25,7 +25,6 @@ class FinalPrinterTest extends BaseUnitTestCase
         $engineEvent = new EngineEvent($output, $context);
 
         $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
-        $testResultContainer->countFilenames()->willReturn(1);
         $testResultContainer->countTestResults()->willReturn(3);
         $testResultContainer->getTestResults()->willReturn(array_fill(0, 3, $this->mockTestResult()));
         $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());
@@ -53,7 +52,6 @@ class FinalPrinterTest extends BaseUnitTestCase
         $engineEvent = new EngineEvent($output, $context);
 
         $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
-        $testResultContainer->countFilenames()->willReturn(1);
         $testResultContainer->countTestResults()->willReturn(3);
         $testResultContainer->getTestResults()->willReturn(array_fill(0, 3, $this->mockTestResult()));
         $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());

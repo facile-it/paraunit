@@ -66,6 +66,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
         /** @var JSONLogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
         $process = new StubbedParaunitProcess();
+        $process->setExitCode(139);
 
         $parser->onProcessTerminated(new ProcessEvent($process));
 
