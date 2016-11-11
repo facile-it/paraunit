@@ -3,7 +3,6 @@
 namespace Paraunit\Configuration;
 
 use Paraunit\File\TempDirectory;
-use Paraunit\Process\ParaunitProcessInterface;
 
 /**
  * Class TempFilenameFactory
@@ -42,8 +41,8 @@ class TempFilenameFactory
     public function getFilenameForCoverage($uniqueId)
     {
         return $this->tempDirectory->getTempDirForThisExecution()
-        . '/coverage/'
-        . $uniqueId
-        . '.php';
+            . '/coverage/'
+            . $uniqueId
+            . '.php';
     }
 }

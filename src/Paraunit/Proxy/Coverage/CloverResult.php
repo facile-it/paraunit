@@ -9,8 +9,6 @@ use SebastianBergmann\CodeCoverage\Report\Clover;
 /**
  * Class CloverResult
  * @package Paraunit\Proxy\Coverage
- *
- * TODO: refactor to a single class with injection
  */
 class CloverResult
 {

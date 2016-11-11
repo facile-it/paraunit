@@ -16,7 +16,7 @@ class Paraunit
 {
     const VERSION = '0.7';
 
-    public static function bootstrap()
+    public static function createApplication()
     {
         $application = new Application('Paraunit', self::VERSION);
 
@@ -26,6 +26,6 @@ class Paraunit
         $CoverageCommand = new CoverageCommand(new ParallelCoverageConfiguration());
         $application->add($CoverageCommand);
 
-        $application->run();
+        return $application;
     }
 }

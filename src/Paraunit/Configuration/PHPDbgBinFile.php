@@ -18,7 +18,6 @@ class PHPDbgBinFile
      */
     public function __construct()
     {
-        // TODO -- check per PHP7?
         $this->phpDbgBin = $this->getPhpDbgBinLocation();
     }
 
@@ -29,7 +28,7 @@ class PHPDbgBinFile
     public function getPhpDbgBin()
     {
         if (! $this->isAvailable()) {
-            throw new \Exception('PHPDbg is not available!');
+            throw new \RuntimeException('PHPDbg is not available!');
         }
 
         return $this->phpDbgBin;

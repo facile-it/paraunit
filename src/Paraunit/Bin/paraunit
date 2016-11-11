@@ -17,4 +17,5 @@ if ( ! ini_get('date.timezone') && ! date_default_timezone_get()) {
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-\Paraunit\Bin\Paraunit::bootstrap();
+$application = \Paraunit\Bin\Paraunit::createApplication();
+$application->run();
