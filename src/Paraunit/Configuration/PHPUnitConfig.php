@@ -37,32 +37,7 @@ class PHPUnitConfig
         }
 
         $this->configFile = $configFile;
-        $this->phpunitOptions = array(
-            new PHPUnitOption('filter'),
-            new PHPUnitOption('testsuite'),
-            new PHPUnitOption('group'),
-            new PHPUnitOption('exclude-group'),
-            new PHPUnitOption('test-suffix'),
-            
-            new PHPUnitOption('report-useless-tests', false),
-            new PHPUnitOption('strict-global-state', false),
-            new PHPUnitOption('disallow-test-output', false),
-            new PHPUnitOption('enforce-time-limit', false),
-            new PHPUnitOption('disallow-todo-tests', false),
-            
-            new PHPUnitOption('process-isolation', false),
-            new PHPUnitOption('no-globals-backup', false),
-            new PHPUnitOption('static-backup', false),
-            
-            new PHPUnitOption('loader'),
-            new PHPUnitOption('repeat'),
-            new PHPUnitOption('printer'),
-            
-            new PHPUnitOption('bootstrap'),
-            new PHPUnitOption('configuration', true, 'c'),
-            new PHPUnitOption('no-configuration'),
-            new PHPUnitOption('include-path'),
-        );
+        $this->phpunitOptions = array();
     }
 
     /**
@@ -81,6 +56,14 @@ class PHPUnitConfig
     public function getDirectory()
     {
         return dirname($this->configFile);
+    }
+
+    /**
+     * @param PHPUnitOption $option
+     */
+    public function addPhpunitOption(PHPUnitOption $option)
+    {
+        $this->phpunitOptions[] = $option;
     }
 
     /**

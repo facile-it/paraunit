@@ -15,21 +15,21 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $phpUnitBin = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $phpUnitBin->getPhpUnitBin()->shouldBeCalled()->willReturn('phpunit');
 
-        $phpUnitConfigFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
-        $phpUnitConfigFile->getFileFullPath()->shouldBeCalled()->willReturn('configFile.xml');
+        $phpUnitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $phpUnitConfig->getFileFullPath()->shouldBeCalled()->willReturn('configFile.xml');
+        $phpUnitConfig->getPhpunitOptions()->shouldBeCalled()->willReturn(array());
 
         $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
         $fileName->generateFromUniqueId(md5('TestTest.php'))->willReturn('log.json');
 
         $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());
-        $factory->setConfigFile($phpUnitConfigFile->reveal());
+        $factory->setConfig($phpUnitConfig->reveal());
 
         $process = $factory->createProcess('TestTest.php');
 
         $this->assertInstanceOf('Paraunit\Process\AbstractParaunitProcess', $process);
         $expectedCmdLine = 'phpunit '
-            . '-c configFile.xml '
-            . '--colors=never '
+            . '--configuration=configFile.xml '
             . '--log-json=log.json '
             . 'TestTest.php';
         $this->assertEquals($expectedCmdLine, $process->getCommandLine());

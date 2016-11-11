@@ -58,15 +58,15 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     * @param PHPUnitConfig $phpunitConfigFile
+     * @param PHPUnitConfig $phpunitConfig
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, PHPUnitConfig $phpunitConfigFile, $debug = false)
+    public function run($files, OutputInterface $outputInterface, PHPUnitConfig $phpunitConfig, $debug = false)
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
-        $this->processFactory->setConfigFile($phpunitConfigFile);
+        $this->processFactory->setConfig($phpunitConfig);
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 

@@ -68,7 +68,7 @@ class PHPUnitOption
     /**
      * @return boolean
      */
-    public function isHasValue()
+    public function hasValue()
     {
         return $this->hasValue;
     }
