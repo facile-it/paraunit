@@ -32,7 +32,7 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
         $this->assertNotContains('paraunit.coverage.coverage_fectcher', $servicesIds);
 
-        $this->markTestIncomplete();
+        $this->markTestIncomplete('Awaiting #29');
         $this->assertContains('paraunit.printer.debug_printer', $servicesIds);
     }
 }
