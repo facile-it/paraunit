@@ -3,6 +3,7 @@
 namespace Tests\Functional\Runner;
 
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\UnformattedOutputStub;
@@ -135,6 +136,28 @@ class RunnerTest extends BaseFunctionalTestCase
             $output,
             'Missing warned filename'
         );
+    }
+    
+    public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination()
+    {
+        $outputInterface = new UnformattedOutputStub();
+
+        /** @var Runner $runner */
+        $runner = $this->container->get('paraunit.runner.runner');
+
+        $fileArray = array('tests/Stub/ThreeGreenTestStub.php');
+        
+        $config = new PHPUnitConfig('');
+        $option = new PHPUnitOption('group');
+        $option->setValue('emptyGroup');
+        $config->addPhpunitOption($option);
+
+        $this->assertEquals(0, $runner->run($fileArray, $outputInterface, $config));
+
+        $output = $outputInterface->fetch();
+        $this->assertNotContains('...', $output);
+        $this->assertNotContains('ABNORMAL TERMINATION', $output);
+        $this->assertContains('Executed: 0 test classes, 0 tests', $output);
     }
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults()
