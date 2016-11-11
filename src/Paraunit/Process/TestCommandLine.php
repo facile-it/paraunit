@@ -38,13 +38,28 @@ class TestCommandLine implements CliCommandInterface
     }
 
     /**
-     * @param PHPUnitConfig $configFile
+     * @param PHPUnitConfig $config
      * @param string $uniqueId
      * @return string
      */
-    public function getOptions(PHPUnitConfig $configFile, $uniqueId)
+    public function getOptions(PHPUnitConfig $config, $uniqueId)
     {
-        return '-c ' . $configFile->getFileFullPath()
-            . ' --log-json ' . $this->filenameFactory->getFilenameForLog($uniqueId);
+        return '-c ' . $config->getFileFullPath()
+            . ' --log-json ' . $this->filenameFactory->getFilenameForLog($uniqueId)
+            . $this->createOptionsString($config);
+    }
+
+    private function createOptionsString(PHPUnitConfig $config)
+    {
+        $optionString = '';
+
+        foreach ($config->getPhpunitOptions() as $option) {
+            $optionString .= ' --' . $option->getName();
+            if ($option->hasValue()) {
+                $optionString .= '=' . $option->getValue();
+            }
+        }
+        
+        return $optionString;
     }
 }

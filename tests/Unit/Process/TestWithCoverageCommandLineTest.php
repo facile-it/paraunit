@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Process\TestWithCoverageCommandLine;
 use Prophecy\Argument;
 
@@ -41,8 +42,15 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOptionsForWithoutDbg()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
-        $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $config = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $optionWithValue = new PHPUnitOption('optVal');
+        $optionWithValue->setValue('value');
+        $config->getPhpunitOptions()->willReturn(array(
+            new PHPUnitOption('opt', false),
+            $optionWithValue
+        ));
+
         $phpDbg = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
         $phpDbg->isAvailable()->shouldBeCalled()->willReturn(false);
         $phpDbg->getPhpDbgBin()->shouldNotBeCalled();
@@ -55,15 +63,17 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
         $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
-            '-c /path/to/phpunit.xml --log-json /path/to/log.json --coverage-php /path/to/coverage.php',
-            $cli->getOptions($configFile->reveal(), $uniqueId)
+            '-c /path/to/phpunit.xml --log-json /path/to/log.json --opt --optVal=value --coverage-php /path/to/coverage.php',
+            $cli->getOptions($config->reveal(), $uniqueId)
         );
     }
 
     public function testGetOptionsForWithDbg()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
-        $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $config = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $config->getPhpunitOptions()->willReturn(array());
+
         $phpDbg = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
         $phpDbg->isAvailable()->shouldBeCalled()->willReturn(true);
         $phpDbg->getPhpDbgBin()->shouldNotBeCalled();
@@ -78,7 +88,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '-qrr path/to/phpunit -c /path/to/phpunit.xml --log-json /path/to/log.json --coverage-php /path/to/coverage.php',
-            $cli->getOptions($configFile->reveal(), $uniqueId)
+            $cli->getOptions($config->reveal(), $uniqueId)
         );
     }
 }

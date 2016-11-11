@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Process;
 
-use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Process\TestCommandLine;
-use Prophecy\Argument;
 
 /**
  * Class TestCliCommandTest
@@ -25,8 +24,16 @@ class TestCommandLineTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOptionsFor()
     {
-        $configFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
-        $configFile->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $config = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        
+        $optionWithValue = new PHPUnitOption('optVal');
+        $optionWithValue->setValue('value');
+        $config->getPhpunitOptions()->willReturn(array(
+            new PHPUnitOption('opt', false),
+            $optionWithValue
+        ));
+        
         $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
         $uniqueId = 'uniqueIdOfProcess';
         $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
@@ -35,8 +42,8 @@ class TestCommandLineTest extends \PHPUnit_Framework_TestCase
         $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
-            '-c /path/to/phpunit.xml --log-json /path/to/log.json',
-            $cli->getOptions($configFile->reveal(), $uniqueId)
+            '-c /path/to/phpunit.xml --log-json /path/to/log.json --opt --optVal=value',
+            $cli->getOptions($config->reveal(), $uniqueId)
         );
     }
 }

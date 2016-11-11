@@ -38,11 +38,11 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
     }
 
     /**
-     * @param PHPUnitConfig $configFile
+     * @param PHPUnitConfig $config
      * @param string $uniqueId
      * @return string
      */
-    public function getOptions(PHPUnitConfig $configFile, $uniqueId)
+    public function getOptions(PHPUnitConfig $config, $uniqueId)
     {
         $options = '';
         if ($this->phpDbgBinFile->isAvailable()) {
@@ -51,7 +51,7 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
         }
 
         return $options
-            . parent::getOptions($configFile, $uniqueId)
+            . parent::getOptions($config, $uniqueId)
             . ' --coverage-php '
             . $this->filenameFactory->getFilenameForCoverage($uniqueId);
     }

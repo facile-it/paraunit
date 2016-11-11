@@ -16,9 +16,9 @@ interface CliCommandInterface
     public function getExecutable();
 
     /**
-     * @param PHPUnitConfig $configFile
+     * @param PHPUnitConfig $config
      * @param string $uniqueId
      * @return string
      */
-    public function getOptions(PHPUnitConfig $configFile, $uniqueId);
+    public function getOptions(PHPUnitConfig $config, $uniqueId);
 }
