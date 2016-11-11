@@ -51,6 +51,13 @@ services:
       - "warning"
       - "warnings"
 
+  paraunit.test_result.no_test_executed_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - ""
+      - "warning"
+      - "no tests executed"
+
   paraunit.test_result.risky_test_result_format:
     class: Paraunit\TestResult\TestResultFormat
     arguments:

@@ -3,10 +3,10 @@
 namespace Paraunit\TestResult\Interfaces;
 
 /**
- * Class TestResultContainer
+ * Interface TestResultBearerInterface
  * @package Paraunit\TestResult\Interfaces
  */
-interface TestResultContainerInterface
+interface TestResultBearerInterface
 {
     /**
      * @return PrintableTestResultInterface[]

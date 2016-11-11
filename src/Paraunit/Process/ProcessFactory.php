@@ -4,7 +4,8 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Class ProcessFactory
@@ -18,12 +19,13 @@ class ProcessFactory
     /** @var  JSONLogFilename */
     private $jsonLogFilename;
 
-    /** @var  PHPUnitConfigFile */
-    private $phpunitConfigFile;
+    /** @var  PHPUnitConfig */
+    private $phpunitConfig;
 
     /**
      * ProcessFactory constructor.
      * @param PHPUnitBinFile $phpUnitBinFile
+     * @param JSONLogFilename $jsonLogFilename
      */
     public function __construct(PHPUnitBinFile $phpUnitBinFile, JSONLogFilename $jsonLogFilename)
     {
@@ -38,8 +40,8 @@ class ProcessFactory
      */
     public function createProcess($testFilePath)
     {
-        if (! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
-            throw new \Exception('PHPUnit config missing');
+        if (! $this->phpunitConfig instanceof PHPUnitConfig) {
+            throw new InvalidConfigurationException('PHPUnit config missing');
         }
 
         $uniqueId = $this->createUniqueId($testFilePath);
@@ -49,11 +51,11 @@ class ProcessFactory
     }
 
     /**
-     * @param PHPUnitConfigFile $configFile
+     * @param PHPUnitConfig $configFile
      */
-    public function setConfigFile(PHPUnitConfigFile $configFile)
+    public function setConfig(PHPUnitConfig $configFile)
     {
-        $this->phpunitConfigFile = $configFile;
+        $this->phpunitConfig = $configFile;
     }
 
     /**
@@ -63,11 +65,18 @@ class ProcessFactory
      */
     private function createCommandLine($testFilePath, $uniqueId)
     {
-        return $this->phpUnitBin .
-        ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-        ' --colors=never' .
-        ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
-        ' ' . $testFilePath;
+        $commandLine = $this->phpUnitBin
+            . ' --configuration=' . $this->phpunitConfig->getFileFullPath()
+            . ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId);
+
+        foreach ($this->phpunitConfig->getPhpunitOptions() as $option) {
+            $commandLine .= ' --' . $option->getName();
+            if ($option->hasValue()) {
+                $commandLine .= '=' . $option->getValue();
+            }
+        }
+
+        return $commandLine . ' ' . $testFilePath;
     }
 
     /**

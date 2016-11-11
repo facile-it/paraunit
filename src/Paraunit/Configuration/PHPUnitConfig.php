@@ -2,15 +2,23 @@
 
 namespace Paraunit\Configuration;
 
-class PHPUnitConfigFile
+/**
+ * Class PHPUnitConfig
+ * @package Paraunit\Configuration
+ */
+class PHPUnitConfig
 {
     const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
 
     /** @var string */
     private $configFile;
+    
+    /** @var  PHPUnitOption[] */
+    private $phpunitOptions;
 
     /**
      * @param string $inputPathOrFileName
+     * @throws \InvalidArgumentException
      */
     public function __construct($inputPathOrFileName)
     {
@@ -29,6 +37,7 @@ class PHPUnitConfigFile
         }
 
         $this->configFile = $configFile;
+        $this->phpunitOptions = array();
     }
 
     /**
@@ -47,5 +56,21 @@ class PHPUnitConfigFile
     public function getDirectory()
     {
         return dirname($this->configFile);
+    }
+
+    /**
+     * @param PHPUnitOption $option
+     */
+    public function addPhpunitOption(PHPUnitOption $option)
+    {
+        $this->phpunitOptions[] = $option;
+    }
+
+    /**
+     * @return PHPUnitOption[]
+     */
+    public function getPhpunitOptions()
+    {
+        return $this->phpunitOptions;
     }
 }
