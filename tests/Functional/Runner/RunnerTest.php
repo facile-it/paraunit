@@ -74,10 +74,6 @@ class RunnerTest extends BaseFunctionalTestCase
 
     public function testSegFault()
     {
-        if (!extension_loaded('sigsegv')) {
-            $this->markTestSkipped('The segfault cannot be reproduced in this environment');
-        }
-
         $outputInterface = new UnformattedOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');

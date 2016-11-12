@@ -40,16 +40,6 @@ ADD config/.zshrc /root/
 ADD config/.zshrc /home/paraunit/
 ENV TERM xterm-256color
 
-#----- BEGIN Enable sigsegv extension
-WORKDIR /tmp/
-RUN git clone https://github.com/facile-it/paraunit.git
-WORKDIR /tmp/paraunit/.travis/sigsegv-extension
-RUN phpize
-RUN ./configure --enable-sigsegv
-RUN make -j
-COPY sigsegv/sigsegv.ini /etc/php5/cli/conf.d/
-#----- END Enable sigsegv extension
-
 WORKDIR /home/paraunit/projects
 VOLUME ["/home/paraunit/projects"]
 
