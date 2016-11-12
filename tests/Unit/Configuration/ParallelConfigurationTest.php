@@ -13,8 +13,9 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testBuildContainer()
     {
         $paraunit = new ParallelConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
 
-        $container = $paraunit->buildContainer();
+        $container = $paraunit->buildContainer($input->reveal());
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
 

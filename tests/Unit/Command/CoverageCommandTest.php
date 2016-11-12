@@ -27,7 +27,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
         $container->get('paraunit.runner.runner')->willReturn($runner->reveal());
 
         $configuration = $this->prophesize('Paraunit\Configuration\ParallelCoverageConfiguration');
-        $configuration->buildContainer()->shouldBeCalled()->willReturn($container);
+        $configuration->buildContainer(Argument::cetera())->shouldBeCalled()->willReturn($container);
 
         $command = new CoverageCommand($configuration->reveal());
         $application = new Application();

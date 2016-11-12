@@ -13,8 +13,9 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testBuildContainer()
     {
         $paraunit = new ParallelCoverageConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
 
-        $container = $paraunit->buildContainer();
+        $container = $paraunit->buildContainer($input->reveal());
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
 
@@ -34,8 +35,24 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('paraunit.coverage.coverage_result', $servicesIds);
         $this->assertContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
         $this->assertContains('paraunit.coverage.coverage_output_paths', $servicesIds);
-        
+
         $this->markTestIncomplete('Awaiting #29');
         $this->assertContains('paraunit.printer.debug_printer', $servicesIds);
+    }
+
+    public function testBuildContainerWithParameter()
+    {
+        $paraunit = new ParallelCoverageConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input->getOption('clover')->willReturn('coverage.clover.xml');
+        $input->getOption('xml')->willReturn('coverage.xml');
+        $input->getOption('html')->willReturn('coverage/html');
+
+        $container = $paraunit->buildContainer($input->reveal());
+
+        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertEquals('coverage.clover.xml', $container->getParameter('paraunit.coverage.clover_file_path'));
+        $this->assertEquals('coverage.xml', $container->getParameter('paraunit.coverage.xml_file_path'));
+        $this->assertEquals('coverage/html', $container->getParameter('paraunit.coverage.html_path'));
     }
 }

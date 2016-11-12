@@ -92,7 +92,7 @@ class ParallelCommand extends Command
 
         $config = $this->createConfig($input);
 
-        $container = $this->configuration->buildContainer();
+        $container = $this->configuration->buildContainer($input);
 
         $filter = $container->get('paraunit.filter.filter');
         $testArray = $filter->filterTestFiles($config, $testsuite);

@@ -4,6 +4,7 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Parser\ParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -17,14 +18,16 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 class ParallelConfiguration
 {
     /**
+     * @param InputInterface $input
      * @return ContainerBuilder
      */
-    public function buildContainer()
+    public function buildContainer(InputInterface $input)
     {
         $containerBuilder = new ContainerBuilder();
 
         $this->loadYamlConfiguration($containerBuilder);
         $this->registerEventDispatcher($containerBuilder);
+        $this->loadCommandLineOptions($containerBuilder, $input);
         $containerBuilder->compile();
 
         return $containerBuilder;
@@ -65,5 +68,9 @@ class ParallelConfiguration
                 array(new Reference('service_container'))
             )
         );
+    }
+
+    protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
+    {
     }
 }

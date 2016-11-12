@@ -27,7 +27,7 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
         $container->get('paraunit.runner.runner')->willReturn($runner->reveal());
 
         $configuration = $this->prophesize('Paraunit\Configuration\ParallelConfiguration');
-        $configuration->buildContainer()->shouldBeCalled()->willReturn($container);
+        $configuration->buildContainer(Argument::cetera())->shouldBeCalled()->willReturn($container);
 
         $command = new ParallelCommand($configuration->reveal());
         $application = new Application();

@@ -112,7 +112,8 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
     protected function loadContainer()
     {
         $configuration = new ParallelConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
 
-        $this->container = $configuration->buildContainer();
+        $this->container = $configuration->buildContainer($input->reveal());
     }
 }
