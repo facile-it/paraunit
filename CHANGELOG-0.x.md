@@ -4,8 +4,6 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
-## [0.6.3] - TBA
-
 ### Changed
 
 * A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of

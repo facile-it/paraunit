@@ -5,7 +5,7 @@ services:
   paraunit.configuration.phpunit_bin_file:
     class: Paraunit\Configuration\PHPUnitBinFile
 
-  paraunit.configuration.json_log_filename:
-    class: Paraunit\Configuration\JSONLogFilename
+  paraunit.configuration.temp_filename_factory:
+    class: Paraunit\Configuration\TempFilenameFactory
     arguments:
       - "@paraunit.file.temp_directory"

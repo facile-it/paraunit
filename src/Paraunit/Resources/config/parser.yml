@@ -12,7 +12,7 @@ services:
   paraunit.parser.json_log_fetcher:
     class: Paraunit\Parser\JSONLogFetcher
     arguments:
-      - "@paraunit.configuration.json_log_filename"
+      - "@paraunit.configuration.temp_filename_factory"
 
   paraunit.parser.test_start_parser:
     class: Paraunit\Parser\TestStartParser

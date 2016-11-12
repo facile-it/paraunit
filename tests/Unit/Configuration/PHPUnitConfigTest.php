@@ -4,7 +4,7 @@ namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitConfig;
 
-class PHPUnitConfigFileTest extends \PHPUnit_Framework_TestCase
+class PHPUnitConfigTest extends \PHPUnit_Framework_TestCase
 {
     private $previousCWD;
 

@@ -2,7 +2,7 @@
 
 namespace Paraunit\Printer;
 
-use Paraunit\Configuration\Paraunit;
+use Paraunit\Bin\Paraunit;
 use Paraunit\Lifecycle\EngineEvent;
 
 /**
@@ -31,7 +31,7 @@ class SharkPrinter
         $outputInterface->writeln('');
         $outputInterface->writeln(
             'PARAUNIT v' .
-            Paraunit::PARAUNIT_VERSION .
+            Paraunit::VERSION .
             ' - by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it'
         );
     }

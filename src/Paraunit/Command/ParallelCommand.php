@@ -2,10 +2,9 @@
 
 namespace Paraunit\Command;
 
+use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Filter\Filter;
-use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,21 +15,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ParallelCommand extends Command
 {
-    /** @var Filter */
-    protected $filter;
-
-    /** @var Runner */
-    protected $runner;
+    /** @var ParallelConfiguration */
+    protected $configuration;
 
     /** @var  PHPUnitOption[] */
     private $phpunitOptions;
 
     /**
-     * @param Filter $filter
-     * @param Runner $runner
-     * @param string $name
+     * ParallelCommand constructor.
+     * @param ParallelConfiguration $configuration
      */
-    public function __construct(Filter $filter, Runner $runner, $name = 'Paraunit')
+    public function __construct(ParallelConfiguration $configuration)
     {
         $this->phpunitOptions = array(
             new PHPUnitOption('filter'),
@@ -59,10 +54,8 @@ class ParallelCommand extends Command
             new PHPUnitOption('include-path'),
         );
 
-        parent::__construct($name);
-
-        $this->filter = $filter;
-        $this->runner = $runner;
+        parent::__construct();
+        $this->configuration = $configuration;
     }
 
     protected function configure()
@@ -82,7 +75,7 @@ class ParallelCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int|null
@@ -99,9 +92,13 @@ class ParallelCommand extends Command
 
         $config = $this->createConfig($input);
 
-        $testArray = $this->filter->filterTestFiles($config, $testsuite);
+        $container = $this->configuration->buildContainer($input);
 
-        return $this->runner->run($testArray, $output, $config, $input->getOption('debug'));
+        $filter = $container->get('paraunit.filter.filter');
+        $testArray = $filter->filterTestFiles($config, $testsuite);
+        $runner = $container->get('paraunit.runner.runner');
+
+        return $runner->run($testArray, $output, $config, $input->getOption('debug'));
     }
 
     /**

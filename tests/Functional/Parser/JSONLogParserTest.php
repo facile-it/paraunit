@@ -2,12 +2,9 @@
 
 namespace Tests\Functional\Parser;
 
-use Paraunit\Configuration\JSONLogFilename;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultWithMessage;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;

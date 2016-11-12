@@ -4,20 +4,6 @@ parameters:
   kernel.root_dir: 'src'
 
 services:
-  paraunit.application:
-    class: Symfony\Component\Console\Application
-    arguments:
-      - 'Paraunit'
-      - '%paraunit.version%'
-    calls:
-      - [add, ["@paraunit.command.parallel_command"]]
-
-  paraunit.command.parallel_command:
-    class: Paraunit\Command\ParallelCommand
-    arguments:
-      - "@paraunit.filter.filter"
-      - "@paraunit.runner.runner"
-
   paraunit.filter.filter:
     class: Paraunit\Filter\Filter
     arguments:
@@ -35,13 +21,6 @@ services:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - "@service_container"
-
-  ## PROCESS HANDLING ##
-  paraunit.process.process_factory:
-    class: Paraunit\Process\ProcessFactory
-    arguments:
-      - "@paraunit.configuration.phpunit_bin_file"
-      - "@paraunit.configuration.json_log_filename"
 
   ## EXTERNAL DEPs -- proxies ##
 
