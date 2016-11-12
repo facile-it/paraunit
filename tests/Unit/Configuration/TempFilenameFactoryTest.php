@@ -4,7 +4,6 @@ namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\TempDirectory;
-use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TempFilenameFactoryTest

@@ -4,7 +4,6 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Process\TestWithCoverageCommandLine;
-use Prophecy\Argument;
 
 /**
  * Class TestWithCoverageCliCommandTest

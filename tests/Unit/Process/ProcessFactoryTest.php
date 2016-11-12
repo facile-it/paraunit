@@ -26,10 +26,6 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Paraunit\Process\AbstractParaunitProcess', $process);
         $expectedCmdLine = 'executable --configuration TestTest.php';
-//        $expectedCmdLine = 'phpunit '
-//            . '--configuration=configFile.xml '
-//            . '--log-json=log.json '
-//            . 'TestTest.php';
         $this->assertEquals($expectedCmdLine, $process->getCommandLine());
     }
 }

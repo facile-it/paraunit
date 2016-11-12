@@ -22,7 +22,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected function getCoverageStubFilePath()
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
-        $this->assertTrue(file_exists($filename), 'CoverageStub file missing!');
+        $this->assertFileExists($filename, 'CoverageStub file missing!');
 
         return $filename;
     }

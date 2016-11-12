@@ -17,7 +17,7 @@ class OutputPath
      */
     public function __construct($path)
     {
-        if (strlen($path)) {
+        if (strlen($path) > 0) {
             $this->path = $path;
         }
     }
@@ -27,11 +27,12 @@ class OutputPath
      */
     public function isEmpty()
     {
-        return is_null($this->path);
+        return $this->path === null;
     }
 
     /**
      * @return string
+     * @throws \RuntimeException
      */
     public function getPath()
     {

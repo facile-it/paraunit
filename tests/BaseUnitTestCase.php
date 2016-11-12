@@ -41,7 +41,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
     protected function getWrongCoverageStubFilePath()
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/WrongCoverageStub.php';
-        $this->assertTrue(file_exists($filename), 'WrongCoverageStub file missing!');
+        $this->assertFileExists($filename, 'WrongCoverageStub file missing!');
 
         return $filename;
     }

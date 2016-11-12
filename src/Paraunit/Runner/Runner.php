@@ -157,7 +157,7 @@ class Runner
 
     /**
      * @param AbstractParaunitProcess $process
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     protected function markProcessCompleted(AbstractParaunitProcess $process)
     {
@@ -166,7 +166,7 @@ class Runner
         if (array_key_exists($pHash, $this->processRunning)) {
             unset($this->processRunning[$pHash]);
         } else {
-            throw new \Exception('Trying to remove a non-existing process from running stack\! ID: ' . $pHash);
+            throw new \RuntimeException('Trying to remove a non-existing process from running stack\! ID: ' . $pHash);
         }
 
         if ($process->isToBeRetried()) {
