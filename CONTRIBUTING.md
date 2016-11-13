@@ -2,10 +2,11 @@
 
 ## Dev environment
 Paraunit comes with a containerized environment which makes contributing really easy.
-The project adopted Docker as container technology, you can find an useful guide for the installation process [here](https://docs.docker.com/engine/installation/).
+The project adopted Docker as container technology, you can find an useful guide for the installation process 
+[here](https://docs.docker.com/engine/installation/).
 
-The container already has Composer
-installed globally, and [OhMyZsh](https://github.com/robbyrussell/oh-my-zsh) installed as shell for some nice autocompletion features. 
+The container already has Composer installed globally, and [OhMyZsh](https://github.com/robbyrussell/oh-my-zsh) installed 
+as shell for some nice autocompletion features. 
 
 To start contributing:
 
@@ -19,11 +20,7 @@ cd paraunit
 ```
 * Build and launch the container:
 ```
-docker/setup-php-5.6.sh
-```
-OR
-```
-docker/setup-php-7.sh
+docker/setup.sh
 ```
  * Now you are inside the container! You should install all the dependencies:
 ```
@@ -35,7 +32,7 @@ phpunit
 ```
  
 And now your're ready! You should always use git commands (pull/commit/push) outside the container, since it does not 
-have your GitHub credentials. 
+have your GitHub credentials available. 
 
 ## Coding Standard
 
