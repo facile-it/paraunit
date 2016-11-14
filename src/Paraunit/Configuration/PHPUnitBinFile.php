@@ -12,6 +12,8 @@ class PHPUnitBinFile
     const PHPUNIT_RELPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
     // I'm using Paraunit standalone (developing)
     const PHPUNIT_RELPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
+    // I'm using Paraunit in a PHAR
+    const PHPUNIT_RELPATH_FOR_PHAR = 'phar://vendor/bin/phpunit';
 
     /** @var string Realpath to PHPUnit bin location */
     private $phpUnitBin;
@@ -25,6 +27,8 @@ class PHPUnitBinFile
             $this->phpUnitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR;
         } elseif (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
             $this->phpUnitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE;
+        } elseif (file_exists(self::PHPUNIT_RELPATH_FOR_PHAR)) {
+            $this->phpUnitBin = self::PHPUNIT_RELPATH_FOR_PHAR;
         } else {
             throw new \Exception('PHPUnit bin not found');
         }

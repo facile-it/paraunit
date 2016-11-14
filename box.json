@@ -1,0 +1,24 @@
+{
+  "alias": "paraunit.phar",
+  "chmod": "0755",
+  "directories": [
+    "src"
+  ],
+  "files": [
+    "LICENSE",
+    "src/Paraunit/Bin/paraunit"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "Tests"
+      ],
+      "in": "vendor"
+    }
+  ],
+  "git-version": "dev-master",
+  "main": "src/Paraunit/Bin/paraunit",
+  "output": "paraunit.phar",
+  "stub": true
+}
