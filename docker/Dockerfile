@@ -12,7 +12,11 @@ RUN apt-get install -y curl \
     sudo \
     less \
     vim-tiny \
-    nano
+    nano \
+ ## PHP-EXT
+    libzip-dev \
+    && docker-php-ext-install -j5 zip mbstring \
+    && apt-get clean
 
 COPY config/sudoers /etc/sudoers
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
