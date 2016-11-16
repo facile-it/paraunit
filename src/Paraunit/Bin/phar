@@ -18,4 +18,4 @@ if (isset($argv[1]) && $argv[1] === 'phpunit') {
     return require __PHPUNIT_PHAR__;
 }
 
-require 'paraunit';
+require './paraunit';
