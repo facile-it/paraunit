@@ -1,12 +1,14 @@
 {
   "alias": "paraunit.phar",
   "chmod": "0755",
+  "compression": "GZ",
   "directories": [
     "src"
   ],
   "files": [
     "LICENSE",
-    "src/Paraunit/Bin/paraunit"
+    "src/Paraunit/Bin/paraunit",
+    "vendor/phpunit/phpunit/phpunit"
   ],
   "finder": [
     {
@@ -18,7 +20,7 @@
     }
   ],
   "git-version": "dev-master",
-  "main": "src/Paraunit/Bin/paraunit",
+  "main": "src/Paraunit/Bin/phar",
   "shebang": "#!/usr/bin/env php",
   "output": "paraunit.phar",
   "stub": true
