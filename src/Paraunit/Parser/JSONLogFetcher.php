@@ -2,7 +2,7 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Configuration\JSONLogFilename;
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\ParaunitProcessInterface;
 
 /**
@@ -13,25 +13,25 @@ class JSONLogFetcher
 {
     const LOG_ENDING_STATUS = 'paraunitEnd';
 
-    /** @var  JSONLogFilename */
+    /** @var  TempFilenameFactory */
     private $fileName;
 
     /**
      * JSONLogFetcher constructor.
-     * @param JSONLogFilename $fileName
+     * @param TempFilenameFactory $fileName
      */
-    public function __construct(JSONLogFilename $fileName)
+    public function __construct(TempFilenameFactory $fileName)
     {
         $this->fileName = $fileName;
     }
 
     /**
      * @param ParaunitProcessInterface $process
-     * @return array
+     * @return array | \stdClass[]
      */
     public function fetch(ParaunitProcessInterface $process)
     {
-        $filePath = $this->fileName->generate($process);
+        $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
         $fileContent = '';
 
         if (file_exists($filePath)) {

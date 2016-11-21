@@ -16,10 +16,10 @@ class JSONLogFetcherTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
 
-        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
-        $fileName->generate($process)->willReturn('non-existent-log.json');
+        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
+        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn('non-existent-log.json');
 
-        $fetcher = new JSONLogFetcher($fileName->reveal());
+        $fetcher = new JSONLogFetcher($tempFileNameFactory->reveal());
 
         $logs = $fetcher->fetch($process);
 
@@ -39,10 +39,10 @@ class JSONLogFetcherTest extends BaseUnitTestCase
         $filename = __DIR__ . '/../../Stub/PHPUnitJSONLogOutput/AllGreen.json';
         $this->assertTrue(file_exists($filename), 'Test malformed, stub log file not found');
 
-        $fileNameService = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
-        $fileNameService->generate($process)->willReturn($filename);
+        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
+        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn($filename);
 
-        $fetcher = new JSONLogFetcher($fileNameService->reveal());
+        $fetcher = new JSONLogFetcher($tempFileNameFactory->reveal());
 
         $logs = $fetcher->fetch($process);
 

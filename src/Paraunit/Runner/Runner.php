@@ -2,7 +2,7 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
@@ -58,15 +58,15 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     * @param PHPUnitConfigFile $phpunitConfigFile
+     * @param PHPUnitConfig $phpunitConfig
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, PHPUnitConfigFile $phpunitConfigFile, $debug = false)
+    public function run($files, OutputInterface $outputInterface, PHPUnitConfig $phpunitConfig, $debug = false)
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
-        $this->processFactory->setConfigFile($phpunitConfigFile);
+        $this->processFactory->setPHPUnitConfig($phpunitConfig);
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 
@@ -75,7 +75,7 @@ class Runner
             new EngineEvent($outputInterface, array('start' => $start,))
         );
 
-        while (! empty($this->processStack) || ! empty($this->processRunning)) {
+        while (count($this->processStack) > 0 || count($this->processRunning) > 0) {
             if ($process = $this->runProcess($debug)) {
                 $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($process));
             }
@@ -113,7 +113,7 @@ class Runner
     protected function getReturnCode()
     {
         foreach ($this->processCompleted as $process) {
-            if ($process->getExitCode() != 0) {
+            if ($process->getExitCode() !== 0) {
                 return 10;
             }
         }
@@ -135,11 +135,11 @@ class Runner
     /**
      * @param $debug
      *
-     * @return AbstractParaunitProcess
+     * @return ParaunitProcessInterface | null
      */
     protected function runProcess($debug)
     {
-        if ($this->maxProcessNumber > count($this->processRunning) && ! empty($this->processStack)) {
+        if ($this->maxProcessNumber > count($this->processRunning) && count($this->processStack) > 0) {
             /** @var ParaunitProcessInterface $process */
             $process = array_pop($this->processStack);
             $process->start();
@@ -151,11 +151,13 @@ class Runner
 
             return $process;
         }
+        
+        return null;
     }
 
     /**
      * @param AbstractParaunitProcess $process
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     protected function markProcessCompleted(AbstractParaunitProcess $process)
     {
@@ -164,7 +166,7 @@ class Runner
         if (array_key_exists($pHash, $this->processRunning)) {
             unset($this->processRunning[$pHash]);
         } else {
-            throw new \Exception('Trying to remove a non-existing process from running stack\! ID: ' . $pHash);
+            throw new \RuntimeException('Trying to remove a non-existing process from running stack\! ID: ' . $pHash);
         }
 
         if ($process->isToBeRetried()) {

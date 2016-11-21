@@ -6,7 +6,7 @@ use Paraunit\Parser\JSONLogParser;
 use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Printer\SingleResultMarkerAwareInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;

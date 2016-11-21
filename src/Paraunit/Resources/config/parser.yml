@@ -5,13 +5,14 @@ services:
     class: Paraunit\Parser\JSONLogParser
     arguments:
       - "@paraunit.parser.json_log_fetcher"
+      - "@paraunit.test_result.no_test_executed_container"
     tags:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
   paraunit.parser.json_log_fetcher:
     class: Paraunit\Parser\JSONLogFetcher
     arguments:
-      - "@paraunit.configuration.json_log_filename"
+      - "@paraunit.configuration.temp_filename_factory"
 
   paraunit.parser.test_start_parser:
     class: Paraunit\Parser\TestStartParser

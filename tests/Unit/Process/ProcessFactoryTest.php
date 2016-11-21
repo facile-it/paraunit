@@ -12,37 +12,20 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateProcess()
     {
-        $phpUnitBin = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
-        $phpUnitBin->getPhpUnitBin()->shouldBeCalled()->willReturn('phpunit');
+        $PHPUnitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $cliCommand = $this->prophesize('Paraunit\Process\CliCommandInterface');
+        $cliCommand->getExecutable()->willReturn('executable');
+        $cliCommand
+            ->getOptions($PHPUnitConfig->reveal(), md5('TestTest.php'))
+            ->willReturn('--configuration');
 
-        $phpUnitConfigFile = $this->prophesize('Paraunit\Configuration\PHPUnitConfigFile');
-        $phpUnitConfigFile->getFileFullPath()->shouldBeCalled()->willReturn('configFile.xml');
-
-        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFilename');
-        $fileName->generateFromUniqueId(md5('TestTest.php'))->willReturn('log.json');
-
-        $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());
-        $factory->setConfigFile($phpUnitConfigFile->reveal());
+        $factory = new ProcessFactory($cliCommand->reveal());
+        $factory->setPHPUnitConfig($PHPUnitConfig->reveal());
 
         $process = $factory->createProcess('TestTest.php');
 
         $this->assertInstanceOf('Paraunit\Process\AbstractParaunitProcess', $process);
-        $expectedCmdLine = 'phpunit '
-            . '-c configFile.xml '
-            . '--colors=never '
-            . '--log-json=log.json '
-            . 'TestTest.php';
+        $expectedCmdLine = 'executable --configuration TestTest.php';
         $this->assertEquals($expectedCmdLine, $process->getCommandLine());
-    }
-
-    public function testCreateProcessThrowsExceptionIfConfigIsMissing()
-    {
-        $phpUnitBin = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
-        $fileName = $this->prophesize('Paraunit\Configuration\JSONLogFileName');
-
-        $factory = new ProcessFactory($phpUnitBin->reveal(), $fileName->reveal());
-
-        $this->setExpectedException('\Exception', 'config missing');
-        $factory->createProcess('test');
     }
 }

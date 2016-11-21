@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Paraunit\Configuration\JSONLogFilename;
-use Paraunit\Configuration\Paraunit;
+use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessEvent;
@@ -17,7 +17,7 @@ use Tests\Stub\UnformattedOutputStub;
  * Class BaseFunctionalTestCase
  * @package Paraunit\Tests
  */
-abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
+abstract class BaseFunctionalTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder */
     protected $container = null;
@@ -26,7 +26,8 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->container = Paraunit::buildContainer();
+        $this->loadContainer();
+
         $this->cleanUpTempDirForThisExecution();
     }
 
@@ -38,6 +39,8 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param StubbedParaunitProcess $process
+     * @param string $stubLog
      * @return StubbedParaunitProcess
      */
     public function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, $stubLog)
@@ -45,14 +48,14 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
         $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing! ' . $stubLogFilename);
 
-        /** @var JSONLogFilename $filename */
-        $filenameService = $this->container->get('paraunit.configuration.json_log_filename');
-        $filename = $filenameService->generate($process);
+        /** @var TempFilenameFactory $filenameService */
+        $filenameService = $this->container->get('paraunit.configuration.temp_filename_factory');
+        $filename = $filenameService->getFilenameForLog($process->getUniqueId());
 
         copy($stubLogFilename, $filename);
     }
 
-    private function cleanUpTempDirForThisExecution()
+    protected function cleanUpTempDirForThisExecution()
     {
         if ($this->container) {
             /** @var TempDirectory $tempDirectory */
@@ -104,5 +107,13 @@ abstract class BaseFunctionalTestCase extends \PHPUnit_Framework_TestCase
             $this->createLogForProcessFromStubbedLog($process, $logName);
             $logParser->onProcessTerminated($processEvent);
         }
+    }
+
+    protected function loadContainer()
+    {
+        $configuration = new ParallelConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+
+        $this->container = $configuration->buildContainer($input->reveal());
     }
 }

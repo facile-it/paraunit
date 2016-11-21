@@ -2,9 +2,7 @@
 
 namespace Paraunit\Process;
 
-use Paraunit\Configuration\JSONLogFilename;
-use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfigFile;
+use Paraunit\Configuration\PHPUnitConfig;
 
 /**
  * Class ProcessFactory
@@ -12,23 +10,19 @@ use Paraunit\Configuration\PHPUnitConfigFile;
  */
 class ProcessFactory
 {
-    /** @var  string */
-    private $phpUnitBin;
+    /** @var  CliCommandInterface */
+    private $cliCommand;
 
-    /** @var  JSONLogFilename */
-    private $jsonLogFilename;
-
-    /** @var  PHPUnitConfigFile */
-    private $phpunitConfigFile;
+    /** @var  PHPUnitConfig */
+    private $phpunitConfig;
 
     /**
      * ProcessFactory constructor.
-     * @param PHPUnitBinFile $phpUnitBinFile
+     * @param CliCommandInterface $cliCommand
      */
-    public function __construct(PHPUnitBinFile $phpUnitBinFile, JSONLogFilename $jsonLogFilename)
+    public function __construct(CliCommandInterface $cliCommand)
     {
-        $this->phpUnitBin = $phpUnitBinFile->getPhpUnitBin();
-        $this->jsonLogFilename = $jsonLogFilename;
+        $this->cliCommand = $cliCommand;
     }
 
     /**
@@ -38,22 +32,10 @@ class ProcessFactory
      */
     public function createProcess($testFilePath)
     {
-        if (! $this->phpunitConfigFile instanceof PHPUnitConfigFile) {
-            throw new \Exception('PHPUnit config missing');
-        }
-
         $uniqueId = $this->createUniqueId($testFilePath);
         $command = $this->createCommandLine($testFilePath, $uniqueId);
 
         return new SymfonyProcessWrapper($command, $uniqueId);
-    }
-
-    /**
-     * @param PHPUnitConfigFile $configFile
-     */
-    public function setConfigFile(PHPUnitConfigFile $configFile)
-    {
-        $this->phpunitConfigFile = $configFile;
     }
 
     /**
@@ -63,11 +45,9 @@ class ProcessFactory
      */
     private function createCommandLine($testFilePath, $uniqueId)
     {
-        return $this->phpUnitBin .
-        ' -c ' . $this->phpunitConfigFile->getFileFullPath() .
-        ' --colors=never' .
-        ' --log-json=' . $this->jsonLogFilename->generateFromUniqueId($uniqueId) .
-        ' ' . $testFilePath;
+        return $this->cliCommand->getExecutable()
+            . ' ' . $this->cliCommand->getOptions($this->phpunitConfig, $uniqueId)
+            . ' ' . $testFilePath;
     }
 
     /**
@@ -77,5 +57,10 @@ class ProcessFactory
     private function createUniqueId($testFilePath)
     {
         return md5($testFilePath);
+    }
+
+    public function setPHPUnitConfig(PHPUnitConfig $phpunitConfig)
+    {
+        $this->phpunitConfig = $phpunitConfig;
     }
 }

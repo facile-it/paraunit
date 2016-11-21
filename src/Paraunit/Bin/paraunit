@@ -7,7 +7,7 @@ if (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     // Required for local testing
     require_once __DIR__ . '/../../../vendor/autoload.php';
 } else {
-    throw new \Exception('Autoload not found');
+    throw new RuntimeException('Autoload not found');
 }
 
 if ( ! ini_get('date.timezone') && ! date_default_timezone_get()) {
@@ -17,6 +17,5 @@ if ( ! ini_get('date.timezone') && ! date_default_timezone_get()) {
 // HOTFIX -- needed to fool the Symfony's WebTestCase
 $_SERVER['argv'][0] = 'phpunit';
 
-Paraunit\Configuration\Paraunit::buildContainer()
-    ->get('paraunit.application')
-    ->run();
+$application = \Paraunit\Bin\Paraunit::createApplication();
+$application->run();

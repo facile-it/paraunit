@@ -21,12 +21,12 @@ class TestStartParser implements JSONParserChainElementInterface
 
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
-        if (property_exists($logItem, 'status') && $logItem->status == JSONLogFetcher::LOG_ENDING_STATUS) {
+        if (property_exists($logItem, 'status') && $logItem->status === JSONLogFetcher::LOG_ENDING_STATUS) {
             return $this->handleLogTermination($process, $logItem);
         }
 
         if (property_exists($logItem, 'event')) {
-            if ($logItem->event == 'testStart' || $logItem->event == 'suiteStart') {
+            if ($logItem->event === 'testStart' || $logItem->event === 'suiteStart') {
                 $process->setWaitingForTestResult(true);
                 $this->saveProcessFunction($process, $logItem);
 
@@ -71,7 +71,7 @@ class TestStartParser implements JSONParserChainElementInterface
     {
         $logItem->test = $this->lastFunction;
 
-        if (is_null($this->lastFunction) || $process !== $this->lastProcess) {
+        if ($this->lastFunction === null || $process !== $this->lastProcess) {
             $logItem->test = self::UNKNOWN_FUNCTION;
         }
     }

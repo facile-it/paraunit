@@ -4,6 +4,35 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ## [0.7] - TBA
 
+### Changed
+
+* A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
+ new supported options is:
+  * `filter`
+  * `group`
+  * `exclude-group`
+  * `test-suffix`
+  * `report-useless-tests`
+  * `strict-global-state`
+  * `disallow-test-output`
+  * `enforce-time-limit`
+  * `disallow-todo-tests`
+  * `process-isolation`
+  * `no-globals-backup`
+  * `static-backup`
+  * `loader`
+  * `repeat`
+  * `printer`
+  * `bootstrap`
+  * `no-configuration`
+  * `include-path`
+  
+ `testsuite` and `configuration` options are still supported; thanks to @sergeyz for suggesting the feature (#56)
+
+### Fixed
+
+* Fixed a minor typo that caused version number to be different in the command help versus the command cli "header"
+
 ## [0.6.2] - 2016-10-24
 
 ### Changed

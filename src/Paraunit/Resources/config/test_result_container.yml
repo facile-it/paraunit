@@ -1,4 +1,9 @@
 services:
+  paraunit.test_result.no_test_executed_container:
+    class: Paraunit\TestResult\DumbTestResultContainer
+    arguments:
+      - "@paraunit.test_result.no_test_executed_format"
+
   paraunit.test_result.test_start_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:

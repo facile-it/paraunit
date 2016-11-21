@@ -37,7 +37,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         $this->uniqueId = $uniqueId;
 
         $filename = array();
-        if (preg_match('/[A-z]*\.php/', $commandLine, $filename) === 1) {
+        if (preg_match('/(?<=[\/\\\])[A-z]+\.php/', $commandLine, $filename) === 1) {
             $this->filename = $filename[0];
         }
 

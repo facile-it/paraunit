@@ -21,7 +21,7 @@ class TempDirectory
      */
     public function __construct()
     {
-        $this->timestamp = uniqid(date('Ymd-His'));
+        $this->timestamp = uniqid(date('Ymd-His'), true);
     }
 
     /**

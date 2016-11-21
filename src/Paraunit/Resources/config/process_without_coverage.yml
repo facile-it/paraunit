@@ -1,0 +1,5 @@
+services:
+  paraunit.process.process_factory:
+    class: Paraunit\Process\ProcessFactory
+    arguments:
+      - "@paraunit.process.test_command_line"

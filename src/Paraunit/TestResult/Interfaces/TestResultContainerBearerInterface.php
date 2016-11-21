@@ -9,7 +9,7 @@ namespace Paraunit\TestResult\Interfaces;
 interface TestResultContainerBearerInterface
 {
     /**
-     * @return TestResultContainerInterface
+     * @return TestResultBearerInterface
      */
     public function getTestResultContainer();
 }

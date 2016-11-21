@@ -1,0 +1,9 @@
+services:
+  paraunit.proxy.coverage.clover_result:
+    class: Paraunit\Proxy\Coverage\CloverResult
+
+  paraunit.proxy.coverage.xml_result:
+    class: Paraunit\Proxy\Coverage\XmlResult
+
+  paraunit.proxy.coverage.html_result:
+    class: Paraunit\Proxy\Coverage\HtmlResult
