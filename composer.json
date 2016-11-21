@@ -25,6 +25,7 @@
   "require": {
     "symfony/console": ">=2.3,<4.0",
     "symfony/dependency-injection": ">=2.3,<4.0",
+    "symfony/http-kernel": ">=2.3,<4.0",
     "symfony/config": ">=2.3,<4.0",
     "symfony/process": ">=2.3,<4.0",
     "symfony/event-dispatcher": ">=2.3,<4.0",

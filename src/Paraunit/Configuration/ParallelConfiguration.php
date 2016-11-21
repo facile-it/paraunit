@@ -20,6 +20,7 @@ class ParallelConfiguration
     /**
      * @param InputInterface $input
      * @return ContainerBuilder
+     * @throws \Exception
      */
     public function buildContainer(InputInterface $input)
     {
@@ -36,6 +37,7 @@ class ParallelConfiguration
     /**
      * @param ContainerBuilder $containerBuilder
      * @return YamlFileLoader
+     * @throws \Exception
      */
     protected function loadYamlConfiguration(ContainerBuilder $containerBuilder)
     {
@@ -50,6 +52,12 @@ class ParallelConfiguration
         $loader->load('test_result_container.yml');
         $loader->load('test_result_format.yml');
 
+        $eventDispatcherPass = 'Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass';
+        $deprecatedPass = 'Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass';
+        if (! class_exists($eventDispatcherPass)) {
+            class_alias($deprecatedPass, $eventDispatcherPass);
+        }
+
         return $loader;
     }
 
@@ -61,7 +69,8 @@ class ParallelConfiguration
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
         $containerBuilder->addCompilerPass(new ParserCompilerPass());
 
-        $containerBuilder->setDefinition(
+        $containerBuilder->
+        setDefinition(
             'event_dispatcher',
             new Definition(
                 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',

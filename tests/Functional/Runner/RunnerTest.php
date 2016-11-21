@@ -7,7 +7,6 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\UnformattedOutputStub;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Class RunnerTest.
@@ -50,7 +49,7 @@ class RunnerTest extends BaseFunctionalTestCase
      */
     public function testMaxRetryDeadlock($stubFilePath)
     {
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
 
         $runner = $this->container->get('paraunit.runner.runner');
 

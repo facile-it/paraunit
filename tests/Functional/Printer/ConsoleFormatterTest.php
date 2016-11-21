@@ -4,10 +4,9 @@ namespace Tests\Functional\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\ConsoleFormatter;
-use Paraunit\Output\OutputContainerInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class ConsoleFormatterTest
@@ -24,7 +23,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $testResultContainer = $this->container->get($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
         $consoleFormatter = $this->container->get('paraunit.printer.console_formatter');
-        $outputInterface = new BufferedOutput();
+        $outputInterface = new UnformattedOutputStub();
         $event = new EngineEvent($outputInterface);
 
         $consoleFormatter->onEngineStart($event);
@@ -35,14 +34,13 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $this->assertInstanceOf(
             'Symfony\Component\Console\Formatter\OutputFormatterStyleInterface',
             $style,
-            'Missing tag style: ' . $tag . ' -- service ' .$containerServiceName
+            'Missing tag style: ' . $tag . ' -- service ' . $containerServiceName
         );
     }
 
     public function serviceTagsProvider()
     {
         return array(
-//            array('paraunit.test_result.null_container'),
             array('paraunit.test_result.abnormal_terminated_container'),
             array('paraunit.test_result.error_container'),
             array('paraunit.test_result.failure_container'),
