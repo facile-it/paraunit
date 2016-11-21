@@ -1,6 +1,7 @@
 # Changes in Paraunit 0.x
 
-All notable changes of the Paraunit 0.x release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+All notable changes of the Paraunit 0.x release series are documented in this file using the 
+[Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [0.7] - TBA
 
@@ -28,9 +29,12 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
   * `include-path`
   
  `testsuite` and `configuration` options are still supported; thanks to @sergeyz for suggesting the feature (#56)
+* PHP 7.1 added to the Travis build matrix
 
 ### Fixed
 
+* Symfony 2.3 compatibility restored: the Travis build now tests with `--prefer-lowest` under PHP 5.3; this added 
+  `symfony/http-kernel` to the required packages
 * Fixed a minor typo that caused version number to be different in the command help versus the command cli "header"
 
 ## [0.6.2] - 2016-10-24
