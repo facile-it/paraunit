@@ -20,6 +20,7 @@ class Paraunit
 
     /**
      * @return ContainerBuilder
+     * @throws \Exception
      */
     public static function buildContainer()
     {
@@ -34,6 +35,12 @@ class Paraunit
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');
         $loader->load('test_result_format.yml');
+
+        $eventDispatcherPass = 'Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass';
+        $deprecatedPass = 'Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass';
+        if (! class_exists($eventDispatcherPass)) {
+            class_alias($deprecatedPass, $eventDispatcherPass);
+        }
 
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
         $containerBuilder->addCompilerPass(new ParserCompilerPass());

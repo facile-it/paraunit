@@ -8,12 +8,12 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class ParserCompilerPass
+ * @package Paraunit\Parser
  */
 class ParserCompilerPass implements CompilerPassInterface
 {
-
     const TAGGED_SERVICES = 'log_parser';
-    const TO_COMPILE      = 'paraunit.parser.json_log_parser';
+    const TO_COMPILE = 'paraunit.parser.json_log_parser';
 
     /**
      * @inheritdoc
