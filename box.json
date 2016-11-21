@@ -23,5 +23,5 @@
   "main": "src/Paraunit/Bin/phar",
   "shebang": "#!/usr/bin/env php",
   "output": "paraunit.phar",
-  "stub": true
+  "stub": false
 }
