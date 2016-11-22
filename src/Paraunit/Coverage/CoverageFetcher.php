@@ -36,6 +36,7 @@ class CoverageFetcher
 
         if ($this->coverageFileIsValid($tempFilename)) {
             $codeCoverage = require $tempFilename;
+            unlink($tempFilename);
         }
 
         if ($codeCoverage instanceof CodeCoverage) {

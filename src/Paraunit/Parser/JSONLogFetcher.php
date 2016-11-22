@@ -36,6 +36,7 @@ class JSONLogFetcher
 
         if (file_exists($filePath)) {
             $fileContent = file_get_contents($filePath);
+            unlink($filePath);
         }
 
         $logs = json_decode($this->cleanLog($fileContent));
