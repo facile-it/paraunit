@@ -25,7 +25,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
 
-        $filename = '/tmp/testfile.json';
+        $filename = uniqid('/tmp/testfile', true) . '.php';
         copy($this->getCoverageStubFilePath(), $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
@@ -60,8 +60,12 @@ class CoverageFetcherTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
 
+        $filename = uniqid('/tmp/testfile', true) . '.php';
+        copy($this->getWrongCoverageStubFilePath(), $filename);
+        $this->assertFileExists($filename, 'Test malformed, stub log file not found');
+
         $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($this->getWrongCoverageStubFilePath());
+        $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($filename);
 
         $fetcher = new CoverageFetcher($tempFilenameFactory->reveal());
 
@@ -69,5 +73,6 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $this->assertInstanceOf('SebastianBergmann\CodeCoverage\CodeCoverage', $result);
         $this->assertEmpty($result->getData());
+        $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 }

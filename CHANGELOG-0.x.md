@@ -33,6 +33,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
   
  `testsuite` and `configuration` options are still supported; thanks to @sergeyz for suggesting the feature (#56)
 * PHP 7.1 added to the Travis build matrix
+* Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)
 
 ### Fixed
 
