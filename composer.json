@@ -34,6 +34,7 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",
     "phpunit/php-code-coverage": ">=2.2.0,<5",
+    "codeclimate/php-test-reporter": "dev-master",
     "satooshi/php-coveralls": "~1.0"
   },
   "bin": ["src/Paraunit/Bin/paraunit"],
@@ -57,7 +58,6 @@
   },
   "minimum-stability": "stable",
   "suggest": {
-    "phpunit/php-code-coverage": "Needed to produce test code coverage in parallel",
     "facile-it/paraunit-testcase": "Useful for Symfony2+Doctrine functional testing, providing DB isolation"
   }
 }
