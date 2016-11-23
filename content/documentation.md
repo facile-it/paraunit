@@ -6,12 +6,12 @@ title = "Documentation"
 Paraunit is a tool for faster executions of PHPUnit test suites. 
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.
 
-Paraunit is developed using [Symfony2 components](http://symfony.com/components).
+Paraunit is developed using [Symfony components](http://symfony.com/components).
 
 # Requirements
 Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit's .xml configuration file, so it's needed to know which test to load.
 
-If you are testing a Symfony2+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing;
+If you are testing a Symfony+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to **warm up the cache before**. in order to avoid a mass cache miss (and relative [cache stampede](https://en.wikipedia.org/wiki/Cache_stampede)) with concurrency problems, and subsequent random failures. 
 
 # Installation
@@ -29,7 +29,7 @@ To use this package, use [composer](https://getcomposer.org/):
 ```
 
 # Usage
-Paraunit starts as a Symfony2 console command, but it's provided through a bin launcher; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
+Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
 
 `vendor/bin/paraunit run`
 
