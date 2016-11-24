@@ -28,9 +28,10 @@ To use this package, use composer:
 ```
 
 ## Usage
-Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this:
+Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this:<br/>
+(assuming your composer's bin dir is `vendor/bin`)
 
-`bin/paraunit run`
+`vendor/bin/paraunit run`
 
 This command will launch all the tests in all your configured testsuites.
 
