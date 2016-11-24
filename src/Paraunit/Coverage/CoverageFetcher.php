@@ -77,12 +77,11 @@ class CoverageFetcher
     private function loadFakeXdebug()
     {
         $namespaces = array(
-            'SebastianBergmann\Environment',
-            'SebastianBergmann\CodeCoverage\Driver',
+            'SebastianBergmann\\Environment',
+            'SebastianBergmann\\CodeCoverage\\Driver',
         );
-
         foreach ($namespaces as $namespace) {
-            if (! function_exists($namespace . '\extension_loaded')) {
+            if (! function_exists($namespace . '\\extension_loaded')) {
                 eval(<<<EOPHP
 namespace $namespace;
 
