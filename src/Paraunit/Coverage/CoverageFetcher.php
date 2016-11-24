@@ -23,6 +23,9 @@ class CoverageFetcher
     public function __construct(TempFilenameFactory $tempFilenameFactory)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
+        if (! extension_loaded('xdebug')) {
+            $this->loadFakeXdebug();
+        }
     }
 
     /**
@@ -65,5 +68,26 @@ class CoverageFetcher
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * This function avoids exceptions when loading CodeCoverage instances when using PHPDBG and xdebug is missing.
+     * Inspired by Symfony\Bridge\PhpUnit\ClockMock::register
+     */
+    private function loadFakeXdebug()
+    {
+        eval(<<<EOPHP
+namespace SebastianBergmann\Environment;
+
+function extension_loaded(\$extensionName)
+{
+    if (\$extensionName == 'xdebug') {
+        return true;
+    }
+    
+    return \\extension_loaded(\$extensionName);
+}
+EOPHP
+        );
     }
 }
