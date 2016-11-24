@@ -76,9 +76,15 @@ class CoverageFetcher
      */
     private function loadFakeXdebug()
     {
-        if (! function_exists('SebastianBergmann\Environment\extension_loaded')) {
-            eval(<<<EOPHP
-namespace SebastianBergmann\Environment;
+        $namespaces = array(
+            'SebastianBergmann\Environment',
+            'SebastianBergmann\CodeCoverage\Driver',
+        );
+
+        foreach ($namespaces as $namespace) {
+            if (! function_exists($namespace . '\extension_loaded')) {
+                eval(<<<EOPHP
+namespace $namespace;
 
 function extension_loaded(\$extensionName)
 {
@@ -89,7 +95,8 @@ function extension_loaded(\$extensionName)
     return \\extension_loaded(\$extensionName);
 }
 EOPHP
-            );
+                );
+            }
         }
     }
 }
