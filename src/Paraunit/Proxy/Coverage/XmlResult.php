@@ -3,7 +3,6 @@
 namespace Paraunit\Proxy\Coverage;
 
 use Paraunit\Configuration\OutputPath;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
 /**

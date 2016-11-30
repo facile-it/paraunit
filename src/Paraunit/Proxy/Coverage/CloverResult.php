@@ -3,7 +3,6 @@
 namespace Paraunit\Proxy\Coverage;
 
 use Paraunit\Configuration\OutputFile;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Clover;
 
 /**

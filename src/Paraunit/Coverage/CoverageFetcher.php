@@ -4,7 +4,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
+use Paraunit\Proxy\Coverage\CodeCoverage;
 use Symfony\Component\Process\Process;
 
 /**
@@ -23,9 +23,6 @@ class CoverageFetcher
     public function __construct(TempFilenameFactory $tempFilenameFactory)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
-        if (! extension_loaded('xdebug')) {
-            $this->loadFakeXdebug();
-        }
     }
 
     /**
@@ -60,6 +57,8 @@ class CoverageFetcher
         }
 
         try {
+            $this->overrideCoverageClassDefinition($tempFilename);
+
             $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
             $verificationProcess->start();
             $verificationProcess->wait();
@@ -71,31 +70,19 @@ class CoverageFetcher
     }
 
     /**
-     * This function avoids exceptions when loading CodeCoverage instances when using PHPDBG and xdebug is missing.
-     * Inspired by Symfony\Bridge\PhpUnit\ClockMock::register
+     * @param string $tempFilename
      */
-    private function loadFakeXdebug()
+    private function overrideCoverageClassDefinition($tempFilename)
     {
-        $namespaces = array(
-            'SebastianBergmann\\Environment',
-            'SebastianBergmann\\CodeCoverage\\Driver',
+        $fileContent = str_replace(
+            array(
+                'new SebastianBergmann\CodeCoverage\CodeCoverage',
+                'new PHP_CodeCoverage'
+            ),
+            'new Paraunit\Proxy\Coverage\CodeCoverage',
+            file_get_contents($tempFilename)
         );
-        foreach ($namespaces as $namespace) {
-            if (! function_exists($namespace . '\\extension_loaded')) {
-                eval(<<<EOPHP
-namespace $namespace;
 
-function extension_loaded(\$extensionName)
-{
-    if (\$extensionName == 'xdebug') {
-        return true;
-    }
-    
-    return \\extension_loaded(\$extensionName);
-}
-EOPHP
-                );
-            }
-        }
+        file_put_contents($tempFilename, $fileContent);
     }
 }
