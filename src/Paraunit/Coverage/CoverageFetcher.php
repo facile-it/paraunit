@@ -27,7 +27,7 @@ class CoverageFetcher
 
     /**
      * @param AbstractParaunitProcess $process
-     * @return CodeCoverage
+     * @return \SebastianBergmann\CodeCoverage\CodeCoverage
      */
     public function fetch(AbstractParaunitProcess $process)
     {
