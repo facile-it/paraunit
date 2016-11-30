@@ -14,6 +14,7 @@ class PhpCodeCoverageCompat
         '\PHP_CodeCoverage_Report_Clover' => 'SebastianBergmann\CodeCoverage\Report\Clover',
         '\PHP_CodeCoverage_Report_HTML' => 'SebastianBergmann\CodeCoverage\Report\Html\Facade',
         '\PHP_CodeCoverage_Report_XML' => 'SebastianBergmann\CodeCoverage\Report\Xml\Facade',
+        '\PHP_CodeCoverage_Driver_PHPDBG' => 'SebastianBergmann\CodeCoverage\Driver\PHPDBG',
     );
 
     /**

@@ -36,7 +36,7 @@ class PHPDbgBinFile
 
     public function isAvailable()
     {
-        return file_exists($this->phpDbgBin);
+        return $this->phpDbgBin !== '';
     }
 
     /**
@@ -47,6 +47,6 @@ class PHPDbgBinFile
         $locator = new Process('command -v phpdbg');
         $locator->run();
 
-        return (string) $locator->getOutput();
+        return (string) preg_replace('/\s/', '', $locator->getOutput());
     }
 }

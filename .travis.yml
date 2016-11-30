@@ -12,13 +12,20 @@ matrix:
       env: 
         - TEST_COVERAGE=true
     - php: 7.0
+    - php: 7.0
+      env:
+        - XDEBUG_DISABLE=true
     - php: 7.1
+    - php: 7.1
+      env:
+        - XDEBUG_DISABLE=true
     - php: hhvm
   allow_failures:
     - php: hhvm
   fast_finish: true
 
-before_script:
+install:
+  - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini; fi
   - if [[ $TEST_COVERAGE ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; fi
   - composer update --prefer-dist --prefer-stable --no-interaction $COMPOSER_OPTIONS
 

@@ -12,21 +12,15 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class CoverageFetcherTest extends BaseUnitTestCase
 {
-    public function setUp()
-    {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('Coverage driver not present in HHVM');
-        }
-
-        parent::setUp();
-    }
-
-    public function testFetch()
+    /**
+     * @dataProvider coverageStubProvider
+     */
+    public function testFetch($coverageStub)
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
 
         $filename = uniqid('/tmp/testfile', true) . '.php';
-        copy($this->getCoverageStubFilePath(), $filename);
+        copy($coverageStub, $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
         $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
@@ -36,11 +30,18 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('\PHP_CodeCoverage', $result);
+        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
         $this->assertNotEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 
+    public function coverageStubProvider()
+    {
+        return array(
+            array($this->getCoverageStubFilePath()),
+            array($this->getCoverage4StubFilePath()),
+        );
+    }
     public function testFetchIgnoresMissingCoverageFiles()
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
@@ -52,7 +53,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('\PHP_CodeCoverage', $result);
+        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
         $this->assertEmpty($result->getData());
     }
 
@@ -71,7 +72,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('SebastianBergmann\CodeCoverage\CodeCoverage', $result);
+        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
         $this->assertEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
