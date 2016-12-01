@@ -5,6 +5,7 @@ namespace Paraunit\Coverage;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\CodeCoverage;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -60,8 +61,7 @@ class CoverageFetcher
             $this->overrideCoverageClassDefinition($tempFilename);
 
             $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
-            $verificationProcess->start();
-            $verificationProcess->wait();
+            $verificationProcess->run();
 
             return $verificationProcess->getExitCode() === 0;
         } catch (\Exception $e) {
@@ -71,18 +71,19 @@ class CoverageFetcher
 
     /**
      * @param string $tempFilename
+     * @return bool
+     * @throws RuntimeException
      */
     private function overrideCoverageClassDefinition($tempFilename)
     {
-        $fileContent = str_replace(
-            array(
-                'new SebastianBergmann\CodeCoverage\CodeCoverage',
-                'new PHP_CodeCoverage'
-            ),
-            'new Paraunit\Proxy\Coverage\CodeCoverage',
-            file_get_contents($tempFilename)
-        );
+        $className1 = 'new SebastianBergmann\\\\CodeCoverage\\\\CodeCoverage';
+        $className2 = 'new PHP_CodeCoverage';
+        $newClassName = 'new Paraunit\\\\Proxy\\\\Coverage\\\\CodeCoverage';
+        
+        $commandLine = "sed -r -i -e 's/($className1|$className2)/$newClassName/' $tempFilename";
 
-        file_put_contents($tempFilename, $fileContent);
+        $editProcess = new Process($commandLine);
+
+        return $editProcess->run() === 0;
     }
 }
