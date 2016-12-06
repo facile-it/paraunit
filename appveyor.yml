@@ -23,7 +23,7 @@ install:
   - cd c:\projects\paraunit
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/download/1.2.3/composer.phar)
   - php composer.phar self-update
-  - php composer update --prefer-dist --prefer-stable --no-interaction
+  - php composer.phar update --prefer-dist --prefer-stable --no-interaction
 
 test_script:
   - cd c:\projects\paraunit
