@@ -1,0 +1,12 @@
+clone_depth: 1
+cache:
+  - c:\projects\symfony\composer.phar
+
+install:
+  - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/download/1.2.3/composer.phar)
+  - composer update --prefer-dist --prefer-stable --no-interaction
+
+test_script:
+  - cd c:\projects\symfony
+  - php bin/phpunit -v
+  - php src/Paraunit/Bin/paraunit run # self-consistency test
