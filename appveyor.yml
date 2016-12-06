@@ -3,12 +3,12 @@ cache:
   - c:\projects\symfony\composer.phar
 
 install:
-  - cd c:\projects\symfony
+  - cd c:\projects\paraunit
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/download/1.2.3/composer.phar)
   - php composer.phar self-update
   - php composer update --prefer-dist --prefer-stable --no-interaction
 
 test_script:
-  - cd c:\projects\symfony
+  - cd c:\projects\paraunit
   - php bin/phpunit -v
   - php src/Paraunit/Bin/paraunit run # self-consistency test
