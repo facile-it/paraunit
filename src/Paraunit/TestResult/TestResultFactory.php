@@ -11,18 +11,6 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
  */
 class TestResultFactory
 {
-    /** @var  TestResultFormat */
-    private $format;
-
-    /**
-     * TestResultFactory constructor.
-     * @param TestResultFormat $format
-     */
-    public function __construct(TestResultFormat $format)
-    {
-        $this->format = $format;
-    }
-
     /**
      * @param \stdClass $log
      * @return PrintableTestResultInterface
@@ -31,7 +19,6 @@ class TestResultFactory
     {
         if (property_exists($log, 'status') && $log->status === JSONLogFetcher::LOG_ENDING_STATUS) {
             return new TestResultWithAbnormalTermination(
-                $this->format,
                 $log->test,
                 'Abnormal termination -- complete test output:'
             );
@@ -42,13 +29,13 @@ class TestResultFactory
         }
 
         if (property_exists($log, 'trace')) {
-            $result = new FullTestResult($this->format, $log->test, $log->message);
+            $result = new FullTestResult($log->test, $log->message);
             $this->addTraceToResult($result, $log);
 
             return $result;
         }
 
-        return new TestResultWithMessage($this->format, $log->test, $log->message);
+        return new TestResultWithMessage($log->test, $log->message);
     }
 
     /**

@@ -24,7 +24,7 @@ class GenericParserTest extends BaseUnitTestCase
             unset($log->message);
         }
 
-        $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
+        $result = new FullTestResult('b', 'c');
         
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);

@@ -69,10 +69,15 @@ abstract class BaseUnitTestCase extends BaseTestCase
         return $this->prophesize('Paraunit\TestResult\Interfaces\TestResultInterface')->reveal();
     }
 
-    protected function mockPrintableTestResult($symbol = '.')
+    protected function mockPrintableTestResult($symbol = null)
     {
-        $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
-        $format->getTestResultSymbol()->willReturn($symbol);
+        if ($symbol === null) {
+            $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        } else {
+            $format = $this->prophesize('Paraunit\TestResult\TestResultWithSymbolFormat');
+            $format->getTestResultSymbol()->willReturn($symbol);
+        }
+
         $result = $this->prophesize('Paraunit\TestResult\Interfaces\PrintableTestResultInterface');
         $result->getTestResultFormat()->willReturn($format->reveal());
 

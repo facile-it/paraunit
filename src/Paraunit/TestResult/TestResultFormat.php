@@ -9,9 +9,6 @@ namespace Paraunit\TestResult;
 class TestResultFormat
 {
     /** @var string */
-    private $testResultSymbol;
-
-    /** @var string */
     private $tag;
 
     /** @var string */
@@ -25,27 +22,17 @@ class TestResultFormat
 
     /**
      * TestResultFormat constructor.
-     * @param string $testResultSymbol
      * @param string $tag
      * @param string $title
      * @param bool $printTestOutput
      * @param bool $printFilesRecap
      */
-    public function __construct($testResultSymbol, $tag, $title, $printTestOutput = true, $printFilesRecap = true)
+    public function __construct($tag, $title, $printTestOutput = true, $printFilesRecap = true)
     {
-        $this->testResultSymbol = $testResultSymbol;
         $this->tag = $tag;
         $this->title = $title;
         $this->printTestOutput = $printTestOutput;
         $this->printFilesRecap = $printFilesRecap;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTestResultSymbol()
-    {
-        return $this->testResultSymbol;
     }
 
     /**

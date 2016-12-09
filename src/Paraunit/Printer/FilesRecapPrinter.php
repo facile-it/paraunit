@@ -3,7 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\TestResult\Interfaces\TestFilenameBearerInterface;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -25,10 +25,10 @@ class FilesRecapPrinter extends AbstractFinalPrinter
     }
 
     /**
-     * @param TestFilenameBearerInterface $testResultContainer
+     * @param TestResultContainerInterface $testResultContainer
      * @param OutputInterface $output
      */
-    private function printFileRecap(TestFilenameBearerInterface $testResultContainer, OutputInterface $output)
+    private function printFileRecap(TestResultContainerInterface $testResultContainer, OutputInterface $output)
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;

@@ -9,11 +9,6 @@ services:
     arguments:
       - "@paraunit.test_result.coverage_failure_format"
 
-  paraunit.test_result.test_start_container:
-    class: Paraunit\TestResult\TestResultContainer
-    arguments:
-      - "@paraunit.test_result.null_format"
-
   paraunit.test_result.pass_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:

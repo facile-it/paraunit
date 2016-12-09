@@ -4,7 +4,6 @@ namespace Tests\Unit\TestResult;
 
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
-use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -17,21 +16,22 @@ class TestResultContainerTest extends BaseUnitTestCase
     public function testAddProcessToFilenames()
     {
         $testResultFormat = $this->prophesize('Paraunit\TestResult\TestResultFormat');
-        $dumbContainer = new TestResultContainer($testResultFormat->reveal());
+        $testResultContainer = new TestResultContainer($testResultFormat->reveal());
+
         $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');
         $unitTestProcess->setFilename('ClassTest.php');
         $functionalTestProcess = new StubbedParaunitProcess('phpunit Functional/ClassTest.php');
         $functionalTestProcess->setFilename('ClassTest.php');
 
-        $dumbContainer->addProcessToFilenames($unitTestProcess);
-        $dumbContainer->addProcessToFilenames($functionalTestProcess);
+        $testResultContainer->addProcessToFilenames($unitTestProcess);
+        $testResultContainer->addProcessToFilenames($functionalTestProcess);
 
-        $this->assertCount(2, $dumbContainer->getFileNames());
+        $this->assertCount(2, $testResultContainer->getFileNames());
     }
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded()
     {
-        $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
@@ -44,7 +44,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty()
     {
-        $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
         $process->setOutput(null);
 

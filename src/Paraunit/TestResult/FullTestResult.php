@@ -18,13 +18,12 @@ class FullTestResult extends TestResultWithMessage implements PrintableTestResul
 
     /**
      * FullTestResult constructor.
-     * @param TestResultFormat $testResultFormat
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct($testResultFormat, $functionName, $failureMessage)
+    public function __construct($functionName, $failureMessage)
     {
-        parent::__construct($testResultFormat, $functionName, $failureMessage);
+        parent::__construct($functionName, $failureMessage);
         $this->trace = array();
     }
 

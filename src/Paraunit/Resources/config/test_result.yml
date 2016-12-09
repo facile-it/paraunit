@@ -1,8 +1,6 @@
 services:
   paraunit.test_result.test_result_factory:
     class: Paraunit\TestResult\TestResultFactory
-    arguments:
-      - "@paraunit.test_result.null_format"
 
   paraunit.test_result.test_result_list:
     class: Paraunit\TestResult\TestResultList
@@ -18,3 +16,4 @@ services:
       - ["addContainer", ["@paraunit.test_result.skipped_container"]]
       - ["addContainer", ["@paraunit.test_result.incomplete_container"]]
       - ["addContainer", ["@paraunit.test_result.retry_container"]]
+      - ["addContainer", ["@paraunit.test_result.pass_container"]]

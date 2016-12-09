@@ -10,7 +10,10 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
  * Class TestResultWithMessage
  * @package Paraunit\TestResult
  */
-class TestResultWithMessage extends MuteTestResult implements PrintableTestResultInterface, FunctionNameInterface, FailureMessageInterface
+class TestResultWithMessage extends MuteTestResult implements
+    PrintableTestResultInterface,
+    FunctionNameInterface,
+    FailureMessageInterface
 {
     /** @var  string */
     private $functionName;
@@ -20,13 +23,12 @@ class TestResultWithMessage extends MuteTestResult implements PrintableTestResul
 
     /**
      * TestResultWithMessage constructor.
-     * @param TestResultFormat $testResultFormat
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct(TestResultFormat $testResultFormat, $functionName, $failureMessage)
+    public function __construct($functionName, $failureMessage)
     {
-        $this->setTestResultFormat($testResultFormat);
+        parent::__construct();
         $this->functionName = $functionName;
         $this->failureMessage = $failureMessage;
     }

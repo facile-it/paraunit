@@ -26,7 +26,7 @@ class UnknownResultParserTest extends BaseUnitTestCase
         $factory->createFromLog($log)
             ->shouldBeCalled()
             ->willReturn($this->mockPrintableTestResult());
-        $resultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $resultContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalled();
 

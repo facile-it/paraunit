@@ -1,6 +1,6 @@
 services:
   paraunit.test_result.pass_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "."
       - "ok"
@@ -9,7 +9,7 @@ services:
       - false
 
   paraunit.test_result.retry_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "A"
       - "ok"
@@ -17,14 +17,14 @@ services:
       - false
 
   paraunit.test_result.unknown_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "?"
       - "unknown"
       - "unknown results (log parsing failed)"
 
   paraunit.test_result.abnormal_terminated_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "X"
       - "abnormal"
@@ -33,26 +33,25 @@ services:
   paraunit.test_result.coverage_failure_format:
     class: Paraunit\TestResult\TestResultFormat
     arguments:
-      - ""
       - "error"
       - "coverage not fetched"
 
   paraunit.test_result.error_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "E"
       - "error"
       - "errors"
 
   paraunit.test_result.failure_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "F"
       - "fail"
       - "failures"
 
   paraunit.test_result.warning_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "W"
       - "warning"
@@ -61,19 +60,18 @@ services:
   paraunit.test_result.no_test_executed_format:
     class: Paraunit\TestResult\TestResultFormat
     arguments:
-      - ""
       - "warning"
       - "no tests executed"
 
   paraunit.test_result.risky_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "R"
       - "warning"
       - "risky outcome"
 
   paraunit.test_result.skipped_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "S"
       - "skip"
@@ -81,18 +79,9 @@ services:
       - false
 
   paraunit.test_result.incomplete_test_result_format:
-    class: Paraunit\TestResult\TestResultFormat
+    class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:
       - "I"
       - "incomplete"
       - "incomplete outcome"
-      - false
-
-  paraunit.test_result.null_format:
-    class: Paraunit\TestResult\TestResultFormat
-    arguments:
-      - ""
-      - "null"
-      - ""
-      - false
       - false

@@ -3,9 +3,8 @@
 namespace Paraunit\Printer;
 
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
+use Paraunit\TestResult\TestResultWithSymbolFormat;
 
 /**
  * Class SingleResultFormatter
@@ -25,8 +24,9 @@ class SingleResultFormatter
         $this->tagMap = array();
 
         foreach ($testResultList->getTestResultContainers() as $parser) {
-            if ($parser instanceof TestResultContainer) {
-                $this->addToMap($parser->getTestResultFormat());
+            $format = $parser->getTestResultFormat();
+            if ($format instanceof TestResultWithSymbolFormat) {
+                $this->addToMap($format);
             }
         }
     }
@@ -37,21 +37,22 @@ class SingleResultFormatter
      */
     public function formatSingleResult(PrintableTestResultInterface $singleResult)
     {
-        $resultSymbol = $singleResult->getTestResultFormat()->getTestResultSymbol();
+        $format = $singleResult->getTestResultFormat();
 
-        if (array_key_exists($resultSymbol, $this->tagMap)) {
-            $tag = $this->tagMap[$resultSymbol];
-
-            return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
+        if (! $format instanceof TestResultWithSymbolFormat) {
+            return '';
         }
 
-        return $resultSymbol;
+        $resultSymbol = $format->getTestResultSymbol();
+        $tag = $this->tagMap[$resultSymbol];
+
+        return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
     }
 
     /**
-     * @param TestResultFormat $format
+     * @param TestResultWithSymbolFormat $format
      */
-    private function addToMap(TestResultFormat $format)
+    private function addToMap(TestResultWithSymbolFormat $format)
     {
         $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
     }

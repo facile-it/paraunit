@@ -3,9 +3,9 @@
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\SingleResultFormatter;
-use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
+use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseFunctionalTestCase;
 
 /**
@@ -22,14 +22,16 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
         $testResultList = $this->container->get('paraunit.test_result.test_result_list');
 
         foreach ($testResultList->getTestResultContainers() as $resultContainer) {
-            if ($resultContainer instanceof TestResultContainer) {
-                $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());
-            }
+            $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());
         }
     }
 
     private function assertMappingIsCorrect(SingleResultFormatter $formatter, TestResultFormat $testResultFormat)
     {
+        if (! $testResultFormat instanceof TestResultWithSymbolFormat) {
+            return;
+        }
+
         $tag = $testResultFormat->getTag();
         $symbol = $testResultFormat->getTestResultSymbol();
 
@@ -39,7 +41,7 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
         $this->assertEquals(
             sprintf('<%s>%s</%s>', $tag, $symbol, $tag),
             $formatter->formatSingleResult($testResult->reveal()),
-            'Mapping incorrect for test result symbol: ' . $symbol
+            'Mapping incorrect for test result symbol: ' . ($symbol ?: 'N/A')
             . '[' . $testResultFormat->getTitle() . ']'
         );
     }
