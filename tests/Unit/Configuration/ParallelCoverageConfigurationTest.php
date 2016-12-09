@@ -4,12 +4,13 @@ namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelCoverageConfiguration;
 use Prophecy\Argument;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class ParaunitCoverageTest
  * @package Tests\Unit\Configuration
  */
-class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
+class ParallelCoverageConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
