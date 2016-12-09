@@ -13,7 +13,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 class TestCommandLine implements CliCommandInterface
 {
     /** @var  PHPUnitBinFile */
-    private $phpUnitBin;
+    protected $phpUnitBin;
 
     /** @var  TempFilenameFactory */
     protected $filenameFactory;
@@ -34,7 +34,7 @@ class TestCommandLine implements CliCommandInterface
      */
     public function getExecutable()
     {
-        return $this->phpUnitBin->getPhpUnitBin();
+        return 'php ' . $this->phpUnitBin->getPhpUnitBin();
     }
 
     /**

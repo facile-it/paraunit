@@ -19,7 +19,7 @@ class TestCommandLineTest extends \PHPUnit_Framework_TestCase
 
         $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
-        $this->assertEquals('path/to/phpunit', $cli->getExecutable());
+        $this->assertEquals('php path/to/phpunit', $cli->getExecutable());
     }
 
     public function testGetOptionsFor()

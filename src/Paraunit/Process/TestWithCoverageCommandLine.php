@@ -46,8 +46,7 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
     {
         $options = '';
         if ($this->phpDbgBinFile->isAvailable()) {
-            $options .= '-qrr '
-                . parent::getExecutable() . ' ';
+            $options .= '-qrr ' . $this->phpUnitBin->getPhpUnitBin() . ' ';
         }
 
         return $options

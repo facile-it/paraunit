@@ -22,7 +22,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
 
         $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
 
-        $this->assertEquals('path/to/phpunit', $cli->getExecutable());
+        $this->assertEquals('php path/to/phpunit', $cli->getExecutable());
     }
 
     public function testGetExecutableWithDbg()
