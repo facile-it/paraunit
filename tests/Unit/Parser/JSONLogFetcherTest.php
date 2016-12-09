@@ -36,7 +36,7 @@ class JSONLogFetcherTest extends BaseUnitTestCase
     public function testFetch()
     {
         $process = new StubbedParaunitProcess();
-        $filename = '/tmp/testfile.json';
+        $filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testfile.json';
         copy(__DIR__ . '/../../Stub/PHPUnitJSONLogOutput/AllGreen.json', $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 

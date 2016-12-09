@@ -37,6 +37,6 @@ class PHPUnitBinFile
      */
     public function getPhpUnitBin()
     {
-        return $this->phpUnitBin;
+        return 'php ' . $this->phpUnitBin;
     }
 }

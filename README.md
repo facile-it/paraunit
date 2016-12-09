@@ -3,6 +3,7 @@
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
 [![Build status][Master build image]][Master build link]
+[![Appveyor build status][Appveyor build image]][Appveyor build link]
 
 [![Coverage Status][Master coverage image]][Master coverage link]
 [![Scrutinizer][Master scrutinizer image]][Master scrutinizer link]
@@ -41,6 +42,7 @@ For more details about Paraunit and its usage, see the [documentation](http://fa
 [Last stable image]: https://poser.pugx.org/facile-it/paraunit/version.svg
 [Last unstable image]: https://poser.pugx.org/facile-it/paraunit/v/unstable.svg
 [Master build image]: https://travis-ci.org/facile-it/paraunit.svg
+[Appveyor build image]: https://ci.appveyor.com/api/projects/status/ohmhq2s762x3ixli/branch/master?svg=true
 [Master climate image]: https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg
 [Master scrutinizer image]: https://scrutinizer-ci.com/g/facile-it/paraunit/badges/quality-score.png?b=master
 [Master coverage image]: https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&service=github
@@ -48,6 +50,7 @@ For more details about Paraunit and its usage, see the [documentation](http://fa
 
 [Packagist link]: https://packagist.org/packages/facile-it/paraunit
 [Master build link]: https://travis-ci.org/facile-it/paraunit
+[Appveyor build link]: https://ci.appveyor.com/project/Jean85/paraunit/branch/master
 [Master climate link]: https://codeclimate.com/github/facile-it/paraunit
 [Master scrutinizer link]: https://scrutinizer-ci.com/g/facile-it/paraunit/?branch=master
 [Master coverage link]: https://coveralls.io/github/facile-it/paraunit?branch=master
