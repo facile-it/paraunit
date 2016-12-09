@@ -13,7 +13,8 @@ use Symfony\Component\DependencyInjection\Reference;
 class ParserCompilerPass implements CompilerPassInterface
 {
     const TAGGED_SERVICES = 'log_parser';
-    const TO_COMPILE = 'paraunit.parser.json_log_parser';
+    const LOG_PARSER_SERVICE = 'paraunit.parser.json_log_parser';
+    const TEST_RESULT_LIST_SERVICE = 'paraunit.test_result.test_result_list';
 
     /**
      * @inheritdoc
@@ -29,9 +30,13 @@ class ParserCompilerPass implements CompilerPassInterface
             }
         );
 
+        $jsonLogService = $container->getDefinition(self::LOG_PARSER_SERVICE);
+        $listService = $container->getDefinition(self::TEST_RESULT_LIST_SERVICE);
+
         foreach ($taggedServices as $id => $taggedService) {
-            $service = $container->getDefinition(self::TO_COMPILE);
-            $service->addMethodCall('addParser', array(new Reference($id)));
+            $callParameters = array(new Reference($id));
+            $jsonLogService->addMethodCall('addParser', $callParameters);
+            $listService->addMethodCall('addParser', $callParameters);
         }
     }
 }

@@ -3,11 +3,10 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestResultContainer;
 
 /**
- * Class FinalPrinter.
+ * Class FinalPrinter
+ * @package Paraunit\Printer
  */
 class FinalPrinter extends AbstractFinalPrinter
 {
@@ -42,11 +41,8 @@ class FinalPrinter extends AbstractFinalPrinter
         $output = $engineEvent->getOutputInterface();
         $completedProcesses = $engineEvent->get('process_completed');
         $testsCount = 0;
-        /** @var AbstractParaunitProcess $process */
-        foreach ($this->logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof TestResultContainer) {
-                $testsCount += $parser->countTestResults();
-            }
+        foreach ($this->testResultList->getTestResultContainers() as $container) {
+            $testsCount += $container->countTestResults();
         }
 
         $output->writeln('');

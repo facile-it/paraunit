@@ -2,10 +2,10 @@
 
 namespace Paraunit\Printer;
 
-use Paraunit\Parser\JSONLogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
+use Paraunit\TestResult\TestResultList;
 
 /**
  * Class SingleResultFormatter
@@ -18,13 +18,13 @@ class SingleResultFormatter
 
     /**
      * SingleResultFormatter constructor.
-     * @param JSONLogParser $logParser
+     * @param TestResultList $testResultList
      */
-    public function __construct(JSONLogParser $logParser)
+    public function __construct(TestResultList $testResultList)
     {
         $this->tagMap = array();
 
-        foreach ($logParser->getParsers() as $parser) {
+        foreach ($testResultList->getTestResultContainers() as $parser) {
             if ($parser instanceof TestResultContainer) {
                 $this->addToMap($parser->getTestResultFormat());
             }

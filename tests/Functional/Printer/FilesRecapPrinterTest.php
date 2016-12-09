@@ -25,6 +25,10 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         );
 
         $this->processAllTheStubLogs();
+        $this->container->get('paraunit.test_result.no_test_executed_container')
+            ->addProcessToFilenames($process);
+        $this->container->get('paraunit.test_result.coverage_failure_container')
+            ->addProcessToFilenames($process);
 
         /** @var FilesRecapPrinter $printer */
         $printer = $this->container->get('paraunit.printer.files_recap_printer');
@@ -38,12 +42,14 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
         $this->assertOutputOrder($output, array(
             'files with UNKNOWN',
+            'files with ERRORS WHILE FETCHING COVERAGE',
             'files with ERRORS',
             'files with FAILURES',
             'files with WARNING',
+            'files with NO TESTS EXECUTED',
             'files with RISKY',
             'files with SKIP',
-            'files with INCOMPLETE'
+            'files with INCOMPLETE',
         ));
     }
 }

@@ -4,6 +4,11 @@ services:
     arguments:
       - "@paraunit.test_result.no_test_executed_format"
 
+  paraunit.test_result.coverage_failure_container:
+    class: Paraunit\TestResult\DumbTestResultContainer
+    arguments:
+      - "@paraunit.test_result.coverage_failure_format"
+
   paraunit.test_result.test_start_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:

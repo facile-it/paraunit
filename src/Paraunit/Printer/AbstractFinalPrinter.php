@@ -4,6 +4,7 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Parser\JSONLogParser;
+use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -12,19 +13,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractFinalPrinter
 {
-    /** @var  JSONLogParser */
-    protected $logParser;
+    /** @var  TestResultList */
+    protected $testResultList;
 
     /** @var  OutputInterface */
     protected $output;
 
     /**
-     * FinalPrinter constructor.
-     * @param JSONLogParser $logParser
+     * AbstractFinalPrinter constructor.
+     * @param TestResultList $testResultList
      */
-    public function __construct(JSONLogParser $logParser)
+    public function __construct(TestResultList $testResultList)
     {
-        $this->logParser = $logParser;
+        $this->testResultList = $testResultList;
     }
 
     /**

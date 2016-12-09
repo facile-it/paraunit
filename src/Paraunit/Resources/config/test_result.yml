@@ -3,3 +3,6 @@ services:
     class: Paraunit\TestResult\TestResultFactory
     arguments:
       - "@paraunit.test_result.null_format"
+
+  paraunit.test_result.test_result_list:
+    class: Paraunit\TestResult\TestResultList

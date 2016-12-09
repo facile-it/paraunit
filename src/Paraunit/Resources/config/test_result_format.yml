@@ -30,6 +30,13 @@ services:
       - "abnormal"
       - "abnormal terminations (fatal errors, segfaults)"
 
+  paraunit.test_result.coverage_failure_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - ""
+      - "error"
+      - "errors while fetching coverage"
+
   paraunit.test_result.error_test_result_format:
     class: Paraunit\TestResult\TestResultFormat
     arguments:

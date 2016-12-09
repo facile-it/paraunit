@@ -14,21 +14,21 @@ services:
   paraunit.printer.final_printer:
     class: Paraunit\Printer\FinalPrinter
     arguments:
-      - "@paraunit.parser.json_log_parser"
+      - "@paraunit.test_result.test_result_list"
     tags:
       - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
 
   paraunit.printer.failures_printer:
     class: Paraunit\Printer\FailuresPrinter
     arguments:
-      - "@paraunit.parser.json_log_parser"
+      - "@paraunit.test_result.test_result_list"
     tags:
       - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 200 }
 
   paraunit.printer.files_recap_printer:
     class: Paraunit\Printer\FilesRecapPrinter
     arguments:
-      - "@paraunit.parser.json_log_parser"
+      - "@paraunit.test_result.test_result_list"
     tags:
       - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 100 }
 
@@ -40,4 +40,4 @@ services:
   paraunit.printer.single_result_formatter:
     class: Paraunit\Printer\SingleResultFormatter
     arguments:
-     - "@paraunit.parser.json_log_parser"
+     - "@paraunit.test_result.test_result_list"

@@ -19,10 +19,8 @@ class FilesRecapPrinter extends AbstractFinalPrinter
     {
         $output = $engineEvent->getOutputInterface();
 
-        foreach ($this->logParser->getParsersForPrinting() as $parser) {
-            if ($parser instanceof TestFilenameBearerInterface) {
-                $this->printFileRecap($parser, $output);
-            }
+        foreach ($this->testResultList->getTestResultContainers() as $parser) {
+            $this->printFileRecap($parser, $output);
         }
     }
 

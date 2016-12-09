@@ -22,7 +22,7 @@ class FailuresPrinter extends AbstractFinalPrinter
     {
         $output = $engineEvent->getOutputInterface();
 
-        foreach ($this->logParser->getParsersForPrinting() as $parser) {
+        foreach ($this->testResultList->getTestResultContainers() as $parser) {
             if ($parser instanceof TestResultContainer) {
                 $this->printFailuresOutput($parser, $output);
             }
