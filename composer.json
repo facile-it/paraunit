@@ -35,8 +35,7 @@
     "squizlabs/php_codesniffer": "2.*",
     "phpunit/php-code-coverage": ">=2.2.0,<5",
     "codeclimate/php-test-reporter": "dev-master",
-    "satooshi/php-coveralls": "~1.0",
-    "php-mock/php-mock-prophecy": "^0.0.2"
+    "satooshi/php-coveralls": "~1.0"
   },
   "bin": ["src/Paraunit/Bin/paraunit"],
   "config": {

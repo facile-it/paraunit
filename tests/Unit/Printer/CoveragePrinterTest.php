@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Printer;
 
+use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\CoveragePrinter;
-use phpmock\prophecy\PHPProphet;
+use Paraunit\Proxy\XDebugProxy;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
@@ -13,31 +14,12 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
 {
-    private $prophet;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->prophet = new PHPProphet();
-    }
-
-    protected function tearDown()
-    {
-        $this->prophet->checkPredictions();
-
-        parent::tearDown();
-    }
-
     public function testOnEngineBeforeStartWithPHPDBGEngine()
     {
         $output = new UnformattedOutputStub();
         $engineEvent = new EngineEvent($output);
 
-        $this->mockXdebugLoaded(false);
-        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
-        $phpdbgBin->isAvailable()
-            ->willReturn(true);
-        $printer = new CoveragePrinter($phpdbgBin->reveal());
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false));
 
         $printer->onEngineBeforeStart($engineEvent);
 
@@ -49,11 +31,7 @@ class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
         $output = new UnformattedOutputStub();
         $engineEvent = new EngineEvent($output);
 
-        $this->mockXdebugLoaded(true);
-        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
-        $phpdbgBin->isAvailable()
-            ->willReturn(false);
-        $printer = new CoveragePrinter($phpdbgBin->reveal());
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true));
 
         $printer->onEngineBeforeStart($engineEvent);
 
@@ -65,11 +43,7 @@ class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
         $output = new UnformattedOutputStub();
         $engineEvent = new EngineEvent($output);
 
-        $this->mockXdebugLoaded(true);
-        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
-        $phpdbgBin->isAvailable()
-            ->willReturn(true);
-        $printer = new CoveragePrinter($phpdbgBin->reveal());
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true));
 
         $printer->onEngineBeforeStart($engineEvent);
 
@@ -77,12 +51,29 @@ class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('both driver', $output->getOutput());
     }
 
-    private function mockXdebugLoaded($shouldReturn)
+    /**
+     * @param bool $shouldReturn
+     * @return PHPDbgBinFile
+     */
+    private function mockPhpdbgBin($shouldReturn)
     {
-        $prophecy = $this->prophet->prophesize('Paraunit\Printer');
-        $prophecy->extension_loaded('xdebug')
+        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
+        $phpdbgBin->isAvailable()
             ->willReturn($shouldReturn);
 
-        $prophecy->reveal();
+        return $phpdbgBin->reveal();
+    }
+
+    /**
+     * @param bool $shouldReturn
+     * @return XDebugProxy
+     */
+    private function mockXdebugLoaded($shouldReturn)
+    {
+        $xdebug = $this->prophesize('Paraunit\Proxy\XDebugProxy');
+        $xdebug->isLoaded()
+            ->willReturn($shouldReturn);
+
+        return $xdebug->reveal();
     }
 }
