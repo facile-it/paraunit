@@ -5,6 +5,7 @@ namespace Paraunit\Coverage;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\CodeCoverage;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Symfony\Component\Process\Process;
 
 /**
@@ -16,13 +17,18 @@ class CoverageFetcher
     /** @var  TempFilenameFactory */
     private $tempFilenameFactory;
 
+    /** @var TestResultHandlerInterface */
+    private $resultHandler;
+
     /**
      * CoverageFetcher constructor.
      * @param TempFilenameFactory $tempFilenameFactory
+     * @param TestResultHandlerInterface $failureHandler
      */
-    public function __construct(TempFilenameFactory $tempFilenameFactory)
+    public function __construct(TempFilenameFactory $tempFilenameFactory, TestResultHandlerInterface $failureHandler)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
+        $this->resultHandler = $failureHandler;
     }
 
     /**
@@ -42,6 +48,8 @@ class CoverageFetcher
         if ($codeCoverage instanceof CodeCoverage) {
             return $codeCoverage;
         }
+
+        $this->resultHandler->addProcessToFilenames($process);
 
         return new CodeCoverage();
     }

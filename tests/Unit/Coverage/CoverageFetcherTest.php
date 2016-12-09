@@ -25,8 +25,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($filename);
+        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $missingCoverageContainer->addProcessToFilenames($process)
+            ->shouldNotBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
 
         $result = $fetcher->fetch($process);
 
@@ -48,8 +51,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn('/path/to/missing/file');
+        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $missingCoverageContainer->addProcessToFilenames($process)
+            ->shouldBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
 
         $result = $fetcher->fetch($process);
 
@@ -67,8 +73,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($filename);
+        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $missingCoverageContainer->addProcessToFilenames($process)
+            ->shouldBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
 
         $result = $fetcher->fetch($process);
 
