@@ -20,10 +20,10 @@ class SingleResultFormatterTest extends BaseUnitTestCase
         $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
         $testResultContainer->getTestResultFormat()->willReturn(new TestResultFormat($symbol, $tag, 'title'));
 
-        $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $jsonParser->getParsers()->willReturn(array($testResultContainer->reveal()));
+        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
+        $testResultList->getTestResultContainers()->willReturn(array($testResultContainer->reveal()));
 
-        $formatter = new SingleResultFormatter($jsonParser->reveal());
+        $formatter = new SingleResultFormatter($testResultList->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);
 
         $this->assertEquals(sprintf('<%s>%s</%s>', $tag, $symbol, $tag), $formattedResult);
@@ -33,10 +33,10 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     {
         $symbol = '.';
         $singleResult = $this->mockPrintableTestResult($symbol);
-        $jsonParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $jsonParser->getParsers()->willReturn(array());
+        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
+        $testResultList->getTestResultContainers()->willReturn(array());
 
-        $formatter = new SingleResultFormatter($jsonParser->reveal());
+        $formatter = new SingleResultFormatter($testResultList->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);
 
         $this->assertEquals($symbol, $formattedResult);

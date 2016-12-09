@@ -30,10 +30,10 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());
         $testResultContainer->getFileNames()->willReturn(array('Test.php'));
 
-        $logParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $logParser->getParsersForPrinting()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
+        $testResultList->getTestResultContainers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
 
-        $printer = new FinalPrinter($logParser->reveal());
+        $printer = new FinalPrinter($testResultList->reveal());
 
         $printer->onEngineEnd($engineEvent);
 
@@ -57,9 +57,9 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());
         $testResultContainer->getFileNames()->willReturn(array('Test.php'));
 
-        $logParser = $this->prophesize('Paraunit\Parser\JSONLogParser');
-        $logParser->getParsersForPrinting()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
-        $printer = new FinalPrinter($logParser->reveal());
+        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
+        $testResultList->getTestResultContainers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $printer = new FinalPrinter($testResultList->reveal());
 
         $printer->onEngineEnd($engineEvent);
 
