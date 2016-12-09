@@ -21,7 +21,20 @@ use Tests\Stub\UnformattedOutputStub;
 abstract class BaseFunctionalTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder */
-    protected $container = null;
+    protected $container;
+
+    /** @var  ParallelConfiguration */
+    protected $configuration;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+
+        $this->configuration = new ParallelConfiguration();
+    }
 
     protected function setUp()
     {
@@ -42,7 +55,6 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
     /**
      * @param StubbedParaunitProcess $process
      * @param string $stubLog
-     * @return StubbedParaunitProcess
      */
     public function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, $stubLog)
     {
@@ -112,13 +124,12 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
 
     protected function loadContainer()
     {
-        $configuration = new ParallelConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $input->getOption('parallel')
             ->willReturn(10);
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
-        $this->container = $configuration->buildContainer($input->reveal());
+        $this->container = $this->configuration->buildContainer($input->reveal());
     }
 }

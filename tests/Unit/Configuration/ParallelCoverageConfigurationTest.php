@@ -42,6 +42,7 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
             'paraunit.coverage.coverage_result',
             'paraunit.configuration.phpdbg_bin_file',
             'paraunit.coverage.coverage_output_paths',
+            'paraunit.printer.coverage_printer',
         );
 
         $servicesIds = $container->getServiceIds();

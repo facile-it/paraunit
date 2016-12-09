@@ -41,7 +41,8 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $servicesIds = $container->getServiceIds();
         $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
-        $this->assertNotContains('paraunit.coverage.coverage_fectcher', $servicesIds);
+        $this->assertNotContains('paraunit.coverage.coverage_fetcher', $servicesIds);
+        $this->assertNotContains('paraunit.printer.coverage_printer', $servicesIds);
 
         foreach ($requiredDefinitions as $definition) {
             $this->assertContains($definition, $servicesIds);

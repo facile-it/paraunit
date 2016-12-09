@@ -2,7 +2,7 @@ services:
   paraunit.printer.shark_printer:
     class: Paraunit\Printer\SharkPrinter
     tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
+      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 1000 }
 
   paraunit.printer.process_printer:
     class: Paraunit\Printer\ProcessPrinter

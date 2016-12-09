@@ -11,7 +11,7 @@ use Paraunit\Lifecycle\EngineEvent;
  */
 class SharkPrinter
 {
-    public function onEngineStart(EngineEvent $engineEvent)
+    public function onEngineBeforeStart(EngineEvent $engineEvent)
     {
         $outputInterface = $engineEvent->getOutputInterface();
 

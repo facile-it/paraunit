@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Runner;
 
+use Paraunit\Bin\Paraunit;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
@@ -9,7 +10,8 @@ use Tests\BaseFunctionalTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
- * Class RunnerTest.
+ * Class RunnerTest
+ * @package Tests\Functional\Runner
  */
 class RunnerTest extends BaseFunctionalTestCase
 {
@@ -24,8 +26,12 @@ class RunnerTest extends BaseFunctionalTestCase
 
         $this->assertEquals(0, $runner->run($fileArray, $outputInterface, new PHPUnitConfig('')));
 
-        $output = $outputInterface->fetch();
-        $this->assertContains('...', $output);
+        $this->assertNotContains('Coverage', $outputInterface->getOutput());
+        $this->assertOutputOrder($outputInterface, array(
+            'PARAUNIT',
+            'v' . Paraunit::VERSION,
+            '...',
+        ));
     }
 
     public function testMaxRetryEntityManagerIsClosed()

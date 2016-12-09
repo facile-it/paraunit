@@ -29,3 +29,10 @@ services:
       - "@paraunit.configuration.clover_file_path"
       - "@paraunit.configuration.xml_path"
       - "@paraunit.configuration.html_path"
+
+  paraunit.printer.coverage_printer:
+    class: Paraunit\Printer\CoveragePrinter
+    arguments:
+      - "@paraunit.configuration.phpdbg_bin_file"
+    tags:
+      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 100 }
