@@ -5,6 +5,7 @@ namespace Paraunit\Parser;
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\Process\RetryAwareInterface;
 use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
 /**
@@ -13,6 +14,9 @@ use Paraunit\TestResult\MuteTestResult;
  */
 class RetryParser implements JSONParserChainElementInterface
 {
+    /** @var TestResultHandlerInterface */
+    private $testResultContainer;
+
     /** @var  int */
     private $maxRetryCount;
 
@@ -21,10 +25,12 @@ class RetryParser implements JSONParserChainElementInterface
 
     /**
      * RetryParser constructor.
+     * @param TestResultHandlerInterface $testResultContainer
      * @param int $maxRetryCount
      */
-    public function __construct($maxRetryCount = 3)
+    public function __construct(TestResultHandlerInterface $testResultContainer, $maxRetryCount = 3)
     {
+        $this->testResultContainer = $testResultContainer;
         $this->maxRetryCount = $maxRetryCount;
 
         $patterns = array(
@@ -44,8 +50,10 @@ class RetryParser implements JSONParserChainElementInterface
         if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
             /** @var RetryAwareInterface | TestResultBearerInterface $process */
             $process->markAsToBeRetried();
+            $testResult = new MuteTestResult();
+            $this->testResultContainer->handleTestResult($process, $testResult);
 
-            return new MuteTestResult();
+            return $testResult;
         }
 
         return null;
@@ -66,7 +74,7 @@ class RetryParser implements JSONParserChainElementInterface
      */
     private function isToBeRetried(\stdClass $log)
     {
-        return property_exists($log, 'status') && $log->status == 'error' && preg_match($this->regexPattern, $log->message);
+        return property_exists($log, 'status') && $log->status === 'error' && preg_match($this->regexPattern, $log->message);
     }
 
     /**

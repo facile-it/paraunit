@@ -64,22 +64,6 @@ class JSONLogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
     }
     
-    public function testGetParsersForPrinting()
-    {
-        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
-        $noTestExecutedContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestFilenameBearerInterface');
-        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
-
-        $parser = new JSONLogParser($logLocator->reveal(), $noTestExecutedContainer->reveal());
-        $parser->addParser($parser1->reveal());
-        
-        $printers = $parser->getParsersForPrinting();
-        
-        $this->assertCount(2, $printers);
-        $this->assertSame($noTestExecutedContainer->reveal(), $printers[0]);
-        $this->assertSame($parser1->reveal(), $printers[1]);
-    }
-
     /**
      * @param bool $logFound
      * @param bool $abnormal
@@ -100,7 +84,7 @@ class JSONLogParserTest extends BaseUnitTestCase
             $logLocator->fetch(Argument::cetera())->willReturn(array($endLog));
         }
         
-        $noTestExecutedContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestFilenameBearerInterface');
+        $noTestExecutedContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
             ->shouldBeCalledTimes($emptyTestsCount);
 

@@ -3,7 +3,7 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessWithResultsInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultFactory;
 
 /**
@@ -15,7 +15,7 @@ class GenericParser implements JSONParserChainElementInterface
     /** @var  TestResultFactory */
     protected $testResultFactory;
 
-    /** @var  TestResultContainerInterface */
+    /** @var  TestResultHandlerInterface */
     protected $testResultContainer;
 
     /** @var  string */
@@ -28,13 +28,13 @@ class GenericParser implements JSONParserChainElementInterface
      * GenericParser constructor.
      *
      * @param TestResultFactory $testResultFactory
-     * @param TestResultContainerInterface $testResultContainer
+     * @param TestResultHandlerInterface $testResultContainer
      * @param string $status The status that the parser should catch
      * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
     public function __construct(
         TestResultFactory $testResultFactory,
-        TestResultContainerInterface $testResultContainer,
+        TestResultHandlerInterface $testResultContainer,
         $status,
         $messageStartsWith = null
     ) {

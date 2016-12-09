@@ -4,8 +4,8 @@ namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestFilenameBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
@@ -20,19 +20,19 @@ class JSONLogParser
     /** @var  JSONParserChainElementInterface[] */
     private $parsers;
 
-    /** @var TestFilenameBearerInterface */
+    /** @var TestResultHandlerInterface */
     private $noTestExecutedResultContainer;
 
     /**
      * JSONLogParser constructor.
      * @param JSONLogFetcher $logLocator
-     * @param TestFilenameBearerInterface $noTestExecutedResultContainer
+     * @param TestResultHandlerInterface $noTestExecutedResultContainer
      */
-    public function __construct(JSONLogFetcher $logLocator, TestFilenameBearerInterface $noTestExecutedResultContainer)
+    public function __construct(JSONLogFetcher $logLocator, TestResultHandlerInterface $noTestExecutedResultContainer)
     {
         $this->logLocator = $logLocator;
-        $this->parsers = array();
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
+        $this->parsers = array();
     }
 
     /**
@@ -49,17 +49,6 @@ class JSONLogParser
     public function getParsers()
     {
         return $this->parsers;
-    }
-
-    /**
-     * @return TestResultBearerInterface[]
-     */
-    public function getParsersForPrinting()
-    {
-        $reversedPrinters = array_reverse($this->parsers);
-        array_unshift($reversedPrinters, $this->noTestExecutedResultContainer);
-
-        return $reversedPrinters;
     }
 
     /**

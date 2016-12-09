@@ -4,6 +4,7 @@ namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\RetryParser;
 use Paraunit\TestResult\TestResultFormat;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
@@ -26,7 +27,7 @@ class RetryParserTest extends BaseUnitTestCase
         $log = $this->getLogFromStub('test', 'error', $testOutput);
 
         $process = new StubbedParaunitProcess();
-        $parser = new RetryParser(3);
+        $parser = new RetryParser($this->getResultHandlerMock(true), 3);
         $result = $parser->handleLogItem($process, $log);
 
         $this->assertInstanceOf('Paraunit\TestResult\MuteTestResult', $result);
@@ -39,11 +40,11 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndContinueWithNoRetry($jsonLogs)
     {
         $process = new StubbedParaunitProcess();
-        $parser = new RetryParser(3);
+        $parser = new RetryParser($this->getResultHandlerMock(false), 3);
 
         $logs = json_decode($jsonLogs);
         foreach ($logs as $singlelog) {
-            if ($singlelog->event == 'test') {
+            if ($singlelog->event === 'test') {
                 $this->assertNull($parser->handleLogItem($process, $singlelog), 'Parsing should continue!');
                 $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
             }
@@ -58,7 +59,7 @@ class RetryParserTest extends BaseUnitTestCase
 
         $this->assertEquals(1, $process->getRetryCount());
 
-        $parser = new RetryParser(0);
+        $parser = new RetryParser($this->getResultHandlerMock(false), 0);
 
         $this->assertNull($parser->handleLogItem($process, $log), 'Parsing should continue!');
         $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
@@ -87,5 +88,14 @@ class RetryParserTest extends BaseUnitTestCase
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
+    }
+    
+    private function getResultHandlerMock($shouldBeCalled)
+    {
+        $resultHandler = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $resultHandler->handleTestResult(Argument::cetera())
+            ->shouldBeCalledTimes((int)$shouldBeCalled);
+        
+        return $resultHandler->reveal();
     }
 }
