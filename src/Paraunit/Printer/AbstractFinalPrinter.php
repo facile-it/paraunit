@@ -3,7 +3,6 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Parser\JSONLogParser;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 

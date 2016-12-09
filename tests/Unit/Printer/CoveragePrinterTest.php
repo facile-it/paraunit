@@ -49,6 +49,7 @@ class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertContains('WARNING', $output->getOutput());
         $this->assertContains('both driver', $output->getOutput());
+        $this->assertNotContains('xDebug', $output->getOutput());
     }
 
     /**

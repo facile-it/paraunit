@@ -3,7 +3,6 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessWithResultsInterface;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**

@@ -40,7 +40,9 @@ class CoveragePrinter
             $output->writeln('PHPDBG');
 
             if ($this->xdebug->isLoaded()) {
-                $output->writeln('WARNING: both drivers found (PHPDBG, xDebug); this may lead to memory exhaustion');
+                $output->writeln('WARNING: both drivers enabled; this may lead to memory exhaustion!');
+                
+                return;
             }
         }
 
