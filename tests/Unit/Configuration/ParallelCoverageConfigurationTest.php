@@ -3,6 +3,7 @@
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Prophecy\Argument;
 
 /**
  * Class ParaunitCoverageTest
@@ -14,10 +15,17 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $paraunit = new ParallelCoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input->getOption('parallel')
+            ->willReturn(10);
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
 
         $container = $paraunit->buildContainer($input->reveal());
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+
+        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Process limit parameter missing');
+        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
 
         $servicesIds = $container->getServiceIds();
         $this->assertContains('paraunit.file.cleaner', $servicesIds);
@@ -47,6 +55,9 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
         $input->getOption('clover')->willReturn('coverage.clover.xml');
         $input->getOption('xml')->willReturn('coverage.xml');
         $input->getOption('html')->willReturn('coverage/html');
+        $input->getOption('parallel')
+            ->shouldBeCalled()
+            ->willReturn(10);
 
         $container = $paraunit->buildContainer($input->reveal());
 

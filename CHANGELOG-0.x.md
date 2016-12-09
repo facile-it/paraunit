@@ -10,6 +10,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 * Paraunit is now capable of producing the test coverage of your test suites in parallel! To use it, use the new 
  `coverage` command (instead of the normal `run`), along with at least an option to specify the requested format; for
  more information, please refer to the [documentation](http://engineering.facile.it/paraunit/documentation/).
+* It's possible to choose how many concurrent processes Paraunit should spawn using the new `--parallel` option.
 * A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
  new supported options is:
   * `filter`

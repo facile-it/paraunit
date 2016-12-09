@@ -8,6 +8,7 @@ use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSONLogParser;
+use Prophecy\Argument;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -46,7 +47,7 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
     public function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, $stubLog)
     {
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
-        $this->assertTrue(file_exists($stubLogFilename), 'Stub log file missing! ' . $stubLogFilename);
+        $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
 
         /** @var TempFilenameFactory $filenameService */
         $filenameService = $this->container->get('paraunit.configuration.temp_filename_factory');
@@ -70,7 +71,7 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
         $previousString = '<beginning of output>';
         foreach ($strings as $string) {
             $position = strpos($output->getOutput(), $string);
-            $this->assertNotSame(false, $position, 'String not found: ' . $string . $output->getOutput());
+            $this->assertNotFalse($position, 'String not found: ' . $string . $output->getOutput());
             $this->assertGreaterThan(
                 $previousPosition,
                 $position,
@@ -113,6 +114,10 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
     {
         $configuration = new ParallelConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input->getOption('parallel')
+            ->willReturn(10);
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
 
         $this->container = $configuration->buildContainer($input->reveal());
     }

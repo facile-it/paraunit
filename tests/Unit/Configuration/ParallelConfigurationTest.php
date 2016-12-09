@@ -3,6 +3,7 @@
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelConfiguration;
+use Prophecy\Argument;
 
 /**
  * Class ParaunitTest
@@ -14,11 +15,18 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $paraunit = new ParallelConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input->getOption('parallel')
+            ->willReturn(10);
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
 
         $container = $paraunit->buildContainer($input->reveal());
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
 
+        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
+        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
+        
         $servicesIds = $container->getServiceIds();
         $this->assertContains('paraunit.file.cleaner', $servicesIds);
         $this->assertContains('paraunit.parser.json_log_parser', $servicesIds);

@@ -1,6 +1,5 @@
 parameters:
   paraunit.max_retry_count: 3
-  paraunit.default_max_process: 10
   kernel.root_dir: 'src'
 
 services:
@@ -15,7 +14,7 @@ services:
     arguments:
       - "@event_dispatcher"
       - "@paraunit.process.process_factory"
-      - %paraunit.default_max_process%
+      - "%paraunit.max_process_count%"
 
   event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher

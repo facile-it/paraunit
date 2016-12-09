@@ -60,9 +60,9 @@ class ParallelCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('run')
-            ->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
+        $this->setName('run');
+        $this->addOption('parallel', null, InputOption::VALUE_REQUIRED, 'Number of concurrent processes to launch', 10);
+        $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
 
         foreach ($this->phpunitOptions as $option) {
             $this->addOption(
