@@ -26,22 +26,28 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
         $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
-        
-        $servicesIds = $container->getServiceIds();
-        $this->assertContains('paraunit.file.cleaner', $servicesIds);
-        $this->assertContains('paraunit.parser.json_log_parser', $servicesIds);
-        $this->assertContains('paraunit.printer.process_printer', $servicesIds);
-        $this->assertContains('paraunit.process.process_factory', $servicesIds);
-        $this->assertContains('paraunit.runner.runner', $servicesIds);
-        $this->assertContains('event_dispatcher', $servicesIds);
-        $this->assertContains('paraunit.test_result.test_result_factory', $servicesIds);
-        $this->assertContains('paraunit.test_result.pass_container', $servicesIds);
-        $this->assertContains('paraunit.test_result.pass_test_result_format', $servicesIds);
 
+        $requiredDefinitions = array(
+            'paraunit.file.cleaner',
+            'paraunit.parser.json_log_parser',
+            'paraunit.printer.process_printer',
+            'paraunit.process.process_factory',
+            'paraunit.runner.runner',
+            'event_dispatcher',
+            'paraunit.test_result.test_result_factory',
+            'paraunit.test_result.pass_container',
+            'paraunit.test_result.pass_test_result_format',
+        );
+
+        $servicesIds = $container->getServiceIds();
         $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
         $this->assertNotContains('paraunit.coverage.coverage_fectcher', $servicesIds);
 
-        $this->markTestIncomplete('Awaiting #29');
-        $this->assertContains('paraunit.printer.debug_printer', $servicesIds);
+        foreach ($requiredDefinitions as $definition) {
+            $this->assertContains($definition, $servicesIds);
+            $container->get($definition); // test instantiation, to prevent misconfigurations
+        }
+
+        $this->markTestIncomplete('Awaiting #29 -- paraunit.printer.debug_printer');
     }
 }

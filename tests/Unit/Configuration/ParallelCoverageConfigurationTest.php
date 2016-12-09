@@ -27,25 +27,31 @@ class ParallelCoverageConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Process limit parameter missing');
         $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
 
+        $requiredDefinitions = array(
+            'paraunit.parser.json_log_parser',
+            'paraunit.printer.process_printer',
+            'paraunit.process.process_factory',
+            'paraunit.runner.runner',
+            'event_dispatcher',
+            'paraunit.test_result.test_result_factory',
+            'paraunit.test_result.pass_container',
+            'paraunit.test_result.pass_test_result_format',
+
+            'paraunit.coverage.coverage_fetcher',
+            'paraunit.coverage.coverage_merger',
+            'paraunit.coverage.coverage_result',
+            'paraunit.configuration.phpdbg_bin_file',
+            'paraunit.coverage.coverage_output_paths',
+        );
+
         $servicesIds = $container->getServiceIds();
-        $this->assertContains('paraunit.file.cleaner', $servicesIds);
-        $this->assertContains('paraunit.parser.json_log_parser', $servicesIds);
-        $this->assertContains('paraunit.printer.process_printer', $servicesIds);
-        $this->assertContains('paraunit.process.process_factory', $servicesIds);
-        $this->assertContains('paraunit.runner.runner', $servicesIds);
-        $this->assertContains('event_dispatcher', $servicesIds);
-        $this->assertContains('paraunit.test_result.test_result_factory', $servicesIds);
-        $this->assertContains('paraunit.test_result.pass_container', $servicesIds);
-        $this->assertContains('paraunit.test_result.pass_test_result_format', $servicesIds);
 
-        $this->assertContains('paraunit.coverage.coverage_fetcher', $servicesIds);
-        $this->assertContains('paraunit.coverage.coverage_merger', $servicesIds);
-        $this->assertContains('paraunit.coverage.coverage_result', $servicesIds);
-        $this->assertContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
-        $this->assertContains('paraunit.coverage.coverage_output_paths', $servicesIds);
+        foreach ($requiredDefinitions as $definition) {
+            $this->assertContains($definition, $servicesIds);
+            $container->get($definition); // test instantiation, to prevent misconfigurations
+        }
 
-        $this->markTestIncomplete('Awaiting #29');
-        $this->assertContains('paraunit.printer.debug_printer', $servicesIds);
+        $this->markTestIncomplete('Awaiting #29 -- paraunit.printer.debug_printer');
     }
 
     public function testBuildContainerWithParameter()

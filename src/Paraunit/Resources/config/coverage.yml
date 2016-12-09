@@ -3,6 +3,7 @@ services:
     class: Paraunit\Coverage\CoverageFetcher
     arguments:
       - "@paraunit.configuration.temp_filename_factory"
+      - "@paraunit.test_result.coverage_failure_container"
 
   paraunit.coverage.coverage_merger:
     class: Paraunit\Coverage\CoverageMerger
