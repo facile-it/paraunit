@@ -14,6 +14,21 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class TestResultContainerTest extends BaseUnitTestCase
 {
+    public function testAddProcessToFilenames()
+    {
+        $testResultFormat = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        $dumbContainer = new TestResultContainer($testResultFormat->reveal());
+        $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');
+        $unitTestProcess->setFilename('ClassTest.php');
+        $functionalTestProcess = new StubbedParaunitProcess('phpunit Functional/ClassTest.php');
+        $functionalTestProcess->setFilename('ClassTest.php');
+
+        $dumbContainer->addProcessToFilenames($unitTestProcess);
+        $dumbContainer->addProcessToFilenames($functionalTestProcess);
+
+        $this->assertCount(2, $dumbContainer->getFileNames());
+    }
+
     public function testHandleLogItemAddsProcessOutputWhenNeeded()
     {
         $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');

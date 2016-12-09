@@ -3,9 +3,14 @@
 namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\UnknownResultParser;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
+/**
+ * Class UnknownResultParserTest
+ * @package Tests\Unit\Parser
+ */
 class UnknownResultParserTest extends BaseUnitTestCase
 {
     /**
@@ -18,9 +23,14 @@ class UnknownResultParserTest extends BaseUnitTestCase
         $log->message = 'message';
 
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
-        $factory->createFromLog($log)->shouldBeCalled()->willReturn($this->mockPrintableTestResult());
+        $factory->createFromLog($log)
+            ->shouldBeCalled()
+            ->willReturn($this->mockPrintableTestResult());
+        $resultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $resultContainer->handleTestResult(Argument::cetera())
+            ->shouldBeCalled();
 
-        $parser = new UnknownResultParser($factory->reveal(), 'no-status-required');
+        $parser = new UnknownResultParser($factory->reveal(), $resultContainer->reveal(), 'no-status-required');
         $this->assertNotNull($parser->handleLogItem(new StubbedParaunitProcess(), $log));
     }
 

@@ -2,7 +2,7 @@
 
 namespace Paraunit\TestResult\Interfaces;
 
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Interface TestResultContainerInterface
@@ -10,8 +10,16 @@ use Paraunit\Process\ProcessWithResultsInterface;
  */
 interface TestResultContainerInterface extends TestResultBearerInterface
 {
-    public function handleTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult);
-    
+    /**
+     * @return string[]
+     */
+    public function getFileNames();
+
+    /**
+     * @return TestResultFormat
+     */
+    public function getTestResultFormat();
+
     /**
      * @return int
      */

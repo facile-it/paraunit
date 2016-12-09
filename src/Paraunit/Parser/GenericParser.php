@@ -3,6 +3,7 @@
 namespace Paraunit\Parser;
 
 use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultFactory;
 
 /**
@@ -14,6 +15,9 @@ class GenericParser implements JSONParserChainElementInterface
     /** @var  TestResultFactory */
     protected $testResultFactory;
 
+    /** @var  TestResultContainerInterface */
+    protected $testResultContainer;
+
     /** @var  string */
     protected $status;
 
@@ -24,12 +28,18 @@ class GenericParser implements JSONParserChainElementInterface
      * GenericParser constructor.
      *
      * @param TestResultFactory $testResultFactory
+     * @param TestResultContainerInterface $testResultContainer
      * @param string $status The status that the parser should catch
      * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
-    public function __construct(TestResultFactory $testResultFactory, $status, $messageStartsWith = null)
-    {
+    public function __construct(
+        TestResultFactory $testResultFactory,
+        TestResultContainerInterface $testResultContainer,
+        $status,
+        $messageStartsWith = null
+    ) {
         $this->testResultFactory = $testResultFactory;
+        $this->testResultContainer = $testResultContainer;
         $this->status = $status;
         $this->messageStartsWith = $messageStartsWith;
     }
@@ -40,7 +50,10 @@ class GenericParser implements JSONParserChainElementInterface
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
         if ($this->logMatches($logItem)) {
-            return $this->testResultFactory->createFromLog($logItem);
+            $testResult = $this->testResultFactory->createFromLog($logItem);
+            $this->testResultContainer->handleTestResult($process, $testResult);
+            
+            return $testResult;
         }
 
         return null;
@@ -60,7 +73,7 @@ class GenericParser implements JSONParserChainElementInterface
             return false;
         }
 
-        if (is_null($this->messageStartsWith)) {
+        if (null === $this->messageStartsWith) {
             return true;
         }
 

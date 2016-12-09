@@ -4,6 +4,7 @@ namespace Tests\Unit\Parser;
 
 use Paraunit\Parser\GenericParser;
 use Paraunit\TestResult\FullTestResult;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -27,10 +28,11 @@ class GenericParserTest extends BaseUnitTestCase
         
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);
-        $resultContainer = $this->prophesize('Paraunit\TestResult\DumbTestResultContainer');
-        $this->markTestIncomplete('Await container refactor');
+        $resultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $resultContainer->handleTestResult(Argument::cetera())
+            ->shouldBeCalledTimes((int)$shouldMatch);
 
-        $parser = new GenericParser($factory->reveal(), $statusToMatch, $startsWithToMatch);
+        $parser = new GenericParser($factory->reveal(), $resultContainer->reveal(), $statusToMatch, $startsWithToMatch);
 
         /** @var FullTestResult $result */
         $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);

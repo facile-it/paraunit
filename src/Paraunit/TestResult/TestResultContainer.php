@@ -2,29 +2,36 @@
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\JSONParserChainElementInterface;
 use Paraunit\Process\OutputAwareInterface;
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
  * Class TestResultContainer
  * @package Paraunit\TestResult
  */
-class TestResultContainer extends DumbTestResultContainer implements TestResultContainerInterface
+class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
 {
+    /** @var  TestResultFormat */
+    private $testResultFormat;
+
+    /** @var  string[] */
+    private $filenames;
+
     /** @var  PrintableTestResultInterface[] */
     private $testResults;
-
+    
     /**
      * TestResultContainer constructor.
      * @param TestResultFormat $testResultFormat
      */
     public function __construct(TestResultFormat $testResultFormat)
     {
-        parent::__construct($testResultFormat);
+        $this->testResultFormat = $testResultFormat;
+        $this->filenames = array();
         $this->testResults = array();
     }
 
@@ -46,6 +53,28 @@ class TestResultContainer extends DumbTestResultContainer implements TestResultC
 
             $process->addTestResult($testResult);
         }
+    }
+
+    public function addProcessToFilenames(ProcessWithResultsInterface $process)
+    {
+        // trick for unique
+        $this->filenames[$process->getUniqueId()] = $process->getFilename();
+    }
+
+    /**
+     * @return TestResultFormat
+     */
+    public function getTestResultFormat()
+    {
+        return $this->testResultFormat;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFileNames()
+    {
+        return $this->filenames;
     }
 
     /**
