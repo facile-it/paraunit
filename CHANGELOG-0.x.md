@@ -32,6 +32,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
   * `include-path`
   
  `testsuite` and `configuration` options are still supported; thanks to @sergeyz for suggesting the feature (#56)
+* Added support to Windows (thanks to R.D. for the help) and Appveyor CI build
 * PHP 7.1 added to the Travis build matrix
 * Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)
 
