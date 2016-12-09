@@ -35,7 +35,7 @@ services:
     arguments:
       - ""
       - "error"
-      - "errors while fetching coverage"
+      - "coverage not fetched"
 
   paraunit.test_result.error_test_result_format:
     class: Paraunit\TestResult\TestResultFormat

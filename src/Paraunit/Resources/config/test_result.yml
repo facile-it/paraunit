@@ -6,3 +6,15 @@ services:
 
   paraunit.test_result.test_result_list:
     class: Paraunit\TestResult\TestResultList
+    calls:
+      - ["addContainer", ["@paraunit.test_result.unknown_result_container"]]
+      - ["addContainer", ["@paraunit.test_result.abnormal_terminated_container"]]
+      - ["addContainer", ["@paraunit.test_result.coverage_failure_container"]]
+      - ["addContainer", ["@paraunit.test_result.error_container"]]
+      - ["addContainer", ["@paraunit.test_result.failure_container"]]
+      - ["addContainer", ["@paraunit.test_result.warning_container"]]
+      - ["addContainer", ["@paraunit.test_result.no_test_executed_container"]]
+      - ["addContainer", ["@paraunit.test_result.risky_container"]]
+      - ["addContainer", ["@paraunit.test_result.skipped_container"]]
+      - ["addContainer", ["@paraunit.test_result.incomplete_container"]]
+      - ["addContainer", ["@paraunit.test_result.retry_container"]]

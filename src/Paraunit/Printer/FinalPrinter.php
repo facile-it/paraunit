@@ -3,6 +3,7 @@
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\TestResult\TestResultContainer;
 
 /**
  * Class FinalPrinter
@@ -42,7 +43,9 @@ class FinalPrinter extends AbstractFinalPrinter
         $completedProcesses = $engineEvent->get('process_completed');
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
-            $testsCount += $container->countTestResults();
+            if ($container instanceof TestResultContainer) {
+                $testsCount += $container->countTestResults();
+            }
         }
 
         $output->writeln('');

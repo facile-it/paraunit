@@ -8,7 +8,7 @@ namespace Paraunit\TestResult;
  */
 class TestResultList
 {
-    /** @var  TestResultContainer[] */
+    /** @var  DumbTestResultContainer[] */
     private $testResultContainers;
 
     public function __construct()
@@ -17,15 +17,15 @@ class TestResultList
     }
 
     /**
-     * @param TestResultContainer $container
+     * @param DumbTestResultContainer $container
      */
-    public function addParser(TestResultContainer $container)
+    public function addContainer(DumbTestResultContainer $container)
     {
         $this->testResultContainers[] = $container;
     }
 
     /**
-     * @return TestResultContainer[]
+     * @return DumbTestResultContainer[]
      */
     public function getTestResultContainers()
     {

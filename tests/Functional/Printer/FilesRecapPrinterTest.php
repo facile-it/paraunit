@@ -42,7 +42,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
         $this->assertOutputOrder($output, array(
             'files with UNKNOWN',
-            'files with ERRORS WHILE FETCHING COVERAGE',
+            'files with COVERAGE NOT FETCHED',
             'files with ERRORS',
             'files with FAILURES',
             'files with WARNING',

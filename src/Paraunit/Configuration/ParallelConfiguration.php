@@ -2,7 +2,6 @@
 
 namespace Paraunit\Configuration;
 
-use Paraunit\Parser\ParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -63,14 +62,13 @@ class ParallelConfiguration
 
     /**
      * @param ContainerBuilder $containerBuilder
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
     private function registerEventDispatcher(ContainerBuilder $containerBuilder)
     {
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
-        $containerBuilder->addCompilerPass(new ParserCompilerPass());
 
-        $containerBuilder->
-        setDefinition(
+        $containerBuilder->setDefinition(
             'event_dispatcher',
             new Definition(
                 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',

@@ -2,14 +2,10 @@
 
 namespace Tests\Functional\Printer;
 
-use Paraunit\Parser\JSONLogParser;
 use Paraunit\Printer\SingleResultFormatter;
-use Paraunit\Printer\SingleResultMarkerAwareInterface;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
+use Paraunit\TestResult\TestResultList;
 use Tests\BaseFunctionalTestCase;
 
 /**
@@ -22,12 +18,12 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
     {
         /** @var SingleResultFormatter $formatter */
         $formatter = $this->container->get('paraunit.printer.single_result_formatter');
-        /** @var JSONLogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
+        /** @var TestResultList $testResultList */
+        $testResultList = $this->container->get('paraunit.test_result.test_result_list');
 
-        foreach ($logParser->getParsers() as $parser) {
-            if ($parser instanceof TestResultContainer) {
-                $this->assertMappingIsCorrect($formatter, $parser->getTestResultFormat());
+        foreach ($testResultList->getTestResultContainers() as $resultContainer) {
+            if ($resultContainer instanceof TestResultContainer) {
+                $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());
             }
         }
     }
@@ -44,6 +40,7 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
             sprintf('<%s>%s</%s>', $tag, $symbol, $tag),
             $formatter->formatSingleResult($testResult->reveal()),
             'Mapping incorrect for test result symbol: ' . $symbol
+            . '[' . $testResultFormat->getTitle() . ']'
         );
     }
 }
