@@ -20,10 +20,9 @@ class TestResultContainer extends DumbTestResultContainer implements TestResultC
 
     /**
      * TestResultContainer constructor.
-     * @param JSONParserChainElementInterface $parser
      * @param TestResultFormat $testResultFormat
      */
-    public function __construct(JSONParserChainElementInterface $parser, TestResultFormat $testResultFormat)
+    public function __construct(TestResultFormat $testResultFormat)
     {
         parent::__construct($testResultFormat);
         $this->testResults = array();

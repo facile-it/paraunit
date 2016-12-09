@@ -12,87 +12,54 @@ services:
   paraunit.test_result.test_start_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.test_start_parser"
       - "@paraunit.test_result.null_format"
-    tags:
-      - { name: log_parser, priority: 100 }
 
   paraunit.test_result.pass_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.pass_parser"
       - "@paraunit.test_result.pass_test_result_format"
-    tags:
-      - { name: log_parser, priority: 200 }
 
   paraunit.test_result.retry_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.retry_parser"
       - "@paraunit.test_result.retry_test_result_format"
-    tags:
-      - { name: log_parser, priority: 300 }
 
   paraunit.test_result.incomplete_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.incomplete_parser"
       - "@paraunit.test_result.incomplete_test_result_format"
-    tags:
-      - { name: log_parser, priority: 400  }
 
   paraunit.test_result.skipped_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.skipped_parser"
       - "@paraunit.test_result.skipped_test_result_format"
-    tags:
-      - { name: log_parser, priority: 500  }
 
   paraunit.test_result.risky_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.risky_parser"
       - "@paraunit.test_result.risky_test_result_format"
-    tags:
-      - { name: log_parser, priority: 600  }
 
   paraunit.test_result.warning_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.warning_parser"
       - "@paraunit.test_result.warning_test_result_format"
-    tags:
-      - { name: log_parser, priority: 700  }
 
   paraunit.test_result.failure_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.failure_parser"
       - "@paraunit.test_result.failure_test_result_format"
-    tags:
-      - { name: log_parser, priority: 800 }
 
   paraunit.test_result.error_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.error_parser"
       - "@paraunit.test_result.error_test_result_format"
-    tags:
-      - { name: log_parser, priority: 900 }
 
   paraunit.test_result.abnormal_terminated_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.abnormal_terminated_parser"
       - "@paraunit.test_result.abnormal_terminated_test_result_format"
-    tags:
-      - { name: log_parser, priority: 1000 }
 
   paraunit.test_result.unknown_result_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:
-      - "@paraunit.parser.unknown_result_parser"
       - "@paraunit.test_result.unknown_result_format"
-    tags:
-      - { name: log_parser, priority: 1100 }

@@ -19,13 +19,9 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
-        $logItem = new \stdClass();
 
-        $parser = $this->prophesize('Paraunit\Parser\GenericParser');
-        $parser->handleLogItem($process, $logItem)->willReturn($testResult);
-
-        $testResultContainer = new TestResultContainer($parser->reveal(), $this->mockTestFormat());
-        $testResultContainer->handleLogItem($process, $logItem);
+        $testResultContainer = new TestResultContainer($this->mockTestFormat());
+        $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertContains('fail message', $testResult->getFailureMessage());
         $this->assertContains('test output', $testResult->getFailureMessage());
@@ -36,15 +32,12 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testResult = new TestResultWithAbnormalTermination($this->mockTestFormat(), 'function name', 'fail message');
         $process = new StubbedParaunitProcess();
         $process->setOutput(null);
-        $logItem = new \stdClass();
 
-        $parser = $this->prophesize('Paraunit\Parser\GenericParser');
-        $parser->handleLogItem($process, $logItem)->willReturn($testResult);
         $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
         $format->getTag()->willReturn('tag');
 
-        $testResultContainer = new TestResultContainer($parser->reveal(), $format->reveal());
-        $testResultContainer->handleLogItem($process, $logItem);
+        $testResultContainer = new TestResultContainer($format->reveal());
+        $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertContains('fail message', $testResult->getFailureMessage());
         $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
