@@ -28,12 +28,7 @@ class TempFilenameFactory
      */
     public function getFilenameForLog($uniqueId)
     {
-        return $this->tempDirectory->getTempDirForThisExecution()
-            . DIRECTORY_SEPARATOR
-            . 'logs'
-            . DIRECTORY_SEPARATOR
-            . $uniqueId
-            . '.json.log';
+        return $this->getTempFilename('logs', $uniqueId, '.json.log');
     }
 
     /**
@@ -42,11 +37,21 @@ class TempFilenameFactory
      */
     public function getFilenameForCoverage($uniqueId)
     {
+        return $this->getTempFilename('coverage', $uniqueId, '.php');
+    }
+
+    /**
+     * @param string $filename
+     * @param string $extension
+     * @return string
+     */
+    private function getTempFilename($subdir, $filename, $extension)
+    {
         return $this->tempDirectory->getTempDirForThisExecution()
             . DIRECTORY_SEPARATOR
-            . 'coverage'
+            . $subdir
             . DIRECTORY_SEPARATOR
-            . $uniqueId
-            . '.php';
+            . $filename
+            . $extension;
     }
 }
