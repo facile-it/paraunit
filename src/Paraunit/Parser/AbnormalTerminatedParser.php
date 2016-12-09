@@ -8,7 +8,7 @@ use Paraunit\TestResult\TestResultFactory;
  * Class AbnormalTerminatedParser
  * @package Paraunit\Parser
  */
-class AbnormalTerminatedParser extends AbstractParser
+class AbnormalTerminatedParser extends GenericParser
 {
     /**
      * AbnormalTerminatedParser constructor.

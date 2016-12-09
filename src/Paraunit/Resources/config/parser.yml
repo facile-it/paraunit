@@ -30,7 +30,7 @@ services:
     class: Paraunit\Parser\TestStartParser
 
   paraunit.parser.pass_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "pass"
@@ -41,40 +41,40 @@ services:
       - %paraunit.max_retry_count%
 
   paraunit.parser.failure_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "fail"
 
   paraunit.parser.warning_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "warning"
 
   paraunit.parser.incomplete_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Incomplete Test: "
 
   paraunit.parser.skipped_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Skipped Test: "
 
   paraunit.parser.risky_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "error"
       - "Risky Test: "
 
   paraunit.parser.error_parser:
-    class: Paraunit\Parser\AbstractParser
+    class: Paraunit\Parser\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "error"

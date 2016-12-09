@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Parser;
 
-use Paraunit\Parser\AbstractParser;
+use Paraunit\Parser\GenericParser;
 use Paraunit\TestResult\FullTestResult;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
- * Class AbstractParserTest
+ * Class GenericParserTest
  * @package Tests\Unit\Parser
  */
-class AbstractParserTest extends BaseUnitTestCase
+class GenericParserTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider matchesProvider
@@ -19,15 +19,18 @@ class AbstractParserTest extends BaseUnitTestCase
     public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
     {
         $log = $this->getLogFromStub('test', $status, $message);
-        if (is_null($message)) {
+        if (null === $message) {
             unset($log->message);
         }
 
         $result = new FullTestResult($this->mockTestFormat(), 'b', 'c');
+        
         $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
         $factory->createFromLog($log)->willReturn($result);
+        $resultContainer = $this->prophesize('Paraunit\TestResult\DumbTestResultContainer');
+        $this->markTestIncomplete('Await container refactor');
 
-        $parser = new AbstractParser($factory->reveal(), $statusToMatch, $startsWithToMatch);
+        $parser = new GenericParser($factory->reveal(), $statusToMatch, $startsWithToMatch);
 
         /** @var FullTestResult $result */
         $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);

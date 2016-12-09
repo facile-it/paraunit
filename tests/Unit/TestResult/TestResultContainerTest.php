@@ -21,7 +21,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process->setOutput('test output');
         $logItem = new \stdClass();
 
-        $parser = $this->prophesize('Paraunit\Parser\AbstractParser');
+        $parser = $this->prophesize('Paraunit\Parser\GenericParser');
         $parser->handleLogItem($process, $logItem)->willReturn($testResult);
 
         $testResultContainer = new TestResultContainer($parser->reveal(), $this->mockTestFormat());
@@ -38,7 +38,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process->setOutput(null);
         $logItem = new \stdClass();
 
-        $parser = $this->prophesize('Paraunit\Parser\AbstractParser');
+        $parser = $this->prophesize('Paraunit\Parser\GenericParser');
         $parser->handleLogItem($process, $logItem)->willReturn($testResult);
         $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
         $format->getTag()->willReturn('tag');

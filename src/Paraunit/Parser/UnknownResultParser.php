@@ -6,7 +6,7 @@ namespace Paraunit\Parser;
  * Class UnknownResultParser
  * @package Paraunit\Parser
  */
-class UnknownResultParser extends AbstractParser
+class UnknownResultParser extends GenericParser
 {
     /**
      * @param \stdClass $log

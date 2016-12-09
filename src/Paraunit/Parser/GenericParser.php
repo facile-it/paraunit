@@ -6,10 +6,10 @@ use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\TestResultFactory;
 
 /**
- * Class AbstractParser
+ * Class GenericParser
  * @package Paraunit\Parser
  */
-class AbstractParser implements JSONParserChainElementInterface
+class GenericParser implements JSONParserChainElementInterface
 {
     /** @var  TestResultFactory */
     protected $testResultFactory;
@@ -21,7 +21,7 @@ class AbstractParser implements JSONParserChainElementInterface
     protected $messageStartsWith;
 
     /**
-     * AbstractParser constructor.
+     * GenericParser constructor.
      *
      * @param TestResultFactory $testResultFactory
      * @param string $status The status that the parser should catch

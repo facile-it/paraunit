@@ -15,7 +15,7 @@ interface JSONParserChainElementInterface
     /**
      * @param ProcessWithResultsInterface $process
      * @param \stdClass $logItem
-     * @return null|TestResultInterface|PrintableTestResultInterface Returned when the chain needs to stop
+     * @return null|TestResultInterface Returned when the chain needs to stop
      */
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem);
 }
