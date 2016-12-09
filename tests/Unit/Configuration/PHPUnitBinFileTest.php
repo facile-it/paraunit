@@ -14,6 +14,7 @@ class PHPUnitBinFileTest extends \PHPUnit_Framework_TestCase
     {
         $phpUnitBin = new PHPUnitBinFile();
 
+        $this->assertStringStartsWith('php ', $phpUnitBin->getPhpUnitBin());
         $this->assertStringEndsWith(DIRECTORY_SEPARATOR . 'phpunit', $phpUnitBin->getPhpUnitBin());
     }
 }
