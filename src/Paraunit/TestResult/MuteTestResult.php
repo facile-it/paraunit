@@ -18,7 +18,7 @@ class MuteTestResult extends NullTestResult implements PrintableTestResultInterf
      */
     public function __construct()
     {
-        $this->testResultFormat = new TestResultFormat('', 'null', '');
+        $this->testResultFormat = new TestResultFormat('null', '');
     }
 
     /**

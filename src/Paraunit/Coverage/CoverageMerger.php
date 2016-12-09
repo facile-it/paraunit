@@ -4,7 +4,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
+use Paraunit\Proxy\Coverage\CodeCoverage;
 
 /**
  * Class CoverageMerger
