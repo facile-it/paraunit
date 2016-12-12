@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Documentation &middot; Paraunit</title>
+  <title>Paraunit 0.7: test coverage in parallel &middot; Paraunit</title>
 
   
   
@@ -171,89 +171,73 @@
 
 
 <div class="header">
-  <h1>Documentation</h1>
+  <h1>Paraunit 0.7: test coverage in parallel</h1>
   <h2></h2>
 </div>
 <div class="content">
   
 
-<p>Paraunit is a tool for faster executions of PHPUnit test suites.
-It makes this possible by launching multiple test in parallel with single PHPUnit processes.</p>
+<p>Finally, <a href="https://github.com/facile-it/paraunit/releases/tag/0.7">Paraunit 0.7</a> has been released!
+This version includes the long awaited <strong>coverage feature</strong>: now you can collect your test coverage running your tests
+in parallel!</p>
 
-<p>Paraunit is developed using <a href="http://symfony.com/components">Symfony components</a>.</p>
+<p>Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit
+options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we
+<strong>officially support Windows</strong>, and we added an <a href="https://ci.appveyor.com/project/Jean85/paraunit">Appveyor CI build</a> to
+do that.</p>
 
-<h1 id="requirements">Requirements</h1>
+<p>In the meantime, the <a href="https://github.com/facile-it/paraunit/milestone/4">1.0 milestone</a> has been defined: it will drop
+support to PHPUnit 4.x series, since its support is going to end by Feb. 27th, 2017; with that, also PHP &lt; 5.6 will lose
+support, and Paraunit will follow along. I will be able to drop a lot of BC-tricks in this way, preferring <code>::class</code>
+and array short syntax everywhere in the codebase.</p>
 
-<p>Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
+<p>Here&rsquo;s the full 0.7 changelog:</p>
 
-<p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/facile-it/paraunit-testcase">facile-it/paraunit-testcase</a>, to avoid database concurrency problems during functional testing;
-also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>. in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
-
-<h1 id="installation">Installation</h1>
-
-<p>To use this package, use <a href="https://getcomposer.org/">composer</a>:</p>
+<h3 id="changed">Changed</h3>
 
 <ul>
-<li>from CLI: <code>composer require facile-it/paraunit</code></li>
-<li>or, directly in your <code>composer.json</code>:</li>
+<li>Paraunit is now capable of producing the test coverage of your test suites in parallel! To use it, use the new
+<code>coverage</code> command (instead of the normal <code>run</code>), along with at least an option to specify the requested format; for
+more information, please use the <code>--help</code> option on the CLI or refer to the <a href="http://engineering.facile.it/paraunit/documentation/">documentation</a>.</li>
+<li>It&rsquo;s possible to choose how many concurrent processes Paraunit should spawn using the new <code>--parallel</code> option.</li>
+<li>A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
+new supported options is:
+
+<ul>
+<li><code>filter</code></li>
+<li><code>group</code></li>
+<li><code>exclude-group</code></li>
+<li><code>test-suffix</code></li>
+<li><code>report-useless-tests</code></li>
+<li><code>strict-global-state</code></li>
+<li><code>disallow-test-output</code></li>
+<li><code>enforce-time-limit</code></li>
+<li><code>disallow-todo-tests</code></li>
+<li><code>process-isolation</code></li>
+<li><code>no-globals-backup</code></li>
+<li><code>static-backup</code></li>
+<li><code>loader</code></li>
+<li><code>repeat</code></li>
+<li><code>printer</code></li>
+<li><code>bootstrap</code></li>
+<li><code>no-configuration</code></li>
+<li><code>include-path</code>
+<br /></li>
+</ul></li>
 </ul>
 
-<pre><code>{
-    &quot;require&quot;: {
-        &quot;facile-it/paraunit&quot;: &quot;~0.6&quot;
-    }
-}
-</code></pre>
+<p><code>testsuite</code> and <code>configuration</code> options are still supported; thanks to @sergeyz for suggesting the feature (#56)
+* Added support to Windows (thanks to R.D. for the help) and Appveyor CI build
+* PHP 7.1 added to the Travis build matrix
+* Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)</p>
 
-<h1 id="usage">Usage</h1>
+<h3 id="fixed">Fixed</h3>
 
-<p>Paraunit starts as a Symfony console command, but it&rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
-
-<p><code>vendor/bin/paraunit run</code></p>
-
-<p>This command will launch all the tests in all your configured testsuites.</p>
-
-<h2 id="optional-parameters">Optional parameters</h2>
-
-<h3 id="configuration">Configuration</h3>
-
-<p>If your <code>phpunit.xml.dist</code> file is not in the default base dir, you can specify it by:</p>
-
-<p><code>vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist</code></p>
-
-<p>or with the short version:</p>
-
-<p><code>vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist</code></p>
-
-<p>Also it&rsquo;s possible to provide only a directory, in such case Paraunit will look for the &lsquo;phpunit.xml.dist&rsquo;:</p>
-
-<p><code>vendor/bin/paraunit run -c=relPath/to/xml/file/</code></p>
-
-<h3 id="testsuite">Testsuite</h3>
-
-<p>You can run a single test suite (as defined in your configuration file) using:</p>
-
-<p><code>vendor/bin/paraunit run --testsuite=testSuiteName</code></p>
-
-<h3 id="debug-mode">Debug mode</h3>
-
-<p>If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:</p>
-
-<p><code>--debug</code></p>
-
-<p>It will show a verbose output with the full running test queue.</p>
-
-<h1 id="parsing-results">Parsing results</h1>
-
-<p>Paraunit prints a parsed result from the single PHPUnit processes.
-This parsing is done (since version 0.6) using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process.
-It allows to be also resistent to fatal errors and other abnormal process termination.
-If you are experiencing any problems, you can try the <code>--debug</code> option to identify the problematic test, and try running it alone;
-if it&rsquo;s ok and the parser is at fault, please open an issue here on GitHub with the full single test output.</p>
-
-<p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&rsquo; exit codes:
- <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
- So you can safely use it in your CI build ;)</p>
+<ul>
+<li>Symfony 2.3 compatibility restored: the Travis build now tests with <code>--prefer-lowest</code> under PHP 5.3; this added
+<code>symfony/http-kernel</code> to the required packages</li>
+<li>Fixed a minor typo that caused version number to be different in the command help versus the command cli &ldquo;header&rdquo;</li>
+</ul>
 
 </div>
 

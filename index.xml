@@ -5,8 +5,80 @@
     <link>http://facile-it.github.io/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 24 Oct 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Dec 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.7: test coverage in parallel</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.7/</link>
+      <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.7/</guid>
+      <description>
+
+&lt;p&gt;Finally, &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7&#34;&gt;Paraunit 0.7&lt;/a&gt; has been released!
+This version includes the long awaited &lt;strong&gt;coverage feature&lt;/strong&gt;: now you can collect your test coverage running your tests
+in parallel!&lt;/p&gt;
+
+&lt;p&gt;Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit
+options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we
+&lt;strong&gt;officially support Windows&lt;/strong&gt;, and we added an &lt;a href=&#34;https://ci.appveyor.com/project/Jean85/paraunit&#34;&gt;Appveyor CI build&lt;/a&gt; to
+do that.&lt;/p&gt;
+
+&lt;p&gt;In the meantime, the &lt;a href=&#34;https://github.com/facile-it/paraunit/milestone/4&#34;&gt;1.0 milestone&lt;/a&gt; has been defined: it will drop
+support to PHPUnit 4.x series, since its support is going to end by Feb. 27th, 2017; with that, also PHP &amp;lt; 5.6 will lose
+support, and Paraunit will follow along. I will be able to drop a lot of BC-tricks in this way, preferring &lt;code&gt;::class&lt;/code&gt;
+and array short syntax everywhere in the codebase.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full 0.7 changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Paraunit is now capable of producing the test coverage of your test suites in parallel! To use it, use the new
+&lt;code&gt;coverage&lt;/code&gt; command (instead of the normal &lt;code&gt;run&lt;/code&gt;), along with at least an option to specify the requested format; for
+more information, please use the &lt;code&gt;--help&lt;/code&gt; option on the CLI or refer to the &lt;a href=&#34;http://engineering.facile.it/paraunit/documentation/&#34;&gt;documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;It&amp;rsquo;s possible to choose how many concurrent processes Paraunit should spawn using the new &lt;code&gt;--parallel&lt;/code&gt; option.&lt;/li&gt;
+&lt;li&gt;A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
+new supported options is:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;exclude-group&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;test-suffix&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;report-useless-tests&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;strict-global-state&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;disallow-test-output&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;enforce-time-limit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;disallow-todo-tests&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;process-isolation&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;no-globals-backup&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;static-backup&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loader&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;repeat&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;printer&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bootstrap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;no-configuration&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;include-path&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;testsuite&lt;/code&gt; and &lt;code&gt;configuration&lt;/code&gt; options are still supported; thanks to @sergeyz for suggesting the feature (#56)
+* Added support to Windows (thanks to R.D. for the help) and Appveyor CI build
+* PHP 7.1 added to the Travis build matrix
+* Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Symfony 2.3 compatibility restored: the Travis build now tests with &lt;code&gt;--prefer-lowest&lt;/code&gt; under PHP 5.3; this added
+&lt;code&gt;symfony/http-kernel&lt;/code&gt; to the required packages&lt;/li&gt;
+&lt;li&gt;Fixed a minor typo that caused version number to be different in the command help versus the command cli &amp;ldquo;header&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.6.2</title>
@@ -248,13 +320,13 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
 &lt;p&gt;Paraunit is a tool for faster executions of PHPUnit test suites.
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.&lt;/p&gt;
 
-&lt;p&gt;Paraunit is developed using &lt;a href=&#34;http://symfony.com/components&#34;&gt;Symfony2 components&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Paraunit is developed using &lt;a href=&#34;http://symfony.com/components&#34;&gt;Symfony components&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
 
 &lt;p&gt;Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit&amp;rsquo;s .xml configuration file, so it&amp;rsquo;s needed to know which test to load.&lt;/p&gt;
 
-&lt;p&gt;If you are testing a Symfony2+Doctrine application, it&amp;rsquo;s suggested to use also &lt;a href=&#34;https://github.com/facile-it/paraunit-testcase&#34;&gt;facile-it/paraunit-testcase&lt;/a&gt;, to avoid database concurrency problems during functional testing;
+&lt;p&gt;If you are testing a Symfony+Doctrine application, it&amp;rsquo;s suggested to use also &lt;a href=&#34;https://github.com/facile-it/paraunit-testcase&#34;&gt;facile-it/paraunit-testcase&lt;/a&gt;, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to &lt;strong&gt;warm up the cache before&lt;/strong&gt;. in order to avoid a mass cache miss (and relative &lt;a href=&#34;https://en.wikipedia.org/wiki/Cache_stampede&#34;&gt;cache stampede&lt;/a&gt;) with concurrency problems, and subsequent random failures.&lt;/p&gt;
 
 &lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
@@ -275,7 +347,7 @@ also, if your want to run functional tests, remember to &lt;strong&gt;warm up th
 
 &lt;h1 id=&#34;usage&#34;&gt;Usage&lt;/h1&gt;
 
-&lt;p&gt;Paraunit starts as a Symfony2 console command, but it&amp;rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&amp;rsquo;s bin dir is &lt;code&gt;vendor/bin&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;Paraunit starts as a Symfony console command, but it&amp;rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&amp;rsquo;s bin dir is &lt;code&gt;vendor/bin&lt;/code&gt;)&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;vendor/bin/paraunit run&lt;/code&gt;&lt;/p&gt;
 
