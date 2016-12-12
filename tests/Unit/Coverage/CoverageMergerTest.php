@@ -17,7 +17,7 @@ class CoverageMergerTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
 
-        $newCoverageData = $this->prophesize('SebastianBergmann\CodeCoverage\CodeCoverage');
+        $newCoverageData = $this->prophesize('Paraunit\Proxy\Coverage\CodeCoverage');
 
         $fetcher = $this->prophesize('Paraunit\Coverage\CoverageFetcher');
         $fetcher->fetch($process)->shouldBeCalledTimes(1)->willReturn($newCoverageData->reveal());
@@ -34,8 +34,8 @@ class CoverageMergerTest extends BaseUnitTestCase
         $process1 = new StubbedParaunitProcess('test1');
         $process2 = new StubbedParaunitProcess('test2');
 
-        $coverageData1 = $this->prophesize('SebastianBergmann\CodeCoverage\CodeCoverage');
-        $coverageData2 = $this->prophesize('SebastianBergmann\CodeCoverage\CodeCoverage');
+        $coverageData1 = $this->prophesize('Paraunit\Proxy\Coverage\CodeCoverage');
+        $coverageData2 = $this->prophesize('Paraunit\Proxy\Coverage\CodeCoverage');
 
         $fetcher = $this->prophesize('Paraunit\Coverage\CoverageFetcher');
         $fetcher->fetch($process1)->shouldBeCalledTimes(1)->willReturn($coverageData1->reveal());
