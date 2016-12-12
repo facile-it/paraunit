@@ -27,11 +27,11 @@ class CoverageCommand extends ParallelCommand
     {
         parent::configure();
 
-        $this
-            ->setName('coverage')
-            ->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result')
-            ->addOption('xml', null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result')
-            ->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
+        $this->setName('coverage');
+        $this->setDescription('Fetch the coverage of your tests in parallel');
+        $this->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
+        $this->addOption('xml', null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
+        $this->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
     }
 
     /**

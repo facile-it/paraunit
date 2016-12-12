@@ -61,6 +61,7 @@ class ParallelCommand extends Command
     protected function configure()
     {
         $this->setName('run');
+        $this->setDescription('Run all the requested tests in parallel');
         $this->addOption('parallel', null, InputOption::VALUE_REQUIRED, 'Number of concurrent processes to launch', 10);
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
 

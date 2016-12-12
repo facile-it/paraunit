@@ -58,6 +58,6 @@
   },
   "minimum-stability": "stable",
   "suggest": {
-    "facile-it/paraunit-testcase": "Useful for Symfony2+Doctrine functional testing, providing DB isolation"
+    "facile-it/paraunit-testcase": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
   }
 }
