@@ -176,6 +176,32 @@
 </div>
 <div class="content">
   
+  <div id="toc" class="well col-md-4 col-sm-6">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a>
+<ul>
+<li><a href="#run-command"><code>run</code> command</a></li>
+<li><a href="#coverage-command"><code>coverage</code> command</a></li>
+<li><a href="#optional-parameters">Optional parameters</a>
+<ul>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#parallel">Parallel</a></li>
+<li><a href="#testsuite">Testsuite</a></li>
+<li><a href="#phpunit-inherited-options">PHPUnit inherited options</a></li>
+<li><a href="#debug-mode">Debug mode</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#parsing-results">Parsing results</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</nav>
+  </div>
+  
+
+  
 
 <p>Paraunit is a tool for faster executions of PHPUnit test suites.
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.</p>
@@ -184,34 +210,50 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 
 <h1 id="requirements">Requirements</h1>
 
-<p>Paraunit is used in conjunction with PHPUnit. IT reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
+<p>Paraunit is used in conjunction with PHPUnit. It reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
 
 <p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/facile-it/paraunit-testcase">facile-it/paraunit-testcase</a>, to avoid database concurrency problems during functional testing;
-also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>. in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
+also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>, in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
 
 <h1 id="installation">Installation</h1>
 
 <p>To use this package, use <a href="https://getcomposer.org/">composer</a>:</p>
 
 <ul>
-<li>from CLI: <code>composer require facile-it/paraunit</code></li>
+<li>from CLI: <code>composer require --dev facile-it/paraunit</code></li>
 <li>or, directly in your <code>composer.json</code>:</li>
 </ul>
 
 <pre><code>{
-    &quot;require&quot;: {
-        &quot;facile-it/paraunit&quot;: &quot;~0.6&quot;
+    &quot;require-dev&quot;: {
+        &quot;facile-it/paraunit&quot;: &quot;~0.7&quot;
     }
 }
 </code></pre>
 
 <h1 id="usage">Usage</h1>
 
-<p>Paraunit starts as a Symfony console command, but it&rsquo;s provided through a bin launcher; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
+<h2 id="run-command"><code>run</code> command</h2>
 
-<p><code>vendor/bin/paraunit run</code></p>
+<p>The <code>run</code> command is the main functionality of Paraunit; it launches all the tests in all your configured testsuites in parallel; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
 
-<p>This command will launch all the tests in all your configured testsuites.</p>
+<pre><code class="language-bash">vendor/bin/paraunit run
+</code></pre>
+
+<p>This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.</p>
+
+<h2 id="coverage-command"><code>coverage</code> command</h2>
+
+<p>The <code>coverage</code> command is used to generate the test coverage in parallel. It supports all the same options of the <code>run</code> command (documented below) but it requires <strong>at least one of those three options</strong> to choose the coverage output format:</p>
+
+<ul>
+<li><code>--html=dir</code> generates the coverage in HTML format, inside the specified directory</li>
+<li><code>--clover=filename.xml</code> generates the coverage in XML-clover format, with the specified filename</li>
+<li><code>--xml=filename.xml</code> generates the coverage in PHPUnit XML format, with the specified filename</li>
+</ul>
+
+<pre><code class="language-bash">vendor/bin/paraunit coverage --html=./coverage
+</code></pre>
 
 <h2 id="optional-parameters">Optional parameters</h2>
 
@@ -219,41 +261,82 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>If your <code>phpunit.xml.dist</code> file is not in the default base dir, you can specify it by:</p>
 
-<p><code>vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist</code></p>
+<pre><code class="language-bash">vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist
+</code></pre>
 
 <p>or with the short version:</p>
 
-<p><code>vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist</code></p>
+<pre><code class="language-bash">vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist
+</code></pre>
 
-<p>Also it&rsquo;s possible to provide only a directory, in such case Paraunit will look for the &lsquo;phpunit.xml.dist&rsquo;:</p>
+<p>Also it&rsquo;s possible to provide only a directory, in such case Paraunit will look a file with the default name, <code>phpunit.xml.dist</code>:</p>
 
-<p><code>vendor/bin/paraunit run -c=relPath/to/xml/file/</code></p>
+<pre><code class="language-bash">vendor/bin/paraunit run -c=relPath/to/xml/file/
+</code></pre>
+
+<h3 id="parallel">Parallel</h3>
+
+<p>You can choose how many concurrent processes you want to spawn at the same time, using the <code>--parallel</code> option. The default value is <code>10</code>:</p>
+
+<pre><code class="language-bash">vendor/bin/paraunit run --parallel=5
+</code></pre>
 
 <h3 id="testsuite">Testsuite</h3>
 
 <p>You can run a single test suite (as defined in your configuration file) using:</p>
 
-<p><code>vendor/bin/paraunit run --testsuite=testSuiteName</code></p>
+<pre><code class="language-bash">vendor/bin/paraunit run --testsuite=testSuiteName
+</code></pre>
+
+<h3 id="phpunit-inherited-options">PHPUnit inherited options</h3>
+
+<p>A large number of PHPUnit options (apart from the aforementioned <code>--testsuite</code>) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options&rsquo; behavior, see the <a href="https://phpunit.de/manual/current/en/textui.html#textui.clioptions">PHPUnit CLI documentation</a>.</p>
+
+<p>This is the complete list of supported options:</p>
+
+<ul>
+<li><code>filter</code></li>
+<li><code>group</code></li>
+<li><code>exclude-group</code></li>
+<li><code>test-suffix</code></li>
+<li><code>report-useless-tests</code></li>
+<li><code>strict-global-state</code></li>
+<li><code>disallow-test-output</code></li>
+<li><code>enforce-time-limit</code></li>
+<li><code>disallow-todo-tests</code></li>
+<li><code>process-isolation</code></li>
+<li><code>no-globals-backup</code></li>
+<li><code>static-backup</code></li>
+<li><code>loader</code></li>
+<li><code>repeat</code></li>
+<li><code>printer</code></li>
+<li><code>bootstrap</code></li>
+<li><code>no-configuration</code></li>
+<li><code>include-path</code></li>
+</ul>
 
 <h3 id="debug-mode">Debug mode</h3>
 
 <p>If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:</p>
 
-<p><code>--debug</code></p>
+<pre><code class="language-bash">vendor/bin/paraunit run --debug
+</code></pre>
 
 <p>It will show a verbose output with the full running test queue.</p>
 
 <h1 id="parsing-results">Parsing results</h1>
 
-<p>Paraunit prints a parsed result from the single PHPUnit processes.
-This parsing is done (since version 0.6) using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process.
-It allows to be also resistent to fatal errors and other abnormal process termination.
-If you are experiencing any problems, you can try the <code>--debug</code> option to identify the problematic test, and try running it alone;
-if it&rsquo;s ok and the parser is at fault, please open an issue here on GitHub with the full single test output.</p>
+<p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process; it allows to be also resistent to fatal errors and other abnormal process termination.</p>
 
 <p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&rsquo; exit codes:
  <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
  So you can safely use it in your CI build ;)</p>
+
+<p>Side note: if you are using <a href="http://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something) you will notice that the bridge list of deprecations will be lost through Paraunit; the tests will be shown as passing, but <strong>the Paraunit process will still fail as expected if a deprecation is encountered</strong>, due to the aforementioned exit code being considered.</p>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>If you are experiencing any problems, you can try the <code>--debug</code> option to identify the problematic test, and try running it alone; if failures seems to appear at randoms during Paraunit runs, check for concurrency problem, like database access; otherwise, please open an issue <a href="https://github.com/facile-it/paraunit/issues">here on GitHub</a>.</p>
 
 </div>
 
