@@ -7,4 +7,3 @@ vendor
 composer.lock
 build/
 swiftmailer/
-public
