@@ -50,6 +50,8 @@ The `coverage` command is used to generate the test coverage in parallel. It sup
 vendor/bin/paraunit coverage --html=./coverage
 ```
 
+Paraunit detects automatically if the [PHPDBG](http://phpdbg.com/) binary is available, at it uses that as a preferred coverage driver, since it's a lot faster and uses less memory. If it's not available, it falls back to use xDebug. If you want to use PHPDBG, you are **highly encouraged to disable xDebug**, since Paraunit can't do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.
+
 ## Optional parameters
 
 ### Configuration
