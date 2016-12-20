@@ -255,6 +255,8 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 <pre><code class="language-bash">vendor/bin/paraunit coverage --html=./coverage
 </code></pre>
 
+<p>Paraunit detects automatically if the <a href="http://phpdbg.com/">PHPDBG</a> binary is available, at it uses that as a preferred coverage driver, since it&rsquo;s a lot faster and uses less memory. If it&rsquo;s not available, it falls back to use xDebug. If you have PHPDBG, you are highly encouraged to disable xDebug, since Paraunit can&rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.</p>
+
 <h2 id="optional-parameters">Optional parameters</h2>
 
 <h3 id="configuration">Configuration</h3>
