@@ -46,9 +46,9 @@ matrix:
 install:
   - if [[ ! $TEST_COVERAGE ]]; then phpenv config-rm xdebug.ini; fi
   - if [[ $TEST_COVERAGE ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; fi
-  - composer update --prefer-dist --prefer-stable --no-interaction $COMPOSER_OPTIONS
   - composer config minimum-stability dev
-  - composer require phpunit/phpunit:${PHPUNIT}
+  - composer require phpunit/phpunit:${PHPUNIT} --no-update
+  - composer update --prefer-dist --prefer-stable --no-interaction $COMPOSER_OPTIONS
 
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS
