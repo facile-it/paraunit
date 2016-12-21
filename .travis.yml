@@ -40,11 +40,10 @@ matrix:
         - TEST_COVERAGE=true
   allow_failures:
     - php: hhvm
-    - php: nightly
   fast_finish: true
 
 install:
-  - if [[ ! $TEST_COVERAGE ]]; then phpenv config-rm xdebug.ini; fi
+  - if [[ ! $TEST_COVERAGE ]]; then phpenv config-rm xdebug.ini || true ; fi
   - if [[ $TEST_COVERAGE ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; fi
   - composer config minimum-stability dev
   - composer require phpunit/phpunit:${PHPUNIT} --no-update
