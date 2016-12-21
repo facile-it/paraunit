@@ -29,7 +29,7 @@
     "symfony/config": ">=2.3,<4.0",
     "symfony/process": ">=2.3,<4.0",
     "symfony/event-dispatcher": ">=2.3,<4.0",
-    "phpunit/phpunit": ">=4.6,<6"
+    "phpunit/phpunit": ">=4.7"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",
