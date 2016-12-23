@@ -34,6 +34,12 @@ Paraunit starts as a Symfony console command, but it's provided through a bin la
 
 `vendor/bin/paraunit run`
 
+Paraunit is also able to collect the test coverage, like this:
+
+`vendor/bin/paraunit coverage --html==./dir`
+
+It automatically **uses PHPDBG** if available, and can produce coverage in HTML, Clover and XML format.
+
 This command will launch all the tests in all your configured testsuites.
 
 ## Documentation
