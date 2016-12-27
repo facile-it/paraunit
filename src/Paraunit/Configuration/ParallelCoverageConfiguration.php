@@ -27,5 +27,7 @@ class ParallelCoverageConfiguration extends ParallelConfiguration
         $containerBuilder->setParameter('paraunit.coverage.clover_file_path', $input->getOption('clover'));
         $containerBuilder->setParameter('paraunit.coverage.xml_file_path', $input->getOption('xml'));
         $containerBuilder->setParameter('paraunit.coverage.html_path', $input->getOption('html'));
+        $containerBuilder->setParameter('paraunit.coverage.text_path', $input->getOption('text'));
+        $containerBuilder->setParameter('paraunit.coverage.text_to_console', $input->getOption('text-to-console'));
     }
 }

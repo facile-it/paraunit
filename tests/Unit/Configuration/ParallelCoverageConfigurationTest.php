@@ -63,6 +63,8 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('clover')->willReturn('coverage.clover.xml');
         $input->getOption('xml')->willReturn('coverage.xml');
         $input->getOption('html')->willReturn('coverage/html');
+        $input->getOption('text')->willReturn('coverage.txt');
+        $input->getOption('text-to-console')->willReturn(true);
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
@@ -73,5 +75,7 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $this->assertEquals('coverage.clover.xml', $container->getParameter('paraunit.coverage.clover_file_path'));
         $this->assertEquals('coverage.xml', $container->getParameter('paraunit.coverage.xml_file_path'));
         $this->assertEquals('coverage/html', $container->getParameter('paraunit.coverage.html_path'));
+        $this->assertEquals('coverage.txt', $container->getParameter('paraunit.coverage.text_path'));
+        $this->assertEquals(true, $container->getParameter('paraunit.coverage.text_to_console'));
     }
 }

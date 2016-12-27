@@ -32,7 +32,8 @@ class CoverageCommand extends ParallelCommand
         $this->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
         $this->addOption('xml', null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
         $this->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
-        $this->addOption('text', null, InputOption::VALUE_OPTIONAL, 'Output file for text coverage result (default is stdout)');
+        $this->addOption('text', null, InputOption::VALUE_REQUIRED, 'Output file for text coverage result');
+        $this->addOption('text-to-console', null, InputOption::VALUE_NONE, 'Output text coverage directly to console');
     }
 
     /**
@@ -63,6 +64,7 @@ class CoverageCommand extends ParallelCommand
         return $input->getOption('clover')
             || $input->getOption('html')
             || $input->getOption('xml')
-            || $input->getOption('text');
+            || $input->getOption('text')
+            || $input->getOption('text-to-console');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Paraunit\Coverage;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Proxy\Coverage\CloverResult;
 use Paraunit\Proxy\Coverage\HtmlResult;
 use Paraunit\Proxy\Coverage\XmlResult;
