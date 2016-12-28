@@ -19,7 +19,7 @@ class TextResult
      */
     public function __construct()
     {
-        $this->text = new Text();
+        $this->text = new Text(50, 90, false, false);
     }
 
     /**
