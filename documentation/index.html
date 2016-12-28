@@ -244,13 +244,45 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <h2 id="coverage-command"><code>coverage</code> command</h2>
 
-<p>The <code>coverage</code> command is used to generate the test coverage in parallel. It supports all the same options of the <code>run</code> command (documented below) but it requires <strong>at least one of those three options</strong> to choose the coverage output format:</p>
+<p>The <code>coverage</code> command is used to generate the test coverage in parallel. It supports all the same options of the <code>run</code> command (documented below) but it requires <strong>at least one of those options</strong> to choose the coverage output format:</p>
 
-<ul>
-<li><code>--html=dir</code> generates the coverage in HTML format, inside the specified directory</li>
-<li><code>--clover=filename.xml</code> generates the coverage in XML-clover format, with the specified filename</li>
-<li><code>--xml=filename.xml</code> generates the coverage in PHPUnit XML format, with the specified filename</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>--html=dir</code></td>
+<td>Coverage in HTML format, inside the specified directory</td>
+</tr>
+
+<tr>
+<td><code>--clover=filename.xml</code></td>
+<td>Coverage in XML-clover format, with the specified filename</td>
+</tr>
+
+<tr>
+<td><code>--xml=dir</code></td>
+<td>Coverage in PHPUnit XML format, inside the specified directory</td>
+</tr>
+
+<tr>
+<td><code>--text=filename.txt</code></td>
+<td>Coverage in text format, with the specified filename</td>
+</tr>
+
+<tr>
+<td><code>--text-to-console</code></td>
+<td>Coverage in text format, printed directly in the console, at the end of the process</td>
+</tr>
+</tbody>
+</table>
+
+<p>Example:</p>
 
 <pre><code class="language-bash">vendor/bin/paraunit coverage --html=./coverage
 </code></pre>

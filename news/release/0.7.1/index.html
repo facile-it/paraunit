@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.7.1: coverage in text format &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,26 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.7.1: coverage in text format</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;10&#41;</span>
-    </li>
-  
-  </ul>
+
+<p><a href="https://github.com/facile-it/paraunit/releases/tag/0.7.0">Paraunit 0.7.1</a> has just been released; this is just a minor release that adds a new useful feature: the <strong>text format</strong> for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.</p>
+
+<p>In the next versions, I will work to implement the other missing formats, PHP and Crap4j.</p>
+
+<p>The official changelog is this below:</p>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+<li>Added support to the text coverage format with two new CLI options: <code>--text-to-console</code> to output it directly onto the standard output, and <code>--text=filename.txt</code> to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.<br /></li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +202,4 @@
 
 </body>
 </html>
+

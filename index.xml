@@ -5,8 +5,30 @@
     <link>http://facile-it.github.io/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 12 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Dec 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.7.1: coverage in text format</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.7.1/</link>
+      <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.7.1/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.0&#34;&gt;Paraunit 0.7.1&lt;/a&gt; has just been released; this is just a minor release that adds a new useful feature: the &lt;strong&gt;text format&lt;/strong&gt; for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.&lt;/p&gt;
+
+&lt;p&gt;In the next versions, I will work to implement the other missing formats, PHP and Crap4j.&lt;/p&gt;
+
+&lt;p&gt;The official changelog is this below:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Added support to the text coverage format with two new CLI options: &lt;code&gt;--text-to-console&lt;/code&gt; to output it directly onto the standard output, and &lt;code&gt;--text=filename.txt&lt;/code&gt; to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.7: test coverage in parallel</title>
@@ -358,13 +380,45 @@ also, if your want to run functional tests, remember to &lt;strong&gt;warm up th
 
 &lt;h2 id=&#34;coverage-command&#34;&gt;&lt;code&gt;coverage&lt;/code&gt; command&lt;/h2&gt;
 
-&lt;p&gt;The &lt;code&gt;coverage&lt;/code&gt; command is used to generate the test coverage in parallel. It supports all the same options of the &lt;code&gt;run&lt;/code&gt; command (documented below) but it requires &lt;strong&gt;at least one of those three options&lt;/strong&gt; to choose the coverage output format:&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;coverage&lt;/code&gt; command is used to generate the test coverage in parallel. It supports all the same options of the &lt;code&gt;run&lt;/code&gt; command (documented below) but it requires &lt;strong&gt;at least one of those options&lt;/strong&gt; to choose the coverage output format:&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--html=dir&lt;/code&gt; generates the coverage in HTML format, inside the specified directory&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--clover=filename.xml&lt;/code&gt; generates the coverage in XML-clover format, with the specified filename&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--xml=filename.xml&lt;/code&gt; generates the coverage in PHPUnit XML format, with the specified filename&lt;/li&gt;
-&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Option&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--html=dir&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Coverage in HTML format, inside the specified directory&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--clover=filename.xml&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Coverage in XML-clover format, with the specified filename&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--xml=dir&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Coverage in PHPUnit XML format, inside the specified directory&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--text=filename.txt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Coverage in text format, with the specified filename&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--text-to-console&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Coverage in text format, printed directly in the console, at the end of the process&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit coverage --html=./coverage
 &lt;/code&gt;&lt;/pre&gt;
