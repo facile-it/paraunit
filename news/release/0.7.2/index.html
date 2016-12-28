@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Paraunit 0.7.1: coverage in text format &middot; Paraunit</title>
+  <title>Paraunit 0.7.2: coverage in text format &middot; Paraunit</title>
 
   
   
@@ -171,7 +171,7 @@
 
 
 <div class="header">
-  <h1>Paraunit 0.7.1: coverage in text format</h1>
+  <h1>Paraunit 0.7.2: coverage in text format</h1>
   <h2></h2>
 </div>
 <div class="content">
@@ -179,16 +179,14 @@
 
   
 
-<p><a href="https://github.com/facile-it/paraunit/releases/tag/0.7.1">Paraunit 0.7.1</a> has just been released; this is just a minor release that adds a new useful feature: the <strong>text format</strong> for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.</p>
+<p><a href="https://github.com/facile-it/paraunit/releases/tag/0.7.2">Paraunit 0.7.2</a> has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.</p>
 
-<p>In the next versions, I will work to implement the other missing formats, PHP and Crap4j.</p>
+<p>Full changelog text:</p>
 
-<p>The official changelog is this below:</p>
-
-<h3 id="changed">Changed</h3>
+<h3 id="fixed">Fixed</h3>
 
 <ul>
-<li>Added support to the text coverage format with two new CLI options: <code>--text-to-console</code> to output it directly onto the standard output, and <code>--text=filename.txt</code> to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.<br /></li>
+<li>Disable colored output in text coverage to console, to avoid issues with GitLab integration.<br /></li>
 </ul>
 
 </div>
