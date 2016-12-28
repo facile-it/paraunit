@@ -7,3 +7,6 @@ services:
 
   paraunit.proxy.coverage.html_result:
     class: Paraunit\Proxy\Coverage\HtmlResult
+
+  paraunit.proxy.coverage.text_result:
+    class: Paraunit\Proxy\Coverage\TextResult

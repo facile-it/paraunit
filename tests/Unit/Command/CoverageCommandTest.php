@@ -13,7 +13,10 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CoverageCommandTest extends \PHPUnit_Framework_TestCase
 {
-    public function testExecute()
+    /**
+     * @dataProvider validCoverageOptionsProvider
+     */
+    public function testExecute($coverageOptionName)
     {
         $filteredFiles = array('Test.php');
         $filter = $this->prophesize('Paraunit\Filter\Filter');
@@ -37,10 +40,21 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
 
         $exitCode = $commandTester->execute(array(
             'command' => $command->getName(),
-            '--xml' => '.',
+            $coverageOptionName => '.',
         ));
 
         $this->assertEquals(0, $exitCode);
+    }
+
+    public function validCoverageOptionsProvider()
+    {
+        return array(
+            array('--clover'),
+            array('--xml'),
+            array('--html'),
+            array('--text'),
+            array('--text-to-console'),
+        );
     }
 
     public function testExecuteExpectsAtLeastOneCoverageFormat()

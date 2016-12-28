@@ -6,6 +6,7 @@ use Paraunit\Configuration\OutputFile;
 use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\CoverageOutputPaths;
 use Paraunit\Coverage\CoverageResult;
+use Paraunit\Lifecycle\EngineEvent;
 use Prophecy\Argument;
 use Tests\BaseTestCase;
 
@@ -20,9 +21,14 @@ class CoverageResultTest extends BaseTestCase
      */
     public function testGenerateResults(CoverageOutputPaths $outputPaths)
     {
+        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
+        $output->write('colored coverage data')
+            ->shouldBeCalledTimes((int)$outputPaths->isTextToConsoleEnabled());
+        $engineEvent = new EngineEvent($output->reveal());
+
         $coverageResult = $this->createCoverageResultWithMocks($outputPaths);
 
-        $coverageResult->generateResults();
+        $coverageResult->generateResults($engineEvent);
     }
 
     /**
@@ -56,13 +62,28 @@ class CoverageResultTest extends BaseTestCase
             $htmlResult->process($coverageData, $outputPaths->getHtmlPath())->shouldBeCalled();
         }
 
+        $textResult = $this->prophesize('Paraunit\Proxy\Coverage\TextResult');
+        if (! $outputPaths->isTextToConsoleEnabled() && $outputPaths->getTextFile()->isEmpty()) {
+            $textResult->process(Argument::cetera())->shouldNotBeCalled();
+        }
+
+        if ($outputPaths->isTextToConsoleEnabled()) {
+            $textResult->process($coverageData, true)
+                ->shouldBeCalled()
+                ->willReturn('colored coverage data');
+        }
+
+        if (! $outputPaths->getTextFile()->isEmpty()) {
+            $textResult->writeToFile($coverageData, Argument::cetera())->shouldBeCalled();
+        }
 
         $coverageResult = new CoverageResult(
             $merger->reveal(),
             $outputPaths,
             $cloverResult->reveal(),
             $xmlResult->reveal(),
-            $htmlResult->reveal()
+            $htmlResult->reveal(),
+            $textResult->reveal()
         );
 
         return $coverageResult;
@@ -71,9 +92,51 @@ class CoverageResultTest extends BaseTestCase
     public function outputPathsProvider()
     {
         return array(
-            array(new CoverageOutputPaths(new OutputFile('file.xml'), $this->mockEmptyPath(), $this->mockEmptyPath())),
-            array(new CoverageOutputPaths($this->mockEmptyFilePath(), new OutputPath('.'), $this->mockEmptyPath())),
-            array(new CoverageOutputPaths($this->mockEmptyFilePath(), $this->mockEmptyPath(), new OutputPath('.'))),
+            array(
+                new CoverageOutputPaths(
+                    new OutputFile('file.xml'),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyFilePath(),
+                    false
+                )
+            ),
+            array(
+                new CoverageOutputPaths(
+                    $this->mockEmptyFilePath(),
+                    new OutputPath('.'),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyFilePath(),
+                    false
+                )
+            ),
+            array(
+                new CoverageOutputPaths(
+                    $this->mockEmptyFilePath(),
+                    $this->mockEmptyPath(),
+                    new OutputPath('.'),
+                    $this->mockEmptyFilePath(),
+                    false
+                )
+            ),
+            array(
+                new CoverageOutputPaths(
+                    $this->mockEmptyFilePath(),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyPath(),
+                    new OutputFile('cov.txt'),
+                    false
+                )
+            ),
+            array(
+                new CoverageOutputPaths(
+                    $this->mockEmptyFilePath(),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyPath(),
+                    $this->mockEmptyFilePath(),
+                    true
+                )
+            ),
         );
     }
 
