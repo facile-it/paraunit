@@ -40,11 +40,17 @@ vendor/bin/paraunit run
 This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.
 
 ## `coverage` command
-The `coverage` command is used to generate the test coverage in parallel. It supports all the same options of the `run` command (documented below) but it requires **at least one of those three options** to choose the coverage output format:
+The `coverage` command is used to generate the test coverage in parallel. It supports all the same options of the `run` command (documented below) but it requires **at least one of those options** to choose the coverage output format:
  
-  * `--html=dir` generates the coverage in HTML format, inside the specified directory
-  * `--clover=filename.xml` generates the coverage in XML-clover format, with the specified filename
-  * `--xml=filename.xml` generates the coverage in PHPUnit XML format, with the specified filename
+ Option | Description
+ -------|------------
+`--html=dir` | Coverage in HTML format, inside the specified directory
+`--clover=filename.xml` | Coverage in XML-clover format, with the specified filename
+`--xml=dir` | Coverage in PHPUnit XML format, inside the specified directory
+`--text=filename.txt` | Coverage in text format, with the specified filename
+`--text-to-console` | Coverage in text format, printed directly in the console, at the end of the process
+
+Example:
 
 ```bash
 vendor/bin/paraunit coverage --html=./coverage
