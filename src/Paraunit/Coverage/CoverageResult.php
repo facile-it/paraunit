@@ -83,7 +83,7 @@ class CoverageResult
 
         if ($this->coverageOutputPaths->isTextToConsoleEnabled()) {
             $output = $event->getOutputInterface();
-            $output->write($this->textResult->process($coverageData, true));
+            $output->write($this->textResult->process($coverageData, false));
         }
     }
 }

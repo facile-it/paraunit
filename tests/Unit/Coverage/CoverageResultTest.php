@@ -68,7 +68,7 @@ class CoverageResultTest extends BaseTestCase
         }
 
         if ($outputPaths->isTextToConsoleEnabled()) {
-            $textResult->process($coverageData, true)
+            $textResult->process($coverageData, false)
                 ->shouldBeCalled()
                 ->willReturn('colored coverage data');
         }
