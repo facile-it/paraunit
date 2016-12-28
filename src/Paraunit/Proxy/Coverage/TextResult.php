@@ -2,6 +2,7 @@
 
 namespace Paraunit\Proxy\Coverage;
 
+use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\Report\Text;
 
 /**
@@ -29,5 +30,15 @@ class TextResult
     public function process(CodeCoverage $coverage, $showColors = false)
     {
         return $this->text->process($coverage, $showColors);
+    }
+
+    /**
+     * @param CodeCoverage $coverage
+     * @param OutputFile $outputFile
+     * @throws \RuntimeException
+     */
+    public function writeToFile(CodeCoverage $coverage, OutputFile $outputFile)
+    {
+        file_put_contents($outputFile->getFilePath(), $this->text->process($coverage, false));
     }
 }

@@ -24,8 +24,6 @@ class CoverageResultTest extends BaseTestCase
         $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
         $output->write('colored coverage data')
             ->shouldBeCalledTimes((int)$outputPaths->isTextToConsoleEnabled());
-        $output->writeln('')
-            ->shouldBeCalledTimes((int)$outputPaths->isTextToConsoleEnabled());
         $engineEvent = new EngineEvent($output->reveal());
 
         $coverageResult = $this->createCoverageResultWithMocks($outputPaths);
@@ -76,7 +74,7 @@ class CoverageResultTest extends BaseTestCase
         }
 
         if (! $outputPaths->getTextFile()->isEmpty()) {
-            $textResult->process($coverageData, false)->shouldBeCalled();
+            $textResult->writeToFile($coverageData, Argument::cetera())->shouldBeCalled();
         }
 
         $coverageResult = new CoverageResult(

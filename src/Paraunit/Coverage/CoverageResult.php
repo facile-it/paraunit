@@ -78,13 +78,12 @@ class CoverageResult
 
         $textFile = $this->coverageOutputPaths->getTextFile();
         if (! $textFile->isEmpty()) {
-            $this->textResult->process($coverageData, false);
+            $this->textResult->writeToFile($coverageData, $textFile);
         }
 
         if ($this->coverageOutputPaths->isTextToConsoleEnabled()) {
             $output = $event->getOutputInterface();
             $output->write($this->textResult->process($coverageData, true));
-            $output->writeln('');
         }
     }
 }
