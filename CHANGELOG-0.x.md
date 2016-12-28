@@ -3,6 +3,12 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.7.1] - 2016-12-28
+
+### Changed
+
+* Added support to the text coverage format with two new CLI options: `--text-to-console` to output it directly onto the standard output, and `--text=filename.txt` to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.  
+
 ## [0.7] - 2016-12-12
 
 ### Changed
