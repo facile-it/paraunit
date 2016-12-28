@@ -20,17 +20,32 @@ class CoverageOutputPaths
     /** @var  OutputPath */
     private $htmlPath;
 
+    /** @var  OutputFile */
+    private $textFile;
+
+    /** @var  bool */
+    private $textToConsole;
+
     /**
      * CoverageOutputPaths constructor.
      * @param OutputFile $cloverFilePath
      * @param OutputPath $xmlPath
      * @param OutputPath $htmlPath
+     * @param OutputFile $textFile
+     * @param bool $textToConsole
      */
-    public function __construct(OutputFile $cloverFilePath, OutputPath $xmlPath, OutputPath $htmlPath)
-    {
+    public function __construct(
+        OutputFile $cloverFilePath,
+        OutputPath $xmlPath,
+        OutputPath $htmlPath,
+        OutputFile $textFile,
+        $textToConsole
+    ) {
         $this->cloverFilePath = $cloverFilePath;
         $this->xmlPath = $xmlPath;
         $this->htmlPath = $htmlPath;
+        $this->textFile = $textFile;
+        $this->textToConsole = $textToConsole;
     }
 
     /**
@@ -55,5 +70,21 @@ class CoverageOutputPaths
     public function getHtmlPath()
     {
         return $this->htmlPath;
+    }
+
+    /**
+     * @return OutputFile
+     */
+    public function getTextFile()
+    {
+        return $this->textFile;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTextToConsoleEnabled()
+    {
+        return $this->textToConsole;
     }
 }

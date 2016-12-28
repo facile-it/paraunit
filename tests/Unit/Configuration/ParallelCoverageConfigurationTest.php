@@ -75,7 +75,7 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $this->assertEquals('coverage.clover.xml', $container->getParameter('paraunit.coverage.clover_file_path'));
         $this->assertEquals('coverage.xml', $container->getParameter('paraunit.coverage.xml_file_path'));
         $this->assertEquals('coverage/html', $container->getParameter('paraunit.coverage.html_path'));
-        $this->assertEquals('coverage.txt', $container->getParameter('paraunit.coverage.text_path'));
+        $this->assertEquals('coverage.txt', $container->getParameter('paraunit.coverage.text_file_path'));
         $this->assertEquals(true, $container->getParameter('paraunit.coverage.text_to_console'));
     }
 }

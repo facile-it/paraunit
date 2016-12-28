@@ -5,6 +5,7 @@ namespace Paraunit\Coverage;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Proxy\Coverage\CloverResult;
 use Paraunit\Proxy\Coverage\HtmlResult;
+use Paraunit\Proxy\Coverage\TextResult;
 use Paraunit\Proxy\Coverage\XmlResult;
 
 /**
@@ -28,6 +29,9 @@ class CoverageResult
     /** @var  HtmlResult */
     private $htmlResult;
 
+    /** @var  TextResult */
+    private $textResult;
+
     /**
      * CoverageResult constructor.
      * @param CoverageMerger $coverageMerger
@@ -35,23 +39,25 @@ class CoverageResult
      * @param CloverResult $cloverResult
      * @param XmlResult $xmlResult
      * @param HtmlResult $htmlResult
+     * @param TextResult $textResult
      */
     public function __construct(
         CoverageMerger $coverageMerger,
         CoverageOutputPaths $coverageOutputPaths,
         CloverResult $cloverResult,
         XmlResult $xmlResult,
-        HtmlResult $htmlResult
+        HtmlResult $htmlResult,
+        TextResult $textResult
     ) {
-    
         $this->coverageMerger = $coverageMerger;
         $this->coverageOutputPaths = $coverageOutputPaths;
         $this->cloverResult = $cloverResult;
         $this->xmlResult = $xmlResult;
         $this->htmlResult = $htmlResult;
+        $this->textResult = $textResult;
     }
 
-    public function generateResults()
+    public function generateResults(EngineEvent $event)
     {
         $coverageData = $this->coverageMerger->getCoverageData();
 
@@ -68,6 +74,17 @@ class CoverageResult
         $htmlPath = $this->coverageOutputPaths->getHtmlPath();
         if (! $htmlPath->isEmpty()) {
             $this->htmlResult->process($coverageData, $htmlPath);
+        }
+
+        $textFile = $this->coverageOutputPaths->getTextFile();
+        if (! $textFile->isEmpty()) {
+            $this->textResult->process($coverageData, false);
+        }
+
+        if ($this->coverageOutputPaths->isTextToConsoleEnabled()) {
+            $output = $event->getOutputInterface();
+            $output->write($this->textResult->process($coverageData, true));
+            $output->writeln('');
         }
     }
 }

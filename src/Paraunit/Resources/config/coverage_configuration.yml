@@ -2,6 +2,7 @@ parameters:
   paraunit.coverage.clover_file_path: null
   paraunit.coverage.xml_path: null
   paraunit.coverage.html_path: null
+  paraunit.coverage.text_file_path: null
 
 services:
   paraunit.configuration.clover_file_path:
@@ -18,6 +19,11 @@ services:
     class: Paraunit\Configuration\OutputPath
     arguments:
       - '%paraunit.coverage.html_path%'
+
+  paraunit.configuration.text_file_path:
+    class: Paraunit\Configuration\OutputFile
+    arguments:
+      - '%paraunit.coverage.text_file_path%'
 
   paraunit.configuration.phpdbg_bin_file:
     class: Paraunit\Configuration\PHPDbgBinFile
