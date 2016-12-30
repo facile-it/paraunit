@@ -9,14 +9,14 @@
     <atom:link href="http://facile-it.github.io/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Paraunit 0.7.3: PHAR rekease</title>
+      <title>Paraunit 0.7.3: PHAR release</title>
       <link>http://facile-it.github.io/paraunit/news/release/0.7.3/</link>
       <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>http://facile-it.github.io/paraunit/news/release/0.7.3/</guid>
       <description>
 
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.3&lt;/a&gt; has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;lastest GitHub release page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.3&lt;/a&gt; has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;latest GitHub release page&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Full changelog text:&lt;/p&gt;
 
