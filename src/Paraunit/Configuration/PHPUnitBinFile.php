@@ -18,18 +18,31 @@ class PHPUnitBinFile
 
     /**
      * PHPUnitBinFile constructor.
+     * @throws \RuntimeException
      */
     public function __construct()
     {
-        if (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR)) {
-            $this->phpUnitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_VENDOR;
-        } elseif (file_exists(__DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
-            $this->phpUnitBin = __DIR__.self::PHPUNIT_RELPATH_FOR_STANDALONE;
-        } else {
-            throw new \Exception('PHPUnit bin not found');
+        if (defined('PARAUNIT_PHAR_FILE')) {
+            // Paraunit is running as a standalone PHAR archive
+            // PHPUnit is embedded in the archive, self execute it in special mode
+            $this->phpUnitBin = PARAUNIT_PHAR_FILE . ' phpunit';
+
+            return;
         }
 
-        $this->phpUnitBin = realpath($this->phpUnitBin);
+        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR)) {
+            $this->phpUnitBin = realpath(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR);
+
+            return;
+        }
+
+        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
+            $this->phpUnitBin = realpath(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE);
+
+            return;
+        }
+
+        throw new \RuntimeException('PHPUnit bin not found');
     }
 
     /**
