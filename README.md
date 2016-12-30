@@ -15,7 +15,8 @@ Paraunit is a tool for faster executions of PHPUnit test suites. It makes this p
 Paraunit is developed using Symfony components.
 
 ## Installation
-To use this package, use composer:
+### From Composer
+To use this package, use Composer:
 
  * from CLI: `composer require --dev facile-it/paraunit`
  * or, directly in your `composer.json`:
@@ -26,6 +27,18 @@ To use this package, use composer:
         "facile-it/paraunit": "~0.7"
     }
 }
+```
+
+### PHAR
+If you prefer you can directly download the latest version in **PHAR format**, from the [lastest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar`.
+
+#### Verify the GPG signature
+All the Paraunit PHAR releases are signed with GPG. To verify the signature:
+ * Download the PHAR
+ * Download the associated GPG signature (the `.asc` file)
+ * Use the GPG tool to verify
+```
+gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ```
 
 ## Usage

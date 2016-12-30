@@ -3,6 +3,12 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.7.3] - 2016-12-30
+
+### Changed
+
+* Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!
+
 ## [0.7.2] - 2016-12-28
 
 ### Fixed
