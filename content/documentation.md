@@ -15,8 +15,9 @@ Paraunit is used in conjunction with PHPUnit. It reads PHPUnit's .xml configurat
 If you are testing a Symfony+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to **warm up the cache before**, in order to avoid a mass cache miss (and relative [cache stampede](https://en.wikipedia.org/wiki/Cache_stampede)) with concurrency problems, and subsequent random failures. 
 
-# Installation
-To use this package, use [composer](https://getcomposer.org/):
+## Installation
+### From Composer
+To use this package, use Composer:
 
  * from CLI: `composer require --dev facile-it/paraunit`
  * or, directly in your `composer.json`:
@@ -27,6 +28,18 @@ To use this package, use [composer](https://getcomposer.org/):
         "facile-it/paraunit": "~0.7"
     }
 }
+```
+
+### PHAR
+If you prefer you can directly download the latest version in **PHAR format**, from the [lastest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar` in all the following examples.
+
+#### Verify the GPG signature
+All the Paraunit PHAR releases are signed with GPG. To verify the signature:
+ * Download the PHAR
+ * Download the associated GPG signature (the `.asc` file)
+ * Use the GPG tool to verify
+```
+gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ```
 
 # Usage
