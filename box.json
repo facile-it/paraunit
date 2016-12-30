@@ -13,10 +13,13 @@
   "finder": [
     {
       "name": "*.php",
+      "in": "vendor",
       "exclude": [
-        "tests"
-      ],
-      "in": "vendor"
+        "tests",
+        "Tests",
+        "spec",
+        "fixtures"
+      ]
     }
   ],
   "git-version": "dev-master",
