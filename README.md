@@ -30,7 +30,7 @@ To use this package, use Composer:
 ```
 
 ### PHAR
-If you prefer you can directly download the latest version in **PHAR format**, from the [lastest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar`.
+If you prefer you can directly download the latest version in **PHAR format**, from the [latest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar`.
 
 #### Verify the GPG signature
 All the Paraunit PHAR releases are signed with GPG. To verify the signature:
