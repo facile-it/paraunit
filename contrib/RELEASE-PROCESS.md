@@ -21,7 +21,7 @@ This is here for pratical usage, but also to leave a trace and to make this avai
  * Check that the release version is correct 
  * Tag the commit (with GPG sign, `-s`) and push
 ```
-git tag -s -a 0.x
+git tag -s -a 0.x -m "Release 0.x"
 git push --follow-tags
 ```
 
@@ -49,7 +49,7 @@ composer update --no-dev
 box build -v
 ```
  * Test the generated PHAR (not with Paraunit's testsuite itself, otherwise the autoloader will clash with itself)
- * Check the PHAR size to avoid bloating it (0.7.3 is around 750Kb) and update Box's exclusion list if necessary
+ * Check the PHAR size to avoid bloating it (0.7.3 is around 1Mb) and update Box's exclusion list if necessary
 ```
 ls -l paraunit.phar
 ```
@@ -57,13 +57,17 @@ ls -l paraunit.phar
 #### Generate the signature
  * Generate the GPG sign
 ```
-gpg --detach-sign --output paraunit.phar.asc paraunit.phar
+gpg --detach-sign --output gpg/paraunit-0.7.3.phar.asc paraunit.phar
+```
+ * Verify the PHAR signature
+```
+gpg --verify gpg/paraunit-0.7.3.phar.asc paraunit.phar
 ```
 
 #### Restore the dev environment
- * Remove the PHP version platform option from `composer.json`
+ * Restore `composer.json`
 ```
-composer config --unset platform
+git checkout composer.json
 ```
  * Restore the vendor folder
 ```

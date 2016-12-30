@@ -2,6 +2,7 @@
 *.tgz
 *.phar
 bin
+gpg
 public
 vendor
 composer.lock
