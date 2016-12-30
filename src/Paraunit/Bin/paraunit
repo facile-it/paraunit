@@ -10,4 +10,4 @@ if (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     throw new RuntimeException('Autoload not found');
 }
 
-require './run-paraunit.inc.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'run-paraunit.inc.php';
