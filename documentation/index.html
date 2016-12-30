@@ -179,8 +179,17 @@
   <div id="toc" class="well col-md-4 col-sm-6">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#installation">Installation</a></li>
+<li><a href="#requirements">Requirements</a>
+<ul>
+<li><a href="#installation">Installation</a>
+<ul>
+<li><a href="#from-composer">From Composer</a></li>
+<li><a href="#phar">PHAR</a>
+<ul>
+<li><a href="#verify-the-gpg-signature">Verify the GPG signature</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
 <li><a href="#usage">Usage</a>
 <ul>
 <li><a href="#run-command"><code>run</code> command</a></li>
@@ -215,9 +224,11 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 <p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/facile-it/paraunit-testcase">facile-it/paraunit-testcase</a>, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>, in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
 
-<h1 id="installation">Installation</h1>
+<h2 id="installation">Installation</h2>
 
-<p>To use this package, use <a href="https://getcomposer.org/">composer</a>:</p>
+<h3 id="from-composer">From Composer</h3>
+
+<p>To use this package, use Composer:</p>
 
 <ul>
 <li>from CLI: <code>composer require --dev facile-it/paraunit</code></li>
@@ -229,6 +240,20 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
         &quot;facile-it/paraunit&quot;: &quot;~0.7&quot;
     }
 }
+</code></pre>
+
+<h3 id="phar">PHAR</h3>
+
+<p>If you prefer you can directly download the latest version in <strong>PHAR format</strong>, from the <a href="https://github.com/facile-it/paraunit/releases/latest">lastest GitHub release page</a>, starting from 0.7.3. In this case, you need to replace <code>vendor/bin/paraunit</code> with <code>./paraunit.phar</code> in all the following examples.</p>
+
+<h4 id="verify-the-gpg-signature">Verify the GPG signature</h4>
+
+<p>All the Paraunit PHAR releases are signed with GPG. To verify the signature:
+ * Download the PHAR
+ * Download the associated GPG signature (the <code>.asc</code> file)
+ * Use the GPG tool to verify</p>
+
+<pre><code>gpg --verify paraunit-x.y.phar.asc paraunit.phar
 </code></pre>
 
 <h1 id="usage">Usage</h1>

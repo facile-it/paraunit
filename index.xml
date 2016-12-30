@@ -5,8 +5,28 @@
     <link>http://facile-it.github.io/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 28 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Dec 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.7.3: PHAR rekease</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.7.3/</link>
+      <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.7.3/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.3&lt;/a&gt; has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;lastest GitHub release page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Full changelog text:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.7.1: coverage in text format</title>
@@ -371,9 +391,11 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 &lt;p&gt;If you are testing a Symfony+Doctrine application, it&amp;rsquo;s suggested to use also &lt;a href=&#34;https://github.com/facile-it/paraunit-testcase&#34;&gt;facile-it/paraunit-testcase&lt;/a&gt;, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to &lt;strong&gt;warm up the cache before&lt;/strong&gt;, in order to avoid a mass cache miss (and relative &lt;a href=&#34;https://en.wikipedia.org/wiki/Cache_stampede&#34;&gt;cache stampede&lt;/a&gt;) with concurrency problems, and subsequent random failures.&lt;/p&gt;
 
-&lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 
-&lt;p&gt;To use this package, use &lt;a href=&#34;https://getcomposer.org/&#34;&gt;composer&lt;/a&gt;:&lt;/p&gt;
+&lt;h3 id=&#34;from-composer&#34;&gt;From Composer&lt;/h3&gt;
+
+&lt;p&gt;To use this package, use Composer:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;from CLI: &lt;code&gt;composer require --dev facile-it/paraunit&lt;/code&gt;&lt;/li&gt;
@@ -385,6 +407,20 @@ also, if your want to run functional tests, remember to &lt;strong&gt;warm up th
         &amp;quot;facile-it/paraunit&amp;quot;: &amp;quot;~0.7&amp;quot;
     }
 }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;phar&#34;&gt;PHAR&lt;/h3&gt;
+
+&lt;p&gt;If you prefer you can directly download the latest version in &lt;strong&gt;PHAR format&lt;/strong&gt;, from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;lastest GitHub release page&lt;/a&gt;, starting from 0.7.3. In this case, you need to replace &lt;code&gt;vendor/bin/paraunit&lt;/code&gt; with &lt;code&gt;./paraunit.phar&lt;/code&gt; in all the following examples.&lt;/p&gt;
+
+&lt;h4 id=&#34;verify-the-gpg-signature&#34;&gt;Verify the GPG signature&lt;/h4&gt;
+
+&lt;p&gt;All the Paraunit PHAR releases are signed with GPG. To verify the signature:
+ * Download the PHAR
+ * Download the associated GPG signature (the &lt;code&gt;.asc&lt;/code&gt; file)
+ * Use the GPG tool to verify&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gpg --verify paraunit-x.y.phar.asc paraunit.phar
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h1 id=&#34;usage&#34;&gt;Usage&lt;/h1&gt;
