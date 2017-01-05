@@ -21,7 +21,7 @@ To use this package, use Composer:
  * from CLI: `composer require --dev facile-it/paraunit`
  * or, directly in your `composer.json`:
 
-``` 
+```json
 {
     "require-dev": {
         "facile-it/paraunit": "~0.7"
@@ -44,12 +44,14 @@ gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ## Usage
 Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this:<br/>
 (assuming your composer's bin dir is `vendor/bin`)
-
-`vendor/bin/paraunit run`
+```
+vendor/bin/paraunit run
+```
 
 Paraunit is also able to collect the test coverage, like this:
-
-`vendor/bin/paraunit coverage --html==./dir`
+```
+vendor/bin/paraunit coverage --html==./dir
+```
 
 It automatically **uses PHPDBG** if available, and can produce coverage in HTML, Clover and XML format.
 
