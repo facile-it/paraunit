@@ -2,7 +2,7 @@ services:
   ## OUTPUT PARSERS ##
 
   paraunit.parser.json_log_parser:
-    class: Paraunit\Parser\JSONLogParser
+    class: Paraunit\Parser\JSON\LogParser
     arguments:
       - "@paraunit.parser.json_log_fetcher"
       - "@paraunit.test_result.no_test_executed_container"
@@ -22,42 +22,42 @@ services:
       - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
 
   paraunit.parser.json_log_fetcher:
-    class: Paraunit\Parser\JSONLogFetcher
+    class: Paraunit\Parser\JSON\LogFetcher
     arguments:
       - "@paraunit.configuration.temp_filename_factory"
 
   paraunit.parser.test_start_parser:
-    class: Paraunit\Parser\TestStartParser
+    class: Paraunit\Parser\JSON\TestStartParser
 
   paraunit.parser.pass_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.pass_container"
       - "pass"
 
   paraunit.parser.retry_parser:
-    class: Paraunit\Parser\RetryParser
+    class: Paraunit\Parser\JSON\RetryParser
     arguments:
       - "@paraunit.test_result.retry_container"
       - "%paraunit.max_retry_count%"
 
   paraunit.parser.failure_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.failure_container"
       - "fail"
 
   paraunit.parser.warning_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.warning_container"
       - "warning"
 
   paraunit.parser.incomplete_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.incomplete_container"
@@ -65,7 +65,7 @@ services:
       - "Incomplete Test: "
 
   paraunit.parser.skipped_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.skipped_container"
@@ -73,7 +73,7 @@ services:
       - "Skipped Test: "
 
   paraunit.parser.risky_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.risky_container"
@@ -81,21 +81,21 @@ services:
       - "Risky Test: "
 
   paraunit.parser.error_parser:
-    class: Paraunit\Parser\GenericParser
+    class: Paraunit\Parser\JSON\GenericParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.error_container"
       - "error"
 
   paraunit.parser.abnormal_terminated_parser:
-    class: Paraunit\Parser\AbnormalTerminatedParser
+    class: Paraunit\Parser\JSON\AbnormalTerminatedParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.abnormal_terminated_container"
       - "paraunitEnd"
 
   paraunit.parser.unknown_result_parser:
-    class: Paraunit\Parser\UnknownResultParser
+    class: Paraunit\Parser\JSON\UnknownResultParser
     arguments:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.unknown_result_container"

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\GenericParser;
+use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\TestResult\FullTestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -10,7 +10,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class GenericParserTest
- * @package Tests\Unit\Parser
+ * @package Tests\Unit\Parser\JSON
  */
 class GenericParserTest extends BaseUnitTestCase
 {

@@ -3,14 +3,14 @@
 namespace Tests\Functional\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Parser\JSONLogParser;
+use Paraunit\Parser\JSON\LogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
- * Class JSONLogParserTest
+ * Class LogParserTest
  * @package Tests\Functional\Parser
  */
 class JSONLogParserTest extends BaseFunctionalTestCase
@@ -23,7 +23,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
-        /** @var JSONLogParser $parser */
+        /** @var LogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
 
         $parser->onProcessTerminated(new ProcessEvent($process));
@@ -59,7 +59,7 @@ class JSONLogParserTest extends BaseFunctionalTestCase
 
     public function testParseHandlesMissingLogsAsAbnormalTerminations()
     {
-        /** @var JSONLogParser $parser */
+        /** @var LogParser $parser */
         $parser = $this->container->get('paraunit.parser.json_log_parser');
         $process = new StubbedParaunitProcess();
         $process->setExitCode(139);

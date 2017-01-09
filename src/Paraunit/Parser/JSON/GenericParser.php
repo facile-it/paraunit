@@ -1,6 +1,6 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
@@ -8,9 +8,9 @@ use Paraunit\TestResult\TestResultFactory;
 
 /**
  * Class GenericParser
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\JSON
  */
-class GenericParser implements JSONParserChainElementInterface
+class GenericParser implements ParserChainElementInterface
 {
     /** @var  TestResultFactory */
     protected $testResultFactory;

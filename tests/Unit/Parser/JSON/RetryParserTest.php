@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\RetryParser;
-use Paraunit\TestResult\TestResultFormat;
+use Paraunit\Parser\JSON\RetryParser;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
@@ -15,7 +14,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class RetryParserTest
- * @package Tests\Unit
+ * @package Tests\Unit\Parser\JSON
  */
 class RetryParserTest extends BaseUnitTestCase
 {
@@ -89,13 +88,13 @@ class RetryParserTest extends BaseUnitTestCase
             array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
         );
     }
-    
+
     private function getResultHandlerMock($shouldBeCalled)
     {
         $resultHandler = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
         $resultHandler->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int)$shouldBeCalled);
-        
+
         return $resultHandler->reveal();
     }
 }

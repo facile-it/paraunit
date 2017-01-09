@@ -1,15 +1,15 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\NullTestResult;
 
 /**
  * Class TestStartParser
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\JSON
  */
-class TestStartParser implements JSONParserChainElementInterface
+class TestStartParser implements ParserChainElementInterface
 {
     const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
 
@@ -21,7 +21,7 @@ class TestStartParser implements JSONParserChainElementInterface
 
     public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
     {
-        if (property_exists($logItem, 'status') && $logItem->status === JSONLogFetcher::LOG_ENDING_STATUS) {
+        if (property_exists($logItem, 'status') && $logItem->status === LogFetcher::LOG_ENDING_STATUS) {
             return $this->handleLogTermination($process, $logItem);
         }
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\UnknownResultParser;
+use Paraunit\Parser\JSON\UnknownResultParser;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class UnknownResultParserTest
- * @package Tests\Unit\Parser
+ * @package Tests\Unit\Parser\JSON
  */
 class UnknownResultParserTest extends BaseUnitTestCase
 {

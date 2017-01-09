@@ -1,29 +1,29 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Parser\JSONLogFetcher;
-use Paraunit\Parser\JSONLogParser;
+use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\Parser\JSON\LogParser;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
- * Class JSONLogParserTest
- * @package Tests\Unit\Parser
+ * Class LogParserTest
+ * @package Tests\Unit\Parser\JSON
  */
-class JSONLogParserTest extends BaseUnitTestCase
+class LogParserTest extends BaseUnitTestCase
 {
     public function testOnProcessTerminatedHasProperChainInterruption()
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('All ok');
-        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser1 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn(null);
-        $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser2 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser2->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(2)->willReturn($this->mockTestResult());
-        $parser3 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser3 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser3->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
         $parser = $this->createParser(true, false);
         $parser->addParser($parser1->reveal());
@@ -38,9 +38,9 @@ class JSONLogParserTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->setOutput('Test output (core dumped)');
         $process->setExitCode(139);
-        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser1 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser1->handleLogItem($process, Argument::cetera())->shouldBeCalledTimes(1)->willReturn($this->mockTestResult());
-        $parser2 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser2 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser2->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
 
         $parser = $this->createParser(false);
@@ -55,7 +55,7 @@ class JSONLogParserTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->setOutput('No tests executed!');
         $process->setExitCode(0);
-        $parser1 = $this->prophesize('Paraunit\Parser\JSONParserChainElementInterface');
+        $parser1 = $this->prophesize('Paraunit\Parser\JSON\ParserChainElementInterface');
         $parser1->handleLogItem($process, Argument::cetera())->shouldNotBeCalled();
 
         $parser = $this->createParser(false, false, 1);
@@ -68,13 +68,13 @@ class JSONLogParserTest extends BaseUnitTestCase
      * @param bool $logFound
      * @param bool $abnormal
      * @param int $emptyTestsCount Number of processes with no test executed
-     * @return JSONLogParser
+     * @return LogParser
      */
     private function createParser($logFound = true, $abnormal = true, $emptyTestsCount = 0)
     {
-        $logLocator = $this->prophesize('Paraunit\Parser\JSONLogFetcher');
+        $logLocator = $this->prophesize('Paraunit\Parser\JSON\LogFetcher');
         $endLog = new \stdClass();
-        $endLog->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $endLog->status = LogFetcher::LOG_ENDING_STATUS;
         if ($logFound) {
             $log1 = new \stdClass();
             $log1->event = $abnormal ? 'testStart' : 'test';
@@ -88,6 +88,6 @@ class JSONLogParserTest extends BaseUnitTestCase
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
             ->shouldBeCalledTimes($emptyTestsCount);
 
-        return new JSONLogParser($logLocator->reveal(), $noTestExecutedContainer->reveal());
+        return new LogParser($logLocator->reveal(), $noTestExecutedContainer->reveal());
     }
 }

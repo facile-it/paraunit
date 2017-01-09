@@ -1,10 +1,10 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 /**
  * Class UnknownResultParser
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\JSON
  */
 class UnknownResultParser extends GenericParser
 {

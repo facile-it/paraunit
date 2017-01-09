@@ -6,7 +6,7 @@ use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Interface TestResultContainerInterface
- * @package Paraunit\Parser\Interfaces
+ * @package Paraunit\TestResult\Interfaces
  */
 interface TestResultContainerInterface extends TestResultBearerInterface
 {

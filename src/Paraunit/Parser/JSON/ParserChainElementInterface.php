@@ -1,15 +1,15 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
- * Interface JSONParserChainElementInterface
- * @package Paraunit\Parser
+ * Interface ParserChainElementInterface
+ * @package Paraunit\Parser\JSON
  */
-interface JSONParserChainElementInterface
+interface ParserChainElementInterface
 {
     /**
      * @param ProcessWithResultsInterface $process

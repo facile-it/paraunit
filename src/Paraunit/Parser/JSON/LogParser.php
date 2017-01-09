@@ -1,6 +1,6 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
@@ -9,26 +9,26 @@ use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
- * Class JSONLogParser
- * @package Paraunit\Parser
+ * Class LogParser
+ * @package Paraunit\Parser\JSON
  */
-class JSONLogParser
+class LogParser
 {
-    /** @var  JSONLogFetcher */
+    /** @var  LogFetcher */
     private $logLocator;
 
-    /** @var  JSONParserChainElementInterface[] */
+    /** @var  ParserChainElementInterface[] */
     private $parsers;
 
     /** @var TestResultHandlerInterface */
     private $noTestExecutedResultContainer;
 
     /**
-     * JSONLogParser constructor.
-     * @param JSONLogFetcher $logLocator
+     * LogParser constructor.
+     * @param LogFetcher $logLocator
      * @param TestResultHandlerInterface $noTestExecutedResultContainer
      */
-    public function __construct(JSONLogFetcher $logLocator, TestResultHandlerInterface $noTestExecutedResultContainer)
+    public function __construct(LogFetcher $logLocator, TestResultHandlerInterface $noTestExecutedResultContainer)
     {
         $this->logLocator = $logLocator;
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
@@ -36,9 +36,9 @@ class JSONLogParser
     }
 
     /**
-     * @param JSONParserChainElementInterface $container
+     * @param ParserChainElementInterface $container
      */
-    public function addParser(JSONParserChainElementInterface $container)
+    public function addParser(ParserChainElementInterface $container)
     {
         $this->parsers[] = $container;
     }
@@ -76,7 +76,7 @@ class JSONLogParser
      */
     private function processLog(AbstractParaunitProcess $process, \stdClass $logItem)
     {
-        /** @var JSONParserChainElementInterface $resultContainer */
+        /** @var ParserChainElementInterface $resultContainer */
         foreach ($this->parsers as $resultContainer) {
             if ($resultContainer->handleLogItem($process, $logItem) instanceof TestResultInterface) {
                 return;

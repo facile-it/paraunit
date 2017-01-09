@@ -2,7 +2,7 @@
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\JSONLogFetcher;
+use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
@@ -17,7 +17,7 @@ class TestResultFactory
      */
     public function createFromLog(\stdClass $log)
     {
-        if (property_exists($log, 'status') && $log->status === JSONLogFetcher::LOG_ENDING_STATUS) {
+        if (property_exists($log, 'status') && $log->status === LogFetcher::LOG_ENDING_STATUS) {
             return new TestResultWithAbnormalTermination(
                 $log->test,
                 'Abnormal termination -- complete test output:'

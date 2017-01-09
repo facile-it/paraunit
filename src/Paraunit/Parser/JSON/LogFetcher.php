@@ -1,15 +1,15 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\ParaunitProcessInterface;
 
 /**
- * Class JSONLogFetcher
- * @package Paraunit\Parser
+ * Class LogFetcher
+ * @package Paraunit\Parser\JSON
  */
-class JSONLogFetcher
+class LogFetcher
 {
     const LOG_ENDING_STATUS = 'paraunitEnd';
 
@@ -17,7 +17,7 @@ class JSONLogFetcher
     private $fileName;
 
     /**
-     * JSONLogFetcher constructor.
+     * LogFetcher constructor.
      * @param TempFilenameFactory $fileName
      */
     public function __construct(TempFilenameFactory $fileName)

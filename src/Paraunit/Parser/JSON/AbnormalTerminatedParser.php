@@ -1,13 +1,13 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultFactory;
 
 /**
  * Class AbnormalTerminatedParser
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\JSON
  */
 class AbnormalTerminatedParser extends GenericParser
 {
@@ -18,6 +18,6 @@ class AbnormalTerminatedParser extends GenericParser
      */
     public function __construct(TestResultFactory $testResultFactory, TestResultHandlerInterface $testResultHandler)
     {
-        parent::__construct($testResultFactory, $testResultHandler, JSONLogFetcher::LOG_ENDING_STATUS);
+        parent::__construct($testResultFactory, $testResultHandler, LogFetcher::LOG_ENDING_STATUS);
     }
 }

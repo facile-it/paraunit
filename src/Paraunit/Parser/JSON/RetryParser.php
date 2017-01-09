@@ -1,6 +1,6 @@
 <?php
 
-namespace Paraunit\Parser;
+namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\ProcessWithResultsInterface;
 use Paraunit\Process\RetryAwareInterface;
@@ -10,9 +10,9 @@ use Paraunit\TestResult\MuteTestResult;
 
 /**
  * Class RetryParser
- * @package Paraunit\Parser
+ * @package Paraunit\Parser\JSON
  */
-class RetryParser implements JSONParserChainElementInterface
+class RetryParser implements ParserChainElementInterface
 {
     /** @var TestResultHandlerInterface */
     private $testResultContainer;

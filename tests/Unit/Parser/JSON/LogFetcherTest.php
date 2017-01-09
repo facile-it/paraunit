@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\JSONLogFetcher;
+use Paraunit\Parser\JSON\LogFetcher;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
- * Class JSONLogFetcherTest
- * @package Tests\Unit\Parser
+ * Class LogFetcherTest
+ * @package Tests\Unit\Parser\JSON
  */
-class JSONLogFetcherTest extends BaseUnitTestCase
+class LogFetcherTest extends BaseUnitTestCase
 {
     public function testFetchAppendsLogEndingAnywayWithMissingLog()
     {
@@ -19,7 +19,7 @@ class JSONLogFetcherTest extends BaseUnitTestCase
         $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn('non-existent-log.json');
 
-        $fetcher = new JSONLogFetcher($tempFileNameFactory->reveal());
+        $fetcher = new LogFetcher($tempFileNameFactory->reveal());
 
         $logs = $fetcher->fetch($process);
 
@@ -30,20 +30,20 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 
         $endingLog = end($logs);
         $this->assertTrue(property_exists($endingLog, 'status'));
-        $this->assertEquals(JSONLogFetcher::LOG_ENDING_STATUS, $endingLog->status);
+        $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->status);
     }
 
     public function testFetch()
     {
         $process = new StubbedParaunitProcess();
         $filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testfile.json';
-        copy(__DIR__ . '/../../Stub/PHPUnitJSONLogOutput/AllGreen.json', $filename);
+        copy(__DIR__ . '/../../../Stub/PHPUnitJSONLogOutput/AllGreen.json', $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
         $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
         $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn($filename);
 
-        $fetcher = new JSONLogFetcher($tempFileNameFactory->reveal());
+        $fetcher = new LogFetcher($tempFileNameFactory->reveal());
 
         $logs = $fetcher->fetch($process);
 
@@ -54,7 +54,7 @@ class JSONLogFetcherTest extends BaseUnitTestCase
 
         $endingLog = end($logs);
         $this->assertTrue(property_exists($endingLog, 'status'));
-        $this->assertEquals(JSONLogFetcher::LOG_ENDING_STATUS, $endingLog->status);
+        $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->status);
 
         $this->assertFileNotExists($filename, 'Log file should be deleted to preserve memory');
     }

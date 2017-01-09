@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\TestResult;
 
-use Paraunit\Parser\JSONLogFetcher;
+use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
 use Tests\BaseUnitTestCase;
@@ -75,7 +75,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
     public function testCreateFromLogWithAbnormalTermination()
     {
         $log = $this->getLogFromStub();
-        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $log->status = LogFetcher::LOG_ENDING_STATUS;
         $log->test = 'testFunction()';
 
         $factory = new TestResultFactory(new TestResultFormat('?', 'concealed', ''));

@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Unit\Parser;
+namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\JSONLogFetcher;
-use Paraunit\Parser\TestStartParser;
+use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\Parser\JSON\TestStartParser;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TestStartParserTest
- * @package Unit\Parser
+ * @package Tests\Unit\Parser\JSON
  */
 class TestStartParserTest extends BaseUnitTestCase
 {
@@ -54,7 +54,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $process->setWaitingForTestResult(false);
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $log->status = LogFetcher::LOG_ENDING_STATUS;
 
         $return = $parser->handleLogItem($process, $log);
 
@@ -67,7 +67,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $process->setWaitingForTestResult(true);
         $parser = new TestStartParser();
         $log = new \stdClass();
-        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $log->status = LogFetcher::LOG_ENDING_STATUS;
 
         $return = $parser->handleLogItem($process, $log);
 
@@ -86,7 +86,7 @@ class TestStartParserTest extends BaseUnitTestCase
 
         $parser->handleLogItem($process, $log);
 
-        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $log->status = LogFetcher::LOG_ENDING_STATUS;
 
         $return = $parser->handleLogItem($process, $log);
 
@@ -104,7 +104,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $parser->handleLogItem(new StubbedParaunitProcess(), $log);
 
         $log = new \stdClass();
-        $log->status = JSONLogFetcher::LOG_ENDING_STATUS;
+        $log->status = LogFetcher::LOG_ENDING_STATUS;
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
 

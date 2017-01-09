@@ -7,7 +7,7 @@ use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Parser\JSONLogParser;
+use Paraunit\Parser\JSON\LogParser;
 use Prophecy\Argument;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -96,7 +96,7 @@ abstract class BaseFunctionalTestCase extends BaseTestCase
 
     protected function processAllTheStubLogs()
     {
-        /** @var JSONLogParser $logParser */
+        /** @var LogParser $logParser */
         $logParser = $this->container->get('paraunit.parser.json_log_parser');
 
         $logsToBeProcessed = array(
