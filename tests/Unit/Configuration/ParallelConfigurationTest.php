@@ -26,6 +26,9 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
         $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
+        
+        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
+        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
 
         $requiredDefinitions = array(
             'paraunit.file.cleaner',

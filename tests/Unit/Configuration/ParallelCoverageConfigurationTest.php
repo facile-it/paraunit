@@ -28,6 +28,9 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Process limit parameter missing');
         $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
 
+        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Process limit parameter missing');
+        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
+
         $requiredDefinitions = array(
             'paraunit.parser.json_log_parser',
             'paraunit.printer.process_printer',
