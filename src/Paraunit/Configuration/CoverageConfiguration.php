@@ -50,7 +50,7 @@ class CoverageConfiguration extends ParallelConfiguration
             $coverageResult->addCoverageProcessor($text);
         }
         
-        if ($input->getOption('textToConsole')) {
+        if ($input->getOption('text-to-console')) {
             $textToConsole = new TextToConsole();
             $coverageResult->addCoverageProcessor($textToConsole);
         }

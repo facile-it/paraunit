@@ -16,22 +16,8 @@ services:
     class: Paraunit\Coverage\CoverageResult
     arguments:
       - "@paraunit.coverage.coverage_merger"
-      - "@paraunit.coverage.coverage_output_paths"
-      - "@paraunit.proxy.coverage.clover_result"
-      - "@paraunit.proxy.coverage.xml_result"
-      - "@paraunit.proxy.coverage.html_result"
-      - "@paraunit.proxy.coverage.text_result"
     tags:
       - { name: kernel.event_listener, event: engine_event.end, method: generateResults }
-
-  paraunit.coverage.coverage_output_paths:
-    class: Paraunit\Coverage\CoverageOutputPaths
-    arguments:
-      - "@paraunit.configuration.clover_file_path"
-      - "@paraunit.configuration.xml_path"
-      - "@paraunit.configuration.html_path"
-      - "@paraunit.configuration.text_file_path"
-      - "%paraunit.coverage.text_to_console%"
 
   paraunit.printer.coverage_printer:
     class: Paraunit\Printer\CoveragePrinter
