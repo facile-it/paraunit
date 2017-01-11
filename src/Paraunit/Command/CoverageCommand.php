@@ -2,7 +2,7 @@
 
 namespace Paraunit\Command;
 
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PhpCodeCoverageCompat;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,9 +16,9 @@ class CoverageCommand extends ParallelCommand
 {
     /**
      * ParallelCommand constructor.
-     * @param ParallelCoverageConfiguration $configuration
+     * @param CoverageConfiguration $configuration
      */
-    public function __construct(ParallelCoverageConfiguration $configuration)
+    public function __construct(CoverageConfiguration $configuration)
     {
         parent::__construct($configuration);
     }

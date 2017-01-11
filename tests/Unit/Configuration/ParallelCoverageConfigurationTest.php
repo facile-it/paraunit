@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Configuration;
 
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 
@@ -14,7 +14,7 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
-        $paraunit = new ParallelCoverageConfiguration();
+        $paraunit = new CoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $input->getOption('parallel')
             ->willReturn(10);
@@ -61,7 +61,7 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
 
     public function testBuildContainerWithParameter()
     {
-        $paraunit = new ParallelCoverageConfiguration();
+        $paraunit = new CoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $input->getOption('clover')->willReturn('coverage.clover.xml');
         $input->getOption('xml')->willReturn('coverage.xml');

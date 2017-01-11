@@ -28,7 +28,10 @@ class ParallelConfiguration
         $this->loadYamlConfiguration($containerBuilder);
         $this->registerEventDispatcher($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
+
         $containerBuilder->compile();
+
+        $this->loadPostCompileSettings($containerBuilder, $input);
 
         return $containerBuilder;
     }
@@ -80,5 +83,9 @@ class ParallelConfiguration
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
     {
         $containerBuilder->setParameter('paraunit.max_process_count', $input->getOption('parallel'));
+    }
+
+    protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
+    {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 
 /**
  * Class BaseFunctionalWithCoverageTestCase
@@ -12,7 +12,7 @@ abstract class BaseFunctionalWithCoverageTestCase extends BaseFunctionalTestCase
 {
     protected function loadContainer()
     {
-        $configuration = new ParallelCoverageConfiguration();
+        $configuration = new CoverageConfiguration();
 
         $this->container = $configuration->buildContainer();
     }
