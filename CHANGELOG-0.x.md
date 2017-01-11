@@ -3,6 +3,12 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.7.4] - 2017-01-11
+
+### Changed
+
+* Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn't rely on paths, so it doesn't have to be a full or relative path; it can also be used in conjunction with the `--testsuite` option
+
 ## [0.7.3] - 2016-12-30
 
 ### Changed
