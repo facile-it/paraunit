@@ -29,6 +29,26 @@
     </item>
     
     <item>
+      <title>Paraunit 0.7.4: PHAR release</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.7.4/</link>
+      <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.7.4/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.4&lt;/a&gt; has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.&lt;/p&gt;
+
+&lt;p&gt;Full changelog text:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&amp;rsquo;t rely on paths, so it doesn&amp;rsquo;t have to be a full or relative path; it can also be used in conjunction with the &lt;code&gt;--testsuite&lt;/code&gt; option&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Paraunit 0.7.1: coverage in text format</title>
       <link>http://facile-it.github.io/paraunit/news/release/0.7.1/</link>
       <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
@@ -481,7 +501,29 @@ also, if your want to run functional tests, remember to &lt;strong&gt;warm up th
 
 &lt;p&gt;Paraunit detects automatically if the &lt;a href=&#34;http://phpdbg.com/&#34;&gt;PHPDBG&lt;/a&gt; binary is available, at it uses that as a preferred coverage driver, since it&amp;rsquo;s a lot faster and uses less memory. If it&amp;rsquo;s not available, it falls back to use xDebug. If you want to use PHPDBG, you are &lt;strong&gt;highly encouraged to disable xDebug&lt;/strong&gt;, since Paraunit can&amp;rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.&lt;/p&gt;
 
-&lt;h2 id=&#34;optional-parameters&#34;&gt;Optional parameters&lt;/h2&gt;
+&lt;h2 id=&#34;optional-arguments-and-parameters&#34;&gt;Optional arguments and parameters&lt;/h2&gt;
+
+&lt;h3 id=&#34;string-filter&#34;&gt;String filter&lt;/h3&gt;
+
+&lt;p&gt;Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run path/to/my/tests
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In Paraunit this functionality is more powerful, since:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it&amp;rsquo;s case insensitive&lt;/li&gt;
+&lt;li&gt;it works in combination with &lt;code&gt;--testsuite&lt;/code&gt; (PHPUnit ignores that if the argument is provided)&lt;/li&gt;
+&lt;li&gt;it searches a match everywhere in the filename, so it doesn&amp;rsquo;t have to be a full or relative path&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s use an example to show how powerful this feature is. You are working on the &lt;code&gt;MyApp\SpecialPanel\SomeClass&lt;/code&gt; class, and you want to run all the tests of the &lt;code&gt;MyApp\SpecialPanel&lt;/code&gt; namespace. Those tests are in the &lt;code&gt;tests/Unit/SpecialPanel/&lt;/code&gt; and &lt;code&gt;tests/Functional/SpecialPanel/&lt;/code&gt; directories. You can run both dir at the same time with&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run specialpanel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You don&amp;rsquo;t have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.&lt;/p&gt;
 
 &lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
 

@@ -194,8 +194,9 @@
 <ul>
 <li><a href="#run-command"><code>run</code> command</a></li>
 <li><a href="#coverage-command"><code>coverage</code> command</a></li>
-<li><a href="#optional-parameters">Optional parameters</a>
+<li><a href="#optional-arguments-and-parameters">Optional arguments and parameters</a>
 <ul>
+<li><a href="#string-filter">String filter</a></li>
 <li><a href="#configuration">Configuration</a></li>
 <li><a href="#parallel">Parallel</a></li>
 <li><a href="#testsuite">Testsuite</a></li>
@@ -314,7 +315,29 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>Paraunit detects automatically if the <a href="http://phpdbg.com/">PHPDBG</a> binary is available, at it uses that as a preferred coverage driver, since it&rsquo;s a lot faster and uses less memory. If it&rsquo;s not available, it falls back to use xDebug. If you want to use PHPDBG, you are <strong>highly encouraged to disable xDebug</strong>, since Paraunit can&rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.</p>
 
-<h2 id="optional-parameters">Optional parameters</h2>
+<h2 id="optional-arguments-and-parameters">Optional arguments and parameters</h2>
+
+<h3 id="string-filter">String filter</h3>
+
+<p>Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:</p>
+
+<pre><code class="language-bash">vendor/bin/paraunit run path/to/my/tests
+</code></pre>
+
+<p>In Paraunit this functionality is more powerful, since:</p>
+
+<ul>
+<li>it&rsquo;s case insensitive</li>
+<li>it works in combination with <code>--testsuite</code> (PHPUnit ignores that if the argument is provided)</li>
+<li>it searches a match everywhere in the filename, so it doesn&rsquo;t have to be a full or relative path</li>
+</ul>
+
+<p>Let&rsquo;s use an example to show how powerful this feature is. You are working on the <code>MyApp\SpecialPanel\SomeClass</code> class, and you want to run all the tests of the <code>MyApp\SpecialPanel</code> namespace. Those tests are in the <code>tests/Unit/SpecialPanel/</code> and <code>tests/Functional/SpecialPanel/</code> directories. You can run both dir at the same time with</p>
+
+<pre><code class="language-bash">vendor/bin/paraunit run specialpanel
+</code></pre>
+
+<p>You don&rsquo;t have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.</p>
 
 <h3 id="configuration">Configuration</h3>
 
