@@ -5,8 +5,28 @@
     <link>http://facile-it.github.io/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 30 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Jan 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.7.4: PHAR release</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.7.4/</link>
+      <pubDate>Wed, 11 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.7.4/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.4&lt;/a&gt; has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.&lt;/p&gt;
+
+&lt;p&gt;Full changelog text:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&amp;rsquo;t rely on paths, so it doesn&amp;rsquo;t have to be a full or relative path; it can also be used in conjunction with the &lt;code&gt;--testsuite&lt;/code&gt; option&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.7.3: PHAR release</title>
@@ -24,26 +44,6 @@
 
 &lt;ul&gt;
 &lt;li&gt;Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.7.4: PHAR release</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7.4/</link>
-      <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7.4/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.4&lt;/a&gt; has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.&lt;/p&gt;
-
-&lt;p&gt;Full changelog text:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&amp;rsquo;t rely on paths, so it doesn&amp;rsquo;t have to be a full or relative path; it can also be used in conjunction with the &lt;code&gt;--testsuite&lt;/code&gt; option&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
