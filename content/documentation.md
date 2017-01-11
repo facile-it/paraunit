@@ -71,7 +71,27 @@ vendor/bin/paraunit coverage --html=./coverage
 
 Paraunit detects automatically if the [PHPDBG](http://phpdbg.com/) binary is available, at it uses that as a preferred coverage driver, since it's a lot faster and uses less memory. If it's not available, it falls back to use xDebug. If you want to use PHPDBG, you are **highly encouraged to disable xDebug**, since Paraunit can't do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.
 
-## Optional parameters
+## Optional arguments and parameters
+
+### String filter
+Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:
+
+```bash
+vendor/bin/paraunit run path/to/my/tests
+```
+In Paraunit this functionality is more powerful, since:
+
+ * it's case insensitive
+ * it works in combination with `--testsuite` (PHPUnit ignores that if the argument is provided)
+ * it searches a match everywhere in the filename, so it doesn't have to be a full or relative path
+
+Let's use an example to show how powerful this feature is. You are working on the `MyApp\SpecialPanel\SomeClass` class, and you want to run all the tests of the `MyApp\SpecialPanel` namespace. Those tests are in the `tests/Unit/SpecialPanel/` and `tests/Functional/SpecialPanel/` directories. You can run both dir at the same time with
+
+```bash
+vendor/bin/paraunit run specialpanel
+```
+
+You don't have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.
 
 ### Configuration
 If your `phpunit.xml.dist` file is not in the default base dir, you can specify it by:
