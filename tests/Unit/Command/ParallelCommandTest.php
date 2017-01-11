@@ -17,7 +17,9 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
     {
         $filteredFiles = array('Test.php');
         $filter = $this->prophesize('Paraunit\Filter\Filter');
-        $filter->filterTestFiles(Argument::cetera())->shouldBeCalled()->willReturn($filteredFiles);
+        $filter->filterTestFiles(Argument::type('Paraunit\Configuration\PHPUnitConfig'), 'testSuiteName', 'someFilter')
+            ->shouldBeCalled()
+            ->willReturn($filteredFiles);
 
         $runner = $this->prophesize('Paraunit\Runner\Runner');
         $runner->run(Argument::cetera())->shouldBeCalled()->willReturn(0);
@@ -35,7 +37,11 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
 
-        $exitCode = $commandTester->execute(array('command' => $command->getName()));
+        $exitCode = $commandTester->execute(array(
+            'command' => $command->getName(),
+            'stringFilter' => 'someFilter',
+            '--testsuite' => 'testSuiteName',
+        ));
 
         $this->assertEquals(0, $exitCode);
     }
