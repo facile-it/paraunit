@@ -34,9 +34,10 @@ class Filter
      * @param PHPUnitConfig $configFile
      * @param string | null $testSuiteFilter
      *
+     * @param string | null $stringFilter
      * @return array
      */
-    public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null)
+    public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null, $stringFilter = null)
     {
         $aggregatedFiles = array();
         $this->relativePath = $configFile->getDirectory() . DIRECTORY_SEPARATOR;
@@ -46,12 +47,12 @@ class Filter
 
         /** @var \DOMNode $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
-            if (is_null($testSuiteFilter) || $testSuiteFilter == $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
+            if (null === $testSuiteFilter || $testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
         }
 
-        return array_values($aggregatedFiles);
+        return $this->filterByString($aggregatedFiles, $stringFilter);
     }
 
     /**
@@ -148,5 +149,21 @@ class Filter
         }
 
         return $defaultValue;
+    }
+
+    /**
+     * @param array $aggregatedFiles
+     * @param string | null $stringFilter
+     * @return array
+     */
+    private function filterByString(array $aggregatedFiles, $stringFilter)
+    {
+        if ($stringFilter !== null) {
+            $aggregatedFiles = array_filter($aggregatedFiles, function ($value) use ($stringFilter) {
+                return stripos($value, $stringFilter) !== false;
+            });
+        }
+
+        return array_values($aggregatedFiles);
     }
 }

@@ -5,7 +5,10 @@ namespace Paraunit\Command;
 use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
+use Paraunit\Filter\Filter;
+use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,6 +65,7 @@ class ParallelCommand extends Command
     {
         $this->setName('run');
         $this->setDescription('Run all the requested tests in parallel');
+        $this->addArgument('stringFilter', InputArgument::OPTIONAL, 'A case-insensitive string to filter tests filename');
         $this->addOption('parallel', null, InputOption::VALUE_REQUIRED, 'Number of concurrent processes to launch', 10);
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
 
@@ -85,18 +89,18 @@ class ParallelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $testsuite = null;
-
-        if ($input->getOption('testsuite')) {
-            $testsuite = $input->getOption('testsuite');
-        }
-
         $config = $this->createConfig($input);
-
         $container = $this->configuration->buildContainer($input);
 
+        /** @var Filter $filter */
         $filter = $container->get('paraunit.filter.filter');
-        $testArray = $filter->filterTestFiles($config, $testsuite);
+        $testArray = $filter->filterTestFiles(
+            $config,
+            $input->getOption('testsuite'),
+            $input->getArgument('stringFilter')
+        );
+
+        /** @var Runner $runner */
         $runner = $container->get('paraunit.runner.runner');
 
         return $runner->run($testArray, $output, $config, $input->getOption('debug'));
