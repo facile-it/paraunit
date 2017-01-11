@@ -203,6 +203,37 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testFilterTestFilesSupportsCaseInsensitiveStringFiltering()
+    {
+        $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
+        $configFilePhpUnit = new PHPUnitConfig($configFile);
+
+        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
+        $utilXml->loadFile($configFile, false, true, true)
+            ->willReturn($this->getStubbedXMLConf($configFile))
+            ->shouldBeCalled();
+
+        $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/ThisTest.php';
+        $file2 = $this->absoluteConfigBaseDir . './only/selected/test/suite/ThisTooTest.php';
+        $file3 = $this->absoluteConfigBaseDir . './only/selected/test/suite/NotHereTest.php';
+        $file4 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
+
+        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file1, $file2, $file3))
+            ->shouldBeCalledTimes(1);
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
+            ->willReturn(array($file4))
+            ->shouldBeCalledTimes(1);
+
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+
+        $result = $filter->filterTestFiles($configFilePhpUnit, null, 'this');
+
+        $this->assertCount(2, $result);
+        $this->assertEquals(array($file1, $file2), $result);
+    }
+    
     /**
      * @param string $fileName
      *
