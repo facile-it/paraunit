@@ -5,13 +5,16 @@ matrix:
   include:
     - php: 5.3
       env: 
+        - DEPS="low"
         - COMPOSER_OPTIONS="--prefer-lowest"
     - php: 5.4
     - php: 5.5
     - php: 5.6
       env: 
-        - TEST_COVERAGE=true
+        - DEPS="lock"
     - php: 7.0
+      env: 
+        - TEST_COVERAGE=true
     - php: 7.0
       env:
         - XDEBUG_DISABLE=true
@@ -27,7 +30,10 @@ matrix:
 install:
   - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini; fi
   - if [[ $TEST_COVERAGE ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; fi
-  - composer update --prefer-dist --prefer-stable --no-interaction $COMPOSER_OPTIONS
+
+  - if [[ $DEPS == "low" ]]; then composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction; fi
+  - if [[ $DEPS == "lock" ]]; then composer install --prefer-dist --no-interaction; fi
+  - if [[ !$DEPS ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
 
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS

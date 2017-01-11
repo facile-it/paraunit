@@ -5,6 +5,5 @@ bin
 gpg
 public
 vendor
-composer.lock
 build/
 swiftmailer/

@@ -55,3 +55,14 @@ We also have other integrations in place that runs on every PR and every commit 
  * [Coveralls](https://coveralls.io/github/facile-it/paraunit?branch=master)
  * [Codeclimate](https://codeclimate.com/github/facile-it/paraunit)
  * [SensioLabs Insights](https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20)
+
+## Composer.lock file
+We provide the composer.lock file with the project. This is due to the fact that a contributor shouldn't stumble on build
+failures that aren't caused by his contribution itself, and have a stable and defined set of dependencies that he can use
+to start with; the lock file is never considered when installing Paraunit as a dependency, so it's useful only in the 
+Travis build and in the local dev environment.
+
+To better understand this approach, see:
+ * Same approach is being applied to [ZendFramework components](https://github.com/zendframework/zendframework/issues/7660)
+ * @rdohms [talk about Composer](https://youtu.be/zt2eL4pbVXQ), especially at minute [34:56](https://youtu.be/zt2eL4pbVXQ?t=34m56s)
+ * [Twitter discussion](https://twitter.com/rdohms/status/818351828840620032)
