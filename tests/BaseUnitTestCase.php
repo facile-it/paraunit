@@ -83,4 +83,22 @@ abstract class BaseUnitTestCase extends BaseTestCase
 
         return $result->reveal();
     }
+
+    /**
+     * @param string $path
+     */
+    protected function removeDirectory($path)
+    {
+        $files = glob($path . '/*');
+
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                $this->removeDirectory($file);
+            } else {
+                unlink($file);
+            }
+        }
+
+        rmdir($path);
+    }
 }
