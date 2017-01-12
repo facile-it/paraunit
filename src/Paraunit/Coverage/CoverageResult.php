@@ -10,10 +10,10 @@ use Paraunit\Coverage\Processor\CoverageProcessorInterface;
  */
 class CoverageResult
 {
-    /** @var  CoverageMerger */
+    /** @var CoverageMerger */
     private $coverageMerger;
 
-    /** @var  CoverageProcessorInterface[] */
+    /** @var CoverageProcessorInterface[] */
     private $coverageProcessors;
 
     /**
