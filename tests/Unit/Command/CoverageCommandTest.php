@@ -29,7 +29,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
         $container->get('paraunit.filter.filter')->willReturn($filter->reveal());
         $container->get('paraunit.runner.runner')->willReturn($runner->reveal());
 
-        $configuration = $this->prophesize('Paraunit\Configuration\ParallelCoverageConfiguration');
+        $configuration = $this->prophesize('Paraunit\Configuration\CoverageConfiguration');
         $configuration->buildContainer(Argument::cetera())->shouldBeCalled()->willReturn($container);
 
         $command = new CoverageCommand($configuration->reveal());
@@ -59,7 +59,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testExecuteExpectsAtLeastOneCoverageFormat()
     {
-        $configuration = $this->prophesize('Paraunit\Configuration\ParallelCoverageConfiguration');
+        $configuration = $this->prophesize('Paraunit\Configuration\CoverageConfiguration');
         $configuration->buildContainer()->shouldNotBeCalled();
 
         $command = new CoverageCommand($configuration->reveal());

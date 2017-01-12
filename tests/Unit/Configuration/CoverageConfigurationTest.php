@@ -10,7 +10,7 @@ use Tests\BaseUnitTestCase;
  * Class ParaunitCoverageTest
  * @package Tests\Unit\Configuration
  */
-class ParallelCoverageConfigurationTest extends BaseUnitTestCase
+class CoverageConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
@@ -45,7 +45,6 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
             'paraunit.coverage.coverage_merger',
             'paraunit.coverage.coverage_result',
             'paraunit.configuration.phpdbg_bin_file',
-            'paraunit.coverage.coverage_output_paths',
             'paraunit.printer.coverage_printer',
         );
 
@@ -59,15 +58,26 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $this->markTestIncomplete('Awaiting #29 -- paraunit.printer.debug_printer');
     }
 
-    public function testBuildContainerWithParameter()
+    /**
+     * @dataProvider cliOptionsProvider
+     */
+    public function testBuildContainerWithCoverageSettings($inputOption, $processorClass)
     {
         $paraunit = new CoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
-        $input->getOption('clover')->willReturn('coverage.clover.xml');
-        $input->getOption('xml')->willReturn('coverage.xml');
-        $input->getOption('html')->willReturn('coverage/html');
-        $input->getOption('text')->willReturn('coverage.txt');
-        $input->getOption('text-to-console')->willReturn(true);
+        $options = array(
+            'clover',
+            'xml',
+            'html',
+            'text',
+            'text-to-console',
+        );
+
+        foreach ($options as $optionName) {
+            $input->getOption($optionName)
+                ->willReturn($optionName === $inputOption ? 'someValue' : null);
+        }
+
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
@@ -75,10 +85,25 @@ class ParallelCoverageConfigurationTest extends BaseUnitTestCase
         $container = $paraunit->buildContainer($input->reveal());
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
-        $this->assertEquals('coverage.clover.xml', $container->getParameter('paraunit.coverage.clover_file_path'));
-        $this->assertEquals('coverage.xml', $container->getParameter('paraunit.coverage.xml_file_path'));
-        $this->assertEquals('coverage/html', $container->getParameter('paraunit.coverage.html_path'));
-        $this->assertEquals('coverage.txt', $container->getParameter('paraunit.coverage.text_file_path'));
-        $this->assertEquals(true, $container->getParameter('paraunit.coverage.text_to_console'));
+
+        $coverageResult = $container->get('paraunit.coverage.coverage_result');
+        $reflection = new \ReflectionObject($coverageResult);
+        $property = $reflection->getProperty('coverageProcessors');
+        $property->setAccessible(true);
+        $processors = $property->getValue($coverageResult);
+
+        $this->assertCount(1, $processors, 'Wrong count of coverage processors');
+        $this->assertInstanceOf($processorClass, $processors[0]);
+    }
+
+    public function cliOptionsProvider()
+    {
+        return array(
+            array('clover', 'Paraunit\Coverage\Processor\Clover'),
+            array('xml', 'Paraunit\Coverage\Processor\Xml'),
+            array('html', 'Paraunit\Coverage\Processor\Html'),
+            array('text', 'Paraunit\Coverage\Processor\Text'),
+            array('text-to-console', 'Paraunit\Coverage\Processor\TextToConsole'),
+        );
     }
 }
