@@ -47,7 +47,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     public static function assertFileExists($filename, $message = 'The specified file does not exists')
     {
         if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
-            static::assertFileExists($filename, $message);
+            parent::assertFileExists($filename, $message);
         }
 
         static::assertTrue(file_exists($filename), $message);
@@ -62,7 +62,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     public static function assertFileNotExists($filename, $message = 'The specified file exists')
     {
         if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
-            static::assertFileNotExists($filename, $message);
+            parent::assertFileNotExists($filename, $message);
         }
 
         static::assertFalse(file_exists($filename), $message);
@@ -74,10 +74,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      * @param string $dirname
      * @param string $message
      */
-    public static function assertDirExists($dirname, $message = 'The specified dir does not exists')
+    public static function assertDirectoryExists($dirname, $message = 'The specified dir does not exists')
     {
         if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
-            static::assertDirExists($dirname, $message);
+            parent::assertDirectoryExists($dirname, $message);
         }
 
         static::assertTrue(is_dir($dirname), $message);
@@ -89,10 +89,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      * @param string $dirname
      * @param string $message
      */
-    public static function assertDirNotExists($dirname, $message = 'The specified dir exists')
+    public static function assertDirectoryNotExists($dirname, $message = 'The specified dir exists')
     {
         if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
-            static::assertDirNotExists($dirname, $message);
+            parent::assertDirectoryNotExists($dirname, $message);
         }
 
         static::assertFalse(is_dir($dirname), $message);
