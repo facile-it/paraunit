@@ -37,7 +37,7 @@ install:
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS
   # self-consistency test
-  - composer install --no-dev
+  - composer install --no-dev --no-autoloader # remove dev deps without changing the autoloader
   - src/Paraunit/Bin/paraunit run 
 
 after_success:
