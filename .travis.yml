@@ -36,9 +36,7 @@ install:
 
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS
-  # self-consistency test
-  - composer install --no-dev --no-autoloader # remove dev deps without changing the autoloader
-  - src/Paraunit/Bin/paraunit run 
+  - src/Paraunit/Bin/paraunit run # self-consistency test
 
 after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
