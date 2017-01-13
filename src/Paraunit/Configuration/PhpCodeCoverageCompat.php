@@ -38,7 +38,7 @@ class PhpCodeCoverageCompat
      */
     private static function loadIfNotPresent($class, $alias)
     {
-        if (! class_exists($alias)) {
+        if (! class_exists($alias) && class_exists($class)) {
             class_alias($class, $alias);
         }
     }
