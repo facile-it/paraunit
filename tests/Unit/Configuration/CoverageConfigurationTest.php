@@ -71,6 +71,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'html',
             'text',
             'text-to-console',
+            'crap4j',
+            'php',
         );
 
         foreach ($options as $optionName) {
@@ -104,6 +106,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             array('html', 'Paraunit\Coverage\Processor\Html'),
             array('text', 'Paraunit\Coverage\Processor\Text'),
             array('text-to-console', 'Paraunit\Coverage\Processor\TextToConsole'),
+            array('crap4j', 'Paraunit\Coverage\Processor\Crap4j'),
+            array('php', 'Paraunit\Coverage\Processor\Php'),
         );
     }
 }

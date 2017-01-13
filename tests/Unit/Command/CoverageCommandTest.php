@@ -54,6 +54,8 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
             array('--html'),
             array('--text'),
             array('--text-to-console'),
+            array('--crap4j'),
+            array('--php'),
         );
     }
 
