@@ -5,7 +5,7 @@ namespace Paraunit\Bin;
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 use Symfony\Component\Console\Application;
 
 /**
@@ -23,7 +23,7 @@ class Paraunit
         $parallelCommand = new ParallelCommand(new ParallelConfiguration());
         $application->add($parallelCommand);
 
-        $CoverageCommand = new CoverageCommand(new ParallelCoverageConfiguration());
+        $CoverageCommand = new CoverageCommand(new CoverageConfiguration());
         $application->add($CoverageCommand);
 
         return $application;

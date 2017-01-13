@@ -13,7 +13,9 @@ class PhpCodeCoverageCompat
         '\PHP_CodeCoverage_Filter' => 'SebastianBergmann\CodeCoverage\Filter',
         '\PHP_CodeCoverage_Report_Text' => 'SebastianBergmann\CodeCoverage\Report\Text',
         '\PHP_CodeCoverage_Report_Clover' => 'SebastianBergmann\CodeCoverage\Report\Clover',
+        '\PHP_CodeCoverage_Report_Crap4j' => 'SebastianBergmann\CodeCoverage\Report\Crap4j',
         '\PHP_CodeCoverage_Report_HTML' => 'SebastianBergmann\CodeCoverage\Report\Html\Facade',
+        '\PHP_CodeCoverage_Report_PHP' => 'SebastianBergmann\CodeCoverage\Report\PHP',
         '\PHP_CodeCoverage_Report_XML' => 'SebastianBergmann\CodeCoverage\Report\Xml\Facade',
         '\PHP_CodeCoverage_Driver_PHPDBG' => 'SebastianBergmann\CodeCoverage\Driver\PHPDBG',
     );

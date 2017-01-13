@@ -2,7 +2,7 @@
 
 namespace Tests\Functional\Runner;
 
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Runner\Runner;
 use Tests\BaseFunctionalTestCase;
@@ -18,7 +18,7 @@ class RunnerWithCoverageTest extends BaseFunctionalTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->configuration = new ParallelCoverageConfiguration();
+        $this->configuration = new CoverageConfiguration();
     }
 
     public function testAllGreen()

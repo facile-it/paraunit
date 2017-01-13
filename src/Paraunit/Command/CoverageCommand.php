@@ -2,7 +2,7 @@
 
 namespace Paraunit\Command;
 
-use Paraunit\Configuration\ParallelCoverageConfiguration;
+use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PhpCodeCoverageCompat;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,9 +16,9 @@ class CoverageCommand extends ParallelCommand
 {
     /**
      * ParallelCommand constructor.
-     * @param ParallelCoverageConfiguration $configuration
+     * @param CoverageConfiguration $configuration
      */
-    public function __construct(ParallelCoverageConfiguration $configuration)
+    public function __construct(CoverageConfiguration $configuration)
     {
         parent::__construct($configuration);
     }
@@ -34,6 +34,8 @@ class CoverageCommand extends ParallelCommand
         $this->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
         $this->addOption('text', null, InputOption::VALUE_REQUIRED, 'Output file for text coverage result');
         $this->addOption('text-to-console', null, InputOption::VALUE_NONE, 'Output text coverage directly to console');
+        $this->addOption('crap4j', null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
+        $this->addOption('php', null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
     }
 
     /**
@@ -65,6 +67,8 @@ class CoverageCommand extends ParallelCommand
             || $input->getOption('html')
             || $input->getOption('xml')
             || $input->getOption('text')
-            || $input->getOption('text-to-console');
+            || $input->getOption('text-to-console')
+            || $input->getOption('crap4j')
+            || $input->getOption('php');
     }
 }

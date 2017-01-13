@@ -22,7 +22,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected function getCoverageStubFilePath()
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
-        $this->assertFileExists($filename, 'CoverageStub file missing!');
+        static::assertFileExists($filename, 'CoverageStub file missing!');
 
         return $filename;
     }
@@ -33,8 +33,68 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected function getCoverage4StubFilePath()
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/Coverage4Stub.php';
-        $this->assertFileExists($filename, 'CoverageStub file missing!');
+        static::assertFileExists($filename, 'CoverageStub file missing!');
 
         return $filename;
+    }
+
+    /**
+     * Fallback method for PHPUnit < 5.6
+     *
+     * @param string $filename
+     * @param string $message
+     */
+    public static function assertFileExists($filename, $message = 'The specified file does not exists')
+    {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertFileExists')) {
+            parent::assertFileExists($filename, $message);
+        }
+
+        static::assertTrue(file_exists($filename), $message);
+    }
+
+    /**
+     * Fallback method for PHPUnit < 5.6
+     *
+     * @param string $filename
+     * @param string $message
+     */
+    public static function assertFileNotExists($filename, $message = 'The specified file exists')
+    {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertFileNotExists')) {
+            parent::assertFileNotExists($filename, $message);
+        }
+
+        static::assertFalse(file_exists($filename), $message);
+    }
+
+    /**
+     * Fallback method for PHPUnit < 5.6
+     *
+     * @param string $dirname
+     * @param string $message
+     */
+    public static function assertDirectoryExists($dirname, $message = 'The specified dir does not exists')
+    {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertDirectoryExists')) {
+            parent::assertDirectoryExists($dirname, $message);
+        }
+
+        static::assertTrue(is_dir($dirname), $message);
+    }
+
+    /**
+     * Fallback method for PHPUnit < 5.6
+     *
+     * @param string $dirname
+     * @param string $message
+     */
+    public static function assertDirectoryNotExists($dirname, $message = 'The specified dir exists')
+    {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertDirectoryNotExists')) {
+            parent::assertDirectoryNotExists($dirname, $message);
+        }
+
+        static::assertFalse(is_dir($dirname), $message);
     }
 }
