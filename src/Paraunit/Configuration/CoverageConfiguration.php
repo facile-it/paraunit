@@ -53,7 +53,7 @@ class CoverageConfiguration extends ParallelConfiguration
         }
 
         if ($input->getOption('text-to-console')) {
-            $textToConsole = new TextToConsole();
+            $textToConsole = new TextToConsole($input->getOption('ansi'));
             $coverageResult->addCoverageProcessor($textToConsole);
         }
 

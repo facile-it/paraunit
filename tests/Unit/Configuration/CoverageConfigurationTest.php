@@ -73,6 +73,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'text-to-console',
             'crap4j',
             'php',
+            'ansi',
         );
 
         foreach ($options as $optionName) {
@@ -109,5 +110,53 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             array('crap4j', 'Paraunit\Coverage\Processor\Crap4j'),
             array('php', 'Paraunit\Coverage\Processor\Php'),
         );
+    }
+
+    public function testBuildContainerWithColoredTextToConsoleCoverage()
+    {
+        $paraunit = new CoverageConfiguration();
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $options = array(
+            'clover',
+            'xml',
+            'html',
+            'text',
+            'crap4j',
+            'php',
+        );
+
+        foreach ($options as $optionName) {
+            $input->getOption($optionName)
+                ->willReturn(null);
+        }
+
+        $input->getOption('parallel')
+            ->shouldBeCalled()
+            ->willReturn(10);
+        $input->getOption('text-to-console')
+            ->shouldBeCalled()
+            ->willReturn(true);
+        $input->getOption('ansi')
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $container = $paraunit->buildContainer($input->reveal());
+
+        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+
+        $coverageResult = $container->get('paraunit.coverage.coverage_result');
+        $reflection = new \ReflectionObject($coverageResult);
+        $property = $reflection->getProperty('coverageProcessors');
+        $property->setAccessible(true);
+        $processors = $property->getValue($coverageResult);
+
+        $this->assertCount(1, $processors, 'Wrong count of coverage processors');
+        $processor = $processors[0];
+        $this->assertInstanceOf('Paraunit\Coverage\Processor\TextToConsole', $processor);
+        
+        $reflection = new \ReflectionObject($processor);
+        $property = $reflection->getProperty('showColors');
+        $property->setAccessible(true);
+        $this->assertTrue($property->getValue($processor));
     }
 }

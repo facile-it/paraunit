@@ -19,11 +19,12 @@ class TextToConsole implements CoverageProcessorInterface
 
     /**
      * TextToConsole constructor.
+     * @param bool $showColors
      */
-    public function __construct()
+    public function __construct($showColors = false)
     {
         $this->text = new Text(50, 90, false, false);
-        $this->showColors = false;
+        $this->showColors = $showColors;
     }
 
     /**

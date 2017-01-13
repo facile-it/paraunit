@@ -3,6 +3,13 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8] - TBA
+
+### Changed
+
+* Add support for two additional coverage output format: `--php` and `--crap4j`
+* Add support for colored output when using `--text-to-console`: just use the `--ansi` option with it
+
 ## [0.7.4] - 2017-01-11
 
 ### Changed
