@@ -8,4 +8,3 @@ services:
     class: Paraunit\Process\TestCommandLine
     arguments:
       - "@paraunit.configuration.phpunit_bin_file"
-      - "@paraunit.configuration.temp_filename_factory"
