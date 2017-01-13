@@ -46,7 +46,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function assertFileExists($filename, $message = 'The specified file does not exists')
     {
-        if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertFileExists')) {
             parent::assertFileExists($filename, $message);
         }
 
@@ -61,7 +61,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function assertFileNotExists($filename, $message = 'The specified file exists')
     {
-        if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertFileNotExists')) {
             parent::assertFileNotExists($filename, $message);
         }
 
@@ -76,7 +76,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function assertDirectoryExists($dirname, $message = 'The specified dir does not exists')
     {
-        if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertDirectoryExists')) {
             parent::assertDirectoryExists($dirname, $message);
         }
 
@@ -91,7 +91,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function assertDirectoryNotExists($dirname, $message = 'The specified dir exists')
     {
-        if (method_exists('\PHPUnit_Framework_TestCase', __METHOD__)) {
+        if (method_exists('\PHPUnit_Framework_TestCase', 'assertDirectoryNotExists')) {
             parent::assertDirectoryNotExists($dirname, $message);
         }
 
