@@ -25,8 +25,8 @@ class PhpTest extends BaseUnitTestCase
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
-        $this->assertStringStartsWith('<?xml', $content);
-        $this->assertContains('<crap_result>', $content);
-        $this->assertContains('</crap_result>', $content);
+        $this->assertStringStartsWith('<?php', $content);
+        $this->assertContains('$coverage = new', $content);
+        $this->assertContains('return $coverage;', $content);
     }
 }

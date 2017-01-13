@@ -4,7 +4,7 @@ namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Proxy\Coverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Report\Php as PHPUnitPhp;
+use SebastianBergmann\CodeCoverage\Report\PHP as PHPUnitPhp;
 
 /**
  * Class PhpResult
