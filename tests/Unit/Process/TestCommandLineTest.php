@@ -42,7 +42,7 @@ class TestCommandLineTest extends \PHPUnit_Framework_TestCase
         $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
-            '-c /path/to/phpunit.xml --printer Paraunit\Parser\JSON\LogPrinter --opt --optVal=value',
+            '-c /path/to/phpunit.xml --printer="Paraunit\\Parser\\JSON\\LogPrinter" --opt --optVal=value',
             $cli->getOptions($config->reveal(), $uniqueId)
         );
     }
