@@ -2,6 +2,9 @@
 
 namespace Paraunit\Parser\JSON;
 
+use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\File\TempDirectory;
+
 /**
  * This class comes from \PHPUnit_Util_Log_JSON.
  * I't copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
@@ -11,14 +14,21 @@ namespace Paraunit\Parser\JSON;
  */
 class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_TestListener
 {
-    /** @var string */
-    protected $currentTestSuiteName = '';
+    /** @var TempFilenameFactory */
+    private $filenameFactory;
 
-    /** @var string */
-    protected $currentTestName = '';
+    /** @var int */
+    private $testSuiteLevel;
 
-    /** @var bool */
-    protected $currentTestPass = true;
+    /**
+     * LogPrinter constructor.
+     * @param mixed $out
+     */
+    public function __construct($out = null)
+    {
+        $this->filenameFactory = new TempFilenameFactory(new TempDirectory());
+        $this->testSuiteLevel = 0;
+    }
 
     /**
      * An error occurred.
@@ -147,6 +157,19 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
      */
     public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
+        if ($this->testSuiteLevel === 0) {
+            $testFilename = $this->getTestFilename($suite);
+            $logFilename = $this->filenameFactory->getFilenameForLog(md5($testFilename));
+
+            $logDir = dirname($logFilename);
+            if (! @mkdir($logDir, 0777, true) && !is_dir($logDir)) {
+                throw new \RuntimeException('Cannot create folder for JSON logs');
+            }
+
+            $this->out = fopen($logFilename, 'wt');
+        }
+
+        $this->testSuiteLevel++;
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName      = '';
 
@@ -166,6 +189,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
      */
     public function endTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
+        $this->testSuiteLevel--;
         $this->currentTestSuiteName = '';
         $this->currentTestName      = '';
     }
@@ -242,5 +266,16 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         });
 
         parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
+    }
+
+    /**
+     * @param \PHPUnit_Framework_TestSuite $suite
+     * @return string
+     */
+    private function getTestFilename(\PHPUnit_Framework_TestSuite $suite)
+    {
+        $reflection = new \ReflectionClass($suite->getName());
+        
+        return $reflection->getFileName();
     }
 }

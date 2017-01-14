@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Parser;
+namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
 use Paraunit\Parser\JSON\LogFetcher;

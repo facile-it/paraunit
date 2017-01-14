@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Parser;
+namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogParser;
@@ -13,7 +13,7 @@ use Tests\Stub\StubbedParaunitProcess;
  * Class LogParserTest
  * @package Tests\Functional\Parser
  */
-class JSONLogParserTest extends BaseFunctionalTestCase
+class LogParserTest extends BaseFunctionalTestCase
 {
     /**
      * @dataProvider parsableResultsProvider
