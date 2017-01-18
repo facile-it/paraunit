@@ -62,7 +62,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
         $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
-            '-c /path/to/phpunit.xml --printer="Paraunit\\Parser\\JSON\\LogPrinter" --opt --optVal=value --coverage-php /path/to/coverage.php',
+            '-c /path/to/phpunit.xml --opt --optVal=value --coverage-php /path/to/coverage.php',
             $cli->getOptions($config->reveal(), $uniqueId)
         );
     }
@@ -86,7 +86,7 @@ class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
         $cli = new TestWithCoverageCommandLine($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals(
-            '-qrr path/to/phpunit -c /path/to/phpunit.xml --printer="Paraunit\\Parser\\JSON\\LogPrinter" --coverage-php /path/to/coverage.php',
+            '-qrr path/to/phpunit -c /path/to/phpunit.xml --coverage-php /path/to/coverage.php',
             $cli->getOptions($config->reveal(), $uniqueId)
         );
     }

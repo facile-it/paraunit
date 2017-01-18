@@ -39,9 +39,7 @@ class TestCommandLine implements CliCommandInterface
      */
     public function getOptions(PHPUnitConfig $config, $uniqueId)
     {
-        return '-c ' . $config->getFileFullPath()
-            . ' --printer="Paraunit\\Parser\\JSON\\LogPrinter"'
-            . $this->createOptionsString($config);
+        return '-c ' . $config->getFileFullPath() . $this->createOptionsString($config);
     }
 
     private function createOptionsString(PHPUnitConfig $config)
