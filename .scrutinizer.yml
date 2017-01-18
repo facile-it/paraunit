@@ -1,3 +1,15 @@
+checks:
+  php: true
+
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        concatenation: true
+        negation: true
+      other:
+        after_type_cast: false
+
 tools:
   external_code_coverage: true
 
