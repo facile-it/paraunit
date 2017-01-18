@@ -40,7 +40,7 @@ class Filter
     public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null, $stringFilter = null)
     {
         $aggregatedFiles = array();
-        $this->relativePath = $configFile->getDirectory() . DIRECTORY_SEPARATOR;
+        $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
 
         $document = $this->utilXml->loadFile($configFile->getFileFullPath(), false, true, true);
         $xpath = new \DOMXPath($document);

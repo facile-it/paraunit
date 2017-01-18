@@ -23,6 +23,14 @@ class TempFilenameFactory
     }
 
     /**
+     * @return string
+     */
+    public function getPathForLog()
+    {
+        return $this->getTempFilename('logs', '', '');
+    }
+
+    /**
      * @param string $uniqueId
      * @return string
      */
@@ -38,6 +46,14 @@ class TempFilenameFactory
     public function getFilenameForCoverage($uniqueId)
     {
         return $this->getTempFilename('coverage', $uniqueId, '.php');
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilenameForConfiguration()
+    {
+        return $this->getTempFilename('config', 'phpunit', '.xml.dist');
     }
 
     /**
