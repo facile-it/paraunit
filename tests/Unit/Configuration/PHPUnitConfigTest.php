@@ -64,19 +64,21 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     public function testRelativeDirectoryAndDefaultFileDoesNotExistThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
+        $config = new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
 
         $this->setExpectedException('InvalidArgumentException', PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
 
-        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
+        $config->getFileFullPath();
     }
 
     public function testInvalidDirectoryProvidedThrowException()
     {
         $dir = $this->getStubPath() . 'foobar';
+        $config = new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
 
         $this->setExpectedException('InvalidArgumentException', 'Config path/file provided is not valid');
 
-        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
+        $config->getFileFullPath();
     }
 
     /**

@@ -17,7 +17,7 @@ class PHPUnitConfig
     private $configFile;
 
     /** @var string */
-    private $baseDirectory;
+    private $originalFilename;
 
     /** @var  PHPUnitOption[] */
     private $phpunitOptions;
@@ -29,11 +29,9 @@ class PHPUnitConfig
      */
     public function __construct(TempFilenameFactory $tempFilenameFactory, $inputPathOrFileName)
     {
-        $this->phpunitOptions = array();
         $this->tempFilenameFactory = $tempFilenameFactory;
-
-        $originalConfigFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        $this->configFile = $this->copyAndAlterConfig($originalConfigFilename);
+        $this->originalFilename = $inputPathOrFileName;
+        $this->phpunitOptions = array();
     }
 
     /**
@@ -42,6 +40,9 @@ class PHPUnitConfig
      */
     public function getFileFullPath()
     {
+        if (null === $this->configFile) {
+            $this->loadAndCopyConfigFile();
+        }
         return $this->configFile;
     }
 
@@ -51,7 +52,7 @@ class PHPUnitConfig
      */
     public function getBaseDirectory()
     {
-        return $this->baseDirectory;
+        return dirname($this->originalFilename);
     }
 
     /**
@@ -68,6 +69,12 @@ class PHPUnitConfig
     public function getPhpunitOptions()
     {
         return $this->phpunitOptions;
+    }
+
+    private function loadAndCopyConfigFile()
+    {
+        $originalConfigFilename = $this->getConfigFileRealpath($this->originalFilename);
+        $this->configFile = $this->copyAndAlterConfig($originalConfigFilename);
     }
 
     /**
