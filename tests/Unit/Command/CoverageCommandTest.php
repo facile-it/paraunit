@@ -18,6 +18,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecute($coverageOptionName)
     {
+        $phpunitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
         $filteredFiles = array('Test.php');
         $filter = $this->prophesize('Paraunit\Filter\Filter');
         $filter->filterTestFiles(Argument::cetera())->shouldBeCalled()->willReturn($filteredFiles);
@@ -26,6 +27,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
         $runner->run(Argument::cetera())->shouldBeCalled()->willReturn(0);
 
         $container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $container->get('paraunit.configuration.phpunit_config')->willReturn($phpunitConfig->reveal());
         $container->get('paraunit.filter.filter')->willReturn($filter->reveal());
         $container->get('paraunit.runner.runner')->willReturn($runner->reveal());
 

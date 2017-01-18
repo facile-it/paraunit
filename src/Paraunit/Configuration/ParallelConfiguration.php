@@ -83,6 +83,7 @@ class ParallelConfiguration
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
     {
         $containerBuilder->setParameter('paraunit.max_process_count', $input->getOption('parallel'));
+        $containerBuilder->setParameter('paraunit.phpunit_config_filename', $input->getOption('configuration'));
     }
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)

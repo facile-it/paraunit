@@ -18,6 +18,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('configuration')
+            ->willReturn('/path/to/file');
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
@@ -46,6 +48,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'paraunit.coverage.coverage_result',
             'paraunit.configuration.phpdbg_bin_file',
             'paraunit.printer.coverage_printer',
+            'paraunit.configuration.phpunit_config',
         );
 
         $servicesIds = $container->getServiceIds();
@@ -66,6 +69,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $paraunit = new CoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $options = array(
+            'configuration',
             'clover',
             'xml',
             'html',
@@ -117,6 +121,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $paraunit = new CoverageConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $options = array(
+            'configuration',
             'clover',
             'xml',
             'html',

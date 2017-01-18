@@ -89,8 +89,11 @@ class ParallelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->createConfig($input);
         $container = $this->configuration->buildContainer($input);
+
+        /** @var PHPUnitConfig $config */
+        $config = $container->get('paraunit.configuration.phpunit_config');
+        $this->addPHPUnitOptions($config, $input);
 
         /** @var Filter $filter */
         $filter = $container->get('paraunit.filter.filter');
@@ -107,14 +110,12 @@ class ParallelCommand extends Command
     }
 
     /**
+     * @param PHPUnitConfig $config
      * @param InputInterface $input
      * @return PHPUnitConfig
-     * @throws \InvalidArgumentException
      */
-    private function createConfig(InputInterface $input)
+    private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input)
     {
-        $config = new PHPUnitConfig($input->getOption('configuration'));
-
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());
             if ($cliOption) {

@@ -17,6 +17,8 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('configuration')
+            ->willReturn('/path/to/file');
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
@@ -40,6 +42,7 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
             'paraunit.test_result.test_result_factory',
             'paraunit.test_result.pass_container',
             'paraunit.test_result.pass_test_result_format',
+            'paraunit.configuration.phpunit_config',
         );
 
         $servicesIds = $container->getServiceIds();
