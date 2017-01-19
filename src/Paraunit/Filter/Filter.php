@@ -72,11 +72,11 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      * @return array|\string[]
      */
-    private function addTestsFromTestSuite(\DOMNode $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
         $excludes = $this->getExcludesArray($testSuiteNode);
 
@@ -87,10 +87,10 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @return array
      */
-    private function getExcludesArray(\DOMNode $testSuiteNode)
+    private function getExcludesArray(\DOMElement $testSuiteNode)
     {
         $excludes = array();
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
@@ -101,11 +101,11 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      * @param array $excludes
      */
-    private function addTestsFromDirectoryNodes(\DOMNode $testSuiteNode, array &$aggregatedFiles, array $excludes)
+    private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes)
     {
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
             $directory = (string)$directoryNode->nodeValue;
@@ -124,10 +124,10 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      */
-    private function addTestsFromFileNodes(\DOMNode $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
             $fileName = $this->relativePath . (string)$fileNode->nodeValue;
@@ -146,13 +146,13 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param string $nodeName
      * @param string $defaultValue
      *
      * @return string
      */
-    private function getDOMNodeAttribute(\DOMNode $testSuiteNode, $nodeName, $defaultValue = null)
+    private function getDOMNodeAttribute(\DOMElement $testSuiteNode, $nodeName, $defaultValue = null)
     {
         /**
          * @var string

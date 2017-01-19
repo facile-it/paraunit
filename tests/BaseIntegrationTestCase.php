@@ -88,7 +88,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $previousString = '<beginning of output>';
         foreach ($strings as $string) {
             $position = strpos($output->getOutput(), $string);
-            $this->assertNotFalse($position, 'String not found: ' . $string . $output->getOutput());
+            $this->assertNotFalse($position, $output->getOutput() . PHP_EOL . 'String not found: ' . $string);
             $this->assertGreaterThan(
                 $previousPosition,
                 $position,

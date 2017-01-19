@@ -3,6 +3,8 @@
 namespace Tests\Functional\Runner;
 
 use Paraunit\Bin\Paraunit;
+use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\UnformattedOutputStub;
@@ -142,8 +144,13 @@ class RunnerTest extends BaseIntegrationTestCase
     {
         $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ThreeGreenTestStub.php');
-        $this->setOption('group', 'emptyGroup');
         $this->loadContainer();
+        
+        /** @var PHPUnitConfig $phpunitConfig */
+        $phpunitConfig = $this->container->get('paraunit.configuration.phpunit_config');
+        $option = new PHPUnitOption('group');
+        $option->setValue('emptyGroup');
+        $phpunitConfig->addPhpunitOption($option);
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
