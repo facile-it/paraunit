@@ -15,13 +15,6 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class RunnerTest extends BaseIntegrationTestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
-    }
-
     public function testAllGreen()
     {
         $outputInterface = new UnformattedOutputStub();
