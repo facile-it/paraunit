@@ -31,6 +31,7 @@ class TempDirectory
     {
         $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . static::$timestamp;
         self::mkdirIfNotExists($dir);
+        self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'config');
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'logs');
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'coverage');
 

@@ -43,6 +43,7 @@ class PHPUnitConfig
         if (null === $this->configFile) {
             $this->loadAndCopyConfigFile();
         }
+
         return $this->configFile;
     }
 
@@ -111,13 +112,56 @@ class PHPUnitConfig
         $document->preserveWhiteSpace = false;
 
         $document->loadXML($originalConfig);
-        $rootNode = $document->documentElement;
-        $rootNode->setAttribute('printerFile', $this->tempFilenameFactory->getPathForLog());
-        $rootNode->setAttribute('printerClass', 'Paraunit\Parser\JSON\LogPrinter');
-
+        $this->alterBoostrap($document);
+        $this->appenLogListener($document);
+        
         $newFilename = $this->tempFilenameFactory->getFilenameForConfiguration();
-        file_put_contents($newFilename, $document->saveXML());
+
+        if (false === file_put_contents($newFilename, $document->saveXML())) {
+            throw new \RuntimeException('Error while saving temporary config');
+        }
 
         return $newFilename;
+    }
+
+    /**
+     * @param string $originalBoostrap
+     * @return bool
+     */
+    private function isRelativePath($originalBoostrap)
+    {
+        return 0 === preg_match('~(^[A-Z]:)|(^/)~', $originalBoostrap);
+    }
+
+    private function alterBoostrap(\DOMDocument $document)
+    {
+        $rootNode = $document->documentElement;
+
+        $originalBoostrap = $rootNode->getAttribute('bootstrap');
+        if ($originalBoostrap && $this->isRelativePath($originalBoostrap)) {
+            $newBootstrapPath = $this->getBaseDirectory() . DIRECTORY_SEPARATOR . $originalBoostrap;
+            $rootNode->setAttribute('bootstrap', $newBootstrapPath);
+        }
+    }
+
+    private function appenLogListener(\DOMDocument $document)
+    {
+        $rootNode = $document->documentElement;
+
+        $logDirNode = $document->createElement('string');
+        $logDirNode->textContent = $this->tempFilenameFactory->getPathForLog();
+        $argumentsNode = $document->createElement('arguments');
+        $argumentsNode->appendChild($logDirNode);
+        $logListenerNode = $document->createElement('listener');
+        $logListenerNode->setAttribute('class', 'Paraunit\Parser\JSON\LogPrinter');
+        $logListenerNode->appendChild($argumentsNode);
+
+        $listenersNode = $rootNode->getElementsByTagName('listeners')->item(0);
+        if (! $listenersNode) {
+            $listenersNode = $document->createElement('listeners');
+            $rootNode->appendChild($listenersNode);
+        }
+
+        $listenersNode->appendChild($logListenerNode);
     }
 }

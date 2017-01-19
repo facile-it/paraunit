@@ -3,6 +3,7 @@
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\TempFilenameFactory;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -16,13 +17,8 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $dir = $this->getStubPath() . 'StubbedXMLConfigs';
         $configurationFile = tempnam(null, 'phpunit_config_');
         $logsDir = '/some/tmp/dir/for/logs';
-        $filenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $filenameFactory->getFilenameForConfiguration()
-            ->willReturn($configurationFile);
-        $filenameFactory->getPathForLog()
-            ->willReturn($logsDir);
-
-        $config = new PHPUnitConfig($filenameFactory->reveal(), $dir);
+        
+        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), $dir);
 
         $this->assertEquals($configurationFile, $config->getFileFullPath());
 
@@ -37,30 +33,40 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $document = new \DOMDocument();
         $document->loadXML($copyConfigContent);
 
-        $this->assertEquals($logsDir, $document->documentElement->getAttribute('printerFile'));
-        $this->assertEquals('Paraunit\Parser\JSON\LogPrinter', $document->documentElement->getAttribute('printerClass'));
+        $expectedBootstrap = $directoryPath . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
+        $this->assertEquals($expectedBootstrap, $document->documentElement->getAttribute('bootstrap'));
+
+        $this->assertLogListenerIsPresent($document, $logsDir);
     }
 
-    public function testRelativeFilenameDoesNotUseDefaultFileName()
+    /**
+     * @dataProvider configFilenameProvider
+     */
+    public function testRelativeFilenameDoesNotUseDefaultFileName($file)
     {
-        $file = $this->getStubPath() . 'StubbedXMLConfigs/stubbed_for_filter_test.xml';
         $configurationFile = tempnam(null, 'phpunit_config_');
         $logsDir = '/some/tmp/dir/for/logs';
-        $filenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $filenameFactory->getFilenameForConfiguration()
-            ->willReturn($configurationFile);
-        $filenameFactory->getPathForLog()
-            ->willReturn($logsDir);
 
-        $config = new PHPUnitConfig($filenameFactory->reveal(), $file);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), $file);
 
         $this->assertEquals($configurationFile, $config->getFileFullPath());
 
         $this->assertFileExists($configurationFile);
         $copyConfigContent = file_get_contents($configurationFile);
         $this->assertContains('test_only_requested_testsuite', $copyConfigContent);
+
+        $document = new \DOMDocument();
+        $document->loadXML($copyConfigContent);
+        $this->assertLogListenerIsPresent($document, $logsDir);
     }
 
+    public function configFilenameProvider()
+    {
+        return array(
+            array($this->getStubPath() . 'StubbedXMLConfigs/stubbed_for_filter_test.xml'),
+            array($this->getStubPath() . 'StubbedXMLConfigs/stubbed_with_listener.xml'),
+        );
+    }
     public function testRelativeDirectoryAndDefaultFileDoesNotExistThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
@@ -82,10 +88,37 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     }
 
     /**
-     * @return string
+     * @param \DOMDocument $document
+     * @param string $logsDir
      */
-    private function getStubPath()
+    private function assertLogListenerIsPresent(\DOMDocument $document, $logsDir)
     {
-        return realpath(__DIR__ . '/../../Stub') . DIRECTORY_SEPARATOR;
+        $listenersNode = $document->documentElement->getElementsByTagName('listeners');
+        $this->assertEquals(1, $listenersNode->length, 'Listeners node missing');
+        $this->assertGreaterThanOrEqual(1, $listenersNode->item(0)->childNodes->length, 'No listeners registered');
+        $paraunitListenerNode = $listenersNode->item(0)->lastChild;
+        $this->assertEquals('Paraunit\Parser\JSON\LogPrinter', $paraunitListenerNode->getAttribute('class'));
+        $this->assertEquals(1, $paraunitListenerNode->getElementsByTagName('arguments')->length);
+        $arguments = $paraunitListenerNode->getElementsByTagName('arguments')->item(0);
+        $this->assertGreaterThanOrEqual(1, $arguments->childNodes->length, 'Arguments missing');
+        $argument = $arguments->firstChild;
+        $this->assertEquals('string', $argument->nodeName);
+        $this->assertEquals($logsDir, $argument->textContent);
+    }
+
+    /**
+     * @param $configurationFile
+     * @param $logsDir
+     * @return TempFilenameFactory
+     */
+    private function mockFilenameFactory($configurationFile, $logsDir)
+    {
+        $filenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
+        $filenameFactory->getFilenameForConfiguration()
+            ->willReturn($configurationFile);
+        $filenameFactory->getPathForLog()
+            ->willReturn($logsDir);
+    
+        return $filenameFactory->reveal();
     }
 }

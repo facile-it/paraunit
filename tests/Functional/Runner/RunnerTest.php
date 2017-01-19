@@ -3,10 +3,7 @@
 namespace Tests\Functional\Runner;
 
 use Paraunit\Bin\Paraunit;
-use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
-use Tests\BaseFunctionalTestCase;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
@@ -16,6 +13,13 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class RunnerTest extends BaseIntegrationTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
+    }
+
     public function testAllGreen()
     {
         $outputInterface = new UnformattedOutputStub();
@@ -25,7 +29,7 @@ class RunnerTest extends BaseIntegrationTestCase
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface));
+        $this->assertEquals(0, $runner->run($outputInterface), $outputInterface->getOutput());
 
         $this->assertNotContains('Coverage', $outputInterface->getOutput());
         $this->assertOutputOrder($outputInterface, array(
@@ -133,7 +137,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing warned filename'
         );
     }
-    
+
     public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination()
     {
         $outputInterface = new UnformattedOutputStub();
@@ -183,7 +187,11 @@ class RunnerTest extends BaseIntegrationTestCase
         $output = $outputInterface->fetch();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
-        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing abnormal termination recap title');
+        $this->assertContains(
+            '1 files with ABNORMAL TERMINATIONS',
+            $output,
+            'Missing abnormal termination recap title'
+        );
     }
 
     public function testRegressionFatalErrorsShouldNotLeakToOutput()
@@ -196,6 +204,10 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
         $output = $outputInterface->getOutput();
-        $this->assertGreaterThan(strpos($output, 'Execution time'), strpos($output, 'YOU SHOULD NOT SEE THIS'), 'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)');
+        $this->assertGreaterThan(
+            strpos($output, 'Execution time'),
+            strpos($output, 'YOU SHOULD NOT SEE THIS'),
+            'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
+        );
     }
 }

@@ -4,7 +4,7 @@ namespace Paraunit\Parser\JSON;
 
 /**
  * This class comes from \PHPUnit_Util_Log_JSON.
- * I't copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
+ * It's copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
  *
  * Class LogPrinter
  * @package Paraunit\Parser\JSON
