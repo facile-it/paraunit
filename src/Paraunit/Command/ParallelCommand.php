@@ -106,7 +106,7 @@ class ParallelCommand extends Command
         /** @var Runner $runner */
         $runner = $container->get('paraunit.runner.runner');
 
-        return $runner->run($testArray, $output, $config, $input->getOption('debug'));
+        return $runner->run($testArray, $output, $input->getOption('debug'));
     }
 
     /**

@@ -2,18 +2,18 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Process\ProcessFactory;
-use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class Runner.
+ * Class Runner
+ * @package Paraunit\Runner
  */
 class Runner
 {
@@ -36,9 +36,9 @@ class Runner
     protected $eventDispatcher;
 
     /**
-     * @param int $maxProcessNumber
      * @param EventDispatcherInterface $eventDispatcher
      * @param ProcessFactory $processFactory
+     * @param int $maxProcessNumber
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -58,15 +58,13 @@ class Runner
     /**
      * @param                 $files
      * @param OutputInterface $outputInterface
-     * @param PHPUnitConfig $phpunitConfig
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, PHPUnitConfig $phpunitConfig, $debug = false)
+    public function run($files, OutputInterface $outputInterface, $debug = false)
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
 
-        $this->processFactory->setPHPUnitConfig($phpunitConfig);
         $start = new \Datetime('now');
         $this->createProcessStackFromFiles($files);
 
@@ -151,7 +149,7 @@ class Runner
 
             return $process;
         }
-        
+
         return null;
     }
 
