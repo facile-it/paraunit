@@ -12,6 +12,25 @@ use Tests\BaseFunctionalTestCase;
  */
 class LogPrinterTest extends BaseFunctionalTestCase
 {
+    public function testLogFilenameMatches()
+    {
+        $testName = get_class();
+        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testSuite->getName()
+            ->willReturn($testName);
+        $testSuite->count()
+            ->willReturn(1);
+
+        $printer = new LogPrinter('/some/dir');
+
+        $reflectionMethod = new \ReflectionMethod($printer, 'getLogFilename');
+        $reflectionMethod->setAccessible(true);
+        $this->assertEquals(
+            '/some/dir/' . md5(__FILE__) . '.json.log',
+            $reflectionMethod->invoke($printer, $testSuite->reveal())
+        );
+    }
+
     public function testWrite()
     {
         $testName = get_class();
@@ -20,14 +39,14 @@ class LogPrinterTest extends BaseFunctionalTestCase
             ->willReturn($testName);
         $testSuite->count()
             ->willReturn(1);
-        
-        $printer = new LogPrinter();
-        
-        $printer->startTestSuite($testSuite->reveal());
-        
         $logFilename = $this->getLogFilenameForTest(__FILE__);
+
+        $printer = new LogPrinter(dirname($logFilename));
+
+        $printer->startTestSuite($testSuite->reveal());
+
         $this->assertFileExists($logFilename);
-        
+
         $content = file_get_contents($logFilename);
         unlink($logFilename);
         $this->assertJson($content);
@@ -43,7 +62,7 @@ class LogPrinterTest extends BaseFunctionalTestCase
     {
         /** @var TempFilenameFactory $filenameFactory */
         $filenameFactory = $this->container->get('paraunit.configuration.temp_filename_factory');
-        
+
         return $filenameFactory->getFilenameForLog(md5($testFilename));
     }
 }

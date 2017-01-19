@@ -2,9 +2,6 @@
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\File\TempDirectory;
-
 /**
  * This class comes from \PHPUnit_Util_Log_JSON.
  * I't copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
@@ -14,8 +11,8 @@ use Paraunit\File\TempDirectory;
  */
 class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_TestListener
 {
-    /** @var TempFilenameFactory */
-    private $filenameFactory;
+    /** @var string */
+    private $logDirectory;
 
     /** @var int */
     private $testSuiteLevel;
@@ -26,7 +23,11 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
      */
     public function __construct($out = null)
     {
-        $this->filenameFactory = new TempFilenameFactory(new TempDirectory());
+        if (substr($out, -1) !== DIRECTORY_SEPARATOR) {
+            $out .= DIRECTORY_SEPARATOR;
+        }
+
+        $this->logDirectory = $out;
         $this->testSuiteLevel = 0;
     }
 
@@ -158,8 +159,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
     public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
         if ($this->testSuiteLevel === 0) {
-            $testFilename = $this->getTestFilename($suite);
-            $logFilename = $this->filenameFactory->getFilenameForLog(md5($testFilename));
+            $logFilename = $this->getLogFilename($suite);
 
             $logDir = dirname($logFilename);
             if (! @mkdir($logDir, 0777, true) && !is_dir($logDir)) {
@@ -266,6 +266,17 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         });
 
         parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
+    }
+
+    /**
+     * @param \PHPUnit_Framework_TestSuite $suite
+     * @return string
+     */
+    private function getLogFilename(\PHPUnit_Framework_TestSuite $suite)
+    {
+        $testFilename = $this->getTestFilename($suite);
+        
+        return $this->logDirectory . md5($testFilename) . '.json.log';
     }
 
     /**
