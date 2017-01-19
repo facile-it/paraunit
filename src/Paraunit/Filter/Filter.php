@@ -12,47 +12,63 @@ use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 class Filter
 {
     /** @var  PHPUnitUtilXMLProxy */
-    protected $utilXml;
+    private $utilXml;
 
     /** @var  \File_Iterator_Facade */
-    protected $fileIteratorFacade;
+    private $fileIteratorFacade;
+
+    /** @var PHPUnitConfig */
+    private $configFile;
 
     /** @var  string | null */
-    protected $relativePath;
+    private $relativePath;
+
+    /** @var null */
+    private $testSuiteFilter;
+
+    /** @var null */
+    private $stringFilter;
 
     /**
      * @param PHPUnitUtilXMLProxy $utilXml
      * @param \File_Iterator_Facade $fileIteratorFacade
+     * @param PHPUnitConfig $configFile
+     * @param string | null $testSuiteFilter
+     * @param string | null $stringFilter
      */
-    public function __construct(PHPUnitUtilXMLProxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
-    {
+    public function __construct(
+        PHPUnitUtilXMLProxy $utilXml,
+        \File_Iterator_Facade $fileIteratorFacade,
+        PHPUnitConfig $configFile,
+        $testSuiteFilter = null,
+        $stringFilter = null
+    ) {
         $this->utilXml = $utilXml;
         $this->fileIteratorFacade = $fileIteratorFacade;
+        $this->configFile = $configFile;
+        $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
+        $this->testSuiteFilter = $testSuiteFilter;
+        $this->stringFilter = $stringFilter;
     }
 
     /**
-     * @param PHPUnitConfig $configFile
-     * @param string | null $testSuiteFilter
-     *
-     * @param string | null $stringFilter
      * @return array
      */
-    public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null, $stringFilter = null)
+    public function filterTestFiles()
     {
         $aggregatedFiles = array();
-        $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
 
-        $document = $this->utilXml->loadFile($configFile->getFileFullPath(), false, true, true);
+        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath(), false, true, true);
         $xpath = new \DOMXPath($document);
 
         /** @var \DOMNode $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
-            if (null === $testSuiteFilter || $testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
+            if (null === $this->testSuiteFilter || $this->testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
         }
 
-        return $this->filterByString($aggregatedFiles, $stringFilter);
+        return $this->filterByString($aggregatedFiles, $this->stringFilter);
     }
 
     /**

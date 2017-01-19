@@ -95,18 +95,10 @@ class ParallelCommand extends Command
         $config = $container->get('paraunit.configuration.phpunit_config');
         $this->addPHPUnitOptions($config, $input);
 
-        /** @var Filter $filter */
-        $filter = $container->get('paraunit.filter.filter');
-        $testArray = $filter->filterTestFiles(
-            $config,
-            $input->getOption('testsuite'),
-            $input->getArgument('stringFilter')
-        );
-
         /** @var Runner $runner */
         $runner = $container->get('paraunit.runner.runner');
 
-        return $runner->run($testArray, $output, $input->getOption('debug'));
+        return $runner->run($output, $input->getOption('debug'));
     }
 
     /**

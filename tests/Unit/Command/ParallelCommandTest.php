@@ -16,18 +16,12 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $phpunitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
-        $filteredFiles = array('Test.php');
-        $filter = $this->prophesize('Paraunit\Filter\Filter');
-        $filter->filterTestFiles(Argument::type('Paraunit\Configuration\PHPUnitConfig'), 'testSuiteName', 'someFilter')
-            ->shouldBeCalled()
-            ->willReturn($filteredFiles);
 
         $runner = $this->prophesize('Paraunit\Runner\Runner');
         $runner->run(Argument::cetera())->shouldBeCalled()->willReturn(0);
 
         $container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerBuilder');
         $container->get('paraunit.configuration.phpunit_config')->willReturn($phpunitConfig->reveal());
-        $container->get('paraunit.filter.filter')->willReturn($filter->reveal());
         $container->get('paraunit.runner.runner')->willReturn($runner->reveal());
 
         $configuration = $this->prophesize('Paraunit\Configuration\ParallelConfiguration');

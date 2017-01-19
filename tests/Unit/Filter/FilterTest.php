@@ -46,9 +46,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file2))
             ->shouldNotBeCalled();
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, $testSuiteName);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit, $testSuiteName);
+        $result = $filter->filterTestFiles();
 
         $this->assertCount(1, $result);
         $this->assertEquals(array($file1), $result);
@@ -75,9 +75,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
@@ -102,9 +102,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
@@ -139,9 +139,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
@@ -165,9 +165,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertCount(1, $result);
         $this->assertEquals(array($file), $result);
     }
@@ -193,9 +193,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(
             array(
                 $file1,
@@ -230,9 +230,9 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn(array($file4))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, null, 'this');
 
-        $result = $filter->filterTestFiles($configFilePhpUnit, null, 'this');
+        $result = $filter->filterTestFiles();
 
         $this->assertCount(2, $result);
         $this->assertEquals(array($file1, $file2), $result);

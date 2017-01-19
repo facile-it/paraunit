@@ -15,8 +15,12 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $paraunit = new ParallelConfiguration();
         $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input->getArgument('stringFilter')
+            ->willReturn('text');
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('testsuite')
+            ->willReturn('testsuite');
         $input->getOption('configuration')
             ->willReturn('/path/to/file');
         $input->getOption(Argument::cetera())
@@ -26,11 +30,17 @@ class ParallelConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
 
-        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
-        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
+        $requiredParameters = array(
+            'paraunit.max_process_count' => 10,
+            'paraunit.testsuite' => 'testsuite',
+            'paraunit.string_filter' => 'text',
+            'paraunit.phpunit_config_filename' => '/path/to/file',
+        );
         
-        $this->assertTrue($container->hasParameter('paraunit.max_process_count'), 'Max process count parameter missing');
-        $this->assertEquals(10, $container->getParameter('paraunit.max_process_count'));
+        foreach ($requiredParameters as $parameterName => $expectedValue) {
+            $this->assertTrue($container->hasParameter($parameterName), 'Parameter missing: ' . $parameterName);
+            $this->assertEquals($expectedValue, $container->getParameter($parameterName));
+        }
 
         $requiredDefinitions = array(
             'paraunit.file.cleaner',

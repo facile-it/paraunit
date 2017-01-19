@@ -2,6 +2,7 @@
 
 namespace Paraunit\Runner;
 
+use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\DebugPrinter;
@@ -18,37 +19,43 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Runner
 {
     /** @var int */
-    protected $maxProcessNumber;
+    private $maxProcessNumber;
 
     /** @var AbstractParaunitProcess[] */
-    protected $processStack;
+    private $processStack;
 
     /** @var AbstractParaunitProcess[] */
-    protected $processCompleted;
+    private $processCompleted;
 
     /** @var AbstractParaunitProcess[] */
-    protected $processRunning;
+    private $processRunning;
 
     /** @var  ProcessFactory */
-    protected $processFactory;
+    private $processFactory;
 
     /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
+    private $eventDispatcher;
+
+    /** @var Filter */
+    private $filter;
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
      * @param ProcessFactory $processFactory
+     * @param Filter $filter
      * @param int $maxProcessNumber
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         ProcessFactory $processFactory,
+        Filter $filter,
         $maxProcessNumber = 10
     ) {
 
         $this->eventDispatcher = $eventDispatcher;
-        $this->maxProcessNumber = $maxProcessNumber;
         $this->processFactory = $processFactory;
+        $this->filter = $filter;
+        $this->maxProcessNumber = $maxProcessNumber;
 
         $this->processStack = array();
         $this->processCompleted = array();
@@ -56,16 +63,16 @@ class Runner
     }
 
     /**
-     * @param                 $files
      * @param OutputInterface $outputInterface
      * @param bool $debug
      * @return int
      */
-    public function run($files, OutputInterface $outputInterface, $debug = false)
+    public function run(OutputInterface $outputInterface, $debug = false)
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
-
         $start = new \Datetime('now');
+
+        $files = $this->filter->filterTestFiles();
         $this->createProcessStackFromFiles($files);
 
         $this->eventDispatcher->dispatch(
@@ -108,7 +115,7 @@ class Runner
     /**
      * @return int
      */
-    protected function getReturnCode()
+    private function getReturnCode()
     {
         foreach ($this->processCompleted as $process) {
             if ($process->getExitCode() !== 0) {
@@ -122,7 +129,7 @@ class Runner
     /**
      * @param string[] $files
      */
-    protected function createProcessStackFromFiles($files)
+    private function createProcessStackFromFiles($files)
     {
         foreach ($files as $file) {
             $process = $this->processFactory->createProcess($file);
@@ -135,7 +142,7 @@ class Runner
      *
      * @return ParaunitProcessInterface | null
      */
-    protected function runProcess($debug)
+    private function runProcess($debug)
     {
         if ($this->maxProcessNumber > count($this->processRunning) && count($this->processStack) > 0) {
             /** @var ParaunitProcessInterface $process */
@@ -157,7 +164,7 @@ class Runner
      * @param AbstractParaunitProcess $process
      * @throws \RuntimeException
      */
-    protected function markProcessCompleted(AbstractParaunitProcess $process)
+    private function markProcessCompleted(AbstractParaunitProcess $process)
     {
         $pHash = $process->getUniqueId();
 
