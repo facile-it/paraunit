@@ -60,11 +60,11 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-
-        $this->assertNotEquals(0, $runner->run($outputInterface));
+        $exitCode = $runner->run($outputInterface);
 
         $output = $outputInterface->fetch();
         $this->assertContains(str_repeat('A', 3) . 'E', $output);
+        $this->assertNotEquals(0, $exitCode);
     }
 
     public function stubFilePathProvider()
