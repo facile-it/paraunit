@@ -21,12 +21,13 @@ class LogPrinterTest extends BaseFunctionalTestCase
         $testSuite->count()
             ->willReturn(1);
 
-        $printer = new LogPrinter('/some/dir');
+        $dir = sys_get_temp_dir();
+        $printer = new LogPrinter($dir);
 
         $reflectionMethod = new \ReflectionMethod($printer, 'getLogFilename');
         $reflectionMethod->setAccessible(true);
         $this->assertEquals(
-            '/some/dir/' . md5(__FILE__) . '.json.log',
+            $dir . DIRECTORY_SEPARATOR . md5(__FILE__) . '.json.log',
             $reflectionMethod->invoke($printer, $testSuite->reveal())
         );
     }
@@ -48,7 +49,6 @@ class LogPrinterTest extends BaseFunctionalTestCase
         $this->assertFileExists($logFilename);
 
         $content = file_get_contents($logFilename);
-        unlink($logFilename);
         $this->assertJson($content);
         $decodedJson = json_decode($content, true);
         $this->assertEquals(array('event' => 'suiteStart', 'suite' => $testName, 'tests' => 1), $decodedJson);

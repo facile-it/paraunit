@@ -113,7 +113,7 @@ class PHPUnitConfig
 
         $document->loadXML($originalConfig);
         $this->alterBoostrap($document);
-        $this->appenLogListener($document);
+        $this->appendLogListener($document);
         
         $newFilename = $this->tempFilenameFactory->getFilenameForConfiguration();
 
@@ -144,7 +144,7 @@ class PHPUnitConfig
         }
     }
 
-    private function appenLogListener(\DOMDocument $document)
+    private function appendLogListener(\DOMDocument $document)
     {
         $rootNode = $document->documentElement;
 
