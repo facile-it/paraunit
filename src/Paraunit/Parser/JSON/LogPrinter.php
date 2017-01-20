@@ -265,7 +265,13 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
             }
         });
 
-        parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
+        $flags = 0;
+
+        if (defined('JSON_PRETTY_PRINT')) {
+            $flags |= JSON_PRETTY_PRINT;
+        }
+
+        parent::write(json_encode($buffer, $flags));
     }
 
     /**
