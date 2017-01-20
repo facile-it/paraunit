@@ -148,8 +148,9 @@ class PHPUnitConfig
     {
         $rootNode = $document->documentElement;
 
+        $textNode = $document->createTextNode($this->tempFilenameFactory->getPathForLog());
         $logDirNode = $document->createElement('string');
-        $logDirNode->textContent = $this->tempFilenameFactory->getPathForLog();
+        $logDirNode->appendChild($textNode);
         $argumentsNode = $document->createElement('arguments');
         $argumentsNode->appendChild($logDirNode);
         $logListenerNode = $document->createElement('listener');
