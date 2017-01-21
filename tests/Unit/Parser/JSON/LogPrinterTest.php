@@ -72,8 +72,10 @@ class LogPrinterTest extends BaseUnitTestCase
 
     public function testAddWarning()
     {
-        if (! class_exists('\PHPUnit_Framework_Warning')) {
-            $this->markTestSkipped('Warning class not present with this version of PHPUnit');
+        $phpunitVersion = new \PHPUnit_Runner_Version();
+
+        if (! preg_match('/^5\./', $phpunitVersion->id())) {
+            $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
         }
 
         $printer = $this->createPrinterAndStartTestSuite();
