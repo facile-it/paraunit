@@ -23,7 +23,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('testsuite')
             ->willReturn('testsuite');
         $input->getOption('configuration')
-            ->willReturn('/path/to/file');
+            ->willReturn($this->getConfigForStubs());
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
@@ -35,7 +35,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'paraunit.max_process_count' => 10,
             'paraunit.testsuite' => 'testsuite',
             'paraunit.string_filter' => 'text',
-            'paraunit.phpunit_config_filename' => '/path/to/file',
+            'paraunit.phpunit_config_filename' => $this->getConfigForStubs(),
         );
 
         foreach ($requiredParameters as $parameterName => $expectedValue) {

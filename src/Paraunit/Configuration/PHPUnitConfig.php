@@ -31,7 +31,6 @@ class PHPUnitConfig
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
         $this->originalFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
         $this->phpunitOptions = array();
     }
 
@@ -41,6 +40,10 @@ class PHPUnitConfig
      */
     public function getFileFullPath()
     {
+        if (null === $this->configFile) {
+            return $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
+        }
+
         return $this->configFile;
     }
 

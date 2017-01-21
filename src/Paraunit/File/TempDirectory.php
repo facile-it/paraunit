@@ -26,6 +26,7 @@ class TempDirectory
 
     /**
      * @return string
+     * @throws \RuntimeException If the temp dirs cannot be created
      */
     public function getTempDirForThisExecution()
     {
@@ -69,7 +70,7 @@ class TempDirectory
     /**
      * @param string $path
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException If the dir cannot be created
      */
     private static function mkdirIfNotExists($path)
     {
@@ -78,9 +79,7 @@ class TempDirectory
         }
 
         if (!mkdir($path) && !is_dir($path)) {
-            throw new \RuntimeException(
-                sprintf('Unable to create temporary directory \'%s\'.', $path)
-            );
+            throw new \RuntimeException('Unable to create temporary directory ' . $path);
         }
     }
 }
