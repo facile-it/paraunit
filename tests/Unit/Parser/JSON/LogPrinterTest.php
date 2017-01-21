@@ -63,7 +63,7 @@ class LogPrinterTest extends BaseUnitTestCase
                         'line' => $line,
                     ),
                 ),
-                'message' => 'Exception: Exception message' . PHP_EOL,
+                'message' => 'Exception: Exception message' . "\n",
                 'output' => '',
             ),
         ));
@@ -105,7 +105,7 @@ class LogPrinterTest extends BaseUnitTestCase
                         'line' => $line,
                     ),
                 ),
-                'message' => 'Warning message' . PHP_EOL,
+                'message' => 'Warning message' . "\n",
                 'output' => '',
             ),
         ));
@@ -141,7 +141,7 @@ class LogPrinterTest extends BaseUnitTestCase
                         'line' => $line,
                     ),
                 ),
-                'message' => 'Failure message' . PHP_EOL,
+                'message' => 'Failure message' . "\n",
                 'output' => '',
             ),
         ));
