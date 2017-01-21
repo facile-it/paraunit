@@ -12,55 +12,71 @@ use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 class Filter
 {
     /** @var  PHPUnitUtilXMLProxy */
-    protected $utilXml;
+    private $utilXml;
 
     /** @var  \File_Iterator_Facade */
-    protected $fileIteratorFacade;
+    private $fileIteratorFacade;
+
+    /** @var PHPUnitConfig */
+    private $configFile;
 
     /** @var  string | null */
-    protected $relativePath;
+    private $relativePath;
+
+    /** @var null */
+    private $testSuiteFilter;
+
+    /** @var null */
+    private $stringFilter;
 
     /**
      * @param PHPUnitUtilXMLProxy $utilXml
      * @param \File_Iterator_Facade $fileIteratorFacade
+     * @param PHPUnitConfig $configFile
+     * @param string | null $testSuiteFilter
+     * @param string | null $stringFilter
      */
-    public function __construct(PHPUnitUtilXMLProxy $utilXml, \File_Iterator_Facade $fileIteratorFacade)
-    {
+    public function __construct(
+        PHPUnitUtilXMLProxy $utilXml,
+        \File_Iterator_Facade $fileIteratorFacade,
+        PHPUnitConfig $configFile,
+        $testSuiteFilter = null,
+        $stringFilter = null
+    ) {
         $this->utilXml = $utilXml;
         $this->fileIteratorFacade = $fileIteratorFacade;
+        $this->configFile = $configFile;
+        $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
+        $this->testSuiteFilter = $testSuiteFilter;
+        $this->stringFilter = $stringFilter;
     }
 
     /**
-     * @param PHPUnitConfig $configFile
-     * @param string | null $testSuiteFilter
-     *
-     * @param string | null $stringFilter
      * @return array
      */
-    public function filterTestFiles(PHPUnitConfig $configFile, $testSuiteFilter = null, $stringFilter = null)
+    public function filterTestFiles()
     {
         $aggregatedFiles = array();
-        $this->relativePath = $configFile->getDirectory() . DIRECTORY_SEPARATOR;
 
-        $document = $this->utilXml->loadFile($configFile->getFileFullPath(), false, true, true);
+        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath(), false, true, true);
         $xpath = new \DOMXPath($document);
 
         /** @var \DOMNode $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
-            if (null === $testSuiteFilter || $testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
+            if (null === $this->testSuiteFilter || $this->testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
         }
 
-        return $this->filterByString($aggregatedFiles, $stringFilter);
+        return $this->filterByString($aggregatedFiles, $this->stringFilter);
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      * @return array|\string[]
      */
-    private function addTestsFromTestSuite(\DOMNode $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
         $excludes = $this->getExcludesArray($testSuiteNode);
 
@@ -71,10 +87,10 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @return array
      */
-    private function getExcludesArray(\DOMNode $testSuiteNode)
+    private function getExcludesArray(\DOMElement $testSuiteNode)
     {
         $excludes = array();
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
@@ -85,11 +101,11 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      * @param array $excludes
      */
-    private function addTestsFromDirectoryNodes(\DOMNode $testSuiteNode, array &$aggregatedFiles, array $excludes)
+    private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes)
     {
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
             $directory = (string)$directoryNode->nodeValue;
@@ -108,10 +124,10 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
      */
-    private function addTestsFromFileNodes(\DOMNode $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
             $fileName = $this->relativePath . (string)$fileNode->nodeValue;
@@ -130,13 +146,13 @@ class Filter
     }
 
     /**
-     * @param \DOMNode $testSuiteNode
+     * @param \DOMElement $testSuiteNode
      * @param string $nodeName
      * @param string $defaultValue
      *
      * @return string
      */
-    private function getDOMNodeAttribute(\DOMNode $testSuiteNode, $nodeName, $defaultValue = null)
+    private function getDOMNodeAttribute(\DOMElement $testSuiteNode, $nodeName, $defaultValue = null)
     {
         /**
          * @var string

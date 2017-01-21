@@ -2,10 +2,14 @@
 
 namespace Tests\Unit\Filter;
 
-use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Filter\Filter;
+use Tests\BaseUnitTestCase;
 
-class FilterTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class FilterTest
+ * @package Tests\Unit\Filter
+ */
+class FilterTest extends BaseUnitTestCase
 {
     const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnitUtilXMLProxy';
     const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade';
@@ -22,7 +26,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     public function testFilterTestFilesGetsOnlyRequestedTestsuite()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $testSuiteName = 'test_only_requested_testsuite';
 
@@ -42,9 +46,9 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file2))
             ->shouldNotBeCalled();
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, $testSuiteName);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit, $testSuiteName);
+        $result = $filter->filterTestFiles();
 
         $this->assertCount(1, $result);
         $this->assertEquals(array($file1), $result);
@@ -53,7 +57,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     public function testFilterTestFilesSupportsSuffixAttribute()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_suffix_test.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -71,16 +75,16 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
     public function testFilterTestFilesSupportsPrefixAttribute()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_prefix_test.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -98,16 +102,16 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
     public function testFilterTestFilesSupportsExcludeNodes()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_exclude.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -135,16 +139,16 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(array($file1, $file2), $result);
     }
 
     public function testFilterTestFilesAvoidsDuplicateRuns()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -161,9 +165,9 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertCount(1, $result);
         $this->assertEquals(array($file), $result);
     }
@@ -171,7 +175,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     public function testFilterTestFilesSupportsFileNodes()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_file.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -189,9 +193,9 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file2))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
-        $result = $filter->filterTestFiles($configFilePhpUnit);
+        $result = $filter->filterTestFiles();
         $this->assertEquals(
             array(
                 $file1,
@@ -206,7 +210,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     public function testFilterTestFilesSupportsCaseInsensitiveStringFiltering()
     {
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
-        $configFilePhpUnit = new PHPUnitConfig($configFile);
+        $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
         $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
         $utilXml->loadFile($configFile, false, true, true)
@@ -226,14 +230,14 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(array($file4))
             ->shouldBeCalledTimes(1);
 
-        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal());
+        $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, null, 'this');
 
-        $result = $filter->filterTestFiles($configFilePhpUnit, null, 'this');
+        $result = $filter->filterTestFiles();
 
         $this->assertCount(2, $result);
         $this->assertEquals(array($file1, $file2), $result);
     }
-    
+
     /**
      * @param string $fileName
      *
@@ -245,10 +249,23 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $filePath = realpath($fileName);
 
-        if (!file_exists($filePath)) {
-            throw new \Exception('Stub XML config file missing: ' . $fileName);
+        if (! file_exists($filePath)) {
+            throw new \RuntimeException('Stub XML config file missing: ' . $fileName);
         }
 
         return \PHPUnit_Util_XML::loadFile($filePath, false, true, true);
+    }
+
+    private function mockPHPUnitConfig($configFile)
+    {
+        $this->assertFileExists($configFile, 'Mock not possible, config file to pass does not exist');
+
+        $config = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $config->getFileFullPath()
+            ->willReturn($configFile);
+        $config->getBaseDirectory()
+            ->willReturn(dirname($configFile));
+
+        return $config->reveal();
     }
 }

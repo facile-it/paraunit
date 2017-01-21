@@ -89,32 +89,25 @@ class ParallelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->createConfig($input);
         $container = $this->configuration->buildContainer($input);
 
-        /** @var Filter $filter */
-        $filter = $container->get('paraunit.filter.filter');
-        $testArray = $filter->filterTestFiles(
-            $config,
-            $input->getOption('testsuite'),
-            $input->getArgument('stringFilter')
-        );
+        /** @var PHPUnitConfig $config */
+        $config = $container->get('paraunit.configuration.phpunit_config');
+        $this->addPHPUnitOptions($config, $input);
 
         /** @var Runner $runner */
         $runner = $container->get('paraunit.runner.runner');
 
-        return $runner->run($testArray, $output, $config, $input->getOption('debug'));
+        return $runner->run($output, $input->getOption('debug'));
     }
 
     /**
+     * @param PHPUnitConfig $config
      * @param InputInterface $input
      * @return PHPUnitConfig
-     * @throws \InvalidArgumentException
      */
-    private function createConfig(InputInterface $input)
+    private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input)
     {
-        $config = new PHPUnitConfig($input->getOption('configuration'));
-
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());
             if ($cliOption) {

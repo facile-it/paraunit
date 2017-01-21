@@ -2,6 +2,10 @@
 
 namespace Paraunit\Process;
 
+/**
+ * Interface ParaunitProcessInterface
+ * @package Paraunit\Process
+ */
 interface ParaunitProcessInterface
 {
     /**

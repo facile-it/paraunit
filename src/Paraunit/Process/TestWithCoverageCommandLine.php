@@ -12,6 +12,9 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
     /** @var PHPDbgBinFile */
     private $phpDbgBinFile;
 
+    /** @var TempFilenameFactory */
+    private $filenameFactory;
+
     /**
      * TestCliCommand constructor.
      * @param PHPUnitBinFile $phpUnitBin
@@ -20,9 +23,10 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
      */
     public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $dbgBinFile, TempFilenameFactory $filenameFactory)
     {
-        parent::__construct($phpUnitBin, $filenameFactory);
+        parent::__construct($phpUnitBin);
 
         $this->phpDbgBinFile = $dbgBinFile;
+        $this->filenameFactory = $filenameFactory;
     }
 
     /**

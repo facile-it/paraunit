@@ -14,14 +14,14 @@ class TempDirectory
     );
 
     /** @var string */
-    private $timestamp;
+    private static $timestamp;
 
     /**
      * Paraunit constructor.
      */
     public function __construct()
     {
-        $this->timestamp = uniqid(date('Ymd-His'), true);
+        static::$timestamp = uniqid(date('Ymd-His'), true);
     }
 
     /**
@@ -29,8 +29,9 @@ class TempDirectory
      */
     public function getTempDirForThisExecution()
     {
-        $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . $this->timestamp;
+        $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . static::$timestamp;
         self::mkdirIfNotExists($dir);
+        self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'config');
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'logs');
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'coverage');
 

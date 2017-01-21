@@ -88,6 +88,8 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     public function reset()
     {
         $this->shouldBeRetried = false;
+        
+        return $this;
     }
 
     /**

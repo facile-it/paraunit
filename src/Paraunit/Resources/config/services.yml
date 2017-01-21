@@ -8,12 +8,16 @@ services:
     arguments:
       - "@paraunit.proxy.phpunit_util_xml_proxy"
       - "@phpunit.file_iterator_facade"
+      - "@paraunit.configuration.phpunit_config"
+      - "%paraunit.testsuite%"
+      - "%paraunit.string_filter%"
 
   paraunit.runner.runner:
     class: Paraunit\Runner\Runner
     arguments:
       - "@event_dispatcher"
       - "@paraunit.process.process_factory"
+      - "@paraunit.filter.filter"
       - "%paraunit.max_process_count%"
 
   event_dispatcher:

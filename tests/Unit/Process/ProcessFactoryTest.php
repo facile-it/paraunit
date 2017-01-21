@@ -12,15 +12,14 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateProcess()
     {
-        $PHPUnitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $phpUnitConfig = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
         $cliCommand = $this->prophesize('Paraunit\Process\CliCommandInterface');
         $cliCommand->getExecutable()->willReturn('executable');
         $cliCommand
-            ->getOptions($PHPUnitConfig->reveal(), md5('TestTest.php'))
+            ->getOptions($phpUnitConfig->reveal(), md5('TestTest.php'))
             ->willReturn('--configuration');
 
-        $factory = new ProcessFactory($cliCommand->reveal());
-        $factory->setPHPUnitConfig($PHPUnitConfig->reveal());
+        $factory = new ProcessFactory($cliCommand->reveal(), $phpUnitConfig->reveal());
 
         $process = $factory->createProcess('TestTest.php');
 

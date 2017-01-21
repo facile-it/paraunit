@@ -15,18 +15,13 @@ class TestCommandLine implements CliCommandInterface
     /** @var  PHPUnitBinFile */
     protected $phpUnitBin;
 
-    /** @var  TempFilenameFactory */
-    protected $filenameFactory;
-
     /**
      * TestCliCommand constructor.
      * @param PHPUnitBinFile $phpUnitBin
-     * @param TempFilenameFactory $filenameFactory
      */
-    public function __construct(PHPUnitBinFile $phpUnitBin, TempFilenameFactory $filenameFactory)
+    public function __construct(PHPUnitBinFile $phpUnitBin)
     {
         $this->phpUnitBin = $phpUnitBin;
-        $this->filenameFactory = $filenameFactory;
     }
 
     /**
@@ -44,9 +39,7 @@ class TestCommandLine implements CliCommandInterface
      */
     public function getOptions(PHPUnitConfig $config, $uniqueId)
     {
-        return '-c ' . $config->getFileFullPath()
-            . ' --log-json ' . $this->filenameFactory->getFilenameForLog($uniqueId)
-            . $this->createOptionsString($config);
+        return '-c ' . $config->getFileFullPath() . $this->createOptionsString($config);
     }
 
     private function createOptionsString(PHPUnitConfig $config)

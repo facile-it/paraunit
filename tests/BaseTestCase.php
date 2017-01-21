@@ -97,4 +97,20 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
         static::assertFalse(is_dir($dirname), $message);
     }
+
+    /**
+     * @return string
+     */
+    protected function getConfigForStubs()
+    {
+        return $this->getStubPath() . 'phpunit_for_stubs.xml';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStubPath()
+    {
+        return realpath(__DIR__ . DIRECTORY_SEPARATOR . 'Stub') . DIRECTORY_SEPARATOR;
+    }
 }

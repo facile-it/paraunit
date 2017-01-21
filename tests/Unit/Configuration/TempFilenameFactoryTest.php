@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Configuration;
 
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\TempDirectory;
 
@@ -11,13 +12,28 @@ use Paraunit\File\TempDirectory;
  */
 class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetPathForLog()
+    {
+        $tempDir = new TempDirectory();
+        $tempFileNameFactory = new TempFilenameFactory($tempDir);
+
+        $pathForLog = $tempFileNameFactory->getPathForLog();
+
+        $expected = $tempDir->getTempDirForThisExecution()
+            . DIRECTORY_SEPARATOR
+            . 'logs'
+            . DIRECTORY_SEPARATOR;
+
+        $this->assertEquals($expected, $pathForLog);
+    }
+
     public function testGetFilenameForLog()
     {
         $processUniqueId = 'asdasdasdasd';
         $tempDir = new TempDirectory();
         $tempFileNameFactory = new TempFilenameFactory($tempDir);
 
-        $tempFileNameFactory = $tempFileNameFactory->getFilenameForLog($processUniqueId);
+        $filenameForLog = $tempFileNameFactory->getFilenameForLog($processUniqueId);
 
         $expected = $tempDir->getTempDirForThisExecution()
             . DIRECTORY_SEPARATOR
@@ -26,7 +42,8 @@ class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
             . $processUniqueId
             . '.json.log';
 
-        $this->assertEquals($expected, $tempFileNameFactory);
+        $this->assertEquals($expected, $filenameForLog);
+        $this->assertStringStartsWith($tempFileNameFactory->getPathForLog(), $filenameForLog);
     }
 
     public function testGetFilenameForCoverage()
@@ -35,7 +52,7 @@ class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
         $tempDir = new TempDirectory();
         $tempFileNameFactory = new TempFilenameFactory($tempDir);
 
-        $tempFileNameFactory = $tempFileNameFactory->getFilenameForCoverage($processUniqueId);
+        $filenameForCoverage = $tempFileNameFactory->getFilenameForCoverage($processUniqueId);
 
         $expected = $tempDir->getTempDirForThisExecution()
             . DIRECTORY_SEPARATOR
@@ -44,6 +61,22 @@ class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
             . $processUniqueId
             . '.php';
 
-        $this->assertEquals($expected, $tempFileNameFactory);
+        $this->assertEquals($expected, $filenameForCoverage);
+    }
+
+    public function testGetFilenameForConfiguration()
+    {
+        $tempDir = new TempDirectory();
+        $tempFileNameFactory = new TempFilenameFactory($tempDir);
+
+        $filenameForConfiguration = $tempFileNameFactory->getFilenameForConfiguration();
+
+        $expected = $tempDir->getTempDirForThisExecution()
+            . DIRECTORY_SEPARATOR
+            . 'config'
+            . DIRECTORY_SEPARATOR
+            . PHPUnitConfig::DEFAULT_FILE_NAME;
+
+        $this->assertEquals($expected, $filenameForConfiguration);
     }
 }

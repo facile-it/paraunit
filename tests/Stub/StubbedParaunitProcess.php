@@ -10,27 +10,21 @@ use Paraunit\Process\AbstractParaunitProcess;
  */
 class StubbedParaunitProcess extends AbstractParaunitProcess
 {
-    /**
-     * @var string
-     */
-    protected $output;
+    /** @var string */
+    private $output;
 
-    /**
-     * @var string
-     */
-    protected $commandLine;
+    /** @var string */
+    private $commandLine;
 
-    /**
-     * @var int
-     */
-    protected $exitCode = 0;
+    /** @var int */
+    private $exitCode;
 
     /**
      * {@inheritdoc}
      */
     public function __construct($commandLine = 'testCommandLine', $uniqueId = null)
     {
-        if (is_null($uniqueId)) {
+        if (null === $uniqueId) {
             $uniqueId = md5($commandLine);
         }
 
@@ -38,6 +32,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
 
         $this->commandLine = $commandLine;
         $this->filename = 'Test.php';
+        $this->exitCode = 0;
     }
 
     /**

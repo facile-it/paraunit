@@ -19,10 +19,12 @@ class ProcessFactory
     /**
      * ProcessFactory constructor.
      * @param CliCommandInterface $cliCommand
+     * @param PHPUnitConfig $phpunitConfig
      */
-    public function __construct(CliCommandInterface $cliCommand)
+    public function __construct(CliCommandInterface $cliCommand, PHPUnitConfig $phpunitConfig)
     {
         $this->cliCommand = $cliCommand;
+        $this->phpunitConfig = $phpunitConfig;
     }
 
     /**
@@ -57,10 +59,5 @@ class ProcessFactory
     private function createUniqueId($testFilePath)
     {
         return md5($testFilePath);
-    }
-
-    public function setPHPUnitConfig(PHPUnitConfig $phpunitConfig)
-    {
-        $this->phpunitConfig = $phpunitConfig;
     }
 }

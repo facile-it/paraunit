@@ -9,6 +9,8 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 * Add support for two additional coverage output format: `--php` and `--crap4j`
 * Add support for colored output when using `--text-to-console`: just use the `--ansi` option with it
+* Copied and moved the JSON log printer from PHPUnit to Paraunit, to allow further support and better control over the logs
+* Various internal refactoring (DI, configuration, runner, coverage processors)
 
 ## [0.7.4] - 2017-01-11
 

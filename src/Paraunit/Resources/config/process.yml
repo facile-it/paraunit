@@ -3,9 +3,9 @@ services:
     class: Paraunit\Process\ProcessFactory
     arguments:
       - "@paraunit.process.test_command_line"
+      - "@paraunit.configuration.phpunit_config"
 
   paraunit.process.test_command_line:
     class: Paraunit\Process\TestCommandLine
     arguments:
       - "@paraunit.configuration.phpunit_bin_file"
-      - "@paraunit.configuration.temp_filename_factory"
