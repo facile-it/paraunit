@@ -79,13 +79,11 @@ class PHPUnitConfig
      */
     private function getConfigFileRealpath($inputPathOrFileName)
     {
-        $inputPathOrFileName = realpath($inputPathOrFileName);
+        $configFile = realpath($inputPathOrFileName);
 
-        if (false === $inputPathOrFileName) {
-            throw new \InvalidArgumentException('Config path/file provided is not valid (does it exist?)');
+        if (false === $configFile) {
+            throw new \InvalidArgumentException('Config path/file provided is not valid: ' . $inputPathOrFileName);
         }
-
-        $configFile = $inputPathOrFileName;
 
         if (is_dir($configFile)) {
             $configFile .= DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME;

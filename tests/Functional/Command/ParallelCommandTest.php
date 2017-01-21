@@ -14,7 +14,10 @@ use Tests\BaseTestCase;
  */
 class ParallelCommandTest extends BaseTestCase
 {
-    public function testExecution()
+    /**
+     * @dataProvider configurationPathProvider
+     */
+    public function testExecutionAllGreen($configurationPath)
     {
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
@@ -23,15 +26,44 @@ class ParallelCommandTest extends BaseTestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(array(
             'command'  => $command->getName(),
-            // pass arguments to the helper
-            '-c' => $this->getConfigForStubs(),
+            '--configuration' => $configurationPath,
+            'stringFilter' => 'green',
         ));
 
-        // the output of the command in the console
+        $output = $commandTester->getDisplay();
+        $this->assertNotContains('NO TESTS EXECUTED', $output);
+        $this->assertNotContains('Executed: 0 test classes', $output);
+        $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
+        $this->assertEquals(0, $exitCode);
+    }
+
+    /**
+     * @dataProvider configurationPathProvider
+     */
+    public function testExecution($configurationPath)
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute(array(
+            'command'  => $command->getName(),
+            '--configuration' => $configurationPath,
+        ));
+
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertContains('ABNORMAL TERMINATIONS', $output);
         $this->assertNotEquals(0, $exitCode);
+    }
+
+    public function configurationPathProvider()
+    {
+        return array(
+            array($this->getConfigForStubs()),
+            array(implode(DIRECTORY_SEPARATOR, array('.', 'tests', 'Stub', 'phpunit_for_stubs.xml'))),
+        );
     }
 }

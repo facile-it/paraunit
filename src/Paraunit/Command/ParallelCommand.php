@@ -52,7 +52,6 @@ class ParallelCommand extends Command
             new PHPUnitOption('printer'),
 
             new PHPUnitOption('bootstrap'),
-            new PHPUnitOption('configuration', true, 'c'),
             new PHPUnitOption('no-configuration'),
             new PHPUnitOption('include-path'),
         );
@@ -65,6 +64,7 @@ class ParallelCommand extends Command
     {
         $this->setName('run');
         $this->setDescription('Run all the requested tests in parallel');
+        $this->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config filename or path');
         $this->addArgument('stringFilter', InputArgument::OPTIONAL, 'A case-insensitive string to filter tests filename');
         $this->addOption('parallel', null, InputOption::VALUE_REQUIRED, 'Number of concurrent processes to launch', 10);
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
