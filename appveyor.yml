@@ -2,7 +2,8 @@ build: false
 version: '0.7.x-{build}'
 clone_depth: 1
 cache:
-  - c:\projects\symfony\composer.phar
+  - composer.phar
+  - C:\Users\appveyor\AppData\Local\Composer\files
 
 init:
   - SET PATH=c:\php;%PATH%

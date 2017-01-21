@@ -51,7 +51,7 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @dataProvider stubFilePathProvider
+     * @dataProvider stubFilenameProvider
      */
     public function testMaxRetryDeadlock($stubFilePath)
     {
@@ -67,11 +67,11 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $exitCode);
     }
 
-    public function stubFilePathProvider()
+    public function stubFilenameProvider()
     {
         return array(
-            array('tests/Stub/MySQLDeadLockTestStub.php'),
-            array('tests/Stub/SQLiteDeadLockTestStub.php'),
+            array('MySQLDeadLockTestStub.php'),
+            array('SQLiteDeadLockTestStub.php'),
         );
     }
 
