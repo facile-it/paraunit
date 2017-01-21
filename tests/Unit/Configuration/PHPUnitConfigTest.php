@@ -12,19 +12,27 @@ use Tests\BaseUnitTestCase;
  */
 class PHPUnitConfigTest extends BaseUnitTestCase
 {
-    public function testRelativeDirectoryDoesUseDefaultFileName()
+    public function testGetBaseDirectoryIsNotLazy()
+    {
+        $configurationFile = tempnam(null, 'phpunit_config_');
+        $logsDir = '/some/tmp/dir/for/logs';
+
+        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), null);
+
+        $directoryPath = $config->getBaseDirectory();
+        $this->assertNotEquals('', $directoryPath);
+        $this->assertNotEquals('/', $directoryPath);
+    }
+
+    public function testGetFileFullPathWithDirAndUseDefaultFileName()
     {
         $dir = $this->getStubPath() . 'StubbedXMLConfigs';
         $configurationFile = tempnam(null, 'phpunit_config_');
         $logsDir = '/some/tmp/dir/for/logs';
-        
+
         $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), $dir);
 
         $this->assertEquals($configurationFile, $config->getFileFullPath());
-
-        $directoryPath = $config->getBaseDirectory();
-        $this->assertNotEquals(dirname($configurationFile), $directoryPath);
-        $this->assertEquals(dirname($dir), $directoryPath);
 
         $this->assertFileExists($configurationFile);
         $copyConfigContent = file_get_contents($configurationFile);
@@ -33,7 +41,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $document = new \DOMDocument();
         $document->loadXML($copyConfigContent);
 
-        $expectedBootstrap = $directoryPath . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
+        $expectedBootstrap = $config->getBaseDirectory() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
         $this->assertEquals($expectedBootstrap, $document->documentElement->getAttribute('bootstrap'));
 
         $this->assertLogListenerIsPresent($document, $logsDir);
@@ -42,7 +50,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     /**
      * @dataProvider configFilenameProvider
      */
-    public function testRelativeFilenameDoesNotUseDefaultFileName($file)
+    public function testGetFileFullPathWithoutDefaultFileName($file)
     {
         $configurationFile = tempnam(null, 'phpunit_config_');
         $logsDir = '/some/tmp/dir/for/logs';
@@ -67,24 +75,21 @@ class PHPUnitConfigTest extends BaseUnitTestCase
             array($this->getStubPath() . 'StubbedXMLConfigs/stubbed_with_listener.xml'),
         );
     }
-    public function testRelativeDirectoryAndDefaultFileDoesNotExistThrowException()
+
+    public function testGetFileFullPathWithFileDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
-        $config = new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
-
         $this->setExpectedException('InvalidArgumentException', PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
 
-        $config->getFileFullPath();
+        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
     }
 
-    public function testInvalidDirectoryProvidedThrowException()
+    public function testGetFileFullPathWithPathDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'foobar';
-        $config = new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
-
         $this->setExpectedException('InvalidArgumentException', 'Config path/file provided is not valid');
 
-        $config->getFileFullPath();
+        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
     }
 
     /**
@@ -118,7 +123,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
             ->willReturn($configurationFile);
         $filenameFactory->getPathForLog()
             ->willReturn($logsDir);
-    
+
         return $filenameFactory->reveal();
     }
 }

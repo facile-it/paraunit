@@ -30,7 +30,8 @@ class PHPUnitConfig
     public function __construct(TempFilenameFactory $tempFilenameFactory, $inputPathOrFileName)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
-        $this->originalFilename = $inputPathOrFileName;
+        $this->originalFilename = $this->getConfigFileRealpath($inputPathOrFileName);
+        $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
         $this->phpunitOptions = array();
     }
 
@@ -40,10 +41,6 @@ class PHPUnitConfig
      */
     public function getFileFullPath()
     {
-        if (null === $this->configFile) {
-            $this->loadAndCopyConfigFile();
-        }
-
         return $this->configFile;
     }
 
@@ -72,12 +69,6 @@ class PHPUnitConfig
         return $this->phpunitOptions;
     }
 
-    private function loadAndCopyConfigFile()
-    {
-        $originalConfigFilename = $this->getConfigFileRealpath($this->originalFilename);
-        $this->configFile = $this->copyAndAlterConfig($originalConfigFilename);
-    }
-
     /**
      * @param string $inputPathOrFileName
      * @return string
@@ -104,6 +95,10 @@ class PHPUnitConfig
         return $configFile;
     }
 
+    /**
+     * @param $originalConfigFilename
+     * @return string The full filename of the new temp config
+     */
     private function copyAndAlterConfig($originalConfigFilename)
     {
         $originalConfig = file_get_contents($originalConfigFilename);
