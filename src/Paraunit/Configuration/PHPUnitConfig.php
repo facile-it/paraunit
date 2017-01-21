@@ -94,7 +94,6 @@ class PHPUnitConfig
         $configFile = $inputPathOrFileName;
 
         if (is_dir($configFile)) {
-            $this->baseDirectory = dirname($configFile);
             $configFile .= DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME;
         }
 

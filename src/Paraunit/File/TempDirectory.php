@@ -21,7 +21,7 @@ class TempDirectory
      */
     public function __construct()
     {
-        static::$timestamp = uniqid(date('Ymd-His'), true);
+        self::$timestamp = uniqid(date('Ymd-His'), true);
     }
 
     /**
@@ -29,7 +29,7 @@ class TempDirectory
      */
     public function getTempDirForThisExecution()
     {
-        $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . static::$timestamp;
+        $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . self::$timestamp;
         self::mkdirIfNotExists($dir);
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'config');
         self::mkdirIfNotExists($dir . DIRECTORY_SEPARATOR . 'logs');

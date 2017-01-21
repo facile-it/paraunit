@@ -17,6 +17,15 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
     /** @var int */
     private $testSuiteLevel;
 
+    /** @var string */
+    private $currentTestSuiteName;
+
+    /** @var string */
+    private $currentTestName;
+
+    /** @var bool */
+    private $currentTestPass;
+
     /**
      * LogPrinter constructor.
      * @param mixed $out
@@ -155,6 +164,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
      * A testsuite started.
      *
      * @param \PHPUnit_Framework_TestSuite $suite
+     * @throws \RuntimeException
      */
     public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
