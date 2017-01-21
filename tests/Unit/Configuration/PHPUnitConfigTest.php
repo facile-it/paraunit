@@ -44,7 +44,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $expectedBootstrap = $config->getBaseDirectory() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
         $this->assertEquals($expectedBootstrap, $document->documentElement->getAttribute('bootstrap'));
 
-        $this->assertLogListenerIsPresent($document, $logsDir);
+        $this->assertListenerIsPresent($document, $logsDir);
     }
 
     /**
@@ -65,7 +65,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
 
         $document = new \DOMDocument();
         $document->loadXML($copyConfigContent);
-        $this->assertLogListenerIsPresent($document, $logsDir);
+        $this->assertListenerIsPresent($document, $logsDir);
     }
 
     public function configFilenameProvider()
@@ -96,13 +96,13 @@ class PHPUnitConfigTest extends BaseUnitTestCase
      * @param \DOMDocument $document
      * @param string $logsDir
      */
-    private function assertLogListenerIsPresent(\DOMDocument $document, $logsDir)
+    private function assertListenerIsPresent(\DOMDocument $document, $logsDir)
     {
         $listenersNode = $document->documentElement->getElementsByTagName('listeners');
         $this->assertEquals(1, $listenersNode->length, 'Listeners node missing');
         $this->assertGreaterThanOrEqual(1, $listenersNode->item(0)->childNodes->length, 'No listeners registered');
         $paraunitListenerNode = $listenersNode->item(0)->lastChild;
-        $this->assertEquals('Paraunit\Parser\JSON\LogPrinter', $paraunitListenerNode->getAttribute('class'));
+        $this->assertEquals('Paraunit\Configuration\StaticOutputPath', $paraunitListenerNode->getAttribute('class'));
         $this->assertEquals(1, $paraunitListenerNode->getElementsByTagName('arguments')->length);
         $arguments = $paraunitListenerNode->getElementsByTagName('arguments')->item(0);
         $this->assertGreaterThanOrEqual(1, $arguments->childNodes->length, 'Arguments missing');

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Parser\JSON;
 
+use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Parser\JSON\LogPrinter;
 use Tests\BaseUnitTestCase;
 
@@ -290,7 +291,8 @@ class LogPrinterTest extends BaseUnitTestCase
 
     private function createPrinterAndStartTestSuite()
     {
-        $printer = new LogPrinter(sys_get_temp_dir());
+        new StaticOutputPath(sys_get_temp_dir());
+        $printer = new LogPrinter();
         $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
         $testSuite->getName()
             ->willReturn(get_class($this));

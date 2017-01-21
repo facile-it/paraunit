@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Parser\JSON;
 
+use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
 use Tests\BaseFunctionalTestCase;
@@ -22,7 +23,8 @@ class LogPrinterTest extends BaseFunctionalTestCase
             ->willReturn(1);
 
         $dir = sys_get_temp_dir();
-        $printer = new LogPrinter($dir);
+        new StaticOutputPath($dir);
+        $printer = new LogPrinter();
 
         $reflectionMethod = new \ReflectionMethod($printer, 'getLogFilename');
         $reflectionMethod->setAccessible(true);
@@ -42,7 +44,8 @@ class LogPrinterTest extends BaseFunctionalTestCase
             ->willReturn(1);
         $logFilename = $this->getLogFilenameForTest(__FILE__);
 
-        $printer = new LogPrinter(dirname($logFilename));
+        new StaticOutputPath(dirname($logFilename));
+        $printer = new LogPrinter();
 
         $printer->startTestSuite($testSuite->reveal());
 

@@ -151,7 +151,7 @@ class PHPUnitConfig
         $argumentsNode = $document->createElement('arguments');
         $argumentsNode->appendChild($logDirNode);
         $logListenerNode = $document->createElement('listener');
-        $logListenerNode->setAttribute('class', 'Paraunit\Parser\JSON\LogPrinter');
+        $logListenerNode->setAttribute('class', 'Paraunit\Configuration\StaticOutputPath');
         $logListenerNode->appendChild($argumentsNode);
 
         $listenersNode = $rootNode->getElementsByTagName('listeners')->item(0);

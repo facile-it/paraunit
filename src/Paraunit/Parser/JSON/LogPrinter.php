@@ -2,6 +2,8 @@
 
 namespace Paraunit\Parser\JSON;
 
+use Paraunit\Configuration\StaticOutputPath;
+
 /**
  * This class comes from \PHPUnit_Util_Log_JSON.
  * It's copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
@@ -28,15 +30,10 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
 
     /**
      * LogPrinter constructor.
-     * @param mixed $out
      */
-    public function __construct($out = null)
+    public function __construct()
     {
-        if (substr($out, -1) !== DIRECTORY_SEPARATOR) {
-            $out .= DIRECTORY_SEPARATOR;
-        }
-
-        $this->logDirectory = $out;
+        $this->logDirectory = null;
         $this->testSuiteLevel = 0;
     }
 
@@ -292,7 +289,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
     {
         $testFilename = $this->getTestFilename($suite);
         
-        return $this->logDirectory . md5($testFilename) . '.json.log';
+        return $this->getLogDirectory() . md5($testFilename) . '.json.log';
     }
 
     /**
@@ -304,5 +301,18 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         $reflection = new \ReflectionClass($suite->getName());
         
         return $reflection->getFileName();
+    }
+
+    /**
+     * @return string
+     */
+    private function getLogDirectory()
+    {
+        $this->logDirectory = StaticOutputPath::getPath();
+        if (substr($this->logDirectory, -1) !== DIRECTORY_SEPARATOR) {
+            $this->logDirectory .= DIRECTORY_SEPARATOR;
+        }
+
+        return $this->logDirectory;
     }
 }
