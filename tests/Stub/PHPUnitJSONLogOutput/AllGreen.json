@@ -1,126 +1,50 @@
 {
     "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 9
-}{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "tests": 9
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "tests": 3
 }{
     "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)"
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
     "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
     "status": "pass",
-    "time": 0.00057387351989746,
-    "trace": [],
+    "time": 0.00089216232299805,
+    "trace": [
+
+    ],
     "message": "",
     "output": ""
 }{
     "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)"
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo"
 }{
     "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
     "status": "pass",
-    "time": 0.00015807151794434,
-    "trace": [],
+    "time": 0.00011992454528809,
+    "trace": [
+
+    ],
     "message": "",
     "output": ""
 }{
     "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)"
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree"
 }{
     "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
+    "suite": "Tests\\Stub\\ThreeGreenTestStub",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree",
     "status": "pass",
-    "time": 0.00011086463928223,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)",
-    "status": "pass",
-    "time": 0.00011205673217773,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #4 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #4 (true)",
-    "status": "pass",
-    "time": 0.00017809867858887,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)",
-    "status": "pass",
-    "time": 0.00010991096496582,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)",
-    "status": "pass",
-    "time": 0.00012302398681641,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)",
-    "status": "pass",
-    "time": 0.0001530647277832,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #8 (true)"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #8 (true)",
-    "status": "pass",
-    "time": 0.00011801719665527,
-    "trace": [],
+    "time": 9.2029571533203e-5,
+    "trace": [
+
+    ],
     "message": "",
     "output": ""
 }
