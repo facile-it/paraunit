@@ -48,7 +48,8 @@ after_success:
 
 before_deploy:
   - composer update --no-dev
-  - bin/box build
+  - curl -LSs https://box-project.github.io/box2/installer.php | php
+  - php box.phar build
   - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ParaunitDiffSigning.asc.gpg && gpg --batch --yes --import ParaunitDiffSigning.asc
   - echo $SIGN_KEY | gpg --passphrase-fd 0 -u AE11B9CEBADB342A --armor --detach-sig paraunit.phar 
   - gpg --verify paraunit.phar.asc paraunit.phar
@@ -57,8 +58,8 @@ deploy:
   provider: releases
   api_key: $GITHUB_API_KEY
   file:
-    - build/paraunit.phar
-    - build/paraunit.phar.asc
+    - paraunit.phar
+    - paraunit.phar.asc
   skip_cleanup: true
   on:
     tags: true
