@@ -50,7 +50,7 @@ before_deploy:
   - composer update --no-dev
   - curl -LSs https://box-project.github.io/box2/installer.php | php
   - php box.phar build
-  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 contrib/ParaunitSigningKeys.asc.gpg && gpg --batch --yes --import ParaunitSigningKeys.asc
+  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 contrib/ParaunitSigningKeys.asc.gpg && gpg --batch --yes --import contrib/ParaunitSigningKeys.asc
   - echo $SIGN_KEY | gpg --passphrase-fd 0 -u E4F5798D --armor --detach-sig paraunit.phar 
   - gpg --verify paraunit.phar.asc paraunit.phar
 
