@@ -8,16 +8,16 @@
     "tests": 83
 }{
     "event": "suiteStart",
-    "suite": "Tests\\Unit\\Configuration\\JSONLogFilenameTest",
+    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
     "tests": 1
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\JSONLogFilenameTest",
-    "test": "Tests\\Unit\\Configuration\\JSONLogFilenameTest::testGenerate"
+    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
+    "test": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest::testGenerate"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\JSONLogFilenameTest",
-    "test": "Tests\\Unit\\Configuration\\JSONLogFilenameTest::testGenerate",
+    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
+    "test": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest::testGenerate",
     "status": "pass",
     "time": 0.002932071685791,
     "trace": [],
@@ -25,16 +25,16 @@
     "output": ""
 }{
     "event": "suiteStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitBinFileTest",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
     "tests": 1
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitBinFileTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitBinFileTest::testGetPhpunitBin"
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest::testGetPhpunitBin"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitBinFileTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitBinFileTest::testGetPhpunitBin",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest::testGetPhpunitBin",
     "status": "pass",
     "time": 0.00070714950561523,
     "trace": [],
@@ -42,16 +42,16 @@
     "output": ""
 }{
     "event": "suiteStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
     "tests": 4
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName"
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName",
     "status": "pass",
     "time": 0.00086498260498047,
     "trace": [],
@@ -59,12 +59,12 @@
     "output": ""
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName"
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName",
     "status": "pass",
     "time": 0.0005488395690918,
     "trace": [],
@@ -72,12 +72,12 @@
     "output": ""
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException"
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException",
     "status": "pass",
     "time": 0.00083804130554199,
     "trace": [],
@@ -85,12 +85,12 @@
     "output": ""
 }{
     "event": "testStart",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException"
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException"
 }{
     "event": "test",
-    "suite": "Tests\\Unit\\Configuration\\PHPUnitConfigTest",
-    "test": "Tests\\Unit\\Configuration\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException",
+    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
+    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException",
     "status": "pass",
     "time": 0.00037598609924316,
     "trace": [],

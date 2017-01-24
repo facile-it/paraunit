@@ -23,6 +23,9 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     /** @var string */
     protected $filename;
 
+    /** @var string */
+    protected $testClassName;
+
     /** @var PrintableTestResultInterface[] */
     protected $testResults;
 
@@ -98,6 +101,22 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     public function getFilename()
     {
         return $this->filename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTestClassName()
+    {
+        return $this->testClassName;
+    }
+
+    /**
+     * @param string $testClassName
+     */
+    public function setTestClassName($testClassName)
+    {
+        $this->testClassName = $testClassName;
     }
 
     /**
