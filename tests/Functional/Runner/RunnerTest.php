@@ -45,9 +45,16 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface));
 
-        $output = $outputInterface->fetch();
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
-        $this->assertContains(str_repeat('A', $retryCount) . 'E', $output);
+        $this->assertContains(str_repeat('A', $retryCount) . 'E', $outputInterface->getOutput());
+        $this->assertOutputOrder($outputInterface, array(
+            'Errors output',
+            'Tests\Stub\EntityManagerClosedTestStub::testBrokenTest',
+            'files with ERRORS',
+            'Tests\Stub\EntityManagerClosedTestStub',
+            'files with RETRIED',
+            'Tests\Stub\EntityManagerClosedTestStub',
+        ));
     }
 
     /**
@@ -97,7 +104,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'SegFaultTestStub.php',
+            'Tests\Stub\SegFaultTestStub',
             $output,
             'Missing failing filename'
         );
@@ -127,7 +134,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'MissingProviderTestStub.php',
+            'Tests\Stub\MissingProviderTestStub',
             $output,
             'Missing warned filename'
         );

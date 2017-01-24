@@ -25,7 +25,7 @@ class ParallelCommandTest extends BaseTestCase
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(array(
-            'command'  => $command->getName(),
+            'command' => $command->getName(),
             '--configuration' => $configurationPath,
             'stringFilter' => 'green',
         ));
@@ -48,7 +48,7 @@ class ParallelCommandTest extends BaseTestCase
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(array(
-            'command'  => $command->getName(),
+            'command' => $command->getName(),
             '--configuration' => $configurationPath,
         ));
 
@@ -56,6 +56,10 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertContains('ABNORMAL TERMINATIONS', $output);
+        $this->assertContains('ParseErrorTestStub.php', $output);
+        $this->assertContains('Tests\Stub\RaisingNoticeTestStub', $output);
+        $this->assertContains('Tests\Stub\MissingProviderTestStub', $output);
+        $this->assertContains('Tests\Stub\MySQLDeadLockTestStub', $output);
         $this->assertNotEquals(0, $exitCode);
     }
 
