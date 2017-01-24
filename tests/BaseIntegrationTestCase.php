@@ -88,12 +88,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $previousPosition = 0;
         $previousString = '<beginning of output>';
         foreach ($strings as $string) {
-            $position = strpos($output->getOutput(), $string);
+            $position = strpos($output->getOutput(), $string, $previousPosition);
             $this->assertNotFalse($position, $output->getOutput() . PHP_EOL . 'String not found: ' . $string);
             $this->assertGreaterThan(
                 $previousPosition,
                 $position,
-                'Failed asserting that "' . $string . '" comes after "' . $previousString . '"'
+                'Failed asserting that "' . $string . '" comes after "' . $previousString . '"' . $output->getOutput()
             );
             $previousString = $string;
             $previousPosition = $position;

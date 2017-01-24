@@ -25,6 +25,12 @@ interface ProcessWithResultsInterface extends TestResultBearerInterface
     public function getFilename();
 
     /** @return string */
+    public function getTestClassName();
+
+    /** @param string $className */
+    public function setTestClassName($className);
+
+    /** @return string */
     public function getUniqueId();
 
     /** @return bool */

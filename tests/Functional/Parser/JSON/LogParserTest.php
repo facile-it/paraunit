@@ -38,6 +38,10 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->assertEquals($expectedResult, $textResults);
 
         $this->assertEquals($hasAbnormalTermination, $process->hasAbnormalTermination());
+
+        if ($process->getTestClassName()) {
+            $this->assertStringStartsWith('Paraunit\Tests\Stub\\', $process->getTestClassName());
+        }
     }
 
     public function parsableResultsProvider()

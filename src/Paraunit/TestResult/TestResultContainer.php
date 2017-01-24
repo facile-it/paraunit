@@ -58,7 +58,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     public function addProcessToFilenames(ProcessWithResultsInterface $process)
     {
         // trick for unique
-        $this->filenames[$process->getUniqueId()] = $process->getFilename();
+        $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $process->getFilename();
     }
 
     /**

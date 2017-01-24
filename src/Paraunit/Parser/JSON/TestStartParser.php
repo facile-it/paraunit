@@ -29,6 +29,7 @@ class TestStartParser implements ParserChainElementInterface
             if ($logItem->event === 'testStart' || $logItem->event === 'suiteStart') {
                 $process->setWaitingForTestResult(true);
                 $this->saveProcessFunction($process, $logItem);
+                $this->saveTestFQCN($process, $logItem);
 
                 return new NullTestResult();
             }
@@ -74,5 +75,23 @@ class TestStartParser implements ParserChainElementInterface
         if ($this->lastFunction === null || $process !== $this->lastProcess) {
             $logItem->test = self::UNKNOWN_FUNCTION;
         }
+    }
+
+    private function saveTestFQCN(ProcessWithResultsInterface $process, \stdClass $logItem)
+    {
+        if ($process->getTestClassName()) {
+            return;
+        }
+
+        if (! property_exists($logItem, 'suite')) {
+            return;
+        }
+
+        if (! property_exists($logItem, 'test')) {
+            return;
+        }
+
+        $suiteName = explode('::', $logItem->suite);
+        $process->setTestClassName($suiteName[0]);
     }
 }
