@@ -3,7 +3,7 @@
 ## Disclaimer
 This is the checklist that should be followed for the creation of a new Paraunit release, including the PHAR creation.
 
-This is here for pratical usage, but also to leave a trace and to make this available to everyone that would like to do the same with their project. For the PHAR creation, I take for granted that the commands are launched inside the Docker container that is distributed with this project, so there are a few prerequisite in place:
+This is here for pratical usage, but also to leave a trace and to make this available to everyone that would like to do the same with their project. For the PHAR creation, I moved it to the Travis build, so I can take for granted a lot of stuff (i.e. min PHP version); otherwise, the commands have to be launched inside the Docker container that is distributed with this project, so there are a few prerequisite in place:
  * Composer installed
  * Box2 installed
  * PHP zip extension enabled (for PHAR compression)
@@ -25,9 +25,9 @@ git tag -s -a 0.x -m "Release 0.x"
 git push --follow-tags
 ```
 
-### PHAR
+## PHAR generation
 
-#### Prepare the vendors
+### Prepare the vendors
 
  * Checkout the desired tagged version
 ```
@@ -43,7 +43,7 @@ composer config platform.php 5.3.3
 composer update --no-dev
 ```
  
-#### Generate the PHAR
+### Generate the PHAR
  * Generate the PHAR using Box:
 ```
 box build -v
@@ -54,7 +54,7 @@ box build -v
 ls -l paraunit.phar
 ```
 
-#### Generate the signature
+### Generate the signature
  * Generate the GPG sign
 ```
 gpg --detach-sign --output gpg/paraunit-0.7.3.phar.asc paraunit.phar
@@ -74,22 +74,21 @@ git checkout composer.json
 composer update
 ```
 
-### Release on GitHub
- * Create a new release on the [GitHub release page](https://github.com/facile-it/paraunit/releases)
-  * Select the tag created and pushed in the first step
-  * Copy-paste the changelog section for this release
-  * Upload the PHAR and its signature
+## Release on GitHub
+ * Check that the new release is on the [GitHub release page](https://github.com/facile-it/paraunit/releases)
+ * Check that the PHAR and its signature are uploaded
+ * Copy-paste the changelog section for this release
 
-### Release notice on the site
+## Release notice on the site
  * Checkout the GitHub Pages branch
 ```
 git checkout gh-pages-source
 ```
  * Create a new release news on in `content/release`
-  * Name the file as the release version
-  * Add (if necessary) some text regarding the release at the top
-  * Copy-paste the changelog section for this release
- * Deploy to HitHub pages
+   * Name the file as the release version
+   * Add (if necessary) some text regarding the release at the top
+   * Copy-paste the changelog section for this release
+ * Deploy to GitHub pages
 ```
 ./deploy.sh
 ```
