@@ -5,7 +5,6 @@ namespace Paraunit\Command;
 use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Filter\Filter;
 use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

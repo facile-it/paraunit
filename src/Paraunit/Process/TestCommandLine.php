@@ -4,7 +4,6 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\TempFilenameFactory;
 
 /**
  * Class TestCliCommand
@@ -54,7 +53,7 @@ class TestCommandLine implements CliCommandInterface
                 $optionString .= '=' . $option->getValue();
             }
         }
-        
+
         return $optionString;
     }
 }
