@@ -14,7 +14,7 @@ use Symfony\Component\Console\Application;
  */
 class Paraunit
 {
-    const VERSION = '0.8-BETA1';
+    const VERSION = '0.8';
 
     public static function createApplication()
     {

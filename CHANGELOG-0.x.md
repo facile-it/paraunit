@@ -3,7 +3,7 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.8] - TBA
+## [0.8] - 2017-01-24
 
 ### Changed
 
@@ -12,6 +12,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 * Copied and moved the JSON log printer from PHPUnit to Paraunit, to allow further support and better control over the logs
 * When printing the file recap at the end of the execution, print the test's FQCN if possible instead of the filename
 * Various internal refactoring (DI, configuration, runner, coverage processors)
+* Added Continuous Deployment: the PHAR gets built and signed on Travis when tagging, and deployed automatically into a GitHub release (thanks to @heiglandreas for the tips)
 
 ## [0.7.4] - 2017-01-11
 
