@@ -45,3 +45,20 @@ after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
   - if [[ $TEST_COVERAGE ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
   - if [[ $TEST_COVERAGE ]]; then bin/test-reporter; fi
+
+before_deploy:
+  - bin/box build
+  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ParaunitDiffSigning.asc.gpg && gpg --batch --yes --import ParaunitDiffSigning.asc
+  - echo $SIGN_KEY | gpg --passphrase-fd 0 -u AE11B9CEBADB342A --armor --detach-sig paraunit.phar 
+  - gpg --verify paraunit.phar.asc paraunit.phar
+
+deploy:
+#  provider: releases
+#  api_key: $GITHUB_API_KEY
+#  file:
+#    - build/junitdiff.phar
+#    - build/junitdiff.phar.asc
+#  skip_cleanup: true
+  on:
+#    tags: true
+    php: 5.3
