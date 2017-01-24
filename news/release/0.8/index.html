@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.8: PHAR continuous delivery &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,32 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.8: PHAR continuous delivery</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;14&#41;</span>
-    </li>
-  
-  </ul>
+
+<p><a href="https://github.com/facile-it/paraunit/releases/tag/0.8">Paraunit 0.8</a> has been released!
+With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to <a href="https://andreas.heigl.org/2017/01/19/encrypt-a-build-result-automaticaly/">Andreas Heigl</a> that made this not only possible, but very straightforward to implement.</p>
+
+<p>Next phase will be the <a href="https://github.com/facile-it/paraunit/milestone/4">1.0 stable release milestone</a>, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.</p>
+
+<p>For the list of the other changes of this release, here&rsquo;s the full changelog:</p>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+<li>Add support for two additional coverage output format: <code>--php</code> and <code>--crap4j</code></li>
+<li>Add support for colored output when using <code>--text-to-console</code>: just use the <code>--ansi</code> option with it</li>
+<li>Copied and moved the JSON log printer from PHPUnit to Paraunit, to allow further support and better control over the logs</li>
+<li>When printing the file recap at the end of the execution, print the test&rsquo;s FQCN if possible instead of the filename</li>
+<li>Various internal refactoring (DI, configuration, runner, coverage processors)</li>
+<li>Added Continuous Deployment: the PHAR gets built and signed on Travis when tagging, and deployed automatically into a GitHub release (thanks to @heiglandreas for the tips)</li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +208,4 @@
 
 </body>
 </html>
+

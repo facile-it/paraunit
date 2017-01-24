@@ -5,8 +5,36 @@
     <link>http://facile-it.github.io/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 11 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Jan 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.8: PHAR continuous delivery</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.8/</link>
+      <pubDate>Tue, 24 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.8/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8&#34;&gt;Paraunit 0.8&lt;/a&gt; has been released!
+With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&amp;rsquo;s PHAR. Thanks to &lt;a href=&#34;https://andreas.heigl.org/2017/01/19/encrypt-a-build-result-automaticaly/&#34;&gt;Andreas Heigl&lt;/a&gt; that made this not only possible, but very straightforward to implement.&lt;/p&gt;
+
+&lt;p&gt;Next phase will be the &lt;a href=&#34;https://github.com/facile-it/paraunit/milestone/4&#34;&gt;1.0 stable release milestone&lt;/a&gt;, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.&lt;/p&gt;
+
+&lt;p&gt;For the list of the other changes of this release, here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add support for two additional coverage output format: &lt;code&gt;--php&lt;/code&gt; and &lt;code&gt;--crap4j&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Add support for colored output when using &lt;code&gt;--text-to-console&lt;/code&gt;: just use the &lt;code&gt;--ansi&lt;/code&gt; option with it&lt;/li&gt;
+&lt;li&gt;Copied and moved the JSON log printer from PHPUnit to Paraunit, to allow further support and better control over the logs&lt;/li&gt;
+&lt;li&gt;When printing the file recap at the end of the execution, print the test&amp;rsquo;s FQCN if possible instead of the filename&lt;/li&gt;
+&lt;li&gt;Various internal refactoring (DI, configuration, runner, coverage processors)&lt;/li&gt;
+&lt;li&gt;Added Continuous Deployment: the PHAR gets built and signed on Travis when tagging, and deployed automatically into a GitHub release (thanks to @heiglandreas for the tips)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.7.4: PHAR release</title>
