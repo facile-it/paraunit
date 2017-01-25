@@ -5,8 +5,26 @@
     <link>http://facile-it.github.io/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 24 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Jan 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.8.1: fixed regression with Symfony</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.8.1/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.8.1/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8&#34;&gt;Paraunit 0.8.1&lt;/a&gt; has been releasedto fix a small regression that happens when running functional tests in a Symfony project:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fix &lt;a href=&#34;https://github.com/facile-it/paraunit/issues/88&#34;&gt;#88&lt;/a&gt;: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.8: PHAR continuous delivery</title>
@@ -416,223 +434,6 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
 &lt;ul&gt;
 &lt;li&gt;Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Documentation</title>
-      <link>http://facile-it.github.io/paraunit/documentation/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://facile-it.github.io/paraunit/documentation/</guid>
-      <description>
-
-&lt;p&gt;Paraunit is a tool for faster executions of PHPUnit test suites.
-It makes this possible by launching multiple test in parallel with single PHPUnit processes.&lt;/p&gt;
-
-&lt;p&gt;Paraunit is developed using &lt;a href=&#34;http://symfony.com/components&#34;&gt;Symfony components&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
-
-&lt;p&gt;Paraunit is used in conjunction with PHPUnit. It reads PHPUnit&amp;rsquo;s .xml configuration file, so it&amp;rsquo;s needed to know which test to load.&lt;/p&gt;
-
-&lt;p&gt;If you are testing a Symfony+Doctrine application, it&amp;rsquo;s suggested to use also &lt;a href=&#34;https://github.com/facile-it/paraunit-testcase&#34;&gt;facile-it/paraunit-testcase&lt;/a&gt;, to avoid database concurrency problems during functional testing;
-also, if your want to run functional tests, remember to &lt;strong&gt;warm up the cache before&lt;/strong&gt;, in order to avoid a mass cache miss (and relative &lt;a href=&#34;https://en.wikipedia.org/wiki/Cache_stampede&#34;&gt;cache stampede&lt;/a&gt;) with concurrency problems, and subsequent random failures.&lt;/p&gt;
-
-&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-
-&lt;h3 id=&#34;from-composer&#34;&gt;From Composer&lt;/h3&gt;
-
-&lt;p&gt;To use this package, use Composer:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;from CLI: &lt;code&gt;composer require --dev facile-it/paraunit&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;or, directly in your &lt;code&gt;composer.json&lt;/code&gt;:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;require-dev&amp;quot;: {
-        &amp;quot;facile-it/paraunit&amp;quot;: &amp;quot;~0.7&amp;quot;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;phar&#34;&gt;PHAR&lt;/h3&gt;
-
-&lt;p&gt;If you prefer you can directly download the latest version in &lt;strong&gt;PHAR format&lt;/strong&gt;, from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;lastest GitHub release page&lt;/a&gt;, starting from 0.7.3. In this case, you need to replace &lt;code&gt;vendor/bin/paraunit&lt;/code&gt; with &lt;code&gt;./paraunit.phar&lt;/code&gt; in all the following examples.&lt;/p&gt;
-
-&lt;h4 id=&#34;verify-the-gpg-signature&#34;&gt;Verify the GPG signature&lt;/h4&gt;
-
-&lt;p&gt;All the Paraunit PHAR releases are signed with GPG. To verify the signature:
- * Download the PHAR
- * Download the associated GPG signature (the &lt;code&gt;.asc&lt;/code&gt; file)
- * Use the GPG tool to verify&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gpg --verify paraunit-x.y.phar.asc paraunit.phar
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;usage&#34;&gt;Usage&lt;/h1&gt;
-
-&lt;h2 id=&#34;run-command&#34;&gt;&lt;code&gt;run&lt;/code&gt; command&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;run&lt;/code&gt; command is the main functionality of Paraunit; it launches all the tests in all your configured testsuites in parallel; you can run it like this: (assuming your composer&amp;rsquo;s bin dir is &lt;code&gt;vendor/bin&lt;/code&gt;)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.&lt;/p&gt;
-
-&lt;h2 id=&#34;coverage-command&#34;&gt;&lt;code&gt;coverage&lt;/code&gt; command&lt;/h2&gt;
-
-&lt;p&gt;The &lt;code&gt;coverage&lt;/code&gt; command is used to generate the test coverage in parallel. It supports all the same options of the &lt;code&gt;run&lt;/code&gt; command (documented below) but it requires &lt;strong&gt;at least one of those options&lt;/strong&gt; to choose the coverage output format:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Option&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;--html=dir&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Coverage in HTML format, inside the specified directory&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;--clover=filename.xml&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Coverage in XML-clover format, with the specified filename&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;--xml=dir&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Coverage in PHPUnit XML format, inside the specified directory&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;--text=filename.txt&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Coverage in text format, with the specified filename&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;--text-to-console&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Coverage in text format, printed directly in the console, at the end of the process&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit coverage --html=./coverage
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Paraunit detects automatically if the &lt;a href=&#34;http://phpdbg.com/&#34;&gt;PHPDBG&lt;/a&gt; binary is available, at it uses that as a preferred coverage driver, since it&amp;rsquo;s a lot faster and uses less memory. If it&amp;rsquo;s not available, it falls back to use xDebug. If you want to use PHPDBG, you are &lt;strong&gt;highly encouraged to disable xDebug&lt;/strong&gt;, since Paraunit can&amp;rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.&lt;/p&gt;
-
-&lt;h2 id=&#34;optional-arguments-and-parameters&#34;&gt;Optional arguments and parameters&lt;/h2&gt;
-
-&lt;h3 id=&#34;string-filter&#34;&gt;String filter&lt;/h3&gt;
-
-&lt;p&gt;Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run path/to/my/tests
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In Paraunit this functionality is more powerful, since:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;it&amp;rsquo;s case insensitive&lt;/li&gt;
-&lt;li&gt;it works in combination with &lt;code&gt;--testsuite&lt;/code&gt; (PHPUnit ignores that if the argument is provided)&lt;/li&gt;
-&lt;li&gt;it searches a match everywhere in the filename, so it doesn&amp;rsquo;t have to be a full or relative path&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Let&amp;rsquo;s use an example to show how powerful this feature is. You are working on the &lt;code&gt;MyApp\SpecialPanel\SomeClass&lt;/code&gt; class, and you want to run all the tests of the &lt;code&gt;MyApp\SpecialPanel&lt;/code&gt; namespace. Those tests are in the &lt;code&gt;tests/Unit/SpecialPanel/&lt;/code&gt; and &lt;code&gt;tests/Functional/SpecialPanel/&lt;/code&gt; directories. You can run both dir at the same time with&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run specialpanel
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You don&amp;rsquo;t have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.&lt;/p&gt;
-
-&lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
-
-&lt;p&gt;If your &lt;code&gt;phpunit.xml.dist&lt;/code&gt; file is not in the default base dir, you can specify it by:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;or with the short version:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Also it&amp;rsquo;s possible to provide only a directory, in such case Paraunit will look a file with the default name, &lt;code&gt;phpunit.xml.dist&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run -c=relPath/to/xml/file/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;parallel&#34;&gt;Parallel&lt;/h3&gt;
-
-&lt;p&gt;You can choose how many concurrent processes you want to spawn at the same time, using the &lt;code&gt;--parallel&lt;/code&gt; option. The default value is &lt;code&gt;10&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run --parallel=5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;testsuite&#34;&gt;Testsuite&lt;/h3&gt;
-
-&lt;p&gt;You can run a single test suite (as defined in your configuration file) using:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run --testsuite=testSuiteName
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;phpunit-inherited-options&#34;&gt;PHPUnit inherited options&lt;/h3&gt;
-
-&lt;p&gt;A large number of PHPUnit options (apart from the aforementioned &lt;code&gt;--testsuite&lt;/code&gt;) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options&amp;rsquo; behavior, see the &lt;a href=&#34;https://phpunit.de/manual/current/en/textui.html#textui.clioptions&#34;&gt;PHPUnit CLI documentation&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This is the complete list of supported options:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;filter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;group&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;exclude-group&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;test-suffix&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;report-useless-tests&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;strict-global-state&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;disallow-test-output&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;enforce-time-limit&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;disallow-todo-tests&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;process-isolation&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;no-globals-backup&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;static-backup&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;loader&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;repeat&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;printer&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;bootstrap&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;no-configuration&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;include-path&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;debug-mode&#34;&gt;Debug mode&lt;/h3&gt;
-
-&lt;p&gt;If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;vendor/bin/paraunit run --debug
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It will show a verbose output with the full running test queue.&lt;/p&gt;
-
-&lt;h1 id=&#34;parsing-results&#34;&gt;Parsing results&lt;/h1&gt;
-
-&lt;p&gt;Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit&amp;rsquo;s JSON log output, so it&amp;rsquo;s a resilient and reliable process; it allows to be also resistent to fatal errors and other abnormal process termination.&lt;/p&gt;
-
-&lt;p&gt;Anyhow, Paraunit doesn&amp;rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&amp;rsquo; exit codes:
- &lt;strong&gt;it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code&lt;/strong&gt;.
- So you can safely use it in your CI build ;)&lt;/p&gt;
-
-&lt;p&gt;Side note: if you are using &lt;a href=&#34;http://symfony.com/doc/current/components/phpunit_bridge.html&#34;&gt;Symfony&amp;rsquo;s PHPUnit bridge&lt;/a&gt; to spot deprecations (or any other plugin that outputs something) you will notice that the bridge list of deprecations will be lost through Paraunit; the tests will be shown as passing, but &lt;strong&gt;the Paraunit process will still fail as expected if a deprecation is encountered&lt;/strong&gt;, due to the aforementioned exit code being considered.&lt;/p&gt;
-
-&lt;h1 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h1&gt;
-
-&lt;p&gt;If you are experiencing any problems, you can try the &lt;code&gt;--debug&lt;/code&gt; option to identify the problematic test, and try running it alone; if failures seems to appear at randoms during Paraunit runs, check for concurrency problem, like database access; otherwise, please open an issue &lt;a href=&#34;https://github.com/facile-it/paraunit/issues&#34;&gt;here on GitHub&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
