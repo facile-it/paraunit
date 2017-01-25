@@ -4,6 +4,7 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
+use Paraunit\Configuration\PHPUnitConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
@@ -35,6 +36,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
+        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     /**
@@ -61,6 +63,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('Tests\Stub\MissingProviderTestStub', $output);
         $this->assertContains('Tests\Stub\MySQLDeadLockTestStub', $output);
         $this->assertNotEquals(0, $exitCode);
+        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function configurationPathProvider()

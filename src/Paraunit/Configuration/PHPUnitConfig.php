@@ -9,6 +9,7 @@ namespace Paraunit\Configuration;
 class PHPUnitConfig
 {
     const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
+    const COPY_FILE_NAME = 'phpunit-paraunit.xml';
 
     /** @var  TempFilenameFactory */
     private $tempFilenameFactory;
@@ -37,11 +38,12 @@ class PHPUnitConfig
     /**
      * Get the full path for this configuration file
      * @return string
+     * @throws \RuntimeException
      */
     public function getFileFullPath()
     {
         if (null === $this->configFile) {
-            return $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
+            $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
         }
 
         return $this->configFile;
@@ -99,6 +101,7 @@ class PHPUnitConfig
     /**
      * @param $originalConfigFilename
      * @return string The full filename of the new temp config
+     * @throws \RuntimeException
      */
     private function copyAndAlterConfig($originalConfigFilename)
     {
@@ -109,11 +112,11 @@ class PHPUnitConfig
         $document->loadXML($originalConfig);
         $this->alterBoostrap($document);
         $this->appendLogListener($document);
-        
-        $newFilename = $this->tempFilenameFactory->getFilenameForConfiguration();
+
+        $newFilename = dirname($this->originalFilename) . DIRECTORY_SEPARATOR . 'phpunit-paraunit.xml';
 
         if (false === file_put_contents($newFilename, $document->saveXML())) {
-            throw new \RuntimeException('Error while saving temporary config');
+            throw new \RuntimeException('Error while saving temporary config in ' . $newFilename);
         }
 
         return $newFilename;

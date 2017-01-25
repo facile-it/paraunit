@@ -14,10 +14,9 @@ class PHPUnitConfigTest extends BaseUnitTestCase
 {
     public function testGetBaseDirectoryIsNotLazy()
     {
-        $configurationFile = tempnam(null, 'phpunit_config_');
         $logsDir = '/some/tmp/dir/for/logs';
 
-        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), null);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), null);
 
         $directoryPath = $config->getBaseDirectory();
         $this->assertNotEquals('', $directoryPath);
@@ -27,10 +26,10 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     public function testGetFileFullPathWithDirAndUseDefaultFileName()
     {
         $dir = $this->getStubPath() . 'StubbedXMLConfigs';
-        $configurationFile = tempnam(null, 'phpunit_config_');
+        $configurationFile = $dir . DIRECTORY_SEPARATOR . 'phpunit-paraunit.xml';
         $logsDir = '/some/tmp/dir/for/logs';
 
-        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), $dir);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), $dir);
 
         $this->assertEquals($configurationFile, $config->getFileFullPath());
 
@@ -52,15 +51,15 @@ class PHPUnitConfigTest extends BaseUnitTestCase
      */
     public function testGetFileFullPathWithoutDefaultFileName($file)
     {
-        $configurationFile = tempnam(null, 'phpunit_config_');
+        $expectedConfigurationFile = dirname($file) . DIRECTORY_SEPARATOR . 'phpunit-paraunit.xml';
         $logsDir = '/some/tmp/dir/for/logs';
 
-        $config = new PHPUnitConfig($this->mockFilenameFactory($configurationFile, $logsDir), $file);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), $file);
 
-        $this->assertEquals($configurationFile, $config->getFileFullPath());
+        $this->assertEquals($expectedConfigurationFile, $config->getFileFullPath());
 
-        $this->assertFileExists($configurationFile);
-        $copyConfigContent = file_get_contents($configurationFile);
+        $this->assertFileExists($expectedConfigurationFile);
+        $copyConfigContent = file_get_contents($expectedConfigurationFile);
         $this->assertContains('test_only_requested_testsuite', $copyConfigContent);
 
         $document = new \DOMDocument();
@@ -112,18 +111,33 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     }
 
     /**
-     * @param $configurationFile
      * @param $logsDir
      * @return TempFilenameFactory
      */
-    private function mockFilenameFactory($configurationFile, $logsDir)
+    private function mockFilenameFactory($logsDir)
     {
         $filenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $filenameFactory->getFilenameForConfiguration()
-            ->willReturn($configurationFile);
         $filenameFactory->getPathForLog()
             ->willReturn($logsDir);
 
         return $filenameFactory->reveal();
+    }
+
+    protected function tearDown()
+    {
+        $copiedConfig = implode(DIRECTORY_SEPARATOR, array(
+            __DIR__,
+            '..',
+            '..',
+            'Stub',
+            'StubbedXMLConfigs',
+            PHPUnitConfig::COPY_FILE_NAME
+        ));
+
+        if (file_exists($copiedConfig)) {
+            unlink($copiedConfig);
+        }
+
+        parent::tearDown();
     }
 }

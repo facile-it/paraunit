@@ -3,6 +3,12 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.1] - 2017-01-25
+
+### Fixed
+
+* Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir
+
 ## [0.8] - 2017-01-24
 
 ### Changed
