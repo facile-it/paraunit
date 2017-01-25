@@ -39,7 +39,6 @@ install:
 
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS
-  - src/Paraunit/Bin/paraunit run # self-consistency test
 
 after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
