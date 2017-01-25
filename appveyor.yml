@@ -32,4 +32,3 @@ install:
 test_script:
   - cd c:\projects\paraunit
   - bin\phpunit.bat
-  - php src/Paraunit/Bin/paraunit run # self-consistency test
