@@ -24,7 +24,7 @@ To use this package, use Composer:
 ```json
 {
     "require-dev": {
-        "facile-it/paraunit": "~0.7"
+        "facile-it/paraunit": "~0.8"
     }
 }
 ```
