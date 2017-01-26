@@ -5,8 +5,26 @@
     <link>http://facile-it.github.io/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 25 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Jan 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://facile-it.github.io/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.8.2: avoid failures due to warnings</title>
+      <link>http://facile-it.github.io/paraunit/news/release/0.8.2/</link>
+      <pubDate>Thu, 26 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://facile-it.github.io/paraunit/news/release/0.8.2/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.2&lt;/a&gt; has been released to fix an issued caused by an unwanted overwrite of the &lt;code&gt;write()&lt;/code&gt; method in the &lt;code&gt;LogWriter&lt;/code&gt; class. Full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fix the signature of &lt;code&gt;LogPrinter&lt;/code&gt;, to avoid warnings (this would lead to no test execution when considering warnings as test failures)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.8.1: fixed regression with Symfony</title>
@@ -16,7 +34,7 @@
       <guid>http://facile-it.github.io/paraunit/news/release/0.8.1/</guid>
       <description>
 
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8&#34;&gt;Paraunit 0.8.1&lt;/a&gt; has been releasedto fix a small regression that happens when running functional tests in a Symfony project:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.1&lt;/a&gt; has been released to fix a small regression that happens when running functional tests in a Symfony project:&lt;/p&gt;
 
 &lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
 
@@ -409,30 +427,6 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Fixed: test stub for fatal errors fixed for HHVM &amp;amp; PHP7&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.4.1</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.4.1/</link>
-      <pubDate>Wed, 23 Sep 2015 00:00:00 +0000</pubDate>
-      
-      <guid>http://facile-it.github.io/paraunit/news/release/0.4.1/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.4.1 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Improved: &lt;code&gt;--configuration&lt;/code&gt; parameter now has the &lt;code&gt;-c&lt;/code&gt; shortcut&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

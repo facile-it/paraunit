@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.8.2: avoid failures due to warnings &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,22 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.8.2: avoid failures due to warnings</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;16&#41;</span>
-    </li>
-  
-  </ul>
+
+<p><a href="https://github.com/facile-it/paraunit/releases/tag/0.8.2">Paraunit 0.8.2</a> has been released to fix an issued caused by an unwanted overwrite of the <code>write()</code> method in the <code>LogWriter</code> class. Full changelog:</p>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+<li>Fix the signature of <code>LogPrinter</code>, to avoid warnings (this would lead to no test execution when considering warnings as test failures)</li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +198,4 @@
 
 </body>
 </html>
+
