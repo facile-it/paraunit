@@ -180,7 +180,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName      = '';
 
-        $this->write(
+        $this->writeArray(
             array(
                 'event' => 'suiteStart',
                 'suite' => $this->currentTestSuiteName,
@@ -211,7 +211,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         $this->currentTestName = \PHPUnit_Util_Test::describe($test);
         $this->currentTestPass = true;
 
-        $this->write(
+        $this->writeArray(
             array(
                 'event' => 'testStart',
                 'suite' => $this->currentTestSuiteName,
@@ -247,7 +247,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
         if ($test !== null && method_exists($test, 'hasOutput') && $test->hasOutput()) {
             $output = $test->getActualOutput();
         }
-        $this->write(
+        $this->writeArray(
             array(
                 'event'   => 'test',
                 'suite'   => $this->currentTestSuiteName,
@@ -262,9 +262,9 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
     }
 
     /**
-     * @param string $buffer
+     * @param array $buffer
      */
-    public function write($buffer)
+    public function writeArray($buffer)
     {
         array_walk_recursive($buffer, function (&$input) {
             if (is_string($input)) {
@@ -278,7 +278,7 @@ class LogPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_Tes
             $flags |= JSON_PRETTY_PRINT;
         }
 
-        parent::write(json_encode($buffer, $flags));
+        $this->write(json_encode($buffer, $flags));
     }
 
     /**
