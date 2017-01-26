@@ -3,6 +3,12 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.2] - 2017-01-26
+
+### Fixed
+
+* Fix the signature of `LogPrinter`, to avoid warnings (this would lead to no test execution when considering warnings as test failures)
+
 ## [0.8.1] - 2017-01-25
 
 ### Fixed
