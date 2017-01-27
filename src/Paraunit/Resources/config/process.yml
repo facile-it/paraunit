@@ -1,6 +1,6 @@
 services:
   paraunit.process.process_factory:
-    class: Paraunit\Process\ProcessFactory
+    class: Paraunit\Process\ProcessBuilderFactory
     arguments:
       - "@paraunit.process.test_command_line"
       - "@paraunit.configuration.phpunit_config"

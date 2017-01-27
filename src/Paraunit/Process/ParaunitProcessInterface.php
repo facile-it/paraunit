@@ -26,6 +26,10 @@ interface ParaunitProcessInterface
      */
     public function reset();
 
+    /**
+     * @return bool
+     * TODO -- deprecate/remove?
+     */
     public function isRunning(): bool;
 
     /**

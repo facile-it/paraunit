@@ -13,15 +13,17 @@ use Symfony\Component\Process\ProcessBuilder;
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
     /** @var ProcessBuilder */
-    protected $processBuilder;
+    private $processBuilder;
+
     /** @var Process */
     private $process;
     /** @var string */
     protected $commandLine;
+
     /**
      * {@inheritdoc}
      */
-    public function __construct(string $filePath, string $commandLine, string $uniqueId)
+    public function __construct(ProcessBuilder $processBuilder, string $filename, string $uniqueId)
     {
         parent::__construct($commandLine, $uniqueId);
         $this->processBuilder = new ProcessBuilder();

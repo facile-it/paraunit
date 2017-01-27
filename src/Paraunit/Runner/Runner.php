@@ -6,7 +6,7 @@ namespace Paraunit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Process\RetryAwareInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Runner
 {
-    /** @var  ProcessFactory */
+    /** @var  ProcessBuilderFactory */
     private $processFactory;
 
     /** @var EventDispatcherInterface */
@@ -36,14 +36,14 @@ class Runner
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param ProcessFactory $processFactory
+     * @param ProcessBuilderFactory $processFactory
      * @param Filter $filter
      * @param PipelineCollection $pipelineCollection
      * @internal param int $maxProcessNumber
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        ProcessFactory $processFactory,
+        ProcessBuilderFactory $processFactory,
         Filter $filter,
         PipelineCollection $pipelineCollection
     ) {
@@ -103,7 +103,7 @@ class Runner
     private function createProcessQueue()
     {
         foreach ($this->filter->filterTestFiles() as $file) {
-            $process = $this->processFactory->createProcess($file);
+            $process = $this->processFactory->create($file);
             $this->queuedProcesses->enqueue($process);
         }
     }
