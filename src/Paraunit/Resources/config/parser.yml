@@ -6,6 +6,7 @@ services:
     arguments:
       - "@paraunit.parser.json_log_fetcher"
       - "@paraunit.test_result.no_test_executed_container"
+      - "@event_dispatcher"
     calls:
       - ["addParser", ["@paraunit.parser.test_start_parser"]]
       - ["addParser", ["@paraunit.parser.pass_parser"]]
@@ -19,7 +20,7 @@ services:
       - ["addParser", ["@paraunit.parser.abnormal_terminated_parser"]]
       - ["addParser", ["@paraunit.parser.unknown_result_parser"]]
     tags:
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 200 }
+      - { name: kernel.event_listener, event: process_event.process_parsing_completed, method: onProcessParsingCompleted }
 
   paraunit.parser.json_log_fetcher:
     class: Paraunit\Parser\JSON\LogFetcher

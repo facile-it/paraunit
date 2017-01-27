@@ -37,7 +37,7 @@ class ProcessPrinter
      * @param ProcessEvent $processEvent
      * @throws \BadMethodCallException
      */
-    public function onProcessTerminated(ProcessEvent $processEvent)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
 

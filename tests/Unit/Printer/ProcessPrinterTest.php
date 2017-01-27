@@ -32,7 +32,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $printer = new ProcessPrinter($formatter->reveal(), $output);
 
-        $printer->onProcessTerminated(new ProcessEvent($process));
+        $printer->onProcessParsingCompleted(new ProcessEvent($process));
 
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
     }
@@ -60,7 +60,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
             $output->reveal()
         );
 
-        $printer->onProcessTerminated(new ProcessEvent($process));
+        $printer->onProcessParsingCompleted(new ProcessEvent($process));
     }
 
     public function newLineTimesProvider(): array

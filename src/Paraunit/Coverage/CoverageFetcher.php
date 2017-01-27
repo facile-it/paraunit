@@ -5,6 +5,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Symfony\Component\Process\Process;
@@ -32,7 +33,11 @@ class CoverageFetcher
         $this->resultHandler = $failureHandler;
     }
 
-    public function fetch(AbstractParaunitProcess $process): \SebastianBergmann\CodeCoverage\CodeCoverage
+    /**
+     * @param ParaunitProcessInterface $process
+     * @return \SebastianBergmann\CodeCoverage\CodeCoverage
+     */
+    public function fetch(ParaunitProcessInterface $process): \SebastianBergmann\CodeCoverage\CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
         $codeCoverage = null;
@@ -46,6 +51,7 @@ class CoverageFetcher
             return $codeCoverage;
         }
 
+        // TODO -- resolve inconsistency of method signature
         $this->resultHandler->addProcessToFilenames($process);
 
         return new CodeCoverage();

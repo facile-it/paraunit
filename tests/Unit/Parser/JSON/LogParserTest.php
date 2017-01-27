@@ -103,6 +103,13 @@ class LogParserTest extends BaseUnitTestCase
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
             ->shouldBeCalledTimes($emptyTestsCount);
 
-        return new LogParser($logLocator->reveal(), $noTestExecutedContainer->reveal());
+        $eventDispatcher = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher->dispatch(
+            ProcessEvent::PROCESS_PARSING_COMPLETED,
+            Argument::type('Paraunit\Lifecycle\ProcessEvent')
+        )
+            ->shouldBeCalledTimes((int)($emptyTestsCount === 0));
+
+        return new LogParser($logLocator->reveal(), $noTestExecutedContainer->reveal(), $eventDispatcher->reveal());
     }
 }

@@ -10,7 +10,7 @@ services:
     arguments:
       - "@paraunit.coverage.coverage_fetcher"
     tags:
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
+      - { name: kernel.event_listener, event: process_event.process_parsing_completed, method: onProcessParsingCompleted }
 
   paraunit.coverage.coverage_result:
     class: Paraunit\Coverage\CoverageResult

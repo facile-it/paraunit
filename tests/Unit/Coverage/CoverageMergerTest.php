@@ -29,7 +29,7 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $merger = new CoverageMerger($fetcher->reveal());
 
-        $merger->onProcessTerminated(new ProcessEvent($process));
+        $merger->onProcessParsingCompleted(new ProcessEvent($process));
 
         $this->assertSame($newCoverageData->reveal(), $merger->getCoverageData());
     }
@@ -55,11 +55,11 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $merger = new CoverageMerger($fetcher->reveal());
 
-        $merger->onProcessTerminated(new ProcessEvent($process1));
+        $merger->onProcessParsingCompleted(new ProcessEvent($process1));
 
         $this->assertSame($coverageData1->reveal(), $merger->getCoverageData());
 
-        $merger->onProcessTerminated(new ProcessEvent($process2));
+        $merger->onProcessParsingCompleted(new ProcessEvent($process2));
 
         $this->assertSame($coverageData1->reveal(), $merger->getCoverageData());
     }

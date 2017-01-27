@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -11,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class AbstractFinalPrinter
  * @package Paraunit\Printer
  */
-abstract class AbstractFinalPrinter
+abstract class AbstractFinalPrinter extends AbstractPrinter
 {
     /** @var  TestResultList */
     protected $testResultList;
@@ -23,8 +22,8 @@ abstract class AbstractFinalPrinter
      */
     public function __construct(TestResultList $testResultList, OutputInterface $output)
     {
+        parent::__construct($output);
         $this->testResultList = $testResultList;
-        $this->output = $output;
     }
 
     abstract public function onEngineEnd();

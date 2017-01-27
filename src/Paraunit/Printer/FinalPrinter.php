@@ -47,9 +47,9 @@ class FinalPrinter extends AbstractFinalPrinter
 
     private function printExecutionTime(StopwatchEvent $stopEvent)
     {
-        $this->output->writeln('');
-        $this->output->writeln('');
-        $this->output->writeln('Execution time -- ' . gmdate('H:i:s', $stopEvent->getDuration() / 1000));
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', $stopEvent->getDuration() / 1000));
     }
 
     private function printTestCounters()
@@ -62,8 +62,8 @@ class FinalPrinter extends AbstractFinalPrinter
             }
         }
 
-        $this->output->writeln('');
-        $this->output->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
-        $this->output->writeln('');
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
+        $this->getOutput()->writeln('');
     }
 }

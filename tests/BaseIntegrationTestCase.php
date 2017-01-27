@@ -146,7 +146,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
                 ->willReturn($value);
         }
 
-        $this->container = $this->configuration->buildContainer($input->reveal());
+        $this->container = $this->configuration->buildContainer($input->reveal(), new UnformattedOutputStub());
     }
 
     public function setTextFilter(string $textFilter)
