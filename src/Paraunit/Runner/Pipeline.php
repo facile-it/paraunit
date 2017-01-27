@@ -76,6 +76,10 @@ class Pipeline
         }
 
         $this->dispatchProcessTerminated();
+        $process = $this->process;
+        $this->process = null;
+        
+        return $process;
     }
 
     private function dispatchProcessTerminated()

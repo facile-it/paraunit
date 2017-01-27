@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
 use Paraunit\TestResult\TestResultContainer;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class FailuresPrinter
@@ -16,25 +14,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FailuresPrinter extends AbstractFinalPrinter
 {
-    /**
-     * @param EngineEvent $engineEvent
-     */
-    public function onEngineEnd(EngineEvent $engineEvent)
+    public function onEngineEnd()
     {
-        $output = $engineEvent->getOutputInterface();
-
         foreach ($this->testResultList->getTestResultContainers() as $parser) {
             if ($parser instanceof TestResultContainer) {
-                $this->printFailuresOutput($parser, $output);
+                $this->printFailuresOutput($parser);
             }
         }
     }
 
     /**
      * @param TestResultContainer $testResultContainer
-     * @param OutputInterface $output
      */
-    private function printFailuresOutput(TestResultContainer $testResultContainer, OutputInterface $output)
+    private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintTestOutput()) {
             return;
@@ -46,26 +38,26 @@ class FailuresPrinter extends AbstractFinalPrinter
 
         foreach ($testResultContainer->getTestResults() as $testResult) {
             if ($i === 1) {
-                $output->writeln('');
-                $output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
+                $this->getOutput()->writeln('');
+                $this->getOutput()->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
             }
 
-            $output->writeln('');
-            $output->write(sprintf('<%s>%d) ', $tag, $i++));
+            $this->getOutput()->writeln('');
+            $this->getOutput()->write(sprintf('<%s>%d) ', $tag, $i++));
 
             if ($testResult instanceof FunctionNameInterface) {
-                $output->writeln($testResult->getFunctionName());
+                $this->getOutput()->writeln($testResult->getFunctionName());
             }
 
-            $output->write(sprintf('</%s>', $tag));
+            $this->getOutput()->write(sprintf('</%s>', $tag));
 
             if ($testResult instanceof FailureMessageInterface) {
-                $output->writeln($testResult->getFailureMessage());
+                $this->getOutput()->writeln($testResult->getFailureMessage());
             }
 
             if ($testResult instanceof StackTraceInterface) {
                 foreach ($testResult->getTrace() as $traceStep) {
-                    $output->writeln((string)$traceStep);
+                    $this->getOutput()->writeln((string)$traceStep);
                 }
             }
         }

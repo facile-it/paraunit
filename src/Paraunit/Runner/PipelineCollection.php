@@ -45,6 +45,10 @@ class PipelineCollection
     public function waitForCompletion()
     {
         foreach ($this->pipelines as $pipeline) {
+            if ($pipeline->isFree()) {
+                continue;
+            }
+
             $pipeline->waitCompletion();
         }
     }

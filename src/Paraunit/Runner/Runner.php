@@ -67,7 +67,7 @@ class Runner
         $this->eventDispatcher->dispatch(EngineEvent::START);
 
         while (! $this->queuedProcesses->isEmpty()) {
-            $this->executeQueuedProcesses();
+            $this->pushQueuedProcesses();
             $this->pipelineCollection->waitForCompletion();
         }
 
@@ -79,7 +79,7 @@ class Runner
     /**
      * @param ProcessEvent $processEvent
      */
-    public function onProcessCompleted(ProcessEvent $processEvent)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
 
@@ -93,7 +93,7 @@ class Runner
         }
     }
 
-    private function executeQueuedProcesses()
+    private function pushQueuedProcesses()
     {
         while (! $this->queuedProcesses->isEmpty()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());

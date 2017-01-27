@@ -6,6 +6,8 @@ services:
       - "@paraunit.process.process_factory"
       - "@paraunit.filter.filter"
       - "@paraunit.runner.pipeline_collection"
+    tags:
+      - { name: kernel.event_listener, event: process_event.process_parsing_completed, method: onProcessParsingCompleted }
 
   paraunit.runner.pipeline_collection:
     class: Paraunit\Runner\PipelineCollection

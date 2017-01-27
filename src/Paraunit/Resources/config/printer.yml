@@ -30,6 +30,7 @@ services:
     class: Paraunit\Printer\FinalPrinter
     parent: paraunit.printer.abstract_final_printer
     tags:
+      - { name: kernel.event_listener, event: engine_event.start, method: onEngineStart }
       - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
 
   paraunit.printer.failures_printer:

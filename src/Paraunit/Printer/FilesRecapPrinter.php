@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class FilesRecapPrinter
@@ -13,23 +11,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FilesRecapPrinter extends AbstractFinalPrinter
 {
-    /**
-     * @param EngineEvent $engineEvent
-     */
-    public function onEngineEnd(EngineEvent $engineEvent)
+    public function onEngineEnd()
     {
-        $output = $engineEvent->getOutputInterface();
-
         foreach ($this->testResultList->getTestResultContainers() as $parser) {
-            $this->printFileRecap($parser, $output);
+            $this->printFileRecap($parser);
         }
     }
 
     /**
      * @param TestResultContainerInterface $testResultContainer
-     * @param OutputInterface $output
      */
-    private function printFileRecap(TestResultContainerInterface $testResultContainer, OutputInterface $output)
+    private function printFileRecap(TestResultContainerInterface $testResultContainer)
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;
@@ -40,8 +32,8 @@ class FilesRecapPrinter extends AbstractFinalPrinter
         if (count($filenames)) {
             $tag = $testResultContainer->getTestResultFormat()->getTag();
             $title = $testResultContainer->getTestResultFormat()->getTitle();
-            $output->writeln('');
-            $output->writeln(
+            $this->getOutput()->writeln('');
+            $this->getOutput()->writeln(
                 sprintf(
                     '<%s>%d files with %s:</%s>',
                     $tag,
@@ -52,7 +44,7 @@ class FilesRecapPrinter extends AbstractFinalPrinter
             );
 
             foreach ($filenames as $fileName) {
-                $output->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
+                $this->getOutput()->writeln(sprintf(' <%s>%s</%s>', $tag, $fileName, $tag));
             }
         }
     }
