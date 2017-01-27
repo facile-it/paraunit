@@ -21,17 +21,17 @@ class RunnerTest extends BaseIntegrationTestCase
 {
     public function testAllGreen()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
+        $output = $this->getConsoleOutput();
 
-        $this->assertEquals(0, $runner->run($outputInterface), $outputInterface->getOutput());
+        $this->assertEquals(0, $runner->run($output), $output->getOutput());
 
-        $this->assertNotContains('Coverage', $outputInterface->getOutput());
-        $this->assertOutputOrder($outputInterface, array(
+        $this->assertNotContains('Coverage', $output->getOutput());
+        $this->assertOutputOrder($output, array(
             'PARAUNIT',
             'v' . Paraunit::getVersion(),
             '...',
@@ -40,18 +40,18 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testMaxRetryEntityManagerIsClosed()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('EntityManagerClosedTestStub.php');
         $this->loadContainer();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
+        $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $runner->run($outputInterface));
+        $this->assertNotEquals(0, $runner->run($output));
 
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
-        $this->assertContains(str_repeat('A', $retryCount) . 'E', $outputInterface->getOutput());
-        $this->assertOutputOrder($outputInterface, [
+        $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
+        $this->assertOutputOrder($output, [
             'Errors output',
             EntityManagerClosedTestStub::class . '::testBrokenTest',
             'files with ERRORS',
@@ -66,14 +66,16 @@ class RunnerTest extends BaseIntegrationTestCase
      */
     public function testMaxRetryDeadlock(string $stubFilePath)
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter($stubFilePath);
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $exitCode = $runner->run($outputInterface);
+        $output = $this->getConsoleOutput();
 
-        $this->assertContains(str_repeat('A', 3) . 'E', $outputInterface->getOutput());
+        $exitCode = $runner->run();
+
+        $output = $output->fetch();
+        $this->assertContains(str_repeat('A', 3) . 'E', $output);
         $this->assertNotEquals(0, $exitCode);
     }
 
@@ -90,15 +92,15 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testSegFault()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('SegFaultTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
+        $output = $this->getConsoleOutput();
 
         $this->assertNotEquals(
             0,
-            $runner->run($outputInterface),
+            $runner->run($output),
             'Exit code should not be 0'
         );
 
@@ -106,12 +108,12 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
-            $output,
+            $output->getOutput(),
             'Missing recap title'
         );
         $this->assertContains(
             SegFaultTestStub::class,
-            $output,
+            $output->getOutput(),
             'Missing failing filename'
         );
     }
@@ -123,29 +125,28 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
+        $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
-        $output = $outputInterface->getOutput();
-        $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
+        $this->assertRegExp('/\nW\n/', $output->getOutput(), 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
-            $output,
+            $output->getOutput(),
             'Missing recap title'
         );
         $this->assertContains(
             MissingProviderTestStub::class,
-            $output,
+            $output->getOutput(),
             'Missing warned filename'
         );
     }
 
     public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
-        
+
         /** @var PHPUnitConfig $phpunitConfig */
         $phpunitConfig = $this->container->get('paraunit.configuration.phpunit_config');
         $option = new PHPUnitOption('group');
@@ -155,7 +156,7 @@ class RunnerTest extends BaseIntegrationTestCase
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface));
+        $this->assertEquals(0, $runner->run());
 
         $output = $outputInterface->getOutput();
         $this->assertNotContains('...', $output);
@@ -167,13 +168,12 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('FatalErrorTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
@@ -183,37 +183,35 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionMissingLogAsUnknownResults()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ParseErrorTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
-            $output,
+            $output->getOutput(),
             'Missing abnormal termination recap title'
         );
     }
 
     public function testRegressionFatalErrorsShouldNotLeakToOutput()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('RaisingNoticeTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
-        $output = $outputInterface->getOutput();
+        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $output = $this->getConsoleOutput();
         $this->assertGreaterThan(
-            strpos($output, 'Execution time'),
-            strpos($output, 'YOU SHOULD NOT SEE THIS'),
+            strpos($output->getOutput(), 'Execution time'),
+            strpos($output->getOutput(), 'YOU SHOULD NOT SEE THIS'),
             'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
         );
     }

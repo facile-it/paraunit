@@ -31,7 +31,7 @@ class PipelineCollection
     {
         do {
             foreach ($this->pipelines as $pipeline) {
-                if ($pipeline->isFree()) {
+                if ($pipeline->isFree() || $pipeline->isTerminated()) {
                     $pipeline->execute($process);
 
                     return $pipeline;

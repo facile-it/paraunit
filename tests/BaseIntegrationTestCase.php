@@ -149,7 +149,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->container = $this->configuration->buildContainer($input->reveal(), new UnformattedOutputStub());
     }
 
-    public function setTextFilter(string $textFilter)
+    protected function getConsoleOutput(): UnformattedOutputStub
+    {
+        return $this->container->get('output');
+    }
+
+    protected function setTextFilter(string $textFilter)
     {
         $this->textFilter = $textFilter;
     }

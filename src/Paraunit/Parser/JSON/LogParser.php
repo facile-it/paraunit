@@ -78,7 +78,7 @@ class LogParser
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);
         }
-        
+
         $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
