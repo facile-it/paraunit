@@ -19,14 +19,13 @@ abstract class AbstractFinalPrinter
     /**
      * AbstractFinalPrinter constructor.
      * @param TestResultList $testResultList
+     * @param OutputInterface $output
      */
-    public function __construct(TestResultList $testResultList)
+    public function __construct(TestResultList $testResultList, OutputInterface $output)
     {
         $this->testResultList = $testResultList;
+        $this->output = $output;
     }
 
-    /**
-     * @param EngineEvent $engineEvent
-     */
-    abstract public function onEngineEnd(EngineEvent $engineEvent);
+    abstract public function onEngineEnd();
 }

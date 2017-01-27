@@ -19,11 +19,10 @@ class CoveragePrinterTest extends BaseUnitTestCase
     public function testOnEngineBeforeStartWithPHPDBGEngine()
     {
         $output = new UnformattedOutputStub();
-        $engineEvent = new EngineEvent($output);
 
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false));
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $output);
 
-        $printer->onEngineBeforeStart($engineEvent);
+        $printer->onEngineBeforeStart();
 
         $this->assertContains('Coverage driver in use: PHPDBG', $output->getOutput());
     }
@@ -31,11 +30,10 @@ class CoveragePrinterTest extends BaseUnitTestCase
     public function testOnEngineBeforeStartWithxDebugEngine()
     {
         $output = new UnformattedOutputStub();
-        $engineEvent = new EngineEvent($output);
 
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true));
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $output);
 
-        $printer->onEngineBeforeStart($engineEvent);
+        $printer->onEngineBeforeStart();
 
         $this->assertContains('Coverage driver in use: xDebug', $output->getOutput());
     }
@@ -43,11 +41,10 @@ class CoveragePrinterTest extends BaseUnitTestCase
     public function testOnEngineBeforeStartWithWarningForBothEnginesEnabled()
     {
         $output = new UnformattedOutputStub();
-        $engineEvent = new EngineEvent($output);
 
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true));
+        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $output);
 
-        $printer->onEngineBeforeStart($engineEvent);
+        $printer->onEngineBeforeStart();
 
         $this->assertContains('WARNING', $output->getOutput());
         $this->assertContains('both driver', $output->getOutput());

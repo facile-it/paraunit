@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use Paraunit\Printer\OutputFactory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -20,13 +22,14 @@ class ParallelConfiguration
 {
     /**
      * @param InputInterface $input
+     * @param OutputInterface $output
      * @return ContainerBuilder
-     * @throws \Exception
      */
-    public function buildContainer(InputInterface $input): ContainerBuilder
+    public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
+        $this->injectOutput($containerBuilder, $output);
         $this->loadYamlConfiguration($containerBuilder);
         $this->registerEventDispatcher($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
@@ -84,5 +87,22 @@ class ParallelConfiguration
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
     {
+    }
+
+    private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
+    {
+        OutputFactory::setOutput($output);
+        $factoryClass = 'Paraunit\Printer\OutputFactory';
+        $factoryMethod = 'getOutput';
+
+        $definition = new Definition('Symfony\Component\Console\Output\OutputInterface');
+        if (method_exists($definition, 'setFactory')) {
+            $definition->setFactory(array($factoryClass, $factoryMethod));
+        } else {
+            $definition->setFactoryClass($factoryClass);
+            $definition->setFactoryMethod($factoryMethod);
+        }
+
+        $containerBuilder->setDefinition('output', $definition);
     }
 }

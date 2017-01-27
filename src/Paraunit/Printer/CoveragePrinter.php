@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-
 namespace Paraunit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Proxy\XDebugProxy;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CoveragePrinter
@@ -16,39 +15,41 @@ class CoveragePrinter
 {
     /** @var  PHPDbgBinFile */
     private $phpdgbBin;
-    
+
     /** @var  XDebugProxy */
     private $xdebug;
+
+    /** @var OutputInterface */
+    private $output;
 
     /**
      * CoveragePrinter constructor.
      * @param PHPDbgBinFile $phpdgbBin
      * @param XDebugProxy $xdebug
      */
-    public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug)
+    public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug, OutputInterface $output)
     {
         $this->phpdgbBin = $phpdgbBin;
         $this->xdebug = $xdebug;
+        $this->output = $output;
     }
 
-    public function onEngineBeforeStart(EngineEvent $engineEvent)
+    public function onEngineBeforeStart()
     {
-        $output = $engineEvent->getOutputInterface();
-
-        $output->write('Coverage driver in use: ');
+        $this->output->write('Coverage driver in use: ');
 
         if ($this->phpdgbBin->isAvailable()) {
-            $output->writeln('PHPDBG');
+            $this->output->writeln('PHPDBG');
 
             if ($this->xdebug->isLoaded()) {
-                $output->writeln('WARNING: both drivers enabled; this may lead to memory exhaustion!');
-                
+                $this->output->writeln('WARNING: both drivers enabled; this may lead to memory exhaustion!');
+
                 return;
             }
         }
 
         if ($this->xdebug->isLoaded()) {
-            $output->writeln('xDebug');
+            $this->output->writeln('xDebug');
         }
     }
 }

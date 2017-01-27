@@ -25,7 +25,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public function testBuildContainer()
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize(InputInterface::class);
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')
@@ -37,7 +38,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
-        $container = $paraunit->buildContainer($input->reveal());
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
@@ -54,6 +55,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         }
 
         $requiredDefinitions = [
+            'output',
             'paraunit.parser.json_log_parser',
             'paraunit.printer.process_printer',
             'paraunit.process.process_factory',
@@ -87,7 +89,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass)
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize(InputInterface::class);
+        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
         $options = array(
             'testsuite',
             'configuration',
@@ -112,7 +115,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn(10);
 
-        $container = $paraunit->buildContainer($input->reveal());
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
@@ -143,6 +146,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     {
         $paraunit = new CoverageConfiguration();
         $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
         $options = [
             'testsuite',
             'configuration',
@@ -171,7 +175,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn(true);
 
-        $container = $paraunit->buildContainer($input->reveal());
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 

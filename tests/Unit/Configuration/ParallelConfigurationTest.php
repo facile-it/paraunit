@@ -19,6 +19,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
     {
         $paraunit = new ParallelConfiguration();
         $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')
@@ -30,7 +31,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $input->getOption(Argument::cetera())
             ->willReturn(null);
 
-        $container = $paraunit->buildContainer($input->reveal());
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
@@ -47,6 +48,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         }
 
         $requiredDefinitions = [
+            'output',
             'paraunit.file.cleaner',
             'paraunit.parser.json_log_parser',
             'paraunit.printer.process_printer',

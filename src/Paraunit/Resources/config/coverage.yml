@@ -24,5 +24,6 @@ services:
     arguments:
       - "@paraunit.configuration.phpdbg_bin_file"
       - "@paraunit.proxy.xdebug_proxy"
+      - "@output"
     tags:
       - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 100 }

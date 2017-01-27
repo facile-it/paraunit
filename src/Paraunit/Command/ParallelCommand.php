@@ -94,7 +94,7 @@ class ParallelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->configuration->buildContainer($input);
+        $container = $this->configuration->buildContainer($input, $output);
 
         /** @var PHPUnitConfig $config */
         $config = $container->get('paraunit.configuration.phpunit_config');
@@ -103,7 +103,7 @@ class ParallelCommand extends Command
         /** @var Runner $runner */
         $runner = $container->get('paraunit.runner.runner');
 
-        return $runner->run($output, $input->getOption('debug'));
+        return $runner->run();
     }
 
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
