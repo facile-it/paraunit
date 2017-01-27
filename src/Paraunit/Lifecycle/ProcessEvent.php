@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Paraunit\Lifecycle;
 
-use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ParaunitProcessInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /***
  * Class ProcessEvent
  * @package Paraunit\Lifecycle
  */
-class ProcessEvent extends AbstractEvent
+class ProcessEvent extends Event
 {
     const PROCESS_STARTED = 'process_event.process_started';
     const PROCESS_TERMINATED = 'process_event.process_terminated';
@@ -19,16 +19,14 @@ class ProcessEvent extends AbstractEvent
     private $process;
 
     /**
-     * @param AbstractParaunitProcess $process
-     * @param array $context
+     * @param ParaunitProcessInterface $process
      */
-    public function __construct(AbstractParaunitProcess $process, array $context = [])
+    public function __construct(ParaunitProcessInterface $process)
     {
-        parent::__construct($context);
         $this->process = $process;
     }
 
-    public function getProcess(): AbstractParaunitProcess
+    public function getProcess(): ParaunitProcessInterface
     {
         return $this->process;
     }

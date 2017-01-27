@@ -35,7 +35,7 @@ services:
   paraunit.printer.console_formatter:
     class: Paraunit\Printer\ConsoleFormatter
     tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
+      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart }
 
   paraunit.printer.single_result_formatter:
     class: Paraunit\Printer\SingleResultFormatter

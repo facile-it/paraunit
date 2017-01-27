@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Paraunit\Process;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class SymfonyProcessWrapper
@@ -11,21 +12,21 @@ use Symfony\Component\Process\Process;
  */
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
+    /** @var ProcessBuilder */
+    protected $processBuilder;
     /** @var Process */
     private $process;
-
+    /** @var string */
+    protected $commandLine;
     /**
-     * SymfonyProcessWrapper constructor.
-     * @param string $filePath
-     * @param string $commandLine
-     * @param string $uniqueId
-     * @throws \InvalidArgumentException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * {@inheritdoc}
      */
     public function __construct(string $filePath, string $commandLine, string $uniqueId)
     {
-        parent::__construct($filePath, $uniqueId);
-        $this->process = new Process($commandLine);
+        parent::__construct($commandLine, $uniqueId);
+        $this->processBuilder = new ProcessBuilder();
+        $this->processBuilder->add($commandLine);
+        $this->commandLine = $commandLine;
     }
 
     public function isTerminated(): bool
@@ -34,12 +35,12 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @return void
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @param array $env
      */
-    public function start()
+    public function start(array $env = [])
     {
+        $this->processBuilder->addEnvironmentVariables($env);
+        $this->process = $this->processBuilder->getProcess();
         $this->process->start();
     }
 
@@ -64,32 +65,26 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     /**
      * @return void
      * @throws \Symfony\Component\Process\Exception\RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     */
-    public function restart()
-    {
-        $this->reset();
-        $this->start();
-    }
-
-    /**
-     * @return void
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function reset()
     {
         parent::reset();
 
-        $this->process = new Process($this->process->getCommandLine());
+        $this->process = null;
     }
 
     public function getCommandLine(): string
     {
-        return $this->process->getCommandLine();
+        return $this->commandLine;
     }
 
     public function isRunning(): bool
     {
         return $this->process->isRunning();
+    }
+
+    public function wait()
+    {
+        $this->process->wait();
     }
 }

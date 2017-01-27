@@ -28,7 +28,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $outputInterface = new UnformattedOutputStub();
         $event = new EngineEvent($outputInterface);
 
-        $consoleFormatter->onEngineStart($event);
+        $consoleFormatter->onEngineBeforeStart($event);
 
         $tag = $testResultContainer->getTestResultFormat()->getTag();
         $formatter = $outputInterface->getFormatter();

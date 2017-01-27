@@ -16,14 +16,10 @@ interface ParaunitProcessInterface
     public function getCommandLine(): string;
 
     /**
+     * @param array $env An array of environment variables to be injected
      * @return void
      */
-    public function start();
-
-    /**
-     * @return void
-     */
-    public function restart();
+    public function start(array $env = []);
 
     /**
      * @return void
@@ -36,4 +32,9 @@ interface ParaunitProcessInterface
      * @return int|null
      */
     public function getExitCode();
+
+    /**
+     * @return void
+     */
+    public function wait();
 }

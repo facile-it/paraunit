@@ -39,7 +39,7 @@ class ProcessFactory
         $uniqueId = $this->createUniqueId($testFilePath);
         $command = $this->createCommandLine($testFilePath, $uniqueId);
 
-        return new SymfonyProcessWrapper($testFilePath, $command, $uniqueId);
+        return new SymfonyProcessWrapper($command, $uniqueId);
     }
 
     private function createCommandLine(string $testFilePath, string $uniqueId): string

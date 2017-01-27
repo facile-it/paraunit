@@ -15,7 +15,7 @@ class ConsoleFormatter
     /**
      * @param EngineEvent $engineEvent
      */
-    public function onEngineStart(EngineEvent $engineEvent)
+    public function onEngineBeforeStart(EngineEvent $engineEvent)
     {
         $formatter = $engineEvent->getOutputInterface()->getFormatter();
 
