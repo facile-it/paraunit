@@ -14,11 +14,12 @@ class PipelineCollection
     /** @var Pipeline[] | \SplFixedArray */
     private $pipelines;
 
-    public function __construct(EventDispatcherInterface $dispatcher, $maxProcessNumber = 10)
+    public function __construct(PipelineFactory $pipelineFactory, $maxProcessNumber = 10)
     {
         $this->pipelines = new \SplFixedArray($maxProcessNumber);
+
         for ($pipelineNumber = 0; $pipelineNumber < $maxProcessNumber; $pipelineNumber++) {
-            $this->pipelines->offsetSet($pipelineNumber, new Pipeline($dispatcher, $pipelineNumber));
+            $this->pipelines->offsetSet($pipelineNumber, $pipelineFactory->create($pipelineNumber));
         }
     }
 

@@ -51,6 +51,7 @@ class ParallelConfiguration
         $loader->load('parser.yml');
         $loader->load('printer.yml');
         $loader->load('process.yml');
+        $loader->load('runner.yml');
         $loader->load('services.yml');
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');
