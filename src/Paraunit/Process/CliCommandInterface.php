@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Paraunit\Process;
 
@@ -15,8 +14,13 @@ interface CliCommandInterface
 
     /**
      * @param PHPUnitConfig $config
-     * @param string $uniqueId
      * @return array
      */
-    public function getOptions(PHPUnitConfig $config, string $uniqueId): array;
+    public function getOptions(PHPUnitConfig $config);
+
+    /**
+     * @param string $testFilename
+     * @return array
+     */
+    public function getSpecificOptions($testFilename);
 }

@@ -2,10 +2,10 @@ services:
   paraunit.process.process_factory:
     class: Paraunit\Process\ProcessBuilderFactory
     arguments:
-      - "@paraunit.process.test_command_line"
+      - "@paraunit.process.command_line"
       - "@paraunit.configuration.phpunit_config"
 
-  paraunit.process.test_command_line:
-    class: Paraunit\Process\TestCommandLine
+  paraunit.process.command_line:
+    class: Paraunit\Process\CommandLine
     arguments:
       - "@paraunit.configuration.phpunit_bin_file"

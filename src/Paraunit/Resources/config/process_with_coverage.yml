@@ -2,11 +2,11 @@ services:
   paraunit.process.process_factory:
     class: Paraunit\Process\ProcessBuilderFactory
     arguments:
-      - "@paraunit.process.test_with_coverage_command_line"
+      - "@paraunit.process.command_line_with_coverage"
       - "@paraunit.configuration.phpunit_config"
 
-  paraunit.process.test_with_coverage_command_line:
-    class: Paraunit\Process\TestWithCoverageCommandLine
+  paraunit.process.command_line_with_coverage:
+    class: Paraunit\Process\CommandLineWithCoverage
     arguments:
       - "@paraunit.configuration.phpunit_bin_file"
       - "@paraunit.configuration.phpdbg_bin_file"

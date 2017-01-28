@@ -8,7 +8,11 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 
-class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandInterface
+/**
+ * Class CommandLineWithCoverage
+ * @package Paraunit\Process
+ */
+class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
 {
     /** @var PHPDbgBinFile */
     private $phpDbgBinFile;
@@ -22,8 +26,11 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
      * @param PHPDbgBinFile $dbgBinFile
      * @param TempFilenameFactory $filenameFactory
      */
-    public function __construct(PHPUnitBinFile $phpUnitBin, PHPDbgBinFile $dbgBinFile, TempFilenameFactory $filenameFactory)
-    {
+    public function __construct(
+        PHPUnitBinFile $phpUnitBin,
+        PHPDbgBinFile $dbgBinFile,
+        TempFilenameFactory $filenameFactory
+    ) {
         parent::__construct($phpUnitBin);
 
         $this->phpDbgBinFile = $dbgBinFile;
@@ -39,16 +46,25 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
         return parent::getExecutable();
     }
 
-    public function getOptions(PHPUnitConfig $config, string $uniqueId): string
+    /**
+     * @param PHPUnitConfig $config
+     * @return array
+     */
+    public function getOptions(PHPUnitConfig $config): array
     {
-        $options = '';
+        $options = parent::getOptions($config);
         if ($this->phpDbgBinFile->isAvailable()) {
-            $options .= '-qrr ' . $this->phpUnitBin->getPhpUnitBin() . ' ';
+            $options[] = '-qrr ' . $this->phpUnitBin->getPhpUnitBin();
         }
 
-        return $options
-            . parent::getOptions($config, $uniqueId)
-            . ' --coverage-php '
-            . $this->filenameFactory->getFilenameForCoverage($uniqueId);
+        return $options;
+    }
+
+    public function getSpecificOptions(string $testFilename)
+    {
+        $options = parent::getSpecificOptions($testFilename);
+        $options[] = '--coverage ' . $this->filenameFactory->getFilenameForCoverage(md5($testFilename));
+
+        return $options;
     }
 }

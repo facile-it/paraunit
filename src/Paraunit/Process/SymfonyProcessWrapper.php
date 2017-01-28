@@ -23,12 +23,10 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     /**
      * {@inheritdoc}
      */
-    public function __construct(ProcessBuilder $processBuilder, string $filename, string $uniqueId)
+    public function __construct(ProcessBuilder $processBuilder, string $filename)
     {
-        parent::__construct($commandLine, $uniqueId);
-        $this->processBuilder = new ProcessBuilder();
-        $this->processBuilder->add($commandLine);
-        $this->commandLine = $commandLine;
+        parent::__construct($filename);
+        $this->processBuilder = $processBuilder;
     }
 
     public function isTerminated(): bool

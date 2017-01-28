@@ -37,10 +37,10 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
      * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $filename, string $uniqueId)
+    public function __construct(string $filename)
     {
         $this->filename = $filename;
-        $this->uniqueId = $uniqueId;
+        $this->uniqueId = md5($this->filename);
         $this->testResults = [];
         $this->waitingForTestResult = true;
     }

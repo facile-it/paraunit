@@ -12,9 +12,34 @@ use Tests\BaseUnitTestCase;
  */
 class SymfonyProcessWrapperTest extends BaseUnitTestCase
 {
+    public function testGetUniqueId()
+    {
+        $process = new SymfonyProcessWrapper($this->mockProcessBuilder(), 'Test.php');
+        
+        $this->assertEquals(md5('Test.php'), $process->getUniqueId());
+    }
+
+    public function testStart()
+    {
+        $envVar = array('NAME' => 'value');
+        $process = $this->prophesize('Symfony\Component\Process\Process');
+        $process->start()
+            ->shouldBeCalledTimes(1);
+        $processBuilder = $this->prophesize('Symfony\Component\Process\ProcessBuilder');
+        $processBuilder->addEnvironmentVariables($envVar)
+            ->shouldBeCalled();
+        $processBuilder->getProcess()
+            ->shouldBeCalled()
+            ->willReturn($process->reveal());
+
+        $processWrapper = new SymfonyProcessWrapper($processBuilder->reveal(), 'Test.php');
+
+        $processWrapper->start($envVar);
+    }
+
     public function testAddTestResultShouldResetExpectingFlag()
     {
-        $process = new SymfonyProcessWrapper('/some/path/SomeTest.php', 'commandline', 'uuid');
+        $process = new SymfonyProcessWrapper($this->mockProcessBuilder(), 'Test.php');
         $process->setWaitingForTestResult(true);
         $this->assertTrue($process->isWaitingForTestResult());
 
@@ -71,5 +96,10 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
             ['D:\Tests\Some-File.php', 'Some-File.php'],
             ['C:\Some2017File.php', 'Some2017File.php'],
         ];
+    }
+
+    private function mockProcessBuilder()
+    {
+        return $this->prophesize('Symfony\Component\Process\ProcessBuilder')->reveal();
     }
 }

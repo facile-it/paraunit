@@ -39,7 +39,7 @@ class PHPUnitConfig
     /**
      * Get the full path for this configuration file
      * @return string
-     * @throws \RuntimeException
+     * @throws \RuntimeException When the alteration of the config fails
      */
     public function getFileFullPath(): string
     {

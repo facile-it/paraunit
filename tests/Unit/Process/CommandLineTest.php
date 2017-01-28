@@ -8,14 +8,14 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
-use Paraunit\Process\TestCommandLine;
+use Paraunit\Process\CommandLine;
 use Tests\BaseUnitTestCase;
 
 /**
  * Class TestCliCommandTest
  * @package Tests\Unit\Process
  */
-class TestCommandLineTest extends BaseUnitTestCase
+class CommandLineTest extends BaseUnitTestCase
 {
     public function testGetExecutable()
     {
@@ -23,7 +23,7 @@ class TestCommandLineTest extends BaseUnitTestCase
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
         $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
 
-        $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
+        $cli = new CommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
         $this->assertEquals('php path/to/phpunit', $cli->getExecutable());
     }
@@ -36,23 +36,20 @@ class TestCommandLineTest extends BaseUnitTestCase
 
         $optionWithValue = new PHPUnitOption('optVal');
         $optionWithValue->setValue('value');
-        $config->getPhpunitOptions()
-            ->willReturn([
-                new PHPUnitOption('opt', false),
-                $optionWithValue
-            ]);
+        $config->getPhpunitOptions()->willReturn(array(
+            new PHPUnitOption('opt', false),
+            $optionWithValue
+        ));
+        
+        $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
 
-        $phpunit = $this->prophesize(PHPUnitBinFile::class);
-        $uniqueId = 'uniqueIdOfProcess';
-        $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
-        $fileNameFactory->getFilenameForLog($uniqueId)
-            ->willReturn('/path/to/log.json');
-
-        $cli = new TestCommandLine($phpunit->reveal(), $fileNameFactory->reveal());
-
-        $this->assertEquals(
-            '-c /path/to/phpunit.xml --printer="' . LogPrinter::class . '" --opt --optVal=value',
-            $cli->getOptions($config->reveal(), $uniqueId)
-        );
+        $cli = new CommandLine($phpunit->reveal());
+        $options = $cli->getOptions($config->reveal());
+        
+        $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertContains('-c /path/to/phpunit.xml', $options);
+        $this->assertContains('--printer Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('--opt', $options);
+        $this->assertContains('--optVal value', $options);
     }
 }
