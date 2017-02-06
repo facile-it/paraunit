@@ -8,6 +8,7 @@ use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Process\RetryAwareInterface;
+use Paraunit\Process\SymfonyProcessWrapper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -17,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Runner
 {
     /** @var  ProcessBuilderFactory */
-    private $processFactory;
+    private $processBuilderFactory;
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
@@ -48,7 +49,7 @@ class Runner
         PipelineCollection $pipelineCollection
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->processFactory = $processFactory;
+        $this->processBuilderFactory = $processFactory;
         $this->filter = $filter;
         $this->pipelineCollection = $pipelineCollection;
         $this->queuedProcesses = new \SplQueue();
@@ -103,8 +104,8 @@ class Runner
     private function createProcessQueue()
     {
         foreach ($this->filter->filterTestFiles() as $file) {
-            $process = $this->processFactory->create($file);
-            $this->queuedProcesses->enqueue($process);
+            $process = $this->processBuilderFactory->create($file);
+            $this->queuedProcesses->enqueue(new SymfonyProcessWrapper($process, $file));
         }
     }
 }
