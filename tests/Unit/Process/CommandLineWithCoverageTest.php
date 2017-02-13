@@ -129,6 +129,6 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getSpecificOptions($testFilename);
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('--coverage=/path/to/coverage.php', $options);
+        $this->assertContains('--coverage-php=/path/to/coverage.php', $options);
     }
 }

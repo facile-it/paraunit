@@ -66,7 +66,7 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
     public function getSpecificOptions(string $testFilename)
     {
         $options = parent::getSpecificOptions($testFilename);
-        $options[] = '--coverage=' . $this->filenameFactory->getFilenameForCoverage(md5($testFilename));
+        $options[] = '--coverage-php=' . $this->filenameFactory->getFilenameForCoverage(md5($testFilename));
 
         return $options;
     }

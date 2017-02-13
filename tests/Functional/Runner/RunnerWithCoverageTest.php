@@ -6,7 +6,6 @@ namespace Tests\Functional\Runner;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
-use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class RunnerWithCoverageTest
@@ -23,15 +22,14 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
 
     public function testAllGreen()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
 
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface));
-        $this->assertOutputOrder($outputInterface, [
+        $this->assertEquals(0, $runner->run());
+        $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',
             '...',
