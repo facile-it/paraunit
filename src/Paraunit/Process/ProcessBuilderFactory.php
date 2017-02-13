@@ -26,11 +26,12 @@ class ProcessBuilderFactory
         $this->cliCommand = $cliCommand;
         $this->builderPrototype = new ProcessBuilder();
 
-        $this->builderPrototype->setPrefix('php');
-        $this->builderPrototype->add($this->cliCommand->getExecutable());
+        foreach ($this->cliCommand->getExecutable() as $item) {
+            $this->builderPrototype->add($item);
+        }
 
-        foreach ($this->cliCommand->getOptions($phpunitConfig) as $option => $value) {
-            $this->builderPrototype->add($option . ' ' . $value);
+        foreach ($this->cliCommand->getOptions($phpunitConfig) as $option) {
+            $this->builderPrototype->add($option);
         }
     }
 

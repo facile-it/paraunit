@@ -25,11 +25,11 @@ class CommandLine implements CliCommandInterface
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     public function getExecutable()
     {
-        return 'php ' . $this->phpUnitBin->getPhpUnitBin();
+        return array('php', $this->phpUnitBin->getPhpUnitBin());
     }
 
     /**
@@ -40,8 +40,8 @@ class CommandLine implements CliCommandInterface
     public function getOptions(PHPUnitConfig $config)
     {
         $options = array(
-            '-c ' . $config->getFileFullPath(),
-            '--printer Paraunit\\Parser\\JSON\\LogPrinter',
+            '--configuration=' . $config->getFileFullPath(),
+            '--printer=Paraunit\\Parser\\JSON\\LogPrinter',
         );
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
@@ -55,7 +55,7 @@ class CommandLine implements CliCommandInterface
     {
         $optionString = '--' . $option->getName();
         if ($option->hasValue()) {
-            $optionString .= ' ' . $option->getValue();
+            $optionString .= '=' . $option->getValue();
         }
 
         return $optionString;

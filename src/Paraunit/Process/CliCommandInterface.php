@@ -10,11 +10,14 @@ use Paraunit\Configuration\PHPUnitConfig;
  */
 interface CliCommandInterface
 {
-    public function getExecutable(): string;
+    /**
+     * @return string[]
+     */
+    public function getExecutable();
 
     /**
      * @param PHPUnitConfig $config
-     * @return array
+     * @return string[]
      */
     public function getOptions(PHPUnitConfig $config);
 

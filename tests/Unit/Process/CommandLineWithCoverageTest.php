@@ -35,7 +35,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
 
-        $this->assertEquals('php path/to/phpunit', $cli->getExecutable());
+        $this->assertEquals(array('php', 'path/to/phpunit'), $cli->getExecutable());
     }
 
     public function testGetExecutableWithDbg()
@@ -54,7 +54,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
-        $this->assertEquals('/path/to/phpdbg', $cli->getExecutable());
+        $this->assertEquals(array('/path/to/phpdbg'), $cli->getExecutable());
     }
 
     public function testGetOptionsForWithoutDbg()
@@ -81,10 +81,10 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('-c /path/to/phpunit.xml', $options);
-        $this->assertContains('--printer Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
+        $this->assertContains('--printer=Paraunit\\Parser\\JSON\\LogPrinter', $options);
         $this->assertContains('--opt', $options);
-        $this->assertContains('--optVal value', $options);
+        $this->assertContains('--optVal=value', $options);
     }
 
     public function testGetOptionsForWithDbg()
@@ -108,9 +108,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('-c/path/to/phpunit.xml', $options);
-        $this->assertContains('--printer Paraunit\\Parser\\JSON\\LogPrinter', $options);
-        $this->assertContains('-qrr path/to/phpunit', $options);
+        $this->assertContains('--configuration= /path/to/phpunit.xml', $options);
+        $this->assertContains('--printer =Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('-qrr =path/to/phpunit', $options);
         $this->assertContains('--opt', $options);
     }
 
@@ -129,6 +129,6 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getSpecificOptions($testFilename);
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('--coverage /path/to/coverage.php', $options);
+        $this->assertContains('--coverage=/path/to/coverage.php', $options);
     }
 }

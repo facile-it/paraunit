@@ -25,7 +25,7 @@ class CommandLineTest extends BaseUnitTestCase
 
         $cli = new CommandLine($phpunit->reveal(), $fileNameFactory->reveal());
 
-        $this->assertEquals('php path/to/phpunit', $cli->getExecutable());
+        $this->assertEquals(array('php', 'path/to/phpunit'), $cli->getExecutable());
     }
 
     public function testGetOptionsFor()
@@ -45,11 +45,10 @@ class CommandLineTest extends BaseUnitTestCase
 
         $cli = new CommandLine($phpunit->reveal());
         $options = $cli->getOptions($config->reveal());
-        
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('-c /path/to/phpunit.xml', $options);
-        $this->assertContains('--printer Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
+        $this->assertContains('--printer=Paraunit\\Parser\\JSON\\LogPrinter', $options);
         $this->assertContains('--opt', $options);
-        $this->assertContains('--optVal value', $options);
+        $this->assertContains('--optVal=value', $options);
     }
 }
