@@ -19,11 +19,9 @@ use Tests\Stub\MySQLDeadLockTestStub;
  */
 class ParallelCommandTest extends BaseTestCase
 {
-    /**
-     * @dataProvider configurationPathProvider
-     */
-    public function testExecutionAllGreen(string $configurationPath)
+    public function testExecutionAllGreen()
     {
+        $configurationPath = $this->getConfigForStubs();
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
@@ -66,11 +64,9 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
-    /**
-     * @dataProvider configurationPathProvider
-     */
-    public function testExecution(string $configurationPath)
+    public function testExecution()
     {
+        $configurationPath = $this->getConfigForStubs();
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
@@ -110,16 +106,5 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('0 tests', $output);
         $this->assertSame(0, $exitCode);
         $this->assertFileNotExists(dirname(__DIR__) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function configurationPathProvider(): array
-    {
-        return [
-            [$this->getConfigForStubs()],
-            [implode(DIRECTORY_SEPARATOR, ['.', 'tests', 'Stub', 'phpunit_for_stubs.xml'])],
-        ];
     }
 }
