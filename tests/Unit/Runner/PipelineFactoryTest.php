@@ -20,12 +20,6 @@ class PipelineFactoryTest extends BaseUnitTestCase
         $pipeline = $factory->create(5);
 
         $this->assertInstanceOf('Paraunit\Runner\Pipeline', $pipeline);
-
-        $process = $this->prophesize('Paraunit\Process\ParaunitProcessInterface');
-
-        $pipeline->execute($process->reveal());
-
-        $process->start(array(Pipeline::ENV_VAR_NAME_PIPELINE_NUMBER => 5))
-            ->shouldHaveBeenCalledTimes(1);
+        $this->assertEquals(5, $pipeline->getNumber());
     }
 }

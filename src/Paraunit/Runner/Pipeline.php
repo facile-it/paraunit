@@ -50,14 +50,18 @@ class Pipeline
         return $this->process === null;
     }
 
+    /**
+     * @return bool
+     * @throws \RuntimeException If the pipeline is empty
+     */
     public function isTerminated()
     {
-        if ($this->process === null) {
+        if ($this->isFree()) {
             throw new \RuntimeException('Check termination on an empty pipeline');
         }
 
         if ($this->process->isTerminated()) {
-            $this->dispatchProcessTerminated();
+            $this->handleProcessTermination();
 
             return true;
         }
@@ -65,6 +69,9 @@ class Pipeline
         return false;
     }
 
+    /**
+     * @return ParaunitProcessInterface
+     */
     public function waitCompletion()
     {
         if ($this->isFree()) {
@@ -75,15 +82,23 @@ class Pipeline
             sleep(100);
         }
 
-        $this->dispatchProcessTerminated();
         $process = $this->process;
-        $this->process = null;
-        
+        $this->handleProcessTermination();
+
         return $process;
     }
 
-    private function dispatchProcessTerminated()
+    /**
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    private function handleProcessTermination()
     {
         $this->dispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, new ProcessEvent($this->process));
+        $this->process = null;
     }
 }
