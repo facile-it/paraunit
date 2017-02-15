@@ -34,4 +34,4 @@ install:
 
 test_script:
   - cd c:\projects\paraunit
-  - bin\phpunit.bat
+  - bin\phpunit.bat --enforce-time-limit
