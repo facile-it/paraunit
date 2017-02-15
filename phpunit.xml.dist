@@ -4,6 +4,8 @@
          colors="true"
          bootstrap="vendor/autoload.php"
          timeoutForSmallTests="1"
+         timeoutForMediumTests="5"
+         timeoutForLargeTests="10"
         >
     <php>
         <ini name="error_reporting" value="-1"/>

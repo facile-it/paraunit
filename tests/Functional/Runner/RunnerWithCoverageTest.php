@@ -10,6 +10,7 @@ use Tests\BaseIntegrationTestCase;
 /**
  * Class RunnerWithCoverageTest
  * @package Tests\Functional\Runner
+ * @small
  */
 class RunnerWithCoverageTest extends BaseIntegrationTestCase
 {
