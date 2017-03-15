@@ -1,4 +1,4 @@
-baseurl = "http://facile-it.github.io/paraunit/"
+baseurl = "https://engineering.facile.it/paraunit/"
 title = "Paraunit"
 theme = "blackburn-master"
 canonifyurls = true
