@@ -1,4 +1,4 @@
-#facile-it/paraunit
+# facile-it/paraunit
 
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
@@ -51,7 +51,7 @@ This command will launch all the tests in all your configured testsuites.
 
 Paraunit is also able to **collect the test coverage in parallel**, like this:
 ```
-vendor/bin/paraunit coverage --html==./dir
+vendor/bin/paraunit coverage --html=./dir
 ```
 
 It automatically **uses PHPDBG** if available, and it can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
