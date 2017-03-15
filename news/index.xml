@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>News on Paraunit</title>
-    <link>http://facile-it.github.io/paraunit/news/</link>
+    <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 26 Jan 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://facile-it.github.io/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Paraunit 0.8.2: avoid failures due to warnings</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.8.2/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.8.2/</link>
       <pubDate>Thu, 26 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.8.2/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.8.2/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.2&lt;/a&gt; has been released to fix an issued caused by an unwanted overwrite of the &lt;code&gt;write()&lt;/code&gt; method in the &lt;code&gt;LogWriter&lt;/code&gt; class. Full changelog:&lt;/p&gt;
@@ -28,10 +28,10 @@
     
     <item>
       <title>Paraunit 0.8.1: fixed regression with Symfony</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.8.1/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.8.1/</link>
       <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.8.1/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.8.1/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.1&lt;/a&gt; has been released to fix a small regression that happens when running functional tests in a Symfony project:&lt;/p&gt;
@@ -46,10 +46,10 @@
     
     <item>
       <title>Paraunit 0.8: PHAR continuous delivery</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.8/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.8/</link>
       <pubDate>Tue, 24 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.8/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.8/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8&#34;&gt;Paraunit 0.8&lt;/a&gt; has been released!
@@ -74,10 +74,10 @@ With this release I added the continuous integration: at each Git tag, the Travi
     
     <item>
       <title>Paraunit 0.7.4: PHAR release</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7.4/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.7.4/</link>
       <pubDate>Wed, 11 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7.4/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.7.4/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.4&lt;/a&gt; has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.&lt;/p&gt;
@@ -94,10 +94,10 @@ With this release I added the continuous integration: at each Git tag, the Travi
     
     <item>
       <title>Paraunit 0.7.3: PHAR release</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7.3/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.7.3/</link>
       <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7.3/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.7.3/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.3&lt;/a&gt; has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;latest GitHub release page&lt;/a&gt;.&lt;/p&gt;
@@ -114,10 +114,10 @@ With this release I added the continuous integration: at each Git tag, the Travi
     
     <item>
       <title>Paraunit 0.7.1: coverage in text format</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7.1/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.7.1/</link>
       <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7.1/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.7.1/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.1&#34;&gt;Paraunit 0.7.1&lt;/a&gt; has just been released; this is just a minor release that adds a new useful feature: the &lt;strong&gt;text format&lt;/strong&gt; for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.&lt;/p&gt;
@@ -136,10 +136,10 @@ With this release I added the continuous integration: at each Git tag, the Travi
     
     <item>
       <title>Paraunit 0.7.2: coverage in text format</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7.2/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.7.2/</link>
       <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7.2/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.7.2/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.2&#34;&gt;Paraunit 0.7.2&lt;/a&gt; has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.&lt;/p&gt;
@@ -156,10 +156,10 @@ With this release I added the continuous integration: at each Git tag, the Travi
     
     <item>
       <title>Paraunit 0.7: test coverage in parallel</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.7/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.7/</link>
       <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.7/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.7/</guid>
       <description>
 
 &lt;p&gt;Finally, &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7&#34;&gt;Paraunit 0.7&lt;/a&gt; has been released!
@@ -228,10 +228,10 @@ new supported options is:
     
     <item>
       <title>Paraunit 0.6.2</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.6.2/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.6.2/</link>
       <pubDate>Mon, 24 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.6.2/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.6.2/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.6.2 has been released! This version include a fix in the choice of the dir for the partial test results, that
@@ -264,10 +264,10 @@ wrong dir (&lt;code&gt;/temp&lt;/code&gt;); now it relies on &lt;code&gt;sys_get
     
     <item>
       <title>Paraunit 0.6.1</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.6.1/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.6.1/</link>
       <pubDate>Fri, 10 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.6.1/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.6.1/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint,
@@ -302,10 +302,10 @@ starting from the PHP 7.0 image&lt;/li&gt;
     
     <item>
       <title>Paraunit 0.6</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.6/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.6/</link>
       <pubDate>Sun, 20 Mar 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.6/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.6/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have
@@ -343,10 +343,10 @@ This grants a lot of new features:
     
     <item>
       <title>Paraunit 0.5</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.5/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.5/</link>
       <pubDate>Tue, 08 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.5/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.5/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.5 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
@@ -370,10 +370,10 @@ This grants a lot of new features:
     
     <item>
       <title>Paraunit 0.4.4</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.4.4/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.4.4/</link>
       <pubDate>Sun, 15 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.4.4/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.4.4/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.4.4 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
@@ -388,10 +388,10 @@ This grants a lot of new features:
     
     <item>
       <title>Paraunit 0.4.3</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.4.3/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.4.3/</link>
       <pubDate>Wed, 04 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.4.3/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.4.3/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.4.3 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
@@ -408,10 +408,10 @@ and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;
     
     <item>
       <title>Paraunit 0.4.2</title>
-      <link>http://facile-it.github.io/paraunit/news/release/0.4.2/</link>
+      <link>https://engineering.facile.it/paraunit/news/release/0.4.2/</link>
       <pubDate>Mon, 19 Oct 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://facile-it.github.io/paraunit/news/release/0.4.2/</guid>
+      <guid>https://engineering.facile.it/paraunit/news/release/0.4.2/</guid>
       <description>
 
 &lt;p&gt;Paraunit 0.4.2 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
