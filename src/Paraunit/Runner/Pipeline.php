@@ -78,9 +78,7 @@ class Pipeline
             throw new \RuntimeException('Waiting on an empty pipeline');
         }
 
-        while ($this->process->wait()) {
-            sleep(100);
-        }
+        $this->process->wait();
 
         $process = $this->process;
         $this->handleProcessTermination();
