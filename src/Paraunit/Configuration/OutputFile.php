@@ -8,7 +8,7 @@ namespace Paraunit\Configuration;
  */
 class OutputFile
 {
-    /** @var  string */
+    /** @var string */
     private $filePath;
 
     /**
@@ -22,10 +22,7 @@ class OutputFile
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->filePath === null;
     }
@@ -34,7 +31,7 @@ class OutputFile
      * @return string
      * @throws \RuntimeException
      */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         if ($this->isEmpty()) {
             throw new \RuntimeException('Program requested an empty file path');

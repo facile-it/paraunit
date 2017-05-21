@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Paraunit\Configuration\PhpCodeCoverageCompat;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,12 +10,6 @@ use PHPUnit\Framework\TestCase;
  */
 class BaseTestCase extends TestCase
 {
-    public static function setUpBeforeClass()
-    {
-        parent::setUpBeforeClass();
-        PhpCodeCoverageCompat::load();
-    }
-
     /**
      * @return string
      */

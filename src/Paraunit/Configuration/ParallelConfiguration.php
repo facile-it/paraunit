@@ -22,7 +22,7 @@ class ParallelConfiguration
      * @return ContainerBuilder
      * @throws \Exception
      */
-    public function buildContainer(InputInterface $input)
+    public function buildContainer(InputInterface $input): ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
@@ -42,7 +42,7 @@ class ParallelConfiguration
      * @return YamlFileLoader
      * @throws \Exception
      */
-    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder)
+    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
     {
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
         $loader->load('configuration.yml');

@@ -12,6 +12,7 @@ use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class CoverageConfiguration
@@ -19,12 +20,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class CoverageConfiguration extends ParallelConfiguration
 {
-    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder)
+    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
     {
         $yamlLoader = parent::loadYamlConfiguration($containerBuilder);
         $yamlLoader->load('coverage.yml');
         $yamlLoader->load('coverage_configuration.yml');
         $yamlLoader->load('process_with_coverage.yml');
+        
+        return $yamlLoader;
     }
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)

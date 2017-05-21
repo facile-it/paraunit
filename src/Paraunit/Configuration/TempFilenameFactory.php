@@ -10,7 +10,7 @@ use Paraunit\File\TempDirectory;
  */
 class TempFilenameFactory
 {
-    /** @var  TempDirectory */
+    /** @var TempDirectory */
     private $tempDirectory;
 
     /**
@@ -22,46 +22,34 @@ class TempFilenameFactory
         $this->tempDirectory = $tempDirectory;
     }
 
-    /**
-     * @return string
-     */
-    public function getPathForLog()
+    public function getPathForLog(): string
     {
         return $this->getTempFilename('logs', '', '');
     }
 
-    /**
-     * @param string $uniqueId
-     * @return string
-     */
-    public function getFilenameForLog($uniqueId)
+    public function getFilenameForLog(string $uniqueId): string
     {
         return $this->getTempFilename('logs', $uniqueId, '.json.log');
     }
 
-    /**
-     * @param string $uniqueId
-     * @return string
-     */
-    public function getFilenameForCoverage($uniqueId)
+    public function getFilenameForCoverage(string $uniqueId): string
     {
         return $this->getTempFilename('coverage', $uniqueId, '.php');
     }
 
-    /**
-     * @return string
-     */
-    public function getFilenameForConfiguration()
+    public function getFilenameForConfiguration(): string
     {
         return $this->getTempFilename('config', 'phpunit', '.xml.dist');
     }
 
     /**
+     * @param string $subdir
      * @param string $filename
      * @param string $extension
      * @return string
+     * @throws \RuntimeException
      */
-    private function getTempFilename($subdir, $filename, $extension)
+    private function getTempFilename(string $subdir, string $filename, string $extension): string
     {
         return $this->tempDirectory->getTempDirForThisExecution()
             . DIRECTORY_SEPARATOR

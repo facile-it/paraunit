@@ -26,23 +26,20 @@ class PHPUnitOption
      * @param bool $hasValue
      * @param string | null $shortName
      */
-    public function __construct($name, $hasValue = true, $shortName = null)
+    public function __construct(string $name, bool $hasValue = true, string $shortName = null)
     {
         $this->name = $name;
         $this->hasValue = $hasValue;
         $this->shortName = $shortName;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getShortName()
     {
@@ -52,13 +49,13 @@ class PHPUnitOption
     /**
      * @param string $value
      */
-    public function setValue($value)
+    public function setValue(string $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getValue()
     {

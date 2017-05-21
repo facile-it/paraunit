@@ -22,10 +22,7 @@ class OutputPath
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->path === null;
     }
@@ -34,7 +31,7 @@ class OutputPath
      * @return string
      * @throws \RuntimeException
      */
-    public function getPath()
+    public function getPath(): string
     {
         if ($this->isEmpty()) {
             throw new \RuntimeException('Program requested an empty path');

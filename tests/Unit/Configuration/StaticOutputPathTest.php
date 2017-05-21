@@ -14,7 +14,6 @@ class StaticOutputPathTest extends BaseUnitTestCase
 {
     public function testGetPathThrowExceptionIfNotReady()
     {
-        new StaticOutputPath(null);
         $this->expectException(\RuntimeException::class);
 
         StaticOutputPath::getPath();

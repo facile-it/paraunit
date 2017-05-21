@@ -15,9 +15,9 @@ class StaticOutputPath extends BaseTestListener
 
     /**
      * StaticOutputPath constructor.
-     * @param $path
+     * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         self::$path = $path;
     }
@@ -26,7 +26,7 @@ class StaticOutputPath extends BaseTestListener
      * @return string
      * @throws \RuntimeException If not ready
      */
-    public static function getPath()
+    public static function getPath(): string
     {
         if (null === self::$path) {
             throw new \RuntimeException('Output path not received, not ready!');

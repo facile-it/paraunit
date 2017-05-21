@@ -10,7 +10,7 @@ use Symfony\Component\Process\Process;
  */
 class PHPDbgBinFile
 {
-    /** @var  string Realpath to the PHPDbg bin location */
+    /** @var string Realpath to the PHPDbg bin location */
     private $phpDbgBin;
 
     /**
@@ -23,9 +23,9 @@ class PHPDbgBinFile
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws \RuntimeException When PHPDBG is not available
      */
-    public function getPhpDbgBin()
+    public function getPhpDbgBin(): string
     {
         if (! $this->isAvailable()) {
             throw new \RuntimeException('PHPDbg is not available!');
@@ -34,19 +34,16 @@ class PHPDbgBinFile
         return $this->phpDbgBin;
     }
 
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return $this->phpDbgBin !== '';
     }
 
-    /**
-     * @return string
-     */
-    private function getPhpDbgBinLocation()
+    private function getPhpDbgBinLocation(): string
     {
         $locator = new Process('command -v phpdbg');
         $locator->run();
 
-        return (string) preg_replace('/\s/', '', $locator->getOutput());
+        return (string)preg_replace('/\s/', '', $locator->getOutput());
     }
 }

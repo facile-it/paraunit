@@ -16,7 +16,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     {
         $logsDir = '/some/tmp/dir/for/logs';
 
-        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), null);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), '');
 
         $directoryPath = $config->getBaseDirectory();
         $this->assertNotEquals('', $directoryPath);
