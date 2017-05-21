@@ -2,11 +2,13 @@
 
 namespace Tests\Stub;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Class RaisingNoticeTestStub
  * @package Tests\Stub
  */
-class RaisingNoticeTestStub extends \PHPUnit_Framework_TestCase
+class RaisingNoticeTestStub extends TestCase
 {
     /**
      * @dataProvider errorProvider

@@ -112,12 +112,6 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testWarning()
     {
-        $phpunitVersion = new \PHPUnit_Runner_Version();
-
-        if (! preg_match('/^5\./', $phpunitVersion->id())) {
-            $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
-        }
-
         $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();

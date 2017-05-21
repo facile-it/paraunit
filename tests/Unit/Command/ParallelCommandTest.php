@@ -6,12 +6,13 @@ use Paraunit\Command\ParallelCommand;
 use Prophecy\Argument;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class ParallelCommandTest
  * @package Tests\Unit\Command
  */
-class ParallelCommandTest extends \PHPUnit_Framework_TestCase
+class ParallelCommandTest extends BaseUnitTestCase
 {
     public function testExecute()
     {

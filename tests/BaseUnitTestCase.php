@@ -89,7 +89,8 @@ abstract class BaseUnitTestCase extends BaseTestCase
      */
     protected function removeDirectory($path)
     {
-        $files = glob($path . '/*');
+        $it = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($files as $file) {
             if (is_dir($file)) {

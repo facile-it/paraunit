@@ -3,7 +3,9 @@
 namespace Tests\Unit\Filter;
 
 use Paraunit\Filter\Filter;
+use PHPUnit\Util\Xml;
 use Tests\BaseUnitTestCase;
+use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 
 /**
  * Class FilterTest
@@ -11,9 +13,6 @@ use Tests\BaseUnitTestCase;
  */
 class FilterTest extends BaseUnitTestCase
 {
-    const PHPUNIT_UTIL_XML_PROXY_CLASS = 'Paraunit\Proxy\PHPUnitUtilXMLProxy';
-    const FILE_ITERATOR_FACADE_CLASS = '\File_Iterator_Facade';
-
     /** @var  string */
     private $absoluteConfigBaseDir;
 
@@ -30,15 +29,15 @@ class FilterTest extends BaseUnitTestCase
 
         $testSuiteName = 'test_only_requested_testsuite';
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array($file1))
             ->shouldBeCalledTimes(1);
@@ -59,15 +58,15 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_suffix_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'TestSuffix.php', '', array())
             ->willReturn(array($file1))
             ->shouldBeCalledTimes(1);
@@ -86,15 +85,15 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_prefix_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
             ->willReturn(array($file1))
             ->shouldBeCalledTimes(1);
@@ -113,8 +112,8 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_exclude.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
@@ -131,7 +130,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', $excludeArray1)
             ->willReturn(array($file1))
             ->shouldBeCalledTimes(1);
@@ -150,14 +149,14 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
         $file = $this->absoluteConfigBaseDir . './only/selected/test/suite/SameFile.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array($file))
             ->shouldBeCalledTimes(1);
@@ -177,15 +176,15 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_file.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array($file1))
             ->shouldBeCalledTimes(1);
@@ -212,8 +211,8 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(static::PHPUNIT_UTIL_XML_PROXY_CLASS);
-        $utilXml->loadFile($configFile, false, true, true)
+        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
@@ -222,7 +221,7 @@ class FilterTest extends BaseUnitTestCase
         $file3 = $this->absoluteConfigBaseDir . './only/selected/test/suite/NotHereTest.php';
         $file4 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(static::FILE_ITERATOR_FACADE_CLASS);
+        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
             ->willReturn(array($file1, $file2, $file3))
             ->shouldBeCalledTimes(1);
@@ -253,7 +252,7 @@ class FilterTest extends BaseUnitTestCase
             throw new \RuntimeException('Stub XML config file missing: ' . $fileName);
         }
 
-        return \PHPUnit_Util_XML::loadFile($filePath, false, true, true);
+        return Xml::loadFile($filePath);
     }
 
     private function mockPHPUnitConfig($configFile)

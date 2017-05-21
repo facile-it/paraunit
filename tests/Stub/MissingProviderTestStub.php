@@ -2,7 +2,9 @@
 
 namespace Tests\Stub;
 
-class MissingProviderTestStub extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MissingProviderTestStub extends TestCase
 {
     /**
      * @dataProvider missingProvider

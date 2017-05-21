@@ -5,12 +5,13 @@ namespace Tests\Unit\Configuration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\TempDirectory;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class TempFilenameFactoryTest
  * @package Tests\Unit\Configuration
  */
-class TempFilenameFactoryTest extends \PHPUnit_Framework_TestCase
+class TempFilenameFactoryTest extends BaseUnitTestCase
 {
     public function testGetPathForLog()
     {

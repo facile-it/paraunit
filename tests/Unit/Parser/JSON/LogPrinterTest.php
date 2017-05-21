@@ -4,6 +4,10 @@ namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Parser\JSON\LogPrinter;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Framework\Warning;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -40,7 +44,7 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testAddError()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
 
         $printer->startTest($test);
         $printer->addError($test, new \Exception('Exception message'), 1);
@@ -73,16 +77,10 @@ class LogPrinterTest extends BaseUnitTestCase
 
     public function testAddWarning()
     {
-        $phpunitVersion = new \PHPUnit_Runner_Version();
-
-        if (! preg_match('/^5\./', $phpunitVersion->id())) {
-            $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
-        }
-
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
-        $warning = new \PHPUnit_Framework_Warning('Warning message', null, new \Exception());
+        $warning = new Warning('Warning message', null, new \Exception());
         $line = __LINE__ - 1;
 
         $printer->startTest($test);
@@ -116,9 +114,9 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testAddFailure()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
-        $failure = new \PHPUnit_Framework_AssertionFailedError('Failure message', null, new \Exception());
+        $failure = new AssertionFailedError('Failure message', null, new \Exception());
         $line = __LINE__ - 1;
 
         $printer->startTest($test);
@@ -152,7 +150,7 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testAddIncompleteTest()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
         $failure = new \Exception('Incomplete message');
         $line = __LINE__ - 1;
@@ -188,7 +186,7 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testAddRiskyTest()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
         $failure = new \Exception('Risky message');
         $line = __LINE__ - 1;
@@ -224,7 +222,7 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testAddSkippedTest()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
         $failure = new \Exception('Skipped message');
         $line = __LINE__ - 1;
@@ -260,7 +258,7 @@ class LogPrinterTest extends BaseUnitTestCase
     public function testEndTest()
     {
         $printer = $this->createPrinterAndStartTestSuite();
-        $test = $this->prophesize('\PHPUnit_Framework_Test')->reveal();
+        $test = $this->prophesize(Test::class)->reveal();
 
         $printer->startTest($test);
         $printer->endTest($test, 1);
@@ -284,7 +282,7 @@ class LogPrinterTest extends BaseUnitTestCase
         ));
         $this->assertEquals($expectedContent, $this->getLogContent());
 
-        $printer->endTestSuite($this->prophesize('\PHPUnit_Framework_TestSuite')->reveal());
+        $printer->endTestSuite($this->prophesize(TestSuite::class)->reveal());
 
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
@@ -293,7 +291,7 @@ class LogPrinterTest extends BaseUnitTestCase
     {
         new StaticOutputPath(sys_get_temp_dir());
         $printer = new LogPrinter();
-        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn(get_class($this));
         $testSuite->count()

@@ -2,11 +2,13 @@
 
 namespace Tests\Stub;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Class ThreeGreenTestStub
  * @package Tests\Stub
  */
-class ThreeGreenTestStub extends \PHPUnit_Framework_TestCase
+class ThreeGreenTestStub extends TestCase
 {
     public function testGreenOne()
     {

@@ -3,12 +3,13 @@
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\OutputPath;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class OutputPathTest
  * @package Tests\Unit\Configuration
  */
-class OutputPathTest extends \PHPUnit_Framework_TestCase
+class OutputPathTest extends BaseUnitTestCase
 {
     public function testCostruct()
     {
@@ -27,7 +28,7 @@ class OutputPathTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($outputPath->isEmpty());
 
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
         $outputPath->getPath();
     }
 

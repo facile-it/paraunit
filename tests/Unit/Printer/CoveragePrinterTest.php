@@ -6,13 +6,14 @@ use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Proxy\XDebugProxy;
+use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class CoveragePrinterTest
  * @package Tests\Unit\Printer
  */
-class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
+class CoveragePrinterTest extends BaseUnitTestCase
 {
     public function testOnEngineBeforeStartWithPHPDBGEngine()
     {

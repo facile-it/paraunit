@@ -4,12 +4,13 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Process\TestWithCoverageCommandLine;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class TestWithCoverageCliCommandTest
  * @package Tests\Unit\Process
  */
-class TestWithCoverageCommandLineTest extends \PHPUnit_Framework_TestCase
+class TestWithCoverageCommandLineTest extends BaseUnitTestCase
 {
     public function testGetExecutableWithoutDbg()
     {

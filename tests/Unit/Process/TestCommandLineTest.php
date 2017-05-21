@@ -4,12 +4,13 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Process\TestCommandLine;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class TestCliCommandTest
  * @package Tests\Unit\Process
  */
-class TestCommandLineTest extends \PHPUnit_Framework_TestCase
+class TestCommandLineTest extends BaseUnitTestCase
 {
     public function testGetExecutable()
     {

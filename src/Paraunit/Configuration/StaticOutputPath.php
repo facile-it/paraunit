@@ -2,11 +2,13 @@
 
 namespace Paraunit\Configuration;
 
+use PHPUnit\Framework\BaseTestListener;
+
 /**
  * Class StaticOutputPath
  * @package Paraunit\Configuration
  */
-class StaticOutputPath extends \PHPUnit_Framework_BaseTestListener
+class StaticOutputPath extends BaseTestListener
 {
     /** @var string */
     private static $path;

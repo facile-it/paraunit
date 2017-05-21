@@ -3,12 +3,13 @@
 namespace Tests\Unit\Process;
 
 use Paraunit\Process\ProcessFactory;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class ProcessFactoryTest
  * @package Tests\Unit\Process
  */
-class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
+class ProcessFactoryTest extends BaseUnitTestCase
 {
     public function testCreateProcess()
     {

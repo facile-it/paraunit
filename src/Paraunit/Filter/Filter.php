@@ -58,7 +58,7 @@ class Filter
     {
         $aggregatedFiles = array();
 
-        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath(), false, true, true);
+        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
         /** @var \DOMNode $testSuiteNode */

@@ -3,12 +3,13 @@
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitBinFile;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class PHPUnitBinFileTest
  * @package Tests\Unit\Configuration
  */
-class PHPUnitBinFileTest extends \PHPUnit_Framework_TestCase
+class PHPUnitBinFileTest extends BaseUnitTestCase
 {
     public function testGetPhpunitBin()
     {

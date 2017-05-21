@@ -5,6 +5,7 @@ namespace Tests\Functional\Parser\JSON;
 use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
+use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
 /**
@@ -16,7 +17,7 @@ class LogPrinterTest extends BaseFunctionalTestCase
     public function testLogFilenameMatches()
     {
         $testName = get_class();
-        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn($testName);
         $testSuite->count()
@@ -37,7 +38,7 @@ class LogPrinterTest extends BaseFunctionalTestCase
     public function testWrite()
     {
         $testName = get_class();
-        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn($testName);
         $testSuite->count()

@@ -6,12 +6,14 @@ use Paraunit\Command\CoverageCommand;
 use Prophecy\Argument;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Tests\BaseUnitTestCase;
+use Paraunit\Configuration\CoverageConfiguration;
 
 /**
  * Class CoverageCommandTest
  * @package Tests\Unit\Command
  */
-class CoverageCommandTest extends \PHPUnit_Framework_TestCase
+class CoverageCommandTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider validCoverageOptionsProvider
@@ -59,7 +61,7 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testExecuteExpectsAtLeastOneCoverageFormat()
     {
-        $configuration = $this->prophesize('Paraunit\Configuration\CoverageConfiguration');
+        $configuration = $this->prophesize(CoverageConfiguration::class);
         $configuration->buildContainer()->shouldNotBeCalled();
 
         $command = new CoverageCommand($configuration->reveal());
@@ -68,8 +70,8 @@ class CoverageCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('coverage');
         $commandTester = new CommandTester($command);
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
 
-        $commandTester->execute(array('command' => $command->getName(),));
+        $commandTester->execute(['command' => $command->getName(),]);
     }
 }
