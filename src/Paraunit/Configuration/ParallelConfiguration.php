@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 
 /**
  * Class Paraunit
@@ -54,12 +55,6 @@ class ParallelConfiguration
         $loader->load('test_result_container.yml');
         $loader->load('test_result_format.yml');
 
-        $eventDispatcherPass = 'Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass';
-        $deprecatedPass = 'Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass';
-        if (! class_exists($eventDispatcherPass)) {
-            class_alias($deprecatedPass, $eventDispatcherPass);
-        }
-
         return $loader;
     }
 
@@ -73,10 +68,7 @@ class ParallelConfiguration
 
         $containerBuilder->setDefinition(
             'event_dispatcher',
-            new Definition(
-                'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',
-                array(new Reference('service_container'))
-            )
+            new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
         );
     }
 
