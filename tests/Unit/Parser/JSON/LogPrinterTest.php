@@ -16,24 +16,6 @@ use Tests\BaseUnitTestCase;
  */
 class LogPrinterTest extends BaseUnitTestCase
 {
-    private $prettyPrint;
-
-    /**
-     * LogPrinterTest constructor.
-     * @param null $name
-     * @param array $data
-     * @param string $dataName
-     */
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-
-        if (defined('JSON_PRETTY_PRINT')) {
-            $this->prettyPrint = JSON_PRETTY_PRINT;
-        }
-    }
-
-
     public function testStartTestSuite()
     {
         $this->createPrinterAndStartTestSuite();
@@ -323,7 +305,7 @@ class LogPrinterTest extends BaseUnitTestCase
 
         $result = '';
         foreach ($logElements as $logElement) {
-            $result .= json_encode($logElement, $this->prettyPrint);
+            $result .= json_encode($logElement, JSON_PRETTY_PRINT);
         }
 
         return $result;

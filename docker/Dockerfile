@@ -1,4 +1,4 @@
-FROM php:5.6
+FROM php:7.0
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update
