@@ -118,7 +118,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface), 'Exit code should be 0');
+        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
         $output = $outputInterface->fetch();
         $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
