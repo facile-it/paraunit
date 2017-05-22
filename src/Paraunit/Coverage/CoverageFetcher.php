@@ -77,8 +77,6 @@ class CoverageFetcher
             [
                 'new SebastianBergmann\CodeCoverage\CodeCoverage',
                 'new PHP_CodeCoverage',
-                'new \SebastianBergmann\CodeCoverage\CodeCoverage',
-                'new SebastianBergmann\CodeCoverage\CodeCoverage',
             ],
             'new Paraunit\Proxy\Coverage\CodeCoverage',
             file_get_contents($tempFilename)

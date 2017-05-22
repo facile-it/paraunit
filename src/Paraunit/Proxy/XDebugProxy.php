@@ -8,7 +8,7 @@ namespace Paraunit\Proxy;
  */
 class XDebugProxy
 {
-    public function isLoaded()
+    public function isLoaded(): bool
     {
         return extension_loaded('xdebug');
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Paraunit\Proxy\Coverage;
 
 /**

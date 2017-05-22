@@ -1,15 +1,14 @@
 <?php
 
-
 namespace Paraunit\Proxy\Coverage;
 
-use SebastianBergmann\CodeCoverage\Driver\PHPDBG;
+use SebastianBergmann\CodeCoverage\Driver\Driver;
 
 /**
  * Class FakeDriver
  * @package Paraunit\Proxy\Coverage
  */
-class FakeDriver extends PHPDBG
+class FakeDriver implements Driver
 {
     public function __construct()
     {
