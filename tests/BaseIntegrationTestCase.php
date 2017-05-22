@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class BaseIntegrationTestCase
@@ -62,7 +63,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      * @param StubbedParaunitProcess $process
      * @param string $stubLog
      */
-    public function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, $stubLog)
+    protected function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, string $stubLog)
     {
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
         $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
@@ -130,7 +131,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function loadContainer()
     {
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input = $this->prophesize(InputInterface::class);
         $input->getArgument('stringFilter')
             ->willReturn($this->textFilter);
         $input->getOption('parallel')
@@ -147,19 +148,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->container = $this->configuration->buildContainer($input->reveal());
     }
 
-    /**
-     * @param string $textFilter
-     */
-    public function setTextFilter($textFilter)
+    public function setTextFilter(string $textFilter)
     {
         $this->textFilter = $textFilter;
     }
 
-    /**
-     * @param string $optionName
-     * @param string $optionValue
-     */
-    protected function setOption($optionName, $optionValue)
+    protected function setOption(string $optionName, string $optionValue)
     {
         $this->options[$optionName] = $optionValue;
     }

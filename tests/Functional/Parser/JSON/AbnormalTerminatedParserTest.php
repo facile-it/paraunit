@@ -6,6 +6,7 @@ use Paraunit\Parser\JSON\AbnormalTerminatedParser;
 use Paraunit\Parser\JSON\LogFetcher;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
+use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 /**
  * Class AbnormalTerminatedParserTest
@@ -24,7 +25,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
 
         $parsedResult = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\TestResultWithAbnormalTermination', $parsedResult);
+        $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $parsedResult);
     }
 
     /**
@@ -44,16 +45,19 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $this->assertFalse($process->hasAbnormalTermination());
     }
 
-    public function otherStatusesProvider()
+    /**
+     * @return string[]
+     */
+    public function otherStatusesProvider(): array
     {
-        return array(
-            array('error'),
-            array('fail'),
-            array('pass'),
-            array('testStart'),
-            array('suiteStart'),
-            array('qwerty'),
-            array('trollingYou'),
-        );
+        return [
+            ['error'],
+            ['fail'],
+            ['pass'],
+            ['testStart'],
+            ['suiteStart'],
+            ['qwerty'],
+            ['trollingYou'],
+        ];
     }
 }

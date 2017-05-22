@@ -10,10 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BaseTestCase extends TestCase
 {
-    /**
-     * @return string
-     */
-    protected function getCoverageStubFilePath()
+    protected function getCoverageStubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
         static::assertFileExists($filename, 'CoverageStub file missing!');
@@ -21,10 +18,7 @@ class BaseTestCase extends TestCase
         return $filename;
     }
 
-    /**
-     * @return string
-     */
-    protected function getCoverage4StubFilePath()
+    protected function getCoverage4StubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/Coverage4Stub.php';
         static::assertFileExists($filename, 'CoverageStub file missing!');
@@ -32,18 +26,12 @@ class BaseTestCase extends TestCase
         return $filename;
     }
 
-    /**
-     * @return string
-     */
-    protected function getConfigForStubs()
+    protected function getConfigForStubs(): string
     {
         return $this->getStubPath() . 'phpunit_for_stubs.xml';
     }
 
-    /**
-     * @return string
-     */
-    protected function getStubPath()
+    protected function getStubPath(): string
     {
         return realpath(__DIR__ . DIRECTORY_SEPARATOR . 'Stub') . DIRECTORY_SEPARATOR;
     }

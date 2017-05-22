@@ -13,7 +13,7 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class RunnerWithCoverageTest extends BaseIntegrationTestCase
 {
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
@@ -30,10 +30,10 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
 
         $this->assertEquals(0, $runner->run($outputInterface));
-        $this->assertOutputOrder($outputInterface, array(
+        $this->assertOutputOrder($outputInterface, [
             'PARAUNIT',
             'Coverage driver in use',
             '...',
-        ));
+        ]);
     }
 }

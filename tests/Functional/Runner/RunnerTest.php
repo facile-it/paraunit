@@ -8,6 +8,9 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\UnformattedOutputStub;
+use Tests\Stub\EntityManagerClosedTestStub;
+use Tests\Stub\SegFaultTestStub;
+use Tests\Stub\MissingProviderTestStub;
 
 /**
  * Class RunnerTest
@@ -47,20 +50,20 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $outputInterface->getOutput());
-        $this->assertOutputOrder($outputInterface, array(
+        $this->assertOutputOrder($outputInterface, [
             'Errors output',
-            'Tests\Stub\EntityManagerClosedTestStub::testBrokenTest',
+            EntityManagerClosedTestStub::class . '::testBrokenTest',
             'files with ERRORS',
-            'Tests\Stub\EntityManagerClosedTestStub',
+            EntityManagerClosedTestStub::class,
             'files with RETRIED',
-            'Tests\Stub\EntityManagerClosedTestStub',
-        ));
+            EntityManagerClosedTestStub::class,
+        ]);
     }
 
     /**
      * @dataProvider stubFilenameProvider
      */
-    public function testMaxRetryDeadlock($stubFilePath)
+    public function testMaxRetryDeadlock(string $stubFilePath)
     {
         $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter($stubFilePath);
@@ -74,12 +77,15 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $exitCode);
     }
 
-    public function stubFilenameProvider()
+    /**
+     * @return string[]
+     */
+    public function stubFilenameProvider(): array
     {
-        return array(
-            array('MySQLDeadLockTestStub.php'),
-            array('SQLiteDeadLockTestStub.php'),
-        );
+        return [
+            ['MySQLDeadLockTestStub.php'],
+            ['SQLiteDeadLockTestStub.php'],
+        ];
     }
 
     public function testSegFault()
@@ -104,7 +110,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'Tests\Stub\SegFaultTestStub',
+            SegFaultTestStub::class,
             $output,
             'Missing failing filename'
         );
@@ -128,7 +134,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'Tests\Stub\MissingProviderTestStub',
+            MissingProviderTestStub::class,
             $output,
             'Missing warned filename'
         );

@@ -18,11 +18,11 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
     {
         $output = new UnformattedOutputStub();
         $process = new StubbedParaunitProcess();
-        $context = array(
+        $context = [
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
-            'process_completed' => array($process),
-        );
+            'process_completed' => [$process],
+        ];
 
         $this->processAllTheStubLogs();
 
@@ -36,13 +36,13 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
         $this->assertNotContains('SKIPPED output', $output->getOutput(), null, true);
         $this->assertNotContains('INCOMPLETE output', $output->getOutput(), null, true);
         $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
-        $this->assertOutputOrder($output, array(
+        $this->assertOutputOrder($output, [
             'Unknown',
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
             'Risky Outcome output:',
-        ));
+        ]);
     }
 }

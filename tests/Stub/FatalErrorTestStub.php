@@ -15,7 +15,7 @@ class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
         $arr = array();
 
         while (true) {
-            $arr[] = "Allocated memory... allocated memory everywhere!";
+            $arr[] = 'Allocated memory... allocated memory everywhere!';
         }
     }
 }

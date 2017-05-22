@@ -18,7 +18,7 @@ class LogParserTest extends BaseFunctionalTestCase
     /**
      * @dataProvider parsableResultsProvider
      */
-    public function testParse($stubLog, $expectedResult, $hasAbnormalTermination = false)
+    public function testParse(string $stubLog, string $expectedResult, bool $hasAbnormalTermination = false)
     {
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
@@ -29,7 +29,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
 
         $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\Interfaces\PrintableTestResultInterface', $results);
+        $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
         $textResults = '';
         /** @var PrintableTestResultInterface $singleResult */
         foreach ($results as $singleResult) {
@@ -44,21 +44,24 @@ class LogParserTest extends BaseFunctionalTestCase
         }
     }
 
-    public function parsableResultsProvider()
+    /**
+     * @return string[]
+     */
+    public function parsableResultsProvider(): array
     {
-        return array(
-            array(JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'),
-            array(JSONLogStub::ALL_GREEN, '.........'),
-            array(JSONLogStub::ONE_ERROR, '.E.'),
-            array(JSONLogStub::ONE_INCOMPLETE, '..I.'),
-            array(JSONLogStub::ONE_RISKY, '..R.'),
-            array(JSONLogStub::ONE_SKIP, '..S.'),
-            array(JSONLogStub::ONE_WARNING, '...W'),
-            array(JSONLogStub::FATAL_ERROR, '...X', true),
-            array(JSONLogStub::SEGFAULT, '...X', true),
-            array(JSONLogStub::PARSE_ERROR, '...................................................X', true),
-            array(JSONLogStub::UNKNOWN, '?', false),
-        );
+        return [
+            [JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'],
+            [JSONLogStub::ALL_GREEN, '.........'],
+            [JSONLogStub::ONE_ERROR, '.E.'],
+            [JSONLogStub::ONE_INCOMPLETE, '..I.'],
+            [JSONLogStub::ONE_RISKY, '..R.'],
+            [JSONLogStub::ONE_SKIP, '..S.'],
+            [JSONLogStub::ONE_WARNING, '...W'],
+            [JSONLogStub::FATAL_ERROR, '...X', true],
+            [JSONLogStub::SEGFAULT, '...X', true],
+            [JSONLogStub::PARSE_ERROR, '...................................................X', true],
+            [JSONLogStub::UNKNOWN, '?', false],
+        ];
     }
 
     public function testParseHandlesMissingLogsAsAbnormalTerminations()
@@ -71,7 +74,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
 
         $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf('Paraunit\TestResult\Interfaces\PrintableTestResultInterface', $results);
+        $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
         $this->assertCount(1, $results);
 
         $this->assertEquals('X', $results[0]->getTestResultFormat()->getTestResultSymbol());

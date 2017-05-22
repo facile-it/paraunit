@@ -7,6 +7,7 @@ use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseFunctionalTestCase;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class SingleResultFormatterTest
@@ -35,8 +36,9 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
         $tag = $testResultFormat->getTag();
         $symbol = $testResultFormat->getTestResultSymbol();
 
-        $testResult = $this->prophesize('Paraunit\TestResult\Interfaces\PrintableTestResultInterface');
-        $testResult->getTestResultFormat()->willReturn($testResultFormat);
+        $testResult = $this->prophesize(PrintableTestResultInterface::class);
+        $testResult->getTestResultFormat()
+            ->willReturn($testResultFormat);
 
         $this->assertEquals(
             sprintf('<%s>%s</%s>', $tag, $symbol, $tag),

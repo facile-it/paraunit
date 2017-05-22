@@ -7,6 +7,7 @@ use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\UnformattedOutputStub;
+use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 
 /**
  * Class ConsoleFormatterTest
@@ -17,7 +18,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     /**
      * @dataProvider serviceTagsProvider
      */
-    public function testOnEngineStartHasAllTagsRegistered($containerServiceName)
+    public function testOnEngineStartHasAllTagsRegistered(string $containerServiceName)
     {
         /** @var TestResultContainer $testResultContainer */
         $testResultContainer = $this->container->get($containerServiceName);
@@ -32,22 +33,25 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $formatter = $outputInterface->getFormatter();
         $style = $formatter->getStyle($tag);
         $this->assertInstanceOf(
-            'Symfony\Component\Console\Formatter\OutputFormatterStyleInterface',
+            OutputFormatterStyleInterface::class,
             $style,
             'Missing tag style: ' . $tag . ' -- service ' . $containerServiceName
         );
     }
 
-    public function serviceTagsProvider()
+    /**
+     * @return string[]
+     */
+    public function serviceTagsProvider(): array
     {
-        return array(
-            array('paraunit.test_result.abnormal_terminated_container'),
-            array('paraunit.test_result.error_container'),
-            array('paraunit.test_result.failure_container'),
-            array('paraunit.test_result.warning_container'),
-            array('paraunit.test_result.risky_container'),
-            array('paraunit.test_result.skipped_container'),
-            array('paraunit.test_result.incomplete_container'),
-        );
+        return [
+            ['paraunit.test_result.abnormal_terminated_container'],
+            ['paraunit.test_result.error_container'],
+            ['paraunit.test_result.failure_container'],
+            ['paraunit.test_result.warning_container'],
+            ['paraunit.test_result.risky_container'],
+            ['paraunit.test_result.skipped_container'],
+            ['paraunit.test_result.incomplete_container'],
+        ];
     }
 }
