@@ -3,6 +3,7 @@
 namespace Tests\Unit\TestResult;
 
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -15,7 +16,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 {
     public function testAddProcessToFilenames()
     {
-        $testResultFormat = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        $testResultFormat = $this->prophesize(TestResultFormat::class);
         $testResultContainer = new TestResultContainer($testResultFormat->reveal());
 
         $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');

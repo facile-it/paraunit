@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Coverage;
 
+use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Proxy\Coverage\CodeCoverage;
@@ -16,7 +17,7 @@ class CoverageResultTest extends BaseTestCase
 {
     public function testGenerateResults()
     {
-        $merger = $this->prophesize('Paraunit\Coverage\CoverageMerger');
+        $merger = $this->prophesize(CoverageMerger::class);
         $merger->getCoverageData()
             ->willReturn(new CodeCoverage());
         

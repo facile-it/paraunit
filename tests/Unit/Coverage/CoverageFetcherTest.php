@@ -2,7 +2,10 @@
 
 namespace Tests\Unit\Coverage;
 
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
+use Paraunit\Proxy\Coverage\CodeCoverage;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -15,7 +18,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
     /**
      * @dataProvider coverageStubProvider
      */
-    public function testFetch($coverageStub)
+    public function testFetch(string $coverageStub)
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
 
@@ -23,9 +26,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
         copy($coverageStub, $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
-        $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($filename);
-        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getFilenameForCoverage('uniqueId')
+            ->shouldBeCalled()
+            ->willReturn($filename);
+        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
         $missingCoverageContainer->addProcessToFilenames($process)
             ->shouldNotBeCalled();
 
@@ -33,25 +38,30 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
+        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertNotEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 
-    public function coverageStubProvider()
+    /**
+     * @return string[]
+     */
+    public function coverageStubProvider(): array
     {
-        return array(
-            array($this->getCoverageStubFilePath()),
-            array($this->getCoverage4StubFilePath()),
-        );
+        return [
+            [$this->getCoverageStubFilePath()],
+            [$this->getCoverage4StubFilePath()],
+        ];
     }
     public function testFetchIgnoresMissingCoverageFiles()
     {
         $process = new StubbedParaunitProcess('test1', 'uniqueId');
 
-        $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn('/path/to/missing/file');
-        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getFilenameForCoverage('uniqueId')
+            ->shouldBeCalled()
+            ->willReturn('/path/to/missing/file');
+        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
         $missingCoverageContainer->addProcessToFilenames($process)
             ->shouldBeCalled();
 
@@ -59,7 +69,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
+        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertEmpty($result->getData());
     }
 
@@ -71,9 +81,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
         copy($this->getWrongCoverageStubFilePath(), $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
-        $tempFilenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFilenameFactory->getFilenameForCoverage('uniqueId')->shouldBeCalled()->willReturn($filename);
-        $missingCoverageContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getFilenameForCoverage('uniqueId')
+            ->shouldBeCalled()
+            ->willReturn($filename);
+        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
         $missingCoverageContainer->addProcessToFilenames($process)
             ->shouldBeCalled();
 
@@ -81,15 +93,12 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf('Paraunit\Proxy\Coverage\CodeCoverage', $result);
+        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 
-    /**
-     * @return string
-     */
-    private function getTempFilename()
+    private function getTempFilename(): string
     {
         return uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testfile', true) . '.php';
     }

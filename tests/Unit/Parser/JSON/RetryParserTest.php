@@ -11,6 +11,8 @@ use Tests\Stub\MySQLLockTimeoutTestStub;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
 use Tests\Stub\StubbedParaunitProcess;
+use Paraunit\TestResult\MuteTestResult;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 
 /**
  * Class RetryParserTest
@@ -21,7 +23,7 @@ class RetryParserTest extends BaseUnitTestCase
     /**
      * @dataProvider toBeRetriedTestsProvider
      */
-    public function testParseAndSetRetry($testOutput)
+    public function testParseAndSetRetry(string $testOutput)
     {
         $log = $this->getLogFromStub('test', 'error', $testOutput);
 
@@ -29,14 +31,14 @@ class RetryParserTest extends BaseUnitTestCase
         $parser = new RetryParser($this->getResultHandlerMock(true), 3);
         $result = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\MuteTestResult', $result);
+        $this->assertInstanceOf(MuteTestResult::class, $result);
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
     }
 
     /**
      * @dataProvider notToBeRetriedTestLogsProvider
      */
-    public function testParseAndContinueWithNoRetry($jsonLogs)
+    public function testParseAndContinueWithNoRetry(string $jsonLogs)
     {
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(false), 3);
@@ -64,34 +66,40 @@ class RetryParserTest extends BaseUnitTestCase
         $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
     }
 
-    public function toBeRetriedTestsProvider()
+    /**
+     * @return string[]
+     */
+    public function toBeRetriedTestsProvider(): array
     {
-        return array(
-            array(EntityManagerClosedTestStub::OUTPUT),
-            array(MySQLDeadLockTestStub::OUTPUT),
-            array(MySQLLockTimeoutTestStub::OUTPUT),
-            array(SQLiteDeadLockTestStub::OUTPUT),
-        );
+        return [
+            [EntityManagerClosedTestStub::OUTPUT],
+            [MySQLDeadLockTestStub::OUTPUT],
+            [MySQLLockTimeoutTestStub::OUTPUT],
+            [SQLiteDeadLockTestStub::OUTPUT],
+        ];
     }
 
-    public function notToBeRetriedTestLogsProvider()
+    /**
+     * @return string[]
+     */
+    public function notToBeRetriedTestLogsProvider(): array
     {
-        return array(
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::TWO_ERRORS_TWO_FAILURES)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::FATAL_ERROR)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::SEGFAULT)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_INCOMPLETE)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_RISKY)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)),
-            array(JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)),
-        );
+        return [
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::TWO_ERRORS_TWO_FAILURES)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::FATAL_ERROR)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::SEGFAULT)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_INCOMPLETE)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_RISKY)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)],
+            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)],
+        ];
     }
 
-    private function getResultHandlerMock($shouldBeCalled)
+    private function getResultHandlerMock(bool $shouldBeCalled): TestResultHandlerInterface
     {
-        $resultHandler = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $resultHandler = $this->prophesize(TestResultHandlerInterface::class);
         $resultHandler->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int)$shouldBeCalled);
 

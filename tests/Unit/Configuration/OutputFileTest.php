@@ -11,7 +11,7 @@ use Tests\BaseUnitTestCase;
  */
 class OutputFileTest extends BaseUnitTestCase
 {
-    public function testCostruct()
+    public function testConstruct()
     {
         $outputFile = new OutputFile('sub/dir/from/relfile.xml');
 
@@ -32,12 +32,12 @@ class OutputFileTest extends BaseUnitTestCase
         $outputFile->getFilePath();
     }
 
-    public function emptyFilesProvider()
+    public function emptyFilesProvider(): array
     {
-        return array(
-            array(null),
-            array(''),
-        );
+        return [
+            [null],
+            [''],
+        ];
     }
 
     public function testThatFileIsOk()

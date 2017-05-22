@@ -32,28 +32,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->addError($test, new \Exception('Exception message'), 1);
         $line = __LINE__ - 1;
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Exception: Exception message' . "\n",
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -68,28 +68,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->addWarning($test, $warning, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'warning',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Warning message' . "\n",
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -104,28 +104,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->addFailure($test, $failure, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'fail',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Failure message' . "\n",
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -140,28 +140,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->addIncompleteTest($test, $failure, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Incomplete Test: Incomplete message',
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -176,28 +176,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->addRiskyTest($test, $failure, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Risky Test: Risky message',
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -212,28 +212,28 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->addSkippedTest($test, $failure, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => array(
-                    array(
+                'trace' => [
+                    [
                         'file' => __FILE__,
                         'line' => $line,
-                    ),
-                ),
+                    ],
+                ],
                 'message' => 'Skipped Test: Skipped message',
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
@@ -245,23 +245,23 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer->startTest($test);
         $printer->endTest($test, 1);
 
-        $expectedContent = $this->encodeWithStartTestSuite(array(
-            array(
+        $expectedContent = $this->encodeWithStartTestSuite([
+            [
                 'event' => 'testStart',
                 'suite' => get_class($this),
                 'test' => get_class($test),
-            ),
-            array(
+            ],
+            [
                 'event' => 'test',
                 'suite' => get_class($this),
                 'test' => get_class($test),
                 'status' => 'pass',
                 'time' => 1,
-                'trace' => array(),
+                'trace' => [],
                 'message' => '',
                 'output' => '',
-            ),
-        ));
+            ],
+        ]);
         $this->assertEquals($expectedContent, $this->getLogContent());
 
         $printer->endTestSuite($this->prophesize(TestSuite::class)->reveal());
@@ -269,7 +269,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    private function createPrinterAndStartTestSuite()
+    private function createPrinterAndStartTestSuite(): LogPrinter
     {
         new StaticOutputPath(sys_get_temp_dir());
         $printer = new LogPrinter();
@@ -284,7 +284,7 @@ class LogPrinterTest extends BaseUnitTestCase
         return $printer;
     }
 
-    private function getLogContent()
+    private function getLogContent(): string
     {
         $logFilename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5(__FILE__) . '.json.log';
         $this->assertFileExists($logFilename, 'Log file missing! Maybe you called this method too early?');
@@ -292,13 +292,9 @@ class LogPrinterTest extends BaseUnitTestCase
         return file_get_contents($logFilename);
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
-    private function encodeWithStartTestSuite(array $data = array())
+    private function encodeWithStartTestSuite(array $data = []): string
     {
-        $logElements = array($this->getStartTestSuiteLog());
+        $logElements = [$this->getStartTestSuiteLog()];
         foreach ($data as $datum) {
             $logElements[] = $datum;
         }
@@ -311,12 +307,12 @@ class LogPrinterTest extends BaseUnitTestCase
         return $result;
     }
 
-    private function getStartTestSuiteLog()
+    private function getStartTestSuiteLog(): array
     {
-        return array(
+        return [
             'event' => 'suiteStart',
             'suite' => get_class($this),
             'tests' => 1,
-        );
+        ];
     }
 }

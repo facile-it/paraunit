@@ -4,6 +4,8 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\FinalPrinter;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultList;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
@@ -17,21 +19,26 @@ class FinalPrinterTest extends BaseUnitTestCase
     public function testOnEngineEndPrintsTheRightCountSummary()
     {
         $output = new UnformattedOutputStub();
-        $context = array(
+        $context = [
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
             'process_completed' => array_fill(0, 15, new StubbedParaunitProcess()),
-        );
+        ];
         $engineEvent = new EngineEvent($output, $context);
 
-        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
-        $testResultContainer->countTestResults()->willReturn(3);
-        $testResultContainer->getTestResults()->willReturn(array_fill(0, 3, $this->mockTestResult()));
-        $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());
-        $testResultContainer->getFileNames()->willReturn(array('Test.php'));
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->countTestResults()
+            ->willReturn(3);
+        $testResultContainer->getTestResults()
+            ->willReturn(array_fill(0, 3, $this->mockTestResult()));
+        $testResultContainer->getTestResultFormat()
+            ->willReturn($this->mockTestFormat());
+        $testResultContainer->getFileNames()
+            ->willReturn(['Test.php']);
 
-        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
-        $testResultList->getTestResultContainers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $testResultList = $this->prophesize(TestResultList::class);
+        $testResultList->getTestResultContainers()
+            ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
 
         $printer = new FinalPrinter($testResultList->reveal());
 
@@ -44,21 +51,26 @@ class FinalPrinterTest extends BaseUnitTestCase
     public function testOnEngineEndHandlesEmptyMessagesCorrectly()
     {
         $output = new UnformattedOutputStub();
-        $context = array(
+        $context = [
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
-            'process_completed' => array(new StubbedParaunitProcess()),
-        );
+            'process_completed' => [new StubbedParaunitProcess()],
+        ];
         $engineEvent = new EngineEvent($output, $context);
 
-        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
-        $testResultContainer->countTestResults()->willReturn(3);
-        $testResultContainer->getTestResults()->willReturn(array_fill(0, 3, $this->mockTestResult()));
-        $testResultContainer->getTestResultFormat()->willReturn($this->mockTestFormat());
-        $testResultContainer->getFileNames()->willReturn(array('Test.php'));
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->countTestResults()
+            ->willReturn(3);
+        $testResultContainer->getTestResults()
+            ->willReturn(array_fill(0, 3, $this->mockTestResult()));
+        $testResultContainer->getTestResultFormat()
+            ->willReturn($this->mockTestFormat());
+        $testResultContainer->getFileNames()
+            ->willReturn(['Test.php']);
 
-        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
-        $testResultList->getTestResultContainers()->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+        $testResultList = $this->prophesize(TestResultList::class);
+        $testResultList->getTestResultContainers()
+            ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
         $printer = new FinalPrinter($testResultList->reveal());
 
         $printer->onEngineEnd($engineEvent);

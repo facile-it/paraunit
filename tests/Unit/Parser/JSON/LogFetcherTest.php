@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Parser\JSON;
 
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogFetcher;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -16,8 +17,9 @@ class LogFetcherTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
 
-        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn('non-existent-log.json');
+        $tempFileNameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())
+            ->willReturn('non-existent-log.json');
 
         $fetcher = new LogFetcher($tempFileNameFactory->reveal());
 
@@ -26,7 +28,7 @@ class LogFetcherTest extends BaseUnitTestCase
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertTrue(is_array($logs), 'Fetcher returning a non-array');
         $this->assertCount(1, $logs, 'Log ending missing');
-        $this->assertContainsOnlyInstancesOf('\stdClass', $logs);
+        $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 
         $endingLog = end($logs);
         $this->assertTrue(property_exists($endingLog, 'status'));
@@ -40,8 +42,9 @@ class LogFetcherTest extends BaseUnitTestCase
         copy(__DIR__ . '/../../../Stub/PHPUnitJSONLogOutput/AllGreen.json', $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
-        $tempFileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())->willReturn($filename);
+        $tempFileNameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFileNameFactory->getFilenameForLog($process->getUniqueId())
+            ->willReturn($filename);
 
         $fetcher = new LogFetcher($tempFileNameFactory->reveal());
 
@@ -50,7 +53,7 @@ class LogFetcherTest extends BaseUnitTestCase
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertTrue(is_array($logs), 'Fetcher returning a non-array');
         $this->assertCount(20 + 1, $logs, 'Log ending missing');
-        $this->assertContainsOnlyInstancesOf('\stdClass', $logs);
+        $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 
         $endingLog = end($logs);
         $this->assertTrue(property_exists($endingLog, 'status'));

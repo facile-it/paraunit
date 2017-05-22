@@ -11,7 +11,7 @@ use Tests\BaseUnitTestCase;
  */
 class OutputPathTest extends BaseUnitTestCase
 {
-    public function testCostruct()
+    public function testConstruct()
     {
         $outputPath = new OutputPath('sub/dir/from/relpath');
 
@@ -32,12 +32,12 @@ class OutputPathTest extends BaseUnitTestCase
         $outputPath->getPath();
     }
 
-    public function emptyPathsProvider()
+    public function emptyPathsProvider(): array
     {
-        return array(
-            array(null),
-            array(''),
-        );
+        return [
+            [null],
+            [''],
+        ];
     }
 
     public function testThatPathIsOk()

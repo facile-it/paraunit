@@ -4,13 +4,12 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Printer\ProcessPrinter;
-use Paraunit\TestResult\MuteTestResult;
-use Tests\BaseUnitTestCase;
-use Tests\Stub\UnformattedOutputStub;
-use Tests\Stub\StubbedParaunitProcess;
-use Prophecy\Argument;
 use Paraunit\Printer\SingleResultFormatter;
+use Prophecy\Argument;
 use Symfony\Component\Console\Output\Output;
+use Tests\BaseUnitTestCase;
+use Tests\Stub\StubbedParaunitProcess;
+use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class ProcessPrinterTest

@@ -2,10 +2,11 @@
 
 namespace Tests\Unit\Filter;
 
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Filter\Filter;
+use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use PHPUnit\Util\Xml;
 use Tests\BaseUnitTestCase;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 
 /**
  * Class FilterTest
@@ -38,11 +39,11 @@ class FilterTest extends BaseUnitTestCase
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file1))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file2))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file2])
             ->shouldNotBeCalled();
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, $testSuiteName);
@@ -50,7 +51,7 @@ class FilterTest extends BaseUnitTestCase
         $result = $filter->filterTestFiles();
 
         $this->assertCount(1, $result);
-        $this->assertEquals(array($file1), $result);
+        $this->assertEquals([$file1], $result);
     }
 
     public function testFilterTestFilesSupportsSuffixAttribute()
@@ -67,17 +68,17 @@ class FilterTest extends BaseUnitTestCase
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'TestSuffix.php', '', array())
-            ->willReturn(array($file1))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'TestSuffix.php', '', [])
+            ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file2))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file2])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
         $result = $filter->filterTestFiles();
-        $this->assertEquals(array($file1, $file2), $result);
+        $this->assertEquals([$file1, $file2], $result);
     }
 
     public function testFilterTestFilesSupportsPrefixAttribute()
@@ -94,17 +95,17 @@ class FilterTest extends BaseUnitTestCase
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', array())
-            ->willReturn(array($file1))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', [])
+            ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file2))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file2])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
         $result = $filter->filterTestFiles();
-        $this->assertEquals(array($file1, $file2), $result);
+        $this->assertEquals([$file1, $file2], $result);
     }
 
     public function testFilterTestFilesSupportsExcludeNodes()
@@ -117,31 +118,31 @@ class FilterTest extends BaseUnitTestCase
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
 
-        $excludeArray1 = array(
+        $excludeArray1 = [
             '/path/to/exclude1',
             '/path/to/exclude2',
-        );
+        ];
 
-        $excludeArray2 = array(
+        $excludeArray2 = [
             '/path/to/exclude3',
             '/path/to/exclude4',
-        );
+        ];
 
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', $excludeArray1)
-            ->willReturn(array($file1))
+            ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', $excludeArray2)
-            ->willReturn(array($file2))
+            ->willReturn([$file2])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
         $result = $filter->filterTestFiles();
-        $this->assertEquals(array($file1, $file2), $result);
+        $this->assertEquals([$file1, $file2], $result);
     }
 
     public function testFilterTestFilesAvoidsDuplicateRuns()
@@ -157,18 +158,18 @@ class FilterTest extends BaseUnitTestCase
         $file = $this->absoluteConfigBaseDir . './only/selected/test/suite/SameFile.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
         $result = $filter->filterTestFiles();
         $this->assertCount(1, $result);
-        $this->assertEquals(array($file), $result);
+        $this->assertEquals([$file], $result);
     }
 
     public function testFilterTestFilesSupportsFileNodes()
@@ -185,23 +186,23 @@ class FilterTest extends BaseUnitTestCase
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file1))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file2))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file2])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit);
 
         $result = $filter->filterTestFiles();
         $this->assertEquals(
-            array(
+            [
                 $file1,
                 $this->absoluteConfigBaseDir . './this/file.php',
                 $this->absoluteConfigBaseDir . './this/file2.php',
                 $file2,
-            ),
+            ],
             $result
         );
     }
@@ -222,11 +223,11 @@ class FilterTest extends BaseUnitTestCase
         $file4 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
         $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file1, $file2, $file3))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file1, $file2, $file3])
             ->shouldBeCalledTimes(1);
-        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', array())
-            ->willReturn(array($file4))
+        $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './other/test/suite/', 'Test.php', '', [])
+            ->willReturn([$file4])
             ->shouldBeCalledTimes(1);
 
         $filter = new Filter($utilXml->reveal(), $fileIterator->reveal(), $configFilePhpUnit, null, 'this');
@@ -234,17 +235,15 @@ class FilterTest extends BaseUnitTestCase
         $result = $filter->filterTestFiles();
 
         $this->assertCount(2, $result);
-        $this->assertEquals(array($file1, $file2), $result);
+        $this->assertEquals([$file1, $file2], $result);
     }
 
     /**
      * @param string $fileName
-     *
-     * @return string
-     *
+     * @return \DOMDocument
      * @throws \Exception
      */
-    private function getStubbedXMLConf($fileName)
+    private function getStubbedXMLConf(string $fileName): \DOMDocument
     {
         $filePath = realpath($fileName);
 
@@ -255,11 +254,11 @@ class FilterTest extends BaseUnitTestCase
         return Xml::loadFile($filePath);
     }
 
-    private function mockPHPUnitConfig($configFile)
+    private function mockPHPUnitConfig(string $configFile)
     {
         $this->assertFileExists($configFile, 'Mock not possible, config file to pass does not exist');
 
-        $config = $this->prophesize('Paraunit\Configuration\PHPUnitConfig');
+        $config = $this->prophesize(PHPUnitConfig::class);
         $config->getFileFullPath()
             ->willReturn($configFile);
         $config->getBaseDirectory()

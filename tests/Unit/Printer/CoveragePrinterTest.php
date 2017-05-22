@@ -53,26 +53,18 @@ class CoveragePrinterTest extends BaseUnitTestCase
         $this->assertNotContains('xDebug', $output->getOutput());
     }
 
-    /**
-     * @param bool $shouldReturn
-     * @return PHPDbgBinFile
-     */
-    private function mockPhpdbgBin($shouldReturn)
+    private function mockPhpdbgBin(bool $shouldReturn): PHPDbgBinFile
     {
-        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
+        $phpdbgBin = $this->prophesize(PHPDbgBinFile::class);
         $phpdbgBin->isAvailable()
             ->willReturn($shouldReturn);
 
         return $phpdbgBin->reveal();
     }
 
-    /**
-     * @param bool $shouldReturn
-     * @return XDebugProxy
-     */
-    private function mockXdebugLoaded($shouldReturn)
+    private function mockXdebugLoaded(bool $shouldReturn): XDebugProxy
     {
-        $xdebug = $this->prophesize('Paraunit\Proxy\XDebugProxy');
+        $xdebug = $this->prophesize(XDebugProxy::class);
         $xdebug->isLoaded()
             ->willReturn($shouldReturn);
 
