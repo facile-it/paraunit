@@ -11,11 +11,7 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
  */
 class TestResultFactory
 {
-    /**
-     * @param \stdClass $log
-     * @return PrintableTestResultInterface
-     */
-    public function createFromLog(\stdClass $log)
+    public function createFromLog(\stdClass $log): PrintableTestResultInterface
     {
         if (property_exists($log, 'status') && $log->status === LogFetcher::LOG_ENDING_STATUS) {
             return new TestResultWithAbnormalTermination(
@@ -38,10 +34,6 @@ class TestResultFactory
         return new TestResultWithMessage($log->test, $log->message);
     }
 
-    /**
-     * @param FullTestResult $result
-     * @param \stdClass $log
-     */
     private function addTraceToResult(FullTestResult $result, \stdClass $log)
     {
         foreach ($log->trace as $traceStep) {

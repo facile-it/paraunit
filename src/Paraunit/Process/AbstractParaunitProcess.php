@@ -15,7 +15,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     protected $retryCount = 0;
 
     /** @var bool */
-    protected $shouldBeRetried = false;
+    protected $shouldBeRetried;
 
     /** @var string */
     protected $uniqueId;
@@ -29,13 +29,13 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     /** @var PrintableTestResultInterface[] */
     protected $testResults;
 
-    /** @var  bool */
+    /** @var bool */
     private $waitingForTestResult;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct($commandLine, $uniqueId)
+    public function __construct(string $commandLine, string $uniqueId)
     {
         $this->uniqueId = $uniqueId;
 
@@ -44,28 +44,21 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
             $this->filename = $filename[0];
         }
 
+        $this->shouldBeRetried = false;
         $this->testResults = array();
         $this->waitingForTestResult = true;
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueId()
+    public function getUniqueId(): string
     {
         return $this->uniqueId;
     }
 
-    /**
-     * @return int
-     */
-    public function getRetryCount()
+    public function getRetryCount(): int
     {
         return $this->retryCount;
     }
 
-    /**
-     */
     public function increaseRetryCount()
     {
         ++$this->retryCount;
@@ -77,44 +70,30 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         $this->testResults = array();
     }
 
-    /**
-     * @return bool
-     */
-    public function isToBeRetried()
+    public function isToBeRetried(): bool
     {
         return $this->shouldBeRetried;
     }
 
-    /**
-     * @return $this
-     */
     public function reset()
     {
         $this->shouldBeRetried = false;
-        
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTestClassName()
     {
         return $this->testClassName;
     }
 
-    /**
-     * @param string $testClassName
-     */
-    public function setTestClassName($testClassName)
+    public function setTestClassName(string $testClassName)
     {
         $this->testClassName = $testClassName;
     }
@@ -122,41 +101,29 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     /**
      * @return PrintableTestResultInterface[]
      */
-    public function getTestResults()
+    public function getTestResults(): array
     {
         return $this->testResults;
     }
 
-    /**
-     * @param PrintableTestResultInterface $testResult
-     */
     public function addTestResult(PrintableTestResultInterface $testResult)
     {
         $this->testResults[] = $testResult;
         $this->waitingForTestResult = false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function hasAbnormalTermination()
+    public function hasAbnormalTermination(): bool
     {
         return end($this->testResults) instanceof TestResultWithAbnormalTermination;
     }
 
-    /**
-     * @return bool
-     */
-    public function isWaitingForTestResult()
+    public function isWaitingForTestResult(): bool
     {
         return $this->waitingForTestResult;
     }
 
-    /**
-     * @param boolean $waitingForTestResult
-     */
-    public function setWaitingForTestResult($waitingForTestResult)
+    public function setWaitingForTestResult(bool $waitingForTestResult)
     {
-        $this->waitingForTestResult = (bool) $waitingForTestResult;
+        $this->waitingForTestResult = (bool)$waitingForTestResult;
     }
 }

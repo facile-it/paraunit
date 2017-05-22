@@ -11,5 +11,5 @@ interface TestResultBearerInterface
     /**
      * @return PrintableTestResultInterface[]
      */
-    public function getTestResults();
+    public function getTestResults(): array;
 }

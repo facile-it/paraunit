@@ -8,8 +8,5 @@ namespace Paraunit\TestResult\Interfaces;
  */
 interface FunctionNameInterface
 {
-    /**
-     * @return string
-     */
-    public function getFunctionName();
+    public function getFunctionName(): string;
 }

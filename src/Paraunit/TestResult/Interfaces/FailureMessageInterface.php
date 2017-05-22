@@ -8,8 +8,5 @@ namespace Paraunit\TestResult\Interfaces;
  */
 interface FailureMessageInterface
 {
-    /**
-     * @return string
-     */
-    public function getFailureMessage();
+    public function getFailureMessage(): string;
 }

@@ -3,21 +3,22 @@
 namespace Paraunit\Process;
 
 /**
- * Interface RetryAwareInterface.
+ * Interface RetryAwareInterface
+ * @package Paraunit\Process
  */
 interface RetryAwareInterface extends OutputAwareInterface
 {
-    /**
-     * @return int
-     */
-    public function getRetryCount();
+    public function getRetryCount(): int;
 
+    /**
+     * @return void
+     */
     public function increaseRetryCount();
 
+    /**
+     * @return void
+     */
     public function markAsToBeRetried();
 
-    /**
-     * @return bool
-     */
-    public function isToBeRetried();
+    public function isToBeRetried(): bool;
 }

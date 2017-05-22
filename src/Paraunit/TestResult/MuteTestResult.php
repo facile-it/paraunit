@@ -10,7 +10,7 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
  */
 class MuteTestResult extends NullTestResult implements PrintableTestResultInterface
 {
-    /** @var  TestResultFormat */
+    /** @var TestResultFormat */
     private $testResultFormat;
 
     /**
@@ -21,18 +21,12 @@ class MuteTestResult extends NullTestResult implements PrintableTestResultInterf
         $this->testResultFormat = new TestResultFormat('null', '');
     }
 
-    /**
-     * @param TestResultFormat $testResultFormat
-     */
     public function setTestResultFormat(TestResultFormat $testResultFormat)
     {
         $this->testResultFormat = $testResultFormat;
     }
 
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat()
+    public function getTestResultFormat(): TestResultFormat
     {
         return $this->testResultFormat;
     }

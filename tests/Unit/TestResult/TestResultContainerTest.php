@@ -46,12 +46,9 @@ class TestResultContainerTest extends BaseUnitTestCase
     {
         $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
-        $process->setOutput(null);
+        $process->setOutput('');
 
-        $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
-        $format->getTag()->willReturn('tag');
-
-        $testResultContainer = new TestResultContainer($format->reveal());
+        $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertContains('fail message', $testResult->getFailureMessage());

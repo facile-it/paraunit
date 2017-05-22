@@ -8,49 +8,33 @@ namespace Paraunit\Process;
  */
 interface ParaunitProcessInterface
 {
-    /**
-     * @param string $commandLine
-     * @param string $uniqueId
-     */
-    public function __construct($commandLine, $uniqueId);
+    public function __construct(string $commandLine, string $uniqueId);
+
+    public function isTerminated(): bool;
+
+    public function getUniqueId(): string;
+
+    public function getCommandLine(): string;
 
     /**
-     * @return bool
-     */
-    public function isTerminated();
-
-    /**
-     * @return string
-     */
-    public function getUniqueId();
-
-    /**
-     * @return string
-     */
-    public function getCommandLine();
-
-    /**
-     * @return mixed
+     * @return void
      */
     public function start();
 
     /**
-     * @return $this
+     * @return void
      */
     public function restart();
 
     /**
-     * @return $this
+     * @return void
      */
     public function reset();
 
-    /**
-     * @return bool
-     */
-    public function isRunning();
+    public function isRunning(): bool;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getExitCode();
 }

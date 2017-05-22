@@ -7,8 +7,5 @@ namespace Paraunit\Process;
  */
 interface OutputAwareInterface
 {
-    /**
-     * @return string
-     */
-    public function getOutput();
+    public function getOutput(): string;
 }

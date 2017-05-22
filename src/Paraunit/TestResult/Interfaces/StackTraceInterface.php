@@ -13,10 +13,7 @@ interface StackTraceInterface
     /**
      * @return TraceStep[]
      */
-    public function getTrace();
+    public function getTrace(): array;
 
-    /**
-     * @param TraceStep $traceStep
-     */
     public function addTraceStep(TraceStep $traceStep);
 }

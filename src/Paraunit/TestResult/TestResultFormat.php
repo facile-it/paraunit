@@ -14,10 +14,10 @@ class TestResultFormat
     /** @var string */
     private $title;
 
-    /** @var  bool */
+    /** @var bool */
     private $printTestOutput;
 
-    /** @var  bool */
+    /** @var bool */
     private $printFilesRecap;
 
     /**
@@ -27,7 +27,7 @@ class TestResultFormat
      * @param bool $printTestOutput
      * @param bool $printFilesRecap
      */
-    public function __construct($tag, $title, $printTestOutput = true, $printFilesRecap = true)
+    public function __construct(string $tag, string $title, bool $printTestOutput = true, bool $printFilesRecap = true)
     {
         $this->tag = $tag;
         $this->title = $title;
@@ -35,34 +35,22 @@ class TestResultFormat
         $this->printFilesRecap = $printFilesRecap;
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return $this->tag;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return boolean
-     */
-    public function shouldPrintTestOutput()
+    public function shouldPrintTestOutput(): bool
     {
         return $this->printTestOutput;
     }
 
-    /**
-     * @return boolean
-     */
-    public function shouldPrintFilesRecap()
+    public function shouldPrintFilesRecap(): bool
     {
         return $this->printFilesRecap;
     }

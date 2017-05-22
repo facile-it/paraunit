@@ -13,12 +13,9 @@ class TestResultList
 
     public function __construct()
     {
-        $this->testResultContainers = array();
+        $this->testResultContainers = [];
     }
 
-    /**
-     * @param TestResultContainer $container
-     */
     public function addContainer(TestResultContainer $container)
     {
         $this->testResultContainers[] = $container;
@@ -27,7 +24,7 @@ class TestResultList
     /**
      * @return TestResultContainer[]
      */
-    public function getTestResultContainers()
+    public function getTestResultContainers(): array
     {
         return $this->testResultContainers;
     }

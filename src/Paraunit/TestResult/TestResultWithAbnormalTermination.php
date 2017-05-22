@@ -11,26 +11,17 @@ class TestResultWithAbnormalTermination extends TestResultWithMessage
     /** @var string */
     private $testOutput;
 
-    /**
-     * @return string
-     */
-    public function getFailureMessage()
+    public function getFailureMessage(): string
     {
         return parent::getFailureMessage() . "\n" . $this->testOutput;
     }
 
-    /**
-     * @return string
-     */
-    public function getTestOutput()
+    public function getTestOutput(): string
     {
         return $this->testOutput;
     }
 
-    /**
-     * @param string $testOutput
-     */
-    public function setTestOutput($testOutput)
+    public function setTestOutput(string $testOutput)
     {
         $this->testOutput = $testOutput;
     }

@@ -10,13 +10,7 @@ use Paraunit\TestResult\TestResultFormat;
  */
 interface PrintableTestResultInterface extends TestResultInterface
 {
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat();
+    public function getTestResultFormat(): TestResultFormat;
 
-    /**
-     * @param TestResultFormat $testResultFormat
-     */
     public function setTestResultFormat(TestResultFormat $testResultFormat);
 }

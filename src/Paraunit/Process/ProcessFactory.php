@@ -10,10 +10,10 @@ use Paraunit\Configuration\PHPUnitConfig;
  */
 class ProcessFactory
 {
-    /** @var  CliCommandInterface */
+    /** @var CliCommandInterface */
     private $cliCommand;
 
-    /** @var  PHPUnitConfig */
+    /** @var PHPUnitConfig */
     private $phpunitConfig;
 
     /**
@@ -28,11 +28,11 @@ class ProcessFactory
     }
 
     /**
-     * @param $testFilePath
-     * @return SymfonyProcessWrapper
-     * @throws \Exception
+     * @param string $testFilePath
+     * @return ParaunitProcessInterface
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    public function createProcess($testFilePath)
+    public function createProcess(string $testFilePath): ParaunitProcessInterface
     {
         $uniqueId = $this->createUniqueId($testFilePath);
         $command = $this->createCommandLine($testFilePath, $uniqueId);
@@ -40,23 +40,14 @@ class ProcessFactory
         return new SymfonyProcessWrapper($command, $uniqueId);
     }
 
-    /**
-     * @param string $testFilePath
-     * @param string $uniqueId
-     * @return string
-     */
-    private function createCommandLine($testFilePath, $uniqueId)
+    private function createCommandLine(string $testFilePath, string $uniqueId): string
     {
         return $this->cliCommand->getExecutable()
             . ' ' . $this->cliCommand->getOptions($this->phpunitConfig, $uniqueId)
             . ' ' . $testFilePath;
     }
 
-    /**
-     * @param string $testFilePath
-     * @return string
-     */
-    private function createUniqueId($testFilePath)
+    private function createUniqueId(string $testFilePath): string
     {
         return md5($testFilePath);
     }

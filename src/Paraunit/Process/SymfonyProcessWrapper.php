@@ -11,27 +11,29 @@ use Symfony\Component\Process\Process;
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
     /** @var Process */
-    protected $process;
+    private $process;
 
     /**
-     * {@inheritdoc}
+     * SymfonyProcessWrapper constructor.
+     * @param string $commandLine
+     * @param string $uniqueId
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    public function __construct($commandLine, $uniqueId)
+    public function __construct(string $commandLine, string $uniqueId)
     {
         parent::__construct($commandLine, $uniqueId);
         $this->process = new Process($commandLine);
     }
 
-    /**
-     * @return bool
-     */
-    public function isTerminated()
+    public function isTerminated(): bool
     {
         return $this->process->isTerminated();
     }
 
     /**
-     *
+     * @return void
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function start()
     {
@@ -39,15 +41,17 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public function getOutput()
+    public function getOutput(): string
     {
         return $this->process->getOutput();
     }
 
     /**
-     * {@inheritdoc}
+     * @return int|null
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function getExitCode()
     {
@@ -55,40 +59,32 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function restart()
     {
-        $this->reset()->start();
-
-        return $this;
+        $this->reset();
+        $this->start();
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
     public function reset()
     {
-        // RESET DELLO STATO
         parent::reset();
 
         $this->process = new Process($this->process->getCommandLine());
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCommandLine()
+    public function getCommandLine(): string
     {
         return $this->process->getCommandLine();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isRunning()
+    public function isRunning(): bool
     {
         return $this->process->isRunning();
     }

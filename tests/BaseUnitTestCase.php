@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
+use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Class BaseUnitTestCase
@@ -61,7 +62,11 @@ abstract class BaseUnitTestCase extends BaseTestCase
 
     protected function mockTestFormat()
     {
-        return $this->prophesize('Paraunit\TestResult\TestResultFormat')->reveal();
+        $format = $this->prophesize(TestResultFormat::class);
+        $format->getTag()
+            ->willReturn('tag');
+
+        return $format->reveal();
     }
 
     protected function mockTestResult()

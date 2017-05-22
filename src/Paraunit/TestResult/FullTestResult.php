@@ -21,23 +21,20 @@ class FullTestResult extends TestResultWithMessage implements PrintableTestResul
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct($functionName, $failureMessage)
+    public function __construct(string $functionName, string $failureMessage)
     {
         parent::__construct($functionName, $failureMessage);
-        $this->trace = array();
+        $this->trace = [];
     }
 
     /**
      * @return TraceStep[]
      */
-    public function getTrace()
+    public function getTrace(): array
     {
         return $this->trace;
     }
 
-    /**
-     * @param TraceStep $traceStep
-     */
     public function addTraceStep(TraceStep $traceStep)
     {
         $this->trace[] = $traceStep;
