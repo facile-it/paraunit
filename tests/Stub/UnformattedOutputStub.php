@@ -6,28 +6,21 @@ use Symfony\Component\Console\Output\Output;
 
 /**
  * Class UnformattedOutputStub
- * This class is inspired by Symfony\Component\Console\Output\BufferedOutput, which is not available in Symfony 2.3
  * @package Tests\Stub
  */
 class UnformattedOutputStub extends Output
 {
     /** @var string */
-    protected $buffer;
+    private $buffer;
 
     public function __construct()
     {
         parent::__construct(null, false);
+        $this->buffer = '';
     }
 
-    /**
-     * @return string
-     */
-    public function getOutput()
+    public function getOutput(): string
     {
-        if ($this->buffer === null) {
-            $this->buffer = $this->fetch();
-        }
-
         return $this->buffer;
     }
 
@@ -41,18 +34,5 @@ class UnformattedOutputStub extends Output
         if ($newline) {
             $this->buffer .= "\n";
         }
-    }
-
-    /**
-     * Empties buffer and returns its content.
-     *
-     * @return string
-     */
-    public function fetch()
-    {
-        $content = $this->buffer;
-        $this->buffer = '';
-
-        return $content;
     }
 }

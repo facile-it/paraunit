@@ -72,8 +72,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
         $exitCode = $runner->run($outputInterface);
 
-        $output = $outputInterface->fetch();
-        $this->assertContains(str_repeat('A', 3) . 'E', $output);
+        $this->assertContains(str_repeat('A', 3) . 'E', $outputInterface->getOutput());
         $this->assertNotEquals(0, $exitCode);
     }
 
@@ -102,7 +101,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Exit code should not be 0'
         );
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
@@ -126,7 +125,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
@@ -157,7 +156,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertEquals(0, $runner->run($outputInterface));
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertNotContains('...', $output);
         $this->assertNotContains('ABNORMAL TERMINATION', $output);
         $this->assertContains('Executed: 1 test classes, 0 tests', $output);
@@ -175,7 +174,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
@@ -191,7 +190,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
         $this->assertContains(
