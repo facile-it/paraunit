@@ -22,9 +22,7 @@ matrix:
     - php: 7.1
       env:
         - XDEBUG_DISABLE=true
-    - php: hhvm
-  allow_failures:
-    - php: hhvm
+    - php: nightly
   fast_finish: true
 
 install:
