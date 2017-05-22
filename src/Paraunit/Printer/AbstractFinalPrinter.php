@@ -15,9 +15,6 @@ abstract class AbstractFinalPrinter
     /** @var  TestResultList */
     protected $testResultList;
 
-    /** @var  OutputInterface */
-    protected $output;
-
     /**
      * AbstractFinalPrinter constructor.
      * @param TestResultList $testResultList

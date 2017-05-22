@@ -12,14 +12,10 @@ use Paraunit\Process\ParaunitProcessInterface;
 class ProcessEvent extends AbstractEvent
 {
     const PROCESS_STARTED = 'process_event.process_started';
-
     const PROCESS_TERMINATED = 'process_event.process_terminated';
 
     /** @var ParaunitProcessInterface */
-    protected $process;
-
-    /** @var  array */
-    protected $context;
+    private $process;
 
     /**
      * @param AbstractParaunitProcess $process
@@ -27,14 +23,11 @@ class ProcessEvent extends AbstractEvent
      */
     public function __construct(AbstractParaunitProcess $process, $context = array())
     {
+        parent::__construct($context);
         $this->process = $process;
-        $this->context = $context;
     }
 
-    /**
-     * @return AbstractParaunitProcess
-     */
-    public function getProcess()
+    public function getProcess(): AbstractParaunitProcess
     {
         return $this->process;
     }

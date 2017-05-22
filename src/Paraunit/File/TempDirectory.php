@@ -28,7 +28,7 @@ class TempDirectory
      * @return string
      * @throws \RuntimeException If the temp dirs cannot be created
      */
-    public function getTempDirForThisExecution()
+    public function getTempDirForThisExecution(): string
     {
         $dir = self::getTempBaseDir() . DIRECTORY_SEPARATOR . self::$timestamp;
         self::mkdirIfNotExists($dir);
@@ -44,7 +44,7 @@ class TempDirectory
      *
      * @throws \RuntimeException
      */
-    public static function getTempBaseDir()
+    public static function getTempBaseDir(): string
     {
         $dirs = self::$tempDirs;
         // Fallback to sys temp dir
@@ -72,7 +72,7 @@ class TempDirectory
      *
      * @throws \RuntimeException If the dir cannot be created
      */
-    private static function mkdirIfNotExists($path)
+    private static function mkdirIfNotExists(string $path)
     {
         if (file_exists($path)) {
             return;

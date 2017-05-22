@@ -31,11 +31,7 @@ class CoverageFetcher
         $this->resultHandler = $failureHandler;
     }
 
-    /**
-     * @param AbstractParaunitProcess $process
-     * @return \SebastianBergmann\CodeCoverage\CodeCoverage
-     */
-    public function fetch(AbstractParaunitProcess $process)
+    public function fetch(AbstractParaunitProcess $process): \SebastianBergmann\CodeCoverage\CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
         $codeCoverage = null;
@@ -54,11 +50,7 @@ class CoverageFetcher
         return new CodeCoverage();
     }
 
-    /**
-     * @param string $tempFilename
-     * @return bool
-     */
-    private function coverageFileIsValid($tempFilename)
+    private function coverageFileIsValid(string $tempFilename): bool
     {
         if (! file_exists($tempFilename)) {
             return false;
@@ -82,10 +74,12 @@ class CoverageFetcher
     private function overrideCoverageClassDefinition($tempFilename)
     {
         $fileContent = str_replace(
-            array(
+            [
                 'new SebastianBergmann\CodeCoverage\CodeCoverage',
-                'new PHP_CodeCoverage'
-            ),
+                'new PHP_CodeCoverage',
+                'new \SebastianBergmann\CodeCoverage\CodeCoverage',
+                'new SebastianBergmann\CodeCoverage\CodeCoverage',
+            ],
             'new Paraunit\Proxy\Coverage\CodeCoverage',
             file_get_contents($tempFilename)
         );

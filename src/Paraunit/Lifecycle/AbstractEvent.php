@@ -10,25 +10,34 @@ use Symfony\Component\EventDispatcher\Event;
  */
 abstract class AbstractEvent extends Event
 {
-    /** @var  array */
-    protected $context = array();
+    /** @var array */
+    private $context;
+
+    /**
+     * AbstractEvent constructor.
+     * @param array $context
+     */
+    public function __construct(array $context = [])
+    {
+        $this->context = $context;
+    }
 
     /**
      * @param $contextParameterName
      *
      * @return bool
      */
-    public function has($contextParameterName)
+    public function has(string $contextParameterName): bool
     {
         return isset($this->context[$contextParameterName]);
     }
 
     /**
-     * @param $contextParameterName
-     *
+     * @param string $contextParameterName
      * @return mixed
+     * @throws \LogicException If parameter is not found
      */
-    public function get($contextParameterName)
+    public function get(string $contextParameterName)
     {
         if (! $this->has($contextParameterName)) {
             throw new \LogicException('Cannot find parameter: ' . $contextParameterName);

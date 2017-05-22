@@ -14,10 +14,10 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
  */
 class LogParser
 {
-    /** @var  LogFetcher */
+    /** @var LogFetcher */
     private $logLocator;
 
-    /** @var  ParserChainElementInterface[] */
+    /** @var ParserChainElementInterface[] */
     private $parsers;
 
     /** @var TestResultHandlerInterface */
@@ -46,7 +46,7 @@ class LogParser
     /**
      * @return TestResultBearerInterface[]
      */
-    public function getParsers()
+    public function getParsers(): array
     {
         return $this->parsers;
     }
@@ -89,7 +89,7 @@ class LogParser
      * @param array $logs
      * @return bool
      */
-    private function noTestsExecuted(AbstractParaunitProcess $process, array $logs)
+    private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
         return $process->getExitCode() === 0 && count($logs) === 1;
     }

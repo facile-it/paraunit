@@ -12,10 +12,8 @@ class EngineEvent extends AbstractEvent
 {
     // This Event will be triggered before the whole paraunit engine is started
     const BEFORE_START = 'engine_event.before_start';
-
     // This Event will be triggered when paraunit finished building the process stack
     const START = 'engine_event.start';
-
     // This Event will be triggered when paraunit finished all test execution
     const END = 'engine_event.end';
 
@@ -28,14 +26,11 @@ class EngineEvent extends AbstractEvent
      */
     public function __construct(OutputInterface $outputInterface, $context = array())
     {
+        parent::__construct($context);
         $this->outputInterface = $outputInterface;
-        $this->context = $context;
     }
 
-    /**
-     * @return OutputInterface
-     */
-    public function getOutputInterface()
+    public function getOutputInterface(): OutputInterface
     {
         return $this->outputInterface;
     }

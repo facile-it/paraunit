@@ -9,6 +9,8 @@ use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Prophecy\Argument;
+use Paraunit\Printer\SingleResultFormatter;
+use Symfony\Component\Console\Output\Output;
 
 /**
  * Class ProcessPrinterTest
@@ -22,13 +24,15 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->addTestResult($testResult);
 
-        $formatter = $this->prophesize('Paraunit\Printer\SingleResultFormatter');
-        $formatter->formatSingleResult($testResult)->shouldBeCalled()->willReturn('<ok>.</ok>');
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $formatter->formatSingleResult($testResult)
+            ->shouldBeCalled()
+            ->willReturn('<ok>.</ok>');
 
         $printer = new ProcessPrinter($formatter->reveal());
         $output = new UnformattedOutputStub();
 
-        $processEvent = new ProcessEvent($process, array('output_interface' => $output));
+        $processEvent = new ProcessEvent($process, ['output_interface' => $output]);
         $printer->onProcessTerminated($processEvent);
 
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
@@ -37,31 +41,38 @@ class ProcessPrinterTest extends BaseUnitTestCase
     /**
      * @dataProvider newLineTimesProvider
      */
-    public function testPrintProcessResultAddsNewlineAfter80Chars($times, $newLineTimes)
+    public function testPrintProcessResultAddsNewlineAfter80Chars(int $times, int $newLineTimes)
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {
             $process->addTestResult($this->mockPrintableTestResult());
         }
 
-        $printer = new ProcessPrinter($this->prophesize('Paraunit\Printer\SingleResultFormatter')->reveal());
-        $output = $this->prophesize('Symfony\Component\Console\Output\Output');
-        $output->write(Argument::any())->willReturn()->shouldBeCalledTimes($times);
-        $output->writeln('')->willReturn()->shouldBeCalledTimes($newLineTimes);
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $formatter->formatSingleResult(Argument::cetera())
+            ->willReturn('<ok>.</ok>');
+        $printer = new ProcessPrinter($formatter->reveal());
+        $output = $this->prophesize(Output::class);
+        $output->write(Argument::any())
+            ->willReturn()
+            ->shouldBeCalledTimes($times);
+        $output->writeln('')
+            ->willReturn()
+            ->shouldBeCalledTimes($newLineTimes);
 
-        $processEvent = new ProcessEvent($process, array('output_interface' => $output->reveal()));
+        $processEvent = new ProcessEvent($process, ['output_interface' => $output->reveal()]);
         $printer->onProcessTerminated($processEvent);
     }
 
-    public function newLineTimesProvider()
+    public function newLineTimesProvider(): array
     {
-        return array(
-            array(79, 0),
-            array(80, 0),
-            array(81, 1),
-            array(200, 2),
-            array(240, 2),
-            array(241, 3),
-        );
+        return [
+            [79, 0],
+            [80, 0],
+            [81, 1],
+            [200, 2],
+            [240, 2],
+            [241, 3],
+        ];
     }
 }

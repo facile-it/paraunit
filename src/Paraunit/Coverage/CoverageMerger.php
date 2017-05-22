@@ -52,7 +52,7 @@ class CoverageMerger
     /**
      * @return CodeCoverage
      */
-    public function getCoverageData()
+    public function getCoverageData(): CodeCoverage
     {
         return $this->coverageData;
     }

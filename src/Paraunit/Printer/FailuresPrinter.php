@@ -44,7 +44,7 @@ class FailuresPrinter extends AbstractFinalPrinter
         $i = 1;
 
         foreach ($testResultContainer->getTestResults() as $testResult) {
-            if ($i == 1) {
+            if ($i === 1) {
                 $output->writeln('');
                 $output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
             }

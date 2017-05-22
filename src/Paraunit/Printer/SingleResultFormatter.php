@@ -31,11 +31,7 @@ class SingleResultFormatter
         }
     }
 
-    /**
-     * @param PrintableTestResultInterface $singleResult
-     * @return string
-     */
-    public function formatSingleResult(PrintableTestResultInterface $singleResult)
+    public function formatSingleResult(PrintableTestResultInterface $singleResult): string
     {
         $format = $singleResult->getTestResultFormat();
 
@@ -49,9 +45,6 @@ class SingleResultFormatter
         return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
     }
 
-    /**
-     * @param TestResultWithSymbolFormat $format
-     */
     private function addToMap(TestResultWithSymbolFormat $format)
     {
         $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
