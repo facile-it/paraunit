@@ -289,7 +289,9 @@ class LogPrinterTest extends BaseUnitTestCase
         $logFilename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5(__FILE__) . '.json.log';
         $this->assertFileExists($logFilename, 'Log file missing! Maybe you called this method too early?');
 
-        return file_get_contents($logFilename);
+        $content = file_get_contents($logFilename);
+
+        return preg_replace('/\r\n/', "\n", $content);
     }
 
     private function encodeWithStartTestSuite(array $data = []): string
