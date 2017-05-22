@@ -1,9 +1,10 @@
 build: false
-version: '0.7.x-{build}'
+version: '0.8.x-{build}'
 clone_depth: 1
 cache:
   - composer.phar
   - C:\Users\appveyor\AppData\Local\Composer\files
+  - c:\php -> appveyor.yml
 
 init:
   - SET PATH=c:\php;%PATH%
@@ -14,8 +15,8 @@ install:
 ## install PHP
   - mkdir c:\php && cd c:\php
   - appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
-  - appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-5.3.29-nts-Win32-VC9-x86.zip
-  - 7z x php-5.3.29-nts-Win32-VC9-x86.zip -y >nul
+  - appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-7.0.9-nts-Win32-VC14-x86.zip
+  - 7z x php-7.0.9-nts-Win32-VC14-x86.zip -y >nul
   - del /Q *.zip
   - copy /Y php.ini-development php.ini
   - echo extension_dir=ext >> php.ini
@@ -25,9 +26,9 @@ install:
   - echo curl.cainfo=c:\php\cacert.pem >> php.ini
 ## install composer and dependencies
   - cd c:\projects\paraunit
-  - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/download/1.2.3/composer.phar)
+  - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/composer.phar)
   - php composer.phar self-update
-  - php composer.phar update --prefer-dist --prefer-stable --no-interaction
+  - php composer.phar update --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi
 
 test_script:
   - cd c:\projects\paraunit
