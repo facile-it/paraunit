@@ -30,6 +30,7 @@ class ProcessFactory
     /**
      * @param string $testFilePath
      * @return ParaunitProcessInterface
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function createProcess(string $testFilePath): ParaunitProcessInterface
@@ -37,7 +38,7 @@ class ProcessFactory
         $uniqueId = $this->createUniqueId($testFilePath);
         $command = $this->createCommandLine($testFilePath, $uniqueId);
 
-        return new SymfonyProcessWrapper($command, $uniqueId);
+        return new SymfonyProcessWrapper($testFilePath, $command, $uniqueId);
     }
 
     private function createCommandLine(string $testFilePath, string $uniqueId): string

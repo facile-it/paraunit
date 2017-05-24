@@ -8,8 +8,6 @@ namespace Paraunit\Process;
  */
 interface ParaunitProcessInterface
 {
-    public function __construct(string $commandLine, string $uniqueId);
-
     public function isTerminated(): bool;
 
     public function getUniqueId(): string;

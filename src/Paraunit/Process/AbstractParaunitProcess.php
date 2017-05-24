@@ -34,15 +34,18 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
 
     /**
      * {@inheritdoc}
+     * @throws \InvalidArgumentException
      */
-    public function __construct(string $commandLine, string $uniqueId)
+    public function __construct(string $filePath, string $uniqueId)
     {
-        $this->uniqueId = $uniqueId;
-
-        $filename = array();
-        if (preg_match('/(?<=[\/\\\])[A-z]+\.php/', $commandLine, $filename) === 1) {
-            $this->filename = $filename[0];
+        $filename = [];
+        if (preg_match('~([^\\\\/]+)$~', $filePath, $filename) === 1) {
+            $this->filename = $filename[1];
+        } else {
+            throw new \InvalidArgumentException('Filename not recognized: ' . $filePath);
         }
+
+        $this->uniqueId = $uniqueId;
 
         $this->shouldBeRetried = false;
         $this->testResults = array();

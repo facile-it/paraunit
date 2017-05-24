@@ -20,15 +20,21 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     private $exitCode;
 
     /**
-     * {@inheritdoc}
+     * StubbedParaunitProcess constructor.
+     * @param string $filePath
+     * @param string $commandLine
+     * @param string|null $uniqueId
      */
-    public function __construct(string $commandLine = 'testCommandLine', string $uniqueId = null)
-    {
+    public function __construct(
+        string $filePath = 'Test.php',
+        string $commandLine = 'phpunit Test.php',
+        string $uniqueId = null
+    ) {
         if (null === $uniqueId) {
-            $uniqueId = md5($commandLine);
+            $uniqueId = md5($filePath);
         }
 
-        parent::__construct($commandLine, $uniqueId);
+        parent::__construct($filePath, $uniqueId);
 
         $this->commandLine = $commandLine;
         $this->filename = 'Test.php';

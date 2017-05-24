@@ -20,7 +20,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
      */
     public function testFetch(string $coverageStub)
     {
-        $process = new StubbedParaunitProcess('test1', 'uniqueId');
+        $process = new StubbedParaunitProcess('test.php', 'cmd', 'uniqueId');
 
         $filename = $this->getTempFilename();
         copy($coverageStub, $filename);
@@ -55,7 +55,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
     }
     public function testFetchIgnoresMissingCoverageFiles()
     {
-        $process = new StubbedParaunitProcess('test1', 'uniqueId');
+        $process = new StubbedParaunitProcess('test.php', 'cmd', 'uniqueId');
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')
@@ -75,7 +75,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
     public function testFetchIgnoresWrongFiles()
     {
-        $process = new StubbedParaunitProcess('test1', 'uniqueId');
+        $process = new StubbedParaunitProcess('test.php', 'cmd', 'uniqueId');
 
         $filename = $this->getTempFilename();
         copy($this->getWrongCoverageStubFilePath(), $filename);

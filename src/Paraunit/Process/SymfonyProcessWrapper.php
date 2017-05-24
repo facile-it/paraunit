@@ -15,13 +15,15 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /**
      * SymfonyProcessWrapper constructor.
+     * @param string $filePath
      * @param string $commandLine
      * @param string $uniqueId
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    public function __construct(string $commandLine, string $uniqueId)
+    public function __construct(string $filePath, string $commandLine, string $uniqueId)
     {
-        parent::__construct($commandLine, $uniqueId);
+        parent::__construct($filePath, $uniqueId);
         $this->process = new Process($commandLine);
     }
 
