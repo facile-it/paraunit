@@ -27,14 +27,13 @@ matrix:
 
 install:
   - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini; fi
-  - if [[ $TEST_COVERAGE ]]; then PHPUNIT_FLAGS="--coverage-clover ./build/logs/clover.xml"; fi
 
   - if [[ $DEPS == "low" ]]; then composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction; fi
   - if [[ $DEPS == "lock" ]]; then composer install --prefer-dist --no-interaction; fi
   - if [[ -z $DEPS ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
 
 script:
-  - bin/phpunit -v $PHPUNIT_FLAGS
+  - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --coverage-clover ./build/logs/clover.xml; else bin/phpunit; fi
 
 after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
