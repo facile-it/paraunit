@@ -9,18 +9,20 @@ namespace Paraunit\Configuration;
  */
 class OutputPath
 {
-    /** @var  string */
+    /** @var string */
     private $path;
 
     /**
      * OutputPath constructor.
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
-        if (strlen($path) > 0) {
-            $this->path = $path;
+        if ($path === '') {
+            throw new \InvalidArgumentException('Empty path provided: not valid');
         }
+
+        $this->path = $path;
     }
 
     public function isEmpty(): bool
@@ -34,10 +36,6 @@ class OutputPath
      */
     public function getPath(): string
     {
-        if ($this->isEmpty()) {
-            throw new \RuntimeException('Program requested an empty path');
-        }
-
         return $this->path;
     }
 }

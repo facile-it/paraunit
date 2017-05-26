@@ -95,14 +95,17 @@ abstract class BaseUnitTestCase extends BaseTestCase
 
     protected function removeDirectory(string $path): bool
     {
-        $it = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
 
+        /** @var \SplFileInfo $file */
         foreach ($files as $file) {
-            if (is_dir($file)) {
-                $this->removeDirectory($file);
+            if ($file->isDir()) {
+                $this->removeDirectory($file->getRealPath());
             } else {
-                unlink($file);
+                unlink($file->getRealPath());
             }
         }
 
