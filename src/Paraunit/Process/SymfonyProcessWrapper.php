@@ -73,6 +73,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /**
      * @return void
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function reset()
     {

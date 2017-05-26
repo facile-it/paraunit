@@ -24,7 +24,7 @@ class EngineEvent extends AbstractEvent
      * @param OutputInterface $outputInterface
      * @param array $context
      */
-    public function __construct(OutputInterface $outputInterface, $context = [])
+    public function __construct(OutputInterface $outputInterface, array $context = [])
     {
         parent::__construct($context);
         $this->outputInterface = $outputInterface;

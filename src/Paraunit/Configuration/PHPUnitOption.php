@@ -62,10 +62,7 @@ class PHPUnitOption
         return $this->value;
     }
 
-    /**
-     * @return boolean
-     */
-    public function hasValue()
+    public function hasValue(): bool
     {
         return $this->hasValue;
     }

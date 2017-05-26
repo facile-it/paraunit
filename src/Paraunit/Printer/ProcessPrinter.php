@@ -32,6 +32,7 @@ class ProcessPrinter
 
     /**
      * @param ProcessEvent $processEvent
+     * @throws \BadMethodCallException
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {

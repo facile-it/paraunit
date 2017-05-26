@@ -17,10 +17,10 @@ class RetryParser implements ParserChainElementInterface
     /** @var TestResultHandlerInterface */
     private $testResultContainer;
 
-    /** @var  int */
+    /** @var int */
     private $maxRetryCount;
 
-    /** @var  string */
+    /** @var string */
     private $regexPattern;
 
     /**

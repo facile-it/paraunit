@@ -26,6 +26,7 @@ class ParallelCommand extends Command
     /**
      * ParallelCommand constructor.
      * @param ParallelConfiguration $configuration
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(ParallelConfiguration $configuration)
     {

@@ -12,7 +12,7 @@ use Paraunit\Parser\JSON\LogPrinter;
  */
 class TestCommandLine implements CliCommandInterface
 {
-    /** @var  PHPUnitBinFile */
+    /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
     /**
