@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 $coverage = new PHP_CodeCoverage;
 $coverage->setData(array (
   '/home/paraunit/projects/src/Paraunit/Process/RetryAwareInterface.php' =>
