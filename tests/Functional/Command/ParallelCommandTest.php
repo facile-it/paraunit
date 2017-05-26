@@ -93,6 +93,25 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
+    public function testExecutionWithoutConfiguration()
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute(array(
+            'command' => $command->getName(),
+            '--filter' => 'do_not_execute_anything',
+        ));
+
+        $output = $commandTester->getDisplay();
+        $this->assertContains('NO TESTS EXECUTED', $output);
+        $this->assertContains('0 tests', $output);
+        $this->assertSame(0, $exitCode);
+        $this->assertFileNotExists(dirname(__DIR__) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
+    }
+
     /**
      * @return string[]
      */
