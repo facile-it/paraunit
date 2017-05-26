@@ -38,14 +38,16 @@ class ParallelCommand extends Command
             new PHPUnitOption('exclude-group'),
             new PHPUnitOption('test-suffix'),
 
-            new PHPUnitOption('report-useless-tests', false),
+            new PHPUnitOption('dont-report-useless-tests', false),
+            new PHPUnitOption('strict-coverage', false),
             new PHPUnitOption('strict-global-state', false),
             new PHPUnitOption('disallow-test-output', false),
+            new PHPUnitOption('disallow-resource-usage', false),
             new PHPUnitOption('enforce-time-limit', false),
             new PHPUnitOption('disallow-todo-tests', false),
 
             new PHPUnitOption('process-isolation', false),
-            new PHPUnitOption('no-globals-backup', false),
+            new PHPUnitOption('globals-backup', false),
             new PHPUnitOption('static-backup', false),
 
             new PHPUnitOption('loader'),
@@ -54,6 +56,8 @@ class ParallelCommand extends Command
 
             new PHPUnitOption('bootstrap'),
             new PHPUnitOption('no-configuration'),
+            new PHPUnitOption('no-coverage'),
+            new PHPUnitOption('no-extensions'),
             new PHPUnitOption('include-path'),
         ];
 

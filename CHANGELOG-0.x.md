@@ -11,6 +11,13 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 * Drop support for PHPUnit 4 & 5
 * Minimum PHP version required: 7.0
 * Improvement to the whole codebase (scalar and return type hints, strict types enforced)
+* Realign option passed through to PHPUnit:
+    * Added `--strict-coverage`
+    * Added `--disallow-resource-usage`
+    * Added `--no-coverage`
+    * Added `--no-extensions`
+    * Changed `--report-useless-tests` to `--dont-report-useless-tests` 
+    * Changed `--no-globals-backup` to `--globals-backup` 
 
 ## [0.8.2] - 2017-01-26
 

@@ -54,7 +54,7 @@ class ParallelCommandTest extends BaseTestCase
         $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
-            '--repeat' => 1,
+            '--repeat' => '1',
             'stringFilter' => 'green',
         ]);
 
