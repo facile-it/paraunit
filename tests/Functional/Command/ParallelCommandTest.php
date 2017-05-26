@@ -45,7 +45,6 @@ class ParallelCommandTest extends BaseTestCase
 
     public function testExecutionAllGreenWithRepeatOption()
     {
-        $this->markTestIncomplete('Issue #92 still to be fixed');
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
