@@ -3,6 +3,15 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9] - TBA
+
+### Changed
+
+* Support for PHPUnit 6
+* Drop support for PHPUnit 4 & 5
+* Minimum PHP version required: 7.0
+* Improvement to the whole codebase (scalar and return type hints, strict types enforced)
+
 ## [0.8.2] - 2017-01-26
 
 ### Fixed
