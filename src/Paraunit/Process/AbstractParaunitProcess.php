@@ -48,7 +48,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         $this->uniqueId = $uniqueId;
 
         $this->shouldBeRetried = false;
-        $this->testResults = array();
+        $this->testResults = [];
         $this->waitingForTestResult = true;
     }
 
@@ -70,7 +70,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
     public function markAsToBeRetried()
     {
         $this->shouldBeRetried = true;
-        $this->testResults = array();
+        $this->testResults = [];
     }
 
     public function isToBeRetried(): bool

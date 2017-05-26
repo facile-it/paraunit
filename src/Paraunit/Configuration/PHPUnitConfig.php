@@ -32,7 +32,7 @@ class PHPUnitConfig
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
         $this->originalFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        $this->phpunitOptions = array();
+        $this->phpunitOptions = [];
     }
 
     /**

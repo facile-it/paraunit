@@ -9,9 +9,9 @@ namespace Paraunit\File;
 class TempDirectory
 {
     /** @var string[] */
-    private static $tempDirs = array(
+    private static $tempDirs = [
         '/dev/shm',
-    );
+    ];
 
     /** @var string */
     private static $timestamp;

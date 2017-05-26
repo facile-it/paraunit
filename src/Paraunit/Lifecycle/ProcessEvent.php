@@ -21,7 +21,7 @@ class ProcessEvent extends AbstractEvent
      * @param AbstractParaunitProcess $process
      * @param array $context
      */
-    public function __construct(AbstractParaunitProcess $process, $context = array())
+    public function __construct(AbstractParaunitProcess $process, $context = [])
     {
         parent::__construct($context);
         $this->process = $process;

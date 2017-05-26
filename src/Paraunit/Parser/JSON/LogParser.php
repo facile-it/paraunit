@@ -32,7 +32,7 @@ class LogParser
     {
         $this->logLocator = $logLocator;
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
-        $this->parsers = array();
+        $this->parsers = [];
     }
 
     /**

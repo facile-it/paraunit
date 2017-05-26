@@ -21,7 +21,7 @@ class SingleResultFormatter
      */
     public function __construct(TestResultList $testResultList)
     {
-        $this->tagMap = array();
+        $this->tagMap = [];
 
         foreach ($testResultList->getTestResultContainers() as $parser) {
             $format = $parser->getTestResultFormat();

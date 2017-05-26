@@ -57,7 +57,7 @@ class Filter
      */
     public function filterTestFiles(): array
     {
-        $aggregatedFiles = array();
+        $aggregatedFiles = [];
 
         $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
@@ -102,7 +102,7 @@ class Filter
      */
     private function getExcludesArray(\DOMElement $testSuiteNode): array
     {
-        $excludes = array();
+        $excludes = [];
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
             $excludes[] = (string)$excludeNode->nodeValue;
         }

@@ -219,7 +219,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function endTest(Test $test, $time)
     {
         if ($this->currentTestPass) {
-            $this->writeCase('pass', $time, array(), '', $test);
+            $this->writeCase('pass', $time, [], '', $test);
         }
     }
 
@@ -230,25 +230,23 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param string $message
      * @param TestCase|null $test
      */
-    protected function writeCase($status, $time, array $trace = array(), $message = '', $test = null)
+    protected function writeCase($status, $time, array $trace = [], $message = '', $test = null)
     {
         $output = '';
         // take care of TestSuite producing error (e.g. by running into exception) as TestSuite doesn't have hasOutput
         if ($test !== null && method_exists($test, 'hasOutput') && $test->hasOutput()) {
             $output = $test->getActualOutput();
         }
-        $this->writeArray(
-            array(
-                'event' => 'test',
-                'suite' => $this->currentTestSuiteName,
-                'test' => $this->currentTestName,
-                'status' => $status,
-                'time' => $time,
-                'trace' => $trace,
-                'message' => $this->convertToUtf8($message),
-                'output' => $output,
-            )
-        );
+        $this->writeArray([
+            'event' => 'test',
+            'suite' => $this->currentTestSuiteName,
+            'test' => $this->currentTestName,
+            'status' => $status,
+            'time' => $time,
+            'trace' => $trace,
+            'message' => $this->convertToUtf8($message),
+            'output' => $output,
+        ]);
     }
 
     /**
