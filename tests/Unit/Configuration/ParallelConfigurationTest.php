@@ -1,9 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelConfiguration;
 use Prophecy\Argument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -15,7 +18,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
     public function testBuildContainer()
     {
         $paraunit = new ParallelConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input = $this->prophesize(InputInterface::class);
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')
@@ -29,21 +32,21 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $requiredParameters = array(
+        $requiredParameters = [
             'paraunit.max_process_count' => 10,
             'paraunit.testsuite' => 'testsuite',
             'paraunit.string_filter' => 'text',
             'paraunit.phpunit_config_filename' => $this->getConfigForStubs(),
-        );
+        ];
         
         foreach ($requiredParameters as $parameterName => $expectedValue) {
             $this->assertTrue($container->hasParameter($parameterName), 'Parameter missing: ' . $parameterName);
             $this->assertEquals($expectedValue, $container->getParameter($parameterName));
         }
 
-        $requiredDefinitions = array(
+        $requiredDefinitions = [
             'paraunit.file.cleaner',
             'paraunit.parser.json_log_parser',
             'paraunit.printer.process_printer',
@@ -54,7 +57,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             'paraunit.test_result.pass_container',
             'paraunit.test_result.pass_test_result_format',
             'paraunit.configuration.phpunit_config',
-        );
+        ];
 
         $servicesIds = $container->getServiceIds();
         $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);

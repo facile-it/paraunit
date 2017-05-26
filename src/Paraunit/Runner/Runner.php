@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
@@ -49,7 +50,7 @@ class Runner
         EventDispatcherInterface $eventDispatcher,
         ProcessFactory $processFactory,
         Filter $filter,
-        $maxProcessNumber = 10
+        int $maxProcessNumber = 10
     ) {
 
         $this->eventDispatcher = $eventDispatcher;
@@ -57,17 +58,18 @@ class Runner
         $this->filter = $filter;
         $this->maxProcessNumber = $maxProcessNumber;
 
-        $this->processStack = array();
-        $this->processCompleted = array();
-        $this->processRunning = array();
+        $this->processStack = [];
+        $this->processCompleted = [];
+        $this->processRunning = [];
     }
 
     /**
      * @param OutputInterface $outputInterface
      * @param bool $debug
      * @return int
+     * @throws \RuntimeException
      */
-    public function run(OutputInterface $outputInterface, $debug = false)
+    public function run(OutputInterface $outputInterface, bool $debug = false): int
     {
         $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START, new EngineEvent($outputInterface));
         $start = new \Datetime('now');
@@ -77,7 +79,7 @@ class Runner
 
         $this->eventDispatcher->dispatch(
             EngineEvent::START,
-            new EngineEvent($outputInterface, array('start' => $start,))
+            new EngineEvent($outputInterface, ['start' => $start])
         );
 
         while (count($this->processStack) > 0 || count($this->processRunning) > 0) {
@@ -89,7 +91,7 @@ class Runner
                 if ($process->isTerminated()) {
                     $this->eventDispatcher->dispatch(
                         ProcessEvent::PROCESS_TERMINATED,
-                        new ProcessEvent($process, array('output_interface' => $outputInterface,))
+                        new ProcessEvent($process, ['output_interface' => $outputInterface,])
                     );
                     // Completed or back to the stack
                     $this->markProcessCompleted($process);
@@ -105,17 +107,14 @@ class Runner
             EngineEvent::END,
             new EngineEvent(
                 $outputInterface,
-                array('end' => $end, 'start' => $start, 'process_completed' => $this->processCompleted)
+                ['end' => $end, 'start' => $start, 'process_completed' => $this->processCompleted]
             )
         );
 
         return $this->getReturnCode();
     }
 
-    /**
-     * @return int
-     */
-    private function getReturnCode()
+    private function getReturnCode(): int
     {
         foreach ($this->processCompleted as $process) {
             if ($process->getExitCode() !== 0) {
@@ -128,8 +127,9 @@ class Runner
 
     /**
      * @param string[] $files
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    private function createProcessStackFromFiles($files)
+    private function createProcessStackFromFiles(array $files)
     {
         foreach ($files as $file) {
             $process = $this->processFactory->createProcess($file);
@@ -139,10 +139,9 @@ class Runner
 
     /**
      * @param $debug
-     *
      * @return ParaunitProcessInterface | null
      */
-    private function runProcess($debug)
+    private function runProcess(bool $debug)
     {
         if ($this->maxProcessNumber > count($this->processRunning) && count($this->processStack) > 0) {
             /** @var ParaunitProcessInterface $process */

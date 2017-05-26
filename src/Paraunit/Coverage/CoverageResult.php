@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Coverage;
 
@@ -23,7 +24,7 @@ class CoverageResult
     public function __construct(CoverageMerger $coverageMerger)
     {
         $this->coverageMerger = $coverageMerger;
-        $this->coverageProcessors = array();
+        $this->coverageProcessors = [];
     }
 
     public function addCoverageProcessor(CoverageProcessorInterface $processor)

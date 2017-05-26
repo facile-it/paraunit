@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Stub;
 
@@ -20,105 +21,76 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     private $exitCode;
 
     /**
-     * {@inheritdoc}
+     * StubbedParaunitProcess constructor.
+     * @param string $filePath
+     * @param string $commandLine
+     * @param string|null $uniqueId
      */
-    public function __construct($commandLine = 'testCommandLine', $uniqueId = null)
-    {
+    public function __construct(
+        string $filePath = 'Test.php',
+        string $commandLine = 'phpunit Test.php',
+        string $uniqueId = null
+    ) {
         if (null === $uniqueId) {
-            $uniqueId = md5($commandLine);
+            $uniqueId = md5($filePath);
         }
 
-        parent::__construct($commandLine, $uniqueId);
+        parent::__construct($filePath, $uniqueId);
 
         $this->commandLine = $commandLine;
         $this->filename = 'Test.php';
         $this->exitCode = 0;
     }
 
-    /**
-     * @param string $filename
-     */
-    public function setFilename($filename)
+    public function setFilename(string $filename)
     {
         $this->filename = $filename;
     }
 
-    /**
-     * @param bool $isToBeRetried
-     */
-    public function setIsToBeRetried($isToBeRetried)
+    public function setIsToBeRetried(bool $isToBeRetried)
     {
         $this->shouldBeRetried = $isToBeRetried;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCommandLine()
+    public function getCommandLine(): string
     {
         return $this->commandLine;
     }
 
-    /**
-     * @param string $output
-     */
-    public function setOutput($output)
+    public function setOutput(string $output)
     {
         $this->output = $output;
     }
 
-    /**
-     * @param int $exitCode
-     */
-    public function setExitCode($exitCode)
+    public function setExitCode(int $exitCode)
     {
         $this->exitCode = $exitCode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOutput()
+    public function getOutput(): string
     {
-        return $this->output;
+        return $this->output ?? '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isTerminated()
+    public function isTerminated(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function start()
     {
-        return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function restart()
     {
-        return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isRunning()
+    public function isRunning(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getExitCode()
+    public function getExitCode(): int
     {
         return $this->exitCode;
     }

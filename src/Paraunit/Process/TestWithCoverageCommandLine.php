@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Process;
 
@@ -29,10 +30,7 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
         $this->filenameFactory = $filenameFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getExecutable()
+    public function getExecutable(): string
     {
         if ($this->phpDbgBinFile->isAvailable()) {
             return $this->phpDbgBinFile->getPhpDbgBin();
@@ -41,12 +39,7 @@ class TestWithCoverageCommandLine extends TestCommandLine implements CliCommandI
         return parent::getExecutable();
     }
 
-    /**
-     * @param PHPUnitConfig $config
-     * @param string $uniqueId
-     * @return string
-     */
-    public function getOptions(PHPUnitConfig $config, $uniqueId)
+    public function getOptions(PHPUnitConfig $config, string $uniqueId): string
     {
         $options = '';
         if ($this->phpDbgBinFile->isAvailable()) {

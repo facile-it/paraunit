@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\StaticOutputPath;
+use PHPUnit\Framework\TestListener;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -13,8 +15,7 @@ class StaticOutputPathTest extends BaseUnitTestCase
 {
     public function testGetPathThrowExceptionIfNotReady()
     {
-        new StaticOutputPath(null);
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         StaticOutputPath::getPath();
     }
@@ -25,7 +26,7 @@ class StaticOutputPathTest extends BaseUnitTestCase
     public function testGetPath()
     {
         $instantiation = new StaticOutputPath($this->getStubPath());
-        $this->assertInstanceOf('\PHPUnit_Framework_TestListener', $instantiation);
+        $this->assertInstanceOf(TestListener::class, $instantiation);
 
         $this->assertEquals($this->getStubPath(), StaticOutputPath::getPath());
     }

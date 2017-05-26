@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Functional\Command;
 
@@ -8,6 +9,9 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
+use Tests\Stub\RaisingNoticeTestStub;
+use Tests\Stub\MissingProviderTestStub;
+use Tests\Stub\MySQLDeadLockTestStub;
 
 /**
  * Class ParallelCommandTest
@@ -18,18 +22,18 @@ class ParallelCommandTest extends BaseTestCase
     /**
      * @dataProvider configurationPathProvider
      */
-    public function testExecutionAllGreen($configurationPath)
+    public function testExecutionAllGreen(string $configurationPath)
     {
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
             'stringFilter' => 'green',
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
@@ -47,12 +51,12 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
             '--repeat' => 1,
             'stringFilter' => 'green',
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
@@ -65,7 +69,7 @@ class ParallelCommandTest extends BaseTestCase
     /**
      * @dataProvider configurationPathProvider
      */
-    public function testExecution($configurationPath)
+    public function testExecution(string $configurationPath)
     {
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
@@ -82,18 +86,40 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertContains('ABNORMAL TERMINATIONS', $output);
         $this->assertContains('ParseErrorTestStub.php', $output);
-        $this->assertContains('Tests\Stub\RaisingNoticeTestStub', $output);
-        $this->assertContains('Tests\Stub\MissingProviderTestStub', $output);
-        $this->assertContains('Tests\Stub\MySQLDeadLockTestStub', $output);
+        $this->assertContains(RaisingNoticeTestStub::class, $output);
+        $this->assertContains(MissingProviderTestStub::class, $output);
+        $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
         $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
-    public function configurationPathProvider()
+    public function testExecutionWithoutConfiguration()
     {
-        return array(
-            array($this->getConfigForStubs()),
-            array(implode(DIRECTORY_SEPARATOR, array('.', 'tests', 'Stub', 'phpunit_for_stubs.xml'))),
-        );
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute(array(
+            'command' => $command->getName(),
+            '--filter' => 'do_not_execute_anything',
+        ));
+
+        $output = $commandTester->getDisplay();
+        $this->assertContains('NO TESTS EXECUTED', $output);
+        $this->assertContains('0 tests', $output);
+        $this->assertSame(0, $exitCode);
+        $this->assertFileNotExists(dirname(__DIR__) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function configurationPathProvider(): array
+    {
+        return [
+            [$this->getConfigForStubs()],
+            [implode(DIRECTORY_SEPARATOR, ['.', 'tests', 'Stub', 'phpunit_for_stubs.xml'])],
+        ];
     }
 }

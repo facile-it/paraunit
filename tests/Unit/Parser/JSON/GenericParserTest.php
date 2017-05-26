@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
@@ -7,6 +8,8 @@ use Paraunit\TestResult\FullTestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
+use Paraunit\TestResult\TestResultFactory;
+use Paraunit\TestResult\TestResultContainer;
 
 /**
  * Class GenericParserTest
@@ -17,18 +20,23 @@ class GenericParserTest extends BaseUnitTestCase
     /**
      * @dataProvider matchesProvider
      */
-    public function testParsingFoundResult($statusToMatch, $startsWithToMatch, $status, $message, $shouldMatch = true)
-    {
+    public function testParsingFoundResult(
+        string $statusToMatch,
+        string $startsWithToMatch = null,
+        string $status,
+        string $message = null,
+        bool $shouldMatch = true
+    ) {
         $log = $this->getLogFromStub('test', $status, $message);
         if (null === $message) {
             unset($log->message);
         }
 
         $result = new FullTestResult('b', 'c');
-        
-        $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
+
+        $factory = $this->prophesize(TestResultFactory::class);
         $factory->createFromLog($log)->willReturn($result);
-        $resultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $resultContainer = $this->prophesize(TestResultContainer::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int)$shouldMatch);
 
@@ -44,16 +52,16 @@ class GenericParserTest extends BaseUnitTestCase
         }
     }
 
-    public function matchesProvider()
+    public function matchesProvider(): array
     {
-        return array(
-            array('error', null, 'error', 'anyMessage'),
-            array('error', 'Error found', 'error', 'Error found'),
+        return [
+            ['error', null, 'error', 'anyMessage'],
+            ['error', 'Error found', 'error', 'Error found'],
 
-            array('error', null, 'pass', 'anyMessage', false),
-            array('error', 'Error found', 'error', 'anoherMessage', false),
-            array('error', 'Error found', 'error', null, false),
-            array('error', 'Error found', 'pass', 'anoherMessage', false),
-        );
+            ['error', null, 'pass', 'anyMessage', false],
+            ['error', 'Error found', 'error', 'anoherMessage', false],
+            ['error', 'Error found', 'error', null, false],
+            ['error', 'Error found', 'pass', 'anoherMessage', false],
+        ];
     }
 }

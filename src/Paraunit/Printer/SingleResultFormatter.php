@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
@@ -21,7 +22,7 @@ class SingleResultFormatter
      */
     public function __construct(TestResultList $testResultList)
     {
-        $this->tagMap = array();
+        $this->tagMap = [];
 
         foreach ($testResultList->getTestResultContainers() as $parser) {
             $format = $parser->getTestResultFormat();
@@ -31,11 +32,7 @@ class SingleResultFormatter
         }
     }
 
-    /**
-     * @param PrintableTestResultInterface $singleResult
-     * @return string
-     */
-    public function formatSingleResult(PrintableTestResultInterface $singleResult)
+    public function formatSingleResult(PrintableTestResultInterface $singleResult): string
     {
         $format = $singleResult->getTestResultFormat();
 
@@ -49,9 +46,6 @@ class SingleResultFormatter
         return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
     }
 
-    /**
-     * @param TestResultWithSymbolFormat $format
-     */
     private function addToMap(TestResultWithSymbolFormat $format)
     {
         $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();

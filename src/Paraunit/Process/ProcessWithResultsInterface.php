@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Process;
 
@@ -6,38 +7,29 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 
 /**
- * Interface RetryAwareInterface.
+ * Interface ProcessWithResultsInterface
+ * @package Paraunit\Process
  */
 interface ProcessWithResultsInterface extends TestResultBearerInterface
 {
-    /**
-     * @param PrintableTestResultInterface $testResult
-     */
     public function addTestResult(PrintableTestResultInterface $testResult);
 
-    /** @return bool */
-    public function hasAbnormalTermination();
+    public function hasAbnormalTermination(): bool;
 
-    /** @return bool */
-    public function isToBeRetried();
+    public function isToBeRetried(): bool;
 
-    /** @return string */
-    public function getFilename();
-
-    /** @return string */
-    public function getTestClassName();
-
-    /** @param string $className */
-    public function setTestClassName($className);
-
-    /** @return string */
-    public function getUniqueId();
-
-    /** @return bool */
-    public function isWaitingForTestResult();
+    public function getFilename(): string;
 
     /**
-     * @param boolean $waitingForTestResult
+     * @return string|null
      */
-    public function setWaitingForTestResult($waitingForTestResult);
+    public function getTestClassName();
+
+    public function setTestClassName(string $className);
+
+    public function getUniqueId(): string;
+
+    public function isWaitingForTestResult(): bool;
+
+    public function setWaitingForTestResult(bool $waitingForTestResult);
 }

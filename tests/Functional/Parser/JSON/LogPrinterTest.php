@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
+use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
 /**
@@ -15,8 +17,8 @@ class LogPrinterTest extends BaseFunctionalTestCase
 {
     public function testLogFilenameMatches()
     {
-        $testName = get_class();
-        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testName = __CLASS__;
+        $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn($testName);
         $testSuite->count()
@@ -36,8 +38,8 @@ class LogPrinterTest extends BaseFunctionalTestCase
 
     public function testWrite()
     {
-        $testName = get_class();
-        $testSuite = $this->prophesize('\PHPUnit_Framework_TestSuite');
+        $testName = __CLASS__;
+        $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn($testName);
         $testSuite->count()
@@ -54,14 +56,10 @@ class LogPrinterTest extends BaseFunctionalTestCase
         $content = file_get_contents($logFilename);
         $this->assertJson($content);
         $decodedJson = json_decode($content, true);
-        $this->assertEquals(array('event' => 'suiteStart', 'suite' => $testName, 'tests' => 1), $decodedJson);
+        $this->assertEquals(['event' => 'suiteStart', 'suite' => $testName, 'tests' => 1], $decodedJson);
     }
 
-    /**
-     * @param string $testFilename
-     * @return string
-     */
-    private function getLogFilenameForTest($testFilename)
+    private function getLogFilenameForTest(string $testFilename): string
     {
         /** @var TempFilenameFactory $filenameFactory */
         $filenameFactory = $this->container->get('paraunit.configuration.temp_filename_factory');

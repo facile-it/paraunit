@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Filter;
 
@@ -11,22 +12,22 @@ use Paraunit\Proxy\PHPUnitUtilXMLProxy;
  */
 class Filter
 {
-    /** @var  PHPUnitUtilXMLProxy */
+    /** @var PHPUnitUtilXMLProxy */
     private $utilXml;
 
-    /** @var  \File_Iterator_Facade */
+    /** @var \File_Iterator_Facade */
     private $fileIteratorFacade;
 
     /** @var PHPUnitConfig */
     private $configFile;
 
-    /** @var  string | null */
+    /** @var string | null */
     private $relativePath;
 
-    /** @var null */
+    /** @var string | null */
     private $testSuiteFilter;
 
-    /** @var null */
+    /** @var string | null */
     private $stringFilter;
 
     /**
@@ -40,8 +41,8 @@ class Filter
         PHPUnitUtilXMLProxy $utilXml,
         \File_Iterator_Facade $fileIteratorFacade,
         PHPUnitConfig $configFile,
-        $testSuiteFilter = null,
-        $stringFilter = null
+        string $testSuiteFilter = null,
+        string $stringFilter = null
     ) {
         $this->utilXml = $utilXml;
         $this->fileIteratorFacade = $fileIteratorFacade;
@@ -52,18 +53,19 @@ class Filter
     }
 
     /**
-     * @return array
+     * @return string[]
+     * @throws \RuntimeException
      */
-    public function filterTestFiles()
+    public function filterTestFiles(): array
     {
-        $aggregatedFiles = array();
+        $aggregatedFiles = [];
 
-        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath(), false, true, true);
+        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
-        /** @var \DOMNode $testSuiteNode */
+        /** @var \DOMElement $testSuiteNode */
         foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
-            if (null === $this->testSuiteFilter || $this->testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name')) {
+            if ($this->testSuitePassFilter($testSuiteNode, $this->testSuiteFilter)) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
         }
@@ -71,12 +73,21 @@ class Filter
         return $this->filterByString($aggregatedFiles, $this->stringFilter);
     }
 
+    private function testSuitePassFilter(\DOMElement $testSuiteNode, string $testSuiteFilter = null): bool
+    {
+        if ($testSuiteFilter === null) {
+            return true;
+        }
+
+        return $this->testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name');
+    }
+
     /**
      * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
-     * @return array|\string[]
+     * @return string[]
      */
-    private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles): array
     {
         $excludes = $this->getExcludesArray($testSuiteNode);
 
@@ -88,11 +99,11 @@ class Filter
 
     /**
      * @param \DOMElement $testSuiteNode
-     * @return array
+     * @return string[]
      */
-    private function getExcludesArray(\DOMElement $testSuiteNode)
+    private function getExcludesArray(\DOMElement $testSuiteNode): array
     {
-        $excludes = array();
+        $excludes = [];
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
             $excludes[] = (string)$excludeNode->nodeValue;
         }
@@ -102,8 +113,8 @@ class Filter
 
     /**
      * @param \DOMElement $testSuiteNode
-     * @param array $aggregatedFiles
-     * @param array $excludes
+     * @param string[] $aggregatedFiles
+     * @param string[] $excludes
      */
     private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes)
     {
@@ -125,7 +136,7 @@ class Filter
 
     /**
      * @param \DOMElement $testSuiteNode
-     * @param array $aggregatedFiles
+     * @param string[] $aggregatedFiles
      */
     private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
@@ -139,7 +150,7 @@ class Filter
      * @param array $aggregatedFiles
      * @param string $fileName
      */
-    private function addFileToAggregateArray(array &$aggregatedFiles, $fileName)
+    private function addFileToAggregateArray(array &$aggregatedFiles, string $fileName)
     {
         // optimized array_unique
         $aggregatedFiles[$fileName] = $fileName;
@@ -148,18 +159,21 @@ class Filter
     /**
      * @param \DOMElement $testSuiteNode
      * @param string $nodeName
-     * @param string $defaultValue
+     * @param string|null $defaultValue
      *
      * @return string
      */
-    private function getDOMNodeAttribute(\DOMElement $testSuiteNode, $nodeName, $defaultValue = null)
-    {
+    private function getDOMNodeAttribute(
+        \DOMElement $testSuiteNode,
+        string $nodeName,
+        string $defaultValue = null
+    ): string {
         /**
          * @var string
          * @var \DOMAttr
          */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
-            if ($attrName == $nodeName) {
+            if ($attrName === $nodeName) {
                 return $attrNode->value;
             }
         }
@@ -170,9 +184,9 @@ class Filter
     /**
      * @param array $aggregatedFiles
      * @param string | null $stringFilter
-     * @return array
+     * @return string[]
      */
-    private function filterByString(array $aggregatedFiles, $stringFilter)
+    private function filterByString(array $aggregatedFiles, $stringFilter): array
     {
         if ($stringFilter !== null) {
             $aggregatedFiles = array_filter($aggregatedFiles, function ($value) use ($stringFilter) {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
@@ -27,9 +28,9 @@ class LogFetcher
 
     /**
      * @param ParaunitProcessInterface $process
-     * @return array | \stdClass[]
+     * @return \stdClass[]
      */
-    public function fetch(ParaunitProcessInterface $process)
+    public function fetch(ParaunitProcessInterface $process): array
     {
         $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
         $fileContent = '';
@@ -39,7 +40,7 @@ class LogFetcher
             unlink($filePath);
         }
 
-        $logs = json_decode($this->cleanLog($fileContent));
+        $logs = json_decode(static::cleanLog($fileContent));
         $logs[] = $this->createLogEnding();
 
         return $logs;
@@ -49,14 +50,14 @@ class LogFetcher
      * @param string $jsonString The dirty output
      * @return string            The normalized log, as an array of JSON objects
      */
-    private static function cleanLog($jsonString)
+    private static function cleanLog(string $jsonString): string
     {
         $splitted = preg_replace('/\}\{/', '},{', $jsonString);
 
         return '[' . $splitted . ']';
     }
 
-    private function createLogEnding()
+    private function createLogEnding(): \stdClass
     {
         $logEnding = new \stdClass();
         $logEnding->status = self::LOG_ENDING_STATUS;

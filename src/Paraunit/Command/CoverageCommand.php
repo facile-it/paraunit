@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Command;
 
 use Paraunit\Configuration\CoverageConfiguration;
-use Paraunit\Configuration\PhpCodeCoverageCompat;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,16 +52,10 @@ class CoverageCommand extends ParallelCommand
             throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML, HTML or text');
         }
 
-        PhpCodeCoverageCompat::load();
-
         return parent::execute($input, $output);
     }
 
-    /**
-     * @param InputInterface $input
-     * @return bool
-     */
-    private function hasChosenCoverageMethod(InputInterface $input)
+    private function hasChosenCoverageMethod(InputInterface $input): bool
     {
         return $input->getOption('clover')
             || $input->getOption('html')

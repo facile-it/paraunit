@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
@@ -17,10 +18,10 @@ class RetryParser implements ParserChainElementInterface
     /** @var TestResultHandlerInterface */
     private $testResultContainer;
 
-    /** @var  int */
+    /** @var int */
     private $maxRetryCount;
 
-    /** @var  string */
+    /** @var string */
     private $regexPattern;
 
     /**
@@ -28,19 +29,19 @@ class RetryParser implements ParserChainElementInterface
      * @param TestResultHandlerInterface $testResultContainer
      * @param int $maxRetryCount
      */
-    public function __construct(TestResultHandlerInterface $testResultContainer, $maxRetryCount = 3)
+    public function __construct(TestResultHandlerInterface $testResultContainer, int $maxRetryCount = 3)
     {
         $this->testResultContainer = $testResultContainer;
         $this->maxRetryCount = $maxRetryCount;
 
-        $patterns = array(
+        $patterns = [
             'The EntityManager is closed',
             // MySQL
             'Deadlock found',
             'Lock wait timeout exceeded',
             // SQLite
             'General error: 5 database is locked',
-        );
+        ];
 
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
@@ -59,29 +60,21 @@ class RetryParser implements ParserChainElementInterface
         return null;
     }
 
-    /**
-     * @param TestResultBearerInterface $process
-     * @return bool
-     */
-    private function isRetriable(TestResultBearerInterface $process)
+    private function isRetriable(TestResultBearerInterface $process): bool
     {
         return $process instanceof RetryAwareInterface && $process->getRetryCount() < $this->maxRetryCount;
     }
 
-    /**
-     * @param \stdClass $log
-     * @return bool
-     */
-    private function isToBeRetried(\stdClass $log)
+    private function isToBeRetried(\stdClass $log): bool
     {
         return property_exists($log, 'status') && $log->status === 'error' && preg_match($this->regexPattern, $log->message);
     }
 
     /**
-     * @param array | string[] $patterns
+     * @param string[] $patterns
      * @return string
      */
-    private function buildRegexPattern(array $patterns)
+    private function buildRegexPattern(array $patterns): string
     {
         $regex = implode('|', $patterns);
 

@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Proxy;
+
+use PHPUnit\Util\Xml;
 
 /**
  * Class PHPUnitUtilXMLProxy.
@@ -9,16 +12,8 @@ namespace Paraunit\Proxy;
  */
 class PHPUnitUtilXMLProxy
 {
-    /**
-     * @param $filename
-     * @param bool|false $isHtml
-     * @param bool|false $xinclude
-     * @param bool|false $strict
-     *
-     * @return \DOMDocument
-     */
-    public function loadFile($filename, $isHtml = false, $xinclude = false, $strict = false)
+    public function loadFile(string $filename): \DOMDocument
     {
-        return \PHPUnit_Util_XML::loadFile($filename, $isHtml, $xinclude, $strict);
+        return Xml::loadFile($filename, false, true, true);
     }
 }

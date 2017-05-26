@@ -1,46 +1,36 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\OutputPath;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class OutputPathTest
  * @package Tests\Unit\Configuration
  */
-class OutputPathTest extends \PHPUnit_Framework_TestCase
+class OutputPathTest extends BaseUnitTestCase
 {
-    public function testCostruct()
+    public function testConstruct()
     {
         $outputPath = new OutputPath('sub/dir/from/relpath');
 
-        $this->assertFalse($outputPath->isEmpty());
         $this->assertEquals('sub/dir/from/relpath', $outputPath->getPath());
     }
 
-    /**
-     * @dataProvider emptyPathsProvider
-     */
-    public function testIsEmpty($emptyPath)
+    public function testWithNull()
     {
-        $outputPath = new OutputPath($emptyPath);
+        $this->expectException(\Throwable::class);
 
-        $this->assertTrue($outputPath->isEmpty());
+        new OutputPath(null);
+    }
 
-        $this->setExpectedException('\RuntimeException');
+    public function testWithEmptyString()
+    {
+        $this->expectException(\Throwable::class);
+
+        $outputPath = new OutputPath('');
         $outputPath->getPath();
-    }
-
-    public function emptyPathsProvider()
-    {
-        return array(
-            array(null),
-            array(''),
-        );
-    }
-
-    public function testThatPathIsOk()
-    {
-        $this->markTestIncomplete('Not sure how to intercept invalid paths');
     }
 }

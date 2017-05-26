@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
@@ -15,10 +16,10 @@ class TestResultWithMessage extends MuteTestResult implements
     FunctionNameInterface,
     FailureMessageInterface
 {
-    /** @var  string */
+    /** @var string */
     private $functionName;
 
-    /** @var  string */
+    /** @var string */
     private $failureMessage;
 
     /**
@@ -26,25 +27,19 @@ class TestResultWithMessage extends MuteTestResult implements
      * @param string $functionName
      * @param string $failureMessage
      */
-    public function __construct($functionName, $failureMessage)
+    public function __construct(string $functionName, string $failureMessage)
     {
         parent::__construct();
         $this->functionName = $functionName;
         $this->failureMessage = $failureMessage;
     }
 
-    /**
-     * @return string
-     */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return $this->functionName;
     }
 
-    /**
-     * @return string
-     */
-    public function getFailureMessage()
+    public function getFailureMessage(): string
     {
         return $this->failureMessage;
     }

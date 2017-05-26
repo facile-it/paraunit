@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
@@ -32,6 +33,7 @@ class ProcessPrinter
 
     /**
      * @param ProcessEvent $processEvent
+     * @throws \BadMethodCallException
      */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
@@ -57,7 +59,7 @@ class ProcessPrinter
      */
     private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
     {
-        if ($this->counter % 80 == 0 && $this->counter > 1) {
+        if ($this->counter % 80 === 0 && $this->counter > 1) {
             $this->output->writeln('');
         }
 

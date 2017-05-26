@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
@@ -14,9 +15,6 @@ abstract class AbstractFinalPrinter
 {
     /** @var  TestResultList */
     protected $testResultList;
-
-    /** @var  OutputInterface */
-    protected $output;
 
     /**
      * AbstractFinalPrinter constructor.

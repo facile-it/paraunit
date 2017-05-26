@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\TestResult;
 
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -15,7 +17,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 {
     public function testAddProcessToFilenames()
     {
-        $testResultFormat = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+        $testResultFormat = $this->prophesize(TestResultFormat::class);
         $testResultContainer = new TestResultContainer($testResultFormat->reveal());
 
         $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');
@@ -46,12 +48,9 @@ class TestResultContainerTest extends BaseUnitTestCase
     {
         $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
-        $process->setOutput(null);
+        $process->setOutput('');
 
-        $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
-        $format->getTag()->willReturn('tag');
-
-        $testResultContainer = new TestResultContainer($format->reveal());
+        $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertContains('fail message', $testResult->getFailureMessage());

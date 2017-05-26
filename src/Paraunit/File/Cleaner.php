@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\File;
 
@@ -44,7 +45,7 @@ class Cleaner
      * @param string $dir
      * @return bool True if the directory existed and it has been deleted
      */
-    public static function cleanUpDir($dir)
+    public static function cleanUpDir(string $dir): bool
     {
         if (! file_exists($dir)) {
             return false;

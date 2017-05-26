@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
@@ -18,7 +19,7 @@ class PHPUnitBinFile
 
     /**
      * PHPUnitBinFile constructor.
-     * @throws \RuntimeException
+     * @throws \RuntimeException If PHPUnit is not found
      */
     public function __construct()
     {
@@ -45,10 +46,7 @@ class PHPUnitBinFile
         throw new \RuntimeException('PHPUnit bin not found');
     }
 
-    /**
-     * @return string
-     */
-    public function getPhpUnitBin()
+    public function getPhpUnitBin(): string
     {
         return $this->phpUnitBin;
     }

@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
 use Paraunit\Printer\SingleResultFormatter;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseUnitTestCase;
 
@@ -17,13 +20,13 @@ class SingleResultFormatterTest extends BaseUnitTestCase
         $tag = 'tag';
         $symbol = '.';
         $singleResult = $this->mockPrintableTestResult($symbol);
-        $testResultContainer = $this->prophesize('Paraunit\TestResult\TestResultContainer');
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->getTestResultFormat()
             ->willReturn(new TestResultWithSymbolFormat($symbol, $tag, 'title'));
 
-        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
+        $testResultList = $this->prophesize(TestResultList::class);
         $testResultList->getTestResultContainers()
-            ->willReturn(array($testResultContainer->reveal()));
+            ->willReturn([$testResultContainer->reveal()]);
 
         $formatter = new SingleResultFormatter($testResultList->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);
@@ -34,8 +37,9 @@ class SingleResultFormatterTest extends BaseUnitTestCase
     public function testFormatSingleResultDoesNothingForUnknownTags()
     {
         $singleResult = $this->mockPrintableTestResult();
-        $testResultList = $this->prophesize('Paraunit\TestResult\TestResultList');
-        $testResultList->getTestResultContainers()->willReturn(array());
+        $testResultList = $this->prophesize(TestResultList::class);
+        $testResultList->getTestResultContainers()
+            ->willReturn([]);
 
         $formatter = new SingleResultFormatter($testResultList->reveal());
         $formattedResult = $formatter->formatSingleResult($singleResult);

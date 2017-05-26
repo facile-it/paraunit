@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\TestStartParser;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -16,7 +18,7 @@ class TestStartParserTest extends BaseUnitTestCase
     /**
      * @dataProvider logsProvider
      */
-    public function testHandleLogItem($event, $chainInterrupted, $processExpectsTestResult = false)
+    public function testHandleLogItem(string $event, bool $chainInterrupted, bool $processExpectsTestResult = false)
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
@@ -28,7 +30,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $return = $parser->handleLogItem($process, $log);
 
         if ($chainInterrupted) {
-            $this->assertInstanceOf('Paraunit\TestResult\Interfaces\TestResultInterface', $return);
+            $this->assertInstanceOf(TestResultInterface::class, $return);
         } else {
             $this->assertNull($return);
         }
@@ -38,14 +40,14 @@ class TestStartParserTest extends BaseUnitTestCase
         }
     }
 
-    public function logsProvider()
+    public function logsProvider(): array
     {
-        return array(
-            array('testStart', true, true),
-            array('suiteStart', true, true),
-            array('test', false, false),
-            array('aaaa', false, false),
-        );
+        return [
+            ['testStart', true, true],
+            ['suiteStart', true, true],
+            ['test', false, false],
+            ['aaaa', false, false],
+        ];
     }
 
     public function testHandleLogItemCatchesEndingIfGraceful()
@@ -58,7 +60,7 @@ class TestStartParserTest extends BaseUnitTestCase
 
         $return = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf('Paraunit\TestResult\Interfaces\TestResultInterface', $return);
+        $this->assertInstanceOf(TestResultInterface::class, $return);
     }
 
     public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog()

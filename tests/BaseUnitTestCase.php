@@ -1,8 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests;
 
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
+use Paraunit\TestResult\TestResultFormat;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
+use Paraunit\TestResult\TestResultWithSymbolFormat;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class BaseUnitTestCase
@@ -17,12 +22,12 @@ abstract class BaseUnitTestCase extends BaseTestCase
      * @return \stdClass
      * @throws \Exception
      */
-    protected function getLogFromStub($event = 'test', $status = 'fail', $testOutput = null)
+    protected function getLogFromStub(string $event = 'test', string $status = 'fail', string $testOutput = null)
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         $logs = json_decode($jsonLogs);
         foreach ($logs as $log) {
-            if ($log->event == $event) {
+            if ($log->event === $event) {
                 if ($testOutput) {
                     $log->status = $status;
                     $log->message = $testOutput;
@@ -35,10 +40,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
         $this->fail('Feasible log message not found for test');
     }
 
-    /**
-     * @return string
-     */
-    protected function getWrongCoverageStubFilePath()
+    protected function getWrongCoverageStubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/WrongCoverageStub.php';
         $this->assertFileExists($filename, 'WrongCoverageStub file missing!');
@@ -46,6 +48,9 @@ abstract class BaseUnitTestCase extends BaseTestCase
         return $filename;
     }
 
+    /**
+     * @return \stdClass
+     */
     protected function getLogWithTrace()
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
@@ -59,46 +64,51 @@ abstract class BaseUnitTestCase extends BaseTestCase
         $this->fail('Feasible log message not found for test');
     }
 
-    protected function mockTestFormat()
+    protected function mockTestFormat(): TestResultFormat
     {
-        return $this->prophesize('Paraunit\TestResult\TestResultFormat')->reveal();
+        $format = $this->prophesize(TestResultFormat::class);
+        $format->getTag()
+            ->willReturn('tag');
+
+        return $format->reveal();
     }
 
-    protected function mockTestResult()
+    protected function mockTestResult(): TestResultInterface
     {
-        return $this->prophesize('Paraunit\TestResult\Interfaces\TestResultInterface')->reveal();
+        return $this->prophesize(TestResultInterface::class)->reveal();
     }
 
-    protected function mockPrintableTestResult($symbol = null)
+    protected function mockPrintableTestResult($symbol = null): PrintableTestResultInterface
     {
         if ($symbol === null) {
-            $format = $this->prophesize('Paraunit\TestResult\TestResultFormat');
+            $format = $this->prophesize(TestResultFormat::class);
         } else {
-            $format = $this->prophesize('Paraunit\TestResult\TestResultWithSymbolFormat');
+            $format = $this->prophesize(TestResultWithSymbolFormat::class);
             $format->getTestResultSymbol()->willReturn($symbol);
         }
 
-        $result = $this->prophesize('Paraunit\TestResult\Interfaces\PrintableTestResultInterface');
+        $result = $this->prophesize(PrintableTestResultInterface::class);
         $result->getTestResultFormat()->willReturn($format->reveal());
 
         return $result->reveal();
     }
 
-    /**
-     * @param string $path
-     */
-    protected function removeDirectory($path)
+    protected function removeDirectory(string $path): bool
     {
-        $files = glob($path . '/*');
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
 
+        /** @var \SplFileInfo $file */
         foreach ($files as $file) {
-            if (is_dir($file)) {
-                $this->removeDirectory($file);
+            if ($file->isDir()) {
+                $this->removeDirectory($file->getRealPath());
             } else {
-                unlink($file);
+                unlink($file->getRealPath());
             }
         }
 
-        rmdir($path);
+        return rmdir($path);
     }
 }

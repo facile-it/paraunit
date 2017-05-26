@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Tests\Functional\Configuration;
@@ -16,24 +17,15 @@ class PHPDbgBinFileTest extends BaseFunctionalTestCase
     {
         $bin = new PHPDbgBinFile();
 
-        $this->assertSame($this->shouldPHPDbgDriverBeAvailable(), $bin->isAvailable());
+        $this->assertTrue($bin->isAvailable());
     }
 
     public function testGetPhpDbgBin()
     {
-        if (! $this->shouldPHPDbgDriverBeAvailable()) {
-            $this->markTestSkipped('PHPDbg coverage driver not available for PHP < 7.0');
-        }
-
         $bin = new PHPDbgBinFile();
 
         $this->assertStringEndsWith('phpdbg', $bin->getPhpDbgBin());
         $this->assertNotContains(' ', $bin->getPhpDbgBin());
         $this->assertNotContains("\n", $bin->getPhpDbgBin());
-    }
-
-    private function shouldPHPDbgDriverBeAvailable()
-    {
-        return version_compare('7', PHP_VERSION, '<');
     }
 }

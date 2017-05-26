@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
@@ -19,31 +20,22 @@ class TraceStep
      * @param string $filePath
      * @param int $line
      */
-    public function __construct($filePath, $line)
+    public function __construct(string $filePath, int $line)
     {
         $this->filePath = $filePath;
         $this->line = $line;
     }
 
-    /**
-     * @return string
-     */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return $this->filePath;
     }
 
-    /**
-     * @return int
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->line;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->filePath . ':' . $this->line;

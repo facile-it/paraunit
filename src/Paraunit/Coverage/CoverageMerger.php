@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 
 /**
@@ -36,9 +38,9 @@ class CoverageMerger
     }
 
     /**
-     * @param AbstractParaunitProcess $process
+     * @param ParaunitProcessInterface $process
      */
-    private function merge(AbstractParaunitProcess $process)
+    private function merge(ParaunitProcessInterface $process)
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
@@ -52,7 +54,7 @@ class CoverageMerger
     /**
      * @return CodeCoverage
      */
-    public function getCoverageData()
+    public function getCoverageData(): CodeCoverage
     {
         return $this->coverageData;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
@@ -21,7 +22,7 @@ class GenericParser implements ParserChainElementInterface
     /** @var  string */
     protected $status;
 
-    /** @var  string */
+    /** @var  string|null */
     protected $messageStartsWith;
 
     /**
@@ -35,8 +36,8 @@ class GenericParser implements ParserChainElementInterface
     public function __construct(
         TestResultFactory $testResultFactory,
         TestResultHandlerInterface $testResultContainer,
-        $status,
-        $messageStartsWith = null
+        string $status,
+        string $messageStartsWith = null
     ) {
         $this->testResultFactory = $testResultFactory;
         $this->testResultContainer = $testResultContainer;
@@ -59,17 +60,13 @@ class GenericParser implements ParserChainElementInterface
         return null;
     }
 
-    /**
-     * @param \stdClass $log
-     * @return bool
-     */
-    protected function logMatches(\stdClass $log)
+    protected function logMatches(\stdClass $log): bool
     {
         if (! property_exists($log, 'status')) {
             return false;
         }
 
-        if ($log->status != $this->status) {
+        if ($log->status !== $this->status) {
             return false;
         }
 

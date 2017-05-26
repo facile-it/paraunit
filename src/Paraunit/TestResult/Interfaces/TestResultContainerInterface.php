@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult\Interfaces;
 
@@ -13,15 +14,9 @@ interface TestResultContainerInterface extends TestResultBearerInterface
     /**
      * @return string[]
      */
-    public function getFileNames();
+    public function getFileNames(): array;
 
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat();
+    public function getTestResultFormat(): TestResultFormat;
 
-    /**
-     * @return int
-     */
-    public function countTestResults();
+    public function countTestResults(): int;
 }

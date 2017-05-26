@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Paraunit\TestResult;
@@ -20,16 +21,18 @@ class TestResultWithSymbolFormat extends TestResultFormat
      * @param bool $printTestOutput
      * @param bool $printFilesRecap
      */
-    public function __construct($testResultSymbol, $tag, $title, $printTestOutput = true, $printFilesRecap = true)
-    {
+    public function __construct(
+        string $testResultSymbol,
+        string $tag,
+        string $title,
+        bool $printTestOutput = true,
+        bool $printFilesRecap = true
+    ) {
         parent::__construct($tag, $title, $printTestOutput, $printFilesRecap);
         $this->testResultSymbol = $testResultSymbol;
     }
 
-    /**
-     * @return string
-     */
-    public function getTestResultSymbol()
+    public function getTestResultSymbol(): string
     {
         return $this->testResultSymbol;
     }

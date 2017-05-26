@@ -1,9 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Crap4j;
+use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Php;
+use Paraunit\Coverage\Processor\Text;
+use Paraunit\Coverage\Processor\TextToConsole;
+use Paraunit\Coverage\Processor\Xml;
 use Prophecy\Argument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -15,7 +25,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public function testBuildContainer()
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input = $this->prophesize(InputInterface::class);
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')
@@ -29,21 +39,21 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $requiredParameters = array(
+        $requiredParameters = [
             'paraunit.max_process_count' => 10,
             'paraunit.testsuite' => 'testsuite',
             'paraunit.string_filter' => 'text',
             'paraunit.phpunit_config_filename' => $this->getConfigForStubs(),
-        );
+        ];
 
         foreach ($requiredParameters as $parameterName => $expectedValue) {
             $this->assertTrue($container->hasParameter($parameterName), 'Parameter missing: ' . $parameterName);
             $this->assertEquals($expectedValue, $container->getParameter($parameterName));
         }
 
-        $requiredDefinitions = array(
+        $requiredDefinitions = [
             'paraunit.parser.json_log_parser',
             'paraunit.printer.process_printer',
             'paraunit.process.process_factory',
@@ -59,7 +69,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'paraunit.configuration.phpdbg_bin_file',
             'paraunit.printer.coverage_printer',
             'paraunit.configuration.phpunit_config',
-        );
+        ];
 
         $servicesIds = $container->getServiceIds();
 
@@ -74,10 +84,10 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     /**
      * @dataProvider cliOptionsProvider
      */
-    public function testBuildContainerWithCoverageSettings($inputOption, $processorClass)
+    public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass)
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
+        $input = $this->prophesize(InputInterface::class);
         $options = array(
             'testsuite',
             'configuration',
@@ -104,7 +114,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
         $coverageResult = $container->get('paraunit.coverage.coverage_result');
         $reflection = new \ReflectionObject($coverageResult);
@@ -116,24 +126,24 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $this->assertInstanceOf($processorClass, $processors[0]);
     }
 
-    public function cliOptionsProvider()
+    public function cliOptionsProvider(): array
     {
-        return array(
-            array('clover', 'Paraunit\Coverage\Processor\Clover'),
-            array('xml', 'Paraunit\Coverage\Processor\Xml'),
-            array('html', 'Paraunit\Coverage\Processor\Html'),
-            array('text', 'Paraunit\Coverage\Processor\Text'),
-            array('text-to-console', 'Paraunit\Coverage\Processor\TextToConsole'),
-            array('crap4j', 'Paraunit\Coverage\Processor\Crap4j'),
-            array('php', 'Paraunit\Coverage\Processor\Php'),
-        );
+        return [
+            ['clover', Clover::class],
+            ['xml', Xml::class],
+            ['html', Html::class],
+            ['text', Text::class],
+            ['text-to-console', TextToConsole::class],
+            ['crap4j', Crap4j::class],
+            ['php', Php::class],
+        ];
     }
 
     public function testBuildContainerWithColoredTextToConsoleCoverage()
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
-        $options = array(
+        $input = $this->prophesize(InputInterface::class);
+        $options = [
             'testsuite',
             'configuration',
             'clover',
@@ -142,7 +152,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'text',
             'crap4j',
             'php',
-        );
+        ];
 
         foreach ($options as $optionName) {
             $input->getOption($optionName)
@@ -163,7 +173,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
         $coverageResult = $container->get('paraunit.coverage.coverage_result');
         $reflection = new \ReflectionObject($coverageResult);
@@ -173,8 +183,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertCount(1, $processors, 'Wrong count of coverage processors');
         $processor = $processors[0];
-        $this->assertInstanceOf('Paraunit\Coverage\Processor\TextToConsole', $processor);
-        
+        $this->assertInstanceOf(TextToConsole::class, $processor);
+
         $reflection = new \ReflectionObject($processor);
         $property = $reflection->getProperty('showColors');
         $property->setAccessible(true);

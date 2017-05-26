@@ -1,8 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Bin;
 
 use Paraunit\Bin\Paraunit;
+use Paraunit\Command\CoverageCommand;
+use Paraunit\Command\ParallelCommand;
+use Symfony\Component\Console\Application;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -15,8 +19,8 @@ class ParaunitTest extends BaseUnitTestCase
     {
         $application = Paraunit::createApplication();
 
-        $this->assertInstanceOf('Symfony\Component\Console\Application', $application);
-        $this->assertInstanceOf('Paraunit\Command\ParallelCommand', $application->find('run'));
-        $this->assertInstanceOf('Paraunit\Command\CoverageCommand', $application->find('coverage'));
+        $this->assertInstanceOf(Application::class, $application);
+        $this->assertInstanceOf(ParallelCommand::class, $application->find('run'));
+        $this->assertInstanceOf(CoverageCommand::class, $application->find('coverage'));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Process;
 
@@ -10,15 +11,7 @@ use Paraunit\Configuration\PHPUnitConfig;
  */
 interface CliCommandInterface
 {
-    /**
-     * @return string
-     */
-    public function getExecutable();
+    public function getExecutable(): string;
 
-    /**
-     * @param PHPUnitConfig $config
-     * @param string $uniqueId
-     * @return string
-     */
-    public function getOptions(PHPUnitConfig $config, $uniqueId);
+    public function getOptions(PHPUnitConfig $config, string $uniqueId): string;
 }

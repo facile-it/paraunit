@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
@@ -15,13 +16,13 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
  */
 class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
 {
-    /** @var  TestResultFormat */
+    /** @var TestResultFormat */
     private $testResultFormat;
 
-    /** @var  string[] */
+    /** @var string[] */
     private $filenames;
 
-    /** @var  PrintableTestResultInterface[] */
+    /** @var PrintableTestResultInterface[] */
     private $testResults;
     
     /**
@@ -31,14 +32,10 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     public function __construct(TestResultFormat $testResultFormat)
     {
         $this->testResultFormat = $testResultFormat;
-        $this->filenames = array();
-        $this->testResults = array();
+        $this->filenames = [];
+        $this->testResults = [];
     }
 
-    /**
-     * @param ProcessWithResultsInterface $process
-     * @param TestResultInterface $testResult
-     */
     public function handleTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult)
     {
         $this->addProcessToFilenames($process);
@@ -61,10 +58,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
         $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $process->getFilename();
     }
 
-    /**
-     * @return TestResultFormat
-     */
-    public function getTestResultFormat()
+    public function getTestResultFormat(): TestResultFormat
     {
         return $this->testResultFormat;
     }
@@ -72,7 +66,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /**
      * @return string[]
      */
-    public function getFileNames()
+    public function getFileNames(): array
     {
         return $this->filenames;
     }
@@ -80,23 +74,16 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /**
      * @return PrintableTestResultInterface[]
      */
-    public function getTestResults()
+    public function getTestResults(): array
     {
         return $this->testResults;
     }
 
-    /**
-     * @return int
-     */
-    public function countTestResults()
+    public function countTestResults(): int
     {
         return count($this->testResults);
     }
 
-    /**
-     * @param TestResultWithAbnormalTermination $result
-     * @param OutputAwareInterface $process
-     */
     private function addProcessOutputToResult(TestResultWithAbnormalTermination $result, OutputAwareInterface $process)
     {
         $tag = $this->testResultFormat->getTag();

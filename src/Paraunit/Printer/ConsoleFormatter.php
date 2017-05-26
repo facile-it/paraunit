@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
@@ -29,12 +30,8 @@ class ConsoleFormatter
         }
     }
 
-    /**
-     * @param string $color
-     * @return OutputFormatterStyle
-     */
-    private function createNewStyle($color)
+    private function createNewStyle(string $color): OutputFormatterStyle
     {
-        return new OutputFormatterStyle($color, null, array('bold', 'blink'));
+        return new OutputFormatterStyle($color, null, ['bold', 'blink']);
     }
 }

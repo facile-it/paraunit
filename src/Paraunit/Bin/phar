@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 define('PARAUNIT_PHAR_FILE', __FILE__);
 require 'phar://paraunit.phar/vendor/autoload.php';
@@ -10,7 +11,7 @@ if (isset($argv[1]) && $argv[1] === 'phpunit') {
     define('__PHPUNIT_PHAR__', str_replace(DIRECTORY_SEPARATOR, '/', __FILE__));
     define('__PHPUNIT_PHAR_ROOT__', 'phar://paraunit.phar');
 
-    exit(\PHPUnit_TextUI_Command::main());
+    exit(\PHPUnit\TextUI\Command::main());
 }
 
 require 'phar://paraunit.phar/src/Paraunit/Bin/run-paraunit.inc.php';

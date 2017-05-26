@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult\Interfaces;
 
@@ -13,10 +14,7 @@ interface StackTraceInterface
     /**
      * @return TraceStep[]
      */
-    public function getTrace();
+    public function getTrace(): array;
 
-    /**
-     * @param TraceStep $traceStep
-     */
     public function addTraceStep(TraceStep $traceStep);
 }

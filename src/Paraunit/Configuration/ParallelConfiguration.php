@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
@@ -9,6 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 
 /**
  * Class Paraunit
@@ -21,7 +23,7 @@ class ParallelConfiguration
      * @return ContainerBuilder
      * @throws \Exception
      */
-    public function buildContainer(InputInterface $input)
+    public function buildContainer(InputInterface $input): ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
@@ -41,7 +43,7 @@ class ParallelConfiguration
      * @return YamlFileLoader
      * @throws \Exception
      */
-    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder)
+    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
     {
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
         $loader->load('configuration.yml');
@@ -53,12 +55,6 @@ class ParallelConfiguration
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');
         $loader->load('test_result_format.yml');
-
-        $eventDispatcherPass = 'Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass';
-        $deprecatedPass = 'Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass';
-        if (! class_exists($eventDispatcherPass)) {
-            class_alias($deprecatedPass, $eventDispatcherPass);
-        }
 
         return $loader;
     }
@@ -73,17 +69,14 @@ class ParallelConfiguration
 
         $containerBuilder->setDefinition(
             'event_dispatcher',
-            new Definition(
-                'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',
-                array(new Reference('service_container'))
-            )
+            new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
         );
     }
 
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
     {
         $containerBuilder->setParameter('paraunit.max_process_count', $input->getOption('parallel'));
-        $containerBuilder->setParameter('paraunit.phpunit_config_filename', $input->getOption('configuration'));
+        $containerBuilder->setParameter('paraunit.phpunit_config_filename', $input->getOption('configuration') ?? '.');
         $containerBuilder->setParameter('paraunit.testsuite', $input->getOption('testsuite'));
         $containerBuilder->setParameter('paraunit.string_filter', $input->getArgument('stringFilter'));
     }

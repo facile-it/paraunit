@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
@@ -11,7 +12,7 @@ class PHPUnitConfig
     const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
     const COPY_FILE_NAME = 'phpunit-paraunit.xml';
 
-    /** @var  TempFilenameFactory */
+    /** @var TempFilenameFactory */
     private $tempFilenameFactory;
 
     /** @var string */
@@ -20,7 +21,7 @@ class PHPUnitConfig
     /** @var string */
     private $originalFilename;
 
-    /** @var  PHPUnitOption[] */
+    /** @var PHPUnitOption[] */
     private $phpunitOptions;
 
     /**
@@ -28,11 +29,11 @@ class PHPUnitConfig
      * @param string $inputPathOrFileName
      * @throws \InvalidArgumentException
      */
-    public function __construct(TempFilenameFactory $tempFilenameFactory, $inputPathOrFileName)
+    public function __construct(TempFilenameFactory $tempFilenameFactory, string $inputPathOrFileName)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;
         $this->originalFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        $this->phpunitOptions = array();
+        $this->phpunitOptions = [];
     }
 
     /**
@@ -40,7 +41,7 @@ class PHPUnitConfig
      * @return string
      * @throws \RuntimeException
      */
-    public function getFileFullPath()
+    public function getFileFullPath(): string
     {
         if (null === $this->configFile) {
             $this->configFile = $this->copyAndAlterConfig($this->originalFilename);
@@ -53,7 +54,7 @@ class PHPUnitConfig
      * The relative path from where the configuration defines the testsuites
      * @return string
      */
-    public function getBaseDirectory()
+    public function getBaseDirectory(): string
     {
         return dirname($this->originalFilename);
     }
@@ -69,7 +70,7 @@ class PHPUnitConfig
     /**
      * @return PHPUnitOption[]
      */
-    public function getPhpunitOptions()
+    public function getPhpunitOptions(): array
     {
         return $this->phpunitOptions;
     }
@@ -79,7 +80,7 @@ class PHPUnitConfig
      * @return string
      * @throws \InvalidArgumentException
      */
-    private function getConfigFileRealpath($inputPathOrFileName)
+    private function getConfigFileRealpath(string $inputPathOrFileName): string
     {
         $configFile = realpath($inputPathOrFileName);
 
@@ -99,11 +100,11 @@ class PHPUnitConfig
     }
 
     /**
-     * @param $originalConfigFilename
+     * @param string $originalConfigFilename
      * @return string The full filename of the new temp config
      * @throws \RuntimeException
      */
-    private function copyAndAlterConfig($originalConfigFilename)
+    private function copyAndAlterConfig(string $originalConfigFilename): string
     {
         $originalConfig = file_get_contents($originalConfigFilename);
         $document = new \DOMDocument;
@@ -126,7 +127,7 @@ class PHPUnitConfig
      * @param string $originalBoostrap
      * @return bool
      */
-    private function isRelativePath($originalBoostrap)
+    private function isRelativePath($originalBoostrap): bool
     {
         return 0 === preg_match('~(^[A-Z]:)|(^/)~', $originalBoostrap);
     }
@@ -152,7 +153,7 @@ class PHPUnitConfig
         $argumentsNode = $document->createElement('arguments');
         $argumentsNode->appendChild($logDirNode);
         $logListenerNode = $document->createElement('listener');
-        $logListenerNode->setAttribute('class', 'Paraunit\Configuration\StaticOutputPath');
+        $logListenerNode->setAttribute('class', StaticOutputPath::class);
         $logListenerNode->appendChild($argumentsNode);
 
         $listenersNode = $rootNode->getElementsByTagName('listeners')->item(0);

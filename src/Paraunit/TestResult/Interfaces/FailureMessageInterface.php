@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\TestResult\Interfaces;
 
@@ -8,8 +9,5 @@ namespace Paraunit\TestResult\Interfaces;
  */
 interface FailureMessageInterface
 {
-    /**
-     * @return string
-     */
-    public function getFailureMessage();
+    public function getFailureMessage(): string;
 }

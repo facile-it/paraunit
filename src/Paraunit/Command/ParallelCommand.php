@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Command;
 
@@ -26,10 +27,11 @@ class ParallelCommand extends Command
     /**
      * ParallelCommand constructor.
      * @param ParallelConfiguration $configuration
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(ParallelConfiguration $configuration)
     {
-        $this->phpunitOptions = array(
+        $this->phpunitOptions = [
             new PHPUnitOption('filter'),
             new PHPUnitOption('testsuite'),
             new PHPUnitOption('group'),
@@ -53,7 +55,7 @@ class ParallelCommand extends Command
             new PHPUnitOption('bootstrap'),
             new PHPUnitOption('no-configuration'),
             new PHPUnitOption('include-path'),
-        );
+        ];
 
         parent::__construct();
         $this->configuration = $configuration;
@@ -100,12 +102,7 @@ class ParallelCommand extends Command
         return $runner->run($output, $input->getOption('debug'));
     }
 
-    /**
-     * @param PHPUnitConfig $config
-     * @param InputInterface $input
-     * @return PHPUnitConfig
-     */
-    private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input)
+    private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
     {
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());

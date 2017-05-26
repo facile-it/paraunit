@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\UnknownResultParser;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -16,17 +19,17 @@ class UnknownResultParserTest extends BaseUnitTestCase
     /**
      * @dataProvider statusesProvider
      */
-    public function testHandleLogItemShouldCatchAnything($statuses)
+    public function testHandleLogItemShouldCatchAnything(string $statuses)
     {
         $log = new \stdClass();
         $log->status = $statuses;
         $log->message = 'message';
 
-        $factory = $this->prophesize('Paraunit\TestResult\TestResultFactory');
+        $factory = $this->prophesize(TestResultFactory::class);
         $factory->createFromLog($log)
             ->shouldBeCalled()
             ->willReturn($this->mockPrintableTestResult());
-        $resultContainer = $this->prophesize('Paraunit\TestResult\Interfaces\TestResultHandlerInterface');
+        $resultContainer = $this->prophesize(TestResultHandlerInterface::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalled();
 
@@ -34,17 +37,17 @@ class UnknownResultParserTest extends BaseUnitTestCase
         $this->assertNotNull($parser->handleLogItem(new StubbedParaunitProcess(), $log));
     }
 
-    public function statusesProvider()
+    public function statusesProvider(): array
     {
-        return array(
-            array('pass'),
-            array('error'),
-            array('fail'),
-            array('pass'),
-            array('testStart'),
-            array('suiteStart'),
-            array('qwerty'),
-            array('trollingYou'),
-        );
+        return [
+            ['pass'],
+            ['error'],
+            ['fail'],
+            ['pass'],
+            ['testStart'],
+            ['suiteStart'],
+            ['qwerty'],
+            ['trollingYou'],
+        ];
     }
 }

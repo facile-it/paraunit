@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Parser\JSON\LogPrinter;
 
 /**
  * Class TestCliCommand
@@ -11,7 +13,7 @@ use Paraunit\Configuration\PHPUnitConfig;
  */
 class TestCommandLine implements CliCommandInterface
 {
-    /** @var  PHPUnitBinFile */
+    /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
     /**
@@ -23,27 +25,19 @@ class TestCommandLine implements CliCommandInterface
         $this->phpUnitBin = $phpUnitBin;
     }
 
-    /**
-     * @return string
-     */
-    public function getExecutable()
+    public function getExecutable(): string
     {
         return 'php ' . $this->phpUnitBin->getPhpUnitBin();
     }
 
-    /**
-     * @param PHPUnitConfig $config
-     * @param string $uniqueId
-     * @return string
-     */
-    public function getOptions(PHPUnitConfig $config, $uniqueId)
+    public function getOptions(PHPUnitConfig $config, string $uniqueId): string
     {
         return '-c ' . $config->getFileFullPath()
-            . ' --printer="Paraunit\\Parser\\JSON\\LogPrinter"'
+            . sprintf(' --printer="%s"', LogPrinter::class)
             . $this->createOptionsString($config);
     }
 
-    private function createOptionsString(PHPUnitConfig $config)
+    private function createOptionsString(PHPUnitConfig $config): string
     {
         $optionString = '';
 

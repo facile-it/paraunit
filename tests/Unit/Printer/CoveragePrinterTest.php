@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
@@ -6,13 +7,14 @@ use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Proxy\XDebugProxy;
+use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class CoveragePrinterTest
  * @package Tests\Unit\Printer
  */
-class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
+class CoveragePrinterTest extends BaseUnitTestCase
 {
     public function testOnEngineBeforeStartWithPHPDBGEngine()
     {
@@ -52,26 +54,18 @@ class CoveragePrinterTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains('xDebug', $output->getOutput());
     }
 
-    /**
-     * @param bool $shouldReturn
-     * @return PHPDbgBinFile
-     */
-    private function mockPhpdbgBin($shouldReturn)
+    private function mockPhpdbgBin(bool $shouldReturn): PHPDbgBinFile
     {
-        $phpdbgBin = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
+        $phpdbgBin = $this->prophesize(PHPDbgBinFile::class);
         $phpdbgBin->isAvailable()
             ->willReturn($shouldReturn);
 
         return $phpdbgBin->reveal();
     }
 
-    /**
-     * @param bool $shouldReturn
-     * @return XDebugProxy
-     */
-    private function mockXdebugLoaded($shouldReturn)
+    private function mockXdebugLoaded(bool $shouldReturn): XDebugProxy
     {
-        $xdebug = $this->prophesize('Paraunit\Proxy\XDebugProxy');
+        $xdebug = $this->prophesize(XDebugProxy::class);
         $xdebug->isLoaded()
             ->willReturn($shouldReturn);
 

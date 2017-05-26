@@ -1,225 +1,226 @@
 <?php
+declare(strict_types=1);
 $coverage = new PHP_CodeCoverage;
 $coverage->setData(array (
-  '/home/paraunit/projects/src/Paraunit/Process/RetryAwareInterface.php' => 
+  '/home/paraunit/projects/src/Paraunit/Process/RetryAwareInterface.php' =>
   array (
   ),
-  '/home/paraunit/projects/src/Paraunit/Process/AbstractParaunitProcess.php' => 
+  '/home/paraunit/projects/src/Paraunit/Process/AbstractParaunitProcess.php' =>
   array (
-    37 => 
+    37 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    39 => 
+    39 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    40 => 
+    40 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    41 => 
+    41 =>
     array (
     ),
-    42 => 
+    42 =>
     array (
     ),
-    44 => 
-    array (
-      0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
-    ),
-    45 => 
+    44 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    46 => 
+    45 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    53 => 
+    46 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    54 => NULL,
-    61 => 
+    53 =>
+    array (
+      0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
+    ),
+    54 => null,
+    61 =>
     array (
     ),
-    62 => NULL,
-    68 => 
+    62 => null,
+    68 =>
     array (
     ),
-    69 => 
+    69 =>
     array (
     ),
-    73 => 
+    73 =>
     array (
     ),
-    74 => 
+    74 =>
     array (
     ),
-    75 => 
+    75 =>
     array (
     ),
-    82 => 
+    82 =>
     array (
     ),
-    83 => NULL,
-    90 => 
+    83 => null,
+    90 =>
     array (
     ),
-    91 => 
+    91 =>
     array (
     ),
-    98 => 
+    98 =>
     array (
     ),
-    99 => NULL,
-    106 => 
+    99 => null,
+    106 =>
     array (
     ),
-    107 => NULL,
-    114 => 
+    107 => null,
+    114 =>
     array (
     ),
-    115 => 
+    115 =>
     array (
     ),
-    116 => 
+    116 =>
     array (
     ),
-    123 => 
+    123 =>
     array (
     ),
-    124 => NULL,
-    131 => 
+    124 => null,
+    131 =>
     array (
     ),
-    132 => NULL,
-    139 => 
+    132 => null,
+    139 =>
     array (
     ),
-    140 => 
-    array (
-    ),
-  ),
-  '/home/paraunit/projects/src/Paraunit/File/TempDirectory.php' => 
-  array (
-    24 => 
-    array (
-    ),
-    25 => 
-    array (
-    ),
-    32 => 
-    array (
-    ),
-    33 => 
-    array (
-    ),
-    34 => 
-    array (
-    ),
-    35 => 
-    array (
-    ),
-    37 => 
-    array (
-    ),
-    38 => NULL,
-    45 => 
-    array (
-    ),
-    46 => 
-    array (
-    ),
-    47 => 
-    array (
-    ),
-    48 => 
-    array (
-    ),
-    50 => 
-    array (
-    ),
-    51 => NULL,
-    52 => 
-    array (
-    ),
-    54 => 
-    array (
-    ),
-    55 => NULL,
-    62 => 
-    array (
-    ),
-    63 => 
-    array (
-    ),
-    64 => 
-    array (
-    ),
-    65 => 
+    140 =>
     array (
     ),
   ),
-  '/home/paraunit/projects/src/Paraunit/Process/ParaunitProcessInterface.php' => 
+  '/home/paraunit/projects/src/Paraunit/File/TempDirectory.php' =>
+  array (
+    24 =>
+    array (
+    ),
+    25 =>
+    array (
+    ),
+    32 =>
+    array (
+    ),
+    33 =>
+    array (
+    ),
+    34 =>
+    array (
+    ),
+    35 =>
+    array (
+    ),
+    37 =>
+    array (
+    ),
+    38 => null,
+    45 =>
+    array (
+    ),
+    46 =>
+    array (
+    ),
+    47 =>
+    array (
+    ),
+    48 =>
+    array (
+    ),
+    50 =>
+    array (
+    ),
+    51 => null,
+    52 =>
+    array (
+    ),
+    54 =>
+    array (
+    ),
+    55 => null,
+    62 =>
+    array (
+    ),
+    63 =>
+    array (
+    ),
+    64 =>
+    array (
+    ),
+    65 =>
+    array (
+    ),
+  ),
+  '/home/paraunit/projects/src/Paraunit/Process/ParaunitProcessInterface.php' =>
   array (
   ),
-  '/home/paraunit/projects/src/Paraunit/Coverage/CoverageFetcher.php' => 
+  '/home/paraunit/projects/src/Paraunit/Coverage/CoverageFetcher.php' =>
   array (
-    23 => 
+    23 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    24 => 
+    24 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    32 => 
+    32 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    36 => 
+    36 =>
     array (
       0 => 'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch',
     ),
-    37 => NULL,
+    37 => null,
   ),
-  '/home/paraunit/projects/src/Paraunit/Configuration/TempFilenameFactory.php' => 
+  '/home/paraunit/projects/src/Paraunit/Configuration/TempFilenameFactory.php' =>
   array (
-    23 => 
+    23 =>
     array (
     ),
-    24 => 
+    24 =>
     array (
     ),
-    32 => 
+    32 =>
     array (
     ),
-    34 => 
+    34 =>
     array (
     ),
-    35 => 
+    35 =>
     array (
     ),
-    36 => NULL,
-    44 => 
+    36 => null,
+    44 =>
     array (
     ),
-    45 => NULL,
+    45 => null,
   ),
-  '/home/paraunit/projects/src/Paraunit/Process/OutputAwareInterface.php' => 
-  array (
-  ),
-  '/home/paraunit/projects/src/Paraunit/Process/ProcessWithResultsInterface.php' => 
+  '/home/paraunit/projects/src/Paraunit/Process/OutputAwareInterface.php' =>
   array (
   ),
-  '/home/paraunit/projects/src/Paraunit/TestResult/Interfaces/TestResultContainerInterface.php' => 
+  '/home/paraunit/projects/src/Paraunit/Process/ProcessWithResultsInterface.php' =>
+  array (
+  ),
+  '/home/paraunit/projects/src/Paraunit/TestResult/Interfaces/TestResultContainerInterface.php' =>
   array (
   ),
 ));
 $coverage->setTests(array (
-  'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch' => 
+  'Tests\\Unit\\Coverage\\CoverageFetcherTest::testFetch' =>
   array (
     'size' => 'unknown',
     'status' => 0,

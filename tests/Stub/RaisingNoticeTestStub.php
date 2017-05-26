@@ -1,12 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Stub;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RaisingNoticeTestStub
  * @package Tests\Stub
  */
-class RaisingNoticeTestStub extends \PHPUnit_Framework_TestCase
+class RaisingNoticeTestStub extends TestCase
 {
     /**
      * @dataProvider errorProvider
@@ -17,13 +20,13 @@ class RaisingNoticeTestStub extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-    public function errorProvider()
+    public function errorProvider(): array
     {
-        return array(
-            array('YOU SHOULD NOT SEE THIS -- E_USER_NOTICE', E_USER_NOTICE),
-            array('YOU SHOULD NOT SEE THIS -- E_USER_WARNING', E_USER_WARNING),
-            array('YOU SHOULD NOT SEE THIS -- E_USER_ERROR', E_USER_ERROR),
-        );
+        return [
+            ['YOU SHOULD NOT SEE THIS -- E_USER_NOTICE', E_USER_NOTICE],
+            ['YOU SHOULD NOT SEE THIS -- E_USER_WARNING', E_USER_WARNING],
+            ['YOU SHOULD NOT SEE THIS -- E_USER_ERROR', E_USER_ERROR],
+        ];
     }
 
     public function testVarDump()

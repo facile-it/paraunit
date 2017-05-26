@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\StaticOutputPath;
 use Paraunit\Configuration\TempFilenameFactory;
 use Tests\BaseUnitTestCase;
 
@@ -16,7 +18,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     {
         $logsDir = '/some/tmp/dir/for/logs';
 
-        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), null);
+        $config = new PHPUnitConfig($this->mockFilenameFactory($logsDir), '');
 
         $directoryPath = $config->getBaseDirectory();
         $this->assertNotEquals('', $directoryPath);
@@ -49,7 +51,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     /**
      * @dataProvider configFilenameProvider
      */
-    public function testGetFileFullPathWithoutDefaultFileName($file)
+    public function testGetFileFullPathWithoutDefaultFileName(string $file)
     {
         $expectedConfigurationFile = dirname($file) . DIRECTORY_SEPARATOR . 'phpunit-paraunit.xml';
         $logsDir = '/some/tmp/dir/for/logs';
@@ -67,28 +69,33 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $this->assertListenerIsPresent($document, $logsDir);
     }
 
-    public function configFilenameProvider()
+    /**
+     * @return string[]
+     */
+    public function configFilenameProvider(): array
     {
-        return array(
-            array($this->getStubPath() . 'StubbedXMLConfigs/stubbed_for_filter_test.xml'),
-            array($this->getStubPath() . 'StubbedXMLConfigs/stubbed_with_listener.xml'),
-        );
+        return [
+            [$this->getStubPath() . 'StubbedXMLConfigs/stubbed_for_filter_test.xml'],
+            [$this->getStubPath() . 'StubbedXMLConfigs/stubbed_with_listener.xml'],
+        ];
     }
 
     public function testGetFileFullPathWithFileDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
-        $this->setExpectedException('InvalidArgumentException', PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
 
-        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
+        new PHPUnitConfig($this->prophesize(TempFilenameFactory::class)->reveal(), $dir);
     }
 
     public function testGetFileFullPathWithPathDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'foobar';
-        $this->setExpectedException('InvalidArgumentException', 'Config path/file provided is not valid');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Config path/file provided is not valid');
 
-        new PHPUnitConfig($this->prophesize('Paraunit\Configuration\TempFilenameFactory')->reveal(), $dir);
+        new PHPUnitConfig($this->prophesize(TempFilenameFactory::class)->reveal(), $dir);
     }
 
     /**
@@ -100,23 +107,22 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $listenersNode = $document->documentElement->getElementsByTagName('listeners');
         $this->assertEquals(1, $listenersNode->length, 'Listeners node missing');
         $this->assertGreaterThanOrEqual(1, $listenersNode->item(0)->childNodes->length, 'No listeners registered');
+
         $paraunitListenerNode = $listenersNode->item(0)->lastChild;
-        $this->assertEquals('Paraunit\Configuration\StaticOutputPath', $paraunitListenerNode->getAttribute('class'));
+        $this->assertEquals(StaticOutputPath::class, $paraunitListenerNode->getAttribute('class'));
         $this->assertEquals(1, $paraunitListenerNode->getElementsByTagName('arguments')->length);
+
         $arguments = $paraunitListenerNode->getElementsByTagName('arguments')->item(0);
         $this->assertGreaterThanOrEqual(1, $arguments->childNodes->length, 'Arguments missing');
+
         $argument = $arguments->firstChild;
         $this->assertEquals('string', $argument->nodeName);
         $this->assertEquals($logsDir, $argument->textContent);
     }
 
-    /**
-     * @param $logsDir
-     * @return TempFilenameFactory
-     */
-    private function mockFilenameFactory($logsDir)
+    private function mockFilenameFactory(string $logsDir): TempFilenameFactory
     {
-        $filenameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
+        $filenameFactory = $this->prophesize(TempFilenameFactory::class);
         $filenameFactory->getPathForLog()
             ->willReturn($logsDir);
 
@@ -125,14 +131,14 @@ class PHPUnitConfigTest extends BaseUnitTestCase
 
     protected function tearDown()
     {
-        $copiedConfig = implode(DIRECTORY_SEPARATOR, array(
+        $copiedConfig = implode(DIRECTORY_SEPARATOR, [
             __DIR__,
             '..',
             '..',
             'Stub',
             'StubbedXMLConfigs',
             PHPUnitConfig::COPY_FILE_NAME
-        ));
+        ]);
 
         if (file_exists($copiedConfig)) {
             unlink($copiedConfig);

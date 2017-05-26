@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Process;
 
@@ -7,8 +8,5 @@ namespace Paraunit\Process;
  */
 interface OutputAwareInterface
 {
-    /**
-     * @return string
-     */
-    public function getOutput();
+    public function getOutput(): string;
 }

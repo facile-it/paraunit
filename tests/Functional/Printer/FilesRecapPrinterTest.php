@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
@@ -18,11 +19,11 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
     {
         $output = new UnformattedOutputStub();
         $process = new StubbedParaunitProcess();
-        $context = array(
+        $context = [
             'start' => new \DateTime('-1 minute'),
             'end' => new \DateTime(),
-            'process_completed' => array($process),
-        );
+            'process_completed' => [$process],
+        ];
 
         $this->processAllTheStubLogs();
         $this->container->get('paraunit.test_result.no_test_executed_container')
@@ -40,7 +41,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->assertNotContains('SKIPPED output', $output->getOutput(), null, true);
         $this->assertNotContains('INCOMPLETE output', $output->getOutput(), null, true);
         $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
-        $this->assertOutputOrder($output, array(
+        $this->assertOutputOrder($output, [
             'files with UNKNOWN',
             'files with COVERAGE NOT FETCHED',
             'files with ERRORS',
@@ -50,6 +51,6 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
             'files with RISKY',
             'files with SKIP',
             'files with INCOMPLETE',
-        ));
+        ]);
     }
 }

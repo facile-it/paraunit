@@ -1,16 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\OutputFile;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class OutputFileTest
  * @package Tests\Unit\Configuration
  */
-class OutputFileTest extends \PHPUnit_Framework_TestCase
+class OutputFileTest extends BaseUnitTestCase
 {
-    public function testCostruct()
+    public function testConstruct()
     {
         $outputFile = new OutputFile('sub/dir/from/relfile.xml');
 
@@ -27,16 +29,16 @@ class OutputFileTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($outputFile->isEmpty());
 
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
         $outputFile->getFilePath();
     }
 
-    public function emptyFilesProvider()
+    public function emptyFilesProvider(): array
     {
-        return array(
-            array(null),
-            array(''),
-        );
+        return [
+            [null],
+            [''],
+        ];
     }
 
     public function testThatFileIsOk()

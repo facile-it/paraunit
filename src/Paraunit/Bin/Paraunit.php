@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Bin;
 
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Command\ParallelCommand;
-use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Configuration\ParallelConfiguration;
 use Symfony\Component\Console\Application;
 
 /**
@@ -16,7 +17,7 @@ class Paraunit
 {
     const VERSION = '0.8.2';
 
-    public static function createApplication()
+    public static function createApplication(): Application
     {
         $application = new Application('Paraunit', self::VERSION);
 

@@ -1,21 +1,24 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Configuration;
+
+use PHPUnit\Framework\BaseTestListener;
 
 /**
  * Class StaticOutputPath
  * @package Paraunit\Configuration
  */
-class StaticOutputPath extends \PHPUnit_Framework_BaseTestListener
+class StaticOutputPath extends BaseTestListener
 {
     /** @var string */
     private static $path;
 
     /**
      * StaticOutputPath constructor.
-     * @param $path
+     * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         self::$path = $path;
     }
@@ -24,7 +27,7 @@ class StaticOutputPath extends \PHPUnit_Framework_BaseTestListener
      * @return string
      * @throws \RuntimeException If not ready
      */
-    public static function getPath()
+    public static function getPath(): string
     {
         if (null === self::$path) {
             throw new \RuntimeException('Output path not received, not ready!');

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Functional\Runner;
 
@@ -8,6 +9,9 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\UnformattedOutputStub;
+use Tests\Stub\EntityManagerClosedTestStub;
+use Tests\Stub\SegFaultTestStub;
+use Tests\Stub\MissingProviderTestStub;
 
 /**
  * Class RunnerTest
@@ -47,20 +51,20 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $outputInterface->getOutput());
-        $this->assertOutputOrder($outputInterface, array(
+        $this->assertOutputOrder($outputInterface, [
             'Errors output',
-            'Tests\Stub\EntityManagerClosedTestStub::testBrokenTest',
+            EntityManagerClosedTestStub::class . '::testBrokenTest',
             'files with ERRORS',
-            'Tests\Stub\EntityManagerClosedTestStub',
+            EntityManagerClosedTestStub::class,
             'files with RETRIED',
-            'Tests\Stub\EntityManagerClosedTestStub',
-        ));
+            EntityManagerClosedTestStub::class,
+        ]);
     }
 
     /**
      * @dataProvider stubFilenameProvider
      */
-    public function testMaxRetryDeadlock($stubFilePath)
+    public function testMaxRetryDeadlock(string $stubFilePath)
     {
         $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter($stubFilePath);
@@ -69,17 +73,19 @@ class RunnerTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
         $exitCode = $runner->run($outputInterface);
 
-        $output = $outputInterface->fetch();
-        $this->assertContains(str_repeat('A', 3) . 'E', $output);
+        $this->assertContains(str_repeat('A', 3) . 'E', $outputInterface->getOutput());
         $this->assertNotEquals(0, $exitCode);
     }
 
-    public function stubFilenameProvider()
+    /**
+     * @return string[]
+     */
+    public function stubFilenameProvider(): array
     {
-        return array(
-            array('MySQLDeadLockTestStub.php'),
-            array('SQLiteDeadLockTestStub.php'),
-        );
+        return [
+            ['MySQLDeadLockTestStub.php'],
+            ['SQLiteDeadLockTestStub.php'],
+        ];
     }
 
     public function testSegFault()
@@ -96,7 +102,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Exit code should not be 0'
         );
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
@@ -104,7 +110,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'Tests\Stub\SegFaultTestStub',
+            SegFaultTestStub::class,
             $output,
             'Missing failing filename'
         );
@@ -112,21 +118,15 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testWarning()
     {
-        $phpunitVersion = new \PHPUnit_Runner_Version();
-
-        if (! preg_match('/^5\./', $phpunitVersion->id())) {
-            $this->markTestSkipped('PHPUnit < 5 in this env, warnings are not present.');
-        }
-
         $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface), 'Exit code should be 0');
+        $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
@@ -134,7 +134,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertContains(
-            'Tests\Stub\MissingProviderTestStub',
+            MissingProviderTestStub::class,
             $output,
             'Missing warned filename'
         );
@@ -157,7 +157,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertEquals(0, $runner->run($outputInterface));
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertNotContains('...', $output);
         $this->assertNotContains('ABNORMAL TERMINATION', $output);
         $this->assertContains('Executed: 1 test classes, 0 tests', $output);
@@ -175,7 +175,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
@@ -191,7 +191,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run($outputInterface), 'Exit code should not be 0');
 
-        $output = $outputInterface->fetch();
+        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
         $this->assertContains(
