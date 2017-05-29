@@ -33,7 +33,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotContains('Coverage', $outputInterface->getOutput());
         $this->assertOutputOrder($outputInterface, array(
             'PARAUNIT',
-            'v' . Paraunit::VERSION,
+            'v' . Paraunit::getVersion(),
             '...',
         ));
     }

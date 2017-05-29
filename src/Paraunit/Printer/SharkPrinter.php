@@ -32,7 +32,7 @@ class SharkPrinter
         $outputInterface->writeln('');
         $outputInterface->writeln(
             'PARAUNIT v' .
-            Paraunit::VERSION .
+            Paraunit::getVersion() .
             ' - by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it'
         );
     }
