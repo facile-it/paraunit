@@ -40,7 +40,6 @@ class Runner
      * @param ProcessBuilderFactory $processFactory
      * @param Filter $filter
      * @param PipelineCollection $pipelineCollection
-     * @internal param int $maxProcessNumber
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
