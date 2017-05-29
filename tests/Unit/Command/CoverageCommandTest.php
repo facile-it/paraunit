@@ -22,7 +22,7 @@ class CoverageCommandTest extends BaseUnitTestCase
     /**
      * @dataProvider validCoverageOptionsProvider
      */
-    public function testExecute($coverageOptionName)
+    public function testExecute(string $coverageOptionName)
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
 

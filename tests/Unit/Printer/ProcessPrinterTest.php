@@ -55,10 +55,11 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->willReturn()
             ->shouldBeCalledTimes($newLineTimes);
 
-        $printer = new ProcessPrinter(
-            $this->prophesize(SingleResultFormatter::class)->reveal(),
-            $output->reveal()
-        );
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $formatter->formatSingleResult(Argument::cetera())
+            ->willReturn('<tag>.</tag>');
+
+        $printer = new ProcessPrinter($formatter->reveal(), $output->reveal());
 
         $printer->onProcessParsingCompleted(new ProcessEvent($process));
     }

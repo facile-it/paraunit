@@ -43,6 +43,7 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         $this->uniqueId = md5($this->filename);
         $this->testResults = [];
         $this->waitingForTestResult = true;
+        $this->shouldBeRetried = false;
     }
 
     public function getUniqueId(): string

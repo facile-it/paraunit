@@ -17,6 +17,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /** @var Process */
     private $process;
+
     /** @var string */
     protected $commandLine;
 
@@ -75,6 +76,10 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
         $this->process = null;
     }
 
+    /**
+     * TODO: deprecate? it's not populated
+     * @return string
+     */
     public function getCommandLine(): string
     {
         return $this->commandLine;

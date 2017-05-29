@@ -6,7 +6,6 @@ namespace Paraunit\Coverage;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Process\RetryAwareInterface;
-use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 
 /**
@@ -43,9 +42,6 @@ class CoverageMerger
         $this->merge($process);
     }
 
-    /**
-     * @param ParaunitProcessInterface $process
-     */
     private function merge(ParaunitProcessInterface $process)
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
@@ -57,9 +53,6 @@ class CoverageMerger
         }
     }
 
-    /**
-     * @return CodeCoverage
-     */
     public function getCoverageData(): CodeCoverage
     {
         return $this->coverageData;

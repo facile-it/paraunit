@@ -49,7 +49,7 @@ class FinalPrinter extends AbstractFinalPrinter
     {
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln('');
-        $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', $stopEvent->getDuration() / 1000));
+        $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', (int)($stopEvent->getDuration() / 1000)));
     }
 
     private function printTestCounters()
