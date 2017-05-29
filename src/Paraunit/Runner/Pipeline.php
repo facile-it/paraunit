@@ -28,7 +28,7 @@ class Pipeline
      * @param EventDispatcherInterface $dispatcher
      * @param int $number
      */
-    public function __construct(EventDispatcherInterface $dispatcher, $number)
+    public function __construct(EventDispatcherInterface $dispatcher, int $number)
     {
         $this->dispatcher = $dispatcher;
         $this->number = $number;
@@ -42,10 +42,7 @@ class Pipeline
         ));
     }
 
-    /**
-     * @return bool
-     */
-    public function isFree()
+    public function isFree(): bool
     {
         return $this->process === null;
     }
@@ -54,7 +51,7 @@ class Pipeline
      * @return bool
      * @throws \RuntimeException If the pipeline is empty
      */
-    public function isTerminated()
+    public function isTerminated(): bool
     {
         if ($this->isFree()) {
             throw new \RuntimeException('Check termination on an empty pipeline');
@@ -72,7 +69,7 @@ class Pipeline
     /**
      * @return ParaunitProcessInterface
      */
-    public function waitCompletion()
+    public function waitCompletion(): ParaunitProcessInterface
     {
         if ($this->isFree()) {
             throw new \RuntimeException('Waiting on an empty pipeline');
@@ -86,10 +83,7 @@ class Pipeline
         return $process;
     }
 
-    /**
-     * @return int
-     */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }

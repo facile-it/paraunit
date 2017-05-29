@@ -6,6 +6,7 @@ namespace Tests\Unit\Configuration;
 use Paraunit\Configuration\ParallelConfiguration;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\BaseUnitTestCase;
 
@@ -19,7 +20,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
     {
         $paraunit = new ParallelConfiguration();
         $input = $this->prophesize(InputInterface::class);
-        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')

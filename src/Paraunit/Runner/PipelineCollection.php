@@ -14,7 +14,7 @@ class PipelineCollection
     /** @var Pipeline[] | \SplFixedArray */
     private $pipelines;
 
-    public function __construct(PipelineFactory $pipelineFactory, $maxProcessNumber = 10)
+    public function __construct(PipelineFactory $pipelineFactory, int $maxProcessNumber = 10)
     {
         $this->pipelines = new \SplFixedArray($maxProcessNumber);
 
@@ -26,6 +26,7 @@ class PipelineCollection
     /**
      * @param ParaunitProcessInterface $process
      * @return Pipeline
+     * @throws \RuntimeException
      */
     public function push(ParaunitProcessInterface $process)
     {

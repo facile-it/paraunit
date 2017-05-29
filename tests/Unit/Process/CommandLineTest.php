@@ -41,13 +41,13 @@ class CommandLineTest extends BaseUnitTestCase
             $optionWithValue
         ));
         
-        $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
 
         $cli = new CommandLine($phpunit->reveal());
         $options = $cli->getOptions($config->reveal());
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
-        $this->assertContains('--printer=Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
     }

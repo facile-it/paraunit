@@ -6,6 +6,8 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Runner\Pipeline;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Paraunit\Process\ParaunitProcessInterface;
 
 /**
  * Class PipelineTest
@@ -15,10 +17,10 @@ class PipelineTest extends BaseUnitTestCase
 {
     public function testExecute()
     {
-        $eventDispatcher = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
-        $process = $this->prophesize('Paraunit\Process\ParaunitProcessInterface');
+        $process = $this->prophesize(ParaunitProcessInterface::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
         $pipeline->execute($process->reveal());
@@ -29,10 +31,10 @@ class PipelineTest extends BaseUnitTestCase
 
     public function testIsFree()
     {
-        $eventDispatcher = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
             ->shouldBeCalledTimes(1);
-        $process = $this->prophesize('Paraunit\Process\ParaunitProcessInterface');
+        $process = $this->prophesize(ParaunitProcessInterface::class);
         $process->start(array(Pipeline::ENV_VAR_NAME_PIPELINE_NUMBER => 5))
             ->shouldBeCalledTimes(1);
         $process->isTerminated()

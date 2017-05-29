@@ -17,7 +17,7 @@ class OutputFactory
      * @return OutputInterface
      * @throws \RuntimeException
      */
-    public static function getOutput()
+    public static function getOutput(): OutputInterface
     {
         if (self::$output === null) {
             throw new \RuntimeException('Output instance missing');
@@ -26,9 +26,6 @@ class OutputFactory
         return self::$output;
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     public static function setOutput(OutputInterface $output)
     {
         self::$output = $output;

@@ -15,6 +15,7 @@ use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\BaseUnitTestCase;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ParaunitCoverageTest
@@ -25,8 +26,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public function testBuildContainer()
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
-        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
+        $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
             ->willReturn('text');
         $input->getOption('parallel')
@@ -89,9 +90,9 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass)
     {
         $paraunit = new CoverageConfiguration();
-        $input = $this->prophesize('Symfony\Component\Console\Input\InputInterface');
-        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
-        $options = array(
+        $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize(OutputInterface::class);
+        $options = [
             'testsuite',
             'configuration',
             'clover',
@@ -102,7 +103,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'crap4j',
             'php',
             'ansi',
-        );
+        ];
 
         foreach ($options as $optionName) {
             $input->getOption($optionName)
@@ -146,7 +147,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     {
         $paraunit = new CoverageConfiguration();
         $input = $this->prophesize(InputInterface::class);
-        $output = $this->prophesize('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->prophesize(OutputInterface::class);
         $options = [
             'testsuite',
             'configuration',

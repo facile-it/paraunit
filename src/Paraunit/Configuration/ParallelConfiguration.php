@@ -24,6 +24,8 @@ class ParallelConfiguration
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return ContainerBuilder
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws \Exception
      */
     public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder
     {
@@ -92,16 +94,11 @@ class ParallelConfiguration
     private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
     {
         OutputFactory::setOutput($output);
-        $factoryClass = 'Paraunit\Printer\OutputFactory';
+        $factoryClass = OutputFactory::class;
         $factoryMethod = 'getOutput';
 
-        $definition = new Definition('Symfony\Component\Console\Output\OutputInterface');
-        if (method_exists($definition, 'setFactory')) {
-            $definition->setFactory(array($factoryClass, $factoryMethod));
-        } else {
-            $definition->setFactoryClass($factoryClass);
-            $definition->setFactoryMethod($factoryMethod);
-        }
+        $definition = new Definition(OutputInterface::class);
+        $definition->setFactory([$factoryClass, $factoryMethod]);
 
         $containerBuilder->setDefinition('output', $definition);
     }

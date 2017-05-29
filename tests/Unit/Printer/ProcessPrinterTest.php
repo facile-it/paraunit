@@ -47,7 +47,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
             $process->addTestResult($this->mockPrintableTestResult());
         }
 
-        $output = $this->prophesize('Symfony\Component\Console\Output\Output');
+        $output = $this->prophesize(Output::class);
         $output->write(Argument::any())
             ->willReturn()
             ->shouldBeCalledTimes($times);
@@ -56,7 +56,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->shouldBeCalledTimes($newLineTimes);
 
         $printer = new ProcessPrinter(
-            $this->prophesize('Paraunit\Printer\SingleResultFormatter')->reveal(),
+            $this->prophesize(SingleResultFormatter::class)->reveal(),
             $output->reveal()
         );
 

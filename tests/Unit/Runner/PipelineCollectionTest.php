@@ -20,11 +20,11 @@ class PipelineCollectionTest extends BaseUnitTestCase
     public function testInstantiation()
     {
         $pipelines = array(
-            $this->prophesize('Paraunit\Runner\Pipeline')->reveal(),
-            $this->prophesize('Paraunit\Runner\Pipeline')->reveal(),
-            $this->prophesize('Paraunit\Runner\Pipeline')->reveal(),
-            $this->prophesize('Paraunit\Runner\Pipeline')->reveal(),
-            $this->prophesize('Paraunit\Runner\Pipeline')->reveal(),
+            $this->prophesize(Pipeline::class)->reveal(),
+            $this->prophesize(Pipeline::class)->reveal(),
+            $this->prophesize(Pipeline::class)->reveal(),
+            $this->prophesize(Pipeline::class)->reveal(),
+            $this->prophesize(Pipeline::class)->reveal(),
         );
 
         new PipelineCollection($this->mockPipelineFactory($pipelines), count($pipelines));
@@ -32,7 +32,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     public function testPush()
     {
-        $pipeline = $this->prophesize('Paraunit\Runner\Pipeline');
+        $pipeline = $this->prophesize(Pipeline::class);
         $pipeline->isFree()
             ->willReturn(false);
         $pipeline->isTerminated()
@@ -41,7 +41,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $pipeline->execute(Argument::cetera())
             ->shouldBeCalledTimes(1);
 
-        $collection = new PipelineCollection($this->mockPipelineFactory(array($pipeline->reveal())), 1);
+        $collection = new PipelineCollection($this->mockPipelineFactory([$pipeline->reveal()]), 1);
 
         $collection->push(new StubbedParaunitProcess());
 
@@ -50,28 +50,31 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     public function testWaitCompletion()
     {
-        $freePipeline = $this->prophesize('Paraunit\Runner\Pipeline');
+        $freePipeline = $this->prophesize(Pipeline::class);
         $freePipeline->isFree()
             ->shouldBeCalled()
             ->willReturn(true);
-        $pipeline = $this->prophesize('Paraunit\Runner\Pipeline');
+        $pipeline = $this->prophesize(Pipeline::class);
         $pipeline->isFree()
             ->willReturn(false);
         $pipeline->waitCompletion()
             ->willReturn(new StubbedParaunitProcess());
 
-        $collection = new PipelineCollection($this->mockPipelineFactory(array($pipeline->reveal(), $freePipeline->reveal())), 2);
+        $collection = new PipelineCollection(
+            $this->mockPipelineFactory([$pipeline->reveal(), $freePipeline->reveal()]),
+            2
+        );
 
         $collection->waitForCompletion();
     }
 
     /**
-     * @param array | Pipeline[] $pipelines
+     * @param Pipeline[] $pipelines
      * @return PipelineFactory
      */
-    private function mockPipelineFactory(array $pipelines)
+    private function mockPipelineFactory(array $pipelines): PipelineFactory
     {
-        $factory = $this->prophesize('Paraunit\Runner\PipelineFactory');
+        $factory = $this->prophesize(PipelineFactory::class);
 
         foreach ($pipelines as $number => $pipeline) {
             $factory->create($number)
@@ -86,7 +89,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
     {
         parent::setUp();
 
-        ClockMock::register('Paraunit\Runner\PipelineCollection');
+        ClockMock::register(PipelineCollection::class);
         ClockMock::withClockMock(true);
     }
 

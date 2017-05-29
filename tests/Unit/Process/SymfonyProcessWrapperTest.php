@@ -5,6 +5,8 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Process\SymfonyProcessWrapper;
 use Tests\BaseUnitTestCase;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class SymfonyProcessWrapperTest
@@ -22,10 +24,10 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
     public function testStart()
     {
         $envVar = array('NAME' => 'value');
-        $process = $this->prophesize('Symfony\Component\Process\Process');
+        $process = $this->prophesize(Process::class);
         $process->start()
             ->shouldBeCalledTimes(1);
-        $processBuilder = $this->prophesize('Symfony\Component\Process\ProcessBuilder');
+        $processBuilder = $this->prophesize(ProcessBuilder::class);
         $processBuilder->addEnvironmentVariables($envVar)
             ->shouldBeCalled();
         $processBuilder->getProcess()
@@ -100,6 +102,6 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
 
     private function mockProcessBuilder()
     {
-        return $this->prophesize('Symfony\Component\Process\ProcessBuilder')->reveal();
+        return $this->prophesize(ProcessBuilder::class)->reveal();
     }
 }

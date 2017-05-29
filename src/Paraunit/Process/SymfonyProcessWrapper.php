@@ -36,6 +36,8 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /**
      * @param array $env
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function start(array $env = [])
     {

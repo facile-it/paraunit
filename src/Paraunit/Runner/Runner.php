@@ -57,7 +57,7 @@ class Runner
     }
 
     /**
-     * @return int The final exitcode: 0 if no failures, 10 otherwise
+     * @return int The final exit code: 0 if no failures, 10 otherwise
      */
     public function run(): int
     {

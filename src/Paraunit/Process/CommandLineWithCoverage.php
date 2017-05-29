@@ -39,11 +39,12 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
 
     /**
      * @return string[]
+     * @throws \RuntimeException
      */
-    public function getExecutable()
+    public function getExecutable(): array
     {
         if ($this->phpDbgBinFile->isAvailable()) {
-            return array($this->phpDbgBinFile->getPhpDbgBin());
+            return [$this->phpDbgBinFile->getPhpDbgBin()];
         }
 
         return parent::getExecutable();
@@ -52,6 +53,7 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
     /**
      * @param PHPUnitConfig $config
      * @return array
+     * @throws \RuntimeException
      */
     public function getOptions(PHPUnitConfig $config): array
     {
@@ -63,7 +65,7 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
         return $options;
     }
 
-    public function getSpecificOptions(string $testFilename)
+    public function getSpecificOptions(string $testFilename): array
     {
         $options = parent::getSpecificOptions($testFilename);
         $options[] = '--coverage-php=' . $this->filenameFactory->getFilenameForCoverage(md5($testFilename));

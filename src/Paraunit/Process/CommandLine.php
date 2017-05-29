@@ -5,6 +5,7 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
+use Paraunit\Parser\JSON\LogPrinter;
 
 /**
  * Class TestCliCommand
@@ -27,9 +28,9 @@ class CommandLine implements CliCommandInterface
     /**
      * @return string[]
      */
-    public function getExecutable()
+    public function getExecutable(): array
     {
-        return array('php', $this->phpUnitBin->getPhpUnitBin());
+        return ['php', $this->phpUnitBin->getPhpUnitBin()];
     }
 
     /**
@@ -37,21 +38,21 @@ class CommandLine implements CliCommandInterface
      * @return array
      * @throws \RuntimeException When the config handling fails
      */
-    public function getOptions(PHPUnitConfig $config)
+    public function getOptions(PHPUnitConfig $config): array
     {
-        $options = array(
+        $options = [
             '--configuration=' . $config->getFileFullPath(),
-            '--printer=Paraunit\\Parser\\JSON\\LogPrinter',
-        );
+            '--printer=' . LogPrinter::class,
+        ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
             $options[] = $this->buildPhpunitOptionString($phpunitOption);
         }
-        
+
         return $options;
     }
 
-    private function buildPhpunitOptionString(PHPUnitOption $option)
+    private function buildPhpunitOptionString(PHPUnitOption $option): string
     {
         $optionString = '--' . $option->getName();
         if ($option->hasValue()) {
@@ -61,8 +62,8 @@ class CommandLine implements CliCommandInterface
         return $optionString;
     }
 
-    public function getSpecificOptions($testFilename)
+    public function getSpecificOptions(string $testFilename): array
     {
-        return array();
+        return [];
     }
 }

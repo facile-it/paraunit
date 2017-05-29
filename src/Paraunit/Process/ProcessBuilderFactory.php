@@ -39,7 +39,7 @@ class ProcessBuilderFactory
      * @param $testFilePath
      * @return ProcessBuilder
      */
-    public function create($testFilePath)
+    public function create(string $testFilePath): ProcessBuilder
     {
         $builder = clone $this->builderPrototype;
         $builder->add($testFilePath);

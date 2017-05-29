@@ -35,7 +35,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $tempFileNameFactory->reveal());
 
-        $this->assertEquals(array('php', 'path/to/phpunit'), $cli->getExecutable());
+        $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
     }
 
     public function testGetExecutableWithDbg()
@@ -54,7 +54,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
-        $this->assertEquals(array('/path/to/phpdbg'), $cli->getExecutable());
+        $this->assertEquals(['/path/to/phpdbg'], $cli->getExecutable());
     }
 
     public function testGetOptionsForWithoutDbg()
@@ -70,11 +70,14 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             ]);
 
         $phpDbg = $this->prophesize(PHPDbgBinFile::class);
-        $phpDbg->isAvailable()->shouldBeCalled()->willReturn(false);
-        $phpDbg->getPhpDbgBin()->shouldNotBeCalled();
+        $phpDbg->isAvailable()
+            ->shouldBeCalled()
+            ->willReturn(false);
+        $phpDbg->getPhpDbgBin()
+            ->shouldNotBeCalled();
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
-        
+
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
@@ -82,7 +85,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
-        $this->assertContains('--printer=Paraunit\\Parser\\JSON\\LogPrinter', $options);
+        $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
     }
@@ -103,14 +106,14 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()->shouldBeCalled()->willReturn('path/to/phpunit');
         $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
-       $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
+        $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $options = $cli->getOptions($config->reveal());
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
-        $this->assertContains('--configuration= /path/to/phpunit.xml', $options);
-        $this->assertContains('--printer =Paraunit\\Parser\\JSON\\LogPrinter', $options);
-        $this->assertContains('-qrr =path/to/phpunit', $options);
+        $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
+        $this->assertContains('--printer=' . LogPrinter::class, $options);
+        $this->assertContains('-qrr=path/to/phpunit', $options);
         $this->assertContains('--opt', $options);
     }
 
@@ -119,10 +122,11 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $testFilename = 'TestTest.php';
         $process = new StubbedParaunitProcess($testFilename);
         $uniqueId = $process->getUniqueId();
-        $phpDbg = $this->prophesize('Paraunit\Configuration\PHPDbgBinFile');
-        $phpunit = $this->prophesize('Paraunit\Configuration\PHPUnitBinFile');
-        $fileNameFactory = $this->prophesize('Paraunit\Configuration\TempFilenameFactory');
-        $fileNameFactory->getFilenameForCoverage($uniqueId)->willReturn('/path/to/coverage.php');
+        $phpDbg = $this->prophesize(PHPDbgBinFile::class);
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
+        $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
+        $fileNameFactory->getFilenameForCoverage($uniqueId)
+            ->willReturn('/path/to/coverage.php');
 
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
