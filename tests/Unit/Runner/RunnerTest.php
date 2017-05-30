@@ -5,6 +5,7 @@ namespace Tests\Unit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\Runner;
 use Prophecy\Argument;
@@ -20,8 +21,11 @@ class RunnerTest extends BaseUnitTestCase
         $filter->filterTestFiles()
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
-        
-        
+        $pipelineCollection->hasEmptySlots()
+            ->willReturn(true);
+        $pipelineCollection->checkRunningState()
+            ->willReturn(false);
+
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessBuilderFactory(),
@@ -41,8 +45,14 @@ class RunnerTest extends BaseUnitTestCase
                 'Test2.php',
             ]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
-        
-        
+        $pipelineCollection->hasEmptySlots()
+            ->willReturn(true);
+        $pipelineCollection->checkRunningState()
+            ->willReturn(false);
+        $pipelineCollection->push(Argument::cetera())
+            ->shouldBeCalledTimes(2)
+            ->willReturn($this->prophesize(Pipeline::class)->reveal());
+
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessBuilderFactory(),
@@ -51,11 +61,6 @@ class RunnerTest extends BaseUnitTestCase
         );
 
         $this->assertSame(0, $runner->run());
-    }
-
-    public function testRunWithAFailingTest()
-    {
-        $this->markTestIncomplete();
     }
 
     private function mockEventDispatcher(): EventDispatcherInterface

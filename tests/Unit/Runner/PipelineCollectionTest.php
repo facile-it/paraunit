@@ -33,40 +33,103 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     public function testPush()
     {
-        $pipeline = $this->prophesize(Pipeline::class);
-        $pipeline->isFree()
+        $newProcess = new StubbedParaunitProcess();
+
+        $occupiedPipeline = $this->prophesize(Pipeline::class);
+        $occupiedPipeline->isFree()
             ->willReturn(false);
-        $pipeline->isTerminated()
-            ->shouldBeCalledTimes(3)
-            ->willReturn(false, false, true);
-        $pipeline->execute(Argument::cetera())
-            ->shouldBeCalledTimes(1);
+        $occupiedPipeline->execute(Argument::cetera())
+            ->shouldNotBeCalled();
 
-        $collection = new PipelineCollection($this->mockPipelineFactory([$pipeline->reveal()]), 1);
-
-        $collection->push(new StubbedParaunitProcess());
-
-        ClockMock::withClockMock(false);
-    }
-
-    public function testWaitCompletion()
-    {
         $freePipeline = $this->prophesize(Pipeline::class);
         $freePipeline->isFree()
-            ->shouldBeCalled()
             ->willReturn(true);
-        $pipeline = $this->prophesize(Pipeline::class);
-        $pipeline->isFree()
-            ->willReturn(false);
-        $pipeline->waitCompletion()
-            ->willReturn(new StubbedParaunitProcess());
+        $freePipeline->execute($newProcess)
+            ->shouldBeCalledTimes(1);
 
         $collection = new PipelineCollection(
-            $this->mockPipelineFactory([$pipeline->reveal(), $freePipeline->reveal()]),
+            $this->mockPipelineFactory([$occupiedPipeline->reveal(), $freePipeline->reveal()]),
             2
         );
 
-        $collection->waitForCompletion();
+        $collection->push($newProcess);
+    }
+
+    public function testPushWithNoEmptyPipelines()
+    {
+        $newProcess = new StubbedParaunitProcess();
+
+        $occupiedPipeline = $this->prophesize(Pipeline::class);
+        $occupiedPipeline->isFree()
+            ->willReturn(false);
+        $occupiedPipeline->execute(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $collection = new PipelineCollection(
+            $this->mockPipelineFactory([$occupiedPipeline->reveal()]),
+            1
+        );
+
+        $this->expectException(\RuntimeException::class);
+
+        $collection->push($newProcess);
+    }
+
+    /**
+     * @dataProvider pipelineStateProvider
+     * @param bool $isPipeline1Terminated
+     * @param bool $isPipeline2Terminated
+     */
+    public function testCheckRunningState(bool $isPipeline1Terminated, bool $isPipeline2Terminated)
+    {
+        $pipeline1 = $this->prophesize(Pipeline::class);
+        $pipeline1->isTerminated()
+            ->shouldBeCalledTimes(1)
+            ->willReturn($isPipeline1Terminated);
+        $pipeline2 = $this->prophesize(Pipeline::class);
+        $pipeline2->isTerminated()
+            ->shouldBeCalledTimes(1)
+            ->willReturn($isPipeline2Terminated);
+
+        $pipelineCollection = new PipelineCollection(
+            $this->mockPipelineFactory([$pipeline1->reveal(), $pipeline2->reveal()]),
+            2
+        );
+
+        $expectedResult = ! ($isPipeline1Terminated && $isPipeline2Terminated);
+        $this->assertSame($expectedResult, $pipelineCollection->checkRunningState());
+    }
+
+    /**
+     * @dataProvider pipelineStateProvider
+     * @param bool $isPipeline1Empty
+     * @param bool $isPipeline2Empty
+     */
+    public function testHasEmptySlots(bool $isPipeline1Empty, bool $isPipeline2Empty)
+    {
+        $pipeline1 = $this->prophesize(Pipeline::class);
+        $pipeline1->isFree()
+            ->willReturn($isPipeline1Empty);
+        $pipeline2 = $this->prophesize(Pipeline::class);
+        $pipeline2->isFree()
+            ->willReturn($isPipeline2Empty);
+
+        $pipelineCollection = new PipelineCollection(
+            $this->mockPipelineFactory([$pipeline1->reveal(), $pipeline2->reveal()]),
+            2
+        );
+
+        $this->assertSame($isPipeline1Empty || $isPipeline2Empty, $pipelineCollection->hasEmptySlots());
+    }
+
+    public function pipelineStateProvider(): array
+    {
+        return [
+            [false, false],
+            [false, true],
+            [true, false],
+            [true, true],
+        ];
     }
 
     /**
@@ -84,20 +147,5 @@ class PipelineCollectionTest extends BaseUnitTestCase
         }
 
         return $factory->reveal();
-    }
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        ClockMock::register(PipelineCollection::class);
-        ClockMock::withClockMock(true);
-    }
-
-    protected function tearDown()
-    {
-        ClockMock::withClockMock(false);
-
-        parent::tearDown();
     }
 }

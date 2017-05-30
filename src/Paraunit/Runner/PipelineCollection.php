@@ -28,29 +28,40 @@ class PipelineCollection
      * @return Pipeline
      * @throws \RuntimeException
      */
-    public function push(ParaunitProcessInterface $process)
-    {
-        do {
-            foreach ($this->pipelines as $pipeline) {
-                if ($pipeline->isFree() || $pipeline->isTerminated()) {
-                    $pipeline->execute($process);
-
-                    return $pipeline;
-                }
-            }
-
-            sleep(500);
-        } while (1);
-    }
-
-    public function waitForCompletion()
+    public function push(ParaunitProcessInterface $process): Pipeline
     {
         foreach ($this->pipelines as $pipeline) {
             if ($pipeline->isFree()) {
-                continue;
-            }
+                $pipeline->execute($process);
 
-            $pipeline->waitCompletion();
+                return $pipeline;
+            }
         }
+
+        throw new \RuntimeException('Cannot find an available pipeline');
+    }
+
+    public function hasEmptySlots(): bool
+    {
+        foreach ($this->pipelines as $pipeline) {
+            if ($pipeline->isFree()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkRunningState(): bool
+    {
+        $isRunning = false;
+
+        foreach ($this->pipelines as $pipeline) {
+            if (! $pipeline->isTerminated()) {
+                $isRunning = true;
+            }
+        }
+
+        return $isRunning;
     }
 }

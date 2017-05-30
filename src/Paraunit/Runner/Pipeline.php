@@ -36,6 +36,10 @@ class Pipeline
 
     public function execute(ParaunitProcessInterface $process)
     {
+        if (! $this->isFree()) {
+            throw new \RuntimeException('This pipeline is not free');
+        }
+
         $this->process = $process;
         $this->process->start(array(
             self::ENV_VAR_NAME_PIPELINE_NUMBER => $this->number,
@@ -49,12 +53,11 @@ class Pipeline
 
     /**
      * @return bool
-     * @throws \RuntimeException If the pipeline is empty
      */
     public function isTerminated(): bool
     {
         if ($this->isFree()) {
-            throw new \RuntimeException('Check termination on an empty pipeline');
+            return true;
         }
 
         if ($this->process->isTerminated()) {
@@ -64,23 +67,6 @@ class Pipeline
         }
 
         return false;
-    }
-
-    /**
-     * @return ParaunitProcessInterface
-     */
-    public function waitCompletion(): ParaunitProcessInterface
-    {
-        if ($this->isFree()) {
-            throw new \RuntimeException('Waiting on an empty pipeline');
-        }
-
-        $this->process->wait();
-
-        $process = $this->process;
-        $this->handleProcessTermination();
-
-        return $process;
     }
 
     public function getNumber(): int
