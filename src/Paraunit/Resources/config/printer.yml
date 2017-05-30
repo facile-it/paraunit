@@ -32,6 +32,8 @@ services:
     tags:
       - { name: kernel.event_listener, event: engine_event.start, method: onEngineStart }
       - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
+      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
+      - { name: kernel.event_listener, event: process_event.process_to_be_retried, method: onProcessToBeRetried }
 
   paraunit.printer.failures_printer:
     class: Paraunit\Printer\FailuresPrinter

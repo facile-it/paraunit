@@ -4,6 +4,7 @@ namespace Tests\Unit\Runner;
 
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
@@ -12,6 +13,7 @@ use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Process\ProcessBuilder;
 use Tests\BaseUnitTestCase;
+use Tests\Stub\StubbedParaunitProcess;
 
 class RunnerTest extends BaseUnitTestCase
 {
@@ -61,6 +63,64 @@ class RunnerTest extends BaseUnitTestCase
         );
 
         $this->assertSame(0, $runner->run());
+    }
+
+    public function testOnProcessParsingCompletedWithFailedProcess()
+    {
+        $process = new StubbedParaunitProcess();
+        $process->setIsToBeRetried(false);
+        $process->setExitCode(1);
+
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
+        
+        $filter = $this->prophesize(Filter::class);
+        $filter->filterTestFiles()
+            ->willReturn([]);
+        $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->push($process)
+            ->shouldNotBeCalled();
+
+        $runner = new Runner(
+            $eventDispatcher->reveal(),
+            $this->mockProcessBuilderFactory(),
+            $filter->reveal(),
+            $pipelineCollection->reveal()
+        );
+
+        $runner->onProcessParsingCompleted(new ProcessEvent($process));
+
+        $this->assertAttributeNotSame(0, 'exitCode', $runner);
+    }
+
+    public function testOnProcessParsingCompletedWithRetriableProcess()
+    {
+        $process = new StubbedParaunitProcess();
+        $process->setIsToBeRetried(true);
+        $process->setExitCode(1);
+
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, Argument::type(ProcessEvent::class))
+            ->shouldBeCalledTimes(1);
+        
+        $filter = $this->prophesize(Filter::class);
+        $filter->filterTestFiles()
+            ->willReturn([]);
+        $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->push($process)
+            ->shouldBeCalledTimes(1);
+
+        $runner = new Runner(
+            $eventDispatcher->reveal(),
+            $this->mockProcessBuilderFactory(),
+            $filter->reveal(),
+            $pipelineCollection->reveal()
+        );
+
+        $runner->onProcessParsingCompleted(new ProcessEvent($process));
+
+        $this->assertAttributeSame(0, 'exitCode', $runner);
     }
 
     private function mockEventDispatcher(): EventDispatcherInterface

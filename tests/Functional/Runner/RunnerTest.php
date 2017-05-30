@@ -8,10 +8,9 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
-use Tests\Stub\UnformattedOutputStub;
 use Tests\Stub\EntityManagerClosedTestStub;
-use Tests\Stub\SegFaultTestStub;
 use Tests\Stub\MissingProviderTestStub;
+use Tests\Stub\SegFaultTestStub;
 
 /**
  * Class RunnerTest
@@ -28,14 +27,14 @@ class RunnerTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
         $output = $this->getConsoleOutput();
 
-        $this->assertEquals(0, $runner->run($output), $output->getOutput());
+        $this->assertEquals(0, $runner->run(), $output->getOutput());
 
         $this->assertNotContains('Coverage', $output->getOutput());
-        $this->assertOutputOrder($output, array(
+        $this->assertOutputOrder($output, [
             'PARAUNIT',
             'v' . Paraunit::getVersion(),
             '...',
-        ));
+        ]);
     }
 
     public function testMaxRetryEntityManagerIsClosed()
@@ -47,7 +46,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
         $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $runner->run($output));
+        $this->assertNotEquals(0, $runner->run());
 
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
@@ -70,12 +69,10 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $output = $this->getConsoleOutput();
 
         $exitCode = $runner->run();
 
-        $output = $output->fetch();
-        $this->assertContains(str_repeat('A', 3) . 'E', $output);
+        $this->assertContains(str_repeat('A', 3) . 'E', $this->getConsoleOutput()->getOutput());
         $this->assertNotEquals(0, $exitCode);
     }
 
@@ -96,48 +93,42 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $output = $this->getConsoleOutput();
+        $output = $this->getConsoleOutput()->getOutput();
 
-        $this->assertNotEquals(
-            0,
-            $runner->run($output),
-            'Exit code should not be 0'
-        );
+        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
-        $output = $outputInterface->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
-            $output->getOutput(),
+            $output,
             'Missing recap title'
         );
         $this->assertContains(
             SegFaultTestStub::class,
-            $output->getOutput(),
+            $output,
             'Missing failing filename'
         );
     }
 
     public function testWarning()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $output = $this->getConsoleOutput();
+        $output = $this->getConsoleOutput()->getOutput();
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
-        $this->assertRegExp('/\nW\n/', $output->getOutput(), 'Missing W output');
+        $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
-            $output->getOutput(),
+            $output,
             'Missing recap title'
         );
         $this->assertContains(
             MissingProviderTestStub::class,
-            $output->getOutput(),
+            $output,
             'Missing warned filename'
         );
     }
@@ -158,7 +149,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertEquals(0, $runner->run());
 
-        $output = $outputInterface->getOutput();
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertNotContains('...', $output);
         $this->assertNotContains('ABNORMAL TERMINATION', $output);
         $this->assertContains('Executed: 1 test classes, 0 tests', $output);
@@ -175,7 +166,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
-        $output = $outputInterface->getOutput();
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
@@ -190,12 +181,12 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
-        $output = $outputInterface->getOutput();
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
-            $output->getOutput(),
+            $output,
             'Missing abnormal termination recap title'
         );
     }
@@ -208,10 +199,10 @@ class RunnerTest extends BaseIntegrationTestCase
         $runner = $this->container->get('paraunit.runner.runner');
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
-        $output = $this->getConsoleOutput();
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertGreaterThan(
-            strpos($output->getOutput(), 'Execution time'),
-            strpos($output->getOutput(), 'YOU SHOULD NOT SEE THIS'),
+            strpos($output, 'Execution time'),
+            strpos($output, 'YOU SHOULD NOT SEE THIS'),
             'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
         );
     }
