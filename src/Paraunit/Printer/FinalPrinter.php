@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,6 +21,11 @@ class FinalPrinter extends AbstractFinalPrinter
     /** @var Stopwatch */
     private $stopWatch;
 
+    /** @var int */
+    private $processCompleted;
+    
+    /** @var int */
+    private $processRetried;
     /**
      * FinalPrinter constructor.
      * @param TestResultList $testResultList
@@ -30,6 +36,8 @@ class FinalPrinter extends AbstractFinalPrinter
         parent::__construct($testResultList, $output);
 
         $this->stopWatch = new Stopwatch();
+        $this->processCompleted = 0;
+        $this->processRetried = 0;
     }
 
     public function onEngineStart()
@@ -45,6 +53,16 @@ class FinalPrinter extends AbstractFinalPrinter
         $this->printTestCounters();
     }
 
+    public function onProcessTerminated()
+    {
+        $this->processCompleted++;
+    }
+
+    public function onProcessToBeRetried()
+    {
+        $this->processRetried++;
+    }
+
     private function printExecutionTime(StopwatchEvent $stopEvent)
     {
         $this->getOutput()->writeln('');
@@ -54,7 +72,6 @@ class FinalPrinter extends AbstractFinalPrinter
 
     private function printTestCounters()
     {
-        $completedProcesses = 0; // TODO $engineEvent->get('process_completed');
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
             if ($container instanceof TestResultContainer) {
@@ -63,7 +80,12 @@ class FinalPrinter extends AbstractFinalPrinter
         }
 
         $this->getOutput()->writeln('');
-        $this->getOutput()->writeln(sprintf('Executed: %d test classes, %d tests', count($completedProcesses), $testsCount));
+        $this->getOutput()->writeln(sprintf(
+            'Executed: %d test classes, %d tests (%d retried)',
+            $this->processCompleted - $this->processRetried,
+            $testsCount,
+            $this->processRetried
+        ));
         $this->getOutput()->writeln('');
     }
 }

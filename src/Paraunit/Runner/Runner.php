@@ -91,6 +91,8 @@ class Runner
             $process->increaseRetryCount();
 
             $this->queuedProcesses->enqueue($process);
+            
+            $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, new ProcessEvent($process));
         } elseif ($process->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
