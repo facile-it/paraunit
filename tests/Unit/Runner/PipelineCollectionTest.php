@@ -86,9 +86,13 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $pipeline1->isTerminated()
             ->shouldBeCalledTimes(1)
             ->willReturn($isPipeline1Terminated);
+        $pipeline1->isFree()
+            ->willReturn($isPipeline1Terminated);
         $pipeline2 = $this->prophesize(Pipeline::class);
         $pipeline2->isTerminated()
             ->shouldBeCalledTimes(1)
+            ->willReturn($isPipeline2Terminated);
+        $pipeline2->isFree()
             ->willReturn($isPipeline2Terminated);
 
         $pipelineCollection = new PipelineCollection(
@@ -98,6 +102,24 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
         $expectedResult = ! ($isPipeline1Terminated && $isPipeline2Terminated);
         $this->assertSame($expectedResult, $pipelineCollection->checkRunningState());
+    }
+
+    public function testCheckRunningStateWithPipelineFullAgain()
+    {
+        $pipeline = $this->prophesize(Pipeline::class);
+        $pipeline->isTerminated()
+            ->shouldBeCalledTimes(1)
+            ->willReturn(true);
+        $pipeline->isFree()
+            ->shouldBeCalledTimes(1)
+            ->willReturn(false);
+
+        $pipelineCollection = new PipelineCollection(
+            $this->mockPipelineFactory([$pipeline->reveal()]),
+            1
+        );
+
+        $this->assertTrue($pipelineCollection->checkRunningState());
     }
 
     /**
