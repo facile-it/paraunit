@@ -2,7 +2,9 @@
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Configuration\TempFilenameFactory;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -20,11 +22,20 @@ class ProcessBuilderFactory
      * ProcessBuilderFactory constructor.
      * @param CliCommandInterface $cliCommand
      * @param PHPUnitConfig $phpunitConfig
+     * @param TempFilenameFactory $tempFilenameFactory
      */
-    public function __construct(CliCommandInterface $cliCommand, PHPUnitConfig $phpunitConfig)
-    {
+    public function __construct(
+        CliCommandInterface $cliCommand,
+        PHPUnitConfig $phpunitConfig,
+        TempFilenameFactory $tempFilenameFactory
+    ) {
         $this->cliCommand = $cliCommand;
+        /** TODO inject builderPrototype so we can assert it's not returned but cloned, and with the right env vars */
         $this->builderPrototype = new ProcessBuilder();
+
+        $this->builderPrototype->addEnvironmentVariables([
+            EnvVariables::LOG_DIR => $tempFilenameFactory->getPathForLog(),
+        ]);
 
         foreach ($this->cliCommand->getExecutable() as $item) {
             $this->builderPrototype->add($item);

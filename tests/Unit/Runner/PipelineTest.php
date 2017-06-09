@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Runner;
 
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Runner\Pipeline;
@@ -26,7 +27,7 @@ class PipelineTest extends BaseUnitTestCase
 
         $pipeline->execute($process->reveal());
 
-        $process->start([Pipeline::ENV_VAR_NAME_PIPELINE_NUMBER => 5])
+        $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldHaveBeenCalledTimes(1);
     }
 
@@ -61,7 +62,7 @@ class PipelineTest extends BaseUnitTestCase
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $process = $this->prophesize(ParaunitProcessInterface::class);
-        $process->start([Pipeline::ENV_VAR_NAME_PIPELINE_NUMBER => 5])
+        $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldBeCalledTimes(1);
         $process->isTerminated()
             ->willReturn(true);
@@ -86,7 +87,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
             ->shouldNotBeCalled();
         $process = $this->prophesize(ParaunitProcessInterface::class);
-        $process->start([Pipeline::ENV_VAR_NAME_PIPELINE_NUMBER => 5])
+        $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldBeCalledTimes(1);
         $process->isTerminated()
             ->willReturn(false);

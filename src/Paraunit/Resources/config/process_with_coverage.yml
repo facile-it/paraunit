@@ -4,6 +4,7 @@ services:
     arguments:
       - "@paraunit.process.command_line_with_coverage"
       - "@paraunit.configuration.phpunit_config"
+      - "@paraunit.configuration.temp_filename_factory"
 
   paraunit.process.command_line_with_coverage:
     class: Paraunit\Process\CommandLineWithCoverage

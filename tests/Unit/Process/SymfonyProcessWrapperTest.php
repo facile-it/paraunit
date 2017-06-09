@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Process\SymfonyProcessWrapper;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
@@ -17,19 +19,24 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
     public function testGetUniqueId()
     {
         $process = new SymfonyProcessWrapper($this->mockProcessBuilder(), 'Test.php');
-        
+
         $this->assertEquals('Test.php', $process->getFilename());
         $this->assertEquals(md5('Test.php'), $process->getUniqueId());
     }
 
     public function testStart()
     {
-        $envVar = array('NAME' => 'value');
         $process = $this->prophesize(Process::class);
         $process->start()
             ->shouldBeCalledTimes(1);
         $processBuilder = $this->prophesize(ProcessBuilder::class);
-        $processBuilder->addEnvironmentVariables($envVar)
+        $processBuilder->addEnvironmentVariables(Argument::that(function ($envVariables) {
+            $this->assertArrayHasKey(EnvVariables::PROCESS_UNIQUE_ID, $envVariables);
+            $this->assertArrayHasKey('NAME', $envVariables);
+            $this->assertEquals('value', $envVariables['NAME']);
+
+            return true;
+        }))
             ->shouldBeCalled();
         $processBuilder->getProcess()
             ->shouldBeCalled()
@@ -37,7 +44,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
 
         $processWrapper = new SymfonyProcessWrapper($processBuilder->reveal(), 'Test.php');
 
-        $processWrapper->start($envVar);
+        $processWrapper->start(['NAME' => 'value']);
     }
 
     public function testAddTestResultShouldResetExpectingFlag()

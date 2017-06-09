@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\ProcessBuilderFactory;
 use Tests\BaseUnitTestCase;
 use Paraunit\Configuration\PHPUnitConfig;
@@ -33,7 +34,11 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
             ->shouldBeCalled(1)
             ->willReturn(['--specific=value-for-TestTest2.php']);
 
-        $factory = new ProcessBuilderFactory($cliCommand->reveal(), $phpUnitConfig->reveal());
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getPathForLog()
+            ->willReturn('/path/for/log/');
+
+        $factory = new ProcessBuilderFactory($cliCommand->reveal(), $phpUnitConfig->reveal(), $tempFilenameFactory->reveal());
 
         $processBuilder = $factory->create('TestTest.php');
 

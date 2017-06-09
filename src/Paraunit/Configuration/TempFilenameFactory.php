@@ -25,38 +25,42 @@ class TempFilenameFactory
 
     public function getPathForLog(): string
     {
-        return $this->getTempFilename('logs', '', '');
+        return $this->getTempSubDir('logs');
     }
 
+    /**
+     * @TODO: deprecate? Maye it will not be used anymore
+     * @param string $uniqueId
+     * @return string
+     */
     public function getFilenameForLog(string $uniqueId): string
     {
-        return $this->getTempFilename('logs', $uniqueId, '.json.log');
+        return $this->getTempFilename('logs', $uniqueId, 'json.log');
     }
 
     public function getFilenameForCoverage(string $uniqueId): string
     {
-        return $this->getTempFilename('coverage', $uniqueId, '.php');
+        return $this->getTempFilename('coverage', $uniqueId, 'php');
     }
 
     public function getFilenameForConfiguration(): string
     {
-        return $this->getTempFilename('config', 'phpunit', '.xml.dist');
+        return $this->getTempFilename('config', 'phpunit', 'xml.dist');
     }
 
-    /**
-     * @param string $subdir
-     * @param string $filename
-     * @param string $extension
-     * @return string
-     * @throws \RuntimeException
-     */
-    private function getTempFilename(string $subdir, string $filename, string $extension): string
+    private function getTempFilename(string $subDir, string $filename, string $extension): string
+    {
+        return $this->getTempSubDir($subDir)
+            . $filename
+            . '.'
+            . $extension;
+    }
+
+    private function getTempSubDir(string $subDir): string
     {
         return $this->tempDirectory->getTempDirForThisExecution()
             . DIRECTORY_SEPARATOR
-            . $subdir
-            . DIRECTORY_SEPARATOR
-            . $filename
-            . $extension;
+            . $subDir
+            . DIRECTORY_SEPARATOR;
     }
 }

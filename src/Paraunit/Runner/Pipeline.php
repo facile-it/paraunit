@@ -2,6 +2,7 @@
 
 namespace Paraunit\Runner;
 
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ParaunitProcessInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -12,8 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Pipeline
 {
-    const ENV_VAR_NAME_PIPELINE_NUMBER = 'PARAUNIT_PIPELINE_NUMBER';
-
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
@@ -41,9 +40,9 @@ class Pipeline
         }
 
         $this->process = $process;
-        $this->process->start(array(
-            self::ENV_VAR_NAME_PIPELINE_NUMBER => $this->number,
-        ));
+        $this->process->start([
+            EnvVariables::PIPELINE_NUMBER => $this->number,
+        ]);
     }
 
     public function isFree(): bool

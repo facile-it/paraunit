@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\EnvVariables;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -42,7 +43,9 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
      */
     public function start(array $env = [])
     {
+        $env[EnvVariables::PROCESS_UNIQUE_ID] = $this->getUniqueId();
         $this->processBuilder->addEnvironmentVariables($env);
+
         $this->process = $this->processBuilder->getProcess();
         $this->process->start();
     }
