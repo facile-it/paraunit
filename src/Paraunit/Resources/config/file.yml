@@ -6,8 +6,6 @@ services:
     class: Paraunit\File\Cleaner
     arguments:
       - "@paraunit.file.temp_directory"
-      - "@paraunit.configuration.phpunit_config"
     tags:
       - { name: kernel.event_listener, event: engine_event.before_start, method: purgeCurrentTempDir }
       - { name: kernel.event_listener, event: engine_event.end, method: purgeCurrentTempDir }
-      - { name: kernel.event_listener, event: engine_event.end, method: deleteTempConfig }

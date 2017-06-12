@@ -38,7 +38,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function testExecutionAllGreenWithRepeatOption()

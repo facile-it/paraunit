@@ -8,7 +8,6 @@ services:
   paraunit.configuration.phpunit_config:
     class: Paraunit\Configuration\PHPUnitConfig
     arguments:
-      - '@paraunit.configuration.temp_filename_factory'
       - '%paraunit.phpunit_config_filename%'
 
   paraunit.configuration.temp_filename_factory:

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Configuration\StaticOutputPath;
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Parser\JSON\LogPrinter;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
@@ -272,7 +272,7 @@ class LogPrinterTest extends BaseUnitTestCase
 
     private function createPrinterAndStartTestSuite(): LogPrinter
     {
-        new StaticOutputPath(sys_get_temp_dir());
+        putenv(EnvVariables::LOG_DIR . '=' . sys_get_temp_dir());
         $printer = new LogPrinter();
         $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()

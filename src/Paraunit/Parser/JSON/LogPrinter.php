@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Configuration\StaticOutputPath;
+use Paraunit\Configuration\EnvVariables;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestCase;
@@ -264,11 +264,13 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->write(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 
-    private function getLogFilename(TestSuite $suite): string
+    /**
+     * @return string
+     * TODO -- move in constructor
+     */
+    private function getLogFilename(): string
     {
-        $testFilename = $this->getTestFilename($suite);
-
-        return $this->getLogDirectory() . md5($testFilename) . '.json.log';
+        return $this->getLogDirectory() . getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
     }
 
     private function getTestFilename(TestSuite $suite): string
@@ -280,11 +282,18 @@ class LogPrinter extends Util\Printer implements TestListener
 
     /**
      * @return string
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
+     * TODO: move to constructor
      */
     private function getLogDirectory(): string
     {
-        $this->logDirectory = StaticOutputPath::getPath();
+        $this->logDirectory = getenv(EnvVariables::LOG_DIR);
+        
+        if ($this->logDirectory === false) {
+            throw new \InvalidArgumentException('Log directory not received: environment variable not set');
+        }
+        
         if (substr($this->logDirectory, -1) !== DIRECTORY_SEPARATOR) {
             $this->logDirectory .= DIRECTORY_SEPARATOR;
         }

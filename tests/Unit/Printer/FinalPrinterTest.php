@@ -3,14 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
@@ -51,7 +49,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $printer->onProcessTerminated();
         $printer->onProcessToBeRetried();
         $printer->onProcessTerminated();
-        sleep(60);
+        sleep(60.1);
         $printer->onEngineEnd();
 
         ClockMock::withClockMock(false);
