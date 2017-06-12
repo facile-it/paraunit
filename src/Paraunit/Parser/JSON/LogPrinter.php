@@ -40,6 +40,15 @@ class LogPrinter extends Util\Printer implements TestListener
     public function __construct()
     {
         $this->testSuiteLevel = 0;
+
+        $logFilename = $this->getLogFilename();
+
+        $logDir = $this->getLogDirectory();
+        if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
+            throw new \RuntimeException('Cannot create folder for JSON logs');
+        }
+
+        $this->out = fopen($logDir . $logFilename, 'wt');
     }
 
     /**
@@ -170,17 +179,6 @@ class LogPrinter extends Util\Printer implements TestListener
      */
     public function startTestSuite(TestSuite $suite)
     {
-        if ($this->testSuiteLevel === 0) {
-            $logFilename = $this->getLogFilename($suite);
-
-            $logDir = dirname($logFilename);
-            if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
-                throw new \RuntimeException('Cannot create folder for JSON logs');
-            }
-
-            $this->out = fopen($logFilename, 'wt');
-        }
-
         $this->testSuiteLevel++;
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName = '';
@@ -266,25 +264,16 @@ class LogPrinter extends Util\Printer implements TestListener
 
     /**
      * @return string
-     * TODO -- move in constructor
+     * @throws \InvalidArgumentException
      */
     private function getLogFilename(): string
     {
-        return $this->getLogDirectory() . getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
-    }
-
-    private function getTestFilename(TestSuite $suite): string
-    {
-        $reflection = new \ReflectionClass($suite->getName());
-
-        return $reflection->getFileName();
+        return getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
     }
 
     /**
      * @return string
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * TODO: move to constructor
      */
     private function getLogDirectory(): string
     {

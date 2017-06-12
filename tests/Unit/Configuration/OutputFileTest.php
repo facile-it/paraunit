@@ -38,11 +38,7 @@ class OutputFileTest extends BaseUnitTestCase
         return [
             [null],
             [''],
+            [false],
         ];
-    }
-
-    public function testThatFileIsOk()
-    {
-        $this->markTestIncomplete('Not sure how to intercept invalid files');
     }
 }

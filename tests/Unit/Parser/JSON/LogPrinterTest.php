@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
+use Paraunit\File\Cleaner;
 use Paraunit\Parser\JSON\LogPrinter;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
@@ -17,6 +18,9 @@ use Tests\BaseUnitTestCase;
  */
 class LogPrinterTest extends BaseUnitTestCase
 {
+    /** @var string */
+    private $randomTempDir;
+
     public function testStartTestSuite()
     {
         $this->createPrinterAndStartTestSuite();
@@ -272,7 +276,8 @@ class LogPrinterTest extends BaseUnitTestCase
 
     private function createPrinterAndStartTestSuite(): LogPrinter
     {
-        putenv(EnvVariables::LOG_DIR . '=' . sys_get_temp_dir());
+        $this->createRandomTmpDir();
+        putenv(EnvVariables::PROCESS_UNIQUE_ID . '=log-file-name');
         $printer = new LogPrinter();
         $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
@@ -287,7 +292,7 @@ class LogPrinterTest extends BaseUnitTestCase
 
     private function getLogContent(): string
     {
-        $logFilename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5(__FILE__) . '.json.log';
+        $logFilename = $this->randomTempDir . 'log-file-name.json.log';
         $this->assertFileExists($logFilename, 'Log file missing! Maybe you called this method too early?');
 
         $content = file_get_contents($logFilename);
@@ -317,5 +322,25 @@ class LogPrinterTest extends BaseUnitTestCase
             'suite' => get_class($this),
             'tests' => 1,
         ];
+    }
+
+    private function createRandomTmpDir()
+    {
+        $this->randomTempDir = uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test-', true);
+        $this->randomTempDir .= DIRECTORY_SEPARATOR;
+
+        putenv(EnvVariables::LOG_DIR . '=' . $this->randomTempDir);
+    }
+
+    protected function tearDown()
+    {
+        putenv(EnvVariables::LOG_DIR);
+        putenv(EnvVariables::PROCESS_UNIQUE_ID);
+
+        if (is_dir($this->randomTempDir)) {
+            Cleaner::cleanUpDir($this->randomTempDir);
+        }
+
+        parent::tearDown();
     }
 }
