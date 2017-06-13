@@ -262,6 +262,14 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->write(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 
+    public function write($buffer)
+    {
+        // ignore everything that is not a JSON object
+        if ($buffer != '' && $buffer[0] === '{') {
+            parent::write($buffer);
+        }
+    }
+
     /**
      * @return string
      * @throws \InvalidArgumentException

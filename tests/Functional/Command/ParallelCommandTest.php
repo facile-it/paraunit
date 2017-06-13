@@ -60,7 +60,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function testExecution()
@@ -85,7 +84,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MissingProviderTestStub::class, $output);
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function testExecutionWithoutConfiguration()
@@ -104,6 +102,5 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('NO TESTS EXECUTED', $output);
         $this->assertContains('0 tests', $output);
         $this->assertSame(0, $exitCode);
-        $this->assertFileNotExists(dirname(__DIR__) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 }
