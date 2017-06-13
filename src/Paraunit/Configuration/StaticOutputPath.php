@@ -6,6 +6,7 @@ namespace Paraunit\Configuration;
 use PHPUnit\Framework\BaseTestListener;
 
 /**
+ * @deprecated TODO delete
  * Class StaticOutputPath
  * @package Paraunit\Configuration
  */

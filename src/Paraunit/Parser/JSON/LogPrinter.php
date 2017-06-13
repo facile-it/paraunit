@@ -40,6 +40,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function __construct()
     {
         $this->testSuiteLevel = 0;
+        $this->autoFlush = true;
 
         $logFilename = $this->getLogFilename();
 
