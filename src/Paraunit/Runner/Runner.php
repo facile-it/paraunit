@@ -66,11 +66,7 @@ class Runner
 
         $this->eventDispatcher->dispatch(EngineEvent::START);
 
-        while ($this->pipelineCollection->hasEmptySlots() && ! $this->queuedProcesses->isEmpty()) {
-            $this->pipelineCollection->push($this->queuedProcesses->dequeue());
-        }
-
-        while ($this->pipelineCollection->checkRunningState() || $this->pipelineCollection->checkRunningState()) {
+        while ($this->pipelineCollection->checkRunningState() || $this->pushToPipeline()) {
             usleep(100);
         }
 
@@ -96,10 +92,6 @@ class Runner
         } elseif ($process->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
-
-        if (! $this->queuedProcesses->isEmpty()) {
-            $this->pipelineCollection->push($this->queuedProcesses->dequeue());
-        }
     }
 
     private function createProcessQueue()
@@ -108,5 +100,16 @@ class Runner
             $processBuilder = $this->processBuilderFactory->create($file);
             $this->queuedProcesses->enqueue(new SymfonyProcessWrapper($processBuilder, $file));
         }
+    }
+
+    private function pushToPipeline(): bool
+    {
+        $somethingHasBeenPushed = false;
+        while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
+            $this->pipelineCollection->push($this->queuedProcesses->dequeue());
+            $somethingHasBeenPushed = true;
+        }
+        
+        return $somethingHasBeenPushed;
     }
 }
