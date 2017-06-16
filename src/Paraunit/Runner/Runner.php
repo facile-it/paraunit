@@ -70,7 +70,7 @@ class Runner
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
         }
 
-        while ($this->pipelineCollection->checkRunningState()) {
+        while ($this->pipelineCollection->checkRunningState() || $this->pipelineCollection->checkRunningState()) {
             usleep(100);
         }
 

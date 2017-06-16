@@ -3,7 +3,6 @@
 namespace Paraunit\Runner;
 
 use Paraunit\Process\ParaunitProcessInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class PipelineCollection

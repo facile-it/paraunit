@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,9 +22,10 @@ class FinalPrinter extends AbstractFinalPrinter
 
     /** @var int */
     private $processCompleted;
-    
+
     /** @var int */
     private $processRetried;
+
     /**
      * FinalPrinter constructor.
      * @param TestResultList $testResultList
