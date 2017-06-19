@@ -56,7 +56,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
      */
     public function getOutput(): string
     {
-        return $this->process->getOutput();
+        return $this->process->getOutput() ?? '';
     }
 
     /**
