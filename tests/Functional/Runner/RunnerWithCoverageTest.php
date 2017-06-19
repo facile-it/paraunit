@@ -25,11 +25,12 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
-
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run());
+        $exitCode = $runner->run();
+        
+        $this->assertEquals(0, $exitCode, $this->getConsoleOutput()->getOutput());
         $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',

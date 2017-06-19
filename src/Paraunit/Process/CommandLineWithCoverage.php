@@ -59,7 +59,7 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
     {
         $options = parent::getOptions($config);
         if ($this->phpDbgBinFile->isAvailable()) {
-            $options[] = '-qrr=' . $this->phpUnitBin->getPhpUnitBin();
+            array_unshift($options, '-qrr=' . $this->phpUnitBin->getPhpUnitBin());
         }
 
         return $options;

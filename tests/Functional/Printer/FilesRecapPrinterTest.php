@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\FilesRecapPrinter;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
-use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class FilesRecapPrinterTest
@@ -17,13 +15,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
 {
     public function testOnEngineEndPrintsInTheRightOrder()
     {
-        $output = new UnformattedOutputStub();
         $process = new StubbedParaunitProcess();
-        $context = [
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => [$process],
-        ];
 
         $this->processAllTheStubLogs();
         $this->container->get('paraunit.test_result.no_test_executed_container')
@@ -34,7 +26,9 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         /** @var FilesRecapPrinter $printer */
         $printer = $this->container->get('paraunit.printer.files_recap_printer');
 
-        $printer->onEngineEnd(new EngineEvent($output, $context));
+        $printer->onEngineEnd();
+
+        $output = $this->getConsoleOutput();
 
         $this->assertNotEmpty($output->getOutput());
         $this->assertNotContains('PASSED output', $output->getOutput(), null, true);

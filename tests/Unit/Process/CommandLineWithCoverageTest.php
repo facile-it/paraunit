@@ -115,6 +115,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('-qrr=path/to/phpunit', $options);
         $this->assertContains('--opt', $options);
+
+        $firstOption = $options[0];
+        $this->assertStringStartsWith('-qrr', $firstOption, '-qrr option needs to be the first one!');
     }
 
     public function testGetSpecificOptions()

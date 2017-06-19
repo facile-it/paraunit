@@ -93,10 +93,10 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $output = $this->getConsoleOutput()->getOutput();
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
@@ -116,10 +116,10 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         $runner = $this->container->get('paraunit.runner.runner');
-        $output = $this->getConsoleOutput()->getOutput();
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
+        $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
