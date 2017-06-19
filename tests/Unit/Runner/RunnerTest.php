@@ -109,7 +109,7 @@ class RunnerTest extends BaseUnitTestCase
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
         $pipelineCollection->push($process)
-            ->shouldBeCalledTimes(1);
+            ->shouldNotBeCalled();
 
         $runner = new Runner(
             $eventDispatcher->reveal(),
