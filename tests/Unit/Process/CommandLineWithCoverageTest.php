@@ -10,8 +10,8 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
 use Paraunit\Process\CommandLineWithCoverage;
-use Tests\Stub\StubbedParaunitProcess;
 use Tests\BaseUnitTestCase;
+use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TestWithCoverageCliCommandTest
@@ -111,13 +111,13 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
 
         $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertContains('-qrr', $options);
+        $this->assertEquals('-qrr', $options[0], '-qrr option needs to be the first one!');
+        $this->assertContains('path/to/phpunit', $options);
+        $this->assertEquals('path/to/phpunit', $options[1], 'PHPUnit bin path must follow the -qrr option');
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
         $this->assertContains('--printer=' . LogPrinter::class, $options);
-        $this->assertContains('-qrr=path/to/phpunit', $options);
         $this->assertContains('--opt', $options);
-
-        $firstOption = $options[0];
-        $this->assertStringStartsWith('-qrr', $firstOption, '-qrr option needs to be the first one!');
     }
 
     public function testGetSpecificOptions()

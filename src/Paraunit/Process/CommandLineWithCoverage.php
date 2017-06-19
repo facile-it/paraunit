@@ -57,12 +57,17 @@ class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
      */
     public function getOptions(PHPUnitConfig $config): array
     {
-        $options = parent::getOptions($config);
-        if ($this->phpDbgBinFile->isAvailable()) {
-            array_unshift($options, '-qrr=' . $this->phpUnitBin->getPhpUnitBin());
+        if (! $this->phpDbgBinFile->isAvailable()) {
+            return parent::getOptions($config);
         }
 
-        return $options;
+        return array_merge(
+            [
+                '-qrr',
+                $this->phpUnitBin->getPhpUnitBin()
+            ],
+            parent::getOptions($config)
+        );
     }
 
     public function getSpecificOptions(string $testFilename): array
