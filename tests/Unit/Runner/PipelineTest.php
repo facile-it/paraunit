@@ -5,7 +5,7 @@ namespace Tests\Unit\Runner;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Runner\Pipeline;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -22,7 +22,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
-        $process = $this->prophesize(ParaunitProcessInterface::class);
+        $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
         $pipeline->execute($process->reveal());
@@ -36,7 +36,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
-        $process = $this->prophesize(ParaunitProcessInterface::class);
+        $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
         $pipeline->execute($process->reveal());
@@ -61,7 +61,7 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsTerminatedHandlesTermination()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $process = $this->prophesize(ParaunitProcessInterface::class);
+        $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldBeCalledTimes(1);
         $process->isTerminated()
@@ -86,7 +86,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
             ->shouldNotBeCalled();
-        $process = $this->prophesize(ParaunitProcessInterface::class);
+        $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldBeCalledTimes(1);
         $process->isTerminated()

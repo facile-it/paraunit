@@ -87,14 +87,4 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     {
         return $this->commandLine;
     }
-
-    public function isRunning(): bool
-    {
-        return $this->process->isRunning();
-    }
-
-    public function wait()
-    {
-        $this->process->wait();
-    }
 }

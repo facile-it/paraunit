@@ -2,7 +2,7 @@
 
 namespace Paraunit\Runner;
 
-use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Class PipelineCollection
@@ -23,11 +23,11 @@ class PipelineCollection
     }
 
     /**
-     * @param ParaunitProcessInterface $process
+     * @param AbstractParaunitProcess $process
      * @return Pipeline
      * @throws \RuntimeException
      */
-    public function push(ParaunitProcessInterface $process): Pipeline
+    public function push(AbstractParaunitProcess $process): Pipeline
     {
         foreach ($this->pipelines as $pipeline) {
             if ($pipeline->isFree()) {

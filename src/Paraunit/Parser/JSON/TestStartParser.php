@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\NullTestResult;
 
 /**
@@ -14,13 +14,13 @@ class TestStartParser implements ParserChainElementInterface
 {
     const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
 
-    /** @var ProcessWithResultsInterface */
+    /** @var AbstractParaunitProcess */
     private $lastProcess;
 
     /** @var string */
     private $lastFunction;
 
-    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
+    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if (property_exists($logItem, 'status') && $logItem->status === LogFetcher::LOG_ENDING_STATUS) {
             return $this->handleLogTermination($process, $logItem);
@@ -40,11 +40,11 @@ class TestStartParser implements ParserChainElementInterface
     }
 
     /**
-     * @param ProcessWithResultsInterface $process
+     * @param AbstractParaunitProcess $process
      * @param \stdClass $logItem
      * @return null|NullTestResult
      */
-    private function handleLogTermination(ProcessWithResultsInterface $process, \stdClass $logItem)
+    private function handleLogTermination(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if ($process->isWaitingForTestResult()) {
             $this->injectLastFunctionInEndingLog($process, $logItem);
@@ -56,20 +56,20 @@ class TestStartParser implements ParserChainElementInterface
     }
 
     /**
-     * @param ProcessWithResultsInterface $process
+     * @param AbstractParaunitProcess $process
      * @param \stdClass $logItem
      */
-    private function saveProcessFunction(ProcessWithResultsInterface $process, \stdClass $logItem)
+    private function saveProcessFunction(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         $this->lastProcess = $process;
         $this->lastFunction = property_exists($logItem, 'test') ? $logItem->test : self::UNKNOWN_FUNCTION;
     }
 
     /**
-     * @param ProcessWithResultsInterface $process
+     * @param AbstractParaunitProcess $process
      * @param \stdClass $logItem
      */
-    private function injectLastFunctionInEndingLog(ProcessWithResultsInterface $process, \stdClass $logItem)
+    private function injectLastFunctionInEndingLog(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         $logItem->test = $this->lastFunction;
 
@@ -78,7 +78,7 @@ class TestStartParser implements ParserChainElementInterface
         }
     }
 
-    private function saveTestFQCN(ProcessWithResultsInterface $process, \stdClass $logItem)
+    private function saveTestFQCN(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if ($process->getTestClassName()) {
             return;

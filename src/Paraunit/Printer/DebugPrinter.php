@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Class DebugPrinter
@@ -12,10 +12,10 @@ use Paraunit\Process\ParaunitProcessInterface;
 class DebugPrinter
 {
     /**
-     * @param ParaunitProcessInterface[] $runningStack
-     * @param ParaunitProcessInterface $launchedProcess
+     * @param AbstractParaunitProcess[] $runningStack
+     * @param AbstractParaunitProcess $launchedProcess
      */
-    public static function printDebugOutput(ParaunitProcessInterface $launchedProcess, array $runningStack)
+    public static function printDebugOutput(AbstractParaunitProcess $launchedProcess, array $runningStack)
     {
         echo "\n New running stack:";
         echo "\n STARTED :" . $launchedProcess->getCommandLine();

@@ -7,7 +7,6 @@ use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ProcessBuilderFactory;
-use Paraunit\Process\RetryAwareInterface;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -82,12 +81,12 @@ class Runner
     {
         $process = $processEvent->getProcess();
 
-        if ($process instanceof RetryAwareInterface && $process->isToBeRetried()) {
+        if ($process->isToBeRetried()) {
             $process->reset();
             $process->increaseRetryCount();
 
             $this->queuedProcesses->enqueue($process);
-            
+
             $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, new ProcessEvent($process));
         } elseif ($process->getExitCode() !== 0) {
             $this->exitCode = 10;
@@ -109,7 +108,7 @@ class Runner
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
             $somethingHasBeenPushed = true;
         }
-        
+
         return $somethingHasBeenPushed;
     }
 }

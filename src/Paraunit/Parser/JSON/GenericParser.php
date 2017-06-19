@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultFactory;
 
@@ -48,12 +48,12 @@ class GenericParser implements ParserChainElementInterface
     /**
      * {@inheritdoc}
      */
-    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
+    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if ($this->logMatches($logItem)) {
             $testResult = $this->testResultFactory->createFromLog($logItem);
             $this->testResultContainer->handleTestResult($process, $testResult);
-            
+
             return $testResult;
         }
 

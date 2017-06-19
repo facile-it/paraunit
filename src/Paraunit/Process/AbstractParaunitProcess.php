@@ -10,7 +10,7 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
  * Class AbstractParaunitProcess
  * @package Paraunit\Process
  */
-abstract class AbstractParaunitProcess implements ParaunitProcessInterface, RetryAwareInterface, ProcessWithResultsInterface
+abstract class AbstractParaunitProcess
 {
     /** @var int */
     protected $retryCount = 0;
@@ -45,6 +45,18 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
         $this->waitingForTestResult = true;
         $this->shouldBeRetried = false;
     }
+
+    abstract public function getOutput(): string;
+
+    abstract public function isTerminated(): bool;
+
+    abstract public function getCommandLine(): string;
+
+    /**
+     * @param array $env An array of environment variables to be injected
+     * @return void
+     */
+    abstract public function start(array $env = []);
 
     public function getUniqueId(): string
     {

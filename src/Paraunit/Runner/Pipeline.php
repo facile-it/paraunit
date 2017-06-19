@@ -4,7 +4,7 @@ namespace Paraunit\Runner;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -16,7 +16,7 @@ class Pipeline
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /** @var ParaunitProcessInterface */
+    /** @var AbstractParaunitProcess */
     private $process;
 
     /** @var int */
@@ -33,7 +33,7 @@ class Pipeline
         $this->number = $number;
     }
 
-    public function execute(ParaunitProcessInterface $process)
+    public function execute(AbstractParaunitProcess $process)
     {
         if (! $this->isFree()) {
             throw new \RuntimeException('This pipeline is not free');

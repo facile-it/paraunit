@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Process\OutputAwareInterface;
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
@@ -24,7 +23,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
 
     /** @var PrintableTestResultInterface[] */
     private $testResults;
-    
+
     /**
      * TestResultContainer constructor.
      * @param TestResultFormat $testResultFormat
@@ -36,11 +35,11 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
         $this->testResults = [];
     }
 
-    public function handleTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult)
+    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult)
     {
         $this->addProcessToFilenames($process);
 
-        if ($testResult instanceof TestResultWithAbnormalTermination && $process instanceof OutputAwareInterface) {
+        if ($testResult instanceof TestResultWithAbnormalTermination) {
             $this->addProcessOutputToResult($testResult, $process);
         }
 
@@ -52,7 +51,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
         }
     }
 
-    public function addProcessToFilenames(ProcessWithResultsInterface $process)
+    public function addProcessToFilenames(AbstractParaunitProcess $process)
     {
         // trick for unique
         $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $process->getFilename();
@@ -84,8 +83,10 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
         return count($this->testResults);
     }
 
-    private function addProcessOutputToResult(TestResultWithAbnormalTermination $result, OutputAwareInterface $process)
-    {
+    private function addProcessOutputToResult(
+        TestResultWithAbnormalTermination $result,
+        AbstractParaunitProcess $process
+    ) {
         $tag = $this->testResultFormat->getTag();
         $output = $process->getOutput() ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
         $result->setTestOutput($output);

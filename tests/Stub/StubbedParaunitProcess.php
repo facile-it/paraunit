@@ -79,18 +79,8 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         return;
     }
 
-    public function isRunning(): bool
-    {
-        return false;
-    }
-
     public function getExitCode(): int
     {
         return $this->exitCode;
-    }
-
-    public function wait()
-    {
-        return;
     }
 }

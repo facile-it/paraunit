@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ParaunitProcessInterface;
-use Paraunit\Process\RetryAwareInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 
 /**
@@ -35,14 +34,14 @@ class CoverageMerger
     public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
-        if ($process instanceof RetryAwareInterface && $process->isToBeRetried()) {
+        if ($process->isToBeRetried()) {
             return;
         }
 
         $this->merge($process);
     }
 
-    private function merge(ParaunitProcessInterface $process)
+    private function merge(AbstractParaunitProcess $process)
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
