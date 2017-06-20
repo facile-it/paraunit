@@ -53,6 +53,11 @@ abstract class AbstractParaunitProcess
     abstract public function getCommandLine(): string;
 
     /**
+     * @return int|null
+     */
+    abstract public function getExitCode();
+
+    /**
      * @param array $env An array of environment variables to be injected
      * @return void
      */
