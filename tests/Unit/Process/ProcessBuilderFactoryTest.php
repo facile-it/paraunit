@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
-use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Process\ProcessBuilderFactory;
-use Tests\BaseUnitTestCase;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Process\CliCommandInterface;
+use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Process\CommandLine;
+use Paraunit\Process\ProcessBuilderFactory;
 use Symfony\Component\Process\ProcessBuilder;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class ProcessBuilderFactoryTest
@@ -19,7 +19,7 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
     public function testCreateProcess()
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
-        $cliCommand = $this->prophesize(CliCommandInterface::class);
+        $cliCommand = $this->prophesize(CommandLine::class);
         $cliCommand->getExecutable()->willReturn(['sapi', 'executable']);
         $cliCommand
             ->getOptions($phpUnitConfig->reveal())
@@ -38,7 +38,11 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
         $tempFilenameFactory->getPathForLog()
             ->willReturn('/path/for/log/');
 
-        $factory = new ProcessBuilderFactory($cliCommand->reveal(), $phpUnitConfig->reveal(), $tempFilenameFactory->reveal());
+        $factory = new ProcessBuilderFactory(
+            $cliCommand->reveal(),
+            $phpUnitConfig->reveal(),
+            $tempFilenameFactory->reveal()
+        );
 
         $processBuilder = $factory->create('TestTest.php');
 

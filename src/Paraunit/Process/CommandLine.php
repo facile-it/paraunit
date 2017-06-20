@@ -11,7 +11,7 @@ use Paraunit\Parser\JSON\LogPrinter;
  * Class TestCliCommand
  * @package Paraunit\Process
  */
-class CommandLine implements CliCommandInterface
+class CommandLine
 {
     /** @var  PHPUnitBinFile */
     protected $phpUnitBin;

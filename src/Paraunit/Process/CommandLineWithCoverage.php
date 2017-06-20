@@ -12,7 +12,7 @@ use Paraunit\Configuration\TempFilenameFactory;
  * Class CommandLineWithCoverage
  * @package Paraunit\Process
  */
-class CommandLineWithCoverage extends CommandLine implements CliCommandInterface
+class CommandLineWithCoverage extends CommandLine
 {
     /** @var PHPDbgBinFile */
     private $phpDbgBinFile;

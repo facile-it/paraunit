@@ -15,17 +15,17 @@ class ProcessBuilderFactory
 {
     /** @var ProcessBuilder */
     private $builderPrototype;
-    /** @var CliCommandInterface */
+    /** @var CommandLine */
     private $cliCommand;
 
     /**
      * ProcessBuilderFactory constructor.
-     * @param CliCommandInterface $cliCommand
+     * @param CommandLine $cliCommand
      * @param PHPUnitConfig $phpunitConfig
      * @param TempFilenameFactory $tempFilenameFactory
      */
     public function __construct(
-        CliCommandInterface $cliCommand,
+        CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,
         TempFilenameFactory $tempFilenameFactory
     ) {
