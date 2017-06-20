@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class Paraunit
@@ -73,10 +74,7 @@ class ParallelConfiguration
     {
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 
-        $containerBuilder->setDefinition(
-            'event_dispatcher',
-            new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
-        );
+        $containerBuilder->setDefinition('event_dispatcher', new Definition(EventDispatcher::class));
     }
 
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
