@@ -56,7 +56,7 @@ class PipelineCollection
         $isRunning = false;
 
         foreach ($this->pipelines as $pipeline) {
-            if (! $pipeline->isTerminated() || ! $pipeline->isFree()) {
+            if (! $pipeline->isTerminated()) {
                 $isRunning = true;
             }
         }
