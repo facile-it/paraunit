@@ -29,7 +29,6 @@ class TempFilenameFactory
     }
 
     /**
-     * @TODO: deprecate? Maye it will not be used anymore
      * @param string $uniqueId
      * @return string
      */

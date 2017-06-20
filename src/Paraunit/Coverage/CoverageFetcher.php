@@ -50,7 +50,6 @@ class CoverageFetcher
             return $codeCoverage;
         }
 
-        // TODO -- resolve inconsistency of method signature
         $this->resultHandler->addProcessToFilenames($process);
 
         return new CodeCoverage();

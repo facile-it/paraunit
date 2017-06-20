@@ -30,7 +30,6 @@ class ProcessBuilderFactory
         TempFilenameFactory $tempFilenameFactory
     ) {
         $this->cliCommand = $cliCommand;
-        /** TODO inject builderPrototype so we can assert it's not returned but cloned, and with the right env vars */
         $this->builderPrototype = new ProcessBuilder();
 
         $this->builderPrototype->addEnvironmentVariables([

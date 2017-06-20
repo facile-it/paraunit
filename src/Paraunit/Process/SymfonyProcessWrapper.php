@@ -80,11 +80,10 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * TODO: deprecate? it's not populated
      * @return string
      */
     public function getCommandLine(): string
     {
-        return $this->commandLine;
+        return $this->process->getCommandLine();
     }
 }
