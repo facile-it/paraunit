@@ -21,7 +21,6 @@ install:
   - IF %PHP%==1 7z x php-7.0.9-nts-Win32-VC14-x86.zip -y >nul
   - IF %PHP%==1 copy /Y php.ini-development php.ini
   - IF %PHP%==1 echo extension_dir=ext >> php.ini
-  - IF %PHP%==1 echo extension=pcntl.so >> php.ini
   - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
   - IF %PHP%==1 echo extension=php_curl.dll >> php.ini
   - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
@@ -31,8 +30,8 @@ install:
   - cd c:\projects\paraunit
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/composer.phar)
   - php composer.phar self-update
-  - php composer.phar update --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi
+  - php composer.phar update --ignore-platform-reqs --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi 
 
 test_script:
   - cd c:\projects\paraunit
-  - bin\phpunit.bat --enforce-time-limit
+  - bin\phpunit.bat
