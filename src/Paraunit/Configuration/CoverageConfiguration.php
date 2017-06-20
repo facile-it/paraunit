@@ -33,6 +33,8 @@ class CoverageConfiguration extends ParallelConfiguration
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
     {
+        parent::loadPostCompileSettings($container, $input);
+
         /** @var CoverageResult $coverageResult */
         $coverageResult = $container->get('paraunit.coverage.coverage_result');
 

@@ -3,17 +3,26 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
 use Paraunit\TestResult\TestResultContainer;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class FailuresPrinter
  * @package Paraunit\Printer
  */
-class FailuresPrinter extends AbstractFinalPrinter
+class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
+    public static function getSubscribedEvents()
+    {
+        return [
+            EngineEvent::END => ['onEngineEnd', 200],
+        ];
+    }
+
     public function onEngineEnd()
     {
         foreach ($this->testResultList->getTestResultContainers() as $parser) {

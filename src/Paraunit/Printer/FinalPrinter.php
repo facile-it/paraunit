@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Stopwatch\StopwatchEvent;
 
@@ -13,7 +16,7 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
  * Class FinalPrinter
  * @package Paraunit\Printer
  */
-class FinalPrinter extends AbstractFinalPrinter
+class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
     const STOPWATCH_NAME = 'engine';
 
@@ -38,6 +41,16 @@ class FinalPrinter extends AbstractFinalPrinter
         $this->stopWatch = new Stopwatch();
         $this->processCompleted = 0;
         $this->processRetried = 0;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::START => 'onEngineStart',
+            EngineEvent::END => ['onEngineEnd', 300],
+            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
+            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
+        ];
     }
 
     public function onEngineStart()

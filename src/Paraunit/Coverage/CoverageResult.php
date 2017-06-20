@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
+use Paraunit\Lifecycle\EngineEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoverageResult
  * @package Paraunit\Coverage
  */
-class CoverageResult
+class CoverageResult implements EventSubscriberInterface
 {
     /** @var CoverageMerger */
     private $coverageMerger;
@@ -25,6 +27,13 @@ class CoverageResult
     {
         $this->coverageMerger = $coverageMerger;
         $this->coverageProcessors = [];
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::END => 'generateResults',
+        ];
     }
 
     public function addCoverageProcessor(CoverageProcessorInterface $processor)

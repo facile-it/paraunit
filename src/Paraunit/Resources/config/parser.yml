@@ -19,8 +19,6 @@ services:
       - ["addParser", ["@paraunit.parser.error_parser"]]
       - ["addParser", ["@paraunit.parser.abnormal_terminated_parser"]]
       - ["addParser", ["@paraunit.parser.unknown_result_parser"]]
-    tags:
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
 
   paraunit.parser.json_log_fetcher:
     class: Paraunit\Parser\JSON\LogFetcher

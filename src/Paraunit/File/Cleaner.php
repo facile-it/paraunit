@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Paraunit\File;
 
+use Paraunit\Lifecycle\EngineEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 /**
  * Class Cleaner
  * @package Paraunit\File
  */
-class Cleaner
+class Cleaner implements EventSubscriberInterface
 {
     /** @var  TempDirectory */
     private $tempDirectory;
@@ -19,6 +22,14 @@ class Cleaner
     public function __construct(TempDirectory $tempDirectory)
     {
         $this->tempDirectory = $tempDirectory;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::BEFORE_START => 'purgeCurrentTempDir',
+            EngineEvent::END => 'purgeCurrentTempDir',
+        ];
     }
 
     public function purgeCurrentTempDir()

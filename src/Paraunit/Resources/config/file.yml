@@ -6,6 +6,3 @@ services:
     class: Paraunit\File\Cleaner
     arguments:
       - "@paraunit.file.temp_directory"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: purgeCurrentTempDir }
-      - { name: kernel.event_listener, event: engine_event.end, method: purgeCurrentTempDir }

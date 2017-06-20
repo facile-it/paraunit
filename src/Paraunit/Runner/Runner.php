@@ -9,12 +9,13 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Runner
  * @package Paraunit\Runner
  */
-class Runner
+class Runner implements EventSubscriberInterface
 {
     /** @var  ProcessBuilderFactory */
     private $processBuilderFactory;
@@ -52,6 +53,13 @@ class Runner
         $this->pipelineCollection = $pipelineCollection;
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+        ];
     }
 
     /**

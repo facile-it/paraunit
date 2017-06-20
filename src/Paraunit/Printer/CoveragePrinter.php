@@ -4,14 +4,16 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoveragePrinter
  * @package Paraunit\Printer
  */
-class CoveragePrinter
+class CoveragePrinter implements EventSubscriberInterface
 {
     /** @var  PHPDbgBinFile */
     private $phpdgbBin;
@@ -32,6 +34,13 @@ class CoveragePrinter
         $this->phpdgbBin = $phpdgbBin;
         $this->xdebug = $xdebug;
         $this->output = $output;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::BEFORE_START => ['onEngineBeforeStart', 100],
+        ];
     }
 
     public function onEngineBeforeStart()

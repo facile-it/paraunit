@@ -6,12 +6,13 @@ namespace Paraunit\Coverage;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\CodeCoverage;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoverageMerger
  * @package Paraunit\Coverage
  */
-class CoverageMerger
+class CoverageMerger implements EventSubscriberInterface
 {
     /** @var  CoverageFetcher */
     private $coverageFetcher;
@@ -26,6 +27,13 @@ class CoverageMerger
     public function __construct(CoverageFetcher $coverageFetcher)
     {
         $this->coverageFetcher = $coverageFetcher;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+        ];
     }
 
     /**

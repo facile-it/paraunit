@@ -4,13 +4,22 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Bin\Paraunit;
+use Paraunit\Lifecycle\EngineEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class SharkPrinter
  * @package Paraunit\Printer
  */
-class SharkPrinter extends AbstractPrinter
+class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::BEFORE_START => 'onEngineBeforeStart',
+        ];
+    }
+
     public function onEngineBeforeStart()
     {
         $output = $this->getOutput();

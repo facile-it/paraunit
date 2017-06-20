@@ -1,7 +1,4 @@
 services:
-  paraunit.configuration.paraunit:
-    class: Paraunit\Configuration\Paraunit
-
   paraunit.configuration.phpunit_bin_file:
     class: Paraunit\Configuration\PHPUnitBinFile
 

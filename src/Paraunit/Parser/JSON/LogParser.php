@@ -9,12 +9,13 @@ use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogParser
  * @package Paraunit\Parser\JSON
  */
-class LogParser
+class LogParser implements EventSubscriberInterface
 {
     /** @var LogFetcher */
     private $logLocator;
@@ -43,6 +44,13 @@ class LogParser
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
         $this->eventDispatcher = $eventDispatcher;
         $this->parsers = [];
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
+        ];
     }
 
     /**

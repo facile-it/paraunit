@@ -10,8 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Paraunit
@@ -32,8 +31,8 @@ class ParallelConfiguration
 
         $this->injectOutput($containerBuilder, $output);
         $this->loadYamlConfiguration($containerBuilder);
-        $this->registerEventDispatcher($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
+        $this->registerEventSubscribers($containerBuilder);
 
         $containerBuilder->compile();
 
@@ -64,15 +63,15 @@ class ParallelConfiguration
         return $loader;
     }
 
-    /**
-     * @param ContainerBuilder $containerBuilder
-     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
-     */
-    private function registerEventDispatcher(ContainerBuilder $containerBuilder)
+    protected function registerEventSubscribers(ContainerBuilder $container)
     {
-        $containerBuilder->addCompilerPass(new RegisterListenersPass());
+        $eventDispatcher = $container->getDefinition('event_dispatcher');
 
-        $containerBuilder->setDefinition('event_dispatcher', new Definition(EventDispatcher::class));
+        foreach ($container->getDefinitions() as $definition) {
+            if (is_subclass_of($definition->getClass(), EventSubscriberInterface::class)) {
+                $eventDispatcher->addMethodCall('addSubscriber', [$definition]);
+            }
+        }
     }
 
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)

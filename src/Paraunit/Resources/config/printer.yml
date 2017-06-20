@@ -15,43 +15,28 @@ services:
   paraunit.printer.shark_printer:
     class: Paraunit\Printer\SharkPrinter
     parent: paraunit.printer.abstract_printer
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 1000 }
 
   paraunit.printer.process_printer:
     class: Paraunit\Printer\ProcessPrinter
     arguments:
       - "@paraunit.printer.single_result_formatter"
       - "@output"
-    tags:
-      - { name: kernel.event_listener, event: process_event.process_parsing_completed, method: onProcessParsingCompleted }
 
   paraunit.printer.final_printer:
     class: Paraunit\Printer\FinalPrinter
     parent: paraunit.printer.abstract_final_printer
-    tags:
-      - { name: kernel.event_listener, event: engine_event.start, method: onEngineStart }
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
-      - { name: kernel.event_listener, event: process_event.process_to_be_retried, method: onProcessToBeRetried }
 
   paraunit.printer.failures_printer:
     class: Paraunit\Printer\FailuresPrinter
     parent: paraunit.printer.abstract_final_printer
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 200 }
 
   paraunit.printer.files_recap_printer:
     class: Paraunit\Printer\FilesRecapPrinter
     parent: paraunit.printer.abstract_final_printer
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 100 }
 
   paraunit.printer.console_formatter:
     class: Paraunit\Printer\ConsoleFormatter
     parent: paraunit.printer.abstract_printer
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart }
 
   paraunit.printer.single_result_formatter:
     class: Paraunit\Printer\SingleResultFormatter

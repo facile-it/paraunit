@@ -3,14 +3,23 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class FilesRecapPrinter
  * @package Paraunit\Printer
  */
-class FilesRecapPrinter extends AbstractFinalPrinter
+class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::END => ['onEngineEnd', 100],
+        ];
+    }
+
     public function onEngineEnd()
     {
         foreach ($this->testResultList->getTestResultContainers() as $parser) {
