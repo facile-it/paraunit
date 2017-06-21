@@ -16,7 +16,7 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::BEFORE_START => 'onEngineBeforeStart',
+            EngineEvent::BEFORE_START => ['onEngineBeforeStart', 1000],
         ];
     }
 

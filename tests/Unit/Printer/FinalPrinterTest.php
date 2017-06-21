@@ -49,7 +49,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $printer->onProcessTerminated();
         $printer->onProcessToBeRetried();
         $printer->onProcessTerminated();
-        sleep(60.49999);
+        usleep(60499999);
         $printer->onEngineEnd();
 
         ClockMock::withClockMock(false);
