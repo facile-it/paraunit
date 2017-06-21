@@ -104,24 +104,6 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $this->assertSame($expectedResult, $pipelineCollection->checkRunningState());
     }
 
-    public function testCheckRunningStateWithPipelineFullAgain()
-    {
-        $pipeline = $this->prophesize(Pipeline::class);
-        $pipeline->isTerminated()
-            ->shouldBeCalledTimes(1)
-            ->willReturn(true);
-        $pipeline->isFree()
-            ->shouldBeCalledTimes(1)
-            ->willReturn(false);
-
-        $pipelineCollection = new PipelineCollection(
-            $this->mockPipelineFactory([$pipeline->reveal()]),
-            1
-        );
-
-        $this->assertTrue($pipelineCollection->checkRunningState());
-    }
-
     /**
      * @dataProvider pipelineStateProvider
      * @param bool $isPipeline1Empty
