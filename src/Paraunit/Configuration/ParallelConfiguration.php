@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -18,6 +19,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ParallelConfiguration
 {
+    const TAG_EVENT_SUBSCRIBER = 'paraunit.event_subscriber';
+
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -32,7 +35,7 @@ class ParallelConfiguration
         $this->injectOutput($containerBuilder, $output);
         $this->loadYamlConfiguration($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
-        $this->registerEventSubscribers($containerBuilder);
+        $this->tagEventSubscribers($containerBuilder);
 
         $containerBuilder->compile();
 
@@ -63,13 +66,13 @@ class ParallelConfiguration
         return $loader;
     }
 
-    protected function registerEventSubscribers(ContainerBuilder $container)
+    protected function tagEventSubscribers(ContainerBuilder $container)
     {
-        $eventDispatcher = $container->getDefinition('event_dispatcher');
+        $container->addCompilerPass(new RegisterListenersPass('event_listener', null, self::TAG_EVENT_SUBSCRIBER));
 
         foreach ($container->getDefinitions() as $definition) {
             if (is_subclass_of($definition->getClass(), EventSubscriberInterface::class)) {
-                $eventDispatcher->addMethodCall('addSubscriber', [$definition]);
+                $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
             }
         }
     }
