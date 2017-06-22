@@ -68,7 +68,7 @@ class ParallelConfiguration
 
     protected function tagEventSubscribers(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterListenersPass('event_listener', null, self::TAG_EVENT_SUBSCRIBER));
+        $container->addCompilerPass(new RegisterListenersPass('event_dispatcher', null, self::TAG_EVENT_SUBSCRIBER));
 
         foreach ($container->getDefinitions() as $definition) {
             if (is_subclass_of($definition->getClass(), EventSubscriberInterface::class)) {
