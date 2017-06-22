@@ -47,13 +47,15 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
         $processBuilder = $factory->create('TestTest.php');
 
         $this->assertInstanceOf(ProcessBuilder::class, $processBuilder);
-        $expectedCmdLine = "'sapi' 'executable' '--configuration=config.xml' 'TestTest.php' '--specific=value-for-TestTest.php'";
-        $this->assertEquals($expectedCmdLine, $processBuilder->getProcess()->getCommandLine());
+        $commandLine = $processBuilder->getProcess()->getCommandLine();
+        $this->assertContains('TestTest.php', $commandLine);
+        $this->assertContains('--specific=value-for-TestTest.php', $commandLine);
 
         $processBuilder = $factory->create('TestTest2.php');
 
         $this->assertInstanceOf(ProcessBuilder::class, $processBuilder);
-        $expectedCmdLine = "'sapi' 'executable' '--configuration=config.xml' 'TestTest2.php' '--specific=value-for-TestTest2.php'";
-        $this->assertEquals($expectedCmdLine, $processBuilder->getProcess()->getCommandLine());
+        $commandLine = $processBuilder->getProcess()->getCommandLine();
+        $this->assertContains('TestTest2.php', $commandLine);
+        $this->assertContains('--specific=value-for-TestTest2.php', $commandLine);
     }
 }
