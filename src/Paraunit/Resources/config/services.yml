@@ -13,7 +13,9 @@ services:
       - "%paraunit.string_filter%"
 
   event_dispatcher:
-    class: Symfony\Component\EventDispatcher\EventDispatcher
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - '@service_container'
 
   ## EXTERNAL DEPs -- proxies ##
 
