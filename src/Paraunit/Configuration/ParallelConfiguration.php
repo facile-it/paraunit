@@ -69,7 +69,9 @@ class ParallelConfiguration
         $container->addCompilerPass(new RegisterListenersPass('event_dispatcher', null, self::TAG_EVENT_SUBSCRIBER));
 
         foreach ($container->getDefinitions() as $definition) {
-            if (is_subclass_of($definition->getClass(), EventSubscriberInterface::class)) {
+            $reflection = new \ReflectionClass($definition->getClass());
+
+            if ($reflection->implementsInterface(EventSubscriberInterface::class)) {
                 $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
             }
         }

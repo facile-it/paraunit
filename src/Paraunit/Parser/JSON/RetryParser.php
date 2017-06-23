@@ -48,7 +48,6 @@ class RetryParser implements ParserChainElementInterface
     public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
-            /** @var TestResultBearerInterface $process */
             $process->markAsToBeRetried();
             $testResult = new MuteTestResult();
             $this->testResultContainer->handleTestResult($process, $testResult);

@@ -287,11 +287,11 @@ class LogPrinter extends Util\Printer implements TestListener
     private function getLogDirectory(): string
     {
         $this->logDirectory = getenv(EnvVariables::LOG_DIR);
-        
+
         if ($this->logDirectory === false) {
             throw new \InvalidArgumentException('Log directory not received: environment variable not set');
         }
-        
+
         if (substr($this->logDirectory, -1) !== DIRECTORY_SEPARATOR) {
             $this->logDirectory .= DIRECTORY_SEPARATOR;
         }

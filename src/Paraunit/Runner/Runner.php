@@ -111,12 +111,12 @@ class Runner implements EventSubscriberInterface
 
     private function pushToPipeline(): bool
     {
-        $somethingHasBeenPushed = false;
+        $pushed = false;
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
-            $somethingHasBeenPushed = true;
+            $pushed = true;
         }
 
-        return $somethingHasBeenPushed;
+        return $pushed;
     }
 }

@@ -40,7 +40,7 @@ class LogFetcher
             unlink($filePath);
         }
 
-        $logs = json_decode(static::cleanLog($fileContent));
+        $logs = json_decode(self::cleanLog($fileContent));
         $logs[] = $this->createLogEnding();
 
         return $logs;

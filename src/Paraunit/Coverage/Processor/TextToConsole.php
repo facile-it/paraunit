@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Proxy\Coverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Report\Text;
+use SebastianBergmann\CodeCoverage\Report\Text as PHPUnitText;
 
 /**
  * Class TextToConsole
@@ -12,7 +12,7 @@ use SebastianBergmann\CodeCoverage\Report\Text;
  */
 class TextToConsole implements CoverageProcessorInterface
 {
-    /** @var Text */
+    /** @var PHPUnitText */
     protected $text;
 
     /** @var bool */
@@ -24,7 +24,7 @@ class TextToConsole implements CoverageProcessorInterface
      */
     public function __construct($showColors = false)
     {
-        $this->text = new Text(50, 90, false, false);
+        $this->text = new PHPUnitText(50, 90, false, false);
         $this->showColors = $showColors;
     }
 
