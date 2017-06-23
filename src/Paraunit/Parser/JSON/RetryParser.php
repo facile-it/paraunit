@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
