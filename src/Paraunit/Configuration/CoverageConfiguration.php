@@ -28,7 +28,7 @@ class CoverageConfiguration extends ParallelConfiguration
         $yamlLoader->load('coverage.yml');
         $yamlLoader->load('coverage_configuration.yml');
         $yamlLoader->load('process_with_coverage.yml');
-        
+
         return $yamlLoader;
     }
 

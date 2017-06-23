@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-use Paraunit\Printer\OutputFactory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -91,13 +89,9 @@ class ParallelConfiguration
 
     private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
     {
-        OutputFactory::setOutput($output);
-        $factoryClass = OutputFactory::class;
-        $factoryMethod = 'getOutput';
+        $containerBuilder->register('output')
+            ->setSynthetic(true);
 
-        $definition = new Definition(OutputInterface::class);
-        $definition->setFactory([$factoryClass, $factoryMethod]);
-
-        $containerBuilder->setDefinition('output', $definition);
+        $containerBuilder->set('output', $output);
     }
 }
