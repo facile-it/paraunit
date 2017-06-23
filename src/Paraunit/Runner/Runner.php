@@ -35,9 +35,6 @@ class Runner implements EventSubscriberInterface
     /** @var int */
     private $exitCode;
 
-    /** @var bool */
-    private $pushed;
-
     /**
      * @param EventDispatcherInterface $eventDispatcher
      * @param ProcessBuilderFactory $processFactory
@@ -77,9 +74,11 @@ class Runner implements EventSubscriberInterface
 
         $this->eventDispatcher->dispatch(EngineEvent::START);
 
-        while ($this->pushToPipeline() || $this->pipelineCollection->checkRunningState() || $this->pushed) {
+        do {
+            $this->pushToPipeline();
             usleep(100);
-        }
+            $this->pipelineCollection->triggerProcessTermination();
+        } while ($this->pipelineCollection->hasRunningProcesses() || ! $this->queuedProcesses->isEmpty());
 
         $this->eventDispatcher->dispatch(EngineEvent::END);
 
@@ -113,14 +112,10 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    public function pushToPipeline(): bool
+    public function pushToPipeline()
     {
-        $this->pushed = false;
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
-            $this->pushed = true;
         }
-
-        return $this->pushed;
     }
 }

@@ -50,13 +50,19 @@ class Pipeline
         return $this->process === null;
     }
 
-    /**
-     * @return bool
-     */
     public function isTerminated(): bool
     {
         if ($this->isFree()) {
             return true;
+        }
+
+        return $this->process->isTerminated();
+    }
+
+    public function triggerTermination(): bool
+    {
+        if ($this->isFree()) {
+            return false;
         }
 
         if ($this->process->isTerminated()) {

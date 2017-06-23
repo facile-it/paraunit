@@ -51,16 +51,21 @@ class PipelineCollection
         return false;
     }
 
-    public function checkRunningState(): bool
+    public function hasRunningProcesses(): bool
     {
-        $isRunning = false;
-
         foreach ($this->pipelines as $pipeline) {
             if (! $pipeline->isTerminated()) {
-                $isRunning = true;
+                return true;
             }
         }
 
-        return $isRunning;
+        return false;
+    }
+
+    public function triggerProcessTermination()
+    {
+        foreach ($this->pipelines as $pipeline) {
+            $pipeline->triggerTermination();
+        }
     }
 }

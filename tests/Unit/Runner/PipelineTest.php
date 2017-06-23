@@ -58,7 +58,28 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertTrue($pipeline->isTerminated(), 'Pipeline should be considered terminated when empty');
     }
 
-    public function testIsTerminatedHandlesTermination()
+    public function testIsTerminated()
+    {
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
+        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process->start([EnvVariables::PIPELINE_NUMBER => 5])
+            ->shouldBeCalledTimes(1);
+        $process->isTerminated()
+            ->willReturn(true);
+        $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
+
+        $this->assertTrue($pipeline->isFree(), 'Pipeline should be free to start with');
+
+        $pipeline->execute($process->reveal());
+
+        $this->assertFalse($pipeline->isFree(), 'Pipeline is marked free during execution of process');
+        $this->assertTrue($pipeline->isTerminated(), 'I was expecting a termination of the process in the pipeline');
+        $this->assertFalse($pipeline->isFree(), 'Pipeline is being freed');
+    }
+
+    public function testTriggerTermination()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $process = $this->prophesize(AbstractParaunitProcess::class);
@@ -73,7 +94,7 @@ class PipelineTest extends BaseUnitTestCase
         $pipeline->execute($process->reveal());
 
         $this->assertFalse($pipeline->isFree(), 'Pipeline is marked free during execution of process');
-        $this->assertTrue($pipeline->isTerminated(), 'I was expecting a termination of the process in the pipeline');
+        $this->assertTrue($pipeline->triggerTermination(), 'I was expecting a termination of the process in the pipeline');
 
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
             ->shouldHaveBeenCalledTimes(1);
@@ -101,7 +122,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertFalse($pipeline->isTerminated(), 'Process should not be terminated');
     }
 
-    public function getNumber()
+    public function testGetNumber()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 123456);

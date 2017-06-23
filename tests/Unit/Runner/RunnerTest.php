@@ -23,9 +23,11 @@ class RunnerTest extends BaseUnitTestCase
         $filter->filterTestFiles()
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->triggerProcessTermination()
+            ->shouldBeCalled();
         $pipelineCollection->hasEmptySlots()
             ->willReturn(true);
-        $pipelineCollection->checkRunningState()
+        $pipelineCollection->hasRunningProcesses()
             ->willReturn(false);
 
         $runner = new Runner(
@@ -47,9 +49,11 @@ class RunnerTest extends BaseUnitTestCase
                 'Test2.php',
             ]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->triggerProcessTermination()
+            ->shouldBeCalled();
         $pipelineCollection->hasEmptySlots()
             ->willReturn(true);
-        $pipelineCollection->checkRunningState()
+        $pipelineCollection->hasRunningProcesses()
             ->willReturn(false);
         $pipelineCollection->push(Argument::cetera())
             ->shouldBeCalledTimes(2)
