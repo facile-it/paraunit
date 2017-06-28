@@ -40,7 +40,7 @@ class CoverageCommandTest extends BaseUnitTestCase
         $configuration = $this->prophesize(CoverageConfiguration::class);
         $configuration->buildContainer(Argument::cetera())
             ->shouldBeCalled()
-            ->willReturn($container);
+            ->willReturn($container->reveal());
 
         $command = new CoverageCommand($configuration->reveal());
         $application = new Application();
