@@ -29,11 +29,10 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn('<ok>.</ok>');
 
-        $printer = new ProcessPrinter($formatter->reveal());
         $output = new UnformattedOutputStub();
+        $printer = new ProcessPrinter($formatter->reveal(), $output);
 
-        $processEvent = new ProcessEvent($process, ['output_interface' => $output]);
-        $printer->onProcessTerminated($processEvent);
+        $printer->onProcessParsingCompleted(new ProcessEvent($process));
 
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
     }
@@ -48,10 +47,6 @@ class ProcessPrinterTest extends BaseUnitTestCase
             $process->addTestResult($this->mockPrintableTestResult());
         }
 
-        $formatter = $this->prophesize(SingleResultFormatter::class);
-        $formatter->formatSingleResult(Argument::cetera())
-            ->willReturn('<ok>.</ok>');
-        $printer = new ProcessPrinter($formatter->reveal());
         $output = $this->prophesize(Output::class);
         $output->write(Argument::any())
             ->willReturn()
@@ -60,8 +55,13 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->willReturn()
             ->shouldBeCalledTimes($newLineTimes);
 
-        $processEvent = new ProcessEvent($process, ['output_interface' => $output->reveal()]);
-        $printer->onProcessTerminated($processEvent);
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $formatter->formatSingleResult(Argument::cetera())
+            ->willReturn('<tag>.</tag>');
+
+        $printer = new ProcessPrinter($formatter->reveal(), $output->reveal());
+
+        $printer->onProcessParsingCompleted(new ProcessEvent($process));
     }
 
     public function newLineTimesProvider(): array

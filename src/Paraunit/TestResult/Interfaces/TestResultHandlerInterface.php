@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\Interfaces;
 
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Interface TestResultHandlerInterface
@@ -12,7 +12,7 @@ use Paraunit\Process\ProcessWithResultsInterface;
  */
 interface TestResultHandlerInterface
 {
-    public function handleTestResult(ProcessWithResultsInterface $process, TestResultInterface $testResult);
+    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult);
 
-    public function addProcessToFilenames(ProcessWithResultsInterface $process);
+    public function addProcessToFilenames(AbstractParaunitProcess $process);
 }

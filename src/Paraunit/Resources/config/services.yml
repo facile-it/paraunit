@@ -12,18 +12,10 @@ services:
       - "%paraunit.testsuite%"
       - "%paraunit.string_filter%"
 
-  paraunit.runner.runner:
-    class: Paraunit\Runner\Runner
-    arguments:
-      - "@event_dispatcher"
-      - "@paraunit.process.process_factory"
-      - "@paraunit.filter.filter"
-      - "%paraunit.max_process_count%"
-
   event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
-      - "@service_container"
+      - '@service_container'
 
   ## EXTERNAL DEPs -- proxies ##
 

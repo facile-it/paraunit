@@ -5,19 +5,24 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConsoleFormatter
  * @package Paraunit\Printer
  */
-class ConsoleFormatter
+class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterface
 {
-    /**
-     * @param EngineEvent $engineEvent
-     */
-    public function onEngineStart(EngineEvent $engineEvent)
+    public static function getSubscribedEvents(): array
     {
-        $formatter = $engineEvent->getOutputInterface()->getFormatter();
+        return [
+            EngineEvent::BEFORE_START => 'onEngineBeforeStart',
+        ];
+    }
+
+    public function onEngineBeforeStart()
+    {
+        $formatter = $this->getOutput()->getFormatter();
 
         if ($formatter) {
             $formatter->setStyle('ok', $this->createNewStyle('green'));

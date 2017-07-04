@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
-use Tests\Stub\UnformattedOutputStub;
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 
 /**
@@ -25,10 +23,9 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $testResultContainer = $this->container->get($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
         $consoleFormatter = $this->container->get('paraunit.printer.console_formatter');
-        $outputInterface = new UnformattedOutputStub();
-        $event = new EngineEvent($outputInterface);
+        $outputInterface = $this->container->get('output');
 
-        $consoleFormatter->onEngineStart($event);
+        $consoleFormatter->onEngineBeforeStart();
 
         $tag = $testResultContainer->getTestResultFormat()->getTag();
         $formatter = $outputInterface->getFormatter();

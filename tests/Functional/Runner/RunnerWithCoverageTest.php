@@ -6,11 +6,11 @@ namespace Tests\Functional\Runner;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
-use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class RunnerWithCoverageTest
  * @package Tests\Functional\Runner
+ * @small
  */
 class RunnerWithCoverageTest extends BaseIntegrationTestCase
 {
@@ -23,15 +23,17 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
 
     public function testAllGreen()
     {
-        $outputInterface = new UnformattedOutputStub();
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
-
         /** @var Runner $runner */
         $runner = $this->container->get('paraunit.runner.runner');
 
-        $this->assertEquals(0, $runner->run($outputInterface));
-        $this->assertOutputOrder($outputInterface, [
+        $exitCode = $runner->run();
+        
+        $output = $this->getConsoleOutput();
+        $this->assertEquals(0, $exitCode, $output->getOutput());
+        $this->assertNotContains('COVERAGE NOT FETCHED', $output->getOutput());
+        $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',
             '...',

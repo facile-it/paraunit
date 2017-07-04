@@ -13,7 +13,7 @@ use SebastianBergmann\CodeCoverage\Report\Clover as PHPUnitClover;
  */
 class Clover implements CoverageProcessorInterface
 {
-    /** @var Clover */
+    /** @var PHPUnitClover */
     private $clover;
 
     /** @var  OutputFile */

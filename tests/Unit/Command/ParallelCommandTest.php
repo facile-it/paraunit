@@ -37,7 +37,7 @@ class ParallelCommandTest extends BaseUnitTestCase
         $configuration = $this->prophesize(ParallelConfiguration::class);
         $configuration->buildContainer(Argument::cetera())
             ->shouldBeCalled()
-            ->willReturn($container);
+            ->willReturn($container->reveal());
 
         $command = new ParallelCommand($configuration->reveal());
         $application = new Application();

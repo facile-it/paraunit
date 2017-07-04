@@ -9,20 +9,15 @@ services:
     class: Paraunit\Coverage\CoverageMerger
     arguments:
       - "@paraunit.coverage.coverage_fetcher"
-    tags:
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated }
 
   paraunit.coverage.coverage_result:
     class: Paraunit\Coverage\CoverageResult
     arguments:
       - "@paraunit.coverage.coverage_merger"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: generateResults }
 
   paraunit.printer.coverage_printer:
     class: Paraunit\Printer\CoveragePrinter
     arguments:
       - "@paraunit.configuration.phpdbg_bin_file"
       - "@paraunit.proxy.xdebug_proxy"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 100 }
+      - "@output"

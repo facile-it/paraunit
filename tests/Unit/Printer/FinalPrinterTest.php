@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
+use Symfony\Bridge\PhpUnit\ClockMock;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Tests\BaseUnitTestCase;
-use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
 /**
@@ -19,13 +19,9 @@ class FinalPrinterTest extends BaseUnitTestCase
 {
     public function testOnEngineEndPrintsTheRightCountSummary()
     {
+        ClockMock::register(Stopwatch::class);
+        ClockMock::register(__CLASS__);
         $output = new UnformattedOutputStub();
-        $context = [
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => array_fill(0, 15, new StubbedParaunitProcess()),
-        ];
-        $engineEvent = new EngineEvent($output, $context);
 
         $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
@@ -41,24 +37,29 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultList->getTestResultContainers()
             ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
 
-        $printer = new FinalPrinter($testResultList->reveal());
+        $printer = new FinalPrinter($testResultList->reveal(), $output);
 
-        $printer->onEngineEnd($engineEvent);
+        ClockMock::withClockMock(true);
+
+        $printer->onEngineStart();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessToBeRetried();
+        $printer->onProcessTerminated();
+        usleep(60499999);
+        $printer->onEngineEnd();
+
+        ClockMock::withClockMock(false);
 
         $this->assertContains('Execution time -- 00:01:00', $output->getOutput());
-        $this->assertContains('Executed: 15 test classes, 45 tests', $output->getOutput());
+        $this->assertContains('Executed: 5 test classes, 45 tests (1 retried)', $output->getOutput());
     }
 
     public function testOnEngineEndHandlesEmptyMessagesCorrectly()
     {
-        $output = new UnformattedOutputStub();
-        $context = [
-            'start' => new \DateTime('-1 minute'),
-            'end' => new \DateTime(),
-            'process_completed' => [new StubbedParaunitProcess()],
-        ];
-        $engineEvent = new EngineEvent($output, $context);
-
         $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
             ->willReturn(3);
@@ -72,9 +73,12 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultList = $this->prophesize(TestResultList::class);
         $testResultList->getTestResultContainers()
             ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
-        $printer = new FinalPrinter($testResultList->reveal());
+        $output = new UnformattedOutputStub();
 
-        $printer->onEngineEnd($engineEvent);
+        $printer = new FinalPrinter($testResultList->reveal(), $output);
+
+        $printer->onEngineStart();
+        $printer->onEngineEnd();
 
         $this->assertNotContains('output', $output->getOutput());
     }

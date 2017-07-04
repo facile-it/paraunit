@@ -1,43 +1,44 @@
 services:
+  paraunit.printer.abstract_printer:
+    class: Paraunit\Printer\AbstractPrinter
+    abstract: true
+    arguments:
+      - "@output"
+
+  paraunit.printer.abstract_final_printer:
+    class: Paraunit\Printer\AbstractPrinter
+    abstract: true
+    arguments:
+      - "@paraunit.test_result.test_result_list"
+      - "@output"
+
   paraunit.printer.shark_printer:
     class: Paraunit\Printer\SharkPrinter
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineBeforeStart, priority: 1000 }
+    parent: paraunit.printer.abstract_printer
 
   paraunit.printer.process_printer:
     class: Paraunit\Printer\ProcessPrinter
     arguments:
       - "@paraunit.printer.single_result_formatter"
-    tags:
-      - { name: kernel.event_listener, event: process_event.process_terminated, method: onProcessTerminated, priority: 100 }
+      - "@output"
 
   paraunit.printer.final_printer:
     class: Paraunit\Printer\FinalPrinter
-    arguments:
-      - "@paraunit.test_result.test_result_list"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 300 }
+    parent: paraunit.printer.abstract_final_printer
 
   paraunit.printer.failures_printer:
     class: Paraunit\Printer\FailuresPrinter
-    arguments:
-      - "@paraunit.test_result.test_result_list"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 200 }
+    parent: paraunit.printer.abstract_final_printer
 
   paraunit.printer.files_recap_printer:
     class: Paraunit\Printer\FilesRecapPrinter
-    arguments:
-      - "@paraunit.test_result.test_result_list"
-    tags:
-      - { name: kernel.event_listener, event: engine_event.end, method: onEngineEnd, priority: 100 }
+    parent: paraunit.printer.abstract_final_printer
 
   paraunit.printer.console_formatter:
     class: Paraunit\Printer\ConsoleFormatter
-    tags:
-      - { name: kernel.event_listener, event: engine_event.before_start, method: onEngineStart }
+    parent: paraunit.printer.abstract_printer
 
   paraunit.printer.single_result_formatter:
     class: Paraunit\Printer\SingleResultFormatter
     arguments:
-     - "@paraunit.test_result.test_result_list"
+      - "@paraunit.test_result.test_result_list"

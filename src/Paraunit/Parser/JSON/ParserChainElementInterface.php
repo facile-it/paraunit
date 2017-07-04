@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Process\ProcessWithResultsInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
@@ -13,9 +13,9 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
 interface ParserChainElementInterface
 {
     /**
-     * @param ProcessWithResultsInterface $process
+     * @param AbstractParaunitProcess $process
      * @param \stdClass $logItem
      * @return null|TestResultInterface Returned when the chain needs to stop
      */
-    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem);
+    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem);
 }

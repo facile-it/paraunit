@@ -32,6 +32,10 @@ class CoverageFetcher
         $this->resultHandler = $failureHandler;
     }
 
+    /**
+     * @param AbstractParaunitProcess $process
+     * @return \SebastianBergmann\CodeCoverage\CodeCoverage
+     */
     public function fetch(AbstractParaunitProcess $process): \SebastianBergmann\CodeCoverage\CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());

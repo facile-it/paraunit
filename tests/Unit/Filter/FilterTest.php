@@ -21,7 +21,7 @@ class FilterTest extends BaseUnitTestCase
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->absoluteConfigBaseDir = realpath(__DIR__ . '/../../Stub/StubbedXMLConfigs/') . DIRECTORY_SEPARATOR;
+        $this->absoluteConfigBaseDir = dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
     }
 
     public function testFilterTestFilesGetsOnlyRequestedTestsuite()

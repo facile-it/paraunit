@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
-use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
+use Paraunit\TestResult\TestResultFormat;
+use Paraunit\TestResult\TestResultWithSymbolFormat;
+use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 
 /**
  * Class BaseUnitTestCase

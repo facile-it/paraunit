@@ -13,6 +13,9 @@ engines:
     - 66501a049ca86e01173495615a692580
     - 022957993061909eb097ccc553397081
     - 86cbb1d3c9aa0741ecf3982b2faa9ec6
+    checks:
+      Naming/LongVariable:
+        enabled: false
   phpcodesniffer:
     enabled: true
 

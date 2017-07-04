@@ -33,7 +33,7 @@ install:
   - if [[ -z $DEPS ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
 
 script:
-  - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --coverage-clover ./build/logs/clover.xml; else bin/phpunit; fi
+  - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml; else bin/phpunit --enforce-time-limit; fi
 
 after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi

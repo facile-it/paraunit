@@ -5,14 +5,14 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\Process\ParaunitProcessInterface;
 use Paraunit\Proxy\Coverage\CodeCoverage;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoverageMerger
  * @package Paraunit\Coverage
  */
-class CoverageMerger
+class CoverageMerger implements EventSubscriberInterface
 {
     /** @var  CoverageFetcher */
     private $coverageFetcher;
@@ -29,18 +29,27 @@ class CoverageMerger
         $this->coverageFetcher = $coverageFetcher;
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
-    public function onProcessTerminated(ProcessEvent $processEvent)
+    public static function getSubscribedEvents(): array
     {
-        $this->merge($processEvent->getProcess());
+        return [
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+        ];
     }
 
     /**
-     * @param ParaunitProcessInterface $process
+     * @param ProcessEvent $processEvent
      */
-    private function merge(ParaunitProcessInterface $process)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent)
+    {
+        $process = $processEvent->getProcess();
+        if ($process->isToBeRetried()) {
+            return;
+        }
+
+        $this->merge($process);
+    }
+
+    private function merge(AbstractParaunitProcess $process)
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
@@ -51,9 +60,6 @@ class CoverageMerger
         }
     }
 
-    /**
-     * @return CodeCoverage
-     */
     public function getCoverageData(): CodeCoverage
     {
         return $this->coverageData;

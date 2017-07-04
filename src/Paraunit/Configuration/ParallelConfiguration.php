@@ -5,12 +5,11 @@ namespace Paraunit\Configuration;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Paraunit
@@ -18,18 +17,23 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
  */
 class ParallelConfiguration
 {
+    const TAG_EVENT_SUBSCRIBER = 'paraunit.event_subscriber';
+
     /**
      * @param InputInterface $input
+     * @param OutputInterface $output
      * @return ContainerBuilder
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Exception
      */
-    public function buildContainer(InputInterface $input): ContainerBuilder
+    public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
 
+        $this->injectOutput($containerBuilder, $output);
         $this->loadYamlConfiguration($containerBuilder);
-        $this->registerEventDispatcher($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
+        $this->tagEventSubscribers($containerBuilder);
 
         $containerBuilder->compile();
 
@@ -51,6 +55,7 @@ class ParallelConfiguration
         $loader->load('parser.yml');
         $loader->load('printer.yml');
         $loader->load('process.yml');
+        $loader->load('runner.yml');
         $loader->load('services.yml');
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');
@@ -59,18 +64,17 @@ class ParallelConfiguration
         return $loader;
     }
 
-    /**
-     * @param ContainerBuilder $containerBuilder
-     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
-     */
-    private function registerEventDispatcher(ContainerBuilder $containerBuilder)
+    protected function tagEventSubscribers(ContainerBuilder $container)
     {
-        $containerBuilder->addCompilerPass(new RegisterListenersPass());
+        $container->addCompilerPass(new RegisterListenersPass('event_dispatcher', null, self::TAG_EVENT_SUBSCRIBER));
 
-        $containerBuilder->setDefinition(
-            'event_dispatcher',
-            new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
-        );
+        foreach ($container->getDefinitions() as $definition) {
+            $reflection = new \ReflectionClass($definition->getClass());
+
+            if ($reflection->implementsInterface(EventSubscriberInterface::class)) {
+                $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
+            }
+        }
     }
 
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input)
@@ -83,5 +87,13 @@ class ParallelConfiguration
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
     {
+    }
+
+    private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
+    {
+        $containerBuilder->register('output')
+            ->setSynthetic(true);
+
+        $containerBuilder->set('output', $output);
     }
 }

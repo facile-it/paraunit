@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Configuration\StaticOutputPath;
+use Paraunit\Configuration\EnvVariables;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestCase;
@@ -40,6 +40,16 @@ class LogPrinter extends Util\Printer implements TestListener
     public function __construct()
     {
         $this->testSuiteLevel = 0;
+        $this->autoFlush = true;
+
+        $logFilename = $this->getLogFilename();
+
+        $logDir = $this->getLogDirectory();
+        if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
+            throw new \RuntimeException('Cannot create folder for JSON logs');
+        }
+
+        $this->out = fopen($logDir . $logFilename, 'wt');
     }
 
     /**
@@ -170,17 +180,6 @@ class LogPrinter extends Util\Printer implements TestListener
      */
     public function startTestSuite(TestSuite $suite)
     {
-        if ($this->testSuiteLevel === 0) {
-            $logFilename = $this->getLogFilename($suite);
-
-            $logDir = dirname($logFilename);
-            if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
-                throw new \RuntimeException('Cannot create folder for JSON logs');
-            }
-
-            $this->out = fopen($logFilename, 'wt');
-        }
-
         $this->testSuiteLevel++;
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName = '';
@@ -264,27 +263,35 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->write(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 
-    private function getLogFilename(TestSuite $suite): string
+    public function write($buffer)
     {
-        $testFilename = $this->getTestFilename($suite);
-
-        return $this->getLogDirectory() . md5($testFilename) . '.json.log';
-    }
-
-    private function getTestFilename(TestSuite $suite): string
-    {
-        $reflection = new \ReflectionClass($suite->getName());
-
-        return $reflection->getFileName();
+        // ignore everything that is not a JSON object
+        if ($buffer != '' && $buffer[0] === '{') {
+            parent::write($buffer);
+        }
     }
 
     /**
      * @return string
-     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     */
+    private function getLogFilename(): string
+    {
+        return getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
+    }
+
+    /**
+     * @return string
+     * @throws \InvalidArgumentException
      */
     private function getLogDirectory(): string
     {
-        $this->logDirectory = StaticOutputPath::getPath();
+        $this->logDirectory = getenv(EnvVariables::LOG_DIR);
+
+        if ($this->logDirectory === false) {
+            throw new \InvalidArgumentException('Log directory not received: environment variable not set');
+        }
+
         if (substr($this->logDirectory, -1) !== DIRECTORY_SEPARATOR) {
             $this->logDirectory .= DIRECTORY_SEPARATOR;
         }

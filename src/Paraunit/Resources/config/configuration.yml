@@ -1,14 +1,10 @@
 services:
-  paraunit.configuration.paraunit:
-    class: Paraunit\Configuration\Paraunit
-
   paraunit.configuration.phpunit_bin_file:
     class: Paraunit\Configuration\PHPUnitBinFile
 
   paraunit.configuration.phpunit_config:
     class: Paraunit\Configuration\PHPUnitConfig
     arguments:
-      - '@paraunit.configuration.temp_filename_factory'
       - '%paraunit.phpunit_config_filename%'
 
   paraunit.configuration.temp_filename_factory:

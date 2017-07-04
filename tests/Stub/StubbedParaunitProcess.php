@@ -21,24 +21,18 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     private $exitCode;
 
     /**
-     * StubbedParaunitProcess constructor.
-     * @param string $filePath
-     * @param string $commandLine
-     * @param string|null $uniqueId
+     * {@inheritdoc}
      */
     public function __construct(
-        string $filePath = 'Test.php',
-        string $commandLine = 'phpunit Test.php',
+        string $filename = 'testFilename', 
         string $uniqueId = null
     ) {
-        if (null === $uniqueId) {
-            $uniqueId = md5($filePath);
+        parent::__construct($filename);
+
+        if (null !== $uniqueId) {
+            $this->uniqueId = $uniqueId;
         }
 
-        parent::__construct($filePath, $uniqueId);
-
-        $this->commandLine = $commandLine;
-        $this->filename = 'Test.php';
         $this->exitCode = 0;
     }
 
@@ -77,17 +71,12 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         return true;
     }
 
-    public function start()
+    /**
+     * {@inheritdoc}
+     */
+    public function start(array $env = [])
     {
-    }
-
-    public function restart()
-    {
-    }
-
-    public function isRunning(): bool
-    {
-        return false;
+        return;
     }
 
     public function getExitCode(): int

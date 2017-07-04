@@ -24,15 +24,18 @@ class CoverageConfiguration extends ParallelConfiguration
     protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
     {
         $yamlLoader = parent::loadYamlConfiguration($containerBuilder);
+
         $yamlLoader->load('coverage.yml');
         $yamlLoader->load('coverage_configuration.yml');
         $yamlLoader->load('process_with_coverage.yml');
-        
+
         return $yamlLoader;
     }
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
     {
+        parent::loadPostCompileSettings($container, $input);
+
         /** @var CoverageResult $coverageResult */
         $coverageResult = $container->get('paraunit.coverage.coverage_result');
 

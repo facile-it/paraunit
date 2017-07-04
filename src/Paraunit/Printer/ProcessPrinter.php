@@ -6,12 +6,13 @@ namespace Paraunit\Printer;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ProcessPrinter
  * @package Paraunit\Printer
  */
-class ProcessPrinter
+class ProcessPrinter implements EventSubscriberInterface
 {
     /** @var  SingleResultFormatter */
     private $singleResultFormatter;
@@ -25,29 +26,28 @@ class ProcessPrinter
     /**
      * ProcessPrinter constructor.
      * @param SingleResultFormatter $singleResultFormatter
+     * @param OutputInterface $output
      */
-    public function __construct(SingleResultFormatter $singleResultFormatter)
+    public function __construct(SingleResultFormatter $singleResultFormatter, OutputInterface $output)
     {
         $this->singleResultFormatter = $singleResultFormatter;
+        $this->output = $output;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+        ];
     }
 
     /**
      * @param ProcessEvent $processEvent
      * @throws \BadMethodCallException
      */
-    public function onProcessTerminated(ProcessEvent $processEvent)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
-
-        if (! $processEvent->has('output_interface')) {
-            throw new \BadMethodCallException('missing output_interface');
-        }
-
-        $this->output = $processEvent->get('output_interface');
-
-        if (! $this->output instanceof OutputInterface) {
-            throw new \BadMethodCallException('output_interface, unexpected type: ' . get_class($this->output));
-        }
 
         foreach ($process->getTestResults() as $testResult) {
             $this->printFormattedWithCounter($testResult);

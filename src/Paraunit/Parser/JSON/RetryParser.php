@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Process\ProcessWithResultsInterface;
-use Paraunit\Process\RetryAwareInterface;
-use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
@@ -46,10 +44,9 @@ class RetryParser implements ParserChainElementInterface
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
 
-    public function handleLogItem(ProcessWithResultsInterface $process, \stdClass $logItem)
+    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
-            /** @var RetryAwareInterface | TestResultBearerInterface $process */
             $process->markAsToBeRetried();
             $testResult = new MuteTestResult();
             $this->testResultContainer->handleTestResult($process, $testResult);
@@ -60,14 +57,16 @@ class RetryParser implements ParserChainElementInterface
         return null;
     }
 
-    private function isRetriable(TestResultBearerInterface $process): bool
+    private function isRetriable(AbstractParaunitProcess $process): bool
     {
-        return $process instanceof RetryAwareInterface && $process->getRetryCount() < $this->maxRetryCount;
+        return $process->getRetryCount() < $this->maxRetryCount;
     }
 
     private function isToBeRetried(\stdClass $log): bool
     {
-        return property_exists($log, 'status') && $log->status === 'error' && preg_match($this->regexPattern, $log->message);
+        return property_exists($log, 'status')
+            && $log->status === 'error'
+            && preg_match($this->regexPattern, $log->message);
     }
 
     /**

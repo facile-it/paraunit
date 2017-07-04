@@ -3,42 +3,38 @@ declare(strict_types=1);
 
 namespace Paraunit\File;
 
-use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Lifecycle\EngineEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Cleaner
  * @package Paraunit\File
  */
-class Cleaner
+class Cleaner implements EventSubscriberInterface
 {
     /** @var  TempDirectory */
     private $tempDirectory;
 
-    /** @var PHPUnitConfig */
-    private $phpunitConfig;
-
     /**
      * Cleaner constructor.
      * @param TempDirectory $tempDirectory
-     * @param PHPUnitConfig $phpunitConfig
      */
-    public function __construct(TempDirectory $tempDirectory, PHPUnitConfig $phpunitConfig)
+    public function __construct(TempDirectory $tempDirectory)
     {
         $this->tempDirectory = $tempDirectory;
-        $this->phpunitConfig = $phpunitConfig;
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            EngineEvent::BEFORE_START => 'purgeCurrentTempDir',
+            EngineEvent::END => 'purgeCurrentTempDir',
+        ];
     }
 
     public function purgeCurrentTempDir()
     {
         self::cleanUpDir($this->tempDirectory->getTempDirForThisExecution());
-    }
-
-    public function deleteTempConfig()
-    {
-        $filename = $this->phpunitConfig->getFileFullPath();
-        if (file_exists($filename)) {
-            unlink($filename);
-        }
     }
 
     /**

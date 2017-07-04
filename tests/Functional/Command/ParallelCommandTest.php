@@ -19,11 +19,9 @@ use Tests\Stub\MySQLDeadLockTestStub;
  */
 class ParallelCommandTest extends BaseTestCase
 {
-    /**
-     * @dataProvider configurationPathProvider
-     */
-    public function testExecutionAllGreen(string $configurationPath)
+    public function testExecutionAllGreen()
     {
+        $configurationPath = $this->getConfigForStubs();
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
@@ -40,7 +38,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function testExecutionAllGreenWithRepeatOption()
@@ -63,14 +60,11 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
-    /**
-     * @dataProvider configurationPathProvider
-     */
-    public function testExecution(string $configurationPath)
+    public function testExecution()
     {
+        $configurationPath = $this->getConfigForStubs();
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
@@ -90,7 +84,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MissingProviderTestStub::class, $output);
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertFileNotExists(dirname($configurationPath) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
     }
 
     public function testExecutionWithoutConfiguration()
@@ -109,17 +102,5 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('NO TESTS EXECUTED', $output);
         $this->assertContains('0 tests', $output);
         $this->assertSame(0, $exitCode);
-        $this->assertFileNotExists(dirname(__DIR__) . DIRECTORY_SEPARATOR . PHPUnitConfig::COPY_FILE_NAME);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function configurationPathProvider(): array
-    {
-        return [
-            [$this->getConfigForStubs()],
-            [implode(DIRECTORY_SEPARATOR, ['.', 'tests', 'Stub', 'phpunit_for_stubs.xml'])],
-        ];
     }
 }

@@ -10,7 +10,7 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
  * Class AbstractParaunitProcess
  * @package Paraunit\Process
  */
-abstract class AbstractParaunitProcess implements ParaunitProcessInterface, RetryAwareInterface, ProcessWithResultsInterface
+abstract class AbstractParaunitProcess
 {
     /** @var int */
     protected $retryCount = 0;
@@ -37,21 +37,31 @@ abstract class AbstractParaunitProcess implements ParaunitProcessInterface, Retr
      * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $filePath, string $uniqueId)
+    public function __construct(string $filename)
     {
-        $filename = [];
-        if (preg_match('~([^\\\\/]+)$~', $filePath, $filename) === 1) {
-            $this->filename = $filename[1];
-        } else {
-            throw new \InvalidArgumentException('Filename not recognized: ' . $filePath);
-        }
-
-        $this->uniqueId = $uniqueId;
-
-        $this->shouldBeRetried = false;
+        $this->filename = $filename;
+        $this->uniqueId = md5($this->filename);
         $this->testResults = [];
         $this->waitingForTestResult = true;
+        $this->shouldBeRetried = false;
     }
+
+    abstract public function getOutput(): string;
+
+    abstract public function isTerminated(): bool;
+
+    abstract public function getCommandLine(): string;
+
+    /**
+     * @return int|null
+     */
+    abstract public function getExitCode();
+
+    /**
+     * @param array $env An array of environment variables to be injected
+     * @return void
+     */
+    abstract public function start(array $env = []);
 
     public function getUniqueId(): string
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Process\ParaunitProcessInterface;
+use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Class LogFetcher
@@ -27,10 +27,10 @@ class LogFetcher
     }
 
     /**
-     * @param ParaunitProcessInterface $process
+     * @param AbstractParaunitProcess $process
      * @return \stdClass[]
      */
-    public function fetch(ParaunitProcessInterface $process): array
+    public function fetch(AbstractParaunitProcess $process): array
     {
         $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
         $fileContent = '';
@@ -40,7 +40,7 @@ class LogFetcher
             unlink($filePath);
         }
 
-        $logs = json_decode(static::cleanLog($fileContent));
+        $logs = json_decode(self::cleanLog($fileContent));
         $logs[] = $this->createLogEnding();
 
         return $logs;

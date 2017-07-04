@@ -8,32 +8,49 @@ use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogParser
  * @package Paraunit\Parser\JSON
  */
-class LogParser
+class LogParser implements EventSubscriberInterface
 {
     /** @var LogFetcher */
     private $logLocator;
 
-    /** @var ParserChainElementInterface[] */
-    private $parsers;
-
     /** @var TestResultHandlerInterface */
     private $noTestExecutedResultContainer;
+
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    /** @var  ParserChainElementInterface[] */
+    private $parsers;
 
     /**
      * LogParser constructor.
      * @param LogFetcher $logLocator
      * @param TestResultHandlerInterface $noTestExecutedResultContainer
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(LogFetcher $logLocator, TestResultHandlerInterface $noTestExecutedResultContainer)
-    {
+    public function __construct(
+        LogFetcher $logLocator,
+        TestResultHandlerInterface $noTestExecutedResultContainer,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->logLocator = $logLocator;
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
+        $this->eventDispatcher = $eventDispatcher;
         $this->parsers = [];
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
+        ];
     }
 
     /**
@@ -69,6 +86,8 @@ class LogParser
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);
         }
+
+        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
     /**

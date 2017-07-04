@@ -1,8 +1,8 @@
 FROM php:7.0
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update
-RUN apt-get install -y curl \
+RUN apt-get update \
+    && apt-get install -y curl \
     git \
     php5-xdebug \
     php5-phpdbg \
@@ -15,7 +15,7 @@ RUN apt-get install -y curl \
     nano \
  ## PHP-EXT
     libzip-dev \
-    && docker-php-ext-install -j5 zip mbstring \
+    && docker-php-ext-install -j5 zip mbstring pcntl \
     && apt-get clean
 
 COPY config/sudoers /etc/sudoers
