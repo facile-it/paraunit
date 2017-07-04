@@ -17,8 +17,8 @@ class PipelineCollection
     {
         $this->pipelines = new \SplFixedArray($maxProcessNumber);
 
-        for ($pipelineNumber = 0; $pipelineNumber < $maxProcessNumber; $pipelineNumber++) {
-            $this->pipelines->offsetSet($pipelineNumber, $pipelineFactory->create($pipelineNumber));
+        for ($pipelineNumber = 1; $pipelineNumber <= $maxProcessNumber; $pipelineNumber++) {
+            $this->pipelines->offsetSet($pipelineNumber - 1, $pipelineFactory->create($pipelineNumber));
         }
     }
 

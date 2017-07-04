@@ -138,7 +138,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $factory = $this->prophesize(PipelineFactory::class);
 
         foreach ($pipelines as $number => $pipeline) {
-            $factory->create($number)
+            $factory->create($number + 1)
                 ->shouldBeCalledTimes(1)
                 ->willReturn($pipeline);
         }
