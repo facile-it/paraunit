@@ -76,24 +76,24 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     /**
      * @dataProvider pipelineStateProvider
-     * @param bool $isPipeline1Terminated
-     * @param bool $isPipeline2Terminated
+     * @param bool $isPipeline1Free
+     * @param bool $isPipeline2Free
      */
-    public function testHasRunningProcesses(bool $isPipeline1Terminated, bool $isPipeline2Terminated)
+    public function testHasRunningProcesses(bool $isPipeline1Free, bool $isPipeline2Free)
     {
         $pipeline1 = $this->prophesize(Pipeline::class);
-        $pipeline1->isTerminated()
-            ->willReturn($isPipeline1Terminated);
+        $pipeline1->isFree()
+            ->willReturn($isPipeline1Free);
         $pipeline2 = $this->prophesize(Pipeline::class);
-        $pipeline2->isTerminated()
-            ->willReturn($isPipeline2Terminated);
+        $pipeline2->isFree()
+            ->willReturn($isPipeline2Free);
 
         $pipelineCollection = new PipelineCollection(
             $this->mockPipelineFactory([$pipeline1->reveal(), $pipeline2->reveal()]),
             2
         );
 
-        $expectedResult = ! ($isPipeline1Terminated && $isPipeline2Terminated);
+        $expectedResult = $isPipeline1Free && $isPipeline2Free;
         $this->assertSame($expectedResult, $pipelineCollection->isEmpty());
     }
 

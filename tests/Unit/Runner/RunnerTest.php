@@ -27,8 +27,8 @@ class RunnerTest extends BaseUnitTestCase
             ->shouldBeCalled();
         $pipelineCollection->hasEmptySlots()
             ->willReturn(true);
-        $pipelineCollection->hasRunningProcesses()
-            ->willReturn(false);
+        $pipelineCollection->isEmpty()
+            ->willReturn(true);
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
@@ -53,8 +53,8 @@ class RunnerTest extends BaseUnitTestCase
             ->shouldBeCalled();
         $pipelineCollection->hasEmptySlots()
             ->willReturn(true);
-        $pipelineCollection->hasRunningProcesses()
-            ->willReturn(false);
+        $pipelineCollection->isEmpty()
+            ->willReturn(true);
         $pipelineCollection->push(Argument::cetera())
             ->shouldBeCalledTimes(2)
             ->willReturn($this->prophesize(Pipeline::class)->reveal());
