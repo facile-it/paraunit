@@ -7,10 +7,11 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ### Changed
 
+* Implement pipelines: now every single test process has an environment variable called `PARAUNIT_PIPELINE_NUMBER` injected which is a number that identifies the pipeline in which the test is executed; it can be used as a discriminator to acces a different set of resources (i.e. a different copy of a test DB). See the [documentation](https://engineering.facile.it/paraunit/documentation/) for more details.
 * Support for PHPUnit 6
 * Drop support for PHPUnit 4 & 5
 * Minimum PHP version required: 7.0
-* Improvement to the whole codebase (scalar and return type hints, strict types enforced)
+* Improvement to the whole codebase (scalar and return type hints, strict types enforced, see [#93](https://github.com/facile-it/paraunit/pull/93))
 * Realign option passed through to PHPUnit:
     * Added `--strict-coverage`
     * Added `--disallow-resource-usage`
