@@ -25,7 +25,7 @@ To use this package, use Composer:
 ``` 
 {
     "require-dev": {
-        "facile-it/paraunit": "~0.7"
+        "facile-it/paraunit": "~0.9 "
     }
 }
 ```
@@ -44,7 +44,7 @@ gpg --verify paraunit-x.y.phar.asc paraunit.phar
 
 # Usage
 ## `run` command
-The `run` command is the main functionality of Paraunit; it launches all the tests in all your configured testsuites in parallel; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
+The `run` command is the main functionality of Paraunit; it launches all the tests in all your configured test suites in parallel; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
 
 ```bash
 vendor/bin/paraunit run
@@ -71,6 +71,33 @@ vendor/bin/paraunit coverage --html=./coverage
 
 Paraunit detects automatically if the [PHPDBG](http://phpdbg.com/) binary is available, at it uses that as a preferred coverage driver, since it's a lot faster and uses less memory. If it's not available, it falls back to use xDebug. If you want to use PHPDBG, you are **highly encouraged to disable xDebug**, since Paraunit can't do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.
 
+If you have issues or random failures when using the `coverage` command, you can try to use the `--parallel 1` option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.
+
+## The pipelines
+
+Since version 0.9, Paraunit executes the tests using a **pipeline logic**: this means that if we ask to run 10 tests in parallel at the same time, Paraunit will instantiate 10 pipeline to do it, and each pipeline will be numbered, from 1 to 10.
+
+The only perceivable difference to the user is the **environment variable**, called `PARAUNIT_PIPELINE_NUMBER`, which is injected in every test process; this variable contains the number of the pipeline. This number can be easily retrieved in your tests, and it can be used to access without concurrency issues to a diverse copy of a resource, i.e. a database, like in this little example:
+
+```php
+<?php
+
+use Paraunit\Configuration\EnvVariables;
+use PHPUnit\Framework\TestCase;
+
+class SomeTest extends TestCase
+{
+    protected function setup()
+    {
+        $pipelineNumber = getenv(EnvVariables::PARAUNIT_PIPELINE_NUMBER);
+        $this->databaseName = 'db_test_' . $pipelineNumber;
+        // ...
+    }
+}
+```
+
+This little piece of code will obtain `db_test_1`, `db_test_2` etc. as a value for the `databaseName` property, achieving actual separation when accessing the test fixtures in the database. The setup and cleanup of the fixtures after each test is still up to the developer, obviously.
+
 ## Optional arguments and parameters
 
 ### String filter
@@ -91,7 +118,7 @@ Let's use an example to show how powerful this feature is. You are working on th
 vendor/bin/paraunit run specialpanel
 ```
 
-You don't have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.
+You don't have to bother about the fact that the tests are splitted into different subdirectories, and about the uppercase letters too.
 
 ### Configuration
 If your `phpunit.xml.dist` file is not in the default base dir, you can specify it by:
@@ -114,7 +141,7 @@ vendor/bin/paraunit run -c=relPath/to/xml/file/
 
 ### Parallel
 
-You can choose how many concurrent processes you want to spawn at the same time, using the `--parallel` option. The default value is `10`:
+You can choose how many concurrent processes (pipelines) you want to spawn at the same time, using the `--parallel` option. The default value is `10`:
 
 ```bash
 vendor/bin/paraunit run --parallel=5
@@ -127,6 +154,7 @@ You can run a single test suite (as defined in your configuration file) using:
 ```bash
 vendor/bin/paraunit run --testsuite=testSuiteName
 ```
+
 ### PHPUnit inherited options
 
 A large number of PHPUnit options (apart from the aforementioned `--testsuite`) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options' behavior, see the [PHPUnit CLI documentation](https://phpunit.de/manual/current/en/textui.html#textui.clioptions).
@@ -137,21 +165,24 @@ This is the complete list of supported options:
   * `group`
   * `exclude-group`
   * `test-suffix`
-  * `report-useless-tests`
+  * `dont-report-useless-tests`
+  * `strict-coverage`
   * `strict-global-state`
   * `disallow-test-output`
+  * `disallow-resource-usage`
   * `enforce-time-limit`
   * `disallow-todo-tests`
   * `process-isolation`
-  * `no-globals-backup`
+  * `globals-backup`
   * `static-backup`
   * `loader`
   * `repeat`
   * `printer`
   * `bootstrap`
   * `no-configuration`
+  * `no-coverage`
+  * `no-extensions`
   * `include-path`
-
 
 ### Debug mode
 
@@ -165,7 +196,7 @@ It will show a verbose output with the full running test queue.
 
 # Parsing results
 
-Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit's JSON log output, so it's a resilient and reliable process; it allows to be also resistent to fatal errors and other abnormal process termination.
+Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit's JSON log output, so it's a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.
 
 Anyhow, Paraunit doesn't rely on the parsed results to provide the final exit code; instead, it looks only to the processes' exit codes:
  **it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code**. 
