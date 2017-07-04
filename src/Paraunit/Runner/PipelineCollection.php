@@ -51,15 +51,15 @@ class PipelineCollection
         return false;
     }
 
-    public function hasRunningProcesses(): bool
+    public function isEmpty(): bool
     {
         foreach ($this->pipelines as $pipeline) {
-            if (! $pipeline->isTerminated()) {
-                return true;
+            if (! $pipeline->isFree()) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public function triggerProcessTermination()

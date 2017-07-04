@@ -78,7 +78,7 @@ class Runner implements EventSubscriberInterface
             $this->pushToPipeline();
             usleep(100);
             $this->pipelineCollection->triggerProcessTermination();
-        } while ($this->pipelineCollection->hasRunningProcesses() || ! $this->queuedProcesses->isEmpty());
+        } while (! $this->pipelineCollection->isEmpty() || ! $this->queuedProcesses->isEmpty());
 
         $this->eventDispatcher->dispatch(EngineEvent::END);
 

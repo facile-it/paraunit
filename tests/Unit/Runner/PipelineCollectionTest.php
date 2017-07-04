@@ -94,7 +94,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         );
 
         $expectedResult = ! ($isPipeline1Terminated && $isPipeline2Terminated);
-        $this->assertSame($expectedResult, $pipelineCollection->hasRunningProcesses());
+        $this->assertSame($expectedResult, $pipelineCollection->isEmpty());
     }
 
     /**
