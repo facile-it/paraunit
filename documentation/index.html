@@ -194,6 +194,7 @@
 <ul>
 <li><a href="#run-command"><code>run</code> command</a></li>
 <li><a href="#coverage-command"><code>coverage</code> command</a></li>
+<li><a href="#the-pipelines">The pipelines</a></li>
 <li><a href="#optional-arguments-and-parameters">Optional arguments and parameters</a>
 <ul>
 <li><a href="#string-filter">String filter</a></li>
@@ -238,7 +239,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <pre><code>{
     &quot;require-dev&quot;: {
-        &quot;facile-it/paraunit&quot;: &quot;~0.7&quot;
+        &quot;facile-it/paraunit&quot;: &quot;~0.9 &quot;
     }
 }
 </code></pre>
@@ -261,7 +262,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <h2 id="run-command"><code>run</code> command</h2>
 
-<p>The <code>run</code> command is the main functionality of Paraunit; it launches all the tests in all your configured testsuites in parallel; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
+<p>The <code>run</code> command is the main functionality of Paraunit; it launches all the tests in all your configured test suites in parallel; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
 
 <pre><code class="language-bash">vendor/bin/paraunit run
 </code></pre>
@@ -315,6 +316,34 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>Paraunit detects automatically if the <a href="http://phpdbg.com/">PHPDBG</a> binary is available, at it uses that as a preferred coverage driver, since it&rsquo;s a lot faster and uses less memory. If it&rsquo;s not available, it falls back to use xDebug. If you want to use PHPDBG, you are <strong>highly encouraged to disable xDebug</strong>, since Paraunit can&rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.</p>
 
+<p>If you have issues or random failures when using the <code>coverage</code> command, you can try to use the <code>--parallel 1</code> option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.</p>
+
+<h2 id="the-pipelines">The pipelines</h2>
+
+<p>Since version 0.9, Paraunit executes the tests using a <strong>pipeline logic</strong>: this means that if we ask to run 10 tests in parallel at the same time, Paraunit will instantiate 10 pipeline to do it, and each pipeline will be numbered, from 1 to 10.</p>
+
+<p>The only perceivable difference to the user is the <strong>environment variable</strong>, called <code>PARAUNIT_PIPELINE_NUMBER</code>, which is injected in every test process; this variable contains the number of the pipeline. This number can be easily retrieved in your tests, and it can be used to access without concurrency issues to a diverse copy of a resource, i.e. a database, like in this little example:</p>
+
+<pre><code class="language-php">&lt;?php
+
+use Paraunit\Configuration\EnvVariables;
+use PHPUnit\Framework\TestCase;
+
+class SomeTest extends TestCase
+{
+    protected function setup()
+    {
+        $pipelineNumber = getenv(EnvVariables::PARAUNIT_PIPELINE_NUMBER);
+        $this-&gt;databaseName = 'db_test_' . $pipelineNumber;
+        // ...
+    }
+}
+</code></pre>
+
+<p>This little piece of code will obtain <code>db_test_1</code>, <code>db_test_2</code> etc. as a value for the <code>databaseName</code> property, achieving actual separation when accessing the test fixtures in the database. The setup and cleanup of the fixtures after each test is still up to the developer, obviously.</p>
+
+<p>As the snippet shows, the name of the environment variables are available as constants in the <code>Paraunit\Configuration\EnvVariables</code> class.</p>
+
 <h2 id="optional-arguments-and-parameters">Optional arguments and parameters</h2>
 
 <h3 id="string-filter">String filter</h3>
@@ -337,7 +366,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 <pre><code class="language-bash">vendor/bin/paraunit run specialpanel
 </code></pre>
 
-<p>You don&rsquo;t have to bother about the fact that the tests are splitted in different subdirectories, and about the uppercase too.</p>
+<p>You don&rsquo;t have to bother about the fact that the tests are splitted into different subdirectories, and about the uppercase letters too.</p>
 
 <h3 id="configuration">Configuration</h3>
 
@@ -358,7 +387,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <h3 id="parallel">Parallel</h3>
 
-<p>You can choose how many concurrent processes you want to spawn at the same time, using the <code>--parallel</code> option. The default value is <code>10</code>:</p>
+<p>You can choose how many concurrent processes (pipelines) you want to spawn at the same time, using the <code>--parallel</code> option. The default value is <code>10</code>:</p>
 
 <pre><code class="language-bash">vendor/bin/paraunit run --parallel=5
 </code></pre>
@@ -381,19 +410,23 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 <li><code>group</code></li>
 <li><code>exclude-group</code></li>
 <li><code>test-suffix</code></li>
-<li><code>report-useless-tests</code></li>
+<li><code>dont-report-useless-tests</code></li>
+<li><code>strict-coverage</code></li>
 <li><code>strict-global-state</code></li>
 <li><code>disallow-test-output</code></li>
+<li><code>disallow-resource-usage</code></li>
 <li><code>enforce-time-limit</code></li>
 <li><code>disallow-todo-tests</code></li>
 <li><code>process-isolation</code></li>
-<li><code>no-globals-backup</code></li>
+<li><code>globals-backup</code></li>
 <li><code>static-backup</code></li>
 <li><code>loader</code></li>
 <li><code>repeat</code></li>
 <li><code>printer</code></li>
 <li><code>bootstrap</code></li>
 <li><code>no-configuration</code></li>
+<li><code>no-coverage</code></li>
+<li><code>no-extensions</code></li>
 <li><code>include-path</code></li>
 </ul>
 
@@ -408,7 +441,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <h1 id="parsing-results">Parsing results</h1>
 
-<p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process; it allows to be also resistent to fatal errors and other abnormal process termination.</p>
+<p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.</p>
 
 <p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&rsquo; exit codes:
  <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.

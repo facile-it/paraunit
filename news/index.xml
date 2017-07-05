@@ -5,8 +5,53 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 26 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Jul 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.9/</link>
+      <pubDate>Wed, 05 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.9/</guid>
+      <description>
+
+&lt;p&gt;After a long time and a lot of work, &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.9&#34;&gt;Paraunit 0.9&lt;/a&gt; has been released. This release is a big step ahead: now Paraunit runs with &lt;strong&gt;PHPUnit 6&lt;/strong&gt;, and support to older versions is dropped; this also means that the &lt;strong&gt;minimum supported PHP version is now 7.0&lt;/strong&gt;, and the minimum version of the &lt;strong&gt;Symfony components is bumped to 2.7&lt;/strong&gt;, since older versions are out of support since may.&lt;/p&gt;
+
+&lt;p&gt;All these changes brought along a lot of refactoring, and I took the occasion to sprinkle scalar and return types everywhere in the code (see &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/93&#34;&gt;#93&lt;/a&gt;); this was also behind &lt;a href=&#34;https://engineering.facile.it/blog/eng/visual-debt-typehints/&#34;&gt;a blog post of mine&lt;/a&gt; that I wrote in response to the &amp;ldquo;visual debt&amp;rdquo; controversy.&lt;/p&gt;
+
+&lt;p&gt;But the biggest change of all is the new &lt;strong&gt;pipeline system&lt;/strong&gt;: now every test is run in a pipeline collection, where each pipe is numbered. This number is the injected in the test as an environment variable, meaning that Paraunit itself can be leveraged to achieve separation in resource access while testing your application. More details on this feature are available in the &lt;a href=&#34;https://engineering.facile.it/paraunit/documentation/#the-pipelines&#34;&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Implement pipelines: now every single test process has an environment variable called &lt;code&gt;PARAUNIT_PIPELINE_NUMBER&lt;/code&gt; injected which is a number that identifies the pipeline in which the test is executed; it can be used as a discriminator to access a different set of resources (i.e. a different copy of a test DB). See the &lt;a href=&#34;https://engineering.facile.it/paraunit/documentation/&#34;&gt;documentation&lt;/a&gt; for more details.&lt;/li&gt;
+&lt;li&gt;Support for PHPUnit 6&lt;/li&gt;
+&lt;li&gt;Drop support for PHPUnit 4 &amp;amp; 5&lt;/li&gt;
+&lt;li&gt;Minimum PHP version required: 7.0&lt;/li&gt;
+&lt;li&gt;Improvement to the whole codebase (scalar and return type hints, strict types enforced, see &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/93&#34;&gt;#93&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Realign options passed through to PHPUnit:
+
+&lt;ul&gt;
+&lt;li&gt;Added &lt;code&gt;--strict-coverage&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;--disallow-resource-usage&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;--no-coverage&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;--no-extensions&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Changed &lt;code&gt;--report-useless-tests&lt;/code&gt; to &lt;code&gt;--dont-report-useless-tests&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Changed &lt;code&gt;--no-globals-backup&lt;/code&gt; to &lt;code&gt;--globals-backup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;--repeat&lt;/code&gt; option now works correctly (see &lt;a href=&#34;https://github.com/facile-it/paraunit/issues/92&#34;&gt;#92&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;The PHPUnit configuration is no longer copied temporarily in the current working folder, it&amp;rsquo;s no longer needed&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.8.2: avoid failures due to warnings</title>
@@ -402,31 +447,6 @@ This grants a lot of new features:
 &lt;li&gt;&lt;code&gt;--configuration&lt;/code&gt; behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename,
 and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;phpunit.xml.dist&lt;/code&gt;) (&lt;a href=&#34;[https://github.com/facile-it/paraunit/issues/19]&#34;&gt;#19&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;Added &lt;code&gt;-c&lt;/code&gt; shortcut to README&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.4.2</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.4.2/</link>
-      <pubDate>Mon, 19 Oct 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.4.2/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.4.2 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Unlocked supporto for PHPUnit &amp;gt;= 5.x&lt;/li&gt;
-&lt;li&gt;README changed to suggest stable version of package in &lt;code&gt;composer.json&lt;/code&gt; example&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Fixed: test stub for fatal errors fixed for HHVM &amp;amp; PHP7&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
