@@ -14,6 +14,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CoverageCommand extends ParallelCommand
 {
+    const COVERAGE_METHODS = [
+        'clover',
+        'html',
+        'xml',
+        'text',
+        'text-to-console',
+        'crap4j',
+        'php',
+    ];
+
     /**
      * ParallelCommand constructor.
      * @param CoverageConfiguration $configuration
@@ -49,7 +59,9 @@ class CoverageCommand extends ParallelCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (! $this->hasChosenCoverageMethod($input)) {
-            throw new \InvalidArgumentException('You should choose at least one method of coverage output, between Clover, XML, HTML or text');
+            $coverageMethods = implode(self::COVERAGE_METHODS, ', ');
+
+            throw new \InvalidArgumentException('You should choose at least one method of coverage output between ' . $coverageMethods);
         }
 
         return parent::execute($input, $output);
@@ -57,12 +69,12 @@ class CoverageCommand extends ParallelCommand
 
     private function hasChosenCoverageMethod(InputInterface $input): bool
     {
-        return $input->getOption('clover')
-            || $input->getOption('html')
-            || $input->getOption('xml')
-            || $input->getOption('text')
-            || $input->getOption('text-to-console')
-            || $input->getOption('crap4j')
-            || $input->getOption('php');
+        foreach (self::COVERAGE_METHODS as $coverageMethod) {
+            if ($input->getOption($coverageMethod)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
