@@ -108,6 +108,11 @@ class RunnerTest extends BaseIntegrationTestCase
             $output,
             'Missing failing filename'
         );
+        $this->assertContains(
+            'Sebastian Bergmann',
+            $output,
+            'Missing general output from the PHPUnit process'
+        );
     }
 
     public function testWarning()

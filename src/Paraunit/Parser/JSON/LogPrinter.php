@@ -22,11 +22,8 @@ use PHPUnit\Util;
  */
 class LogPrinter extends Util\Printer implements TestListener
 {
-    /** @var string */
-    private $logDirectory;
-
-    /** @var int */
-    private $testSuiteLevel;
+    /** @var resource */
+    private $logFile;
 
     /** @var string */
     private $currentTestSuiteName;
@@ -39,17 +36,8 @@ class LogPrinter extends Util\Printer implements TestListener
 
     public function __construct()
     {
-        $this->testSuiteLevel = 0;
+        $this->logFile = fopen($this->getLogFilename(), 'wt');
         $this->autoFlush = true;
-
-        $logFilename = $this->getLogFilename();
-
-        $logDir = $this->getLogDirectory();
-        if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
-            throw new \RuntimeException('Cannot create folder for JSON logs');
-        }
-
-        $this->out = fopen($logDir . $logFilename, 'wt');
     }
 
     /**
@@ -180,7 +168,6 @@ class LogPrinter extends Util\Printer implements TestListener
      */
     public function startTestSuite(TestSuite $suite)
     {
-        $this->testSuiteLevel++;
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName = '';
 
@@ -193,7 +180,6 @@ class LogPrinter extends Util\Printer implements TestListener
 
     public function endTestSuite(TestSuite $suite)
     {
-        $this->testSuiteLevel--;
         $this->currentTestSuiteName = '';
         $this->currentTestName = '';
     }
@@ -230,7 +216,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param string $message
      * @param TestCase|null $test
      */
-    protected function writeCase($status, $time, array $trace = [], $message = '', $test = null)
+    private function writeCase($status, $time, array $trace = [], $message = '', $test = null)
     {
         $output = '';
         // take care of TestSuite producing error (e.g. by running into exception) as TestSuite doesn't have hasOutput
@@ -252,7 +238,7 @@ class LogPrinter extends Util\Printer implements TestListener
     /**
      * @param array $buffer
      */
-    public function writeArray($buffer)
+    private function writeArray($buffer)
     {
         array_walk_recursive($buffer, function (&$input) {
             if (is_string($input)) {
@@ -260,24 +246,36 @@ class LogPrinter extends Util\Printer implements TestListener
             }
         });
 
-        $this->write(json_encode($buffer, JSON_PRETTY_PRINT));
+        $this->writeToLog(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 
-    public function write($buffer)
+    private function writeToLog($buffer)
     {
         // ignore everything that is not a JSON object
         if ($buffer != '' && $buffer[0] === '{') {
-            parent::write($buffer);
+            \fwrite($this->logFile, $buffer);
+            \fflush($this->logFile);
         }
     }
 
     /**
      * @return string
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
     private function getLogFilename(): string
     {
-        return getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
+        $logDir = $this->getLogDirectory();
+        if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
+            throw new \RuntimeException('Cannot create folder for JSON logs');
+        }
+
+        $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
+        if ($logFilename === false) {
+            throw new \InvalidArgumentException('Log filename not received: environment variable not set');
+        }
+
+        return $logDir . $logFilename;
     }
 
     /**
@@ -286,17 +284,17 @@ class LogPrinter extends Util\Printer implements TestListener
      */
     private function getLogDirectory(): string
     {
-        $this->logDirectory = getenv(EnvVariables::LOG_DIR);
+        $logDirectory = getenv(EnvVariables::LOG_DIR);
 
-        if ($this->logDirectory === false) {
+        if ($logDirectory === false) {
             throw new \InvalidArgumentException('Log directory not received: environment variable not set');
         }
 
-        if (substr($this->logDirectory, -1) !== DIRECTORY_SEPARATOR) {
-            $this->logDirectory .= DIRECTORY_SEPARATOR;
+        if (substr($logDirectory, -1) !== DIRECTORY_SEPARATOR) {
+            $logDirectory .= DIRECTORY_SEPARATOR;
         }
 
-        return $this->logDirectory;
+        return $logDirectory;
     }
 
     private function convertToUtf8($string): string

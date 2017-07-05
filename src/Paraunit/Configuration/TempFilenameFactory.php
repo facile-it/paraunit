@@ -28,10 +28,6 @@ class TempFilenameFactory
         return $this->getTempSubDir('logs');
     }
 
-    /**
-     * @param string $uniqueId
-     * @return string
-     */
     public function getFilenameForLog(string $uniqueId): string
     {
         return $this->getTempFilename('logs', $uniqueId, 'json.log');
