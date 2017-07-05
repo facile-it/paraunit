@@ -3,22 +3,31 @@
 All notable changes of the Paraunit 0.x release series are documented in this file using the 
 [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.9] - TBA
+## [1.0] - TBA
 
 ### Changed
 
-* Implement pipelines: now every single test process has an environment variable called `PARAUNIT_PIPELINE_NUMBER` injected which is a number that identifies the pipeline in which the test is executed; it can be used as a discriminator to acces a different set of resources (i.e. a different copy of a test DB). See the [documentation](https://engineering.facile.it/paraunit/documentation/) for more details.
+### Fixed
+
+## [0.9] - 2017-07-05
+
+### Changed
+
+* Implement pipelines: now every single test process has an environment variable called `PARAUNIT_PIPELINE_NUMBER` injected which is a number that identifies the pipeline in which the test is executed; it can be used as a discriminator to access a different set of resources (i.e. a different copy of a test DB). See the [documentation](https://engineering.facile.it/paraunit/documentation/) for more details.
 * Support for PHPUnit 6
 * Drop support for PHPUnit 4 & 5
 * Minimum PHP version required: 7.0
 * Improvement to the whole codebase (scalar and return type hints, strict types enforced, see [#93](https://github.com/facile-it/paraunit/pull/93))
-* Realign option passed through to PHPUnit:
+* Realign options passed through to PHPUnit:
     * Added `--strict-coverage`
     * Added `--disallow-resource-usage`
     * Added `--no-coverage`
     * Added `--no-extensions`
     * Changed `--report-useless-tests` to `--dont-report-useless-tests` 
     * Changed `--no-globals-backup` to `--globals-backup` 
+
+### Fixed
+* The `--repeat` option now works correctly (see [#92](https://github.com/facile-it/paraunit/issues/92))
 
 ## [0.8.2] - 2017-01-26
 
