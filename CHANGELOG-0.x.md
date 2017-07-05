@@ -28,6 +28,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ### Fixed
 * The `--repeat` option now works correctly (see [#92](https://github.com/facile-it/paraunit/issues/92))
+* The PHPUnit configuration is no longer copied temporarily in the current working folder, it's no longer needed
 
 ## [0.8.2] - 2017-01-26
 
