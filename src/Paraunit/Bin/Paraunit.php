@@ -23,8 +23,8 @@ class Paraunit
         $parallelCommand = new ParallelCommand(new ParallelConfiguration());
         $application->add($parallelCommand);
 
-        $CoverageCommand = new CoverageCommand(new CoverageConfiguration());
-        $application->add($CoverageCommand);
+        $coverageCommand = new CoverageCommand(new CoverageConfiguration());
+        $application->add($coverageCommand);
 
         return $application;
     }
