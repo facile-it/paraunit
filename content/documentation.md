@@ -98,6 +98,8 @@ class SomeTest extends TestCase
 
 This little piece of code will obtain `db_test_1`, `db_test_2` etc. as a value for the `databaseName` property, achieving actual separation when accessing the test fixtures in the database. The setup and cleanup of the fixtures after each test is still up to the developer, obviously.
 
+As the snippet shows, the name of the environment variables are available as constants in the `Paraunit\Configuration\EnvVariables` class.
+
 ## Optional arguments and parameters
 
 ### String filter
