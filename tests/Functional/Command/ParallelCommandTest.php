@@ -84,6 +84,8 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MissingProviderTestStub::class, $output);
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
+
+        $this->assertContains('Executed: 1 test classes, 4 tests (3 retried)', $output->getOutput());
     }
 
     public function testExecutionWithoutConfiguration()

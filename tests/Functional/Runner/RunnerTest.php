@@ -34,6 +34,8 @@ class RunnerTest extends BaseIntegrationTestCase
             'PARAUNIT',
             Paraunit::getVersion(),
             '...',
+            'Execution time',
+            'Executed: 1 test classes, 3 tests (0 retried)'
         ]);
     }
 
@@ -58,6 +60,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'files with RETRIED',
             EntityManagerClosedTestStub::class,
         ]);
+        $this->assertContains('Executed: 1 test classes, 4 tests (3 retried)', $output->getOutput());
     }
 
     /**
