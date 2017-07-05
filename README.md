@@ -1,7 +1,10 @@
 # facile-it/paraunit
 
+[![PHP Version](https://img.shields.io/badge/php-%5E7.0-blue.svg)](https://img.shields.io/badge/php-%5E7.0-blue.svg)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
+[![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
+
 [![Build status][Master build image]][Master build link]
 [![Appveyor build status][Appveyor build image]][Appveyor build link]
 
