@@ -26,7 +26,7 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
     public function onEngineEnd()
     {
         foreach ($this->testResultList->getTestResultContainers() as $parser) {
-            if ($parser instanceof TestResultContainer) {
+            if ($parser->getTestResultFormat()->shouldPrintTestOutput()) {
                 $this->printFailuresOutput($parser);
             }
         }
@@ -37,20 +37,18 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
      */
     private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
-        if (! $testResultContainer->getTestResultFormat()->shouldPrintTestOutput()) {
+        if (empty($testResultContainer->getTestResults())) {
             return;
         }
 
         $tag = $testResultContainer->getTestResultFormat()->getTag();
         $title = $testResultContainer->getTestResultFormat()->getTitle();
+
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
+
         $i = 1;
-
         foreach ($testResultContainer->getTestResults() as $testResult) {
-            if ($i === 1) {
-                $this->getOutput()->writeln('');
-                $this->getOutput()->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
-            }
-
             $this->getOutput()->writeln('');
             $this->getOutput()->write(sprintf('<%s>%d) ', $tag, $i++));
 
