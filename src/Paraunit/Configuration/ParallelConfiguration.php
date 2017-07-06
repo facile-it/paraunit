@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use Paraunit\Printer\DebugPrinter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -34,6 +37,10 @@ class ParallelConfiguration
         $this->loadYamlConfiguration($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
         $this->tagEventSubscribers($containerBuilder);
+
+        if ($input->getOption('debug')) {
+            $this->enableDebugMode($containerBuilder);
+        }
 
         $containerBuilder->compile();
 
@@ -95,5 +102,14 @@ class ParallelConfiguration
             ->setSynthetic(true);
 
         $containerBuilder->set('output', $output);
+    }
+
+    private function enableDebugMode(ContainerBuilder $containerBuilder)
+    {
+        $definition = new Definition(DebugPrinter::class, [new Reference('output')]);
+        $definition->setPublic(false);
+        $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
+
+        $containerBuilder->setDefinition('paraunit.printer.debug_printer', $definition);
     }
 }
