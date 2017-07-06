@@ -39,6 +39,8 @@ install:
 
 script:
   - bin/phpunit -v $PHPUNIT_FLAGS
+  - composer install --no-dev --no-interaction
+  - src/Paraunit/Bin/paraunit run nothing
 
 after_success:
   - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
