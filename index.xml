@@ -5,8 +5,30 @@
     <link>https://engineering.facile.it/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jul 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.9.1: a small fix in the header</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.9.1/</link>
+      <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.9.1/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.9.1&#34;&gt;Paraunit 0.9.1&lt;/a&gt; has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&amp;rsquo; package to do it, but it didn&amp;rsquo;t provide that feature, and he was adamant about not implementing it in the future.&lt;/p&gt;
+
+&lt;p&gt;So I decided to release an OSS package for this usage, &lt;code&gt;Jean85/pretty-package-versions&lt;/code&gt;, available here: &lt;a href=&#34;https://github.com/Jean85/pretty-package-versions/&#34;&gt;https://github.com/Jean85/pretty-package-versions/&lt;/a&gt;. Feel free to use it in your projects, as I&amp;rsquo;ve done inside Paraunit.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Jean85\PrettiVersions&lt;/code&gt; to print the version header, and hide the big SHA commit hash when not needed&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</title>
@@ -427,26 +449,6 @@ This grants a lot of new features:
 
 &lt;ul&gt;
 &lt;li&gt;Merged previous &lt;code&gt;v0.4&lt;/code&gt; branch, there were missing fixes in previous release&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.4.3</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.4.3/</link>
-      <pubDate>Wed, 04 Nov 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.4.3/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.4.3 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--configuration&lt;/code&gt; behaviour is now identical to the same option in PHPUnit: it can accept also a path without a filename,
-and has a &lt;code&gt;-c&lt;/code&gt; shortcut (default filename is &lt;code&gt;phpunit.xml.dist&lt;/code&gt;) (&lt;a href=&#34;[https://github.com/facile-it/paraunit/issues/19]&#34;&gt;#19&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;Added &lt;code&gt;-c&lt;/code&gt; shortcut to README&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
