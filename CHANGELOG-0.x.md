@@ -12,7 +12,7 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 ## [0.9.1] - 2017-07-06
 
 ### Changed
-* Use `Jean85\PrettiVersions` to print the version header, and hide the big SHA commit hash when not needed
+* Use `Jean85\PrettyVersions` to print the version header, and hide the big SHA commit hash when not needed
 
 ## [0.9] - 2017-07-05
 
