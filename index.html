@@ -232,6 +232,45 @@
   
     <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.2/">Paraunit 0.9.2 and 0.8.3: missing dependencies</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Jul 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.9.2 and Paraunit 0.8.3 has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies. I fixed that and backported the fix to the 0.8 series, since it was very easy to do. Here&rsquo;s the full changelog: Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9/">Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</a></h2>
 
     <div class="post-meta">
@@ -347,49 +386,6 @@
   Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project: Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir
   </p>
 
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>24 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8 has been released! With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to Andreas Heigl that made this not only possible, but very straightforward to implement. Next phase will be the 1.0 stable release milestone, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
   
 </article>
 

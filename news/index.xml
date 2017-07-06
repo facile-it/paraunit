@@ -31,6 +31,28 @@
     </item>
     
     <item>
+      <title>Paraunit 0.9.2 and 0.8.3: missing dependencies</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.9.2/</link>
+      <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.9.2/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.9.2&#34;&gt;Paraunit 0.9.2&lt;/a&gt; and &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.3&#34;&gt;Paraunit 0.8.3&lt;/a&gt; has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies.&lt;/p&gt;
+
+&lt;p&gt;I fixed that and backported the fix to the 0.8 series, since it was very easy to do.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add missing dependencies: &lt;code&gt;symfony/yaml&lt;/code&gt; and &lt;code&gt;symfony/stopwatch&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</title>
       <link>https://engineering.facile.it/paraunit/news/release/0.9/</link>
       <pubDate>Wed, 05 Jul 2017 00:00:00 +0000</pubDate>
@@ -431,24 +453,6 @@ This grants a lot of new features:
 
 &lt;ul&gt;
 &lt;li&gt;Removed double generation of MD5 hash of process&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.4.4</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.4.4/</link>
-      <pubDate>Sun, 15 Nov 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.4.4/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.4.4 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Merged previous &lt;code&gt;v0.4&lt;/code&gt; branch, there were missing fixes in previous release&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
