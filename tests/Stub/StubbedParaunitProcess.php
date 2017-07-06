@@ -33,6 +33,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
             $this->uniqueId = $uniqueId;
         }
 
+        $this->commandLine = 'phpunit /stub/test';
         $this->exitCode = 0;
     }
 

@@ -5,13 +5,12 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
-use Paraunit\Configuration\PHPUnitConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
-use Tests\Stub\RaisingNoticeTestStub;
 use Tests\Stub\MissingProviderTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
+use Tests\Stub\RaisingNoticeTestStub;
 
 /**
  * Class ParallelCommandTest
@@ -86,6 +85,31 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotEquals(0, $exitCode);
 
         $this->assertContains('Executed: 10 test classes, 27 tests (12 retried)', $output);
+    }
+
+    public function testExecutionWithDebugEnabled()
+    {
+        $configurationPath = $this->getConfigForStubs();
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute(array(
+            'command' => $command->getName(),
+            '--configuration' => $configurationPath,
+            '--debug' => true,
+        ));
+
+        $output = $commandTester->getDisplay();
+        $this->assertNotEquals(0, $exitCode);
+
+        $this->assertContains('Executed: 10 test classes, 27 tests (12 retried)', $output, 'Precondition failed');
+        $processesCount = 10 + 12;
+        $this->assertSame($processesCount, substr_count($output, 'PROCESS STARTED'));
+        $this->assertSame($processesCount, substr_count($output, 'PROCESS TERMINATED'));
+        $this->assertSame($processesCount, substr_count($output, 'PROCESS PARSING COMPLETED'));
+        $this->assertSame(12, substr_count($output, 'PROCESS TO BE RETRIED'));
     }
 
     public function testExecutionWithoutConfiguration()
