@@ -34,7 +34,7 @@ install:
 
 script:
   - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml; else bin/phpunit --enforce-time-limit; fi
-  - composer install --no-dev
+  - composer install --no-dev --no-autoloader --no-interaction
   - bin/phpunit --enforce-time-limit
 
 after_success:
