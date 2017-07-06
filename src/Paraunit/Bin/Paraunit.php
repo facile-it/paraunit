@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Bin;
 
-use PackageVersions\Versions;
+use Jean85\PrettyVersions;
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\CoverageConfiguration;
@@ -31,6 +31,6 @@ class Paraunit
 
     public static function getVersion(): string
     {
-        return Versions::getVersion('facile-it/paraunit');
+        return PrettyVersions::getVersion('facile-it/paraunit')->getPrettyVersion();
     }
 }
