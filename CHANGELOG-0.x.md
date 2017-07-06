@@ -9,6 +9,11 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 
 ### Fixed
 
+## [0.9.2] - 2017-07-06
+
+### Fixed
+* Add missing dependencies: `symfony/yaml` and `symfony/stopwatch`
+
 ## [0.9.1] - 2017-07-06
 
 ### Changed
@@ -34,6 +39,11 @@ All notable changes of the Paraunit 0.x release series are documented in this fi
 ### Fixed
 * The `--repeat` option now works correctly (see [#92](https://github.com/facile-it/paraunit/issues/92))
 * The PHPUnit configuration is no longer copied temporarily in the current working folder, it's no longer needed
+
+## [0.8.3] - 2017-07-06
+
+### Fixed
+* Add missing dependencies: `symfony/yaml` and `symfony/stopwatch` (backported from 0.9.2)
 
 ## [0.8.2] - 2017-01-26
 
