@@ -75,6 +75,7 @@ class ParallelCommandTest extends BaseTestCase
         ));
 
         $output = $commandTester->getDisplay();
+        $this->assertNotContains('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertNotContains('Executed: 0 test classes', $output);
         $this->assertContains('ABNORMAL TERMINATIONS', $output);
@@ -85,6 +86,24 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotEquals(0, $exitCode);
 
         $this->assertContains('Executed: 10 test classes, 27 tests (12 retried)', $output);
+    }
+
+    public function testExecutionWithLogo()
+    {
+        $configurationPath = $this->getConfigForStubs();
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(array(
+            'command' => $command->getName(),
+            '--logo' => $configurationPath,
+            '--filter' => 'doNotExecuteAnyTestSoItsFaster',
+        ));
+
+        $output = $commandTester->getDisplay();
+        $this->assertContains('BBBBbBBBBBBB', $output, 'Shark logo missing');
     }
 
     public function testExecutionWithDebugEnabled()

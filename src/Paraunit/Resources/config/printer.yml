@@ -15,6 +15,8 @@ services:
   paraunit.printer.shark_printer:
     class: Paraunit\Printer\SharkPrinter
     parent: paraunit.printer.abstract_printer
+    arguments:
+      -  "%paraunit.show_logo%"
 
   paraunit.printer.process_printer:
     class: Paraunit\Printer\ProcessPrinter

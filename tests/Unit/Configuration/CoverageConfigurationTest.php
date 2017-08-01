@@ -103,6 +103,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'crap4j',
             'php',
             'ansi',
+            'logo',
         ];
 
         foreach ($options as $optionName) {
@@ -179,6 +180,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn(true);
         $input->getOption('debug')
             ->willReturn(null);
+        $input->getOption('logo')
+            ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 

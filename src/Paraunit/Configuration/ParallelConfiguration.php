@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Paraunit\Configuration;
 
 use Paraunit\Printer\DebugPrinter;
+use Paraunit\Printer\SharkPrinter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,10 +38,6 @@ class ParallelConfiguration
         $this->loadYamlConfiguration($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
         $this->tagEventSubscribers($containerBuilder);
-
-        if ($input->getOption('debug')) {
-            $this->enableDebugMode($containerBuilder);
-        }
 
         $containerBuilder->compile();
 
@@ -90,6 +87,11 @@ class ParallelConfiguration
         $containerBuilder->setParameter('paraunit.phpunit_config_filename', $input->getOption('configuration') ?? '.');
         $containerBuilder->setParameter('paraunit.testsuite', $input->getOption('testsuite'));
         $containerBuilder->setParameter('paraunit.string_filter', $input->getArgument('stringFilter'));
+        $containerBuilder->setParameter('paraunit.show_logo', $input->getOption('logo'));
+
+        if ($input->getOption('debug')) {
+            $this->enableDebugMode($containerBuilder);
+        }
     }
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
