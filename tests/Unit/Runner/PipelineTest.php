@@ -20,8 +20,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testExecute()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(Argument::cetera())
-            ->shouldNotBeCalled();
+        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+            ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
@@ -34,8 +34,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testExecuteWithOccupiedPipeline()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(Argument::cetera())
-            ->shouldNotBeCalled();
+        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+            ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
@@ -61,8 +61,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsTerminated()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(Argument::cetera())
-            ->shouldNotBeCalled();
+        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+            ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start([EnvVariables::PIPELINE_NUMBER => 5])
             ->shouldBeCalledTimes(1);
@@ -105,6 +105,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsTerminatedFalse()
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+            ->shouldBeCalledTimes(1);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
             ->shouldNotBeCalled();
         $process = $this->prophesize(AbstractParaunitProcess::class);

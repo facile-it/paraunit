@@ -3,32 +3,54 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Lifecycle\ProcessEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class DebugPrinter
  * @package Paraunit\Printer
  */
-class DebugPrinter
+class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
-    /**
-     * @param AbstractParaunitProcess[] $runningStack
-     * @param AbstractParaunitProcess $launchedProcess
-     */
-    public static function printDebugOutput(AbstractParaunitProcess $launchedProcess, array $runningStack)
+    public static function getSubscribedEvents(): array
     {
-        echo "\n New running stack:";
-        echo "\n STARTED :" . $launchedProcess->getCommandLine();
-        echo "\n --------";
-        foreach ($runningStack as $processRunning) {
-            echo "\n";
-            echo
-            str_replace(
-                '2>&1',
-                '',
-                $processRunning->getCommandLine()
-            );
-        }
-        echo "\n FINISHED: ";
+        return [
+            ProcessEvent::PROCESS_STARTED => 'onProcessStarted',
+            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
+            ProcessEvent::PROCESS_PARSING_COMPLETED => ['onProcessParsingCompleted', 1],
+            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
+        ];
+    }
+
+    public function onProcessStarted(ProcessEvent $event)
+    {
+        $process = $event->getProcess();
+
+        $this->getOutput()->writeln('PROCESS STARTED: ' . $process->getFilename());
+        $this->getOutput()->writeln($process->getCommandLine());
+        $this->getOutput()->writeln('');
+    }
+
+    public function onProcessTerminated(ProcessEvent $event)
+    {
+        $process = $event->getProcess();
+
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln('PROCESS TERMINATED: ' . $process->getFilename());
+        $this->getOutput()->writeln(' - with class name: ' . $process->getTestClassName() ?? 'N/A');
+        $this->getOutput()->writeln('');
+    }
+
+    public function onProcessParsingCompleted()
+    {
+        $this->getOutput()->write('PROCESS PARSING COMPLETED -- RESULTS: ');
+    }
+
+    public function onProcessToBeRetried(ProcessEvent $event)
+    {
+        $process = $event->getProcess();
+
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln('PROCESS TO BE RETRIED: ' . $process->getFilename());
     }
 }

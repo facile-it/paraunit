@@ -43,6 +43,8 @@ class Pipeline
         $this->process->start([
             EnvVariables::PIPELINE_NUMBER => $this->number,
         ]);
+
+        $this->dispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($this->process));
     }
 
     public function isFree(): bool

@@ -115,6 +115,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
+        $input->getOption('debug')
+            ->willReturn(null);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
@@ -175,6 +177,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('ansi')
             ->shouldBeCalled()
             ->willReturn(true);
+        $input->getOption('debug')
+            ->willReturn(null);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
