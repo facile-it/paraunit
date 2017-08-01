@@ -1,11 +1,14 @@
-# Changes in Paraunit 0.x
+# Changelog
+All notable changes to this project will be documented in this file.
 
-All notable changes of the Paraunit 0.x release series are documented in this file using the 
-[Keep a CHANGELOG](http://keepachangelog.com/) principles.
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0] - TBA
+## [Unreleased]
 
 ### Changed
+ * The Shark logo is now optional; to show it at the top, use the `--logo` option
+ * The `--debug` output has been completely rewritten and now is more useful than ever! 
 
 ### Fixed
 
