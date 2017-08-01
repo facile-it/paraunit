@@ -107,7 +107,6 @@ class ParallelConfiguration
     private function enableDebugMode(ContainerBuilder $containerBuilder)
     {
         $definition = new Definition(DebugPrinter::class, [new Reference('output')]);
-        $definition->setPublic(false);
         $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
 
         $containerBuilder->setDefinition('paraunit.printer.debug_printer', $definition);
