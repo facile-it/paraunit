@@ -22,6 +22,10 @@ matrix:
     - php: 7.1
       env:
         - XDEBUG_DISABLE=true
+    - php: 7.2
+    - php: 7.2
+      env:
+        - XDEBUG_DISABLE=true
     - php: nightly
   fast_finish: true
 
