@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,6 +15,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ProcessPrinter implements EventSubscriberInterface
 {
+    const MAX_CHAR_LENGTH = 80;
+    const COUNTER_CHAR_LENGTH = 5;
+
     /** @var  SingleResultFormatter */
     private $singleResultFormatter;
 
@@ -21,7 +25,10 @@ class ProcessPrinter implements EventSubscriberInterface
     private $output;
 
     /** @var int */
-    private $counter = 0;
+    private $counter;
+
+    /** @var int */
+    private $singleRowCounter;
 
     /**
      * ProcessPrinter constructor.
@@ -32,12 +39,15 @@ class ProcessPrinter implements EventSubscriberInterface
     {
         $this->singleResultFormatter = $singleResultFormatter;
         $this->output = $output;
+        $this->counter = 0;
+        $this->singleRowCounter = 0;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
             ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+            EngineEvent::END => ['onEngineEnd', 400],
         ];
     }
 
@@ -54,19 +64,41 @@ class ProcessPrinter implements EventSubscriberInterface
         }
     }
 
+    public function onEngineEnd()
+    {
+        while (! $this->isRowFull()) {
+            $this->output->write(' ');
+            ++$this->singleRowCounter;
+        }
+
+        $this->printCounter();
+    }
+
     /**
      * @param PrintableTestResultInterface $testResult
      */
     private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
     {
-        if ($this->counter % 80 === 0 && $this->counter > 1) {
-            $this->output->writeln('');
+        if ($this->isRowFull()) {
+            $this->printCounter();
         }
 
         ++$this->counter;
+        ++$this->singleRowCounter;
 
         $this->output->write(
             $this->singleResultFormatter->formatSingleResult($testResult)
         );
+    }
+
+    private function printCounter()
+    {
+        $this->output->writeln(sprintf('%6d', $this->counter));
+        $this->singleRowCounter = 0;
+    }
+
+    private function isRowFull(): bool
+    {
+        return $this->singleRowCounter === self::MAX_CHAR_LENGTH - (self::COUNTER_CHAR_LENGTH + 1);
     }
 }

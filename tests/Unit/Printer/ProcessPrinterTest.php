@@ -18,7 +18,7 @@ use Tests\Stub\UnformattedOutputStub;
  */
 class ProcessPrinterTest extends BaseUnitTestCase
 {
-    public function testPrintProcessGoesToFormatting()
+    public function testOnProcessParsingCompletedGoesToFormatting()
     {
         $testResult = $this->mockPrintableTestResult();
         $process = new StubbedParaunitProcess();
@@ -37,10 +37,23 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
     }
 
+    public function testOnEngineEnd()
+    {
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $output = new UnformattedOutputStub();
+        $printer = new ProcessPrinter($formatter->reveal(), $output);
+
+        $printer->onEngineEnd();
+
+        $consoleOutput = $output->getOutput();
+        $this->assertEquals(ProcessPrinter::MAX_CHAR_LENGTH + 1, strlen($consoleOutput));
+        $this->assertStringEndsWith(' 0' . PHP_EOL, $consoleOutput);
+    }
+
     /**
      * @dataProvider newLineTimesProvider
      */
-    public function testPrintProcessResultAddsNewlineAfter80Chars(int $times, int $newLineTimes)
+    public function testOnProcessParsingCompletedAddsCounterAndNewlineAtFullRow(int $times, int $newLineTimes)
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; $i++) {
@@ -49,14 +62,18 @@ class ProcessPrinterTest extends BaseUnitTestCase
 
         $output = $this->prophesize(Output::class);
         $output->write(Argument::any())
-            ->willReturn()
             ->shouldBeCalledTimes($times);
-        $output->writeln('')
+        $output->writeln(Argument::that(function ($input) {
+            $this->assertEquals(6, strlen($input), 'Wrong output: ' . $input);
+
+            return true;
+        }))
             ->willReturn()
             ->shouldBeCalledTimes($newLineTimes);
 
         $formatter = $this->prophesize(SingleResultFormatter::class);
         $formatter->formatSingleResult(Argument::cetera())
+            ->shouldBeCalledTimes($times)
             ->willReturn('<tag>.</tag>');
 
         $printer = new ProcessPrinter($formatter->reveal(), $output->reveal());
@@ -67,12 +84,37 @@ class ProcessPrinterTest extends BaseUnitTestCase
     public function newLineTimesProvider(): array
     {
         return [
-            [79, 0],
-            [80, 0],
-            [81, 1],
-            [200, 2],
-            [240, 2],
-            [241, 3],
+            [73, 0],
+            [74, 0],
+            [75, 1],
+            [195, 2],
+            [222, 2],
+            [223, 3],
         ];
+    }
+
+    public function testOnProcessParsingCompletedAndOnEngineEndWorkWellTogether()
+    {
+        $process = new StubbedParaunitProcess();
+        for ($i = 0; $i < 100; $i++) {
+            $process->addTestResult($this->mockPrintableTestResult());
+        }
+
+        $formatter = $this->prophesize(SingleResultFormatter::class);
+        $formatter->formatSingleResult(Argument::cetera())
+            ->shouldBeCalledTimes(100)
+            ->willReturn('.');
+
+        $output = new UnformattedOutputStub();
+        $printer = new ProcessPrinter($formatter->reveal(), $output);
+
+        $printer->onProcessParsingCompleted(new ProcessEvent($process));
+        $printer->onEngineEnd();
+
+        $expectedOutput = str_repeat('.', 74) . '    74' . PHP_EOL
+            . str_repeat('.', 26)
+            . str_repeat(' ', ProcessPrinter::MAX_CHAR_LENGTH - (26 + 3))
+            . '100' . PHP_EOL;
+        $this->assertSame($expectedOutput, $output->getOutput());
     }
 }

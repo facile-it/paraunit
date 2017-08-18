@@ -34,6 +34,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'PARAUNIT',
             Paraunit::getVersion(),
             '...',
+            '     3',
             'Execution time',
             'Executed: 1 test classes, 3 tests (0 retried)'
         ]);
@@ -100,7 +101,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
+        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
@@ -128,7 +129,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nW\n/', $output, 'Missing W output');
+        $this->assertRegExp('/\nW\s+1\n/', $output, 'Missing W output');
         $this->assertContains(
             '1 files with WARNINGS:',
             $output,
@@ -175,7 +176,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
+        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
         $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
     }
@@ -190,7 +191,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\n/', $output, 'Missing X output');
+        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
         $this->assertContains('UNKNOWN', $output);
         $this->assertContains(
             '1 files with ABNORMAL TERMINATIONS',
