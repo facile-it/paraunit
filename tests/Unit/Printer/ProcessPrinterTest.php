@@ -47,7 +47,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
 
         $consoleOutput = $output->getOutput();
         $this->assertEquals(ProcessPrinter::MAX_CHAR_LENGTH + 1, strlen($consoleOutput));
-        $this->assertStringEndsWith(' 0' . PHP_EOL, $consoleOutput);
+        $this->assertStringEndsWith(" 0\n", $consoleOutput);
     }
 
     /**
@@ -111,10 +111,10 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $printer->onProcessParsingCompleted(new ProcessEvent($process));
         $printer->onEngineEnd();
 
-        $expectedOutput = str_repeat('.', 74) . '    74' . PHP_EOL
+        $expectedOutput = str_repeat('.', 74) . '    74' . "\n"
             . str_repeat('.', 26)
             . str_repeat(' ', ProcessPrinter::MAX_CHAR_LENGTH - (26 + 3))
-            . '100' . PHP_EOL;
+            . '100' . "\n";
         $this->assertSame($expectedOutput, $output->getOutput());
     }
 }
