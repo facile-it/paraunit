@@ -5,8 +5,42 @@
     <link>https://engineering.facile.it/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 06 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 Sep 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.10: small fixes and improvements</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.10/</link>
+      <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.10/</guid>
+      <description>
+
+&lt;p&gt;With this release, I&amp;rsquo;m grouping a few fixes and improvements that I collected in the past month. Mainly, I&amp;rsquo;ve fixed the &lt;code&gt;--debug&lt;/code&gt; option and the &lt;code&gt;--text-to-console&lt;/code&gt; coverage output. Also, now the logo is optional, and at the end of each line it&amp;rsquo;s printed a partial count of executed tests.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add official support to PHP 7.2 (added to Travis CI matrix)&lt;/li&gt;
+&lt;li&gt;Add executed tests counter at the end of each line in output (#91)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Shark logo is now optional; to show it at the top, use the &lt;code&gt;--logo&lt;/code&gt; option&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;--debug&lt;/code&gt; output has been completely rewritten and now is more useful than ever!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fix the &lt;code&gt;--text-to-console&lt;/code&gt; coverage option (#99)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.9.1: a small fix in the header</title>
@@ -426,33 +460,6 @@ This grants a lot of new features:
 &lt;li&gt;Removed &lt;code&gt;Container.php&lt;/code&gt; file and &lt;code&gt;CompilerPass&lt;/code&gt; class in favor of proper usage of Symfony&amp;rsquo;s components&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;paraunit&lt;/code&gt; bin now uses the container directly&lt;/li&gt;
 &lt;li&gt;FinalPrinter class splitted in 3 classes&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.5</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.5/</link>
-      <pubDate>Tue, 08 Dec 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.5/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.5 has been released! Here&amp;rsquo;s what&amp;rsquo;s changed:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux)&lt;/li&gt;
-&lt;li&gt;Travis is testing on PHP 7.0, no more nightlies or allowed failures&lt;/li&gt;
-&lt;li&gt;Symfony 3.0 components are now supported and compatible with Paraunit&lt;/li&gt;
-&lt;li&gt;Retry parsing and management is improved&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Removed double generation of MD5 hash of process&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
