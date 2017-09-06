@@ -5,15 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.10] - 2017-09-06
+
 ### Added
- * Official support to PHP 7.2; added to Travis CI matrix
+ * Add official support to PHP 7.2 (added to Travis CI matrix)
  * Add executed tests counter at the end of each line in output (#91)
+
 ### Changed
  * The Shark logo is now optional; to show it at the top, use the `--logo` option
  * The `--debug` output has been completely rewritten and now is more useful than ever! 
 
 ### Fixed
- * Fix `--text-to-console` coverage option (#99)
+ * Fix the `--text-to-console` coverage option (#99)
 
 ## [0.9.2] - 2017-07-06
 
