@@ -10,7 +10,7 @@ use Paraunit\Proxy\Coverage\CodeCoverage;
  * Class Text
  * @package Paraunit\Proxy\Coverage
  */
-class Text extends TextToConsole implements CoverageProcessorInterface
+class Text extends AbstractText
 {
     /** @var  OutputFile */
     private $targetFile;
@@ -33,7 +33,7 @@ class Text extends TextToConsole implements CoverageProcessorInterface
     {
         file_put_contents(
             $this->targetFile->getFilePath(),
-            $this->text->process($coverage, $this->showColors)
+            $this->getTextCoverage($coverage)
         );
     }
 }

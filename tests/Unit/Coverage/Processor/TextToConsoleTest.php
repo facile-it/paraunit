@@ -8,6 +8,7 @@ use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
+use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class TextToConsoleTest
@@ -17,10 +18,11 @@ class TextToConsoleTest extends BaseUnitTestCase
 {
     public function testWriteToConsole()
     {
-        $text = new TextToConsole();
-
-        $this->expectOutputString('');
+        $output = new UnformattedOutputStub();
+        $text = new TextToConsole($output, true);
 
         $text->process(new CodeCoverage());
+        
+        $this->assertContains('Code Coverage Report', $output->getOutput());
     }
 }

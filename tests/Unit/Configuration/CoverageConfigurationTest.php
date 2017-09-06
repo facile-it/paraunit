@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Coverage\Processor\AbstractText;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
@@ -197,7 +198,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $processor = $processors[0];
         $this->assertInstanceOf(TextToConsole::class, $processor);
 
-        $reflection = new \ReflectionObject($processor);
+        $reflection = new \ReflectionClass(AbstractText::class);
         $property = $reflection->getProperty('showColors');
         $property->setAccessible(true);
         $this->assertTrue($property->getValue($processor));

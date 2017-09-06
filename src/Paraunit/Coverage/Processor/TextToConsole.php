@@ -4,35 +4,30 @@ declare(strict_types=1);
 namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Proxy\Coverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Report\Text as PHPUnitText;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class TextToConsole
  * @package Paraunit\Proxy\Coverage
  */
-class TextToConsole implements CoverageProcessorInterface
+class TextToConsole extends AbstractText
 {
-    /** @var PHPUnitText */
-    protected $text;
-
-    /** @var bool */
-    protected $showColors;
+    /** @var  OutputInterface */
+    private $output;
 
     /**
      * TextToConsole constructor.
+     * @param OutputInterface $output
      * @param bool $showColors
      */
-    public function __construct($showColors = false)
+    public function __construct(OutputInterface $output, bool $showColors)
     {
-        $this->text = new PHPUnitText(50, 90, false, false);
-        $this->showColors = $showColors;
+        parent::__construct($showColors);
+        $this->output = $output;
     }
 
-    /**
-     * @param CodeCoverage $coverage
-     */
-    public function process(CodeCoverage $coverage)
+    public function process(CodeCoverage $codeCoverage)
     {
-        $this->text->process($coverage, $this->showColors);
+        $this->output->writeln($this->getTextCoverage($codeCoverage));
     }
 }

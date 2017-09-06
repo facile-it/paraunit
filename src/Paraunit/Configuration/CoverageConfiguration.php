@@ -12,6 +12,7 @@ use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -60,7 +61,9 @@ class CoverageConfiguration extends ParallelConfiguration
         }
 
         if ($input->getOption('text-to-console')) {
-            $textToConsole = new TextToConsole($input->getOption('ansi'));
+            /** @var OutputInterface $output */
+            $output = $container->get('output');
+            $textToConsole = new TextToConsole($output, (bool)$input->getOption('ansi'));
             $coverageResult->addCoverageProcessor($textToConsole);
         }
 
