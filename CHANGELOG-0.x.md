@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+ * Start suggesting `dama/doctrine-test-bundle` instead of `facile-it/paraunit-testcase`, since it has been abandoned.
 
 ## [0.10] - 2017-09-06
 
