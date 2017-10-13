@@ -37,6 +37,11 @@ class BaseTestCase extends TestCase
         return $this->getStubPath() . 'phpunit_for_stubs.xml';
     }
 
+    protected function getConfigForDeprecationListener(): string
+    {
+        return $this->getStubPath() . 'phpunit_with_deprecations.xml';
+    }
+
     protected function getStubPath(): string
     {
         return realpath(__DIR__ . DIRECTORY_SEPARATOR . 'Stub') . DIRECTORY_SEPARATOR;

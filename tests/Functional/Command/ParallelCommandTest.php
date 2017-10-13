@@ -85,7 +85,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 10 test classes, 27 tests (12 retried)', $output);
+        $this->assertContains('Executed: 11 test classes, 28 tests (12 retried)', $output);
     }
 
     public function testExecutionWithLogo()
@@ -123,8 +123,8 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 10 test classes, 27 tests (12 retried)', $output, 'Precondition failed');
-        $processesCount = 10 + 12;
+        $this->assertContains('Executed: 11 test classes, 28 tests (12 retried)', $output, 'Precondition failed');
+        $processesCount = 11 + 12;
         $this->assertSame($processesCount, substr_count($output, 'PROCESS STARTED'));
         $this->assertSame($processesCount, substr_count($output, 'PROCESS TERMINATED'));
         $this->assertSame($processesCount, substr_count($output, 'PROCESS PARSING COMPLETED'));
@@ -147,5 +147,24 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('NO TESTS EXECUTED', $output);
         $this->assertContains('0 tests', $output);
         $this->assertSame(0, $exitCode);
+    }
+
+    public function testExecutionWithDeprecationListener()
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute(array(
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForDeprecationListener(),
+        ));
+
+        $output = $commandTester->getDisplay();
+        $this->assertNotEquals(0, $exitCode);
+        $this->assertContains('Executed: 1 test classes, 1 tests (0 retried)', $output, 'Precondition failed');
+        $this->assertContains('1 files with DEPRECATION WARNINGS:', $output);
+        $this->assertContains('deprecation triggered by RaisingDeprecationTestStub::testDeprecation', $output);
     }
 }
