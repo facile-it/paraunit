@@ -13,7 +13,6 @@ RUN apt-get update \
     less \
     vim-tiny \
     nano \
- ## PHP-EXT
     libzip-dev \
     && docker-php-ext-install -j5 zip mbstring pcntl \
     && apt-get clean
