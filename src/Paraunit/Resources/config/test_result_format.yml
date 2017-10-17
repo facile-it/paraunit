@@ -36,6 +36,12 @@ services:
       - "error"
       - "coverage not fetched"
 
+  paraunit.test_result.deprecation_result_format:
+    class: Paraunit\TestResult\TestResultFormat
+    arguments:
+      - "fail"
+      - "deprecation warnings"
+
   paraunit.test_result.error_test_result_format:
     class: Paraunit\TestResult\TestResultWithSymbolFormat
     arguments:

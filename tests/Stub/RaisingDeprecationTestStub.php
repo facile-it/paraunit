@@ -6,9 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class RaisingDeprecationTestStub extends TestCase
 {
+    const DEPRECATION_MESSAGE = 'This "Foo" method is deprecated';
+
     public function testDeprecation()
     {
         $this->assertTrue(true, 'This avoids the risky status');
-        @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
+        @trigger_error(self::DEPRECATION_MESSAGE, E_USER_DEPRECATED);
     }
 }

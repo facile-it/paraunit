@@ -9,6 +9,7 @@ services:
       - "@event_dispatcher"
     calls:
       - ["addParser", ["@paraunit.parser.test_start_parser"]]
+      - ["addParser", ["@paraunit.parser.deprecation_parser"]]
       - ["addParser", ["@paraunit.parser.pass_parser"]]
       - ["addParser", ["@paraunit.parser.retry_parser"]]
       - ["addParser", ["@paraunit.parser.incomplete_parser"]]
@@ -47,6 +48,11 @@ services:
       - "@paraunit.test_result.test_result_factory"
       - "@paraunit.test_result.failure_container"
       - "fail"
+
+  paraunit.parser.deprecation_parser:
+    class: Paraunit\Parser\DeprecationParser
+    arguments:
+      - "@paraunit.test_result.deprecation_container"
 
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\JSON\GenericParser

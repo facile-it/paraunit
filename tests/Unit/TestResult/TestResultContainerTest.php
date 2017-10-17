@@ -56,4 +56,19 @@ class TestResultContainerTest extends BaseUnitTestCase
         $this->assertContains('fail message', $testResult->getFailureMessage());
         $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
     }
+
+    public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols()
+    {
+        $testResult = new TestResultWithAbnormalTermination('function name', 'some message');
+        $process = new StubbedParaunitProcess();
+        $process->setOutput('');
+        $testFormat = $this->prophesize(TestResultFormat::class);
+        $testFormat->getTag()
+            ->willReturn('tag');
+
+        $testResultContainer = new TestResultContainer($testFormat->reveal());
+        $testResultContainer->handleTestResult($process, $testResult);
+
+        $this->assertSame(0, $testResultContainer->countTestResults());
+    }
 }

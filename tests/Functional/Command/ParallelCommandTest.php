@@ -10,6 +10,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
 use Tests\Stub\MissingProviderTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
+use Tests\Stub\RaisingDeprecationTestStub;
 use Tests\Stub\RaisingNoticeTestStub;
 
 /**
@@ -165,6 +166,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertNotEquals(0, $exitCode);
         $this->assertContains('Executed: 1 test classes, 1 tests (0 retried)', $output, 'Precondition failed');
         $this->assertContains('1 files with DEPRECATION WARNINGS:', $output);
-        $this->assertContains('deprecation triggered by RaisingDeprecationTestStub::testDeprecation', $output);
+        $this->assertContains(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
+        $this->assertContains('RaisingDeprecationTestStub::testDeprecation', $output);
     }
 }
