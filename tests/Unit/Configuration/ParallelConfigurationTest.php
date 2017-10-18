@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelConfiguration;
+use Paraunit\Printer\DebugPrinter;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -71,7 +73,30 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
+    }
+ 
+    public function testBuildContainerWithDebug()
+    {
+        $paraunit = new ParallelConfiguration();
+        $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize(OutputInterface::class);
+        $input->getArgument('stringFilter')
+            ->willReturn('text');
+        $input->getOption('debug')
+            ->willReturn(true);
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
 
-        $this->markTestIncomplete('Awaiting #29 -- paraunit.printer.debug_printer');
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
+
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
+
+        $servicesIds = $container->getServiceIds();
+
+        $definition = 'paraunit.printer.debug_printer';
+        $this->assertContains($definition, $servicesIds);
+        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $this->assertInstanceOf(DebugPrinter::class, $service);
+        $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
 }

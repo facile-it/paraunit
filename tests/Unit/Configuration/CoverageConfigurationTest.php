@@ -12,9 +12,11 @@ use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Coverage\Processor\Xml;
+use Paraunit\Printer\DebugPrinter;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -81,8 +83,31 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
+    }
 
-        $this->markTestIncomplete('Awaiting #29 -- paraunit.printer.debug_printer');
+    public function testBuildContainerWithDebug()
+    {
+        $paraunit = new CoverageConfiguration();
+        $input = $this->prophesize(InputInterface::class);
+        $output = $this->prophesize(OutputInterface::class);
+        $input->getArgument('stringFilter')
+            ->willReturn('text');
+        $input->getOption('debug')
+            ->willReturn(true);
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
+
+        $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
+
+        $this->assertInstanceOf(ContainerBuilder::class, $container);
+
+        $servicesIds = $container->getServiceIds();
+
+        $definition = 'paraunit.printer.debug_printer';
+        $this->assertContains($definition, $servicesIds);
+        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $this->assertInstanceOf(DebugPrinter::class, $service);
+        $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
 
     /**
