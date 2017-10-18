@@ -3,17 +3,15 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use Paraunit\Configuration\DependencyInjection\ParallelContainerDefinition;
 use Paraunit\Printer\DebugPrinter;
-use Paraunit\Printer\SharkPrinter;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -23,6 +21,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ParallelConfiguration
 {
     const TAG_EVENT_SUBSCRIBER = 'paraunit.event_subscriber';
+
+    /** @var ParallelContainerDefinition */
+    protected $containerDefinition;
+
+    public function __construct()
+    {
+        $this->containerDefinition = new ParallelContainerDefinition();
+    }
 
     /**
      * @param InputInterface $input
@@ -36,8 +42,7 @@ class ParallelConfiguration
         $containerBuilder = new ContainerBuilder();
 
         $this->injectOutput($containerBuilder, $output);
-        $this->loadYamlConfiguration($containerBuilder);
-        $this->loadConfiguration($containerBuilder);
+        $this->containerDefinition->configure($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
         $this->tagEventSubscribers($containerBuilder);
 
@@ -48,44 +53,16 @@ class ParallelConfiguration
         return $containerBuilder;
     }
 
-    /**
-     * @param ContainerBuilder $containerBuilder
-     * @return YamlFileLoader
-     * @throws \Exception
-     *
-     * @deprecated Use loadConfiguration($containerBuilder): PhpFileLoader
-     */
-    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
-    {
-        $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
-        $loader->load('file.yml');
-        $loader->load('parser.yml');
-        $loader->load('printer.yml');
-        $loader->load('process.yml');
-        $loader->load('runner.yml');
-        $loader->load('services.yml');
-        $loader->load('test_result.yml');
-        $loader->load('test_result_container.yml');
-        $loader->load('test_result_format.yml');
-
-        return $loader;
-    }
-
-    protected function loadConfiguration(ContainerBuilder $containerBuilder): PhpFileLoader
-    {
-        $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
-        $loader->load('configuration.php');
-
-        return $loader;
-    }
-
     protected function tagEventSubscribers(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterListenersPass('event_dispatcher', null, self::TAG_EVENT_SUBSCRIBER));
+        $container->addCompilerPass(new RegisterListenersPass(EventDispatcherInterface::class, null, self::TAG_EVENT_SUBSCRIBER));
 
         foreach ($container->getDefinitions() as $definition) {
-            $reflection = new \ReflectionClass($definition->getClass());
+            if ($definition->isSynthetic()) {
+                continue;
+            }
 
+            $reflection = new \ReflectionClass($definition->getClass());
             if ($reflection->implementsInterface(EventSubscriberInterface::class)) {
                 $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
             }
@@ -111,17 +88,17 @@ class ParallelConfiguration
 
     private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
     {
-        $containerBuilder->register('output')
+        $containerBuilder->register(OutputInterface::class)
             ->setSynthetic(true);
 
-        $containerBuilder->set('output', $output);
+        $containerBuilder->set(OutputInterface::class, $output);
     }
 
     private function enableDebugMode(ContainerBuilder $containerBuilder)
     {
-        $definition = new Definition(DebugPrinter::class, [new Reference('output')]);
+        $definition = new Definition(DebugPrinter::class, [new Reference(OutputInterface::class)]);
         $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
 
-        $containerBuilder->setDefinition('paraunit.printer.debug_printer', $definition);
+        $containerBuilder->setDefinition(DebugPrinter::class, $definition);
     }
 }

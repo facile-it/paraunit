@@ -98,11 +98,11 @@ class ParallelCommand extends Command
         $container = $this->configuration->buildContainer($input, $output);
 
         /** @var PHPUnitConfig $config */
-        $config = $container->get('paraunit.configuration.phpunit_config');
+        $config = $container->get(PHPUnitConfig::class);
         $this->addPHPUnitOptions($config, $input);
 
         /** @var Runner $runner */
-        $runner = $container->get('paraunit.runner.runner');
+        $runner = $container->get(Runner::class);
 
         return $runner->run();
     }

@@ -70,7 +70,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
 
         /** @var TempFilenameFactory $filenameService */
-        $filenameService = $this->container->get('paraunit.configuration.temp_filename_factory');
+        $filenameService = $this->container->get(TempFilenameFactory::class);
         $filename = $filenameService->getFilenameForLog($process->getUniqueId());
 
         copy($stubLogFilename, $filename);
@@ -80,7 +80,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         if ($this->container) {
             /** @var TempDirectory $tempDirectory */
-            $tempDirectory = $this->container->get('paraunit.file.temp_directory');
+            $tempDirectory = $this->container->get(TempDirectory::class);
             Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
         }
     }
