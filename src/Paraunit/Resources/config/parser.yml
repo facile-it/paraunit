@@ -48,6 +48,11 @@ services:
       - "@paraunit.test_result.failure_container"
       - "fail"
 
+  paraunit.parser.deprecation_parser:
+    class: Paraunit\Parser\DeprecationParser
+    arguments:
+      - "@paraunit.test_result.deprecation_container"
+
   paraunit.parser.warning_parser:
     class: Paraunit\Parser\JSON\GenericParser
     arguments:

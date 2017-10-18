@@ -5,7 +5,7 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -87,7 +87,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     {
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
-            if ($container instanceof TestResultContainer) {
+            if ($container instanceof TestResultContainerInterface) {
                 $testsCount += $container->countTestResults();
             }
         }

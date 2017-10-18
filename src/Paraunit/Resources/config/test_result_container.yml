@@ -39,6 +39,11 @@ services:
     arguments:
       - "@paraunit.test_result.warning_test_result_format"
 
+  paraunit.test_result.deprecation_container:
+    class: Paraunit\TestResult\TestResultContainer
+    arguments:
+      - "@paraunit.test_result.deprecation_result_format"
+
   paraunit.test_result.failure_container:
     class: Paraunit\TestResult\TestResultContainer
     arguments:

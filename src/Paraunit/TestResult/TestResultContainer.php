@@ -80,6 +80,10 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
 
     public function countTestResults(): int
     {
+        if (! $this->testResultFormat instanceof TestResultWithSymbolFormat) {
+            return 0;
+        }
+
         return count($this->testResults);
     }
 
