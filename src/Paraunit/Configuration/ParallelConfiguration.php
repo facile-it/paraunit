@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -36,6 +37,7 @@ class ParallelConfiguration
 
         $this->injectOutput($containerBuilder, $output);
         $this->loadYamlConfiguration($containerBuilder);
+        $this->loadConfiguration($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
         $this->tagEventSubscribers($containerBuilder);
 
@@ -50,11 +52,12 @@ class ParallelConfiguration
      * @param ContainerBuilder $containerBuilder
      * @return YamlFileLoader
      * @throws \Exception
+     *
+     * @deprecated Use loadConfiguration($containerBuilder): PhpFileLoader
      */
     protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
     {
         $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
-        $loader->load('configuration.yml');
         $loader->load('file.yml');
         $loader->load('parser.yml');
         $loader->load('printer.yml');
@@ -64,6 +67,14 @@ class ParallelConfiguration
         $loader->load('test_result.yml');
         $loader->load('test_result_container.yml');
         $loader->load('test_result_format.yml');
+
+        return $loader;
+    }
+
+    protected function loadConfiguration(ContainerBuilder $containerBuilder): PhpFileLoader
+    {
+        $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config/'));
+        $loader->load('configuration.php');
 
         return $loader;
     }
