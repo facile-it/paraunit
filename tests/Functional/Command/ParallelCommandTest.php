@@ -86,7 +86,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 11 test classes, 28 tests (12 retried)', $output);
+        $this->assertContains('Executed: 11 test classes, 30 tests (12 retried)', $output);
     }
 
     public function testExecutionWithLogo()
@@ -124,7 +124,7 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 11 test classes, 28 tests (12 retried)', $output, 'Precondition failed');
+        $this->assertContains('Executed: 11 test classes, 30 tests (12 retried)', $output, 'Precondition failed');
         $processesCount = 11 + 12;
         $this->assertSame($processesCount, substr_count($output, 'PROCESS STARTED'));
         $this->assertSame($processesCount, substr_count($output, 'PROCESS TERMINATED'));
@@ -164,9 +164,10 @@ class ParallelCommandTest extends BaseTestCase
 
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
-        $this->assertContains('Executed: 1 test classes, 1 tests (0 retried)', $output, 'Precondition failed');
+        $this->assertContains('Executed: 1 test classes, 3 tests (0 retried)', $output, 'Precondition failed');
         $this->assertContains('1 files with DEPRECATION WARNINGS:', $output);
         $this->assertContains(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
         $this->assertContains('RaisingDeprecationTestStub::testDeprecation', $output);
+        $this->assertNotContains('2)', $output, 'Deprecations are shown more than once per test file');
     }
 }

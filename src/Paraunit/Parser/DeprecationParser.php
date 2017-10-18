@@ -2,13 +2,14 @@
 
 namespace Paraunit\Parser;
 
-use Paraunit\Parser\JSON\ParserChainElementInterface;
+use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultWithMessage;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class DeprecationParser implements ParserChainElementInterface
+class DeprecationParser implements EventSubscriberInterface
 {
     /** @var TestResultHandlerInterface */
     private $testResultContainer;
@@ -22,8 +23,17 @@ class DeprecationParser implements ParserChainElementInterface
         $this->testResultContainer = $testResultContainer;
     }
 
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
+    public static function getSubscribedEvents(): array
     {
+        return [
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'handleDeprecations',
+        ];
+    }
+
+    public function handleDeprecations(ProcessEvent $event)
+    {
+        $process = $event->getProcess();
+
         if ($process->getExitCode() === 0) {
             return;
         }

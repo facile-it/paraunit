@@ -9,7 +9,6 @@ services:
       - "@event_dispatcher"
     calls:
       - ["addParser", ["@paraunit.parser.test_start_parser"]]
-      - ["addParser", ["@paraunit.parser.deprecation_parser"]]
       - ["addParser", ["@paraunit.parser.pass_parser"]]
       - ["addParser", ["@paraunit.parser.retry_parser"]]
       - ["addParser", ["@paraunit.parser.incomplete_parser"]]
