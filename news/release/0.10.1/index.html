@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 0.10.1: report deprecations &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,30 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 0.10.1: report deprecations</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;21&#41;</span>
-    </li>
-  
-  </ul>
+
+<p>With this release, Paraunit replaces the suggestion of <code>facile-it/paraunit-testcase</code> with <code>dama/doctrine-test-bundle</code>; also there&rsquo;s a new feature that will report any test failure due to deprecation warnings catched by the Symfony PHPUnit Bridge.</p>
+
+<p>Here&rsquo;s the full changelog:</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+<li>Add support for deprecation warnings found by <code>symfony/phpunit-bridge</code>: failures and tests output are now reported</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+<li>Start suggesting <code>dama/doctrine-test-bundle</code> instead of <code>facile-it/paraunit-testcase</code>, since it has been abandoned.</li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +206,4 @@
 
 </body>
 </html>
+
