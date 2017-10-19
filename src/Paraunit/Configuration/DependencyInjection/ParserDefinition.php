@@ -56,16 +56,6 @@ class ParserDefinition
                 new Reference('paraunit.test_result.retry_container'),
                 '%paraunit.max_retry_count%',
             ]),
-            'paraunit.parser.failure_parser' => new Definition(GenericParser::class, [
-                $testResultFactory,
-                new Reference('paraunit.test_result.failure_container'),
-                'fail',
-            ]),
-            'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
-                $testResultFactory,
-                new Reference('paraunit.test_result.warning_container'),
-                'warning',
-            ]),
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.incomplete_container'),
@@ -83,6 +73,16 @@ class ParserDefinition
                 new Reference('paraunit.test_result.risky_container'),
                 'error',
                 'Risky Tests: ',
+            ]),
+            'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
+                $testResultFactory,
+                new Reference('paraunit.test_result.warning_container'),
+                'warning',
+            ]),
+            'paraunit.parser.failure_parser' => new Definition(GenericParser::class, [
+                $testResultFactory,
+                new Reference('paraunit.test_result.failure_container'),
+                'fail',
             ]),
             'paraunit.parser.error_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
