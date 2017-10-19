@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.10.1] - 2017-10-19
+
 ### Added
  * Add support for deprecation warnings found by `symfony/phpunit-bridge`: failures and tests output are now reported
 
