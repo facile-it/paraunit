@@ -24,7 +24,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
             ->addProcessToFilenames($process);
 
         /** @var FilesRecapPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.files_recap_printer');
+        $printer = $this->container->get(FilesRecapPrinter::class);
 
         $printer->onEngineEnd();
 

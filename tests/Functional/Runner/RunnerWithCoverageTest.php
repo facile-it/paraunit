@@ -26,7 +26,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
         /** @var Runner $runner */
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $exitCode = $runner->run();
         

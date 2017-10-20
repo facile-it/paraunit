@@ -44,19 +44,6 @@ class TestResultDefinition
     private function getFormatDefinitions(): array
     {
         return [
-            'pass' => new Definition(TestResultWithSymbolFormat::class, [
-                '.',
-                'ok',
-                'PASSED',
-                false,
-                false,
-            ]),
-            'retry' => new Definition(TestResultWithSymbolFormat::class, [
-                'A',
-                'ok',
-                'RETRIED',
-                false,
-            ]),
             'unknown' => new Definition(TestResultWithSymbolFormat::class, [
                 '?',
                 'unknown',
@@ -70,10 +57,6 @@ class TestResultDefinition
             'coverage_failure' => new Definition(TestResultFormat::class, [
                 'error',
                 'coverage not fetched',
-            ]),
-            'deprecation' => new Definition(TestResultFormat::class, [
-                'fail',
-                'deprecation warnings',
             ]),
             'error' => new Definition(TestResultWithSymbolFormat::class, [
                 'E',
@@ -89,6 +72,10 @@ class TestResultDefinition
                 'W',
                 'warning',
                 'warnings',
+            ]),
+            'deprecation' => new Definition(TestResultFormat::class, [
+                'fail',
+                'deprecation warnings',
             ]),
             'no_test_executed' => new Definition(TestResultFormat::class, [
                 'warning',
@@ -109,6 +96,19 @@ class TestResultDefinition
                 'I',
                 'incomplete',
                 'incomplete outcome',
+                false,
+            ]),
+            'retry' => new Definition(TestResultWithSymbolFormat::class, [
+                'A',
+                'ok',
+                'RETRIED',
+                false,
+            ]),
+            'pass' => new Definition(TestResultWithSymbolFormat::class, [
+                '.',
+                'ok',
+                'PASSED',
+                false,
                 false,
             ]),
         ];

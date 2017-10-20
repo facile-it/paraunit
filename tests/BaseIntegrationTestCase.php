@@ -10,6 +10,7 @@ use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogParser;
 use Prophecy\Argument;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -105,7 +106,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected function processAllTheStubLogs()
     {
         /** @var LogParser $logParser */
-        $logParser = $this->container->get('paraunit.parser.json_log_parser');
+        $logParser = $this->container->get(LogParser::class);
 
         $logsToBeProcessed = array(
             JSONLogStub::TWO_ERRORS_TWO_FAILURES,
@@ -153,7 +154,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function getConsoleOutput(): UnformattedOutputStub
     {
-        return $this->container->get('output');
+        return $this->container->get(OutputInterface::class);
     }
 
     protected function setTextFilter(string $textFilter)

@@ -5,6 +5,7 @@ namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\TestResult\TestResultContainer;
+use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseFunctionalTestCase;
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 
@@ -22,8 +23,8 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         /** @var TestResultContainer $testResultContainer */
         $testResultContainer = $this->container->get($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
-        $consoleFormatter = $this->container->get('paraunit.printer.console_formatter');
-        $outputInterface = $this->container->get('output');
+        $consoleFormatter = $this->container->get(ConsoleFormatter::class);
+        $outputInterface = $this->container->get(OutputInterface::class);
 
         $consoleFormatter->onEngineBeforeStart();
 

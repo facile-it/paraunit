@@ -19,9 +19,9 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
     public function testFormatProvider()
     {
         /** @var SingleResultFormatter $formatter */
-        $formatter = $this->container->get('paraunit.printer.single_result_formatter');
+        $formatter = $this->container->get(SingleResultFormatter::class);
         /** @var TestResultList $testResultList */
-        $testResultList = $this->container->get('paraunit.test_result.test_result_list');
+        $testResultList = $this->container->get(TestResultList::class);
 
         foreach ($testResultList->getTestResultContainers() as $resultContainer) {
             $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());
