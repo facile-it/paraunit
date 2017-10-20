@@ -2,6 +2,7 @@
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
@@ -26,7 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParallelContainerDefinition
@@ -34,7 +36,7 @@ class ParallelContainerDefinition
     /** @var ParserDefinition */
     private $parserDefinition;
 
-    /** @var TestResultDefinition  */
+    /** @var TestResultDefinition */
     private $testResult;
 
     public function __construct()
@@ -48,6 +50,7 @@ class ParallelContainerDefinition
         $container->setParameter('paraunit.max_retry_count', 3);
         $container->setParameter('kernel.root_dir', 'src');
         $this->configureConfiguration($container);
+        $this->configureEventDispatcher($container);
         $this->configureFile($container);
         $this->parserDefinition->configure($container);
         $this->configurePrinter($container);
@@ -68,6 +71,18 @@ class ParallelContainerDefinition
         $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
             new Reference(TempDirectory::class),
         ]));
+    }
+
+    private function configureEventDispatcher(ContainerBuilder $container)
+    {
+        $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
+        $container->addCompilerPass(
+            new RegisterListenersPass(
+                EventDispatcherInterface::class,
+                null,
+                ParallelConfiguration::TAG_EVENT_SUBSCRIBER
+            )
+        );
     }
 
     private function configureFile(ContainerBuilder $container)
@@ -120,9 +135,6 @@ class ParallelContainerDefinition
 
     private function configureRunner(ContainerBuilder $container)
     {
-        $container->setDefinition(EventDispatcherInterface::class, new Definition(ContainerAwareEventDispatcher::class, [
-            new Reference('service_container'),
-        ]));
         $container->setDefinition(PipelineFactory::class, new Definition(PipelineFactory::class, [
             new Reference(EventDispatcherInterface::class),
         ]));
