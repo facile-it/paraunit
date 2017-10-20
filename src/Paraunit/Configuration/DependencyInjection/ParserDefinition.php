@@ -8,6 +8,7 @@ use Paraunit\Parser\JSON\AbnormalTerminatedParser;
 use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
+use Paraunit\Parser\JSON\LogPrinter;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Parser\JSON\TestStartParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
@@ -50,7 +51,7 @@ class ParserDefinition
             'paraunit.parser.pass_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.pass_container'),
-                'pass',
+                LogPrinter::STATUS_PASS,
             ]),
             RetryParser::class => new Definition(RetryParser::class, [
                 new Reference('paraunit.test_result.retry_container'),
@@ -59,40 +60,40 @@ class ParserDefinition
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.incomplete_container'),
-                'error',
-                'Incomplete Tests: ',
+                LogPrinter::STATUS_ERROR,
+                LogPrinter::MESSAGE_INCOMPLETE_TEST,
             ]),
             'paraunit.parser.skipped_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.skipped_container'),
-                'error',
-                'Skipped Tests: ',
+                LogPrinter::STATUS_ERROR,
+                LogPrinter::MESSAGE_SKIPPED_TEST,
             ]),
             'paraunit.parser.risky_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.risky_container'),
-                'error',
-                'Risky Tests: ',
+                LogPrinter::STATUS_ERROR,
+                LogPrinter::MESSAGE_RISKY_TEST,
             ]),
             'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.warning_container'),
-                'warning',
+                LogPrinter::STATUS_WARNING,
             ]),
             'paraunit.parser.failure_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.failure_container'),
-                'fail',
+                LogPrinter::STATUS_FAIL,
             ]),
             'paraunit.parser.error_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.error_container'),
-                'error',
+                LogPrinter::STATUS_ERROR,
             ]),
             AbnormalTerminatedParser::class => new Definition(AbnormalTerminatedParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.abnormal_terminated_container'),
-                'paraunitEnd',
+                LogFetcher::LOG_ENDING_STATUS,
             ]),
             UnknownResultParser::class => new Definition(UnknownResultParser::class, [
                 $testResultFactory,

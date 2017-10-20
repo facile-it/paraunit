@@ -22,6 +22,15 @@ use PHPUnit\Util;
  */
 class LogPrinter extends Util\Printer implements TestListener
 {
+    const STATUS_ERROR = 'error';
+    const STATUS_WARNING = 'warning';
+    const STATUS_FAIL = 'fail';
+    const STATUS_PASS = 'pass';
+
+    const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+    const MESSAGE_RISKY_TEST = 'Risky Test: ';
+    const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
+
     /** @var resource */
     private $logFile;
 
@@ -50,7 +59,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addError(Test $test, \Exception $e, $time)
     {
         $this->writeCase(
-            'error',
+            self::STATUS_ERROR,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
             TestFailure::exceptionToString($e),
@@ -70,7 +79,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addWarning(Test $test, Warning $e, $time)
     {
         $this->writeCase(
-            'warning',
+            self::STATUS_WARNING,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
             TestFailure::exceptionToString($e),
@@ -90,7 +99,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
         $this->writeCase(
-            'fail',
+            self::STATUS_FAIL,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
             TestFailure::exceptionToString($e),
@@ -110,10 +119,10 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addIncompleteTest(Test $test, \Exception $e, $time)
     {
         $this->writeCase(
-            'error',
+            self::STATUS_ERROR,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
-            'Incomplete Test: ' . $e->getMessage(),
+            self::MESSAGE_INCOMPLETE_TEST . $e->getMessage(),
             $test
         );
 
@@ -130,10 +139,10 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addRiskyTest(Test $test, \Exception $e, $time)
     {
         $this->writeCase(
-            'error',
+            self::STATUS_ERROR,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
-            'Risky Test: ' . $e->getMessage(),
+            self::MESSAGE_RISKY_TEST . $e->getMessage(),
             $test
         );
 
@@ -150,10 +159,10 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addSkippedTest(Test $test, \Exception $e, $time)
     {
         $this->writeCase(
-            'error',
+            self::STATUS_ERROR,
             $time,
             Util\Filter::getFilteredStacktrace($e, false),
-            'Skipped Test: ' . $e->getMessage(),
+            self::MESSAGE_SKIPPED_TEST . $e->getMessage(),
             $test
         );
 
@@ -205,7 +214,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function endTest(Test $test, $time)
     {
         if ($this->currentTestPass) {
-            $this->writeCase('pass', $time, [], '', $test);
+            $this->writeCase(self::STATUS_PASS, $time, [], '', $test);
         }
     }
 
