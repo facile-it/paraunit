@@ -3,6 +3,5 @@ parameters:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
         - '/Constant PARAUNIT_PHAR_FILE not found/'
         - '/Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy::/'
-        - '/Parameter #2 \$listenerTag of class Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass constructor expects string, null given/'
     excludes_analyse:
         - tests/Stub/ParseErrorTestStub.php

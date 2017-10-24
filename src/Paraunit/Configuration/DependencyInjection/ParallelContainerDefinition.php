@@ -89,7 +89,7 @@ class ParallelContainerDefinition
         $container->addCompilerPass(
             new RegisterListenersPass(
                 EventDispatcherInterface::class,
-                null,
+                '',
                 ParallelConfiguration::TAG_EVENT_SUBSCRIBER
             )
         );
