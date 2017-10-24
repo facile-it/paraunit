@@ -16,15 +16,12 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class CoverageFetcherTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider coverageStubProvider
-     */
-    public function testFetch(string $coverageStub)
+    public function testFetch()
     {
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
 
         $filename = $this->getTempFilename();
-        copy($coverageStub, $filename);
+        copy($this->getCoverageStubFilePath(), $filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
@@ -44,16 +41,6 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 
-    /**
-     * @return string[][]
-     */
-    public function coverageStubProvider(): array
-    {
-        return [
-            [$this->getCoverageStubFilePath()],
-            [$this->getCoverage4StubFilePath()],
-        ];
-    }
     public function testFetchIgnoresMissingCoverageFiles()
     {
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
