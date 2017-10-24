@@ -27,6 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,7 +76,15 @@ class ParallelContainerDefinition
 
     private function configureEventDispatcher(ContainerBuilder $container)
     {
-        $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
+        if (class_exists('Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument')) {
+            $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
+        } else {
+            $container->setDefinition(
+                EventDispatcherInterface::class,
+                new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
+            );
+        }
+
         $container->addCompilerPass(
             new RegisterListenersPass(
                 EventDispatcherInterface::class,
