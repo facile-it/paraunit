@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
+    excludes_analyse:
+        - tests/Stub/ParseErrorTestStub.php

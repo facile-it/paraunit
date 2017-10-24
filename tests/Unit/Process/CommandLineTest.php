@@ -21,9 +21,8 @@ class CommandLineTest extends BaseUnitTestCase
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
-        $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
 
-        $cli = new CommandLine($phpunit->reveal(), $fileNameFactory->reveal());
+        $cli = new CommandLine($phpunit->reveal());
 
         $this->assertEquals(array('php', 'path/to/phpunit'), $cli->getExecutable());
     }
