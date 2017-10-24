@@ -81,7 +81,6 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertNotContains(CoveragePrinter::class, $servicesIds);
 
         foreach ($requiredDefinitions as $definition) {
-            $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
     }
@@ -102,11 +101,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $servicesIds = $container->getServiceIds();
-
-        $definition = DebugPrinter::class;
-        $this->assertContains($definition, $servicesIds);
-        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }

@@ -92,7 +92,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $servicesIds = $container->getServiceIds();
 
         foreach ($requiredDefinitions as $definition) {
-            $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
     }
@@ -113,11 +112,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $servicesIds = $container->getServiceIds();
-
-        $definition = DebugPrinter::class;
-        $this->assertContains($definition, $servicesIds);
-        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
