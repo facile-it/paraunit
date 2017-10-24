@@ -6,6 +6,7 @@ namespace Tests\Functional\Parser\JSON;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -34,7 +35,10 @@ class LogParserTest extends BaseFunctionalTestCase
         $textResults = '';
         /** @var PrintableTestResultInterface $singleResult */
         foreach ($results as $singleResult) {
-            $textResults .= $singleResult->getTestResultFormat()->getTestResultSymbol();
+            /** @var TestResultWithSymbolFormat $formatWithSymbol */
+            $formatWithSymbol = $singleResult->getTestResultFormat();
+            $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
+            $textResults .= $formatWithSymbol->getTestResultSymbol();
         }
         $this->assertEquals($expectedResult, $textResults);
 
@@ -46,7 +50,7 @@ class LogParserTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return string[]
+     * @return (bool|string)[][]
      */
     public function parsableResultsProvider(): array
     {
@@ -78,7 +82,10 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('X', $results[0]->getTestResultFormat()->getTestResultSymbol());
+        /** @var TestResultWithSymbolFormat $formatWithSymbol */
+        $formatWithSymbol = $results[0]->getTestResultFormat();
+        $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
+        $this->assertEquals('X', $formatWithSymbol->getTestResultSymbol());
         $this->assertTrue($process->hasAbnormalTermination());
     }
 }

@@ -16,7 +16,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     /** @var ProcessBuilder */
     private $processBuilder;
 
-    /** @var Process */
+    /** @var Process|null */
     private $process;
 
     /** @var string */

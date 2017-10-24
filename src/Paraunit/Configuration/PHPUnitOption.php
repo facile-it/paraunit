@@ -12,10 +12,10 @@ class PHPUnitOption
     /** @var string */
     private $name;
     
-    /** @var string */
+    /** @var string|null */
     private $shortName;
     
-    /** @var string */
+    /** @var string|null */
     private $value;
     
     /** @var bool */

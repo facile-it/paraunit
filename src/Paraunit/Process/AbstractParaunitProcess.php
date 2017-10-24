@@ -138,6 +138,6 @@ abstract class AbstractParaunitProcess
 
     public function setWaitingForTestResult(bool $waitingForTestResult)
     {
-        $this->waitingForTestResult = (bool)$waitingForTestResult;
+        $this->waitingForTestResult = $waitingForTestResult;
     }
 }

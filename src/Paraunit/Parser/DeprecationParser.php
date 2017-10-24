@@ -4,7 +4,6 @@ namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultWithMessage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,9 +15,9 @@ class DeprecationParser implements EventSubscriberInterface
 
     /**
      * DeprecationParser constructor.
-     * @param TestResultContainerInterface $testResultContainer
+     * @param TestResultHandlerInterface $testResultContainer
      */
-    public function __construct(TestResultContainerInterface $testResultContainer)
+    public function __construct(TestResultHandlerInterface $testResultContainer)
     {
         $this->testResultContainer = $testResultContainer;
     }

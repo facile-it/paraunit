@@ -45,7 +45,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function coverageStubProvider(): array
     {

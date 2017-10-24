@@ -61,7 +61,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             TestFailure::exceptionToString($e),
             $test
         );
@@ -81,7 +81,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_WARNING,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             TestFailure::exceptionToString($e),
             $test
         );
@@ -101,7 +101,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_FAIL,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             TestFailure::exceptionToString($e),
             $test
         );
@@ -121,7 +121,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             self::MESSAGE_INCOMPLETE_TEST . $e->getMessage(),
             $test
         );
@@ -141,7 +141,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             self::MESSAGE_RISKY_TEST . $e->getMessage(),
             $test
         );
@@ -161,7 +161,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
+            $this->getStackTrace($e),
             self::MESSAGE_SKIPPED_TEST . $e->getMessage(),
             $test
         );
@@ -223,7 +223,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param float $time
      * @param array $trace
      * @param string $message
-     * @param TestCase|null $test
+     * @param Test|TestCase|null $test
      */
     private function writeCase($status, $time, array $trace = [], $message = '', $test = null)
     {
@@ -279,12 +279,12 @@ class LogPrinter extends Util\Printer implements TestListener
             throw new \RuntimeException('Cannot create folder for JSON logs');
         }
 
-        $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
+        $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID);
         if ($logFilename === false) {
             throw new \InvalidArgumentException('Log filename not received: environment variable not set');
         }
 
-        return $logDir . $logFilename;
+        return $logDir . $logFilename . '.json.log';
     }
 
     /**
@@ -313,5 +313,13 @@ class LogPrinter extends Util\Printer implements TestListener
         }
 
         return $string;
+    }
+
+    private function getStackTrace($e): array
+    {
+        /** @var string[] $trace */
+        $trace = Util\Filter::getFilteredStacktrace($e, false);
+        
+        return $trace;
     }
 }

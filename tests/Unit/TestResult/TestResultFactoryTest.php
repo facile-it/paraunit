@@ -50,6 +50,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         unset($log->trace);
 
         $factory = new TestResultFactory();
+        /** @var TestResultWithMessage $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(TestResultWithMessage::class, $result);
@@ -63,6 +64,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log->trace[] = clone $log->trace[0];
 
         $factory = new TestResultFactory();
+        /** @var FullTestResult $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(FullTestResult::class, $result);
@@ -85,6 +87,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log->test = 'testFunction()';
 
         $factory = new TestResultFactory();
+        /** @var TestResultWithAbnormalTermination $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $result);
