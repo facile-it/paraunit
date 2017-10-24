@@ -1,6 +1,0 @@
-services:
-  paraunit.configuration.phpdbg_bin_file:
-    class: Paraunit\Configuration\PHPDbgBinFile
-
-  paraunit.proxy.xdebug_proxy:
-    class: Paraunit\Proxy\XDebugProxy

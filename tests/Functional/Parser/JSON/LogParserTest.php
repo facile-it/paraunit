@@ -25,7 +25,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
         /** @var LogParser $parser */
-        $parser = $this->container->get('paraunit.parser.json_log_parser');
+        $parser = $this->container->get(LogParser::class);
 
         $parser->onProcessTerminated(new ProcessEvent($process));
 
@@ -68,7 +68,7 @@ class LogParserTest extends BaseFunctionalTestCase
     public function testParseHandlesMissingLogsAsAbnormalTerminations()
     {
         /** @var LogParser $parser */
-        $parser = $this->container->get('paraunit.parser.json_log_parser');
+        $parser = $this->container->get(LogParser::class);
         $process = new StubbedParaunitProcess();
         $process->setExitCode(139);
 

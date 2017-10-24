@@ -4,8 +4,6 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update \
     && apt-get install -y curl \
     git \
-    php5-xdebug \
-    php5-phpdbg \
     zsh \
     ssh \
     supervisor \
@@ -15,12 +13,13 @@ RUN apt-get update \
     nano \
     libzip-dev \
     && docker-php-ext-install -j5 zip mbstring pcntl \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && apt-get clean
 
 COPY config/sudoers /etc/sudoers
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/php.ini /usr/local/etc/php/conf.d/
-RUN echo "zend_extension=$(find /usr/lib/php5 -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini
 
 #COMPOSER
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -48,4 +47,6 @@ ADD config/.zshrc /root/
 ADD config/.zshrc /home/paraunit/
 
 ENV TERM xterm-256color
+ENV PHP_IDE_CONFIG="serverName=Paraunit"
+ENV XDEBUG_CONFIG="remote_host=172.18.0.1 remote_port=9000"
 CMD sudo /usr/bin/supervisord

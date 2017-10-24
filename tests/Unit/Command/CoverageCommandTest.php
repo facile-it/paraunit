@@ -32,9 +32,9 @@ class CoverageCommandTest extends BaseUnitTestCase
             ->willReturn(0);
 
         $container = $this->prophesize(ContainerBuilder::class);
-        $container->get('paraunit.configuration.phpunit_config')
+        $container->get(PHPUnitConfig::class)
             ->willReturn($phpunitConfig->reveal());
-        $container->get('paraunit.runner.runner')
+        $container->get(Runner::class)
             ->willReturn($runner->reveal());
 
         $configuration = $this->prophesize(CoverageConfiguration::class);

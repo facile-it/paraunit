@@ -4,6 +4,11 @@ declare(strict_types=1);
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Coverage\CoverageFetcher;
+use Paraunit\Coverage\CoverageMerger;
+use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\AbstractText;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Crap4j;
@@ -12,10 +17,17 @@ use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Coverage\Processor\Xml;
+use Paraunit\Parser\JSON\LogParser;
+use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
+use Paraunit\Printer\ProcessPrinter;
+use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,28 +71,27 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         }
 
         $requiredDefinitions = [
-            'output',
-            'paraunit.parser.json_log_parser',
-            'paraunit.printer.process_printer',
-            'paraunit.process.process_factory',
-            'paraunit.runner.runner',
-            'event_dispatcher',
-            'paraunit.test_result.test_result_factory',
+            OutputInterface::class,
+            LogParser::class,
+            ProcessPrinter::class,
+            ProcessBuilderFactory::class,
+            Runner::class,
+            EventDispatcherInterface::class,
+            TestResultFactory::class,
             'paraunit.test_result.pass_container',
-            'paraunit.test_result.pass_test_result_format',
+            'paraunit.test_result.pass_format',
 
-            'paraunit.coverage.coverage_fetcher',
-            'paraunit.coverage.coverage_merger',
-            'paraunit.coverage.coverage_result',
-            'paraunit.configuration.phpdbg_bin_file',
-            'paraunit.printer.coverage_printer',
-            'paraunit.configuration.phpunit_config',
+            CoverageFetcher::class,
+            CoverageMerger::class,
+            CoverageResult::class,
+            PHPDbgBinFile::class,
+            CoveragePrinter::class,
+            PHPUnitConfig::class,
         ];
 
         $servicesIds = $container->getServiceIds();
 
         foreach ($requiredDefinitions as $definition) {
-            $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
     }
@@ -101,11 +112,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $servicesIds = $container->getServiceIds();
-
-        $definition = 'paraunit.printer.debug_printer';
-        $this->assertContains($definition, $servicesIds);
-        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
@@ -149,7 +156,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $coverageResult = $container->get('paraunit.coverage.coverage_result');
+        $coverageResult = $container->get(CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
         $property->setAccessible(true);
@@ -213,7 +220,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $coverageResult = $container->get('paraunit.coverage.coverage_result');
+        $coverageResult = $container->get(CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
         $property->setAccessible(true);

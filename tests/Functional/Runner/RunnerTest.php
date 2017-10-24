@@ -24,7 +24,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         /** @var Runner $runner */
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
         $output = $this->getConsoleOutput();
 
         $this->assertEquals(0, $runner->run(), $output->getOutput());
@@ -46,7 +46,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         /** @var Runner $runner */
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
         $output = $this->getConsoleOutput();
 
         $this->assertNotEquals(0, $runner->run());
@@ -72,7 +72,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter($stubFilePath);
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $exitCode = $runner->run();
 
@@ -96,7 +96,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('SegFaultTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
@@ -124,7 +124,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
@@ -148,13 +148,13 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         /** @var PHPUnitConfig $phpunitConfig */
-        $phpunitConfig = $this->container->get('paraunit.configuration.phpunit_config');
+        $phpunitConfig = $this->container->get(PHPUnitConfig::class);
         $option = new PHPUnitOption('group');
         $option->setValue('emptyGroup');
         $phpunitConfig->addPhpunitOption($option);
 
         /** @var Runner $runner */
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertEquals(0, $runner->run());
 
@@ -171,7 +171,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('FatalErrorTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
@@ -186,7 +186,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('ParseErrorTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
 
@@ -205,7 +205,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('RaisingNoticeTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get('paraunit.runner.runner');
+        $runner = $this->container->get(Runner::class);
 
         $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
         $output = $this->getConsoleOutput()->getOutput();

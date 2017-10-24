@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use Paraunit\Configuration\DependencyInjection\CoverageContainerDefinition;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Crap4j;
@@ -14,7 +15,6 @@ use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class CoverageConfiguration
@@ -22,15 +22,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class CoverageConfiguration extends ParallelConfiguration
 {
-    protected function loadYamlConfiguration(ContainerBuilder $containerBuilder): YamlFileLoader
+    public function __construct()
     {
-        $yamlLoader = parent::loadYamlConfiguration($containerBuilder);
-
-        $yamlLoader->load('coverage.yml');
-        $yamlLoader->load('coverage_configuration.yml');
-        $yamlLoader->load('process_with_coverage.yml');
-
-        return $yamlLoader;
+        parent::__construct();
+        $this->containerDefinition = new CoverageContainerDefinition();
     }
 
     protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
@@ -38,7 +33,7 @@ class CoverageConfiguration extends ParallelConfiguration
         parent::loadPostCompileSettings($container, $input);
 
         /** @var CoverageResult $coverageResult */
-        $coverageResult = $container->get('paraunit.coverage.coverage_result');
+        $coverageResult = $container->get(CoverageResult::class);
 
         if ($input->getOption('clover')) {
             $clover = new Clover(new OutputFile($input->getOption('clover')));
@@ -62,7 +57,7 @@ class CoverageConfiguration extends ParallelConfiguration
 
         if ($input->getOption('text-to-console')) {
             /** @var OutputInterface $output */
-            $output = $container->get('output');
+            $output = $container->get(OutputInterface::class);
             $textToConsole = new TextToConsole($output, (bool)$input->getOption('ansi'));
             $coverageResult->addCoverageProcessor($textToConsole);
         }

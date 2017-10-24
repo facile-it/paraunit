@@ -1,8 +1,0 @@
-services:
-  paraunit.file.temp_directory:
-    class: Paraunit\File\TempDirectory
-
-  paraunit.file.cleaner:
-    class: Paraunit\File\Cleaner
-    arguments:
-      - "@paraunit.file.temp_directory"

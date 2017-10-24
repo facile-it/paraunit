@@ -17,7 +17,7 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
         $this->processAllTheStubLogs();
 
         /** @var FailuresPrinter $printer */
-        $printer = $this->container->get('paraunit.printer.failures_printer');
+        $printer = $this->container->get(FailuresPrinter::class);
 
         $printer->onEngineEnd();
 

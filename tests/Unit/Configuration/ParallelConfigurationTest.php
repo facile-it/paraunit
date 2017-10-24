@@ -4,11 +4,22 @@ declare(strict_types=1);
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\ParallelConfiguration;
+use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Coverage\CoverageFetcher;
+use Paraunit\File\Cleaner;
+use Paraunit\Parser\JSON\LogParser;
+use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
+use Paraunit\Printer\ProcessPrinter;
+use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
@@ -51,26 +62,25 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         }
 
         $requiredDefinitions = [
-            'output',
-            'paraunit.file.cleaner',
-            'paraunit.parser.json_log_parser',
-            'paraunit.printer.process_printer',
-            'paraunit.process.process_factory',
-            'paraunit.runner.runner',
-            'event_dispatcher',
-            'paraunit.test_result.test_result_factory',
+            OutputInterface::class,
+            Cleaner::class,
+            LogParser::class,
+            ProcessPrinter::class,
+            ProcessBuilderFactory::class,
+            Runner::class,
+            EventDispatcherInterface::class,
+            TestResultFactory::class,
             'paraunit.test_result.pass_container',
-            'paraunit.test_result.pass_test_result_format',
-            'paraunit.configuration.phpunit_config',
+            'paraunit.test_result.pass_format',
+            PHPUnitConfig::class,
         ];
 
         $servicesIds = $container->getServiceIds();
-        $this->assertNotContains('paraunit.configuration.phpdbg_bin_file', $servicesIds);
-        $this->assertNotContains('paraunit.coverage.coverage_fetcher', $servicesIds);
-        $this->assertNotContains('paraunit.printer.coverage_printer', $servicesIds);
+        $this->assertNotContains(PHPDbgBinFile::class, $servicesIds);
+        $this->assertNotContains(CoverageFetcher::class, $servicesIds);
+        $this->assertNotContains(CoveragePrinter::class, $servicesIds);
 
         foreach ($requiredDefinitions as $definition) {
-            $this->assertContains($definition, $servicesIds);
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
     }
@@ -91,11 +101,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $servicesIds = $container->getServiceIds();
-
-        $definition = 'paraunit.printer.debug_printer';
-        $this->assertContains($definition, $servicesIds);
-        $service = $container->get($definition); // test instantiation, to prevent misconfigurations
+        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
