@@ -29,7 +29,7 @@ paginate = 5
     pre = "<i class='fa fa-tags fa-fw'></i>"
     weight = 1
     identifier = "release"
-    url = "/tags/release"
+    url = "/tags/release/"
   [[menu.main]]
     name = "Documentation"
     pre = "<i class='fa fa-book fa-fw'></i>"
