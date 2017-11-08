@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+ * Migrated the whole DI configuration from YAML to PHP 
+
+### Removed
+ * Removed dependency from `symfony/yaml` 
+
 ## [0.10.1] - 2017-10-19
 
 ### Added
