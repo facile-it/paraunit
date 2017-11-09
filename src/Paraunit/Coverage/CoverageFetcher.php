@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage;
@@ -15,7 +16,7 @@ use Symfony\Component\Process\Process;
  */
 class CoverageFetcher
 {
-    /** @var  TempFilenameFactory */
+    /** @var TempFilenameFactory */
     private $tempFilenameFactory;
 
     /** @var TestResultHandlerInterface */

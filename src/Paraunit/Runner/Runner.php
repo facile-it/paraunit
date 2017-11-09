@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Runner;
@@ -17,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Runner implements EventSubscriberInterface
 {
-    /** @var  ProcessBuilderFactory */
+    /** @var ProcessBuilderFactory */
     private $processBuilderFactory;
 
     /** @var EventDispatcherInterface */

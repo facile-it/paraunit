@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Filter;
@@ -105,7 +106,7 @@ class Filter
     {
         $excludes = [];
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
-            $excludes[] = (string)$excludeNode->nodeValue;
+            $excludes[] = (string) $excludeNode->nodeValue;
         }
 
         return $excludes;
@@ -119,7 +120,7 @@ class Filter
     private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes)
     {
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
-            $directory = (string)$directoryNode->nodeValue;
+            $directory = (string) $directoryNode->nodeValue;
 
             $files = $this->fileIteratorFacade->getFilesAsArray(
                 $this->relativePath . $directory,
@@ -141,7 +142,7 @@ class Filter
     private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
     {
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
-            $fileName = $this->relativePath . (string)$fileNode->nodeValue;
+            $fileName = $this->relativePath . (string) $fileNode->nodeValue;
             $this->addFileToAggregateArray($aggregatedFiles, $fileName);
         }
     }

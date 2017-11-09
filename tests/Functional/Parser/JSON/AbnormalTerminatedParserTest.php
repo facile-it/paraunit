@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
 use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
-use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 /**
  * Class AbnormalTerminatedParserTest

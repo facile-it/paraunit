@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Configuration;
@@ -11,13 +12,13 @@ class PHPUnitOption
 {
     /** @var string */
     private $name;
-    
+
     /** @var string|null */
     private $shortName;
-    
+
     /** @var string|null */
     private $value;
-    
+
     /** @var bool */
     private $hasValue;
 

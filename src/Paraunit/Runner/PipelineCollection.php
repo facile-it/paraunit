@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Runner;
 
 use Paraunit\Process\AbstractParaunitProcess;
@@ -17,7 +19,7 @@ class PipelineCollection
     {
         $this->pipelines = new \SplFixedArray($maxProcessNumber);
 
-        for ($pipelineNumber = 1; $pipelineNumber <= $maxProcessNumber; $pipelineNumber++) {
+        for ($pipelineNumber = 1; $pipelineNumber <= $maxProcessNumber; ++$pipelineNumber) {
             $this->pipelines->offsetSet($pipelineNumber - 1, $pipelineFactory->create($pipelineNumber));
         }
     }

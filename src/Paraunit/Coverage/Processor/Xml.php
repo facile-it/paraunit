@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage\Processor;
@@ -14,10 +15,10 @@ use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
  */
 class Xml implements CoverageProcessorInterface
 {
-    /** @var  Facade */
+    /** @var Facade */
     private $xml;
 
-    /** @var  OutputPath */
+    /** @var OutputPath */
     private $targetPath;
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Process;
@@ -6,7 +7,6 @@ namespace Tests\Unit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\JSON\LogPrinter;
 use Paraunit\Process\CommandLine;
 use Tests\BaseUnitTestCase;
@@ -24,7 +24,7 @@ class CommandLineTest extends BaseUnitTestCase
 
         $cli = new CommandLine($phpunit->reveal());
 
-        $this->assertEquals(array('php', 'path/to/phpunit'), $cli->getExecutable());
+        $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
     }
 
     public function testGetOptionsFor()
@@ -35,16 +35,16 @@ class CommandLineTest extends BaseUnitTestCase
 
         $optionWithValue = new PHPUnitOption('optVal');
         $optionWithValue->setValue('value');
-        $config->getPhpunitOptions()->willReturn(array(
+        $config->getPhpunitOptions()->willReturn([
             new PHPUnitOption('opt', false),
-            $optionWithValue
-        ));
-        
+            $optionWithValue,
+        ]);
+
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
 
         $cli = new CommandLine($phpunit->reveal());
         $options = $cli->getOptions($config->reveal());
-        $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertInternalType('array', $options, 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
         $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('--opt', $options);

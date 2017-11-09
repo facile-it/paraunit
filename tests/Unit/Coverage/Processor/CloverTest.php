@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Clover;
-use Paraunit\Coverage\Processor\Text;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 

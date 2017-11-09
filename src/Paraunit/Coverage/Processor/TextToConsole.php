@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage\Processor;
@@ -12,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TextToConsole extends AbstractText
 {
-    /** @var  OutputInterface */
+    /** @var OutputInterface */
     private $output;
 
     /**

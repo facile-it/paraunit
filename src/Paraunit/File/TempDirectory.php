@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\File;
@@ -79,7 +80,7 @@ class TempDirectory
             return;
         }
 
-        if (!mkdir($path) && !is_dir($path)) {
+        if (! mkdir($path) && ! is_dir($path)) {
             throw new \RuntimeException('Unable to create temporary directory ' . $path);
         }
     }

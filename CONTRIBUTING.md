@@ -41,9 +41,11 @@ We follow STRICTLY PSR-1 and PSR-2:
  * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
  * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 
-When you run `composer install`, a pre-commit Git Hook is moved in place: it checks before every commit that the code is
-PSR-2 compliant, and asks you to fix it if it doesn't. **Don't worry!!** You don't have to fix it manually, the script
-will suggest to you the command line to fix it automatically using `phpcbf`.
+Also, this project uses the [Facile.it codestyle package](https://github.com/facile-it/facile-coding-standard), and requires
+stricter rules.
+
+The code style is checked in the Travis CS build; you can check it locally with the `composer cs-check` command, and fix
+automatically all the issues with `composer cs-fix`; please do not commit badly formatted code!
 
 ## Travis and other integrations
 Paraunit has a Travis build integration in place: every time you open a PR (or each time you commit something, if you 

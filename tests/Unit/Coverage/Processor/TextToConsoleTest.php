@@ -1,10 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Coverage\Processor;
 
-use Paraunit\Configuration\OutputFile;
-use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextToConsole;
 use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
@@ -22,7 +21,7 @@ class TextToConsoleTest extends BaseUnitTestCase
         $text = new TextToConsole($output, true);
 
         $text->process(new CodeCoverage());
-        
+
         $this->assertContains('Code Coverage Report', $output->getOutput());
     }
 }

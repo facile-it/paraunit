@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
@@ -68,7 +69,7 @@ class ParallelContainerDefinition
     {
         $container->setDefinition(PHPUnitBinFile::class, new Definition(PHPUnitBinFile::class));
         $container->setDefinition(PHPUnitConfig::class, new Definition(PHPUnitConfig::class, [
-            '%paraunit.phpunit_config_filename%'
+            '%paraunit.phpunit_config_filename%',
         ]));
         $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
             new Reference(TempDirectory::class),

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -68,19 +69,19 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 
     public function onProcessTerminated()
     {
-        $this->processCompleted++;
+        ++$this->processCompleted;
     }
 
     public function onProcessToBeRetried()
     {
-        $this->processRetried++;
+        ++$this->processRetried;
     }
 
     private function printExecutionTime(StopwatchEvent $stopEvent)
     {
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln('');
-        $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', (int)($stopEvent->getDuration() / 1000)));
+        $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', (int) ($stopEvent->getDuration() / 1000)));
     }
 
     private function printTestCounters()

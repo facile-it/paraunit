@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Runner;
 
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineFactory;
-use Tests\BaseUnitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class PipelineFactoryTest

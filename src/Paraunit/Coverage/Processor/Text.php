@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage\Processor;
@@ -12,7 +13,7 @@ use Paraunit\Proxy\Coverage\CodeCoverage;
  */
 class Text extends AbstractText
 {
-    /** @var  OutputFile */
+    /** @var OutputFile */
     private $targetFile;
 
     /**

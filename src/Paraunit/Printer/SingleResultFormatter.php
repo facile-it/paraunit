@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -13,7 +14,7 @@ use Paraunit\TestResult\TestResultWithSymbolFormat;
  */
 class SingleResultFormatter
 {
-    /** @var  array */
+    /** @var array */
     private $tagMap;
 
     /**

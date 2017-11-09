@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessEvent;

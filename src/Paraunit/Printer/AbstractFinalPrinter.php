@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -12,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractFinalPrinter extends AbstractPrinter
 {
-    /** @var  TestResultList */
+    /** @var TestResultList */
     protected $testResultList;
 
     /**

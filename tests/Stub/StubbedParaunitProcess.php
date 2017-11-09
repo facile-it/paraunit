@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Stub;
@@ -24,7 +25,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
      * {@inheritdoc}
      */
     public function __construct(
-        string $filename = 'testFilename', 
+        string $filename = 'testFilename',
         string $uniqueId = null
     ) {
         parent::__construct($filename);

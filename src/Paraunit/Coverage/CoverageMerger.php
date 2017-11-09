@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage;
@@ -14,10 +15,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class CoverageMerger implements EventSubscriberInterface
 {
-    /** @var  CoverageFetcher */
+    /** @var CoverageFetcher */
     private $coverageFetcher;
 
-    /** @var  CodeCoverage */
+    /** @var CodeCoverage */
     private $coverageData;
 
     /**

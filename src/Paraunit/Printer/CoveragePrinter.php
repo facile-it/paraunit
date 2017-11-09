@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -15,10 +16,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class CoveragePrinter implements EventSubscriberInterface
 {
-    /** @var  PHPDbgBinFile */
+    /** @var PHPDbgBinFile */
     private $phpdgbBin;
 
-    /** @var  XDebugProxy */
+    /** @var XDebugProxy */
     private $xdebug;
 
     /** @var OutputInterface */

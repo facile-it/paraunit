@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
@@ -14,7 +15,7 @@ class LogFetcher
 {
     const LOG_ENDING_STATUS = 'paraunitEnd';
 
-    /** @var  TempFilenameFactory */
+    /** @var TempFilenameFactory */
     private $fileName;
 
     /**

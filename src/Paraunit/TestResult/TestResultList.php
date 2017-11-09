@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\TestResult;
@@ -9,7 +10,7 @@ namespace Paraunit\TestResult;
  */
 class TestResultList
 {
-    /** @var  TestResultContainer[] */
+    /** @var TestResultContainer[] */
     private $testResultContainers;
 
     public function __construct()

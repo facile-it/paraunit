@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -18,10 +19,10 @@ class ProcessPrinter implements EventSubscriberInterface
     const MAX_CHAR_LENGTH = 80;
     const COUNTER_CHAR_LENGTH = 5;
 
-    /** @var  SingleResultFormatter */
+    /** @var SingleResultFormatter */
     private $singleResultFormatter;
 
-    /** @var  OutputInterface */
+    /** @var OutputInterface */
     private $output;
 
     /** @var int */

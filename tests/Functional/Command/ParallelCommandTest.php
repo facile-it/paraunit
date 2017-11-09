@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Command;
@@ -70,10 +71,10 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertNotContains('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
@@ -97,11 +98,11 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
+        $commandTester->execute([
             'command' => $command->getName(),
             '--logo' => $configurationPath,
             '--filter' => 'doNotExecuteAnyTestSoItsFaster',
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertContains('BBBBbBBBBBBB', $output, 'Shark logo missing');
@@ -115,11 +116,11 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
             '--debug' => true,
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
@@ -139,10 +140,10 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--filter' => 'do_not_execute_anything',
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertContains('NO TESTS EXECUTED', $output);
@@ -157,10 +158,10 @@ class ParallelCommandTest extends BaseTestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(array(
+        $exitCode = $commandTester->execute([
             'command' => $command->getName(),
             '--configuration' => $this->getConfigForDeprecationListener(),
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);

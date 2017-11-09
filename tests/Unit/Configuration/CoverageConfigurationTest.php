@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
@@ -26,11 +27,11 @@ use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ParaunitCoverageTest

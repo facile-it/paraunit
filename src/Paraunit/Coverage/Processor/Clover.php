@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Coverage\Processor;
@@ -16,7 +17,7 @@ class Clover implements CoverageProcessorInterface
     /** @var PHPUnitClover */
     private $clover;
 
-    /** @var  OutputFile */
+    /** @var OutputFile */
     private $targetFile;
 
     /**

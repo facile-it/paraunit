@@ -1,6 +1,8 @@
 ._*
 *.tgz
 *.phar
+.php_cs.cache
+.php_cs
 bin
 gpg
 public

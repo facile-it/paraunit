@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
@@ -13,16 +14,16 @@ use Paraunit\TestResult\TestResultFactory;
  */
 class GenericParser implements ParserChainElementInterface
 {
-    /** @var  TestResultFactory */
+    /** @var TestResultFactory */
     protected $testResultFactory;
 
-    /** @var  TestResultHandlerInterface */
+    /** @var TestResultHandlerInterface */
     protected $testResultContainer;
 
-    /** @var  string */
+    /** @var string */
     protected $status;
 
-    /** @var  string|null */
+    /** @var string|null */
     protected $messageStartsWith;
 
     /**

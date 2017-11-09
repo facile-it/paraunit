@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\RetryParser;
+use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use Paraunit\TestResult\MuteTestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
@@ -12,8 +15,6 @@ use Tests\Stub\MySQLLockTimeoutTestStub;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
 use Tests\Stub\StubbedParaunitProcess;
-use Paraunit\TestResult\MuteTestResult;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 
 /**
  * Class RetryParserTest
@@ -102,7 +103,7 @@ class RetryParserTest extends BaseUnitTestCase
     {
         $resultHandler = $this->prophesize(TestResultHandlerInterface::class);
         $resultHandler->handleTestResult(Argument::cetera())
-            ->shouldBeCalledTimes((int)$shouldBeCalled);
+            ->shouldBeCalledTimes((int) $shouldBeCalled);
 
         return $resultHandler->reveal();
     }

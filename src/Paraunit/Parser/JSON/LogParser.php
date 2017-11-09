@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultBearerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -26,7 +26,7 @@ class LogParser implements EventSubscriberInterface
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    /** @var  ParserChainElementInterface[] */
+    /** @var ParserChainElementInterface[] */
     private $parsers;
 
     /**

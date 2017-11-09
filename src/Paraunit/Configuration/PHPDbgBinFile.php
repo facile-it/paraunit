@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Configuration;
@@ -51,6 +52,6 @@ class PHPDbgBinFile
         $locator = new Process('command -v phpdbg');
         $locator->run();
 
-        return (string)preg_replace('/\s/', '', $locator->getOutput());
+        return (string) preg_replace('/\s/', '', $locator->getOutput());
     }
 }

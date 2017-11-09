@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\File;
@@ -12,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Cleaner implements EventSubscriberInterface
 {
-    /** @var  TempDirectory */
+    /** @var TempDirectory */
     private $tempDirectory;
 
     /**

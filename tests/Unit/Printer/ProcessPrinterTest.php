@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
@@ -56,7 +57,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     public function testOnProcessParsingCompletedAddsCounterAndNewlineAtFullRow(int $times, int $newLineTimes)
     {
         $process = new StubbedParaunitProcess();
-        for ($i = 0; $i < $times; $i++) {
+        for ($i = 0; $i < $times; ++$i) {
             $process->addTestResult($this->mockPrintableTestResult());
         }
 
@@ -96,7 +97,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     public function testOnProcessParsingCompletedAndOnEngineEndWorkWellTogether()
     {
         $process = new StubbedParaunitProcess();
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $process->addTestResult($this->mockPrintableTestResult());
         }
 

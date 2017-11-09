@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\SingleResultFormatter;
+use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseFunctionalTestCase;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class SingleResultFormatterTest

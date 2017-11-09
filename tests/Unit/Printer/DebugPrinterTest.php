@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\ProcessEvent;
@@ -31,9 +33,9 @@ class DebugPrinterTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
         $process = new StubbedParaunitProcess();
-        
+
         $printer->onProcessStarted(new ProcessEvent($process));
-        
+
         $this->assertContains('PROCESS STARTED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());
         $this->assertContains($process->getCommandLine(), $output->getOutput());
@@ -45,9 +47,9 @@ class DebugPrinterTest extends BaseUnitTestCase
         $printer = new DebugPrinter($output);
         $process = new StubbedParaunitProcess();
         $process->setTestClassName('Some\Class\Name');
-        
+
         $printer->onProcessTerminated(new ProcessEvent($process));
-        
+
         $this->assertContains('PROCESS TERMINATED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());
         $this->assertContains($process->getTestClassName(), $output->getOutput());
@@ -57,9 +59,9 @@ class DebugPrinterTest extends BaseUnitTestCase
     {
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
-        
+
         $printer->onProcessParsingCompleted();
-        
+
         $this->assertContains('PROCESS PARSING COMPLETED', $output->getOutput());
         $this->assertContains('RESULTS', $output->getOutput());
     }
@@ -71,7 +73,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
 
         $printer->onProcessToBeRetried(new ProcessEvent($process));
-        
+
         $this->assertContains('PROCESS TO BE RETRIED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());
     }

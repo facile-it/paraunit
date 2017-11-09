@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Process;
@@ -64,7 +65,7 @@ class CommandLineWithCoverage extends CommandLine
         return array_merge(
             [
                 '-qrr',
-                $this->phpUnitBin->getPhpUnitBin()
+                $this->phpUnitBin->getPhpUnitBin(),
             ],
             parent::getOptions($config)
         );
