@@ -16,12 +16,12 @@ $config->setUsingCache(true);
 $config->setRiskyAllowed(true);
 
 $finder = PhpCsFixer\Finder::create();
-$finder->exclude('tests/Stub/CoverageOutput');
 $finder->in(array (
   0 => 'src',
   1 => 'tests',
 ));
-
+$finder->notName('Coverage4Stub.php');
+$finder->notName('ParseErrorTestStub.php');
 $config->setFinder($finder);
 
 return $config;
