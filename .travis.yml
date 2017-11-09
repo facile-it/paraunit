@@ -26,7 +26,7 @@ jobs:
   include:
     - stage: Test
       env: XDEBUG=true
-      before_install: echo "Do not remove XDEBUG
+      before_install: echo "Do not remove XDEBUG"
     - env: VENDOR=prefer-lowest
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - env: VENDOR=lock
