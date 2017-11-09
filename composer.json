@@ -1,72 +1,76 @@
 {
-  "name": "facile-it/paraunit",
-  "type": "library",
-  "description": "paraunit",
-  "support": {
-    "issues": "https://github.com/facile-it/paraunit/issues"
-  },
-  "keywords": [
-    "parallel test",
-    "testing",
-    "phpunit"
-  ],
-  "homepage": "http://github.com/facile-it/paraunit",
-  "license": "Apache-2.0",
-  "authors": [
-    {
-      "name": "Francesco Panina",
-      "email": "francesco.panina@gmail.com"
+    "name": "facile-it/paraunit",
+    "type": "library",
+    "description": "paraunit",
+    "support": {
+        "issues": "https://github.com/facile-it/paraunit/issues"
     },
-    {
-      "name": "Alessandro Lai",
-      "email": "alessandro.lai85@gmail.com"
+    "keywords": [
+        "parallel test",
+        "testing",
+        "phpunit"
+    ],
+    "homepage": "http://github.com/facile-it/paraunit",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Francesco Panina",
+            "email": "francesco.panina@gmail.com"
+        },
+        {
+            "name": "Alessandro Lai",
+            "email": "alessandro.lai85@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "symfony/console": "^2.7||^3.0",
+        "symfony/dependency-injection": "^2.7||^3.0",
+        "symfony/config": "^2.7||^3.0",
+        "symfony/stopwatch": "^2.7||^3.0",
+        "symfony/process": "^2.7||^3.0",
+        "symfony/event-dispatcher": "^2.7||^3.0",
+        "phpunit/phpunit": "^6.0.9",
+        "phpunit/php-code-coverage": "^4.0||^5.0",
+        "jean85/pretty-package-versions": "^1.0"
+    },
+    "require-dev": {
+        "codeclimate/php-test-reporter": "0.*",
+        "facile-it/facile-coding-standard": "^0.1.0",
+        "phpstan/phpstan": "^0.8.5",
+        "phpunit/php-invoker": "^1.1",
+        "satooshi/php-coveralls": "~1.0",
+        "scrutinizer/ocular": "^1.4",
+        "symfony/expression-language": "^2.7||^3.0",
+        "symfony/phpunit-bridge": "^3.3"
+    },
+    "bin": [
+        "src/Paraunit/Bin/paraunit"
+    ],
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Paraunit\\": "src/Paraunit"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
+        "cs-check": "php -n bin/php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php -n bin/php-cs-fixer fix",
+        "post-install-cmd": [
+            "bash contrib/setup.sh"
+        ]
+    },
+    "minimum-stability": "stable",
+    "suggest": {
+        "dama/doctrine-test-bundle": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
     }
-  ],
-  "require": {
-    "php": "^7.0",
-    "symfony/console": "^2.7||^3.0",
-    "symfony/dependency-injection": "^2.7||^3.0",
-    "symfony/config": "^2.7||^3.0",
-    "symfony/stopwatch": "^2.7||^3.0",
-    "symfony/process": "^2.7||^3.0",
-    "symfony/event-dispatcher": "^2.7||^3.0",
-    "phpunit/phpunit": "^6.0.9",
-    "phpunit/php-code-coverage": "^4.0||^5.0",
-    "jean85/pretty-package-versions": "^1.0"
-  },
-  "require-dev": {
-    "codeclimate/php-test-reporter": "0.*",
-    "phpstan/phpstan": "^0.8.5",
-    "phpunit/php-invoker": "^1.1",
-    "satooshi/php-coveralls": "~1.0",
-    "scrutinizer/ocular": "^1.4",
-    "squizlabs/php_codesniffer": "2.*",
-    "symfony/expression-language": "^2.7||^3.0",
-    "symfony/phpunit-bridge": "^3.3"
-  },
-  "bin": ["src/Paraunit/Bin/paraunit"],
-  "config": {
-    "sort-packages": true,
-    "bin-dir": "bin"
-  },
-  "autoload": {
-    "psr-4": {
-      "Paraunit\\": "src/Paraunit"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests"
-    }
-  },
-  "scripts": {
-    "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
-    "post-install-cmd": [
-      "bash contrib/setup.sh"
-    ]
-  },
-  "minimum-stability": "stable",
-  "suggest": {
-    "dama/doctrine-test-bundle": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
-  }
 }

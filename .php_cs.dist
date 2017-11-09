@@ -1,0 +1,27 @@
+<?php
+
+$additionalRules = [
+    'declare_strict_types' => true,
+    'php_unit_construct' => true,
+    'php_unit_dedicate_assert' => true,
+    'psr4' => true,
+    'random_api_migration' => true,
+];
+$rules = new Facile\CodingStandards\DefaultRules($additionalRules);
+
+$config = PhpCsFixer\Config::create();
+$config->setRules($rules->getRules());
+
+$config->setUsingCache(true);
+$config->setRiskyAllowed(true);
+
+$finder = PhpCsFixer\Finder::create();
+$finder->exclude('tests/Stub/CoverageOutput');
+$finder->in(array (
+  0 => 'src',
+  1 => 'tests',
+));
+
+$config->setFinder($finder);
+
+return $config;
