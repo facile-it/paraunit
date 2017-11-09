@@ -32,7 +32,7 @@ jobs:
     - env: PHPSTAN=true
       script: composer phpstan
     - env: CS-FIXER=true
-      script: contrib/contributing.sh 
+      script: composer cs-check 
     - stage: Coverage
       script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
       after_success:
