@@ -5,47 +5,62 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+  - nightly
+env:
+  - XDEBUG_DISABLE=true
+  - XDEBUG_DISABLE=false
+
 matrix:
-  include:
-    - php: 7.0
-      env: 
-        - DEPS="low"
-    - php: 7.0
-      env: 
-        - DEPS="lock"
-    - php: 7.0
-      env: 
-        - TEST_COVERAGE=true
-    - php: 7.0
-      env:
-        - XDEBUG_DISABLE=true
-    - php: 7.1
-    - php: 7.1
-      env:
-        - XDEBUG_DISABLE=true
-    - php: 7.2
-#    - php: 7.2
-#      env:
-#        - XDEBUG_DISABLE=true
-    - php: nightly
   fast_finish: true
+  allow_failures:
+    - php: nightly
+
+before_install:
+  - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini || echo "xDebug not disabled"; fi
 
 install:
-  - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini; fi
-
-  - if [[ $DEPS == "low" ]]; then composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction; fi
-  - if [[ $DEPS == "lock" ]]; then composer install --prefer-dist --no-interaction; fi
-  - if [[ -z $DEPS ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
+  - composer update --prefer-dist --prefer-stable --no-interaction
 
 script:
-  - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml; else bin/phpunit --enforce-time-limit; fi
-  - composer install --no-dev --no-interaction
-  - src/Paraunit/Bin/paraunit run nothing
+  - bin/phpunit --enforce-time-limit
 
-after_success:
-  - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
-  - if [[ $TEST_COVERAGE ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
-  - if [[ $TEST_COVERAGE ]]; then bin/test-reporter; fi
+jobs:
+  include:
+    - stage: Test
+      php: 7.0
+      env:
+        - COMPOSER=prefer-lowest
+      install:
+        - composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
+    - stage: Test
+      php: 7.0
+      env:
+        - COMPOSER=lock
+      install:
+        - then composer install --prefer-dist --no-interaction
+    - stage: Code style, static analysis and E2E
+      env: E2E=true
+      install:
+        - composer install --no-dev --no-interaction
+      script:
+        - src/Paraunit/Bin/paraunit run nothing
+    - env: PHPSTAN=true
+      script:
+        - composer phpstan
+    - script: 
+      env: CS-FIXER=true
+        - contrib/contributing.sh
+    - stage: coverage
+      script: 
+        - phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
+      after_success:
+        - php bin/coveralls -v
+        - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
+        - bin/test-reporter
 
 before_deploy:
   - composer update --no-dev
