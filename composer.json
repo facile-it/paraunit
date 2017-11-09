@@ -64,10 +64,7 @@
     "scripts": {
         "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
         "cs-check": "php -n bin/php-cs-fixer fix --dry-run --diff",
-        "cs-fix": "php -n bin/php-cs-fixer fix",
-        "post-install-cmd": [
-            "bash contrib/setup.sh"
-        ]
+        "cs-fix": "php -n bin/php-cs-fixer fix"
     },
     "minimum-stability": "stable",
     "suggest": {
