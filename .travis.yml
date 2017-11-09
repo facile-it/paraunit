@@ -27,9 +27,9 @@ jobs:
     - stage: Test
       env: XDEBUG=false
       before_install: phpenv config-rm xdebug.ini
-    - env: COMPOSER=prefer-lowest
+    - env: VENDOR=prefer-lowest
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
-    - env: COMPOSER=lock
+    - env: VENDOR=lock
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
       env: E2E=true
