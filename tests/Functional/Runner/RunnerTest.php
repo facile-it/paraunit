@@ -81,7 +81,7 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function stubFilenameProvider(): array
     {

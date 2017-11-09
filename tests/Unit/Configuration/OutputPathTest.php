@@ -19,13 +19,6 @@ class OutputPathTest extends BaseUnitTestCase
         $this->assertEquals('sub/dir/from/relpath', $outputPath->getPath());
     }
 
-    public function testWithNull()
-    {
-        $this->expectException(\Throwable::class);
-
-        new OutputPath(null);
-    }
-
     public function testWithEmptyString()
     {
         $this->expectException(\Throwable::class);

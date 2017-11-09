@@ -39,7 +39,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function serviceTagsProvider(): array
     {

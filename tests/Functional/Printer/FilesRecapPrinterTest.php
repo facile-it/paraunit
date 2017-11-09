@@ -31,10 +31,10 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $output = $this->getConsoleOutput();
 
         $this->assertNotEmpty($output->getOutput());
-        $this->assertNotContains('PASSED output', $output->getOutput(), null, true);
-        $this->assertNotContains('SKIPPED output', $output->getOutput(), null, true);
-        $this->assertNotContains('INCOMPLETE output', $output->getOutput(), null, true);
-        $this->assertNotContains('files with PASSED', $output->getOutput(), null, true);
+        $this->assertNotContains('PASSED output', $output->getOutput(), '', true);
+        $this->assertNotContains('SKIPPED output', $output->getOutput(), '', true);
+        $this->assertNotContains('INCOMPLETE output', $output->getOutput(), '', true);
+        $this->assertNotContains('files with PASSED', $output->getOutput(), '', true);
         $this->assertOutputOrder($output, [
             'files with UNKNOWN',
             'files with COVERAGE NOT FETCHED',

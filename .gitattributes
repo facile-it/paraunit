@@ -6,5 +6,6 @@ docker              export-ignore
 .codeclimate.yml    export-ignore
 .coveralls.yml      export-ignore
 .scrutinizer.yml    export-ignore
+phpstan.neon        export-ignore
 phpunit.xml.dist    export-ignore
 tests               export-ignore

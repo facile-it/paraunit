@@ -53,16 +53,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * An error occurred.
      *
      * @param Test $test
-     * @param \Exception $e
+     * @param \Exception $exception
      * @param float $time
      */
-    public function addError(Test $test, \Exception $e, $time)
+    public function addError(Test $test, \Exception $exception, $time)
     {
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            TestFailure::exceptionToString($e),
+            $this->getStackTrace($exception),
+            TestFailure::exceptionToString($exception),
             $test
         );
 
@@ -73,16 +73,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * A warning occurred.
      *
      * @param Test $test
-     * @param Warning $e
+     * @param Warning $warning
      * @param float $time
      */
-    public function addWarning(Test $test, Warning $e, $time)
+    public function addWarning(Test $test, Warning $warning, $time)
     {
         $this->writeCase(
             self::STATUS_WARNING,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            TestFailure::exceptionToString($e),
+            $this->getStackTrace($warning),
+            TestFailure::exceptionToString($warning),
             $test
         );
 
@@ -93,16 +93,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * A failure occurred.
      *
      * @param Test $test
-     * @param AssertionFailedError $e
+     * @param AssertionFailedError $error
      * @param float $time
      */
-    public function addFailure(Test $test, AssertionFailedError $e, $time)
+    public function addFailure(Test $test, AssertionFailedError $error, $time)
     {
         $this->writeCase(
             self::STATUS_FAIL,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            TestFailure::exceptionToString($e),
+            $this->getStackTrace($error),
+            TestFailure::exceptionToString($error),
             $test
         );
 
@@ -113,16 +113,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * Incomplete test.
      *
      * @param Test $test
-     * @param \Exception $e
+     * @param \Exception $error
      * @param float $time
      */
-    public function addIncompleteTest(Test $test, \Exception $e, $time)
+    public function addIncompleteTest(Test $test, \Exception $error, $time)
     {
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            self::MESSAGE_INCOMPLETE_TEST . $e->getMessage(),
+            $this->getStackTrace($error),
+            self::MESSAGE_INCOMPLETE_TEST . $error->getMessage(),
             $test
         );
 
@@ -133,16 +133,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * Risky test.
      *
      * @param Test $test
-     * @param \Exception $e
+     * @param \Exception $exception
      * @param float $time
      */
-    public function addRiskyTest(Test $test, \Exception $e, $time)
+    public function addRiskyTest(Test $test, \Exception $exception, $time)
     {
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            self::MESSAGE_RISKY_TEST . $e->getMessage(),
+            $this->getStackTrace($exception),
+            self::MESSAGE_RISKY_TEST . $exception->getMessage(),
             $test
         );
 
@@ -153,16 +153,16 @@ class LogPrinter extends Util\Printer implements TestListener
      * Skipped test.
      *
      * @param Test $test
-     * @param \Exception $e
+     * @param \Exception $exception
      * @param float $time
      */
-    public function addSkippedTest(Test $test, \Exception $e, $time)
+    public function addSkippedTest(Test $test, \Exception $exception, $time)
     {
         $this->writeCase(
             self::STATUS_ERROR,
             $time,
-            Util\Filter::getFilteredStacktrace($e, false),
-            self::MESSAGE_SKIPPED_TEST . $e->getMessage(),
+            $this->getStackTrace($exception),
+            self::MESSAGE_SKIPPED_TEST . $exception->getMessage(),
             $test
         );
 
@@ -223,7 +223,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param float $time
      * @param array $trace
      * @param string $message
-     * @param TestCase|null $test
+     * @param Test|TestCase|null $test
      */
     private function writeCase($status, $time, array $trace = [], $message = '', $test = null)
     {
@@ -279,12 +279,12 @@ class LogPrinter extends Util\Printer implements TestListener
             throw new \RuntimeException('Cannot create folder for JSON logs');
         }
 
-        $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID) . '.json.log';
+        $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID);
         if ($logFilename === false) {
             throw new \InvalidArgumentException('Log filename not received: environment variable not set');
         }
 
-        return $logDir . $logFilename;
+        return $logDir . $logFilename . '.json.log';
     }
 
     /**
@@ -313,5 +313,13 @@ class LogPrinter extends Util\Printer implements TestListener
         }
 
         return $string;
+    }
+
+    private function getStackTrace($error): array
+    {
+        /** @var string[] $trace */
+        $trace = Util\Filter::getFilteredStacktrace($error, false);
+        
+        return $trace;
     }
 }

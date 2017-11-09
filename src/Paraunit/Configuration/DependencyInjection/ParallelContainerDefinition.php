@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
@@ -88,7 +89,7 @@ class ParallelContainerDefinition
         $container->addCompilerPass(
             new RegisterListenersPass(
                 EventDispatcherInterface::class,
-                null,
+                '',
                 ParallelConfiguration::TAG_EVENT_SUBSCRIBER
             )
         );

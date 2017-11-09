@@ -68,7 +68,7 @@ class RetryParserTest extends BaseUnitTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function toBeRetriedTestsProvider(): array
     {
@@ -81,7 +81,7 @@ class RetryParserTest extends BaseUnitTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function notToBeRetriedTestLogsProvider(): array
     {

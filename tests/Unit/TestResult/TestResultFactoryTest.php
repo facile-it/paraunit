@@ -24,7 +24,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log = new \stdClass();
         $log->event = 'test';
 
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed'));
+        $factory = new TestResultFactory();
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(MuteTestResult::class, $result);
@@ -37,7 +37,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log->test = 'testFunction()';
         $log->event = 'test';
 
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed'));
+        $factory = new TestResultFactory();
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(MuteTestResult::class, $result);
@@ -49,7 +49,8 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log = $this->getLogFromStub('test', 'error');
         unset($log->trace);
 
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed'));
+        $factory = new TestResultFactory();
+        /** @var TestResultWithMessage $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(TestResultWithMessage::class, $result);
@@ -62,7 +63,8 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log = $this->getLogWithTrace();
         $log->trace[] = clone $log->trace[0];
 
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed'));
+        $factory = new TestResultFactory();
+        /** @var FullTestResult $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(FullTestResult::class, $result);
@@ -84,7 +86,8 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $log->status = LogFetcher::LOG_ENDING_STATUS;
         $log->test = 'testFunction()';
 
-        $factory = new TestResultFactory(new TestResultFormat('?', 'concealed'));
+        $factory = new TestResultFactory();
+        /** @var TestResultWithAbnormalTermination $result */
         $result = $factory->createFromLog($log);
 
         $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $result);

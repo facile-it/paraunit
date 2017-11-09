@@ -16,7 +16,7 @@ class Pipeline
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /** @var AbstractParaunitProcess */
+    /** @var AbstractParaunitProcess|null */
     private $process;
 
     /** @var int */

@@ -47,7 +47,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function otherStatusesProvider(): array
     {

@@ -62,7 +62,7 @@ class LogParser implements EventSubscriberInterface
     }
 
     /**
-     * @return TestResultBearerInterface[]
+     * @return ParserChainElementInterface[]
      */
     public function getParsers(): array
     {

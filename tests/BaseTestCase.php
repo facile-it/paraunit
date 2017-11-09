@@ -18,14 +18,6 @@ class BaseTestCase extends TestCase
 
     protected function getCoverageStubFilePath(): string
     {
-        $filename = __DIR__ . '/Stub/CoverageOutput/CoverageStub.php';
-        static::assertFileExists($filename, 'CoverageStub file missing!');
-
-        return $filename;
-    }
-
-    protected function getCoverage4StubFilePath(): string
-    {
         $filename = __DIR__ . '/Stub/CoverageOutput/Coverage4Stub.php';
         static::assertFileExists($filename, 'CoverageStub file missing!');
 
@@ -61,7 +53,7 @@ class BaseTestCase extends TestCase
     protected function getRandomTempDir(): string
     {
         $this->assertNotNull($this->randomTempDir, 'Tmp dir not initialized');
-        
+
         return $this->randomTempDir;
     }
 

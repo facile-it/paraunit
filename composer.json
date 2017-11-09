@@ -35,14 +35,18 @@
     "jean85/pretty-package-versions": "^1.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "2.*",
     "codeclimate/php-test-reporter": "0.*",
+    "phpstan/phpstan": "^0.8.5",
+    "phpunit/php-invoker": "^1.1",
     "satooshi/php-coveralls": "~1.0",
-    "symfony/phpunit-bridge": "^3.3",
-    "phpunit/php-invoker": "^1.1"
+    "scrutinizer/ocular": "^1.4",
+    "squizlabs/php_codesniffer": "2.*",
+    "symfony/expression-language": "^2.7||^3.0",
+    "symfony/phpunit-bridge": "^3.3"
   },
   "bin": ["src/Paraunit/Bin/paraunit"],
   "config": {
+    "sort-packages": true,
     "bin-dir": "bin"
   },
   "autoload": {
@@ -56,6 +60,7 @@
     }
   },
   "scripts": {
+    "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
     "post-install-cmd": [
       "bash contrib/setup.sh"
     ]

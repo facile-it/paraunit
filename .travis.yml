@@ -5,47 +5,40 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
-matrix:
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+
+before_install: phpenv config-rm xdebug.ini
+
+install: composer update --prefer-dist --prefer-stable --no-interaction
+
+script: bin/phpunit --enforce-time-limit
+
+jobs:
   include:
-    - php: 7.0
-      env: 
-        - DEPS="low"
-    - php: 7.0
-      env: 
-        - DEPS="lock"
-    - php: 7.0
-      env: 
-        - TEST_COVERAGE=true
-    - php: 7.0
-      env:
-        - XDEBUG_DISABLE=true
-    - php: 7.1
-    - php: 7.1
-      env:
-        - XDEBUG_DISABLE=true
-    - php: 7.2
-#    - php: 7.2
-#      env:
-#        - XDEBUG_DISABLE=true
-    - php: nightly
-  fast_finish: true
-
-install:
-  - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini; fi
-
-  - if [[ $DEPS == "low" ]]; then composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction; fi
-  - if [[ $DEPS == "lock" ]]; then composer install --prefer-dist --no-interaction; fi
-  - if [[ -z $DEPS ]]; then composer update --prefer-dist --prefer-stable --no-interaction; fi
-
-script:
-  - if [[ $TEST_COVERAGE ]]; then phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml; else bin/phpunit --enforce-time-limit; fi
-  - composer install --no-dev --no-interaction
-  - src/Paraunit/Bin/paraunit run nothing
-
-after_success:
-  - if [[ $TEST_COVERAGE ]]; then php bin/coveralls -v; fi
-  - if [[ $TEST_COVERAGE ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
-  - if [[ $TEST_COVERAGE ]]; then bin/test-reporter; fi
+    - stage: Test
+      env: XDEBUG=true
+      before_install: echo "Do not remove XDEBUG"
+    - env: VENDOR=prefer-lowest
+      install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
+    - env: VENDOR=lock
+      install: composer install --prefer-dist --no-interaction
+    - stage: Code style, static analysis and E2E
+      env: E2E=true
+      install: composer install --no-dev --no-interaction
+      script: src/Paraunit/Bin/paraunit run nothing
+    - env: PHPSTAN=true
+      script: composer phpstan
+    - env: CS-FIXER=true
+      script: contrib/contributing.sh 
+    - stage: Coverage
+      script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
+      after_success:
+        - php bin/coveralls -v
+        - bin/ocular code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
+        - bin/test-reporter
 
 before_deploy:
   - composer update --no-dev
@@ -65,4 +58,3 @@ deploy:
   on:
     tags: true
     php: 7.0
-    condition: XDEBUG_DISABLE=true

@@ -16,7 +16,7 @@ class UnformattedOutputStub extends Output
 
     public function __construct()
     {
-        parent::__construct(null, false);
+        parent::__construct();
         $this->buffer = '';
     }
 
