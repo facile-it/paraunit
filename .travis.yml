@@ -10,17 +10,11 @@ php:
   - 7.1
   - 7.2
   - nightly
-env:
-  - XDEBUG_DISABLE=true
-  - XDEBUG_DISABLE=false
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: nightly
-
-before_install:
-  - if [[ $XDEBUG_DISABLE ]]; then phpenv config-rm xdebug.ini || echo "xDebug not disabled"; fi
 
 install:
   - composer update --prefer-dist --prefer-stable --no-interaction
@@ -31,32 +25,22 @@ script:
 jobs:
   include:
     - stage: Test
-      php: 7.0
-      env:
-        - COMPOSER=prefer-lowest
-      install:
-        - composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
-    - stage: Test
-      php: 7.0
-      env:
-        - COMPOSER=lock
-      install:
-        - then composer install --prefer-dist --no-interaction
+      env: XDEBUG=false
+      before_install: phpenv config-rm xdebug.ini
+    - env: COMPOSER=prefer-lowest
+      install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
+    - env: COMPOSER=lock
+      install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
       env: E2E=true
-      install:
-        - composer install --no-dev --no-interaction
-      script:
-        - src/Paraunit/Bin/paraunit run nothing
+      install: composer install --no-dev --no-interaction
+      script: src/Paraunit/Bin/paraunit run nothing
     - env: PHPSTAN=true
-      script:
-        - composer phpstan
-    - script: 
-      env: CS-FIXER=true
-        - contrib/contributing.sh
-    - stage: coverage
-      script: 
-        - phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
+      script: composer phpstan
+    - env: CS-FIXER=true
+      script: contrib/contributing.sh 
+    - stage: Coverage
+      script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
       after_success:
         - php bin/coveralls -v
         - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
