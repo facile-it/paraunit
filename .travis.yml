@@ -16,17 +16,17 @@ matrix:
   allow_failures:
     - php: nightly
 
-install:
-  - composer update --prefer-dist --prefer-stable --no-interaction
+before_install: phpenv config-rm xdebug.ini
 
-script:
-  - bin/phpunit --enforce-time-limit
+install: composer update --prefer-dist --prefer-stable --no-interaction
+
+script: bin/phpunit --enforce-time-limit
 
 jobs:
   include:
     - stage: Test
-      env: XDEBUG=false
-      before_install: phpenv config-rm xdebug.ini
+      env: XDEBUG=true
+      before_install: echo "Do not remove XDEBUG
     - env: VENDOR=prefer-lowest
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - env: VENDOR=lock
@@ -64,4 +64,3 @@ deploy:
   on:
     tags: true
     php: 7.0
-    condition: XDEBUG_DISABLE=true
