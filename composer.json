@@ -36,16 +36,18 @@
     "jean85/pretty-package-versions": "^1.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "2.*",
     "codeclimate/php-test-reporter": "0.*",
-    "satooshi/php-coveralls": "~1.0",
-    "symfony/phpunit-bridge": "^3.3",
-    "phpunit/php-invoker": "^1.1",
     "phpstan/phpstan": "^0.8.5",
-    "symfony/expression-language": "^2.7||^3.0"
+    "phpunit/php-invoker": "^1.1",
+    "satooshi/php-coveralls": "~1.0",
+    "scrutinizer/ocular": "^1.4",
+    "squizlabs/php_codesniffer": "2.*",
+    "symfony/expression-language": "^2.7||^3.0",
+    "symfony/phpunit-bridge": "^3.3"
   },
   "bin": ["src/Paraunit/Bin/paraunit"],
   "config": {
+    "sort-packages": true,
     "bin-dir": "bin"
   },
   "autoload": {

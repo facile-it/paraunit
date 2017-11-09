@@ -37,7 +37,7 @@ jobs:
       script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
       after_success:
         - php bin/coveralls -v
-        - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
+        - bin/ocular code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
         - bin/test-reporter
 
 before_deploy:
