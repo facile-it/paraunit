@@ -59,6 +59,7 @@
     }
   },
   "scripts": {
+    "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
     "post-install-cmd": [
       "bash contrib/setup.sh"
     ]

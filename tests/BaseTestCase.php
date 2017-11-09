@@ -53,7 +53,7 @@ class BaseTestCase extends TestCase
     protected function getRandomTempDir(): string
     {
         $this->assertNotNull($this->randomTempDir, 'Tmp dir not initialized');
-        
+
         return $this->randomTempDir;
     }
 
