@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Configuration;
@@ -55,7 +56,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             'paraunit.string_filter' => 'text',
             'paraunit.phpunit_config_filename' => $this->getConfigForStubs(),
         ];
-        
+
         foreach ($requiredParameters as $parameterName => $expectedValue) {
             $this->assertTrue($container->hasParameter($parameterName), 'Parameter missing: ' . $parameterName);
             $this->assertEquals($expectedValue, $container->getParameter($parameterName));
@@ -84,7 +85,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             $container->get($definition); // test instantiation, to prevent misconfigurations
         }
     }
- 
+
     public function testBuildContainerWithDebug()
     {
         $paraunit = new ParallelConfiguration();

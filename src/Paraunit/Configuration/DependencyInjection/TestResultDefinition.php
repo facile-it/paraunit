@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\TestResult\TestResultContainer;
@@ -22,19 +24,19 @@ class TestResultDefinition
     private function configureTestResultContainer(ContainerBuilder $container)
     {
         $testResultList = new Definition(TestResultList::class);
-        
+
         foreach ($this->getFormatDefinitions() as $name => $format) {
             $formatName = sprintf('paraunit.test_result.%s_format', $name);
             $testResultContainerName = sprintf('paraunit.test_result.%s_container', $name);
-        
+
             $container->setDefinition($formatName, $format);
             $container->setDefinition($testResultContainerName, new Definition(TestResultContainer::class, [
                 new Reference($formatName),
             ]));
-        
+
             $testResultList->addMethodCall('addContainer', [new Reference($testResultContainerName)]);
         }
-        
+
         $container->setDefinition(TestResultList::class, $testResultList);
     }
 

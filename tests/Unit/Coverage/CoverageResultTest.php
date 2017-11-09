@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Coverage;
@@ -21,9 +22,9 @@ class CoverageResultTest extends BaseTestCase
         $merger = $this->prophesize(CoverageMerger::class);
         $merger->getCoverageData()
             ->willReturn(new CodeCoverage());
-        
+
         $coverageResult = new CoverageResult($merger->reveal());
-        
+
         $coverageResult->addCoverageProcessor($this->mockCoverageProcessorInterface());
         $coverageResult->addCoverageProcessor($this->mockCoverageProcessorInterface());
         $coverageResult->addCoverageProcessor($this->mockCoverageProcessorInterface());
@@ -39,7 +40,7 @@ class CoverageResultTest extends BaseTestCase
         $coverageProcessor = $this->prophesize('Paraunit\Coverage\Processor\CoverageProcessorInterface');
         $coverageProcessor->process(Argument::cetera())
             ->shouldBeCalledTimes(1);
-        
+
         return $coverageProcessor->reveal();
     }
 }

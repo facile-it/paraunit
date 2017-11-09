@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Filter;
@@ -15,10 +16,10 @@ use Tests\BaseUnitTestCase;
  */
 class FilterTest extends BaseUnitTestCase
 {
-    /** @var  string */
+    /** @var string */
     private $absoluteConfigBaseDir;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->absoluteConfigBaseDir = dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;

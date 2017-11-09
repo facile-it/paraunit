@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\TestResult\TestResultContainer;
+use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseFunctionalTestCase;
-use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 
 /**
  * Class ConsoleFormatterTest

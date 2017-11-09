@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Process;
@@ -66,7 +67,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $config->getPhpunitOptions()
             ->willReturn([
                 new PHPUnitOption('opt', false),
-                $optionWithValue
+                $optionWithValue,
             ]);
 
         $phpDbg = $this->prophesize(PHPDbgBinFile::class);
@@ -78,12 +79,11 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $fileNameFactory = $this->prophesize(TempFilenameFactory::class);
 
-
         $cli = new CommandLineWithCoverage($phpunit->reveal(), $phpDbg->reveal(), $fileNameFactory->reveal());
 
         $options = $cli->getOptions($config->reveal());
 
-        $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertInternalType('array', $options, 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
         $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('--opt', $options);
@@ -110,7 +110,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $options = $cli->getOptions($config->reveal());
 
-        $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertInternalType('array', $options, 'Expecting an array, got ' . gettype($options));
         $this->assertContains('-qrr', $options);
         $this->assertEquals('-qrr', $options[0], '-qrr option needs to be the first one!');
         $this->assertContains('path/to/phpunit', $options);
@@ -135,7 +135,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $options = $cli->getSpecificOptions($testFilename);
 
-        $this->assertTrue(is_array($options), 'Expecting an array, got ' . gettype($options));
+        $this->assertInternalType('array', $options, 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--coverage-php=/path/to/coverage.php', $options);
     }
 }

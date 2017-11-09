@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Runner;
@@ -29,7 +30,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $runner = $this->container->get(Runner::class);
 
         $exitCode = $runner->run();
-        
+
         $output = $this->getConsoleOutput();
         $this->assertEquals(0, $exitCode, $output->getOutput());
         $this->assertNotContains('COVERAGE NOT FETCHED', $output->getOutput());

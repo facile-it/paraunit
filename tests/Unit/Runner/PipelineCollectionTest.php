@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Runner;
@@ -19,13 +20,13 @@ class PipelineCollectionTest extends BaseUnitTestCase
 {
     public function testInstantiation()
     {
-        $pipelines = array(
+        $pipelines = [
             $this->prophesize(Pipeline::class)->reveal(),
             $this->prophesize(Pipeline::class)->reveal(),
             $this->prophesize(Pipeline::class)->reveal(),
             $this->prophesize(Pipeline::class)->reveal(),
             $this->prophesize(Pipeline::class)->reveal(),
-        );
+        ];
 
         new PipelineCollection($this->mockPipelineFactory($pipelines), count($pipelines));
     }

@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\File\Cleaner;
 use Paraunit\Parser\JSON\LogPrinter;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;

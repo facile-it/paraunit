@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Process;
@@ -6,9 +7,9 @@ namespace Tests\Unit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Prophecy\Argument;
-use Tests\BaseUnitTestCase;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class SymfonyProcessWrapperTest

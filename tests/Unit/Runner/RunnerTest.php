@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Runner;
 
 use Paraunit\Filter\Filter;
@@ -78,7 +80,7 @@ class RunnerTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
-        
+
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()
             ->willReturn([]);
@@ -107,7 +109,7 @@ class RunnerTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, Argument::type(ProcessEvent::class))
             ->shouldBeCalledTimes(1);
-        
+
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()
             ->willReturn([]);
@@ -156,7 +158,7 @@ class RunnerTest extends BaseUnitTestCase
     private function mockProcessBuilder(): ProcessBuilder
     {
         $processBuilder = $this->prophesize(ProcessBuilder::class);
-        
+
         return $processBuilder->reveal();
     }
 }

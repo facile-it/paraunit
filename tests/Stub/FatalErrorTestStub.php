@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Stub;
@@ -13,7 +14,7 @@ class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
     {
         ini_set('memory_limit', '2M');
 
-        $arr = array();
+        $arr = [];
 
         while (true) {
             $arr[] = 'Allocated memory... allocated memory everywhere!';

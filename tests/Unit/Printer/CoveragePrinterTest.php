@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Proxy\XDebugProxy;
 use Tests\BaseUnitTestCase;

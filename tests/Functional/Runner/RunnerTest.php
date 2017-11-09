@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Functional\Runner;
@@ -36,7 +37,7 @@ class RunnerTest extends BaseIntegrationTestCase
             '...',
             '     3',
             'Execution time',
-            'Executed: 1 test classes, 3 tests (0 retried)'
+            'Executed: 1 test classes, 3 tests (0 retried)',
         ]);
     }
 

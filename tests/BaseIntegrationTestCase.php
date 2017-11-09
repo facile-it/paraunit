@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests;
@@ -10,12 +11,12 @@ use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogParser;
 use Prophecy\Argument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
-use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class BaseIntegrationTestCase
@@ -26,7 +27,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     /** @var ContainerBuilder */
     protected $container;
 
-    /** @var  ParallelConfiguration */
+    /** @var ParallelConfiguration */
     protected $configuration;
 
     /** @var string */
@@ -38,12 +39,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     /**
      * {@inheritdoc}
      */
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
         $this->configuration = new ParallelConfiguration();
-        $this->options = array();
+        $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
 
@@ -108,7 +109,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         /** @var LogParser $logParser */
         $logParser = $this->container->get(LogParser::class);
 
-        $logsToBeProcessed = array(
+        $logsToBeProcessed = [
             JSONLogStub::TWO_ERRORS_TWO_FAILURES,
             JSONLogStub::ALL_GREEN,
             JSONLogStub::ONE_ERROR,
@@ -119,7 +120,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             JSONLogStub::FATAL_ERROR,
             JSONLogStub::SEGFAULT,
             JSONLogStub::UNKNOWN,
-        );
+        ];
 
         $process = new StubbedParaunitProcess();
         $processEvent = new ProcessEvent($process);

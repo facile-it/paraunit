@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPUnitBinFile;
@@ -13,7 +15,7 @@ use Paraunit\Parser\JSON\LogPrinter;
  */
 class CommandLine
 {
-    /** @var  PHPUnitBinFile */
+    /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
     /**

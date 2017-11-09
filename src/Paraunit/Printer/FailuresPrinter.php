@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Printer;
@@ -64,7 +65,7 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
 
             if ($testResult instanceof StackTraceInterface) {
                 foreach ($testResult->getTrace() as $traceStep) {
-                    $this->getOutput()->writeln((string)$traceStep);
+                    $this->getOutput()->writeln((string) $traceStep);
                 }
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Configuration;
@@ -58,7 +59,7 @@ class CoverageConfiguration extends ParallelConfiguration
         if ($input->getOption('text-to-console')) {
             /** @var OutputInterface $output */
             $output = $container->get(OutputInterface::class);
-            $textToConsole = new TextToConsole($output, (bool)$input->getOption('ansi'));
+            $textToConsole = new TextToConsole($output, (bool) $input->getOption('ansi'));
             $coverageResult->addCoverageProcessor($textToConsole);
         }
 

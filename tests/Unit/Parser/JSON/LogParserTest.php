@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
@@ -108,7 +109,7 @@ class LogParserTest extends BaseUnitTestCase
             ProcessEvent::PROCESS_PARSING_COMPLETED,
             Argument::type('Paraunit\Lifecycle\ProcessEvent')
         )
-            ->shouldBeCalledTimes((int)($emptyTestsCount === 0));
+            ->shouldBeCalledTimes((int) ($emptyTestsCount === 0));
 
         return new LogParser($logLocator->reveal(), $noTestExecutedContainer->reveal(), $eventDispatcher->reveal());
     }

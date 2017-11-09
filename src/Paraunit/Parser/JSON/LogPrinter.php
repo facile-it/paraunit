@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
@@ -183,7 +184,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeArray([
             'event' => 'suiteStart',
             'suite' => $this->currentTestSuiteName,
-            'tests' => count($suite)
+            'tests' => count($suite),
         ]);
     }
 
@@ -201,7 +202,7 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeArray([
             'event' => 'testStart',
             'suite' => $this->currentTestSuiteName,
-            'test' => $this->currentTestName
+            'test' => $this->currentTestName,
         ]);
     }
 
@@ -319,7 +320,7 @@ class LogPrinter extends Util\Printer implements TestListener
     {
         /** @var string[] $trace */
         $trace = Util\Filter::getFilteredStacktrace($error, false);
-        
+
         return $trace;
     }
 }

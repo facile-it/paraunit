@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\PHPDbgBinFile;

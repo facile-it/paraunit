@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Paraunit\Command;
@@ -21,7 +22,7 @@ class ParallelCommand extends Command
     /** @var ParallelConfiguration */
     protected $configuration;
 
-    /** @var  PHPUnitOption[] */
+    /** @var PHPUnitOption[] */
     private $phpunitOptions;
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Stub\PHPUnitJSONLogOutput;
@@ -38,7 +39,7 @@ class JSONLogStub
      */
     public static function getCleanOutputFileContent($filename)
     {
-        $fullFilename =  __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';
+        $fullFilename = __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';
         if (! file_exists($fullFilename)) {
             throw new \Exception('Unknown file stub: ' . $filename);
         }

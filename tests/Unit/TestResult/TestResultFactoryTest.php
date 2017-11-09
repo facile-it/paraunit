@@ -1,17 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\TestResult;
 
 use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\TestResult\FullTestResult;
+use Paraunit\TestResult\MuteTestResult;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
-use Tests\BaseUnitTestCase;
-use Paraunit\TestResult\MuteTestResult;
-use Paraunit\TestResult\TestResultWithMessage;
-use Paraunit\TestResult\FullTestResult;
-use Paraunit\TestResult\TraceStep;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
+use Paraunit\TestResult\TestResultWithMessage;
+use Paraunit\TestResult\TraceStep;
+use Tests\BaseUnitTestCase;
 
 /**
  * Class TestResultFactoryTest
