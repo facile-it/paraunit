@@ -30,7 +30,7 @@ install:
   - cd c:\projects\paraunit
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/composer.phar)
   - php composer.phar self-update
-  - php composer.phar update --ignore-platform-reqs --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi 
+  - php composer.phar update --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi 
 
 test_script:
   - cd c:\projects\paraunit
