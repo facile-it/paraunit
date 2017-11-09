@@ -60,7 +60,7 @@ vendor/bin/paraunit coverage --html=./dir
 It automatically **uses PHPDBG** if available, and it can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
 
 ## Documentation
-For more details about Paraunit and its usage, see the [documentation](http://facile-it.github.io/paraunit/documentation/)
+For more details about Paraunit and its usage, see the [documentation](https://engineering.facile.it/paraunit/documentation/)
 
 [Last stable image]: https://poser.pugx.org/facile-it/paraunit/version.svg
 [Last unstable image]: https://poser.pugx.org/facile-it/paraunit/v/unstable.svg
