@@ -6,7 +6,6 @@ namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;

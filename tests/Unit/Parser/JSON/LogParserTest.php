@@ -10,9 +10,9 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class LogParserTest
