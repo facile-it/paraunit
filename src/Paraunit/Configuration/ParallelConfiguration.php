@@ -47,8 +47,6 @@ class ParallelConfiguration
 
         $containerBuilder->compile();
 
-        $this->loadPostCompileSettings($containerBuilder, $input);
-
         return $containerBuilder;
     }
 
@@ -76,10 +74,6 @@ class ParallelConfiguration
         if ($input->getOption('debug')) {
             $this->enableDebugMode($containerBuilder);
         }
-    }
-
-    protected function loadPostCompileSettings(ContainerBuilder $container, InputInterface $input)
-    {
     }
 
     private function injectOutput(ContainerBuilder $containerBuilder, OutputInterface $output)
