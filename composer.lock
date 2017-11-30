@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "864ebfdffb7efcd8d667e7cb9133e2a1",
+    "content-hash": "e6e4f02934272c49890525b61827b39c",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -2871,6 +2871,47 @@
             "time": "2017-03-20T17:10:46+00:00"
         },
         {
+            "name": "jangregor/phpstan-prophecy",
+            "version": "dev-patch-1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jean85/phpstan-prophecy.git",
+                "reference": "59a9688a664413677d5cecfb31e6f5ee6218b5f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jean85/phpstan-prophecy/zipball/59a9688a664413677d5cecfb31e6f5ee6218b5f7",
+                "reference": "59a9688a664413677d5cecfb31e6f5ee6218b5f7",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpspec/prophecy": "^1.7",
+                "phpstan/phpstan": "0.9.x-dev",
+                "phpunit/phpunit": "^6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JanGregor\\Prophecy\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "Tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Jan Gregor Emge-Triebel",
+                    "email": "jan@jangregor.me"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/Jean85/phpstan-prophecy/tree/patch-1"
+            },
+            "time": "2017-11-30T10:36:25+00:00"
+        },
+        {
             "name": "jms/metadata",
             "version": "1.6.0",
             "source": {
@@ -4758,7 +4799,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "jangregor/phpstan-prophecy": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
