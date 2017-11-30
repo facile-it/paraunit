@@ -47,10 +47,6 @@ class ProcessBuilderFactory
         }
     }
 
-    /**
-     * @param $testFilePath
-     * @return ProcessBuilder
-     */
     public function create(string $testFilePath): ProcessBuilder
     {
         $builder = clone $this->builderPrototype;

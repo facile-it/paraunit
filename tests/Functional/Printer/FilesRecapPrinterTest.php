@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\FilesRecapPrinter;
+use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
+use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -19,10 +22,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
 
         $this->processAllTheStubLogs();
-        $this->container->get('paraunit.test_result.no_test_executed_container')
-            ->addProcessToFilenames($process);
-        $this->container->get('paraunit.test_result.coverage_failure_container')
-            ->addProcessToFilenames($process);
+        $this->addProcessToContainers($process);
 
         /** @var FilesRecapPrinter $printer */
         $printer = $this->container->get(FilesRecapPrinter::class);
@@ -47,5 +47,16 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
             'files with SKIP',
             'files with INCOMPLETE',
         ]);
+    }
+
+    private function addProcessToContainers(AbstractParaunitProcess $process)
+    {
+        /** @var TestResultContainer $noTestExecuted */
+        $noTestExecuted = $this->container->get('paraunit.test_result.no_test_executed_container');
+        $noTestExecuted->addProcessToFilenames($process);
+
+        /** @var TestResultContainer $coverageFailure */
+        $coverageFailure = $this->container->get('paraunit.test_result.coverage_failure_container');
+        $coverageFailure->addProcessToFilenames($process);
     }
 }

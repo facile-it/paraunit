@@ -24,11 +24,9 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
 
-        /** @var Runner $runner */
-        $runner = $this->container->get(Runner::class);
         $output = $this->getConsoleOutput();
 
-        $this->assertEquals(0, $runner->run(), $output->getOutput());
+        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
 
         $this->assertNotContains('Coverage', $output->getOutput());
         $this->assertOutputOrder($output, [
@@ -46,11 +44,9 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('EntityManagerClosedTestStub.php');
         $this->loadContainer();
 
-        /** @var Runner $runner */
-        $runner = $this->container->get(Runner::class);
         $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $runner->run());
+        $this->assertNotEquals(0, $this->executeRunner());
 
         $retryCount = $this->container->getParameter('paraunit.max_retry_count');
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
@@ -73,9 +69,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter($stubFilePath);
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $exitCode = $runner->run();
+        $exitCode = $this->executeRunner();
 
         $this->assertContains(str_repeat('A', 3) . 'E', $this->getConsoleOutput()->getOutput());
         $this->assertNotEquals(0, $exitCode);
@@ -97,9 +91,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('SegFaultTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
@@ -125,9 +117,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nW\s+1\n/', $output, 'Missing W output');
@@ -154,10 +144,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $option->setValue('emptyGroup');
         $phpunitConfig->addPhpunitOption($option);
 
-        /** @var Runner $runner */
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertEquals(0, $runner->run());
+        $this->assertEquals(0, $this->executeRunner());
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertNotContains('...', $output);
@@ -172,9 +159,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('FatalErrorTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
@@ -187,9 +172,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('ParseErrorTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
@@ -206,14 +189,20 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->setTextFilter('RaisingNoticeTestStub.php');
         $this->loadContainer();
 
-        $runner = $this->container->get(Runner::class);
-
-        $this->assertNotEquals(0, $runner->run(), 'Exit code should not be 0');
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertGreaterThan(
             strpos($output, 'Execution time'),
             strpos($output, 'YOU SHOULD NOT SEE THIS'),
             'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
         );
+    }
+
+    private function executeRunner(): int
+    {
+        /** @var Runner $runner */
+        $runner = $this->container->get(Runner::class);
+
+        return $runner->run();
     }
 }

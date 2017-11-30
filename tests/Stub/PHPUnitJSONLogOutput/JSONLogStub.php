@@ -23,21 +23,21 @@ class JSONLogStub
     const PARSE_ERROR = 'ParseError';
 
     /**
-     * @param $filename
+     * @param string $filename
      * @return string
      * @throws \Exception
      */
-    public static function getLogs($filename)
+    public static function getLogs(string $filename): string
     {
         return json_decode(self::getCleanOutputFileContent($filename));
     }
 
     /**
-     * @param $filename
+     * @param string $filename
      * @return string
      * @throws \Exception
      */
-    public static function getCleanOutputFileContent($filename)
+    public static function getCleanOutputFileContent(string $filename): string
     {
         $fullFilename = __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';
         if (! file_exists($fullFilename)) {

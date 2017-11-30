@@ -25,6 +25,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
         $testResultContainer = $this->container->get($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
         $consoleFormatter = $this->container->get(ConsoleFormatter::class);
+        /** @var OutputInterface $outputInterface */
         $outputInterface = $this->container->get(OutputInterface::class);
 
         $consoleFormatter->onEngineBeforeStart();

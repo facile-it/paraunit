@@ -28,11 +28,11 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
             ->willReturn(['--configuration=config.xml']);
         $cliCommand
             ->getSpecificOptions('TestTest.php')
-            ->shouldBeCalled(1)
+            ->shouldBeCalledTimes(1)
             ->willReturn(['--specific=value-for-TestTest.php']);
         $cliCommand
             ->getSpecificOptions('TestTest2.php')
-            ->shouldBeCalled(1)
+            ->shouldBeCalledTimes(1)
             ->willReturn(['--specific=value-for-TestTest2.php']);
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);

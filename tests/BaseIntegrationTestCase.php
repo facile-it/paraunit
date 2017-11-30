@@ -155,7 +155,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function getConsoleOutput(): UnformattedOutputStub
     {
-        return $this->container->get(OutputInterface::class);
+        /** @var UnformattedOutputStub $output */
+        $output = $this->container->get(OutputInterface::class);
+
+        return $output;
     }
 
     protected function setTextFilter(string $textFilter)
