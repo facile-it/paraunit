@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Printer;
 
+use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\FailuresPrinter;
 use Tests\BaseFunctionalTestCase;
 
@@ -37,5 +39,14 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
             'Warnings output:',
             'Risky Outcome output:',
         ]);
+    }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            FailuresPrinter::class,
+            LogParser::class,
+            TempFilenameFactory::class,
+        ];
     }
 }

@@ -90,10 +90,12 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             PHPUnitConfig::class,
         ];
 
-        $servicesIds = $container->getServiceIds();
+        foreach ($requiredDefinitions as $definitionName) {
+            if ($container->hasDefinition($definitionName)) {
+                $container->getDefinition($definitionName)->setPublic(true);
+            }
 
-        foreach ($requiredDefinitions as $definition) {
-            $container->get($definition); // test instantiation, to prevent misconfigurations
+            $container->get($definitionName); // test instantiation, to prevent misconfigurations
         }
     }
 
@@ -113,6 +115,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
+        $container->getDefinition(DebugPrinter::class)->setPublic(true);
         $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
@@ -157,6 +160,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
+        $container->getDefinition(CoverageResult::class)->setPublic(true);
         $coverageResult = $container->get(CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
@@ -221,6 +225,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
+        $container->getDefinition(CoverageResult::class)->setPublic(true);
         $coverageResult = $container->get(CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');

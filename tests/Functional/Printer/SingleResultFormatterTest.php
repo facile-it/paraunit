@@ -49,4 +49,12 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
             . '[' . $testResultFormat->getTitle() . ']'
         );
     }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            SingleResultFormatter::class,
+            TestResultList::class,
+        ];
+    }
 }

@@ -205,4 +205,12 @@ class RunnerTest extends BaseIntegrationTestCase
 
         return $runner->run();
     }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            PHPUnitConfig::class,
+            Runner::class,
+        ];
+    }
 }

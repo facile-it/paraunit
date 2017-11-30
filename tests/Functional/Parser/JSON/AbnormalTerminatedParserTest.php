@@ -62,4 +62,11 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
             ['trollingYou'],
         ];
     }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            AbnormalTerminatedParser::class,
+        ];
+    }
 }

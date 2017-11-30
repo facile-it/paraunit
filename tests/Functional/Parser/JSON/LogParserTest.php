@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Parser\JSON;
 
+use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
@@ -88,5 +89,13 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
         $this->assertEquals('X', $formatWithSymbol->getTestResultSymbol());
         $this->assertTrue($process->hasAbnormalTermination());
+    }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            LogParser::class,
+            TempFilenameFactory::class,
+        ];
     }
 }

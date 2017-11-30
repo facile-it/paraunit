@@ -55,4 +55,17 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
             ['paraunit.test_result.incomplete_container'],
         ];
     }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        $services = [
+            ConsoleFormatter::class,
+        ];
+
+        foreach ($this->serviceTagsProvider() as $providerEntry) {
+            $services[] = $providerEntry[0];
+        }
+
+        return $services;
+    }
 }

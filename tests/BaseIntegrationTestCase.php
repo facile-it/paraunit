@@ -151,6 +151,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
 
         $this->container = $this->configuration->buildContainer($input->reveal(), new UnformattedOutputStub());
+        $this->makeServicesUnderTestPublic();
     }
 
     protected function getConsoleOutput(): UnformattedOutputStub
@@ -169,5 +170,25 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected function setOption(string $optionName, string $optionValue)
     {
         $this->options[$optionName] = $optionValue;
+    }
+
+    /**
+     * @return string[]
+     *
+     * Override this function to avoid deprecations in test about fetching private services from the container
+     * The array must contain the service names to be declared public for the test at hand
+     */
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [];
+    }
+
+    private function makeServicesUnderTestPublic()
+    {
+        $services = array_merge($this->getServiceToBeDeclaredPublic(), [TempDirectory::class]);
+
+        foreach ($services as $serviceName) {
+            $this->container->getDefinition($serviceName)->setPublic(true);
+        }
     }
 }

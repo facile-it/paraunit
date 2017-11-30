@@ -40,4 +40,11 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
             '...',
         ]);
     }
+
+    protected function getServiceToBeDeclaredPublic(): array
+    {
+        return [
+            Runner::class,
+        ];
+    }
 }

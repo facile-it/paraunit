@@ -70,7 +70,8 @@ class ParallelContainerDefinition
         $container->setDefinition(PHPUnitBinFile::class, new Definition(PHPUnitBinFile::class));
         $container->setDefinition(PHPUnitConfig::class, new Definition(PHPUnitConfig::class, [
             '%paraunit.phpunit_config_filename%',
-        ]));
+        ]))
+            ->setPublic(true);
         $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
             new Reference(TempDirectory::class),
         ]));
@@ -158,7 +159,8 @@ class ParallelContainerDefinition
             new Reference(ProcessBuilderFactory::class),
             new Reference(Filter::class),
             new Reference(PipelineCollection::class),
-        ]));
+        ]))
+            ->setPublic(true);
     }
 
     private function configureServices(ContainerBuilder $container)
