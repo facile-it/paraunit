@@ -18,4 +18,6 @@ interface CoverageProcessorInterface
      * @throws \RuntimeException If the processor is missing a needed info, like the target dir/filename
      */
     public function process(CodeCoverage $codeCoverage);
+
+    public static function getConsoleOptionName(): string;
 }

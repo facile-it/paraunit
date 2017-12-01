@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace Paraunit\Command;
 
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Crap4j;
+use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Php;
+use Paraunit\Coverage\Processor\Text;
+use Paraunit\Coverage\Processor\TextToConsole;
+use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,15 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CoverageCommand extends ParallelCommand
 {
-    const COVERAGE_METHODS = [
-        'clover',
-        'html',
-        'xml',
-        'text',
-        'text-to-console',
-        'crap4j',
-        'php',
-    ];
+    /** @var string[] */
+    private $coverageMethods;
 
     /**
      * ParallelCommand constructor.
@@ -32,6 +32,15 @@ class CoverageCommand extends ParallelCommand
     public function __construct(CoverageConfiguration $configuration)
     {
         parent::__construct($configuration);
+        $this->coverageMethods = [
+            Clover::getConsoleOptionName(),
+            Html::getConsoleOptionName(),
+            Xml::getConsoleOptionName(),
+            Text::getConsoleOptionName(),
+            TextToConsole::getConsoleOptionName(),
+            Crap4j::getConsoleOptionName(),
+            Php::getConsoleOptionName(),
+        ];
     }
 
     protected function configure()
@@ -40,13 +49,13 @@ class CoverageCommand extends ParallelCommand
 
         $this->setName('coverage');
         $this->setDescription('Fetch the coverage of your tests in parallel');
-        $this->addOption('clover', null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
-        $this->addOption('xml', null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
-        $this->addOption('html', null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
-        $this->addOption('text', null, InputOption::VALUE_REQUIRED, 'Output file for text coverage result');
-        $this->addOption('text-to-console', null, InputOption::VALUE_NONE, 'Output text coverage directly to console');
-        $this->addOption('crap4j', null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
-        $this->addOption('php', null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
+        $this->addOption(Clover::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
+        $this->addOption(Xml::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
+        $this->addOption(Html::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
+        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for text coverage result');
+        $this->addOption(TextToConsole::getConsoleOptionName(), null, InputOption::VALUE_NONE, 'Output text coverage directly to console');
+        $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
+        $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
     }
 
     /**
@@ -56,11 +65,12 @@ class CoverageCommand extends ParallelCommand
      * @return int|null
      *
      * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (! $this->hasChosenCoverageMethod($input)) {
-            $coverageMethods = implode(self::COVERAGE_METHODS, ', ');
+            $coverageMethods = implode($this->coverageMethods, ', ');
 
             throw new \InvalidArgumentException('You should choose at least one method of coverage output between ' . $coverageMethods);
         }
@@ -70,7 +80,7 @@ class CoverageCommand extends ParallelCommand
 
     private function hasChosenCoverageMethod(InputInterface $input): bool
     {
-        foreach (self::COVERAGE_METHODS as $coverageMethod) {
+        foreach ($this->coverageMethods as $coverageMethod) {
             if ($input->getOption($coverageMethod)) {
                 return true;
             }

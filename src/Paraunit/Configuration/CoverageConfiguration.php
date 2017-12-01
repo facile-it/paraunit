@@ -7,6 +7,7 @@ namespace Paraunit\Configuration;
 use Paraunit\Configuration\DependencyInjection\CoverageContainerDefinition;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
@@ -37,13 +38,13 @@ class CoverageConfiguration extends ParallelConfiguration
 
         $coverageResult = $container->getDefinition(CoverageResult::class);
 
-        $this->addPathProcessor($coverageResult, $input, Xml::class, 'xml');
-        $this->addPathProcessor($coverageResult, $input, Html::class, 'html');
+        $this->addPathProcessor($coverageResult, $input, Xml::class);
+        $this->addPathProcessor($coverageResult, $input, Html::class);
 
-        $this->addFileProcessor($coverageResult, $input, Clover::class, 'clover');
-        $this->addFileProcessor($coverageResult, $input, Text::class, 'text');
-        $this->addFileProcessor($coverageResult, $input, Crap4j::class, 'crap4j');
-        $this->addFileProcessor($coverageResult, $input, Php::class, 'php');
+        $this->addFileProcessor($coverageResult, $input, Clover::class);
+        $this->addFileProcessor($coverageResult, $input, Text::class);
+        $this->addFileProcessor($coverageResult, $input, Crap4j::class);
+        $this->addFileProcessor($coverageResult, $input, Php::class);
 
         if ($input->getOption('text-to-console')) {
             $this->addProcessor($coverageResult, TextToConsole::class, [
@@ -61,9 +62,10 @@ class CoverageConfiguration extends ParallelConfiguration
     private function addFileProcessor(
         Definition $coverageResult,
         InputInterface $input,
-        string $processorClass,
-        string $optionName
+        string $processorClass
     ) {
+        $optionName = $this->getOptionName($processorClass);
+
         if ($input->getOption($optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 $this->createOutputFileDefinition($input, $optionName),
@@ -74,9 +76,10 @@ class CoverageConfiguration extends ParallelConfiguration
     private function addPathProcessor(
         Definition $coverageResult,
         InputInterface $input,
-        string $processorClass,
-        string $optionName
+        string $processorClass
     ) {
+        $optionName = $this->getOptionName($processorClass);
+
         if ($input->getOption($optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 $this->createOutputPathDefinition($input, $optionName),
@@ -92,5 +95,19 @@ class CoverageConfiguration extends ParallelConfiguration
     private function createOutputPathDefinition(InputInterface $input, string $optionName): Definition
     {
         return new Definition(OutputPath::class, [$input->getOption($optionName)]);
+    }
+
+    /**
+     * @param string $processorClass
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    private function getOptionName(string $processorClass): string
+    {
+        if (! \in_array(CoverageProcessorInterface::class, class_implements($processorClass), true)) {
+            throw new \InvalidArgumentException('Expecting FQCN of class implementing ' . CoverageProcessorInterface::class . ', got ' . $processorClass);
+        }
+
+        return $processorClass::getConsoleOptionName();
     }
 }

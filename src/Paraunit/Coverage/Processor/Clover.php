@@ -38,4 +38,9 @@ class Clover implements CoverageProcessorInterface
     {
         $this->clover->process($codeCoverage, $this->targetFile->getFilePath());
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'clover';
+    }
 }
