@@ -11,7 +11,7 @@ php:
   - 7.2
 
 before_install: 
-  - phpenv config-rm xdebug.ini
+  - if [[ !$XDEBUG ]]; then phpenv config-rm xdebug.ini; fi
   - composer config -g github-oauth.github.com $GITHUB_API_KEY
 
 install: composer update --prefer-dist --prefer-stable --no-interaction
@@ -22,7 +22,6 @@ jobs:
   include:
     - stage: Test
       env: XDEBUG=true
-      before_install: echo "Do not remove XDEBUG"
     - env: VENDOR=prefer-lowest
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - env: VENDOR=lock
