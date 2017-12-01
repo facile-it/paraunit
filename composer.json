@@ -48,7 +48,7 @@
     "repositories": [
         {
             "type": "github",
-            "url": "https://github.com/Jean85/phpstan-prophecy.git"
+            "url": "git@github.com:Jean85/phpstan-prophecy.git"
         }
     ],
     "bin": [

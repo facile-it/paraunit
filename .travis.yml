@@ -10,7 +10,9 @@ php:
   - 7.1
   - 7.2
 
-before_install: phpenv config-rm xdebug.ini
+before_install: 
+  - phpenv config-rm xdebug.ini
+  - composer config -g github-oauth.github.com $GITHUB_API_KEY
 
 install: composer update --prefer-dist --prefer-stable --no-interaction
 
