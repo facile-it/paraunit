@@ -6,7 +6,6 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\EnvVariables;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class SymfonyProcessWrapper
@@ -14,10 +13,7 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
-    /** @var ProcessBuilder */
-    private $processBuilder;
-
-    /** @var Process|null */
+    /** @var Process */
     private $process;
 
     /** @var string */
@@ -26,10 +22,10 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     /**
      * {@inheritdoc}
      */
-    public function __construct(ProcessBuilder $processBuilder, string $filename)
+    public function __construct(Process $process, string $filename)
     {
         parent::__construct($filename);
-        $this->processBuilder = $processBuilder;
+        $this->process = $process;
     }
 
     public function isTerminated(): bool
@@ -38,16 +34,15 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @param array $env
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @param int $pipelineNumber
      */
-    public function start(array $env = [])
+    public function start(int $pipelineNumber)
     {
+        $env = $this->process->getEnv();
         $env[EnvVariables::PROCESS_UNIQUE_ID] = $this->getUniqueId();
-        $this->processBuilder->addEnvironmentVariables($env);
+        $env[EnvVariables::PIPELINE_NUMBER] = $pipelineNumber;
 
-        $this->process = $this->processBuilder->getProcess();
+        $this->process->setEnv($env);
         $this->process->start();
     }
 
@@ -67,17 +62,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     public function getExitCode()
     {
         return $this->process->getExitCode();
-    }
-
-    /**
-     * @return void
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     */
-    public function reset()
-    {
-        parent::reset();
-
-        $this->process = null;
     }
 
     /**

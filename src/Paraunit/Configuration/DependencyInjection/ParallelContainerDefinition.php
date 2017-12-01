@@ -19,7 +19,7 @@ use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
@@ -138,7 +138,7 @@ class ParallelContainerDefinition
             new Reference(PHPUnitBinFile::class),
         ]));
 
-        $container->setDefinition(ProcessBuilderFactory::class, new Definition(ProcessBuilderFactory::class, [
+        $container->setDefinition(ProcessFactory::class, new Definition(ProcessFactory::class, [
             new Reference(CommandLine::class),
             new Reference(PHPUnitConfig::class),
             new Reference(TempFilenameFactory::class),
@@ -156,7 +156,7 @@ class ParallelContainerDefinition
         ]));
         $container->setDefinition(Runner::class, new Definition(Runner::class, [
             new Reference(EventDispatcherInterface::class),
-            new Reference(ProcessBuilderFactory::class),
+            new Reference(ProcessFactory::class),
             new Reference(Filter::class),
             new Reference(PipelineCollection::class),
         ]))

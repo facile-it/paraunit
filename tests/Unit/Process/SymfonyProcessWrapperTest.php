@@ -8,7 +8,6 @@ use Paraunit\Configuration\EnvVariables;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Prophecy\Argument;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -19,7 +18,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
 {
     public function testGetUniqueId()
     {
-        $process = new SymfonyProcessWrapper($this->mockProcessBuilder(), 'Test.php');
+        $process = new SymfonyProcessWrapper($this->mockProcess(), 'Test.php');
 
         $this->assertEquals('Test.php', $process->getFilename());
         $this->assertEquals(md5('Test.php'), $process->getUniqueId());
@@ -30,27 +29,25 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $process = $this->prophesize(Process::class);
         $process->start()
             ->shouldBeCalledTimes(1);
-        $processBuilder = $this->prophesize(ProcessBuilder::class);
-        $processBuilder->addEnvironmentVariables(Argument::that(function ($envVariables) {
+        $process->getEnv()
+            ->willReturn([]);
+        $process->setEnv(Argument::that(function ($envVariables) {
             $this->assertArrayHasKey(EnvVariables::PROCESS_UNIQUE_ID, $envVariables);
-            $this->assertArrayHasKey('NAME', $envVariables);
-            $this->assertEquals('value', $envVariables['NAME']);
+            $this->assertArrayHasKey(EnvVariables::PIPELINE_NUMBER, $envVariables);
+            $this->assertEquals(4, $envVariables[EnvVariables::PIPELINE_NUMBER]);
 
             return true;
         }))
             ->shouldBeCalled();
-        $processBuilder->getProcess()
-            ->shouldBeCalled()
-            ->willReturn($process->reveal());
 
-        $processWrapper = new SymfonyProcessWrapper($processBuilder->reveal(), 'Test.php');
+        $processWrapper = new SymfonyProcessWrapper($process->reveal(), 'Test.php');
 
-        $processWrapper->start(['NAME' => 'value']);
+        $processWrapper->start(4);
     }
 
     public function testAddTestResultShouldResetExpectingFlag()
     {
-        $process = new SymfonyProcessWrapper($this->mockProcessBuilder(), 'Test.php');
+        $process = new SymfonyProcessWrapper($this->mockProcess(), 'Test.php');
         $process->setWaitingForTestResult(true);
         $this->assertTrue($process->isWaitingForTestResult());
 
@@ -59,8 +56,8 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $this->assertFalse($process->isWaitingForTestResult());
     }
 
-    private function mockProcessBuilder(): ProcessBuilder
+    private function mockProcess(): Process
     {
-        return $this->prophesize(ProcessBuilder::class)->reveal();
+        return $this->prophesize(Process::class)->reveal();
     }
 }

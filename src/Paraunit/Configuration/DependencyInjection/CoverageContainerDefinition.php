@@ -13,7 +13,7 @@ use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Process\CommandLineWithCoverage;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -46,7 +46,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
             new Reference(PHPDbgBinFile::class),
             new Reference(TempFilenameFactory::class),
         ]));
-        $container->setDefinition(ProcessBuilderFactory::class, new Definition(ProcessBuilderFactory::class, [
+        $container->setDefinition(ProcessFactory::class, new Definition(ProcessFactory::class, [
             new Reference(CommandLineWithCoverage::class),
             new Reference(PHPUnitConfig::class),
             new Reference(TempFilenameFactory::class),

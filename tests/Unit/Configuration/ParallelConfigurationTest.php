@@ -13,7 +13,7 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
@@ -67,7 +67,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             Cleaner::class,
             LogParser::class,
             ProcessPrinter::class,
-            ProcessBuilderFactory::class,
+            ProcessFactory::class,
             Runner::class,
             EventDispatcherInterface::class,
             TestResultFactory::class,

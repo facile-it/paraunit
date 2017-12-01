@@ -7,8 +7,7 @@ namespace Paraunit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ProcessBuilderFactory;
-use Paraunit\Process\SymfonyProcessWrapper;
+use Paraunit\Process\ProcessFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -18,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Runner implements EventSubscriberInterface
 {
-    /** @var ProcessBuilderFactory */
+    /** @var ProcessFactory */
     private $processBuilderFactory;
 
     /** @var EventDispatcherInterface */
@@ -38,13 +37,13 @@ class Runner implements EventSubscriberInterface
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param ProcessBuilderFactory $processFactory
+     * @param ProcessFactory $processFactory
      * @param Filter $filter
      * @param PipelineCollection $pipelineCollection
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        ProcessBuilderFactory $processFactory,
+        ProcessFactory $processFactory,
         Filter $filter,
         PipelineCollection $pipelineCollection
     ) {
@@ -108,8 +107,9 @@ class Runner implements EventSubscriberInterface
     private function createProcessQueue()
     {
         foreach ($this->filter->filterTestFiles() as $file) {
-            $processBuilder = $this->processBuilderFactory->create($file);
-            $this->queuedProcesses->enqueue(new SymfonyProcessWrapper($processBuilder, $file));
+            $this->queuedProcesses->enqueue(
+                $this->processBuilderFactory->create($file)
+            );
         }
     }
 

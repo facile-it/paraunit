@@ -76,7 +76,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     /**
      * {@inheritdoc}
      */
-    public function start(array $env = [])
+    public function start(int $pipeline)
     {
         return;
     }

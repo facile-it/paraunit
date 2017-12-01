@@ -59,10 +59,9 @@ abstract class AbstractParaunitProcess
     abstract public function getExitCode();
 
     /**
-     * @param array $env An array of environment variables to be injected
-     * @return void
+     * @param int $pipelineNumber
      */
-    abstract public function start(array $env = []);
+    abstract public function start(int $pipelineNumber);
 
     public function getUniqueId(): string
     {

@@ -64,6 +64,10 @@ class CommandLine
         return $optionString;
     }
 
+    /**
+     * @param string $testFilename
+     * @return string[]
+     */
     public function getSpecificOptions(string $testFilename): array
     {
         return [];

@@ -6,16 +6,16 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\CommandLine;
-use Paraunit\Process\ProcessBuilderFactory;
-use Symfony\Component\Process\ProcessBuilder;
+use Paraunit\Process\ProcessFactory;
 use Tests\BaseUnitTestCase;
 
 /**
- * Class ProcessBuilderFactoryTest
+ * Class ProcessFactoryTest
  * @package Tests\Unit\Process
  */
-class ProcessBuilderFactoryTest extends BaseUnitTestCase
+class ProcessFactoryTest extends BaseUnitTestCase
 {
     public function testCreateProcess()
     {
@@ -39,23 +39,23 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
         $tempFilenameFactory->getPathForLog()
             ->willReturn('/path/for/log/');
 
-        $factory = new ProcessBuilderFactory(
+        $factory = new ProcessFactory(
             $cliCommand->reveal(),
             $phpUnitConfig->reveal(),
             $tempFilenameFactory->reveal()
         );
 
-        $processBuilder = $factory->create('TestTest.php');
+        $processWrapper = $factory->create('TestTest.php');
 
-        $this->assertInstanceOf(ProcessBuilder::class, $processBuilder);
-        $commandLine = $processBuilder->getProcess()->getCommandLine();
+        $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
+        $commandLine = $processWrapper->getCommandLine();
         $this->assertContains('TestTest.php', $commandLine);
         $this->assertContains('--specific=value-for-TestTest.php', $commandLine);
 
-        $processBuilder = $factory->create('TestTest2.php');
+        $processWrapper = $factory->create('TestTest2.php');
 
-        $this->assertInstanceOf(ProcessBuilder::class, $processBuilder);
-        $commandLine = $processBuilder->getProcess()->getCommandLine();
+        $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
+        $commandLine = $processWrapper->getCommandLine();
         $this->assertContains('TestTest2.php', $commandLine);
         $this->assertContains('--specific=value-for-TestTest2.php', $commandLine);
     }

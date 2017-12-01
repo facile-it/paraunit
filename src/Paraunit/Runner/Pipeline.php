@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
-use Paraunit\Configuration\EnvVariables;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -42,9 +41,7 @@ class Pipeline
         }
 
         $this->process = $process;
-        $this->process->start([
-            EnvVariables::PIPELINE_NUMBER => $this->number,
-        ]);
+        $this->process->start($this->number);
 
         $this->dispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($this->process));
     }
