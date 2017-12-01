@@ -46,6 +46,8 @@ RUN git clone --depth=1 git://github.com/robbyrussell/oh-my-zsh.git  ~/.oh-my-zs
 ADD config/.zshrc /root/
 ADD config/.zshrc /home/paraunit/
 
+RUN composer global require hirak/prestissimo
+
 ENV TERM xterm-256color
 ENV PHP_IDE_CONFIG="serverName=Paraunit"
 ENV XDEBUG_CONFIG="remote_host=172.18.0.1 remote_port=9000"
