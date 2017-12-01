@@ -49,7 +49,11 @@ class ProcessFactory
             null,
             $this->environmentVariables
         );
-        $process->inheritEnvironmentVariables();
+        
+        if (method_exists($process, 'inheritEnvironmentVariables')) {
+            // method added in 3.0
+            $process->inheritEnvironmentVariables();
+        }
 
         return new SymfonyProcessWrapper($process, $testFilePath);
     }
