@@ -32,7 +32,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
-        $paraunit = new ParallelConfiguration();
+        $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -82,16 +82,13 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertNotContains(CoveragePrinter::class, $servicesIds);
 
         foreach ($requiredDefinitions as $definitionName) {
-            if ($container->hasDefinition($definitionName)) {
-                $container->getDefinition($definitionName)->setPublic(true);
-            }
-            $container->get($definitionName); // test instantiation, to prevent misconfigurations
+            $this->getService($container, $definitionName); // test instantiation, to prevent misconfigurations
         }
     }
 
     public function testBuildContainerWithDebug()
     {
-        $paraunit = new ParallelConfiguration();
+        $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -105,9 +102,13 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $container->getDefinition(DebugPrinter::class)->setPublic(true);
-        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
+        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
+    }
+
+    private function getService(ContainerBuilder $container, string $serviceName)
+    {
+        return $container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
     }
 }

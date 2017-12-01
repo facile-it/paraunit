@@ -22,11 +22,11 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     public function testOnEngineStartHasAllTagsRegistered(string $containerServiceName)
     {
         /** @var TestResultContainer $testResultContainer */
-        $testResultContainer = $this->container->get($containerServiceName);
+        $testResultContainer = $this->getService($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
-        $consoleFormatter = $this->container->get(ConsoleFormatter::class);
+        $consoleFormatter = $this->getService(ConsoleFormatter::class);
         /** @var OutputInterface $outputInterface */
-        $outputInterface = $this->container->get(OutputInterface::class);
+        $outputInterface = $this->getService(OutputInterface::class);
 
         $consoleFormatter->onEngineBeforeStart();
 
@@ -54,18 +54,5 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
             ['paraunit.test_result.skipped_container'],
             ['paraunit.test_result.incomplete_container'],
         ];
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        $services = [
-            ConsoleFormatter::class,
-        ];
-
-        foreach ($this->serviceTagsProvider() as $providerEntry) {
-            $services[] = $providerEntry[0];
-        }
-
-        return $services;
     }
 }

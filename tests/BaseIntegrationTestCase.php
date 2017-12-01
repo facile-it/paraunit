@@ -25,7 +25,7 @@ use Tests\Stub\UnformattedOutputStub;
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder */
-    protected $container;
+    private $container;
 
     /** @var ParallelConfiguration */
     protected $configuration;
@@ -43,7 +43,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->configuration = new ParallelConfiguration();
+        $this->configuration = new ParallelConfiguration(true);
         $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
@@ -72,7 +72,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
 
         /** @var TempFilenameFactory $filenameService */
-        $filenameService = $this->container->get(TempFilenameFactory::class);
+        $filenameService = $this->getService(TempFilenameFactory::class);
         $filename = $filenameService->getFilenameForLog($process->getUniqueId());
 
         copy($stubLogFilename, $filename);
@@ -82,7 +82,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         if ($this->container) {
             /** @var TempDirectory $tempDirectory */
-            $tempDirectory = $this->container->get(TempDirectory::class);
+            $tempDirectory = $this->getService(TempDirectory::class);
             Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
         }
     }
@@ -107,7 +107,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected function processAllTheStubLogs()
     {
         /** @var LogParser $logParser */
-        $logParser = $this->container->get(LogParser::class);
+        $logParser = $this->getService(LogParser::class);
 
         $logsToBeProcessed = [
             JSONLogStub::TWO_ERRORS_TWO_FAILURES,
@@ -132,6 +132,26 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
+    /**
+     * @param string $serviceName
+     * @return object
+     * @throws \Exception
+     */
+    public function getService(string $serviceName)
+    {
+        return $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+    }
+
+    /**
+     * @param string $parameterName
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getParameter(string $parameterName)
+    {
+        return $this->container->getParameter($parameterName);
+    }
+
     protected function loadContainer()
     {
         $input = $this->prophesize(InputInterface::class);
@@ -151,13 +171,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
 
         $this->container = $this->configuration->buildContainer($input->reveal(), new UnformattedOutputStub());
-        $this->makeServicesUnderTestPublic();
     }
 
     protected function getConsoleOutput(): UnformattedOutputStub
     {
         /** @var UnformattedOutputStub $output */
-        $output = $this->container->get(OutputInterface::class);
+        $output = $this->getService(OutputInterface::class);
 
         return $output;
     }
@@ -170,25 +189,5 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected function setOption(string $optionName, string $optionValue)
     {
         $this->options[$optionName] = $optionValue;
-    }
-
-    /**
-     * @return string[]
-     *
-     * Override this function to avoid deprecations in test about fetching private services from the container
-     * The array must contain the service names to be declared public for the test at hand
-     */
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [];
-    }
-
-    private function makeServicesUnderTestPublic()
-    {
-        $services = array_merge($this->getServiceToBeDeclaredPublic(), [TempDirectory::class]);
-
-        foreach ($services as $serviceName) {
-            $this->container->getDefinition($serviceName)->setPublic(true);
-        }
     }
 }

@@ -28,7 +28,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
         /** @var LogParser $parser */
-        $parser = $this->container->get(LogParser::class);
+        $parser = $this->getService(LogParser::class);
 
         $parser->onProcessTerminated(new ProcessEvent($process));
 
@@ -74,7 +74,7 @@ class LogParserTest extends BaseFunctionalTestCase
     public function testParseHandlesMissingLogsAsAbnormalTerminations()
     {
         /** @var LogParser $parser */
-        $parser = $this->container->get(LogParser::class);
+        $parser = $this->getService(LogParser::class);
         $process = new StubbedParaunitProcess();
         $process->setExitCode(139);
 
@@ -89,13 +89,5 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
         $this->assertEquals('X', $formatWithSymbol->getTestResultSymbol());
         $this->assertTrue($process->hasAbnormalTermination());
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            LogParser::class,
-            TempFilenameFactory::class,
-        ];
     }
 }

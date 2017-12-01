@@ -41,7 +41,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
-        $paraunit = new CoverageConfiguration();
+        $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -91,17 +91,14 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         ];
 
         foreach ($requiredDefinitions as $definitionName) {
-            if ($container->hasDefinition($definitionName)) {
-                $container->getDefinition($definitionName)->setPublic(true);
-            }
-
-            $container->get($definitionName); // test instantiation, to prevent misconfigurations
+            // test instantiation, to prevent misconfigurations
+            $this->getService($container, $definitionName);
         }
     }
 
     public function testBuildContainerWithDebug()
     {
-        $paraunit = new CoverageConfiguration();
+        $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -115,8 +112,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $container->getDefinition(DebugPrinter::class)->setPublic(true);
-        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
+        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfigurations
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
@@ -126,7 +122,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
      */
     public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass)
     {
-        $paraunit = new CoverageConfiguration();
+        $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $options = [
@@ -160,8 +156,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $container->getDefinition(CoverageResult::class)->setPublic(true);
-        $coverageResult = $container->get(CoverageResult::class);
+        $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
         $property->setAccessible(true);
@@ -186,7 +181,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
     public function testBuildContainerWithColoredTextToConsoleCoverage()
     {
-        $paraunit = new CoverageConfiguration();
+        $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $options = [
@@ -225,8 +220,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $container->getDefinition(CoverageResult::class)->setPublic(true);
-        $coverageResult = $container->get(CoverageResult::class);
+        $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
         $property->setAccessible(true);
@@ -240,5 +234,10 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $property = $reflection->getProperty('showColors');
         $property->setAccessible(true);
         $this->assertTrue($property->getValue($processor));
+    }
+
+    private function getService(ContainerBuilder $container, string $serviceName)
+    {
+        return $container->get(sprintf(CoverageConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
     }
 }

@@ -48,7 +48,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $this->executeRunner());
 
-        $retryCount = $this->container->getParameter('paraunit.max_retry_count');
+        $retryCount = $this->getParameter('paraunit.max_retry_count');
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
         $this->assertOutputOrder($output, [
             'Errors output',
@@ -139,7 +139,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->loadContainer();
 
         /** @var PHPUnitConfig $phpunitConfig */
-        $phpunitConfig = $this->container->get(PHPUnitConfig::class);
+        $phpunitConfig = $this->getService(PHPUnitConfig::class);
         $option = new PHPUnitOption('group');
         $option->setValue('emptyGroup');
         $phpunitConfig->addPhpunitOption($option);
@@ -201,16 +201,8 @@ class RunnerTest extends BaseIntegrationTestCase
     private function executeRunner(): int
     {
         /** @var Runner $runner */
-        $runner = $this->container->get(Runner::class);
+        $runner = $this->getService(Runner::class);
 
         return $runner->run();
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            PHPUnitConfig::class,
-            Runner::class,
-        ];
     }
 }

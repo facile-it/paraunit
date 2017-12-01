@@ -49,7 +49,7 @@ class ProcessFactory
             null,
             $this->environmentVariables
         );
-        
+
         if (method_exists($process, 'inheritEnvironmentVariables')) {
             // method added in 3.0
             $process->inheritEnvironmentVariables();

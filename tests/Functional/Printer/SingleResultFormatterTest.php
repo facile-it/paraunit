@@ -20,9 +20,9 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
     public function testFormatProvider()
     {
         /** @var SingleResultFormatter $formatter */
-        $formatter = $this->container->get(SingleResultFormatter::class);
+        $formatter = $this->getService(SingleResultFormatter::class);
         /** @var TestResultList $testResultList */
-        $testResultList = $this->container->get(TestResultList::class);
+        $testResultList = $this->getService(TestResultList::class);
 
         foreach ($testResultList->getTestResultContainers() as $resultContainer) {
             $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());
@@ -48,13 +48,5 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
             'Mapping incorrect for test result symbol: ' . ($symbol ?: 'N/A')
             . '[' . $testResultFormat->getTitle() . ']'
         );
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            SingleResultFormatter::class,
-            TestResultList::class,
-        ];
     }
 }

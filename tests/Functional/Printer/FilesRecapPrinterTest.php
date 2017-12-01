@@ -26,7 +26,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->addProcessToContainers($process);
 
         /** @var FilesRecapPrinter $printer */
-        $printer = $this->container->get(FilesRecapPrinter::class);
+        $printer = $this->getService(FilesRecapPrinter::class);
 
         $printer->onEngineEnd();
 
@@ -53,22 +53,11 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
     private function addProcessToContainers(AbstractParaunitProcess $process)
     {
         /** @var TestResultContainer $noTestExecuted */
-        $noTestExecuted = $this->container->get('paraunit.test_result.no_test_executed_container');
+        $noTestExecuted = $this->getService('paraunit.test_result.no_test_executed_container');
         $noTestExecuted->addProcessToFilenames($process);
 
         /** @var TestResultContainer $coverageFailure */
-        $coverageFailure = $this->container->get('paraunit.test_result.coverage_failure_container');
+        $coverageFailure = $this->getService('paraunit.test_result.coverage_failure_container');
         $coverageFailure->addProcessToFilenames($process);
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            FilesRecapPrinter::class,
-            LogParser::class,
-            TempFilenameFactory::class,
-            'paraunit.test_result.no_test_executed_container',
-            'paraunit.test_result.coverage_failure_container',
-        ];
     }
 }

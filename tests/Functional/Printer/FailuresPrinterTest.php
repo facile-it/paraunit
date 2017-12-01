@@ -20,7 +20,7 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
         $this->processAllTheStubLogs();
 
         /** @var FailuresPrinter $printer */
-        $printer = $this->container->get(FailuresPrinter::class);
+        $printer = $this->getService(FailuresPrinter::class);
 
         $printer->onEngineEnd();
 
@@ -39,14 +39,5 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
             'Warnings output:',
             'Risky Outcome output:',
         ]);
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            FailuresPrinter::class,
-            LogParser::class,
-            TempFilenameFactory::class,
-        ];
     }
 }

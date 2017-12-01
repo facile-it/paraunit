@@ -165,6 +165,9 @@ class ParallelContainerDefinition
 
     private function configureServices(ContainerBuilder $container)
     {
+        $container->register(OutputInterface::class, OutputInterface::class)
+            ->setPublic(true)
+            ->setSynthetic(true);
         $container->setDefinition(PHPUnitUtilXMLProxy::class, new Definition(PHPUnitUtilXMLProxy::class));
         $container->setDefinition(\File_Iterator_Facade::class, new Definition(\File_Iterator_Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [

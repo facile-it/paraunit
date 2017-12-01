@@ -19,7 +19,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->configuration = new CoverageConfiguration();
+        $this->configuration = new CoverageConfiguration(true);
     }
 
     public function testAllGreen()
@@ -27,7 +27,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
         /** @var Runner $runner */
-        $runner = $this->container->get(Runner::class);
+        $runner = $this->getService(Runner::class);
 
         $exitCode = $runner->run();
 
@@ -39,12 +39,5 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
             'Coverage driver in use',
             '...',
         ]);
-    }
-
-    protected function getServiceToBeDeclaredPublic(): array
-    {
-        return [
-            Runner::class,
-        ];
     }
 }
