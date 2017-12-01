@@ -105,6 +105,11 @@ class ParallelConfiguration
         // the synthetic service isn't listed
         $services[] = OutputInterface::class;
         foreach ($services as $serviceName) {
+            if ($serviceName === 'service_container') {
+                // needed with SF 3.x
+                continue;
+            }
+
             $containerBuilder->setAlias(
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
                 new Alias($serviceName, true)
