@@ -4,6 +4,7 @@ parameters:
         - '/Constant PARAUNIT_PHAR_FILE not found/'
         - '/Method Tests\\BaseTestCase::getRandomTempDir\(\) should return string but returns string|null\./'
         - '/Parameter #1 $process of class Paraunit\\Lifecycle\\ProcessEvent constructor expects Paraunit\\Process\\AbstractParaunitProcess, Paraunit\\Process\\AbstractParaunitProcess|null given\./'
+        - '/Call to function is_array\(\) will always evaluate to false./'
     excludes_analyse:
         - tests/Stub/ParseErrorTestStub.php
 includes:

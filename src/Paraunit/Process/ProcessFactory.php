@@ -13,7 +13,7 @@ use Symfony\Component\Process\Process;
  * Class ProcessFactory
  * @package Paraunit\Process
  */
-class ProcessFactory
+class ProcessFactory implements ProcessFactoryInterface
 {
     /** @var CommandLine */
     private $cliCommand;

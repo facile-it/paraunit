@@ -19,7 +19,9 @@ use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
+use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
@@ -33,6 +35,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Process\Process;
 
 class ParallelContainerDefinition
 {
@@ -138,7 +141,7 @@ class ParallelContainerDefinition
             new Reference(PHPUnitBinFile::class),
         ]));
 
-        $container->setDefinition(ProcessFactory::class, new Definition(ProcessFactory::class, [
+        $container->setDefinition(ProcessFactoryInterface::class, new Definition($this->getProcessFactoryClass(), [
             new Reference(CommandLine::class),
             new Reference(PHPUnitConfig::class),
             new Reference(TempFilenameFactory::class),
@@ -156,7 +159,7 @@ class ParallelContainerDefinition
         ]));
         $container->setDefinition(Runner::class, new Definition(Runner::class, [
             new Reference(EventDispatcherInterface::class),
-            new Reference(ProcessFactory::class),
+            new Reference(ProcessFactoryInterface::class),
             new Reference(Filter::class),
             new Reference(PipelineCollection::class),
         ]))
@@ -177,5 +180,17 @@ class ParallelContainerDefinition
             '%paraunit.testsuite%',
             '%paraunit.string_filter%',
         ]));
+    }
+
+    private function getProcessFactoryClass(): string
+    {
+        // only reliable way to detect symfony/process 3.3+: CLI parsing
+        $process = new Process(['cmd as array']);
+        if (\is_array($process->getCommandLine())) {
+            // Commandline not parsed, we have Symfony < 3.3
+            return ProcessBuilderFactory::class;
+        }
+
+        return ProcessFactory::class;
     }
 }

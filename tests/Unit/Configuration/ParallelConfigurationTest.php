@@ -13,7 +13,7 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;
-use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
@@ -67,7 +67,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             Cleaner::class,
             LogParser::class,
             ProcessPrinter::class,
-            ProcessFactory::class,
+            ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
             TestResultFactory::class,
@@ -102,7 +102,8 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfigurations
+        // test instantiation, to prevent misconfigurations
+        $service = $this->getService($container, DebugPrinter::class);
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
