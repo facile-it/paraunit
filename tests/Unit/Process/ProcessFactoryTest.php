@@ -9,6 +9,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
+use Symfony\Component\Process\Process;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -17,6 +18,16 @@ use Tests\BaseUnitTestCase;
  */
 class ProcessFactoryTest extends BaseUnitTestCase
 {
+    protected function setUp()
+    {
+        $process = new Process(['cmd as array']);
+        if (\is_array($process->getCommandLine())) {
+            $this->markTestSkipped('CommandLine not parsed, we have symfony/process < 3.3');
+        }
+
+        parent::setUp();
+    }
+
     public function testCreateProcess()
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
