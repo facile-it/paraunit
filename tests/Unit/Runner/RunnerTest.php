@@ -8,7 +8,7 @@ use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\Runner;
@@ -146,9 +146,9 @@ class RunnerTest extends BaseUnitTestCase
         return $eventDispatcher->reveal();
     }
 
-    private function mockProcessFactory(): ProcessFactory
+    private function mockProcessFactory(): ProcessFactoryInterface
     {
-        $processFactory = $this->prophesize(ProcessFactory::class);
+        $processFactory = $this->prophesize(ProcessFactoryInterface::class);
         $processFactory->create(Argument::containingString('.php'))
             ->willReturn($this->prophesize(AbstractParaunitProcess::class)->reveal());
 

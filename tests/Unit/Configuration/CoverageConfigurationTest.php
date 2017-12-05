@@ -22,7 +22,7 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;
-use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
@@ -75,7 +75,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             OutputInterface::class,
             LogParser::class,
             ProcessPrinter::class,
-            ProcessFactory::class,
+            ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
             TestResultFactory::class,

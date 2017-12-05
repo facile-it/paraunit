@@ -7,7 +7,7 @@ namespace Paraunit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ProcessFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -17,8 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Runner implements EventSubscriberInterface
 {
-    /** @var ProcessFactory */
-    private $processBuilderFactory;
+    /** @var ProcessFactoryInterface */
+    private $processFactory;
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
@@ -37,18 +37,18 @@ class Runner implements EventSubscriberInterface
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param ProcessFactory $processFactory
+     * @param ProcessFactoryInterface $processFactory
      * @param Filter $filter
      * @param PipelineCollection $pipelineCollection
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        ProcessFactory $processFactory,
+        ProcessFactoryInterface $processFactory,
         Filter $filter,
         PipelineCollection $pipelineCollection
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->processBuilderFactory = $processFactory;
+        $this->processFactory = $processFactory;
         $this->filter = $filter;
         $this->pipelineCollection = $pipelineCollection;
         $this->queuedProcesses = new \SplQueue();
@@ -108,7 +108,7 @@ class Runner implements EventSubscriberInterface
     {
         foreach ($this->filter->filterTestFiles() as $file) {
             $this->queuedProcesses->enqueue(
-                $this->processBuilderFactory->create($file)
+                $this->processFactory->create($file)
             );
         }
     }
