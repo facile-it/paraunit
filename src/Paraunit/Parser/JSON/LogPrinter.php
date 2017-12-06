@@ -229,10 +229,10 @@ class LogPrinter extends Util\Printer implements TestListener
     private function writeCase($status, $time, array $trace = [], $message = '', $test = null)
     {
         $output = '';
-        // take care of TestSuite producing error (e.g. by running into exception) as TestSuite doesn't have hasOutput
-        if ($test !== null && method_exists($test, 'hasOutput') && $test->hasOutput()) {
+        if ($test instanceof TestCase) {
             $output = $test->getActualOutput();
         }
+
         $this->writeArray([
             'event' => 'test',
             'suite' => $this->currentTestSuiteName,

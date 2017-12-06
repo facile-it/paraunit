@@ -38,4 +38,9 @@ class Html implements CoverageProcessorInterface
     {
         $this->html->process($codeCoverage, $this->targetPath->getPath());
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'html';
+    }
 }

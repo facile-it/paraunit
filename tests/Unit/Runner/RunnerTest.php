@@ -7,13 +7,13 @@ namespace Tests\Unit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\Runner;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Process\ProcessBuilder;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -34,7 +34,7 @@ class RunnerTest extends BaseUnitTestCase
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
-            $this->mockProcessBuilderFactory(),
+            $this->mockProcessFactory(),
             $filter->reveal(),
             $pipelineCollection->reveal()
         );
@@ -63,7 +63,7 @@ class RunnerTest extends BaseUnitTestCase
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
-            $this->mockProcessBuilderFactory(),
+            $this->mockProcessFactory(),
             $filter->reveal(),
             $pipelineCollection->reveal()
         );
@@ -90,7 +90,7 @@ class RunnerTest extends BaseUnitTestCase
 
         $runner = new Runner(
             $eventDispatcher->reveal(),
-            $this->mockProcessBuilderFactory(),
+            $this->mockProcessFactory(),
             $filter->reveal(),
             $pipelineCollection->reveal()
         );
@@ -119,7 +119,7 @@ class RunnerTest extends BaseUnitTestCase
 
         $runner = new Runner(
             $eventDispatcher->reveal(),
-            $this->mockProcessBuilderFactory(),
+            $this->mockProcessFactory(),
             $filter->reveal(),
             $pipelineCollection->reveal()
         );
@@ -146,19 +146,12 @@ class RunnerTest extends BaseUnitTestCase
         return $eventDispatcher->reveal();
     }
 
-    private function mockProcessBuilderFactory(): ProcessBuilderFactory
+    private function mockProcessFactory(): ProcessFactoryInterface
     {
-        $processBuilderFactory = $this->prophesize(ProcessBuilderFactory::class);
-        $processBuilderFactory->create(Argument::containingString('.php'))
-            ->willReturn($this->mockProcessBuilder());
+        $processFactory = $this->prophesize(ProcessFactoryInterface::class);
+        $processFactory->create(Argument::containingString('.php'))
+            ->willReturn($this->prophesize(AbstractParaunitProcess::class)->reveal());
 
-        return $processBuilderFactory->reveal();
-    }
-
-    private function mockProcessBuilder(): ProcessBuilder
-    {
-        $processBuilder = $this->prophesize(ProcessBuilder::class);
-
-        return $processBuilder->reveal();
+        return $processFactory->reveal();
     }
 }

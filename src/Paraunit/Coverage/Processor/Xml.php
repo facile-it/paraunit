@@ -39,4 +39,9 @@ class Xml implements CoverageProcessorInterface
     {
         $this->xml->process($codeCoverage, $this->targetPath->getPath());
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'xml';
+    }
 }

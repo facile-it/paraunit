@@ -8,19 +8,26 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\CommandLine;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\ProcessFactory;
+use Symfony\Component\Process\Process;
 use Tests\BaseUnitTestCase;
 
 /**
- * Class ProcessBuilderFactoryTest
+ * Class ProcessFactoryTest
  * @package Tests\Unit\Process
  */
-class ProcessBuilderFactoryTest extends BaseUnitTestCase
+class ProcessFactoryTest extends BaseUnitTestCase
 {
-    /**
-     * @group legacy
-     * @expectedDeprecation The Symfony\Component\Process\ProcessBuilder class is deprecated since version 3.4 and will be removed in 4.0. Use the Process class instead
-     */
+    protected function setUp()
+    {
+        $process = new Process(['cmd as array']);
+        if (\is_array($process->getCommandLine())) {
+            $this->markTestSkipped('CommandLine not parsed, we have symfony/process < 3.3');
+        }
+
+        parent::setUp();
+    }
+
     public function testCreateProcess()
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
@@ -32,34 +39,34 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
             ->willReturn(['--configuration=config.xml']);
         $cliCommand
             ->getSpecificOptions('TestTest.php')
-            ->shouldBeCalled()
+            ->shouldBeCalledTimes(1)
             ->willReturn(['--specific=value-for-TestTest.php']);
         $cliCommand
             ->getSpecificOptions('TestTest2.php')
-            ->shouldBeCalled()
+            ->shouldBeCalledTimes(1)
             ->willReturn(['--specific=value-for-TestTest2.php']);
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
         $tempFilenameFactory->getPathForLog()
             ->willReturn('/path/for/log/');
 
-        $factory = new ProcessBuilderFactory(
+        $factory = new ProcessFactory(
             $cliCommand->reveal(),
             $phpUnitConfig->reveal(),
             $tempFilenameFactory->reveal()
         );
 
-        $processBuilder = $factory->create('TestTest.php');
+        $processWrapper = $factory->create('TestTest.php');
 
-        $this->assertInstanceOf(AbstractParaunitProcess::class, $processBuilder);
-        $commandLine = $processBuilder->getCommandLine();
+        $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
+        $commandLine = $processWrapper->getCommandLine();
         $this->assertContains('TestTest.php', $commandLine);
         $this->assertContains('--specific=value-for-TestTest.php', $commandLine);
 
-        $processBuilder = $factory->create('TestTest2.php');
+        $processWrapper = $factory->create('TestTest2.php');
 
-        $this->assertInstanceOf(AbstractParaunitProcess::class, $processBuilder);
-        $commandLine = $processBuilder->getCommandLine();
+        $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
+        $commandLine = $processWrapper->getCommandLine();
         $this->assertContains('TestTest2.php', $commandLine);
         $this->assertContains('--specific=value-for-TestTest2.php', $commandLine);
     }

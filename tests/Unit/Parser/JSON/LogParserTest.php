@@ -10,6 +10,7 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -104,10 +105,10 @@ class LogParserTest extends BaseUnitTestCase
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
             ->shouldBeCalledTimes($emptyTestsCount);
 
-        $eventDispatcher = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(
             ProcessEvent::PROCESS_PARSING_COMPLETED,
-            Argument::type('Paraunit\Lifecycle\ProcessEvent')
+            Argument::type(ProcessEvent::class)
         )
             ->shouldBeCalledTimes((int) ($emptyTestsCount === 0));
 

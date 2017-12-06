@@ -8,6 +8,7 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
+use PHPUnit\Framework\AssertionFailedError;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 
 /**
@@ -19,13 +20,15 @@ abstract class BaseUnitTestCase extends BaseTestCase
     /**
      * @param string $event
      * @param string $status
-     * @param $testOutput
+     * @param string|null $testOutput
      * @return \stdClass
+     * @throws AssertionFailedError
      * @throws \Exception
      */
-    protected function getLogFromStub(string $event = 'test', string $status = 'fail', string $testOutput = null)
+    protected function getLogFromStub(string $event = 'test', string $status = 'fail', string $testOutput = null): \stdClass
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
+        /** @var \stdClass[] $logs */
         $logs = json_decode($jsonLogs);
         foreach ($logs as $log) {
             if ($log->event === $event) {

@@ -31,4 +31,9 @@ class TextToConsole extends AbstractText
     {
         $this->output->writeln($this->getTextCoverage($codeCoverage));
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'text-to-console';
+    }
 }

@@ -7,8 +7,7 @@ namespace Paraunit\Runner;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\EngineEvent;
 use Paraunit\Lifecycle\ProcessEvent;
-use Paraunit\Process\ProcessBuilderFactory;
-use Paraunit\Process\SymfonyProcessWrapper;
+use Paraunit\Process\ProcessFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -18,8 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Runner implements EventSubscriberInterface
 {
-    /** @var ProcessBuilderFactory */
-    private $processBuilderFactory;
+    /** @var ProcessFactoryInterface */
+    private $processFactory;
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
@@ -38,18 +37,18 @@ class Runner implements EventSubscriberInterface
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param ProcessBuilderFactory $processFactory
+     * @param ProcessFactoryInterface $processFactory
      * @param Filter $filter
      * @param PipelineCollection $pipelineCollection
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        ProcessBuilderFactory $processFactory,
+        ProcessFactoryInterface $processFactory,
         Filter $filter,
         PipelineCollection $pipelineCollection
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->processBuilderFactory = $processFactory;
+        $this->processFactory = $processFactory;
         $this->filter = $filter;
         $this->pipelineCollection = $pipelineCollection;
         $this->queuedProcesses = new \SplQueue();
@@ -108,8 +107,9 @@ class Runner implements EventSubscriberInterface
     private function createProcessQueue()
     {
         foreach ($this->filter->filterTestFiles() as $file) {
-            $processBuilder = $this->processBuilderFactory->create($file);
-            $this->queuedProcesses->enqueue(new SymfonyProcessWrapper($processBuilder, $file));
+            $this->queuedProcesses->enqueue(
+                $this->processFactory->create($file)
+            );
         }
     }
 

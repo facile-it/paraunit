@@ -13,7 +13,7 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;
-use Paraunit\Process\ProcessBuilderFactory;
+use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
@@ -32,7 +32,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()
     {
-        $paraunit = new ParallelConfiguration();
+        $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -67,7 +67,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             Cleaner::class,
             LogParser::class,
             ProcessPrinter::class,
-            ProcessBuilderFactory::class,
+            ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
             TestResultFactory::class,
@@ -81,14 +81,14 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertNotContains(CoverageFetcher::class, $servicesIds);
         $this->assertNotContains(CoveragePrinter::class, $servicesIds);
 
-        foreach ($requiredDefinitions as $definition) {
-            $container->get($definition); // test instantiation, to prevent misconfigurations
+        foreach ($requiredDefinitions as $definitionName) {
+            $this->getService($container, $definitionName); // test instantiation, to prevent misconfigurations
         }
     }
 
     public function testBuildContainerWithDebug()
     {
-        $paraunit = new ParallelConfiguration();
+        $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
         $output = $this->prophesize(OutputInterface::class);
         $input->getArgument('stringFilter')
@@ -102,8 +102,14 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(ContainerBuilder::class, $container);
 
-        $service = $container->get(DebugPrinter::class); // test instantiation, to prevent misconfigurations
+        // test instantiation, to prevent misconfigurations
+        $service = $this->getService($container, DebugPrinter::class);
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
+    }
+
+    private function getService(ContainerBuilder $container, string $serviceName)
+    {
+        return $container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
     }
 }

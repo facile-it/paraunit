@@ -13,7 +13,7 @@ use Symfony\Component\Process\ProcessBuilder;
  * Class ProcessBuilderFactory
  * @package Paraunit\Process
  */
-class ProcessBuilderFactory
+class ProcessBuilderFactory implements ProcessFactoryInterface
 {
     /** @var ProcessBuilder */
     private $builderPrototype;
@@ -47,11 +47,7 @@ class ProcessBuilderFactory
         }
     }
 
-    /**
-     * @param $testFilePath
-     * @return ProcessBuilder
-     */
-    public function create(string $testFilePath): ProcessBuilder
+    public function create(string $testFilePath): AbstractParaunitProcess
     {
         $builder = clone $this->builderPrototype;
         $builder->add($testFilePath);
@@ -59,6 +55,6 @@ class ProcessBuilderFactory
             $builder->add($specificOption);
         }
 
-        return $builder;
+        return new SymfonyProcessWrapper($builder->getProcess(), $testFilePath);
     }
 }

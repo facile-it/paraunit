@@ -25,7 +25,7 @@ use Tests\Stub\UnformattedOutputStub;
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder */
-    protected $container;
+    private $container;
 
     /** @var ParallelConfiguration */
     protected $configuration;
@@ -43,7 +43,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->configuration = new ParallelConfiguration();
+        $this->configuration = new ParallelConfiguration(true);
         $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
@@ -72,7 +72,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
 
         /** @var TempFilenameFactory $filenameService */
-        $filenameService = $this->container->get(TempFilenameFactory::class);
+        $filenameService = $this->getService(TempFilenameFactory::class);
         $filename = $filenameService->getFilenameForLog($process->getUniqueId());
 
         copy($stubLogFilename, $filename);
@@ -82,7 +82,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         if ($this->container) {
             /** @var TempDirectory $tempDirectory */
-            $tempDirectory = $this->container->get(TempDirectory::class);
+            $tempDirectory = $this->getService(TempDirectory::class);
             Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
         }
     }
@@ -107,7 +107,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected function processAllTheStubLogs()
     {
         /** @var LogParser $logParser */
-        $logParser = $this->container->get(LogParser::class);
+        $logParser = $this->getService(LogParser::class);
 
         $logsToBeProcessed = [
             JSONLogStub::TWO_ERRORS_TWO_FAILURES,
@@ -130,6 +130,26 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             $this->createLogForProcessFromStubbedLog($process, $logName);
             $logParser->onProcessTerminated($processEvent);
         }
+    }
+
+    /**
+     * @param string $serviceName
+     * @return object
+     * @throws \Exception
+     */
+    public function getService(string $serviceName)
+    {
+        return $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+    }
+
+    /**
+     * @param string $parameterName
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getParameter(string $parameterName)
+    {
+        return $this->container->getParameter($parameterName);
     }
 
     protected function loadContainer()
@@ -155,7 +175,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function getConsoleOutput(): UnformattedOutputStub
     {
-        return $this->container->get(OutputInterface::class);
+        /** @var UnformattedOutputStub $output */
+        $output = $this->getService(OutputInterface::class);
+
+        return $output;
     }
 
     protected function setTextFilter(string $textFilter)

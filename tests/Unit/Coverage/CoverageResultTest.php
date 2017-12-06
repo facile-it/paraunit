@@ -32,12 +32,9 @@ class CoverageResultTest extends BaseTestCase
         $coverageResult->generateResults();
     }
 
-    /**
-     * @return CoverageProcessorInterface
-     */
-    private function mockCoverageProcessorInterface()
+    private function mockCoverageProcessorInterface(): CoverageProcessorInterface
     {
-        $coverageProcessor = $this->prophesize('Paraunit\Coverage\Processor\CoverageProcessorInterface');
+        $coverageProcessor = $this->prophesize(CoverageProcessorInterface::class);
         $coverageProcessor->process(Argument::cetera())
             ->shouldBeCalledTimes(1);
 

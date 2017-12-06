@@ -37,4 +37,9 @@ class Text extends AbstractText
             $this->getTextCoverage($coverage)
         );
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'text';
+    }
 }

@@ -22,10 +22,11 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     public function testOnEngineStartHasAllTagsRegistered(string $containerServiceName)
     {
         /** @var TestResultContainer $testResultContainer */
-        $testResultContainer = $this->container->get($containerServiceName);
+        $testResultContainer = $this->getService($containerServiceName);
         /** @var ConsoleFormatter $consoleFormatter */
-        $consoleFormatter = $this->container->get(ConsoleFormatter::class);
-        $outputInterface = $this->container->get(OutputInterface::class);
+        $consoleFormatter = $this->getService(ConsoleFormatter::class);
+        /** @var OutputInterface $outputInterface */
+        $outputInterface = $this->getService(OutputInterface::class);
 
         $consoleFormatter->onEngineBeforeStart();
 

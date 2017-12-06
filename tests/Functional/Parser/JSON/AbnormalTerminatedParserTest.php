@@ -23,7 +23,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $log->status = LogFetcher::LOG_ENDING_STATUS;
         $log->test = 'testFunction()';
         /** @var AbnormalTerminatedParser $parser */
-        $parser = $this->container->get(AbnormalTerminatedParser::class);
+        $parser = $this->getService(AbnormalTerminatedParser::class);
 
         $parsedResult = $parser->handleLogItem($process, $log);
 
@@ -39,7 +39,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $log = new \stdClass();
         $log->status = $otherStatuses;
         /** @var AbnormalTerminatedParser $parser */
-        $parser = $this->container->get(AbnormalTerminatedParser::class);
+        $parser = $this->getService(AbnormalTerminatedParser::class);
 
         $parsedResult = $parser->handleLogItem($process, $log);
 

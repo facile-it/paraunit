@@ -20,9 +20,9 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
     public function testFormatProvider()
     {
         /** @var SingleResultFormatter $formatter */
-        $formatter = $this->container->get(SingleResultFormatter::class);
+        $formatter = $this->getService(SingleResultFormatter::class);
         /** @var TestResultList $testResultList */
-        $testResultList = $this->container->get(TestResultList::class);
+        $testResultList = $this->getService(TestResultList::class);
 
         foreach ($testResultList->getTestResultContainers() as $resultContainer) {
             $this->assertMappingIsCorrect($formatter, $resultContainer->getTestResultFormat());

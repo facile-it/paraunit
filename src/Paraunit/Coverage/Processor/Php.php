@@ -38,4 +38,9 @@ class Php implements CoverageProcessorInterface
     {
         $this->php->process($codeCoverage, $this->targetFile->getFilePath());
     }
+
+    public static function getConsoleOptionName(): string
+    {
+        return 'php';
+    }
 }
