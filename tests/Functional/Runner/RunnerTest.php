@@ -11,6 +11,7 @@ use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MissingProviderTestStub;
+use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
 
 /**
@@ -196,6 +197,19 @@ class RunnerTest extends BaseIntegrationTestCase
             strpos($output, 'YOU SHOULD NOT SEE THIS'),
             'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
         );
+    }
+
+    public function testRegressionTestResultsBeforeRetryShouldNotBeReported()
+    {
+        $this->setTextFilter('PassThenRetryTestStub');
+        $this->loadContainer();
+
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
+        $output = $this->getConsoleOutput()->getOutput();
+        $this->assertContains('AAA.F.E', $output);
+        $this->assertContains('Executed: 1 test classes, 16 tests (3 retried)', $output);
+        $this->assertContains('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
+        $this->assertNotContains('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
     }
 
     private function executeRunner(): int
