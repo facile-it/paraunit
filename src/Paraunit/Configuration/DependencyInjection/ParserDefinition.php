@@ -28,11 +28,17 @@ class ParserDefinition
             new Reference(LogFetcher::class),
             new Reference('paraunit.test_result.no_test_executed_container'),
             new Reference(EventDispatcherInterface::class),
+            new Reference(RetryParser::class),
         ]);
 
         foreach ($this->defineParsers($container) as $reference) {
             $logParser->addMethodCall('addParser', [$reference]);
         }
+
+        $container->setDefinition(RetryParser::class, new Definition(RetryParser::class, [
+            new Reference('paraunit.test_result.retry_container'),
+            '%paraunit.max_retry_count%',
+        ]));
 
         $container->setDefinition(LogParser::class, $logParser);
         $container->setDefinition(LogFetcher::class, new Definition(LogFetcher::class, [
@@ -54,10 +60,6 @@ class ParserDefinition
                 $testResultFactory,
                 new Reference('paraunit.test_result.pass_container'),
                 LogPrinter::STATUS_PASS,
-            ]),
-            RetryParser::class => new Definition(RetryParser::class, [
-                new Reference('paraunit.test_result.retry_container'),
-                '%paraunit.max_retry_count%',
             ]),
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,

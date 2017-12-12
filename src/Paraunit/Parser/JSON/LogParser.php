@@ -26,6 +26,9 @@ class LogParser implements EventSubscriberInterface
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var RetryParser */
+    private $retryParser;
+
     /** @var ParserChainElementInterface[] */
     private $parsers;
 
@@ -34,15 +37,18 @@ class LogParser implements EventSubscriberInterface
      * @param LogFetcher $logLocator
      * @param TestResultHandlerInterface $noTestExecutedResultContainer
      * @param EventDispatcherInterface $eventDispatcher
+     * @param RetryParser $retryParser
      */
     public function __construct(
         LogFetcher $logLocator,
         TestResultHandlerInterface $noTestExecutedResultContainer,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        RetryParser $retryParser
     ) {
         $this->logLocator = $logLocator;
         $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
         $this->eventDispatcher = $eventDispatcher;
+        $this->retryParser = $retryParser;
         $this->parsers = [];
     }
 
@@ -83,11 +89,24 @@ class LogParser implements EventSubscriberInterface
             return;
         }
 
+        $this->processLogs($process, $logs);
+
+        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
+    }
+
+    /**
+     * @param AbstractParaunitProcess $process
+     * @param \stdClass[] $logs
+     */
+    private function processLogs(AbstractParaunitProcess $process, array $logs)
+    {
+        if ($this->retryParser->processWillBeRetried($process, $logs)) {
+            return;
+        }
+
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);
         }
-
-        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
     /**
