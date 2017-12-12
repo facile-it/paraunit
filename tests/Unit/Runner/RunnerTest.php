@@ -107,8 +107,8 @@ class RunnerTest extends BaseUnitTestCase
         $process->setExitCode(1);
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, Argument::type(ProcessEvent::class))
-            ->shouldBeCalledTimes(1);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
 
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()

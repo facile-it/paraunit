@@ -18,7 +18,7 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         return [
             ProcessEvent::PROCESS_STARTED => 'onProcessStarted',
             ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
-            ProcessEvent::PROCESS_PARSING_COMPLETED => ['onProcessParsingCompleted', 1],
+            ProcessEvent::PROCESS_PARSING_COMPLETED => ['onProcessCompleted', 1],
             ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
         ];
     }

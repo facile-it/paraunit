@@ -47,7 +47,8 @@ class ProcessPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessCompleted',
+            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessCompleted',
             EngineEvent::END => ['onEngineEnd', 400],
         ];
     }
@@ -56,7 +57,7 @@ class ProcessPrinter implements EventSubscriberInterface
      * @param ProcessEvent $processEvent
      * @throws \BadMethodCallException
      */
-    public function onProcessParsingCompleted(ProcessEvent $processEvent)
+    public function onProcessCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
 

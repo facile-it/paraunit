@@ -89,24 +89,17 @@ class LogParser implements EventSubscriberInterface
             return;
         }
 
-        $this->processLogs($process, $logs);
-
-        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
-    }
-
-    /**
-     * @param AbstractParaunitProcess $process
-     * @param \stdClass[] $logs
-     */
-    private function processLogs(AbstractParaunitProcess $process, array $logs)
-    {
         if ($this->retryParser->processWillBeRetried($process, $logs)) {
+            $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, new ProcessEvent($process));
+
             return;
         }
 
         foreach ($logs as $singleLog) {
             $this->processLog($process, $singleLog);
         }
+
+        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
     /**

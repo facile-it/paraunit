@@ -33,7 +33,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $printer = new ProcessPrinter($formatter->reveal(), $output);
 
-        $printer->onProcessParsingCompleted(new ProcessEvent($process));
+        $printer->onProcessCompleted(new ProcessEvent($process));
 
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
     }
@@ -79,7 +79,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
 
         $printer = new ProcessPrinter($formatter->reveal(), $output->reveal());
 
-        $printer->onProcessParsingCompleted(new ProcessEvent($process));
+        $printer->onProcessCompleted(new ProcessEvent($process));
     }
 
     public function newLineTimesProvider(): array
@@ -109,7 +109,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $printer = new ProcessPrinter($formatter->reveal(), $output);
 
-        $printer->onProcessParsingCompleted(new ProcessEvent($process));
+        $printer->onProcessCompleted(new ProcessEvent($process));
         $printer->onEngineEnd();
 
         $expectedOutput = str_repeat('.', 74) . '    74' . "\n"

@@ -59,6 +59,7 @@ class Runner implements EventSubscriberInterface
     {
         return [
             ProcessEvent::PROCESS_TERMINATED => 'pushToPipeline',
+            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
             ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
         ];
     }
@@ -93,15 +94,22 @@ class Runner implements EventSubscriberInterface
         $process = $processEvent->getProcess();
 
         if ($process->isToBeRetried()) {
-            $process->reset();
-            $process->increaseRetryCount();
-
             $this->queuedProcesses->enqueue($process);
+            
+            return;
+        }
 
-            $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, new ProcessEvent($process));
-        } elseif ($process->getExitCode() !== 0) {
+        if ($process->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
+    }
+
+    /**
+     * @param ProcessEvent $processEvent
+     */
+    public function onProcessToBeRetried(ProcessEvent $processEvent)
+    {
+        $this->queuedProcesses->enqueue($processEvent->getProcess());
     }
 
     private function createProcessQueue()

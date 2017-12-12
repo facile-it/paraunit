@@ -8,7 +8,9 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
+use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use PhpParser\Node\Arg;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
@@ -73,7 +75,22 @@ class LogParserTest extends BaseUnitTestCase
         $parser1->handleLogItem($process, Argument::cetera())
             ->shouldNotBeCalled();
 
-        $parser = $this->createParser(false, false, 1);
+        $parser = $this->createParser(false, false, true);
+        $parser->addParser($parser1->reveal());
+
+        $parser->onProcessTerminated(new ProcessEvent($process));
+    }
+
+    public function testParseHandlesTestToBeRetried()
+    {
+        $process = new StubbedParaunitProcess();
+        $process->setOutput('No tests executed!');
+        $process->setExitCode(0);
+        $parser1 = $this->prophesize(ParserChainElementInterface::class);
+        $parser1->handleLogItem($process, Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $parser = $this->createParser(true, false, false, true);
         $parser->addParser($parser1->reveal());
 
         $parser->onProcessTerminated(new ProcessEvent($process));
@@ -85,7 +102,7 @@ class LogParserTest extends BaseUnitTestCase
      * @param int $emptyTestsCount Number of processes with no test executed
      * @return LogParser
      */
-    private function createParser(bool $logFound = true, bool $abnormal = true, int $emptyTestsCount = 0): LogParser
+    private function createParser(bool $logFound = true, bool $abnormal = true, bool $noTestExecuted = false, bool $willBeRetried = false): LogParser
     {
         $logLocator = $this->prophesize(LogFetcher::class);
         $endLog = new \stdClass();
@@ -103,15 +120,36 @@ class LogParserTest extends BaseUnitTestCase
 
         $noTestExecutedContainer = $this->prophesize(TestResultHandlerInterface::class);
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
-            ->shouldBeCalledTimes($emptyTestsCount);
+            ->shouldBeCalledTimes((int)$noTestExecuted);
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(
-            ProcessEvent::PROCESS_PARSING_COMPLETED,
-            Argument::type(ProcessEvent::class)
-        )
-            ->shouldBeCalledTimes((int) ($emptyTestsCount === 0));
+        $eventDispatcher->dispatch('OtherEvents')
+            ->shouldNotBeCalled();
 
-        return new LogParser($logLocator->reveal(), $noTestExecutedContainer->reveal(), $eventDispatcher->reveal());
+        if ($willBeRetried) {
+            $eventDispatcher->dispatch(
+                ProcessEvent::PROCESS_TO_BE_RETRIED,
+                Argument::type(ProcessEvent::class)
+            )
+                ->shouldBeCalledTimes(1);
+        } elseif (! $noTestExecuted) {
+            $eventDispatcher->dispatch(
+                ProcessEvent::PROCESS_PARSING_COMPLETED,
+                Argument::type(ProcessEvent::class)
+            )
+                ->shouldBeCalledTimes(1);
+        }
+
+        $retryParser = $this->prophesize(RetryParser::class);
+        $retryParser->processWillBeRetried(Argument::cetera())
+            ->shouldBeCalledTimes((int) !$noTestExecuted)
+            ->willReturn($willBeRetried);
+
+        return new LogParser(
+            $logLocator->reveal(), 
+            $noTestExecutedContainer->reveal(), 
+            $eventDispatcher->reveal(),
+            $retryParser->reveal()
+        );
     }
 }

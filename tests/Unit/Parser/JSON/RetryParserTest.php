@@ -31,9 +31,8 @@ class RetryParserTest extends BaseUnitTestCase
 
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(true), 3);
-        $result = $parser->handleLogItem($process, $log);
 
-        $this->assertInstanceOf(MuteTestResult::class, $result);
+        $this->assertTrue($parser->processWillBeRetried($process, [$log]), 'Retry not detected');
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
     }
 
@@ -45,13 +44,8 @@ class RetryParserTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(false), 3);
 
-        $logs = json_decode($jsonLogs);
-        foreach ($logs as $singlelog) {
-            if ($singlelog->event === 'test') {
-                $this->assertNull($parser->handleLogItem($process, $singlelog), 'Parsing should continue!');
-                $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
-            }
-        }
+        $this->assertFalse($parser->processWillBeRetried($process, json_decode($jsonLogs)), 'Fake retry detected');
+        $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
     }
 
     public function testParseAndContinueWithNoRetryAfterLimit()
@@ -64,8 +58,8 @@ class RetryParserTest extends BaseUnitTestCase
 
         $parser = new RetryParser($this->getResultHandlerMock(false), 0);
 
-        $this->assertNull($parser->handleLogItem($process, $log), 'Parsing should continue!');
-        $this->assertFalse($process->isToBeRetried(), 'Test shouldn\'t be retried!');
+        $this->assertFalse($parser->processWillBeRetried($process, [$log]), 'Fake retry detected');
+        $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
     }
 
     /**

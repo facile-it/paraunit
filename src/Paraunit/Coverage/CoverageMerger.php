@@ -33,7 +33,7 @@ class CoverageMerger implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessCompleted',
         ];
     }
 

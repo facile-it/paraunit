@@ -94,12 +94,11 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         }
 
         $this->getOutput()->writeln('');
-        $this->getOutput()->writeln(sprintf(
-            'Executed: %d test classes, %d tests (%d retried)',
-            $this->processCompleted - $this->processRetried,
-            $testsCount,
-            $this->processRetried
-        ));
+        $this->getOutput()->write(sprintf('Executed: %d test classes', $this->processCompleted - $this->processRetried));
+        if ($this->processRetried > 0) {
+            $this->getOutput()->write(sprintf(' (%d retried)', $this->processRetried));
+        }
+        $this->getOutput()->write(sprintf(', %d tests', $testsCount - $this->processRetried));
         $this->getOutput()->writeln('');
     }
 }

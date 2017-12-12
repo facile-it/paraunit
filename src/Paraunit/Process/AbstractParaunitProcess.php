@@ -80,6 +80,8 @@ abstract class AbstractParaunitProcess
 
     public function markAsToBeRetried()
     {
+        $this->reset();
+        $this->increaseRetryCount();
         $this->shouldBeRetried = true;
         $this->testResults = [];
     }
