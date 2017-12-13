@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  * Migrated the whole DI configuration from YAML to PHP 
  * Require at least jean85/pretty-package-versions 1.0.3 (see related [#3](https://github.com/Jean85/pretty-package-versions/issues/3))
 
+### Fixed
+ * When a test class is retried, previous tests are no longer shown/counted toward executed tests (#109). 
+
 ### Removed
  * Removed support for Symfony 2.7
  * Removed dependency from `symfony/yaml` 
