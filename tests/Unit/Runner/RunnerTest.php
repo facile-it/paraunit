@@ -100,7 +100,7 @@ class RunnerTest extends BaseUnitTestCase
         $this->assertAttributeNotSame(0, 'exitCode', $runner);
     }
 
-    public function testOnProcessParsingCompletedWithRetriableProcess()
+    public function testOnProcessToBeRetried()
     {
         $process = new StubbedParaunitProcess();
         $process->setIsToBeRetried(true);
@@ -124,7 +124,7 @@ class RunnerTest extends BaseUnitTestCase
             $pipelineCollection->reveal()
         );
 
-        $runner->onProcessParsingCompleted(new ProcessEvent($process));
+        $runner->onProcessToBeRetried(new ProcessEvent($process));
 
         $this->assertAttributeSame(0, 'exitCode', $runner);
     }

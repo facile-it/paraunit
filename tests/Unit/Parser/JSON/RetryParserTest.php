@@ -6,7 +6,6 @@ namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use Paraunit\TestResult\MuteTestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;

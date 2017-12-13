@@ -129,8 +129,8 @@ class ParallelCommandTest extends BaseTestCase
         $processRetried = 15;
         $processesCount = $classExecuted + $processRetried;
         $this->assertContains(
-            sprintf('Executed: %d test classes (%d retried), 22 tests', $classExecuted, $processRetried), 
-            $output, 
+            sprintf('Executed: %d test classes (%d retried), 22 tests', $classExecuted, $processRetried),
+            $output,
             'Precondition failed'
         );
         $this->assertSame($processesCount, substr_count($output, 'PROCESS STARTED'));

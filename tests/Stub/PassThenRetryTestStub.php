@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Stub;
 
 class PassThenRetryTestStub extends BrokenTestBase implements BrokenTestInterface

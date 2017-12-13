@@ -10,7 +10,6 @@ use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use PhpParser\Node\Arg;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
@@ -96,12 +95,6 @@ class LogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
     }
 
-    /**
-     * @param bool $logFound
-     * @param bool $abnormal
-     * @param int $emptyTestsCount Number of processes with no test executed
-     * @return LogParser
-     */
     private function createParser(bool $logFound = true, bool $abnormal = true, bool $noTestExecuted = false, bool $willBeRetried = false): LogParser
     {
         $logLocator = $this->prophesize(LogFetcher::class);
@@ -120,7 +113,7 @@ class LogParserTest extends BaseUnitTestCase
 
         $noTestExecutedContainer = $this->prophesize(TestResultHandlerInterface::class);
         $noTestExecutedContainer->addProcessToFilenames(Argument::any())
-            ->shouldBeCalledTimes((int)$noTestExecuted);
+            ->shouldBeCalledTimes((int) $noTestExecuted);
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch('OtherEvents')
@@ -142,12 +135,12 @@ class LogParserTest extends BaseUnitTestCase
 
         $retryParser = $this->prophesize(RetryParser::class);
         $retryParser->processWillBeRetried(Argument::cetera())
-            ->shouldBeCalledTimes((int) !$noTestExecuted)
+            ->shouldBeCalledTimes((int) ! $noTestExecuted)
             ->willReturn($willBeRetried);
 
         return new LogParser(
-            $logLocator->reveal(), 
-            $noTestExecutedContainer->reveal(), 
+            $logLocator->reveal(),
+            $noTestExecutedContainer->reveal(),
             $eventDispatcher->reveal(),
             $retryParser->reveal()
         );
