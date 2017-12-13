@@ -5,8 +5,48 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Dec 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.11: add Symfony 4 support, some refactoring and a fix</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.11/</link>
+      <pubDate>Wed, 13 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.11/</guid>
+      <description>
+
+&lt;p&gt;This releases has nothing big on the outside, but a lot of code rework under the hood. The DI has been completely migrated from YAML to PHP (so no more &lt;code&gt;symfony/yaml&lt;/code&gt;) and support for Symfony 4 has been added; also, a small bug has been fixed.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Added support for Symfony 4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Migrated the whole DI configuration from YAML to PHP&lt;/li&gt;
+&lt;li&gt;Require at least jean85/pretty-package-versions 1.0.3 (see related &lt;a href=&#34;https://github.com/Jean85/pretty-package-versions/issues/3&#34;&gt;#3&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;When a test class is retried, previous tests are no longer shown/counted toward executed tests (#109).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;removed&#34;&gt;Removed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Removed support for Symfony 2.7&lt;/li&gt;
+&lt;li&gt;Removed dependency from &lt;code&gt;symfony/yaml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.10.1: report deprecations</title>
@@ -407,44 +447,6 @@ launched.&lt;/p&gt;
 wrong dir (&lt;code&gt;/temp&lt;/code&gt;); now it relies on &lt;code&gt;sys_get_temp_dir()&lt;/code&gt; as a fallback&lt;/li&gt;
 &lt;li&gt;Minor fixes to README.md (#48, #49, thanks @garak)&lt;/li&gt;
 &lt;li&gt;Paraunit version is shown correctly now when launching it&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.6.1</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.6.1/</link>
-      <pubDate>Fri, 10 Jun 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.6.1/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint,
-to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it
-this summer.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s the full 0.6.1 changelog:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Symfony compatibility has been extended to &lt;code&gt;&amp;lt;4.0&lt;/code&gt;, since Symfony 3.1 has been released; we will rely on &lt;a href=&#34;http://symfony.com/doc/current/contributing/code/bc.html&#34;&gt;their BC promise&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;A new approach for dockerfiles, now they will be based on the standard Docker PHP library. This will allow for a
-faster image build, cleaner dockerfiles and a more precise PHP version targeting, including:
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;docker/dockerfile-php-5.6&lt;/code&gt; with the related &lt;code&gt;docker/setup-php-5.6.sh&lt;/code&gt; script that will allow to build a container
-starting from the PHP 5.6 image&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;docker/dockerfile-php-7&lt;/code&gt; with the related  &lt;code&gt;docker/setup-php-7.sh&lt;/code&gt; script that will allow to build a container
-starting from the PHP 7.0 image&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Paraunit now adopts &lt;a href=&#34;http://www.php-fig.org/psr/psr-2/&#34;&gt;PSR-2&lt;/a&gt; as a coding style
-
-&lt;ul&gt;
-&lt;li&gt;A &lt;code&gt;contrib/contributing.sh&lt;/code&gt; has been added to tidy the code style, using &lt;code&gt;phpcbf&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;A git pre-commit hook is enabled during the &lt;code&gt;composer install&lt;/code&gt; command to warn about code style violations&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;CONTRIBUTING.md file has been added, with instructions for coding style and usage of Docker images for development&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
