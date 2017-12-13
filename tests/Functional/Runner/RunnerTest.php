@@ -36,7 +36,7 @@ class RunnerTest extends BaseIntegrationTestCase
             '...',
             '     3',
             'Execution time',
-            'Executed: 1 test classes, 3 tests (0 retried)',
+            'Executed: 1 test classes, 3 tests',
         ]);
     }
 
@@ -59,7 +59,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'files with RETRIED',
             'EntityManagerClosedTestStub',
         ]);
-        $this->assertContains('Executed: 1 test classes, 4 tests (3 retried)', $output->getOutput());
+        $this->assertContains('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
     }
 
     /**
@@ -210,6 +210,17 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertContains('Executed: 1 test classes (3 retried), 4 tests', $output);
         $this->assertContains('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
         $this->assertNotContains('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
+    }
+
+    public function testRegressionTestShouldBeRetriedOnlyWhenNeeded()
+    {
+        $this->setTextFilter('RetryOnceTestStub');
+        $this->loadContainer();
+
+        $this->assertEquals(0, $this->executeRunner(), 'Exit code should be 0');
+        $output = $this->getConsoleOutput()->getOutput();
+        $this->assertContains(PHP_EOL . 'A.', $output);
+        $this->assertContains('Executed: 1 test classes (1 retried), 1 tests', $output);
     }
 
     private function executeRunner(): int

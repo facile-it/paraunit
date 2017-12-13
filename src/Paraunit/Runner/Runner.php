@@ -91,15 +91,7 @@ class Runner implements EventSubscriberInterface
      */
     public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
-        $process = $processEvent->getProcess();
-
-        if ($process->isToBeRetried()) {
-            $this->queuedProcesses->enqueue($process);
-            
-            return;
-        }
-
-        if ($process->getExitCode() !== 0) {
+        if ($processEvent->getProcess()->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
     }
