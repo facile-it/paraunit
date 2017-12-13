@@ -206,7 +206,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertContains(PHP_EOL . 'AAA.F.E', $output);
+        $this->assertRegExp('/^AAA\.F\.E/m', $output);
         $this->assertContains('Executed: 1 test classes (3 retried), 4 tests', $output);
         $this->assertContains('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
         $this->assertNotContains('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
