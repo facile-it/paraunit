@@ -12,7 +12,7 @@ use Paraunit\TestResult\MuteTestResult;
  * Class RetryParser
  * @package Paraunit\Parser\JSON
  */
-class RetryParser implements ParserChainElementInterface
+class RetryParser
 {
     /** @var TestResultHandlerInterface */
     private $testResultContainer;
@@ -45,25 +45,26 @@ class RetryParser implements ParserChainElementInterface
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
 
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
+    public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
     {
-        if ($this->isRetriable($process) && $this->isToBeRetried($logItem)) {
-            $process->markAsToBeRetried();
-            $testResult = new MuteTestResult();
-            $this->testResultContainer->handleTestResult($process, $testResult);
-
-            return $testResult;
+        if ($process->getRetryCount() >= $this->maxRetryCount) {
+            return false;
         }
 
-        return null;
+        foreach ($logs as $logItem) {
+            if ($this->containsRetriableError($logItem)) {
+                $process->markAsToBeRetried();
+                $testResult = new MuteTestResult();
+                $this->testResultContainer->handleTestResult($process, $testResult);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    private function isRetriable(AbstractParaunitProcess $process): bool
-    {
-        return $process->getRetryCount() < $this->maxRetryCount;
-    }
-
-    private function isToBeRetried(\stdClass $log): bool
+    private function containsRetriableError(\stdClass $log): bool
     {
         return property_exists($log, 'status')
             && $log->status === 'error'

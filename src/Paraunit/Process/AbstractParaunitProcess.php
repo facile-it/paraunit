@@ -80,8 +80,9 @@ abstract class AbstractParaunitProcess
 
     public function markAsToBeRetried()
     {
+        $this->reset();
+        $this->increaseRetryCount();
         $this->shouldBeRetried = true;
-        $this->testResults = [];
     }
 
     public function isToBeRetried(): bool
@@ -92,6 +93,7 @@ abstract class AbstractParaunitProcess
     public function reset()
     {
         $this->shouldBeRetried = false;
+        $this->testResults = [];
     }
 
     public function getFilename(): string

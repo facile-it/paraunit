@@ -56,7 +56,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         ClockMock::withClockMock(false);
 
         $this->assertContains('Execution time -- 00:01:00', $output->getOutput());
-        $this->assertContains('Executed: 5 test classes, 45 tests (1 retried)', $output->getOutput());
+        $this->assertContains('Executed: 5 test classes (1 retried), 44 tests', $output->getOutput());
     }
 
     public function testOnEngineEndHandlesEmptyMessagesCorrectly()
