@@ -38,6 +38,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
      */
     public function start(int $pipelineNumber)
     {
+        $this->reset();
         $env = $this->process->getEnv();
         $env[EnvVariables::PROCESS_UNIQUE_ID] = $this->getUniqueId();
         $env[EnvVariables::PIPELINE_NUMBER] = $pipelineNumber;

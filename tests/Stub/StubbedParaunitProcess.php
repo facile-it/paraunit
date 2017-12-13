@@ -78,7 +78,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
      */
     public function start(int $pipeline)
     {
-        return;
+        $this->reset();
     }
 
     public function getExitCode(): int
