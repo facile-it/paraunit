@@ -54,10 +54,10 @@ class LogPrinter extends Util\Printer implements TestListener
      * An error occurred.
      *
      * @param Test $test
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @param float $time
      */
-    public function addError(Test $test, \Exception $exception, $time)
+    public function addError(Test $test, \Throwable $exception, float $time): void
     {
         $this->writeCase(
             self::STATUS_ERROR,
@@ -77,7 +77,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param Warning $warning
      * @param float $time
      */
-    public function addWarning(Test $test, Warning $warning, $time)
+    public function addWarning(Test $test, Warning $warning, float $time): void
     {
         $this->writeCase(
             self::STATUS_WARNING,
@@ -97,7 +97,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param AssertionFailedError $error
      * @param float $time
      */
-    public function addFailure(Test $test, AssertionFailedError $error, $time)
+    public function addFailure(Test $test, AssertionFailedError $error, float $time): void
     {
         $this->writeCase(
             self::STATUS_FAIL,
@@ -114,10 +114,10 @@ class LogPrinter extends Util\Printer implements TestListener
      * Incomplete test.
      *
      * @param Test $test
-     * @param \Exception $error
+     * @param \Throwable $error
      * @param float $time
      */
-    public function addIncompleteTest(Test $test, \Exception $error, $time)
+    public function addIncompleteTest(Test $test, \Throwable $error, float $time): void
     {
         $this->writeCase(
             self::STATUS_ERROR,
@@ -134,10 +134,10 @@ class LogPrinter extends Util\Printer implements TestListener
      * Risky test.
      *
      * @param Test $test
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @param float $time
      */
-    public function addRiskyTest(Test $test, \Exception $exception, $time)
+    public function addRiskyTest(Test $test, \Throwable $exception, float $time): void
     {
         $this->writeCase(
             self::STATUS_ERROR,
@@ -154,10 +154,10 @@ class LogPrinter extends Util\Printer implements TestListener
      * Skipped test.
      *
      * @param Test $test
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @param float $time
      */
-    public function addSkippedTest(Test $test, \Exception $exception, $time)
+    public function addSkippedTest(Test $test, \Throwable $exception, float $time): void
     {
         $this->writeCase(
             self::STATUS_ERROR,
@@ -176,7 +176,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param TestSuite $suite
      * @throws \RuntimeException
      */
-    public function startTestSuite(TestSuite $suite)
+    public function startTestSuite(TestSuite $suite): void
     {
         $this->currentTestSuiteName = $suite->getName();
         $this->currentTestName = '';
@@ -188,13 +188,13 @@ class LogPrinter extends Util\Printer implements TestListener
         ]);
     }
 
-    public function endTestSuite(TestSuite $suite)
+    public function endTestSuite(TestSuite $suite): void
     {
         $this->currentTestSuiteName = '';
         $this->currentTestName = '';
     }
 
-    public function startTest(Test $test)
+    public function startTest(Test $test): void
     {
         $this->currentTestName = Util\Test::describe($test);
         $this->currentTestPass = true;
@@ -212,7 +212,7 @@ class LogPrinter extends Util\Printer implements TestListener
      * @param Test $test
      * @param float $time
      */
-    public function endTest(Test $test, $time)
+    public function endTest(Test $test, float $time): void
     {
         if ($this->currentTestPass) {
             $this->writeCase(self::STATUS_PASS, $time, [], '', $test);
