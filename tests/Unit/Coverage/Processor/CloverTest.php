@@ -6,7 +6,8 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Clover;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use Paraunit\Proxy\Coverage\FakeDriver;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -22,7 +23,7 @@ class CloverTest extends BaseUnitTestCase
 
         $this->assertFileNotExists($targetFile->getFilePath());
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());

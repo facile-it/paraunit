@@ -12,12 +12,12 @@ use SebastianBergmann\CodeCoverage\Driver\Driver;
  */
 class FakeDriver implements Driver
 {
-    public function start($determineUnusedAndDead = true)
+    public function start($determineUnusedAndDead = true): void
     {
         throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');
     }
 
-    public function stop()
+    public function stop(): array
     {
         throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');
     }

@@ -6,7 +6,7 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Php;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -22,7 +22,7 @@ class PhpTest extends BaseUnitTestCase
 
         $this->assertFileNotExists($targetFile->getFilePath());
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());

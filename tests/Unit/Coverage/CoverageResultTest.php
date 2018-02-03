@@ -7,7 +7,8 @@ namespace Tests\Unit\Coverage;
 use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use Paraunit\Proxy\Coverage\FakeDriver;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Prophecy\Argument;
 use Tests\BaseTestCase;
 
@@ -21,7 +22,7 @@ class CoverageResultTest extends BaseTestCase
     {
         $merger = $this->prophesize(CoverageMerger::class);
         $merger->getCoverageData()
-            ->willReturn(new CodeCoverage());
+            ->willReturn($this->createCodeCoverage());
 
         $coverageResult = new CoverageResult($merger->reveal());
 

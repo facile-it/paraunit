@@ -6,8 +6,8 @@ namespace Tests\Unit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 

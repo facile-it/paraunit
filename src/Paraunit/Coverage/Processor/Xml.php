@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputPath;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
