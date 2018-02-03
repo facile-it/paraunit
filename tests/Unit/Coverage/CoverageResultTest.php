@@ -7,8 +7,6 @@ namespace Tests\Unit\Coverage;
 use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
-use Paraunit\Proxy\Coverage\FakeDriver;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Prophecy\Argument;
 use Tests\BaseTestCase;
 

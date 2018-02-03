@@ -320,16 +320,5 @@ class LogPrinter extends Util\Printer implements TestListener
     private function getStackTrace($error): string
     {
         return Util\Filter::getFilteredStacktrace($error);
-        $trace = explode("\n", $traceString);
-        array_pop($trace); // last element is empty
-        
-        return array_map(function ($traceElem) {
-            [$file, $line] = explode(':', $traceElem);
-            
-            return [
-                'file' => $file,
-                'line' => (int)$line,
-            ];
-        }, $trace);
     }
 }

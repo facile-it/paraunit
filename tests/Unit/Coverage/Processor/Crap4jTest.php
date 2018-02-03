@@ -6,7 +6,6 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Crap4j;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**

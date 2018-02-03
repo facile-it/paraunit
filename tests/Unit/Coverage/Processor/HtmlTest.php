@@ -6,7 +6,6 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\Processor\Html;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**

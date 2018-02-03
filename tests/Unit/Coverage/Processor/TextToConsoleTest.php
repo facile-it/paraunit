@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Coverage\Processor\TextToConsole;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
