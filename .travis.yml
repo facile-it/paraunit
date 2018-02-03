@@ -6,7 +6,6 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - 7.0
   - 7.1
   - 7.2
 
@@ -58,4 +57,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    php: 7.0
+    php: 7.1

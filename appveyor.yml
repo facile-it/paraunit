@@ -17,8 +17,8 @@ install:
   - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
   - cd c:\php
   - IF %PHP%==1 appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
-  - IF NOT EXIST php-7.0.9-nts-Win32-VC14-x86.zip (appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-7.0.9-nts-Win32-VC14-x86.zip)
-  - IF %PHP%==1 7z x php-7.0.9-nts-Win32-VC14-x86.zip -y >nul
+  - IF NOT EXIST php-7.0.9-nts-Win32-VC14-x86.zip (appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-7.1.9-nts-Win32-VC14-x86.zip)
+  - IF %PHP%==1 7z x php-7.1.9-nts-Win32-VC14-x86.zip -y >nul
   - IF %PHP%==1 copy /Y php.ini-development php.ini
   - IF %PHP%==1 echo extension_dir=ext >> php.ini
   - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
