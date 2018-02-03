@@ -6,6 +6,7 @@ namespace Paraunit\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\SelfDescribing;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestFailure;
@@ -196,7 +197,7 @@ class LogPrinter extends Util\Printer implements TestListener
 
     public function startTest(Test $test): void
     {
-        $this->currentTestName = Util\Test::describe($test);
+        $this->currentTestName = $test instanceof SelfDescribing ? $test->toString() : \get_class($test);
         $this->currentTestPass = true;
 
         $this->writeArray([
@@ -215,18 +216,18 @@ class LogPrinter extends Util\Printer implements TestListener
     public function endTest(Test $test, float $time): void
     {
         if ($this->currentTestPass) {
-            $this->writeCase(self::STATUS_PASS, $time, [], '', $test);
+            $this->writeCase(self::STATUS_PASS, $time, '', '', $test);
         }
     }
 
     /**
      * @param string $status
      * @param float $time
-     * @param array $trace
+     * @param string $trace
      * @param string $message
      * @param Test|TestCase|null $test
      */
-    private function writeCase($status, $time, array $trace = [], $message = '', $test = null)
+    private function writeCase(string $status, float $time, string $trace, $message = '', $test = null)
     {
         $output = '';
         if ($test instanceof TestCase) {
@@ -316,11 +317,19 @@ class LogPrinter extends Util\Printer implements TestListener
         return $string;
     }
 
-    private function getStackTrace($error): array
+    private function getStackTrace($error): string
     {
-        /** @var string[] $trace */
-        $trace = Util\Filter::getFilteredStacktrace($error, false);
-
-        return $trace;
+        return Util\Filter::getFilteredStacktrace($error);
+        $trace = explode("\n", $traceString);
+        array_pop($trace); // last element is empty
+        
+        return array_map(function ($traceElem) {
+            [$file, $line] = explode(':', $traceElem);
+            
+            return [
+                'file' => $file,
+                'line' => (int)$line,
+            ];
+        }, $trace);
     }
 }
