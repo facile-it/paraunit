@@ -16,7 +16,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
     "status": "pass",
     "time": 0.00092697143554688,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -29,7 +29,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
     "status": "pass",
     "time": 0.00023484230041504,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -42,7 +42,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
     "status": "pass",
     "time": 0.00017714500427246,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{

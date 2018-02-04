@@ -16,7 +16,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
     "status": "pass",
     "time": 0.00048184394836426,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -29,7 +29,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
     "status": "pass",
     "time": 0.00011897087097168,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -42,7 +42,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
     "status": "pass",
     "time": 0.00016307830810547,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -59,7 +59,7 @@
     "test": "Warning",
     "status": "warning",
     "time": 0.0048871040344238,
-    "trace": [],
+    "trace": "",
     "message": "The data provider specified for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo is invalid.\nTrying to invoke private method Paraunit\\Tests\\Stub\\ThreeGreenTestStub::provider2() from scope ReflectionMethod",
     "output": ""
 }

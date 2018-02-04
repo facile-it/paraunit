@@ -11,7 +11,6 @@ use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Paraunit\TestResult\TestResultWithMessage;
-use Paraunit\TestResult\TraceStep;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -62,7 +61,6 @@ class TestResultFactoryTest extends BaseUnitTestCase
     public function testCreateFromLogWithTrace()
     {
         $log = $this->getLogWithTrace();
-        $log->trace[] = clone $log->trace[0];
 
         $factory = new TestResultFactory();
         /** @var FullTestResult $result */
@@ -71,14 +69,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertInstanceOf(FullTestResult::class, $result);
         $this->assertInstanceOf(TestResultFormat::class, $result->getTestResultFormat());
         $this->assertEquals($log->message, $result->getFailureMessage());
-        $trace = $result->getTrace();
-        $this->assertCount(count($log->trace), $trace);
-        $this->assertContainsOnlyInstancesOf(TraceStep::class, $trace);
-        $i = 0;
-        do {
-            $this->assertEquals($log->trace[$i]->file, $trace[$i]->getFilePath());
-            $this->assertEquals($log->trace[$i]->line, $trace[$i]->getLine());
-        } while (++$i < count($log->trace));
+        $this->assertSame($log->trace, $result->getTrace());
     }
 
     public function testCreateFromLogWithAbnormalTermination()

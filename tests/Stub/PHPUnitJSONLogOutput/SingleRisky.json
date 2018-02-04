@@ -16,7 +16,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
     "status": "pass",
     "time": 0.00049185752868652,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -29,7 +29,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
     "status": "pass",
     "time": 0.0001678466796875,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -42,7 +42,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (false)",
     "status": "error",
     "time": 0.00013589859008789,
-    "trace": [],
+    "trace": "",
     "message": "Risky Test: This test printed output: SPAM",
     "output": "SPAM"
 }{
@@ -55,7 +55,7 @@
     "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)",
     "status": "pass",
     "time": 0.00017404556274414,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }
