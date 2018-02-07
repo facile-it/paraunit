@@ -34,29 +34,29 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         const STATUS_WARNING = 'warning';
         const STATUS_FAIL = 'fail';
         const STATUS_PASS = 'pass';
-    
+
         const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
         const MESSAGE_RISKY_TEST = 'Risky Test: ';
         const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
-    
+
         /** @var resource */
         private $logFile;
-    
+
         /** @var string */
         private $currentTestSuiteName;
-    
+
         /** @var string */
         private $currentTestName;
-    
+
         /** @var bool */
         private $currentTestPass;
-    
+
         public function __construct()
         {
             $this->logFile = fopen($this->getLogFilename(), 'wt');
             $this->autoFlush = true;
         }
-    
+
         /**
          * An error occurred.
          *
@@ -73,10 +73,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 TestFailure::exceptionToString($exception),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * A warning occurred.
          *
@@ -93,10 +93,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 TestFailure::exceptionToString($warning),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * A failure occurred.
          *
@@ -113,10 +113,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 TestFailure::exceptionToString($error),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * Incomplete test.
          *
@@ -133,10 +133,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 self::MESSAGE_INCOMPLETE_TEST . $error->getMessage(),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * Risky test.
          *
@@ -153,10 +153,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 self::MESSAGE_RISKY_TEST . $exception->getMessage(),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * Skipped test.
          *
@@ -173,10 +173,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 self::MESSAGE_SKIPPED_TEST . $exception->getMessage(),
                 $test
             );
-    
+
             $this->currentTestPass = false;
         }
-    
+
         /**
          * A testsuite started.
          *
@@ -187,32 +187,32 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         {
             $this->currentTestSuiteName = $suite->getName();
             $this->currentTestName = '';
-    
+
             $this->writeArray([
                 'event' => 'suiteStart',
                 'suite' => $this->currentTestSuiteName,
                 'tests' => count($suite),
             ]);
         }
-    
+
         public function endTestSuite(TestSuite $suite): void
         {
             $this->currentTestSuiteName = '';
             $this->currentTestName = '';
         }
-    
+
         public function startTest(Test $test): void
         {
             $this->currentTestName = $test instanceof SelfDescribing ? $test->toString() : \get_class($test);
             $this->currentTestPass = true;
-    
+
             $this->writeArray([
                 'event' => 'testStart',
                 'suite' => $this->currentTestSuiteName,
                 'test' => $this->currentTestName,
             ]);
         }
-    
+
         /**
          * A test ended.
          *
@@ -225,7 +225,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 $this->writeCase(self::STATUS_PASS, $time, '', '', $test);
             }
         }
-    
+
         /**
          * @param string $status
          * @param float $time
@@ -239,7 +239,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
             if ($test instanceof TestCase) {
                 $output = $test->getActualOutput();
             }
-    
+
             $this->writeArray([
                 'event' => 'test',
                 'suite' => $this->currentTestSuiteName,
@@ -251,7 +251,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 'output' => $output,
             ]);
         }
-    
+
         /**
          * @param array $buffer
          */
@@ -262,10 +262,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                     $input = $this->convertToUtf8($input);
                 }
             });
-    
+
             $this->writeToLog(json_encode($buffer, JSON_PRETTY_PRINT));
         }
-    
+
         private function writeToLog($buffer)
         {
             // ignore everything that is not a JSON object
@@ -274,7 +274,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
                 \fflush($this->logFile);
             }
         }
-    
+
         /**
          * @return string
          * @throws \RuntimeException
@@ -286,15 +286,15 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
             if (! @mkdir($logDir, 0777, true) && ! is_dir($logDir)) {
                 throw new \RuntimeException('Cannot create folder for JSON logs');
             }
-    
+
             $logFilename = getenv(EnvVariables::PROCESS_UNIQUE_ID);
             if ($logFilename === false) {
                 throw new \InvalidArgumentException('Log filename not received: environment variable not set');
             }
-    
+
             return $logDir . $logFilename . '.json.log';
         }
-    
+
         /**
          * @return string
          * @throws \InvalidArgumentException
@@ -302,27 +302,27 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         private function getLogDirectory(): string
         {
             $logDirectory = getenv(EnvVariables::LOG_DIR);
-    
+
             if ($logDirectory === false) {
                 throw new \InvalidArgumentException('Log directory not received: environment variable not set');
             }
-    
+
             if (substr($logDirectory, -1) !== DIRECTORY_SEPARATOR) {
                 $logDirectory .= DIRECTORY_SEPARATOR;
             }
-    
+
             return $logDirectory;
         }
-    
+
         private function convertToUtf8($string): string
         {
             if (! \mb_detect_encoding($string, 'UTF-8', true)) {
                 return \mb_convert_encoding($string, 'UTF-8');
             }
-    
+
             return $string;
         }
-    
+
         private function getStackTrace($error): string
         {
             return Util\Filter::getFilteredStacktrace($error);

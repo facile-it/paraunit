@@ -31,7 +31,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         {
             throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');
         }
-    
+
         public function stop(): array
         {
             throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');
