@@ -6,6 +6,7 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
+use PHPUnit\Runner\Version;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
@@ -159,7 +160,9 @@ class ParallelCommandTest extends BaseTestCase
 
     public function testExecutionWithDeprecationListener()
     {
-        $this->markTestSkipped('Blocked by symfony/symfony#26017');
+        if (version_compare(Version::id(), '7.0.0', '>=')) {
+            $this->markTestSkipped('Blocked by symfony/symfony#26017');
+        }
 
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
