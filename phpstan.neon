@@ -6,6 +6,7 @@ parameters:
         - '/Parameter #1 $process of class Paraunit\\Lifecycle\\ProcessEvent constructor expects Paraunit\\Process\\AbstractParaunitProcess, Paraunit\\Process\\AbstractParaunitProcess|null given\./'
         - '/Call to function is_array\(\) will always evaluate to false./'
     excludes_analyse:
+        - src/Paraunit/Parser/JSON/LogPrinterV6.php
         - tests/Stub/ParseErrorTestStub.php
 includes:
 	- vendor/jangregor/phpstan-prophecy/src/extension.neon
