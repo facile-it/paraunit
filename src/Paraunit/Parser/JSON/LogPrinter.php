@@ -17,7 +17,7 @@ use PHPUnit\Runner\Version;
 use PHPUnit\Util;
 
 if (version_compare(Version::id(), '7.0.0', '<')) {
-    class_alias('Paraunit\Parser\JSON\LogPrinter', LogPrinterV6::class);
+    class_alias(LogPrinterV6::class, 'Paraunit\Parser\JSON\LogPrinter');
 // Using an early return instead of a else does not work when using the PHPUnit phar due to some weird PHP behavior
 // (the class gets defined without executing the code before it and so the definition is not properly conditional)
 } else {
