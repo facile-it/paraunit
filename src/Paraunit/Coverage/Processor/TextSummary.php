@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 
 /**
- * Class Text
+ * Class TextSummary
  * @package Paraunit\Proxy\Coverage
  */
-class Text extends AbstractText
+class TextSummary extends AbstractText
 {
     /**
-     * Text constructor.
+     * TextSummary constructor.
      * @param OutputFile $targetFile
      * @param bool $showColors
      */
     public function __construct(OutputFile $targetFile, bool $showColors)
     {
-        parent::__construct($showColors, false);
+        parent::__construct($targetFile, $showColors, true);
     }
 
-     public static function getConsoleOptionName(): string
+    public static function getConsoleOptionName(): string
     {
-        return 'text';
+        return 'text-summary';
     }
 }

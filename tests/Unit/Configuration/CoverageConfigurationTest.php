@@ -16,7 +16,7 @@ use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
-use Paraunit\Coverage\Processor\TextToConsole;
+use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
@@ -173,7 +173,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ['xml', Xml::class],
             ['html', Html::class],
             ['text', Text::class],
-            ['text-to-console', TextToConsole::class],
+            ['text-to-console', TextSummary::class],
             ['crap4j', Crap4j::class],
             ['php', Php::class],
         ];
@@ -228,7 +228,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $this->assertCount(1, $processors, 'Wrong count of coverage processors');
         $processor = $processors[0];
-        $this->assertInstanceOf(TextToConsole::class, $processor);
+        $this->assertInstanceOf(TextSummary::class, $processor);
 
         $reflection = new \ReflectionClass(AbstractText::class);
         $property = $reflection->getProperty('showColors');

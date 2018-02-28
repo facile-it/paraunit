@@ -12,13 +12,11 @@ use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
-use Paraunit\Coverage\Processor\TextToConsole;
+use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class CoverageConfiguration
@@ -43,15 +41,9 @@ class CoverageConfiguration extends ParallelConfiguration
 
         $this->addFileProcessor($coverageResult, $input, Clover::class);
         $this->addFileProcessor($coverageResult, $input, Text::class);
+        $this->addFileProcessor($coverageResult, $input, TextSummary::class);
         $this->addFileProcessor($coverageResult, $input, Crap4j::class);
         $this->addFileProcessor($coverageResult, $input, Php::class);
-
-        if ($input->getOption('text-to-console')) {
-            $this->addProcessor($coverageResult, TextToConsole::class, [
-                new Reference(OutputInterface::class),
-                (bool) $input->getOption('ansi'),
-            ]);
-        }
     }
 
     private function addProcessor(Definition $coverageResult, string $processorClass, array $dependencies)
@@ -69,6 +61,7 @@ class CoverageConfiguration extends ParallelConfiguration
         if ($input->getOption($optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 $this->createOutputFileDefinition($input, $optionName),
+                (bool)$input->getOption('ansi'),
             ]);
         }
     }
