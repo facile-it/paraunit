@@ -20,7 +20,7 @@ class Text extends AbstractText
      */
     public function __construct(OutputFile $targetFile, bool $showColors)
     {
-        parent::__construct($showColors, false);
+        parent::__construct($targetFile, $showColors, false);
     }
 
      public static function getConsoleOptionName(): string

@@ -22,6 +22,7 @@ abstract class AbstractText implements CoverageProcessorInterface
     public function __construct(OutputFile $targetFile, bool $showColors, bool $onlySummary)
     {
         $this->text = new PHPUnitText(50, 90, false, $onlySummary);
+        $this->targetFile = $targetFile;
         $this->showColors = $showColors;
     }
 
