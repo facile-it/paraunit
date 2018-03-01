@@ -24,7 +24,7 @@ class Text extends AbstractText
         parent::__construct($output, $showColors, false, $targetFile);
     }
 
-     public static function getConsoleOptionName(): string
+    public static function getConsoleOptionName(): string
     {
         return 'text';
     }

@@ -63,7 +63,7 @@ class CoverageConfiguration extends ParallelConfiguration
         if ($input->getOption($optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 $this->createOutputFileDefinition($input, $optionName),
-                (bool)$input->getOption('ansi'),
+                (bool) $input->getOption('ansi'),
             ]);
         }
     }
@@ -78,7 +78,7 @@ class CoverageConfiguration extends ParallelConfiguration
         if ($this->optionIsEnabled($input, $optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 new Reference(OutputInterface::class),
-                (bool)$input->getOption('ansi'),
+                (bool) $input->getOption('ansi'),
                 $this->createOutputFileDefinition($input, $optionName),
             ]);
         }
@@ -108,7 +108,7 @@ class CoverageConfiguration extends ParallelConfiguration
         if ($this->optionIsEnabled($input, $optionName)) {
             return new Definition(OutputFile::class, [$input->getOption($optionName)]);
         }
-        
+
         return null;
     }
 

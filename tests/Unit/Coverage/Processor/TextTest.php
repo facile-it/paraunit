@@ -7,7 +7,6 @@ namespace Tests\Unit\Coverage\Processor;
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Proxy\Coverage\CodeCoverage;
-use PhpParser\Node\Arg;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseUnitTestCase;
