@@ -54,6 +54,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn($this->getConfigForStubs());
         $input->getOption(Argument::cetera())
             ->willReturn(null);
+        $input->hasParameterOption(Argument::cetera())
+            ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
@@ -107,6 +109,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn(true);
         $input->getOption(Argument::cetera())
             ->willReturn(null);
+        $input->hasParameterOption(Argument::cetera())
+            ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
@@ -132,7 +136,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'xml',
             'html',
             'text',
-            'text-to-console',
+            'text-summary',
             'crap4j',
             'php',
             'ansi',
@@ -142,6 +146,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         foreach ($options as $optionName) {
             $input->getOption($optionName)
                 ->willReturn($optionName === $inputOption ? 'someValue' : null);
+            $input->hasParameterOption('--' . $optionName)
+                ->willReturn($optionName === $inputOption);
         }
 
         $input->getArgument('stringFilter')
@@ -173,7 +179,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ['xml', Xml::class],
             ['html', Html::class],
             ['text', Text::class],
-            ['text-to-console', TextSummary::class],
+            ['text-summary', TextSummary::class],
             ['crap4j', Crap4j::class],
             ['php', Php::class],
         ];
@@ -205,7 +211,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
-        $input->getOption('text-to-console')
+        $input->getOption('text-summary')
             ->shouldBeCalled()
             ->willReturn(true);
         $input->getOption('ansi')
@@ -214,6 +220,10 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('debug')
             ->willReturn(null);
         $input->getOption('logo')
+            ->willReturn(false);
+        $input->hasParameterOption('--text-summary')
+            ->willReturn(true);
+        $input->hasParameterOption(Argument::cetera())
             ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());

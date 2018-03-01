@@ -64,7 +64,7 @@ class CoverageCommandTest extends BaseUnitTestCase
             ['--xml'],
             ['--html'],
             ['--text'],
-            ['--text-to-console'],
+            ['--text-summary'],
             ['--crap4j'],
             ['--php'],
         ];
