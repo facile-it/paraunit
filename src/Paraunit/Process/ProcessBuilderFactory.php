@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Symfony\Component\Process\Process;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class ProcessBuilderFactory
@@ -15,10 +15,12 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class ProcessBuilderFactory implements ProcessFactoryInterface
 {
-    /** @var ProcessBuilder */
-    private $builderPrototype;
     /** @var CommandLine */
     private $cliCommand;
+    /** @var array */
+    private $processArguments;
+    /** @var array */
+    private $processEnv;
 
     /**
      * ProcessBuilderFactory constructor.
@@ -32,29 +34,31 @@ class ProcessBuilderFactory implements ProcessFactoryInterface
         TempFilenameFactory $tempFilenameFactory
     ) {
         $this->cliCommand = $cliCommand;
-        $this->builderPrototype = new ProcessBuilder();
 
-        $this->builderPrototype->addEnvironmentVariables([
+        $this->processEnv = [
             EnvVariables::LOG_DIR => $tempFilenameFactory->getPathForLog(),
-        ]);
+        ];
 
         foreach ($this->cliCommand->getExecutable() as $item) {
-            $this->builderPrototype->add($item);
+            $this->processArguments[] = $item;
         }
 
         foreach ($this->cliCommand->getOptions($phpunitConfig) as $option) {
-            $this->builderPrototype->add($option);
+            $this->processArguments[] = $option;
         }
     }
 
     public function create(string $testFilePath): AbstractParaunitProcess
     {
-        $builder = clone $this->builderPrototype;
-        $builder->add($testFilePath);
+        $arguments = array_merge($this->processArguments, [$testFilePath]);
+
         foreach ($this->cliCommand->getSpecificOptions($testFilePath) as $specificOption) {
-            $builder->add($specificOption);
+            $arguments[] = $specificOption;
         }
 
-        return new SymfonyProcessWrapper($builder->getProcess(), $testFilePath);
+        return new SymfonyProcessWrapper(
+            new Process($arguments, null, $this->processEnv),
+            $testFilePath
+        );
     }
 }
