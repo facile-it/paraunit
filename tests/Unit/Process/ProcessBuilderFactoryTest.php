@@ -19,7 +19,7 @@ class ProcessBuilderFactoryTest extends BaseUnitTestCase
 {
     /**
      * @group legacy
-     * @expectedDeprecation The Symfony\Component\Process\ProcessBuilder class is deprecated since version 3.4 and will be removed in 4.0. Use the Process class instead
+     * @expectedDeprecation The Symfony\Component\Process\ProcessBuilder class is deprecated since Symfony 3.4 and will be removed in 4.0. Use the Process class instead
      */
     public function testCreateProcess()
     {
