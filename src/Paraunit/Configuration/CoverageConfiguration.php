@@ -15,8 +15,10 @@ use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class CoverageConfiguration
@@ -40,8 +42,8 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->addPathProcessor($coverageResult, $input, Html::class);
 
         $this->addFileProcessor($coverageResult, $input, Clover::class);
-        $this->addFileProcessor($coverageResult, $input, Text::class);
-        $this->addFileProcessor($coverageResult, $input, TextSummary::class);
+        $this->addFileOrOutputProcessor($coverageResult, $input, Text::class);
+        $this->addFileOrOutputProcessor($coverageResult, $input, TextSummary::class);
         $this->addFileProcessor($coverageResult, $input, Crap4j::class);
         $this->addFileProcessor($coverageResult, $input, Php::class);
     }
@@ -66,6 +68,22 @@ class CoverageConfiguration extends ParallelConfiguration
         }
     }
 
+    private function addFileOrOutputProcessor(
+        Definition $coverageResult,
+        InputInterface $input,
+        string $processorClass
+    ) {
+        $optionName = $this->getOptionName($processorClass);
+
+        if ($this->optionIsEnabled($input, $optionName)) {
+            $this->addProcessor($coverageResult, $processorClass, [
+                new Reference(OutputInterface::class),
+                (bool)$input->getOption('ansi'),
+                $this->createOutputFileDefinition($input, $optionName),
+            ]);
+        }
+    }
+
     private function addPathProcessor(
         Definition $coverageResult,
         InputInterface $input,
@@ -73,16 +91,25 @@ class CoverageConfiguration extends ParallelConfiguration
     ) {
         $optionName = $this->getOptionName($processorClass);
 
-        if ($input->getOption($optionName)) {
+        if ($this->optionIsEnabled($input, $optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
                 $this->createOutputPathDefinition($input, $optionName),
             ]);
         }
     }
 
-    private function createOutputFileDefinition(InputInterface $input, string $optionName): Definition
+    /**
+     * @param InputInterface $input
+     * @param string $optionName
+     * @return null|Definition
+     */
+    private function createOutputFileDefinition(InputInterface $input, string $optionName)
     {
-        return new Definition(OutputFile::class, [$input->getOption($optionName)]);
+        if ($this->optionIsEnabled($input, $optionName)) {
+            return new Definition(OutputFile::class, [$input->getOption($optionName)]);
+        }
+        
+        return null;
     }
 
     private function createOutputPathDefinition(InputInterface $input, string $optionName): Definition
@@ -102,5 +129,10 @@ class CoverageConfiguration extends ParallelConfiguration
         }
 
         return $processorClass::getConsoleOptionName();
+    }
+
+    private function optionIsEnabled(InputInterface $input, string $optionName): bool
+    {
+        return $input->hasParameterOption('--' . $optionName);
     }
 }

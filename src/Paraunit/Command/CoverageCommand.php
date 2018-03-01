@@ -52,8 +52,8 @@ class CoverageCommand extends ParallelCommand
         $this->addOption(Clover::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
         $this->addOption(Xml::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
         $this->addOption(Html::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
-        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output coverage as text into file, by default into console', 'php://stdout');
-        $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only', 'php://stdout');
+        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output coverage as text into file, by default into console');
+        $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only');
         $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
         $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
     }

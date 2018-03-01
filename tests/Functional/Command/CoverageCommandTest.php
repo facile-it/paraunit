@@ -28,10 +28,11 @@ class CoverageCommandTest extends BaseTestCase
 
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
+        $this->assertNotContains('Coverage Report', $output);
         $this->assertEquals(0, $exitCode);
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
-        $this->assertContains('Coverage', $fileContent);
+        $this->assertContains('Coverage Report', $fileContent);
     }
 }
