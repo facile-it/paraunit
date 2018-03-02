@@ -34,11 +34,16 @@ jobs:
     - env: CS-FIXER=true
       script: composer cs-check 
     - stage: Coverage
+      env: CC_TEST_REPORTER_ID=8c560bd57df8d9409ef8d6c077538025cd023256211b5d08f8892910c6ed6b5f
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
       script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
       after_success:
         - php bin/coveralls -v
         - bin/ocular code-coverage:upload --format=php-clover ./build/logs/clover.xml --revision=$TRAVIS_COMMIT
-        - bin/test-reporter
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 before_deploy:
   - composer update --no-dev
