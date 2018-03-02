@@ -160,10 +160,6 @@ class ParallelCommandTest extends BaseTestCase
 
     public function testExecutionWithDeprecationListener()
     {
-        if (version_compare(Version::id(), '7.0.0', '>=')) {
-            $this->markTestSkipped('Blocked by symfony/symfony#26017');
-        }
-
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
