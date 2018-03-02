@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+ * Added support for PHPUnit 7 and `phpunit/php-code-coverage` 6
+
+### Removed
+ * Removed support for PHP 7.0 (needed to support PHPUnit 7 correctly)
 
 ## [0.11] - 2017-12-13
 
