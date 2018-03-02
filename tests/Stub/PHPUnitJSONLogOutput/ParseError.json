@@ -20,7 +20,7 @@
     "test": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest::testGenerate",
     "status": "pass",
     "time": 0.002932071685791,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -37,7 +37,7 @@
     "test": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest::testGetPhpunitBin",
     "status": "pass",
     "time": 0.00070714950561523,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -54,7 +54,7 @@
     "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName",
     "status": "pass",
     "time": 0.00086498260498047,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -67,7 +67,7 @@
     "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName",
     "status": "pass",
     "time": 0.0005488395690918,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -80,7 +80,7 @@
     "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException",
     "status": "pass",
     "time": 0.00083804130554199,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -93,7 +93,7 @@
     "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException",
     "status": "pass",
     "time": 0.00037598609924316,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -110,7 +110,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_gets_only_requested_testsuite",
     "status": "pass",
     "time": 0.023076057434082,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -123,7 +123,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_suffix_attribute",
     "status": "pass",
     "time": 0.0053908824920654,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -136,7 +136,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_prefix_attribute",
     "status": "pass",
     "time": 0.0055530071258545,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -149,7 +149,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_exclude_nodes",
     "status": "pass",
     "time": 0.0064339637756348,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -162,7 +162,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_avoids_duplicate_runs",
     "status": "pass",
     "time": 0.0071191787719727,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -175,7 +175,7 @@
     "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_file_nodes",
     "status": "pass",
     "time": 0.0063328742980957,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -196,7 +196,7 @@
     "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #0 ('error', null, 'error', 'anyMessage')",
     "status": "pass",
     "time": 0.0068230628967285,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -209,7 +209,7 @@
     "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #1 ('error', 'Error found', 'error', 'Error found')",
     "status": "pass",
     "time": 0.0030789375305176,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -222,7 +222,7 @@
     "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #2 ('error', null, 'pass', 'anyMessage', false)",
     "status": "pass",
     "time": 0.0025160312652588,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -235,7 +235,7 @@
     "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anoherMessage', false)",
     "status": "pass",
     "time": 0.002514123916626,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -248,7 +248,7 @@
     "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anoherMessage', false)",
     "status": "pass",
     "time": 0.002324104309082,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -265,7 +265,7 @@
     "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetchAppendsLogEndingAnywayWithMissingLog",
     "status": "pass",
     "time": 0.0021848678588867,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -278,7 +278,7 @@
     "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetch",
     "status": "pass",
     "time": 0.0017800331115723,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -295,7 +295,7 @@
     "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testOnProcessTerminatedHasProperChainInterruption",
     "status": "pass",
     "time": 0.0074429512023926,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -308,7 +308,7 @@
     "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testParseHandlesMissingLogs",
     "status": "pass",
     "time": 0.0031771659851074,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -329,7 +329,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #0 ('Blah Blah The EntityManager i...h Blah')",
     "status": "pass",
     "time": 0.0025858879089355,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -342,7 +342,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #1 ('SQLSTATE[HY000]: General erro...action')",
     "status": "pass",
     "time": 0.0016548633575439,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -355,7 +355,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #2 ('SQLSTATE[HY000]: General erro...action')",
     "status": "pass",
     "time": 0.0018491744995117,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -368,7 +368,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #3 ('SQLSTATE[HY000]: General erro...7:38))')",
     "status": "pass",
     "time": 0.0015778541564941,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -385,7 +385,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #0 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.0021200180053711,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -398,7 +398,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #1 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.0018699169158936,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -411,7 +411,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #2 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')",
     "status": "pass",
     "time": 0.0019128322601318,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -424,7 +424,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #3 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')",
     "status": "pass",
     "time": 0.0017600059509277,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -437,7 +437,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #4 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.0016791820526123,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -450,7 +450,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #5 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.0016958713531494,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -463,7 +463,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #6 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.0026688575744629,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -476,7 +476,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #7 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.001971960067749,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -489,7 +489,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #8 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
     "status": "pass",
     "time": 0.00164794921875,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -502,7 +502,7 @@
     "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetryAfterLimit",
     "status": "pass",
     "time": 0.0017259120941162,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -523,7 +523,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #0 ('testStart', true, true)",
     "status": "pass",
     "time": 0.00087904930114746,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -536,7 +536,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #1 ('suiteStart', true, true)",
     "status": "pass",
     "time": 0.00017881393432617,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -549,7 +549,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #2 ('test', false, false)",
     "status": "pass",
     "time": 0.00022411346435547,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -562,7 +562,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #3 ('aaaa', false, false)",
     "status": "pass",
     "time": 0.0002601146697998,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -575,7 +575,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemCatchesEndingIfGraceful",
     "status": "pass",
     "time": 0.00044107437133789,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -588,7 +588,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsNoCulpableFunctionForMissingLog",
     "status": "pass",
     "time": 0.00029182434082031,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -601,7 +601,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunction",
     "status": "pass",
     "time": 0.00015807151794434,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -614,7 +614,7 @@
     "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunctionToRightProcess",
     "status": "pass",
     "time": 0.00027894973754883,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -635,7 +635,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #0 ('pass')",
     "status": "pass",
     "time": 0.0035140514373779,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -648,7 +648,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #1 ('error')",
     "status": "pass",
     "time": 0.0032780170440674,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -661,7 +661,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #2 ('fail')",
     "status": "pass",
     "time": 0.0033349990844727,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -674,7 +674,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #3 ('pass')",
     "status": "pass",
     "time": 0.0030758380889893,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -687,7 +687,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #4 ('testStart')",
     "status": "pass",
     "time": 0.003093957901001,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -700,7 +700,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #5 ('suiteStart')",
     "status": "pass",
     "time": 0.0030770301818848,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -713,7 +713,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #6 ('qwerty')",
     "status": "pass",
     "time": 0.0037579536437988,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{
@@ -726,7 +726,7 @@
     "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #7 ('trollingYou')",
     "status": "pass",
     "time": 0.0029809474945068,
-    "trace": [],
+    "trace": "",
     "message": "",
     "output": ""
 }{

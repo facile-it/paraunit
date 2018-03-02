@@ -33,7 +33,7 @@ class GenericParserTest extends BaseUnitTestCase
             unset($log->message);
         }
 
-        $result = new FullTestResult('b', 'c');
+        $result = new FullTestResult('b', 'c', 'trace');
 
         $factory = $this->prophesize(TestResultFactory::class);
         $factory->createFromLog($log)->willReturn($result);

@@ -6,7 +6,9 @@ namespace Tests;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\File\Cleaner;
+use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 /**
  * Class BaseTestCase
@@ -68,5 +70,10 @@ class BaseTestCase extends TestCase
         }
 
         parent::tearDown();
+    }
+
+    protected function createCodeCoverage(): CodeCoverage
+    {
+        return new CodeCoverage(new FakeDriver());
     }
 }

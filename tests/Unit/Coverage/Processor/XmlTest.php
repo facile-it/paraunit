@@ -6,7 +6,6 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\Processor\Xml;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -22,7 +21,7 @@ class XmlTest extends BaseUnitTestCase
 
         $this->assertDirectoryNotExists($targetPath->getPath());
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertDirectoryExists($targetPath->getPath());
         $index = $targetPath->getPath() . DIRECTORY_SEPARATOR . 'index.xml';

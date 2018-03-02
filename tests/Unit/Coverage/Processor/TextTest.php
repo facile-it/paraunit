@@ -6,7 +6,6 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Text;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -22,7 +21,7 @@ class TextTest extends BaseUnitTestCase
 
         $this->assertFileNotExists($targetFile->getFilePath());
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());

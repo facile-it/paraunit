@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Coverage\Processor\TextToConsole;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
@@ -20,7 +19,7 @@ class TextToConsoleTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $text = new TextToConsole($output, true);
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertContains('Code Coverage Report', $output->getOutput());
     }
