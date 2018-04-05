@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Paraunit 0.12: PHPUnit 7 support and coverage text summary option &middot; Paraunit</title>
+  <title>Paraunit 0.12.1: a small fix &middot; Paraunit</title>
 
   
   
@@ -171,7 +171,7 @@
 
 
 <div class="header">
-  <h1>Paraunit 0.12: PHPUnit 7 support and coverage text summary option</h1>
+  <h1>Paraunit 0.12.1: a small fix</h1>
   <h2></h2>
 </div>
 <div class="content">
@@ -179,32 +179,14 @@
 
   
 
-<p>With this release, I had to do some under-the-hood changes, but we finally support PHPUnit 7; to do that I had to bump the minimum PHP required version to 7.1. I&rsquo;ve also added a better support for text coverage report, adding the possibility of obtaining just the summary report.</p>
+<p>I had to release a fast fix for a problem introduced in the 0.12 release, due to the new behavior of the <code>--text</code> and <code>--text-summary</code> options. At first, it seemed that having an option with an optional argument was impossible, but I was able to do that anyway, and it spured a <a href="https://github.com/symfony/symfony-docs/pull/9560https://github.com/symfony/symfony-docs/pull/9560">PR to the Symfony Docs</a> too!</p>
 
 <p>Here&rsquo;s the full changelog:</p>
 
-<h3 id="added">Added</h3>
+<h3 id="fixed">Fixed</h3>
 
 <ul>
-<li>Added support for PHPUnit 7 and <code>phpunit/php-code-coverage</code> 6</li>
-</ul>
-
-<h3 id="changed">Changed</h3>
-
-<ul>
-<li>The coverage text output options have changed:
-
-<ul>
-<li>The <code>--text</code> option now accepts a filename as an argument, and defaults to the console as output (replacing <code>--text-to-console</code>)</li>
-<li>The new <code>--text-summary</code> option behaves in the same way, but it writes only the summary part</li>
-</ul></li>
-</ul>
-
-<h3 id="removed">Removed</h3>
-
-<ul>
-<li>Removed support for PHP 7.0 (needed to support PHPUnit 7 correctly)</li>
-<li>Dropped the <code>--text-to-console</code> coverage option in favor of the new behavior</li>
+<li>Fix the behavior of the new <code>--text</code> and <code>--text-summary</code> options (<a href="https://github.com/facile-it/paraunit/pull/121">#121</a>)</li>
 </ul>
 
 </div>

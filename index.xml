@@ -9,6 +9,26 @@
     <atom:link href="https://engineering.facile.it/paraunit/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Paraunit 0.12.1: a small fix</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.12.1/</link>
+      <pubDate>Thu, 05 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.12.1/</guid>
+      <description>
+
+&lt;p&gt;I had to release a fast fix for a problem introduced in the 0.12 release, due to the new behavior of the &lt;code&gt;--text&lt;/code&gt; and &lt;code&gt;--text-summary&lt;/code&gt; options. At first, it seemed that having an option with an optional argument was impossible, but I was able to do that anyway, and it spured a &lt;a href=&#34;https://github.com/symfony/symfony-docs/pull/9560https://github.com/symfony/symfony-docs/pull/9560&#34;&gt;PR to the Symfony Docs&lt;/a&gt; too!&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fix the behavior of the new &lt;code&gt;--text&lt;/code&gt; and &lt;code&gt;--text-summary&lt;/code&gt; options (&lt;a href=&#34;https://github.com/facile-it/paraunit/pull/121&#34;&gt;#121&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Paraunit 0.12: PHPUnit 7 support and coverage text summary option</title>
       <link>https://engineering.facile.it/paraunit/news/release/0.12/</link>
       <pubDate>Thu, 05 Apr 2018 00:00:00 +0000</pubDate>
@@ -16,7 +36,7 @@
       <guid>https://engineering.facile.it/paraunit/news/release/0.12/</guid>
       <description>
 
-&lt;p&gt;Wiht this release, I had to do some under-the-hood changes, but we finally support PHPUnit 7; to do that I had to bump the minimum PHP required version to 7.1. I&amp;rsquo;ve also added a better support for text coverage report, adding the possibility of obtaining just the summary report.&lt;/p&gt;
+&lt;p&gt;With this release, I had to do some under-the-hood changes, but we finally support PHPUnit 7; to do that I had to bump the minimum PHP required version to 7.1. I&amp;rsquo;ve also added a better support for text coverage report, adding the possibility of obtaining just the summary report.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
 
@@ -377,78 +397,6 @@ With this release I added the continuous integration: at each Git tag, the Travi
 
 &lt;ul&gt;
 &lt;li&gt;Disable colored output in text coverage to console, to avoid issues with GitLab integration.&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.7: test coverage in parallel</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.7/</link>
-      <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.7/</guid>
-      <description>
-
-&lt;p&gt;Finally, &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7&#34;&gt;Paraunit 0.7&lt;/a&gt; has been released!
-This version includes the long awaited &lt;strong&gt;coverage feature&lt;/strong&gt;: now you can collect your test coverage running your tests
-in parallel!&lt;/p&gt;
-
-&lt;p&gt;Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit
-options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we
-&lt;strong&gt;officially support Windows&lt;/strong&gt;, and we added an &lt;a href=&#34;https://ci.appveyor.com/project/Jean85/paraunit&#34;&gt;Appveyor CI build&lt;/a&gt; to
-do that.&lt;/p&gt;
-
-&lt;p&gt;In the meantime, the &lt;a href=&#34;https://github.com/facile-it/paraunit/milestone/4&#34;&gt;1.0 milestone&lt;/a&gt; has been defined: it will drop
-support to PHPUnit 4.x series, since its support is going to end by Feb. 27th, 2017; with that, also PHP &amp;lt; 5.6 will lose
-support, and Paraunit will follow along. I will be able to drop a lot of BC-tricks in this way, preferring &lt;code&gt;::class&lt;/code&gt;
-and array short syntax everywhere in the codebase.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s the full 0.7 changelog:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Paraunit is now capable of producing the test coverage of your test suites in parallel! To use it, use the new
-&lt;code&gt;coverage&lt;/code&gt; command (instead of the normal &lt;code&gt;run&lt;/code&gt;), along with at least an option to specify the requested format; for
-more information, please use the &lt;code&gt;--help&lt;/code&gt; option on the CLI or refer to the &lt;a href=&#34;http://engineering.facile.it/paraunit/documentation/&#34;&gt;documentation&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;It&amp;rsquo;s possible to choose how many concurrent processes Paraunit should spawn using the new &lt;code&gt;--parallel&lt;/code&gt; option.&lt;/li&gt;
-&lt;li&gt;A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
-new supported options is:
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;filter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;group&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;exclude-group&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;test-suffix&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;report-useless-tests&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;strict-global-state&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;disallow-test-output&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;enforce-time-limit&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;disallow-todo-tests&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;process-isolation&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;no-globals-backup&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;static-backup&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;loader&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;repeat&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;printer&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;bootstrap&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;no-configuration&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;include-path&lt;/code&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;testsuite&lt;/code&gt; and &lt;code&gt;configuration&lt;/code&gt; options are still supported; thanks to @sergeyz for suggesting the feature (#56)
-* Added support to Windows (thanks to R.D. for the help) and Appveyor CI build
-* PHP 7.1 added to the Travis build matrix
-* Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)&lt;/p&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Symfony 2.3 compatibility restored: the Travis build now tests with &lt;code&gt;--prefer-lowest&lt;/code&gt; under PHP 5.3; this added
-&lt;code&gt;symfony/http-kernel&lt;/code&gt; to the required packages&lt;/li&gt;
-&lt;li&gt;Fixed a minor typo that caused version number to be different in the command help versus the command cli &amp;ldquo;header&amp;rdquo;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
