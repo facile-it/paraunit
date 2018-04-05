@@ -12,17 +12,19 @@ use PHPUnit\Framework\TestCase;
  */
 class ThreeGreenTestStub extends TestCase
 {
-    public function testGreenOne()
+    public function testGreenOne(): void
+    {
+        $process = new StubbedParaunitProcess();
+
+        $this->assertTrue($process->isTerminated());
+    }
+
+    public function testGreenTwo(): void
     {
         $this->assertTrue(true);
     }
 
-    public function testGreenTwo()
-    {
-        $this->assertTrue(true);
-    }
-
-    public function testGreenThree()
+    public function testGreenThree(): void
     {
         $this->assertTrue(true);
     }
