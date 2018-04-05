@@ -28,7 +28,10 @@ jobs:
     - stage: Code style, static analysis and E2E
       env: E2E=true
       install: composer install --no-dev --no-interaction
-      script: src/Paraunit/Bin/paraunit run nothing
+      script: 
+        - src/Paraunit/Bin/paraunit run FakeDriverTest
+        - src/Paraunit/Bin/paraunit coverage FakeDriverTest --text
+        - src/Paraunit/Bin/paraunit coverage FakeDriverTest --summary-text
     - env: PHPSTAN=true
       script: composer phpstan
     - env: CS-FIXER=true
