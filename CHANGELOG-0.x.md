@@ -8,8 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
  * Added support for PHPUnit 7 and `phpunit/php-code-coverage` 6
 
+### Changed
+ * The coverage text output options have changed:
+   * The `--text` option now accepts a filename as an argument, and defaults to the console as output (replacing `--text-to-console`) 
+   * The new `--text-summary` option behaves in the same way, but it writes only the summary part 
+
 ### Removed
  * Removed support for PHP 7.0 (needed to support PHPUnit 7 correctly)
+ * Dropped unneeded dependency to `symfony/config`
+ * Dropped the `--text-to-console` coverage option in favor of the new behavior
 
 ## [0.11] - 2017-12-13
 

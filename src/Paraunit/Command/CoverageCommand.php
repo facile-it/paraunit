@@ -10,7 +10,7 @@ use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
-use Paraunit\Coverage\Processor\TextToConsole;
+use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -37,7 +37,7 @@ class CoverageCommand extends ParallelCommand
             Html::getConsoleOptionName(),
             Xml::getConsoleOptionName(),
             Text::getConsoleOptionName(),
-            TextToConsole::getConsoleOptionName(),
+            TextSummary::getConsoleOptionName(),
             Crap4j::getConsoleOptionName(),
             Php::getConsoleOptionName(),
         ];
@@ -52,8 +52,8 @@ class CoverageCommand extends ParallelCommand
         $this->addOption(Clover::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
         $this->addOption(Xml::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
         $this->addOption(Html::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
-        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for text coverage result');
-        $this->addOption(TextToConsole::getConsoleOptionName(), null, InputOption::VALUE_NONE, 'Output text coverage directly to console');
+        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output coverage as text into file, by default into console');
+        $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only');
         $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
         $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
     }

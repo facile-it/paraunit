@@ -163,6 +163,8 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             ->willReturn(false);
         $input->getOption(Argument::cetera())
             ->willReturn(null);
+        $input->hasParameterOption(Argument::cetera())
+            ->willReturn(false);
 
         foreach ($this->options as $name => $value) {
             $input->getOption($name)

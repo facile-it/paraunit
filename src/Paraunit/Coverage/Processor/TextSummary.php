@@ -8,24 +8,24 @@ use Paraunit\Configuration\OutputFile;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Text
+ * Class TextSummary
  * @package Paraunit\Proxy\Coverage
  */
-class Text extends AbstractText
+class TextSummary extends AbstractText
 {
     /**
-     * Text constructor.
+     * TextSummary constructor.
      * @param OutputInterface $output
      * @param bool $showColors
      * @param OutputFile|null $targetFile
      */
     public function __construct(OutputInterface $output, bool $showColors, OutputFile $targetFile = null)
     {
-        parent::__construct($output, $showColors, false, $targetFile);
+        parent::__construct($output, $showColors, true, $targetFile);
     }
 
     public static function getConsoleOptionName(): string
     {
-        return 'text';
+        return 'text-summary';
     }
 }
