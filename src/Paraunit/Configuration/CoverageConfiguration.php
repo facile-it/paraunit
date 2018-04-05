@@ -32,7 +32,7 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->containerDefinition = new CoverageContainerDefinition();
     }
 
-    protected function loadCommandLineOptions(ContainerBuilder $container, InputInterface $input)
+    protected function loadCommandLineOptions(ContainerBuilder $container, InputInterface $input): void
     {
         parent::loadCommandLineOptions($container, $input);
 
@@ -48,7 +48,7 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->addFileProcessor($coverageResult, $input, Php::class);
     }
 
-    private function addProcessor(Definition $coverageResult, string $processorClass, array $dependencies)
+    private function addProcessor(Definition $coverageResult, string $processorClass, array $dependencies): void
     {
         $coverageResult->addMethodCall('addCoverageProcessor', [new Definition($processorClass, $dependencies)]);
     }
@@ -57,7 +57,7 @@ class CoverageConfiguration extends ParallelConfiguration
         Definition $coverageResult,
         InputInterface $input,
         string $processorClass
-    ) {
+    ): void {
         $optionName = $this->getOptionName($processorClass);
 
         if ($input->getOption($optionName)) {
@@ -72,7 +72,7 @@ class CoverageConfiguration extends ParallelConfiguration
         Definition $coverageResult,
         InputInterface $input,
         string $processorClass
-    ) {
+    ): void {
         $optionName = $this->getOptionName($processorClass);
 
         if ($this->optionIsEnabled($input, $optionName)) {
@@ -88,33 +88,23 @@ class CoverageConfiguration extends ParallelConfiguration
         Definition $coverageResult,
         InputInterface $input,
         string $processorClass
-    ) {
+    ): void {
         $optionName = $this->getOptionName($processorClass);
 
         if ($this->optionIsEnabled($input, $optionName)) {
             $this->addProcessor($coverageResult, $processorClass, [
-                $this->createOutputPathDefinition($input, $optionName),
+                new Definition(OutputPath::class, [$input->getOption($optionName)]),
             ]);
         }
     }
 
-    /**
-     * @param InputInterface $input
-     * @param string $optionName
-     * @return null|Definition
-     */
-    private function createOutputFileDefinition(InputInterface $input, string $optionName)
+    private function createOutputFileDefinition(InputInterface $input, string $optionName): ?Definition
     {
-        if ($this->optionIsEnabled($input, $optionName)) {
+        if ($input->getOption($optionName)) {
             return new Definition(OutputFile::class, [$input->getOption($optionName)]);
         }
 
         return null;
-    }
-
-    private function createOutputPathDefinition(InputInterface $input, string $optionName): Definition
-    {
-        return new Definition(OutputPath::class, [$input->getOption($optionName)]);
     }
 
     /**
