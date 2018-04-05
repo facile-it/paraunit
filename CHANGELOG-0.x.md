@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
  * Removed support for PHP 7.0 (needed to support PHPUnit 7 correctly)
+ * Dropped unneeded dependency to `symfony/config`
  * Dropped the `--text-to-console` coverage option in favor of the new behavior
 
 ## [0.11] - 2017-12-13
