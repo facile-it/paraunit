@@ -11,7 +11,7 @@ php:
 
 before_install: 
   - if [[ !$XDEBUG ]]; then phpenv config-rm xdebug.ini; fi
-  - composer config -g github-oauth.github.com $GITHUB_API_KEY
+  - if [ -n "$GITHUB_API_KEY" ]; then composer config -g github-oauth.github.com ${GITHUB_API_KEY}; fi;
 
 install: composer update --prefer-dist --prefer-stable --no-interaction
 
