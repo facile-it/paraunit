@@ -9,7 +9,6 @@ use Paraunit\Configuration\CoverageConfiguration;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
-use Tests\Stub\StubbedParaunitProcess;
 
 class CoverageCommandTest extends BaseTestCase
 {
@@ -28,13 +27,13 @@ class CoverageCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertNotContains('Coverage Report', $output);
-        $this->assertNotContains(StubbedParaunitProcess::class, $output);
+        $this->assertNotContains('StubbedParaunitProcess', $output);
         $this->assertEquals(0, $exitCode);
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
         $this->assertContains('Coverage Report', $fileContent);
-        $this->assertContains(StubbedParaunitProcess::class, $fileContent);
+        $this->assertContains('StubbedParaunitProcess', $fileContent);
     }
 
     public function testExecutionWithTextToConsole(): void
@@ -49,7 +48,7 @@ class CoverageCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertContains('Coverage Report', $output);
-        $this->assertContains(StubbedParaunitProcess::class, $output);
+        $this->assertContains('StubbedParaunitProcess', $output);
         $this->assertEquals(0, $exitCode);
     }
 
@@ -66,13 +65,13 @@ class CoverageCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertNotContains('Coverage Report', $output);
-        $this->assertNotContains(StubbedParaunitProcess::class, $output);
+        $this->assertNotContains('StubbedParaunitProcess', $output);
         $this->assertEquals(0, $exitCode);
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
         $this->assertContains('Coverage Report', $fileContent);
-        $this->assertNotContains(StubbedParaunitProcess::class, $fileContent);
+        $this->assertNotContains('StubbedParaunitProcess', $fileContent);
     }
 
     public function testExecutionWithTextSummaryToConsole(): void
@@ -87,7 +86,7 @@ class CoverageCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotContains('NO TESTS EXECUTED', $output);
         $this->assertContains('Coverage Report', $output);
-        $this->assertNotContains(StubbedParaunitProcess::class, $output);
+        $this->assertNotContains('StubbedParaunitProcess', $output);
         $this->assertEquals(0, $exitCode);
     }
 
