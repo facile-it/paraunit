@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Proxy\Coverage;
 
 use Paraunit\Proxy\Coverage\FakeDriver;
@@ -14,9 +16,9 @@ class FakeDriverTest extends TestCase
     public function testUnusableMethods(string $method): void
     {
         $driver = new FakeDriver();
-        
+
         $this->expectException(\RuntimeException::class);
-        
+
         $driver->$method();
     }
 
