@@ -12,7 +12,7 @@ Paraunit is developed using [Symfony components](http://symfony.com/components).
 # Requirements
 Paraunit is used in conjunction with PHPUnit. It reads PHPUnit's .xml configuration file, so it's needed to know which test to load.
 
-If you are testing a Symfony+Doctrine application, it's suggested to use also [facile-it/paraunit-testcase](https://github.com/facile-it/paraunit-testcase), to avoid database concurrency problems during functional testing;
+If you are testing a Symfony+Doctrine application, it's suggested to use also [dama/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle), to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to **warm up the cache before**, in order to avoid a mass cache miss (and relative [cache stampede](https://en.wikipedia.org/wiki/Cache_stampede)) with concurrency problems, and subsequent random failures. 
 
 ## Installation
@@ -25,7 +25,7 @@ To use this package, use Composer:
 ``` 
 {
     "require-dev": {
-        "facile-it/paraunit": "~0.9 "
+        "facile-it/paraunit": "^0.12"
     }
 }
 ```
@@ -38,7 +38,7 @@ All the Paraunit PHAR releases are signed with GPG. To verify the signature:
  * Download the PHAR
  * Download the associated GPG signature (the `.asc` file)
  * Use the GPG tool to verify
-```
+```bash
 gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ```
 
@@ -60,8 +60,10 @@ The `coverage` command is used to generate the test coverage in parallel. It sup
 `--html=dir` | Coverage in HTML format, inside the specified directory
 `--clover=filename.xml` | Coverage in XML-clover format, with the specified filename
 `--xml=dir` | Coverage in PHPUnit XML format, inside the specified directory
-`--text=filename.txt` | Coverage in text format, with the specified filename
-`--text-to-console` | Coverage in text format, printed directly in the console, at the end of the process
+`--text=filename.txt` | Coverage in text format, into the specified filename
+`--text | Coverage in text format, printed directly in the console, at the end of the process
+`--text-summary=filename.txt` | Coverage summary in text format, into the specified filename
+`--text-summary` | Coverage in text format, printed directly in the console, at the end of the process
 
 Example:
 
@@ -204,9 +206,9 @@ Anyhow, Paraunit doesn't rely on the parsed results to provide the final exit co
  **it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code**. 
  So you can safely use it in your CI build ;)
 
-Side note: if you are using [Symfony's PHPUnit bridge](http://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something) you will notice that the bridge list of deprecations will be lost through Paraunit; the tests will be shown as passing, but **the Paraunit process will still fail as expected if a deprecation is encountered**, due to the aforementioned exit code being considered.
+Side note: if you are using [Symfony's PHPUnit bridge](http://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations 
+ since version 0.11.
 
 # Troubleshooting
 
 If you are experiencing any problems, you can try the `--debug` option to identify the problematic test, and try running it alone; if failures seems to appear at randoms during Paraunit runs, check for concurrency problem, like database access; otherwise, please open an issue [here on GitHub](https://github.com/facile-it/paraunit/issues).
-
