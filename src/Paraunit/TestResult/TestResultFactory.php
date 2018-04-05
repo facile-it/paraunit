@@ -27,19 +27,9 @@ class TestResultFactory
         }
 
         if (property_exists($log, 'trace')) {
-            $result = new FullTestResult($log->test, $log->message);
-            $this->addTraceToResult($result, $log);
-
-            return $result;
+            return new FullTestResult($log->test, $log->message, $log->trace);
         }
 
         return new TestResultWithMessage($log->test, $log->message);
-    }
-
-    private function addTraceToResult(FullTestResult $result, \stdClass $log)
-    {
-        foreach ($log->trace as $traceStep) {
-            $result->addTraceStep(new TraceStep($traceStep->file, $traceStep->line));
-        }
     }
 }

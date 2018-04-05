@@ -15,30 +15,23 @@ use Paraunit\TestResult\Interfaces\StackTraceInterface;
  */
 class FullTestResult extends TestResultWithMessage implements PrintableTestResultInterface, FunctionNameInterface, FailureMessageInterface, StackTraceInterface
 {
-    /** @var TraceStep[] */
+    /** @var string */
     private $trace;
 
     /**
      * FullTestResult constructor.
      * @param string $functionName
      * @param string $failureMessage
+     * @param string $trace
      */
-    public function __construct(string $functionName, string $failureMessage)
+    public function __construct(string $functionName, string $failureMessage, string $trace)
     {
         parent::__construct($functionName, $failureMessage);
-        $this->trace = [];
+        $this->trace = $trace;
     }
 
-    /**
-     * @return TraceStep[]
-     */
-    public function getTrace(): array
+    public function getTrace(): string
     {
         return $this->trace;
-    }
-
-    public function addTraceStep(TraceStep $traceStep)
-    {
-        $this->trace[] = $traceStep;
     }
 }

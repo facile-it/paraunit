@@ -60,7 +60,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         $logs = json_decode($jsonLogs);
         foreach ($logs as $log) {
-            if (property_exists($log, 'trace') && count($log->trace)) {
+            if (property_exists($log, 'trace') && $log->trace !== '') {
                 return $log;
             }
         }

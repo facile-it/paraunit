@@ -6,7 +6,7 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

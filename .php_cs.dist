@@ -6,6 +6,7 @@ $additionalRules = [
     'php_unit_dedicate_assert' => true,
     'psr4' => true,
     'random_api_migration' => true,
+    'self_accessor' => true,
 ];
 $rules = new Facile\CodingStandards\DefaultRules($additionalRules);
 

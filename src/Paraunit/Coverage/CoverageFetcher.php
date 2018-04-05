@@ -6,8 +6,9 @@ namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\Proxy\Coverage\CodeCoverage;
+use Paraunit\Proxy\Coverage\FakeDriver;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\Process\Process;
 
 /**
@@ -49,7 +50,7 @@ class CoverageFetcher
 
         $this->resultHandler->addProcessToFilenames($process);
 
-        return new CodeCoverage();
+        return new CodeCoverage(new FakeDriver());
     }
 
     private function coverageFileIsValid(string $tempFilename): bool
@@ -77,10 +78,12 @@ class CoverageFetcher
     {
         $fileContent = str_replace(
             [
-                'new SebastianBergmann\CodeCoverage\CodeCoverage',
-                'new PHP_CodeCoverage',
+                'new SebastianBergmann\CodeCoverage\CodeCoverage;',
+                'new SebastianBergmann\CodeCoverage\CodeCoverage();',
+                'new CodeCoverage;',
+                'new CodeCoverage();',
             ],
-            'new ' . CodeCoverage::class,
+            'new SebastianBergmann\CodeCoverage\CodeCoverage(new ' . FakeDriver::class . ');',
             file_get_contents($tempFilename)
         );
 

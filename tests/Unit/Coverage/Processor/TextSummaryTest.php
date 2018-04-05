@@ -6,7 +6,6 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\TextSummary;
-use Paraunit\Proxy\Coverage\CodeCoverage;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseUnitTestCase;
@@ -31,7 +30,7 @@ class TextSummaryTest extends BaseUnitTestCase
 
         $this->assertFileNotExists($targetFile->getFilePath());
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
 
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());
@@ -50,7 +49,7 @@ class TextSummaryTest extends BaseUnitTestCase
             ->willReturn();
         $text = new TextSummary($output->reveal(), $withColors);
 
-        $text->process(new CodeCoverage());
+        $text->process($this->createCodeCoverage());
     }
 
     public function colorProvider()

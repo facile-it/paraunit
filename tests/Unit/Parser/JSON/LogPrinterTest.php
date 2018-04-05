@@ -46,12 +46,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Exception: Exception message' . "\n",
                 'output' => '',
             ],
@@ -82,12 +77,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'warning',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Warning message' . "\n",
                 'output' => '',
             ],
@@ -118,12 +108,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'fail',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Failure message' . "\n",
                 'output' => '',
             ],
@@ -154,12 +139,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Incomplete Test: Incomplete message',
                 'output' => '',
             ],
@@ -190,12 +170,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Risky Test: Risky message',
                 'output' => '',
             ],
@@ -226,12 +201,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'error',
                 'time' => 1,
-                'trace' => [
-                    [
-                        'file' => __FILE__,
-                        'line' => $line,
-                    ],
-                ],
+                'trace' => __FILE__ . ':' . $line . "\n",
                 'message' => 'Skipped Test: Skipped message',
                 'output' => '',
             ],
@@ -259,7 +229,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'test' => get_class($test),
                 'status' => 'pass',
                 'time' => 1,
-                'trace' => [],
+                'trace' => '',
                 'message' => '',
                 'output' => '',
             ],
