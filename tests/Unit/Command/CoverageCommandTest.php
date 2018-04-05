@@ -7,6 +7,13 @@ namespace Tests\Unit\Command;
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Crap4j;
+use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Php;
+use Paraunit\Coverage\Processor\Text;
+use Paraunit\Coverage\Processor\TextSummary;
+use Paraunit\Coverage\Processor\Xml;
 use Paraunit\Runner\Runner;
 use Prophecy\Argument;
 use Symfony\Component\Console\Application;
@@ -22,8 +29,10 @@ class CoverageCommandTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider validCoverageOptionsProvider
+     * @param string $coverageOptionName
+     * @param bool $hasOptionalValue
      */
-    public function testExecute(string $coverageOptionName)
+    public function testExecute(string $coverageOptionName, bool $hasOptionalValue = false): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
 
@@ -51,7 +60,7 @@ class CoverageCommandTest extends BaseUnitTestCase
 
         $exitCode = $commandTester->execute([
             'command' => $command->getName(),
-            $coverageOptionName => '.',
+            '--' . $coverageOptionName => $hasOptionalValue ? null : 'some/path',
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -60,20 +69,22 @@ class CoverageCommandTest extends BaseUnitTestCase
     public function validCoverageOptionsProvider(): array
     {
         return [
-            ['--clover'],
-            ['--xml'],
-            ['--html'],
-            ['--text'],
-            ['--text-summary'],
-            ['--crap4j'],
-            ['--php'],
+            [Clover::getConsoleOptionName()],
+            [Xml::getConsoleOptionName()],
+            [Html::getConsoleOptionName()],
+            [Text::getConsoleOptionName(), true],
+            [Text::getConsoleOptionName()],
+            [TextSummary::getConsoleOptionName(), true],
+            [TextSummary::getConsoleOptionName()],
+            [Crap4j::getConsoleOptionName()],
+            [Php::getConsoleOptionName()],
         ];
     }
 
-    public function testExecuteExpectsAtLeastOneCoverageFormat()
+    public function testExecuteExpectsAtLeastOneCoverageFormat(): void
     {
         $configuration = $this->prophesize(CoverageConfiguration::class);
-        $configuration->buildContainer()
+        $configuration->buildContainer(Argument::cetera())
             ->shouldNotBeCalled();
 
         $command = new CoverageCommand($configuration->reveal());

@@ -52,8 +52,8 @@ class CoverageCommand extends ParallelCommand
         $this->addOption(Clover::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Clover XML coverage result');
         $this->addOption(Xml::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for PHPUnit XML coverage result');
         $this->addOption(Html::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for HTML coverage result');
-        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output coverage as text into file, by default into console');
-        $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only');
+        $this->addOption(Text::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output coverage as text into file, by default into console', false);
+        $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only', false);
         $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
         $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
     }
@@ -81,7 +81,7 @@ class CoverageCommand extends ParallelCommand
     private function hasChosenCoverageMethod(InputInterface $input): bool
     {
         foreach ($this->coverageMethods as $coverageMethod) {
-            if ($input->getOption($coverageMethod) || $input->hasParameterOption($coverageMethod)) {
+            if ($input->hasParameterOption('--' . $coverageMethod)) {
                 return true;
             }
         }
