@@ -11,7 +11,7 @@ php:
 
 before_install: 
   - if [[ !$XDEBUG ]]; then phpenv config-rm xdebug.ini; fi
-  - composer config -g github-oauth.github.com $GITHUB_API_KEY
+  - if [ -n "$GITHUB_API_KEY" ]; then composer config -g github-oauth.github.com ${GITHUB_API_KEY}; fi;
 
 install: composer update --prefer-dist --prefer-stable --no-interaction
 
@@ -28,7 +28,10 @@ jobs:
     - stage: Code style, static analysis and E2E
       env: E2E=true
       install: composer install --no-dev --no-interaction
-      script: src/Paraunit/Bin/paraunit run nothing
+      script: 
+        - src/Paraunit/Bin/paraunit run FakeDriverTest
+        - src/Paraunit/Bin/paraunit coverage FakeDriverTest --text
+        - src/Paraunit/Bin/paraunit coverage FakeDriverTest --text-summary
     - env: PHPSTAN=true
       script: composer phpstan
     - env: CS-FIXER=true
