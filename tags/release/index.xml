@@ -5,8 +5,46 @@
     <link>https://engineering.facile.it/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 13 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Apr 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.12: PHPUnit 7 support and coverage text summary option</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.12/</link>
+      <pubDate>Thu, 05 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.12/</guid>
+      <description>
+
+&lt;p&gt;Wiht this release, I had to do some under-the-hood changes, but we finally support PHPUnit 7; to do that I had to bump the minimum PHP required version to 7.1. I&amp;rsquo;ve also added a better support for text coverage report, adding the possibility of obtaining just the summary report.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Added support for PHPUnit 7 and &lt;code&gt;phpunit/php-code-coverage&lt;/code&gt; 6&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The coverage text output options have changed:
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;--text&lt;/code&gt; option now accepts a filename as an argument, and defaults to the console as output (replacing &lt;code&gt;--text-to-console&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;The new &lt;code&gt;--text-summary&lt;/code&gt; option behaves in the same way, but it writes only the summary part&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;removed&#34;&gt;Removed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Removed support for PHP 7.0 (needed to support PHPUnit 7 correctly)&lt;/li&gt;
+&lt;li&gt;Dropped the &lt;code&gt;--text-to-console&lt;/code&gt; coverage option in favor of the new behavior&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.11: add Symfony 4 support, some refactoring and a fix</title>
@@ -411,42 +449,6 @@ new supported options is:
 &lt;li&gt;Symfony 2.3 compatibility restored: the Travis build now tests with &lt;code&gt;--prefer-lowest&lt;/code&gt; under PHP 5.3; this added
 &lt;code&gt;symfony/http-kernel&lt;/code&gt; to the required packages&lt;/li&gt;
 &lt;li&gt;Fixed a minor typo that caused version number to be different in the command help versus the command cli &amp;ldquo;header&amp;rdquo;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.6.2</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.6.2/</link>
-      <pubDate>Mon, 24 Oct 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.6.2/</guid>
-      <description>
-
-&lt;p&gt;Paraunit 0.6.2 has been released! This version include a fix in the choice of the dir for the partial test results, that
-caused issues while on non-Linux systems. Some minor fix are present too, and now Paraunit shows the right version when
-launched.&lt;/p&gt;
-
-&lt;p&gt;Also, since this release, all commits by me will be GPG signed!&lt;/p&gt;
-
-&lt;p&gt;Unfortunately, the coverage feature is still in the works, but it&amp;rsquo;s slowly going on; the feature is working, but release
-0.7 still needs some polishing.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s the full 0.6.2 changelog:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Binaries moved to the &lt;code&gt;/bin&lt;/code&gt; dir (#50, thanks @garak)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Temp dir for storing JSON partial logs now works in non-Linux OS too (#52, thanks @thomasvargiu): it previously used a
-wrong dir (&lt;code&gt;/temp&lt;/code&gt;); now it relies on &lt;code&gt;sys_get_temp_dir()&lt;/code&gt; as a fallback&lt;/li&gt;
-&lt;li&gt;Minor fixes to README.md (#48, #49, thanks @garak)&lt;/li&gt;
-&lt;li&gt;Paraunit version is shown correctly now when launching it&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

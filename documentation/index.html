@@ -223,7 +223,7 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 
 <p>Paraunit is used in conjunction with PHPUnit. It reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
 
-<p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/facile-it/paraunit-testcase">facile-it/paraunit-testcase</a>, to avoid database concurrency problems during functional testing;
+<p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/dmaicher/doctrine-test-bundle">dama/doctrine-test-bundle</a>, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>, in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
 
 <h2 id="installation">Installation</h2>
@@ -239,7 +239,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <pre><code>{
     &quot;require-dev&quot;: {
-        &quot;facile-it/paraunit&quot;: &quot;~0.9 &quot;
+        &quot;facile-it/paraunit&quot;: &quot;^0.12&quot;
     }
 }
 </code></pre>
@@ -255,7 +255,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
  * Download the associated GPG signature (the <code>.asc</code> file)
  * Use the GPG tool to verify</p>
 
-<pre><code>gpg --verify paraunit-x.y.phar.asc paraunit.phar
+<pre><code class="language-bash">gpg --verify paraunit-x.y.phar.asc paraunit.phar
 </code></pre>
 
 <h1 id="usage">Usage</h1>
@@ -299,11 +299,21 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <tr>
 <td><code>--text=filename.txt</code></td>
-<td>Coverage in text format, with the specified filename</td>
+<td>Coverage in text format, into the specified filename</td>
 </tr>
 
 <tr>
-<td><code>--text-to-console</code></td>
+<td>`&ndash;text</td>
+<td>Coverage in text format, printed directly in the console, at the end of the process</td>
+</tr>
+
+<tr>
+<td><code>--text-summary=filename.txt</code></td>
+<td>Coverage summary in text format, into the specified filename</td>
+</tr>
+
+<tr>
+<td><code>--text-summary</code></td>
 <td>Coverage in text format, printed directly in the console, at the end of the process</td>
 </tr>
 </tbody>
@@ -447,7 +457,8 @@ class SomeTest extends TestCase
  <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
  So you can safely use it in your CI build ;)</p>
 
-<p>Side note: if you are using <a href="http://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something) you will notice that the bridge list of deprecations will be lost through Paraunit; the tests will be shown as passing, but <strong>the Paraunit process will still fail as expected if a deprecation is encountered</strong>, due to the aforementioned exit code being considered.</p>
+<p>Side note: if you are using <a href="http://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations
+ since version 0.11.</p>
 
 <h1 id="troubleshooting">Troubleshooting</h1>
 
