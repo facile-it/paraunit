@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Functional\Filter;
 
 use Paraunit\Filter\Filter;
