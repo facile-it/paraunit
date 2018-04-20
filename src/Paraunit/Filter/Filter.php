@@ -80,7 +80,11 @@ class Filter
             return true;
         }
 
-        return $this->testSuiteFilter === $this->getDOMNodeAttribute($testSuiteNode, 'name');
+        return \in_array(
+            $this->getDOMNodeAttribute($testSuiteNode, 'name'),
+            explode(',', $testSuiteFilter),
+            true
+        );
     }
 
     /**
