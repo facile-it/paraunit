@@ -30,7 +30,7 @@ class XmlTest extends BaseUnitTestCase
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<?xml version="1.0"?>', $content);
-        $this->assertContains('<phpunit xmlns="http://schema.phpunit.de/coverage/1.0">', $content);
+        $this->assertContains('<phpunit xmlns="http', $content);
         $this->assertContains('</phpunit>', $content);
     }
 }
