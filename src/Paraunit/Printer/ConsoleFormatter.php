@@ -38,6 +38,6 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
 
     private function createNewStyle(string $color): OutputFormatterStyle
     {
-        return new OutputFormatterStyle($color, null, ['bold', 'blink']);
+        return new OutputFormatterStyle($color, null, ['bold']);
     }
 }
