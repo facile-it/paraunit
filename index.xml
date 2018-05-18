@@ -24,6 +24,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;Allow multiple, comma-separated values with the &lt;code&gt;--testsuite&lt;/code&gt; option, like with PHPUnit 6+ &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/122&#34;&gt;#122&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Avoid letting the colored console output blink (dots, errors) &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/124&#34;&gt;#124&lt;/a&gt; thanks to @elegos&lt;/li&gt;
 &lt;li&gt;Add a new exception about MySQL savepoint to the retryable ones &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/125&#34;&gt;#125&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
