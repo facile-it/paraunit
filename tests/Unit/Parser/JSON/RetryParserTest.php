@@ -11,6 +11,7 @@ use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\MySQLLockTimeoutTestStub;
+use Tests\Stub\MySQLSavePointMissingTestStub;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -70,6 +71,7 @@ class RetryParserTest extends BaseUnitTestCase
             [EntityManagerClosedTestStub::OUTPUT],
             [MySQLDeadLockTestStub::OUTPUT],
             [MySQLLockTimeoutTestStub::OUTPUT],
+            [MySQLSavePointMissingTestStub::OUTPUT],
             [SQLiteDeadLockTestStub::OUTPUT],
         ];
     }
