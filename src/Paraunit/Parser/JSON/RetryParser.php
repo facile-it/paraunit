@@ -38,6 +38,7 @@ class RetryParser
             // MySQL
             'Deadlock found',
             'Lock wait timeout exceeded',
+            'SAVEPOINT \w+ does not exist',
             // SQLite
             'General error: 5 database is locked',
         ];
