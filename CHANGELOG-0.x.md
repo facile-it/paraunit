@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
+
+## [0.12.2] - 2018-05-18
 ### Fixed
  * Allow multiple, comma-separated values with the `--testsuite` option, like with PHPUnit 6+ [#122](https://github.com/facile-it/paraunit/pull/122)
  * Add a new exception about MySQL savepoint to the retryable ones [#125](https://github.com/facile-it/paraunit/pull/125)
