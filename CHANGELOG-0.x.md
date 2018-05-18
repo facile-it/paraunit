@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.12.2] - 2018-05-18
 ### Fixed
  * Allow multiple, comma-separated values with the `--testsuite` option, like with PHPUnit 6+ [#122](https://github.com/facile-it/paraunit/pull/122)
+ * Avoid letting the colored console output blink (dots, errors) [#124](https://github.com/facile-it/paraunit/pull/124) thanks to @elegos 
  * Add a new exception about MySQL savepoint to the retryable ones [#125](https://github.com/facile-it/paraunit/pull/125)
 
 ## [0.12.1] - 2018-04-06
