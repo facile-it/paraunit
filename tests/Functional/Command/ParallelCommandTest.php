@@ -87,7 +87,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 12 test classes (15 retried), 22 tests', $output);
+        $this->assertContains('Executed: 13 test classes (18 retried), 23 tests', $output);
     }
 
     public function testExecutionWithLogo()
@@ -125,11 +125,11 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $classExecuted = 12;
-        $processRetried = 15;
+        $classExecuted = 13;
+        $processRetried = 18;
         $processesCount = $classExecuted + $processRetried;
         $this->assertContains(
-            sprintf('Executed: %d test classes (%d retried), 22 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 23 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );
