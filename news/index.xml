@@ -5,8 +5,29 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 05 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 18 May 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.12.2: two more fixes</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.12.2/</link>
+      <pubDate>Fri, 18 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.12.2/</guid>
+      <description>
+
+&lt;p&gt;Today I released a new small patch for Paraunit, fixing an output bug and intercepting a new king of retryable exception.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Allow multiple, comma-separated values with the &lt;code&gt;--testsuite&lt;/code&gt; option, like with PHPUnit 6+ &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/122&#34;&gt;#122&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add a new exception about MySQL savepoint to the retryable ones &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/125&#34;&gt;#125&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.12.1: a small fix</title>
@@ -377,26 +398,6 @@ With this release I added the continuous integration: at each Git tag, the Travi
 
 &lt;ul&gt;
 &lt;li&gt;Added support to the text coverage format with two new CLI options: &lt;code&gt;--text-to-console&lt;/code&gt; to output it directly onto the standard output, and &lt;code&gt;--text=filename.txt&lt;/code&gt; to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.7.2: coverage in text format</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.7.2/</link>
-      <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.7.2/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.2&#34;&gt;Paraunit 0.7.2&lt;/a&gt; has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.&lt;/p&gt;
-
-&lt;p&gt;Full changelog text:&lt;/p&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Disable colored output in text coverage to console, to avoid issues with GitLab integration.&lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
