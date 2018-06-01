@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Paraunit\Filter;
 
+if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
+    \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
+}
+
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
+use SebastianBergmann\FileIterator\Facade;
 
 /**
  * Class Filter
@@ -16,7 +21,7 @@ class Filter
     /** @var PHPUnitUtilXMLProxy */
     private $utilXml;
 
-    /** @var \File_Iterator_Facade */
+    /** @var Facade */
     private $fileIteratorFacade;
 
     /** @var PHPUnitConfig */
@@ -33,14 +38,14 @@ class Filter
 
     /**
      * @param PHPUnitUtilXMLProxy $utilXml
-     * @param \File_Iterator_Facade $fileIteratorFacade
+     * @param Facade $fileIteratorFacade
      * @param PHPUnitConfig $configFile
      * @param string | null $testSuiteFilter
      * @param string | null $stringFilter
      */
     public function __construct(
         PHPUnitUtilXMLProxy $utilXml,
-        \File_Iterator_Facade $fileIteratorFacade,
+        Facade $fileIteratorFacade,
         PHPUnitConfig $configFile,
         string $testSuiteFilter = null,
         string $stringFilter = null

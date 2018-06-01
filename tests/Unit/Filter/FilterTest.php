@@ -8,6 +8,7 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Filter\Filter;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use PHPUnit\Util\Xml;
+use SebastianBergmann\FileIterator\Facade;
 use Tests\BaseUnitTestCase;
 
 /**
@@ -22,7 +23,7 @@ class FilterTest extends BaseUnitTestCase
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->absoluteConfigBaseDir = dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
+        $this->absoluteConfigBaseDir = \dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
     }
 
     public function testFilterTestFilesGetsOnlyRequestedTestsuite()
@@ -40,7 +41,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
             ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
@@ -69,7 +70,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/OnlyTestSuiteTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'TestSuffix.php', '', [])
             ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
@@ -96,7 +97,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', [])
             ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
@@ -133,7 +134,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', 'TestPrefix', $excludeArray1)
             ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
@@ -159,7 +160,7 @@ class FilterTest extends BaseUnitTestCase
 
         $file = $this->absoluteConfigBaseDir . './only/selected/test/suite/SameFile.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
             ->willReturn([$file])
             ->shouldBeCalledTimes(1);
@@ -187,7 +188,7 @@ class FilterTest extends BaseUnitTestCase
         $file1 = $this->absoluteConfigBaseDir . './only/selected/test/suite/TestPrefixOneTest.php';
         $file2 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
             ->willReturn([$file1])
             ->shouldBeCalledTimes(1);
@@ -224,7 +225,7 @@ class FilterTest extends BaseUnitTestCase
         $file3 = $this->absoluteConfigBaseDir . './only/selected/test/suite/NotHereTest.php';
         $file4 = $this->absoluteConfigBaseDir . './other/test/suite/OtherTest.php';
 
-        $fileIterator = $this->prophesize(\File_Iterator_Facade::class);
+        $fileIterator = $this->prophesize(Facade::class);
         $fileIterator->getFilesAsArray($this->absoluteConfigBaseDir . './only/selected/test/suite/', 'Test.php', '', [])
             ->willReturn([$file1, $file2, $file3])
             ->shouldBeCalledTimes(1);
