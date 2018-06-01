@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
 
+## [0.12.3] - 2018-06-01
+### Fixed
+ * Allow explicitly phpunit/php-file-iterator 2 [#126](https://github.com/facile-it/paraunit/pull/126)
+
 ## [0.12.2] - 2018-05-18
 ### Fixed
  * Allow multiple, comma-separated values with the `--testsuite` option, like with PHPUnit 6+ [#122](https://github.com/facile-it/paraunit/pull/122)

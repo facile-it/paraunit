@@ -27,6 +27,7 @@ use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultList;
+use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -168,14 +169,18 @@ class ParallelContainerDefinition
 
     private function configureServices(ContainerBuilder $container)
     {
+        if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
+            \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
+        }
+
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
         $container->setDefinition(PHPUnitUtilXMLProxy::class, new Definition(PHPUnitUtilXMLProxy::class));
-        $container->setDefinition(\File_Iterator_Facade::class, new Definition(\File_Iterator_Facade::class));
+        $container->setDefinition(Facade::class, new Definition(Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [
             new Reference(PHPUnitUtilXMLProxy::class),
-            new Reference(\File_Iterator_Facade::class),
+            new Reference(Facade::class),
             new Reference(PHPUnitConfig::class),
             '%paraunit.testsuite%',
             '%paraunit.string_filter%',
