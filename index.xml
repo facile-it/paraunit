@@ -5,8 +5,28 @@
     <link>https://engineering.facile.it/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 18 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Jun 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 0.12.3: allow phpunit/php-file-iterator 2</title>
+      <link>https://engineering.facile.it/paraunit/news/release/0.12.3/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/0.12.3/</guid>
+      <description>
+
+&lt;p&gt;Today I released a new small patch for Paraunit, fixing the support for a hidden dependency (&lt;code&gt;phpunit/php-file-iterator&lt;/code&gt;) which broke Paraunit with its 2.0 release.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Allow explicitly phpunit/php-file-iterator 2 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/126&#34;&gt;#126&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.12.2: two more fixes</title>
@@ -377,28 +397,6 @@ With this release I added the continuous integration: at each Git tag, the Travi
 
 &lt;ul&gt;
 &lt;li&gt;Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.7.1: coverage in text format</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.7.1/</link>
-      <pubDate>Wed, 28 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.7.1/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.1&#34;&gt;Paraunit 0.7.1&lt;/a&gt; has just been released; this is just a minor release that adds a new useful feature: the &lt;strong&gt;text format&lt;/strong&gt; for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.&lt;/p&gt;
-
-&lt;p&gt;In the next versions, I will work to implement the other missing formats, PHP and Crap4j.&lt;/p&gt;
-
-&lt;p&gt;The official changelog is this below:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Added support to the text coverage format with two new CLI options: &lt;code&gt;--text-to-console&lt;/code&gt; to output it directly onto the standard output, and &lt;code&gt;--text=filename.txt&lt;/code&gt; to save it into a file; this is highly useful with various CI/CD integrations like Jenkins and GitLab.&lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
