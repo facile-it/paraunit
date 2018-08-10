@@ -108,6 +108,11 @@ class ParallelCommand extends Command
         return $runner->run();
     }
 
+    /**
+     * @param PHPUnitConfig $config
+     * @param InputInterface $input
+     * @return PHPUnitConfig
+     */
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
     {
         foreach ($this->phpunitOptions as $option) {
