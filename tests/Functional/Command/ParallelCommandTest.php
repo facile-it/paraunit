@@ -139,6 +139,24 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertSame($processRetried, substr_count($output, 'PROCESS TO BE RETRIED'));
     }
 
+    public function testExecutionWithParametersWithoutValue()
+    {
+        $configurationPath = $this->getConfigForStubs();
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $configurationPath,
+            'stringFilter' => 'green',
+            '--dont-report-useless-tests' => true,
+        ]);
+
+        $this->assertSame(0, $exitCode);
+    }
+
     public function testExecutionWithoutConfiguration()
     {
         $application = new Application();
