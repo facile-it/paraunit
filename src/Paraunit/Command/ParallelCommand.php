@@ -127,7 +127,7 @@ class ParallelCommand extends Command
 
     /**
      * @param PHPUnitOption $option
-     * @param $cliOption
+     * @param mixed $cliOption
      * @return bool
      */
     private function setOptionValue(PHPUnitOption $option, $cliOption): bool
