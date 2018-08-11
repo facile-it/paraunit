@@ -108,16 +108,37 @@ class ParallelCommand extends Command
         return $runner->run();
     }
 
+    /**
+     * @param PHPUnitConfig $config
+     * @param InputInterface $input
+     * @return PHPUnitConfig
+     */
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
     {
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());
-            if ($cliOption) {
-                $option->setValue($cliOption);
+            if ($this->setOptionValue($option, $cliOption)) {
                 $config->addPhpunitOption($option);
             }
         }
 
         return $config;
+    }
+
+    /**
+     * @param PHPUnitOption $option
+     * @param mixed $cliOption
+     * @return bool
+     */
+    private function setOptionValue(PHPUnitOption $option, $cliOption): bool
+    {
+        if (! $cliOption) {
+            return false;
+        }
+        if ($option->hasValue()) {
+            $option->setValue($cliOption);
+        }
+
+        return true;
     }
 }
