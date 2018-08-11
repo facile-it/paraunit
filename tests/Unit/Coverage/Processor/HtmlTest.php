@@ -25,8 +25,7 @@ class HtmlTest extends BaseUnitTestCase
 
         $this->assertDirectoryExists($targetPath->getPath());
         $index = $targetPath->getPath() . DIRECTORY_SEPARATOR . 'index.html';
-        $this->assertFileExists($index);
-        $content = file_get_contents($index);
+        $content = $this->getFileContent($index);
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<!DOCTYPE html>', $content);

@@ -260,9 +260,7 @@ class LogPrinterTest extends BaseUnitTestCase
     private function getLogContent(): string
     {
         $logFilename = $this->getRandomTempDir() . 'log-file-name.json.log';
-        $this->assertFileExists($logFilename, 'Log file missing! Maybe you called this method too early?');
-
-        $content = file_get_contents($logFilename);
+        $content = $this->getFileContent($logFilename);
 
         return preg_replace('/\r\n/', "\n", $content);
     }

@@ -25,8 +25,7 @@ class XmlTest extends BaseUnitTestCase
 
         $this->assertDirectoryExists($targetPath->getPath());
         $index = $targetPath->getPath() . DIRECTORY_SEPARATOR . 'index.xml';
-        $this->assertFileExists($index);
-        $content = file_get_contents($index);
+        $content = $this->getFileContent($index);
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<?xml version="1.0"?>', $content);

@@ -250,7 +250,7 @@ class FilterTest extends BaseUnitTestCase
     {
         $filePath = realpath($fileName);
 
-        if (! file_exists($filePath)) {
+        if (! $filePath || file_exists($filePath)) {
             throw new \RuntimeException('Stub XML config file missing: ' . $fileName);
         }
 

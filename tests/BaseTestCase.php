@@ -9,6 +9,7 @@ use Paraunit\File\Cleaner;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use Tests\Unit\Coverage\Processor\HtmlTest;
 
 /**
  * Class BaseTestCase
@@ -75,5 +76,16 @@ class BaseTestCase extends TestCase
     protected function createCodeCoverage(): CodeCoverage
     {
         return new CodeCoverage(new FakeDriver());
+    }
+
+    protected function getFileContent(string $filePath): string
+    {
+        $this->assertFileExists($filePath);
+        $content = file_get_contents($filePath);
+        if (! \is_string($content)) {
+            $this->fail('Unable to retrieve file content from ' . $filePath);
+        }
+
+        return $content;
     }
 }
