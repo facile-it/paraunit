@@ -81,10 +81,10 @@ class BaseTestCase extends TestCase
     {
         $this->assertFileExists($filePath);
         $content = file_get_contents($filePath);
-        if (\is_string($content)) {
-            return $content;
+        if (! \is_string($content)) {
+            $this->fail('Unable to retrieve file content from ' . $filePath);
         }
 
-        $this->fail('Unable to retrieve file content from ' . $filePath);
+        return $content;
     }
 }

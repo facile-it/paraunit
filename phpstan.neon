@@ -1,4 +1,7 @@
 parameters:
+    earlyTerminatingMethodCalls:
+        PHPUnit\Framework\TestCase:
+            - fail
     ignoreErrors:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
         - '/Method Tests\\BaseTestCase::getRandomTempDir\(\) should return string but returns string|null\./'
