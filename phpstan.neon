@@ -1,7 +1,4 @@
 parameters:
-    earlyTerminatingMethodCalls:
-        PHPUnit\Framework\TestCase:
-            - fail
     ignoreErrors:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
         - '/Method Tests\\BaseTestCase::getRandomTempDir\(\) should return string but returns string|null\./'
@@ -14,4 +11,5 @@ parameters:
         - src/Paraunit/Process/ProcessBuilderFactory.php
         - tests/Stub/ParseErrorTestStub.php
 includes:
+	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/jangregor/phpstan-prophecy/src/extension.neon
