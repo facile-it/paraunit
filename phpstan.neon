@@ -5,6 +5,7 @@ parameters:
         - '/Parameter #1 $process of class Paraunit\\Lifecycle\\ProcessEvent constructor expects Paraunit\\Process\\AbstractParaunitProcess, Paraunit\\Process\\AbstractParaunitProcess|null given\./'
         - '/Call to function is_array\(\) with string will always evaluate to false./'
         - '/Class Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher not found/'
+        - '/Parameter #3 \$offset of function strpos expects int, int\|false given\./'
     excludes_analyse:
         - src/Paraunit/Parser/JSON/LogPrinterV6.php
         - src/Paraunit/Process/ProcessBuilderFactory.php

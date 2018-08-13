@@ -52,6 +52,6 @@ class PHPDbgBinFile
         $locator = new Process('command -v phpdbg');
         $locator->run();
 
-        return (string) preg_replace('/\s/', '', $locator->getOutput());
+        return preg_replace('/\s/', '', $locator->getOutput());
     }
 }

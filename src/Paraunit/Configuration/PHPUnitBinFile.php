@@ -11,9 +11,9 @@ namespace Paraunit\Configuration;
 class PHPUnitBinFile
 {
     // I'm using Paraunit as a vendor package
-    const PHPUNIT_RELPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
+    private const PHPUNIT_REALPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
     // I'm using Paraunit standalone (developing)
-    const PHPUNIT_RELPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
+    private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
 
     /** @var string Realpath to PHPUnit bin location */
     private $phpUnitBin;
@@ -24,7 +24,7 @@ class PHPUnitBinFile
      */
     public function __construct()
     {
-        if (defined('PARAUNIT_PHAR_FILE')) {
+        if (\defined('PARAUNIT_PHAR_FILE')) {
             // Paraunit is running as a standalone PHAR archive
             // PHPUnit is embedded in the archive, self execute it in special mode
             $this->phpUnitBin = PARAUNIT_PHAR_FILE . ' phpunit';
@@ -32,14 +32,14 @@ class PHPUnitBinFile
             return;
         }
 
-        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR)) {
-            $this->phpUnitBin = realpath(__DIR__ . self::PHPUNIT_RELPATH_FOR_VENDOR);
+        if (file_exists(__DIR__ . self::PHPUNIT_REALPATH_FOR_VENDOR)) {
+            $this->setPhpUnitBin(__DIR__ . self::PHPUNIT_REALPATH_FOR_VENDOR);
 
             return;
         }
 
-        if (file_exists(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE)) {
-            $this->phpUnitBin = realpath(__DIR__ . self::PHPUNIT_RELPATH_FOR_STANDALONE);
+        if (file_exists(__DIR__ . self::PHPUNIT_REALPATH_FOR_STANDALONE)) {
+            $this->setPhpUnitBin(__DIR__ . self::PHPUNIT_REALPATH_FOR_STANDALONE);
 
             return;
         }
@@ -50,5 +50,15 @@ class PHPUnitBinFile
     public function getPhpUnitBin(): string
     {
         return $this->phpUnitBin;
+    }
+
+    private function setPhpUnitBin($phpUnitBin): void
+    {
+        $realpath = realpath($phpUnitBin);
+        if (! $realpath) {
+            throw new \RuntimeException('Unable set PHPUnit binary real path');
+        }
+
+        $this->phpUnitBin = $realpath;
     }
 }

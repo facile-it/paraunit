@@ -24,16 +24,13 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
     public function onEngineBeforeStart()
     {
         $formatter = $this->getOutput()->getFormatter();
-
-        if ($formatter) {
-            $formatter->setStyle('ok', $this->createNewStyle('green'));
-            $formatter->setStyle('skip', $this->createNewStyle('yellow'));
-            $formatter->setStyle('warning', $this->createNewStyle('yellow'));
-            $formatter->setStyle('incomplete', $this->createNewStyle('blue'));
-            $formatter->setStyle('fail', $this->createNewStyle('red'));
-            $formatter->setStyle('error', $this->createNewStyle('red'));
-            $formatter->setStyle('abnormal', $this->createNewStyle('magenta'));
-        }
+        $formatter->setStyle('ok', $this->createNewStyle('green'));
+        $formatter->setStyle('skip', $this->createNewStyle('yellow'));
+        $formatter->setStyle('warning', $this->createNewStyle('yellow'));
+        $formatter->setStyle('incomplete', $this->createNewStyle('blue'));
+        $formatter->setStyle('fail', $this->createNewStyle('red'));
+        $formatter->setStyle('error', $this->createNewStyle('red'));
+        $formatter->setStyle('abnormal', $this->createNewStyle('magenta'));
     }
 
     private function createNewStyle(string $color): OutputFormatterStyle

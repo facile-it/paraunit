@@ -92,7 +92,11 @@ class CoverageCommandTest extends BaseTestCase
 
     private function getTempCoverageFilename(): string
     {
-        return tempnam(sys_get_temp_dir(), 'coverage.txt');
+        /** @var string $filename */
+        $filename = tempnam(sys_get_temp_dir(), 'coverage.txt');
+        $this->assertInternalType('string', $filename);
+
+        return $filename;
     }
 
     private function createCommandTester(): CommandTester

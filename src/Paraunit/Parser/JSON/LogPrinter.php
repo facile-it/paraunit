@@ -53,7 +53,11 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         public function __construct()
         {
-            $this->logFile = fopen($this->getLogFilename(), 'wt');
+            $file = fopen($this->getLogFilename(), 'wt');
+            if (! \is_resource($file)) {
+                throw new \RuntimeException('Unable to create log file');
+            }
+            $this->logFile = $file;
             $this->autoFlush = true;
         }
 

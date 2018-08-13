@@ -24,7 +24,7 @@ use Tests\Stub\UnformattedOutputStub;
  */
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
-    /** @var ContainerBuilder */
+    /** @var ContainerBuilder|null */
     private $container;
 
     /** @var ParallelConfiguration */
@@ -66,7 +66,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      * @param StubbedParaunitProcess $process
      * @param string $stubLog
      */
-    protected function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, string $stubLog)
+    protected function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, string $stubLog): void
     {
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
         $this->assertFileExists($stubLogFilename, 'Stub log file missing! ' . $stubLogFilename);
@@ -78,7 +78,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         copy($stubLogFilename, $filename);
     }
 
-    protected function cleanUpTempDirForThisExecution()
+    protected function cleanUpTempDirForThisExecution(): void
     {
         if ($this->container) {
             /** @var TempDirectory $tempDirectory */
@@ -87,7 +87,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
-    protected function assertOutputOrder(UnformattedOutputStub $output, array $strings)
+    protected function assertOutputOrder(UnformattedOutputStub $output, array $strings): void
     {
         $previousPosition = 0;
         $previousString = '<beginning of output>';
@@ -104,7 +104,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
-    protected function processAllTheStubLogs()
+    protected function processAllTheStubLogs(): void
     {
         /** @var LogParser $logParser */
         $logParser = $this->getService(LogParser::class);
@@ -152,7 +152,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $this->container->getParameter($parameterName);
     }
 
-    protected function loadContainer()
+    protected function loadContainer(): void
     {
         $input = $this->prophesize(InputInterface::class);
         $input->getArgument('stringFilter')
@@ -183,12 +183,12 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $output;
     }
 
-    protected function setTextFilter(string $textFilter)
+    protected function setTextFilter(string $textFilter): void
     {
         $this->textFilter = $textFilter;
     }
 
-    protected function setOption(string $optionName, string $optionValue)
+    protected function setOption(string $optionName, string $optionValue): void
     {
         $this->options[$optionName] = $optionValue;
     }

@@ -9,7 +9,6 @@ use Paraunit\File\Cleaner;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use Tests\Unit\Coverage\Processor\HtmlTest;
 
 /**
  * Class BaseTestCase
@@ -82,10 +81,10 @@ class BaseTestCase extends TestCase
     {
         $this->assertFileExists($filePath);
         $content = file_get_contents($filePath);
-        if (! \is_string($content)) {
-            $this->fail('Unable to retrieve file content from ' . $filePath);
+        if (\is_string($content)) {
+            return $content;
         }
 
-        return $content;
+        $this->fail('Unable to retrieve file content from ' . $filePath);
     }
 }

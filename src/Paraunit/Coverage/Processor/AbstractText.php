@@ -17,7 +17,7 @@ abstract class AbstractText implements CoverageProcessorInterface
     /** @var OutputInterface */
     private $output;
 
-    /** @var OutputFile */
+    /** @var OutputFile|null */
     private $targetFile;
 
     /** @var bool */
