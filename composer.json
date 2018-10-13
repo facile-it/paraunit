@@ -24,6 +24,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "facile-it/facile-coding-standard": "^0.3",
         "jean85/pretty-package-versions": "^1.0.3",
         "phpunit/php-code-coverage": "^4.0||^5.0||^6.0",
         "phpunit/php-file-iterator": "^1.0||^2.0",
@@ -35,7 +36,6 @@
         "symfony/stopwatch": "^2.8||^3.0||^4.0"
     },
     "require-dev": {
-        "facile-it/facile-coding-standard": "^0.2",
         "jangregor/phpstan-prophecy": "^0.1.1",
         "phpstan/phpstan": "^0.9",
         "phpunit/php-invoker": "^1.1",
