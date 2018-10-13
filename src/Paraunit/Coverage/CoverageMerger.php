@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoverageMerger
- * @package Paraunit\Coverage
  */
 class CoverageMerger implements EventSubscriberInterface
 {
@@ -23,6 +22,7 @@ class CoverageMerger implements EventSubscriberInterface
 
     /**
      * CoverageMerger constructor.
+     *
      * @param CoverageFetcher $coverageFetcher
      */
     public function __construct(CoverageFetcher $coverageFetcher)

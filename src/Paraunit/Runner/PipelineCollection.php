@@ -8,7 +8,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Class PipelineCollection
- * @package Paraunit\Runner
  */
 class PipelineCollection
 {
@@ -26,8 +25,10 @@ class PipelineCollection
 
     /**
      * @param AbstractParaunitProcess $process
-     * @return Pipeline
+     *
      * @throws \RuntimeException
+     *
+     * @return Pipeline
      */
     public function push(AbstractParaunitProcess $process): Pipeline
     {

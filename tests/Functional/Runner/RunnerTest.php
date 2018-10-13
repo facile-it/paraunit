@@ -16,7 +16,6 @@ use Tests\Stub\SegFaultTestStub;
 
 /**
  * Class RunnerTest
- * @package Tests\Functional\Runner
  */
 class RunnerTest extends BaseIntegrationTestCase
 {

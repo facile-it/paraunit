@@ -14,7 +14,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class LogPrinterTest
- * @package Tests\Unit\Parser\JSON
  */
 class LogPrinterTest extends BaseUnitTestCase
 {

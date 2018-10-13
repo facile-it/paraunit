@@ -6,7 +6,6 @@ namespace Paraunit\File;
 
 /**
  * Class TempDirectory
- * @package Paraunit\File
  */
 class TempDirectory
 {
@@ -27,8 +26,9 @@ class TempDirectory
     }
 
     /**
-     * @return string
      * @throws \RuntimeException If the temp dirs cannot be created
+     *
+     * @return string
      */
     public function getTempDirForThisExecution(): string
     {
@@ -42,9 +42,9 @@ class TempDirectory
     }
 
     /**
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public static function getTempBaseDir(): string
     {

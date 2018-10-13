@@ -15,7 +15,6 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
 
 /**
  * Class FinalPrinter
- * @package Paraunit\Printer
  */
 class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
@@ -32,6 +31,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 
     /**
      * FinalPrinter constructor.
+     *
      * @param TestResultList $testResultList
      * @param OutputInterface $output
      */

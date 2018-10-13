@@ -10,7 +10,6 @@ use Paraunit\TestResult\MuteTestResult;
 
 /**
  * Class RetryParser
- * @package Paraunit\Parser\JSON
  */
 class RetryParser
 {
@@ -25,6 +24,7 @@ class RetryParser
 
     /**
      * RetryParser constructor.
+     *
      * @param TestResultHandlerInterface $testResultContainer
      * @param int $maxRetryCount
      */
@@ -74,6 +74,7 @@ class RetryParser
 
     /**
      * @param string[] $patterns
+     *
      * @return string
      */
     private function buildRegexPattern(array $patterns): string

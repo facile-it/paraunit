@@ -12,7 +12,6 @@ use Tests\BaseTestCase;
 
 /**
  * Class CoverageResultTest
- * @package Tests\Unit\Coverage
  */
 class CoverageResultTest extends BaseTestCase
 {

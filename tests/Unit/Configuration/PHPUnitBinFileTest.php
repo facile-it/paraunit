@@ -9,7 +9,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class PHPUnitBinFileTest
- * @package Tests\Unit\Configuration
  */
 class PHPUnitBinFileTest extends BaseUnitTestCase
 {

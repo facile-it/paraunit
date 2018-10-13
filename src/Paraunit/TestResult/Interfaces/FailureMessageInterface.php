@@ -6,7 +6,6 @@ namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Interface FailureMessageInterface
- * @package Paraunit\TestResult\Interfaces
  */
 interface FailureMessageInterface
 {

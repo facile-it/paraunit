@@ -9,7 +9,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class PHPUnitConfigTest
- * @package Tests\Unit\Configuration
  */
 class PHPUnitConfigTest extends BaseUnitTestCase
 {

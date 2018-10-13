@@ -8,7 +8,6 @@ use Symfony\Component\Process\Process;
 
 /**
  * Class PHPDbgBinFile
- * @package Paraunit\Configuration
  */
 class PHPDbgBinFile
 {
@@ -24,8 +23,9 @@ class PHPDbgBinFile
     }
 
     /**
-     * @return string
      * @throws \RuntimeException When PHPDBG is not available
+     *
+     * @return string
      */
     public function getPhpDbgBin(): string
     {

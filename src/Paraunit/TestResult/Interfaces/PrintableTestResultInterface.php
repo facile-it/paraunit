@@ -8,7 +8,6 @@ use Paraunit\TestResult\TestResultFormat;
 
 /**
  * Interface PrintableTestResultInterface
- * @package Paraunit\TestResult\Interfaces
  */
 interface PrintableTestResultInterface extends TestResultInterface
 {

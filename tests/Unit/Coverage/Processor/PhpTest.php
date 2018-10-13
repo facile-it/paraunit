@@ -10,7 +10,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class PhpTest
- * @package Tests\Unit\Coverage\Processor
  */
 class PhpTest extends BaseUnitTestCase
 {

@@ -13,7 +13,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ProcessBuilderFactoryTest
- * @package Tests\Unit\Process
  */
 class ProcessBuilderFactoryTest extends BaseUnitTestCase
 {

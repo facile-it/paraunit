@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Pipeline
- * @package Paraunit\Runner
  */
 class Pipeline
 {
@@ -25,6 +24,7 @@ class Pipeline
 
     /**
      * Pipeline constructor.
+     *
      * @param EventDispatcherInterface $dispatcher
      * @param int $number
      */

@@ -10,7 +10,6 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class TestResultWithMessage
- * @package Paraunit\TestResult
  */
 class TestResultWithMessage extends MuteTestResult implements
     PrintableTestResultInterface,
@@ -25,6 +24,7 @@ class TestResultWithMessage extends MuteTestResult implements
 
     /**
      * TestResultWithMessage constructor.
+     *
      * @param string $functionName
      * @param string $failureMessage
      */

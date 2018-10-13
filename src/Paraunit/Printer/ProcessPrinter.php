@@ -12,11 +12,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ProcessPrinter
- * @package Paraunit\Printer
  */
 class ProcessPrinter implements EventSubscriberInterface
 {
     const MAX_CHAR_LENGTH = 80;
+
     const COUNTER_CHAR_LENGTH = 5;
 
     /** @var SingleResultFormatter */
@@ -33,6 +33,7 @@ class ProcessPrinter implements EventSubscriberInterface
 
     /**
      * ProcessPrinter constructor.
+     *
      * @param SingleResultFormatter $singleResultFormatter
      * @param OutputInterface $output
      */
@@ -55,6 +56,7 @@ class ProcessPrinter implements EventSubscriberInterface
 
     /**
      * @param ProcessEvent $processEvent
+     *
      * @throws \BadMethodCallException
      */
     public function onProcessCompleted(ProcessEvent $processEvent)

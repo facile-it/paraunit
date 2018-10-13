@@ -6,7 +6,6 @@ namespace Paraunit\TestResult;
 
 /**
  * Class TestResultContainer
- * @package Paraunit\TestResult
  */
 class TestResultFormat
 {
@@ -24,6 +23,7 @@ class TestResultFormat
 
     /**
      * TestResultFormat constructor.
+     *
      * @param string $tag
      * @param string $title
      * @param bool $printTestOutput

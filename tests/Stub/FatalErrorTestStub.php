@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class FatalErrorTestStub
- * @package Tests\Stub
  */
 class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 {

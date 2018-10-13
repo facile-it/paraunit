@@ -9,7 +9,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class OutputFileTest
- * @package Tests\Unit\Configuration
  */
 class OutputFileTest extends BaseUnitTestCase
 {

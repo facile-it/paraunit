@@ -12,7 +12,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class TextTest
- * @package Tests\Unit\Proxy
  */
 class TextTest extends BaseUnitTestCase
 {

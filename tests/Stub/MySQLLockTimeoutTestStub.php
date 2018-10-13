@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class MySQLLockTimeoutTestStub
- * @package Tests\Stub
  */
 class MySQLLockTimeoutTestStub extends BrokenTestBase implements BrokenTestInterface
 {

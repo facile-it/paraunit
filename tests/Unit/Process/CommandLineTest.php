@@ -13,7 +13,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class TestCliCommandTest
- * @package Tests\Unit\Process
  */
 class CommandLineTest extends BaseUnitTestCase
 {

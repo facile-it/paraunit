@@ -13,7 +13,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class PipelineCollectionTest
- * @package Tests\Unit\Runner
+ *
  * @small
  */
 class PipelineCollectionTest extends BaseUnitTestCase
@@ -77,6 +77,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     /**
      * @dataProvider pipelineStateProvider
+     *
      * @param bool $isPipeline1Free
      * @param bool $isPipeline2Free
      */
@@ -100,6 +101,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     /**
      * @dataProvider pipelineStateProvider
+     *
      * @param bool $isPipeline1Empty
      * @param bool $isPipeline2Empty
      */
@@ -132,6 +134,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
     /**
      * @param Pipeline[] $pipelines
+     *
      * @return PipelineFactory
      */
     private function mockPipelineFactory(array $pipelines): PipelineFactory

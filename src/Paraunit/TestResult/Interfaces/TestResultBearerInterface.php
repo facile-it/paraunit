@@ -6,7 +6,6 @@ namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Interface TestResultBearerInterface
- * @package Paraunit\TestResult\Interfaces
  */
 interface TestResultBearerInterface
 {

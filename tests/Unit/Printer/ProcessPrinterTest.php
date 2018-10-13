@@ -15,7 +15,6 @@ use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class ProcessPrinterTest
- * @package Tests\Unit\Printer
  */
 class ProcessPrinterTest extends BaseUnitTestCase
 {

@@ -19,17 +19,21 @@ use PHPUnit\Util;
  * This class duplicates the original one because in PHPUnit 7 the signatures of the TestListener interface are : void
  *
  * Class LogPrinter
- * @package Paraunit\Parser\JSON
  */
 class LogPrinterV6 extends Util\Printer implements TestListener
 {
     const STATUS_ERROR = 'error';
+
     const STATUS_WARNING = 'warning';
+
     const STATUS_FAIL = 'fail';
+
     const STATUS_PASS = 'pass';
 
     const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+
     const MESSAGE_RISKY_TEST = 'Risky Test: ';
+
     const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
 
     /** @var resource */
@@ -174,6 +178,7 @@ class LogPrinterV6 extends Util\Printer implements TestListener
      * A testsuite started.
      *
      * @param TestSuite $suite
+     *
      * @throws \RuntimeException
      */
     public function startTestSuite(TestSuite $suite)
@@ -269,9 +274,10 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     }
 
     /**
-     * @return string
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     private function getLogFilename(): string
     {
@@ -289,8 +295,9 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     }
 
     /**
-     * @return string
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     private function getLogDirectory(): string
     {

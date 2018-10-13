@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class CoveragePrinter
- * @package Paraunit\Printer
  */
 class CoveragePrinter implements EventSubscriberInterface
 {
@@ -27,6 +26,7 @@ class CoveragePrinter implements EventSubscriberInterface
 
     /**
      * CoveragePrinter constructor.
+     *
      * @param PHPDbgBinFile $phpdgbBin
      * @param XDebugProxy $xdebug
      */

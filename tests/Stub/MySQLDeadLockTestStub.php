@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class MySQLDeadLockTestStub
- * @package Tests\Stub
  */
 class MySQLDeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
 {

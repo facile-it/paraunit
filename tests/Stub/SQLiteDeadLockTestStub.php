@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class SQLiteDeadLockTestStub
- * @package Tests\Stub
  */
 class SQLiteDeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
 {

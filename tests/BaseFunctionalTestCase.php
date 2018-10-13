@@ -6,7 +6,6 @@ namespace Tests;
 
 /**
  * Class BaseFunctionalTestCase
- * @package Paraunit\Tests
  */
 abstract class BaseFunctionalTestCase extends BaseIntegrationTestCase
 {

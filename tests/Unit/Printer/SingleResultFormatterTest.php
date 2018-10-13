@@ -12,7 +12,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class SingleResultFormatterTest
- * @package Tests\Unit\Printer
  */
 class SingleResultFormatterTest extends BaseUnitTestCase
 {

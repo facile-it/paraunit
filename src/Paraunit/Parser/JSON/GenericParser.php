@@ -10,7 +10,6 @@ use Paraunit\TestResult\TestResultFactory;
 
 /**
  * Class GenericParser
- * @package Paraunit\Parser\JSON
  */
 class GenericParser implements ParserChainElementInterface
 {

@@ -10,7 +10,6 @@ use SebastianBergmann\CodeCoverage\Report\PHP as PHPUnitPhp;
 
 /**
  * Class PhpResult
- * @package Paraunit\Proxy\Coverage
  */
 class Php implements CoverageProcessorInterface
 {
@@ -22,6 +21,7 @@ class Php implements CoverageProcessorInterface
 
     /**
      * Php constructor.
+     *
      * @param OutputFile $targetFile
      */
     public function __construct(OutputFile $targetFile)
@@ -32,6 +32,7 @@ class Php implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $codeCoverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

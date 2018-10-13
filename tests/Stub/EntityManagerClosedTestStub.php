@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class EntityManagerClosedTestStub
- * @package Tests\Stub
  */
 class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestInterface
 {

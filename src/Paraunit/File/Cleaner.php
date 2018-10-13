@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Cleaner
- * @package Paraunit\File
  */
 class Cleaner implements EventSubscriberInterface
 {
@@ -18,6 +17,7 @@ class Cleaner implements EventSubscriberInterface
 
     /**
      * Cleaner constructor.
+     *
      * @param TempDirectory $tempDirectory
      */
     public function __construct(TempDirectory $tempDirectory)
@@ -40,6 +40,7 @@ class Cleaner implements EventSubscriberInterface
 
     /**
      * @param string $dir
+     *
      * @return bool True if the directory existed and it has been deleted
      */
     public static function cleanUpDir(string $dir): bool

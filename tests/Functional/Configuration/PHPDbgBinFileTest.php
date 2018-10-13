@@ -9,7 +9,6 @@ use Tests\BaseFunctionalTestCase;
 
 /**
  * Class PHPDbgBinFileTest
- * @package Tests\Functional\Configuration
  */
 class PHPDbgBinFileTest extends BaseFunctionalTestCase
 {

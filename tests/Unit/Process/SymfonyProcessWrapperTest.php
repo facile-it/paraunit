@@ -12,7 +12,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class SymfonyProcessWrapperTest
- * @package Unit\Process
  */
 class SymfonyProcessWrapperTest extends BaseUnitTestCase
 {

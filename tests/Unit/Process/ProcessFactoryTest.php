@@ -14,7 +14,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ProcessFactoryTest
- * @package Tests\Unit\Process
  */
 class ProcessFactoryTest extends BaseUnitTestCase
 {

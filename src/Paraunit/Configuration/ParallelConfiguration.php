@@ -16,11 +16,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Paraunit
- * @package Paraunit\Configuration
  */
 class ParallelConfiguration
 {
     const TAG_EVENT_SUBSCRIBER = 'paraunit.event_subscriber';
+
     const PUBLIC_ALIAS_FORMAT = '%s_public_alias';
 
     /** @var ParallelContainerDefinition */
@@ -31,6 +31,7 @@ class ParallelConfiguration
 
     /**
      * ParallelConfiguration constructor.
+     *
      * @param bool $createPublicServiceAliases
      */
     public function __construct(bool $createPublicServiceAliases = false)
@@ -42,9 +43,11 @@ class ParallelConfiguration
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return ContainerBuilder
+     *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Exception
+     *
+     * @return ContainerBuilder
      */
     public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder
     {

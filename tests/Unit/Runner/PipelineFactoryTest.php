@@ -11,7 +11,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class PipelineFactoryTest
- * @package Tests\Unit\Runner
  */
 class PipelineFactoryTest extends BaseUnitTestCase
 {

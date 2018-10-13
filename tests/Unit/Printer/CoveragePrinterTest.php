@@ -12,7 +12,6 @@ use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class CoveragePrinterTest
- * @package Tests\Unit\Printer
  */
 class CoveragePrinterTest extends BaseUnitTestCase
 {

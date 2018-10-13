@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class FilesRecapPrinter
- * @package Paraunit\Printer
  */
 class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {

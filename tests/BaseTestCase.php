@@ -12,7 +12,6 @@ use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 /**
  * Class BaseTestCase
- * @package Tests
  */
 class BaseTestCase extends TestCase
 {

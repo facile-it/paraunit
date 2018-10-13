@@ -13,7 +13,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class PipelineTest
- * @package Tests\Unit\Runner
  */
 class PipelineTest extends BaseUnitTestCase
 {

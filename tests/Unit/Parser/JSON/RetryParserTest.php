@@ -18,7 +18,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class RetryParserTest
- * @package Tests\Unit\Parser\JSON
  */
 class RetryParserTest extends BaseUnitTestCase
 {

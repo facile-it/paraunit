@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CoverageCommand
- * @package Paraunit\Command
  */
 class CoverageCommand extends ParallelCommand
 {
@@ -27,6 +26,7 @@ class CoverageCommand extends ParallelCommand
 
     /**
      * ParallelCommand constructor.
+     *
      * @param CoverageConfiguration $configuration
      */
     public function __construct(CoverageConfiguration $configuration)
@@ -62,10 +62,10 @@ class CoverageCommand extends ParallelCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return int|null
-     *
      * @throws \Exception
      * @throws \InvalidArgumentException
+     *
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

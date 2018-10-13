@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Class MySQLSavePointMissingTestStub
- * @package Tests\Stub
  */
 class MySQLSavePointMissingTestStub extends BrokenTestBase implements BrokenTestInterface
 {

@@ -11,7 +11,6 @@ use Paraunit\Configuration\TempFilenameFactory;
 
 /**
  * Class CommandLineWithCoverage
- * @package Paraunit\Process
  */
 class CommandLineWithCoverage extends CommandLine
 {
@@ -23,6 +22,7 @@ class CommandLineWithCoverage extends CommandLine
 
     /**
      * TestCliCommand constructor.
+     *
      * @param PHPUnitBinFile $phpUnitBin
      * @param PHPDbgBinFile $dbgBinFile
      * @param TempFilenameFactory $filenameFactory
@@ -39,8 +39,9 @@ class CommandLineWithCoverage extends CommandLine
     }
 
     /**
-     * @return string[]
      * @throws \RuntimeException
+     *
+     * @return string[]
      */
     public function getExecutable(): array
     {
@@ -53,8 +54,10 @@ class CommandLineWithCoverage extends CommandLine
 
     /**
      * @param PHPUnitConfig $config
-     * @return array
+     *
      * @throws \RuntimeException
+     *
+     * @return array
      */
     public function getOptions(PHPUnitConfig $config): array
     {

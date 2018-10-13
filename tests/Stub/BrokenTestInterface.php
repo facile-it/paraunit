@@ -6,7 +6,6 @@ namespace Tests\Stub;
 
 /**
  * Interface BrokenTestInterface
- * @package Tests\Stub
  */
 interface BrokenTestInterface
 {

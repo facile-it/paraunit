@@ -9,7 +9,6 @@ use Paraunit\TestResult\NullTestResult;
 
 /**
  * Class TestStartParser
- * @package Paraunit\Parser\JSON
  */
 class TestStartParser implements ParserChainElementInterface
 {
@@ -43,6 +42,7 @@ class TestStartParser implements ParserChainElementInterface
     /**
      * @param AbstractParaunitProcess $process
      * @param \stdClass $logItem
+     *
      * @return null|NullTestResult
      */
     private function handleLogTermination(AbstractParaunitProcess $process, \stdClass $logItem)

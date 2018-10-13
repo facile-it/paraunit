@@ -8,7 +8,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Class StubbedParaunitProcess
- * @package Tests\Stub
  */
 class StubbedParaunitProcess extends AbstractParaunitProcess
 {

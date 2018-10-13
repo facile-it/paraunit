@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConsoleFormatter
- * @package Paraunit\Printer
  */
 class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterface
 {

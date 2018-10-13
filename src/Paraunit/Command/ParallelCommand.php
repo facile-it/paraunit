@@ -27,7 +27,9 @@ class ParallelCommand extends Command
 
     /**
      * ParallelCommand constructor.
+     *
      * @param ParallelConfiguration $configuration
+     *
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(ParallelConfiguration $configuration)
@@ -90,9 +92,9 @@ class ParallelCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return int|null
-     *
      * @throws \Exception
+     *
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -111,6 +113,7 @@ class ParallelCommand extends Command
     /**
      * @param PHPUnitConfig $config
      * @param InputInterface $input
+     *
      * @return PHPUnitConfig
      */
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
@@ -128,6 +131,7 @@ class ParallelCommand extends Command
     /**
      * @param PHPUnitOption $option
      * @param mixed $cliOption
+     *
      * @return bool
      */
     private function setOptionValue(PHPUnitOption $option, $cliOption): bool

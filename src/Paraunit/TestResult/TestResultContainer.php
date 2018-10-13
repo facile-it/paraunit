@@ -12,7 +12,6 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 /**
  * Class TestResultContainer
- * @package Paraunit\TestResult
  */
 class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
 {
@@ -27,6 +26,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
 
     /**
      * TestResultContainer constructor.
+     *
      * @param TestResultFormat $testResultFormat
      */
     public function __construct(TestResultFormat $testResultFormat)

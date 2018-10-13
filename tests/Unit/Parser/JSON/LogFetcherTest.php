@@ -11,7 +11,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class LogFetcherTest
- * @package Tests\Unit\Parser\JSON
  */
 class LogFetcherTest extends BaseUnitTestCase
 {

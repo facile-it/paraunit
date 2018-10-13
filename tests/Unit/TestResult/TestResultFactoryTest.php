@@ -15,7 +15,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class TestResultFactoryTest
- * @package Tests\Unit\TestResult
  */
 class TestResultFactoryTest extends BaseUnitTestCase
 {

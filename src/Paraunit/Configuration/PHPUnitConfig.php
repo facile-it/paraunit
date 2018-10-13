@@ -6,7 +6,6 @@ namespace Paraunit\Configuration;
 
 /**
  * Class PHPUnitConfig
- * @package Paraunit\Configuration
  */
 class PHPUnitConfig
 {
@@ -20,6 +19,7 @@ class PHPUnitConfig
 
     /**
      * @param string $inputPathOrFileName
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
@@ -62,8 +62,10 @@ class PHPUnitConfig
 
     /**
      * @param string $inputPathOrFileName
-     * @return string
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     private function getConfigFileRealpath(string $inputPathOrFileName): string
     {

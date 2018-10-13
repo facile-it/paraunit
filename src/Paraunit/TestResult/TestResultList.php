@@ -6,7 +6,6 @@ namespace Paraunit\TestResult;
 
 /**
  * Class TestResultList
- * @package Paraunit\TestResult
  */
 class TestResultList
 {

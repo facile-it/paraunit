@@ -12,7 +12,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TestStartParserTest
- * @package Tests\Unit\Parser\JSON
  */
 class TestStartParserTest extends BaseUnitTestCase
 {

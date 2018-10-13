@@ -10,7 +10,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class XmlTest
- * @package Tests\Unit\Proxy
  */
 class XmlTest extends BaseUnitTestCase
 {

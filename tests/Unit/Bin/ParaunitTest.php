@@ -12,7 +12,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ParaunitTest
- * @package Tests\Unit\Bin
  */
 class ParaunitTest extends BaseUnitTestCase
 {

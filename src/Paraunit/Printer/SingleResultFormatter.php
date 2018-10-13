@@ -10,7 +10,6 @@ use Paraunit\TestResult\TestResultWithSymbolFormat;
 
 /**
  * Class SingleResultFormatter
- * @package Paraunit\Printer
  */
 class SingleResultFormatter
 {
@@ -19,6 +18,7 @@ class SingleResultFormatter
 
     /**
      * SingleResultFormatter constructor.
+     *
      * @param TestResultList $testResultList
      */
     public function __construct(TestResultList $testResultList)

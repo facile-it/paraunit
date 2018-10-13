@@ -10,7 +10,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class HtmlTest
- * @package Tests\Unit\Proxy
  */
 class HtmlTest extends BaseUnitTestCase
 {

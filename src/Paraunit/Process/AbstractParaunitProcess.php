@@ -9,7 +9,6 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 /**
  * Class AbstractParaunitProcess
- * @package Paraunit\Process
  */
 abstract class AbstractParaunitProcess
 {
@@ -35,7 +34,6 @@ abstract class AbstractParaunitProcess
     private $waitingForTestResult;
 
     /**
-     * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
     public function __construct(string $filename)

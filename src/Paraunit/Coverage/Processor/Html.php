@@ -10,7 +10,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 /**
  * Class HTMLResult
- * @package Paraunit\Proxy\Coverage
  */
 class Html implements CoverageProcessorInterface
 {
@@ -22,6 +21,7 @@ class Html implements CoverageProcessorInterface
 
     /**
      * Html constructor.
+     *
      * @param OutputPath $targetPath
      */
     public function __construct(OutputPath $targetPath)
@@ -32,6 +32,7 @@ class Html implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $codeCoverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

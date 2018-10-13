@@ -26,7 +26,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ParaunitTest
- * @package Tests\Unit\Configuration
  */
 class ParallelConfigurationTest extends BaseUnitTestCase
 {

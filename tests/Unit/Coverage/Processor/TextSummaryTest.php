@@ -12,7 +12,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class TextSummaryTest
- * @package Tests\Unit\Coverage\Processor
  */
 class TextSummaryTest extends BaseUnitTestCase
 {

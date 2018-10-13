@@ -10,7 +10,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class CloverTest
- * @package Tests\Unit\Proxy
  */
 class CloverTest extends BaseUnitTestCase
 {

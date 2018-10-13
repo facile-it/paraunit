@@ -35,7 +35,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ParaunitCoverageTest
- * @package Tests\Unit\Configuration
  */
 class CoverageConfigurationTest extends BaseUnitTestCase
 {

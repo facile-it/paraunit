@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class AbstractPrinter
- * @package Paraunit\Printer
  */
 abstract class AbstractPrinter
 {
@@ -17,6 +16,7 @@ abstract class AbstractPrinter
 
     /**
      * AbstractPrinter constructor.
+     *
      * @param OutputInterface $output
      */
     public function __construct(OutputInterface $output)

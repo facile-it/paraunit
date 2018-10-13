@@ -6,7 +6,6 @@ namespace Paraunit\Process;
 
 /**
  * Class ProcessFactory
- * @package Paraunit\Process
  */
 interface ProcessFactoryInterface
 {

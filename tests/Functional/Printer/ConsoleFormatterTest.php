@@ -12,7 +12,6 @@ use Tests\BaseFunctionalTestCase;
 
 /**
  * Class ConsoleFormatterTest
- * @package Tests\Functional\Printer
  */
 class ConsoleFormatterTest extends BaseFunctionalTestCase
 {

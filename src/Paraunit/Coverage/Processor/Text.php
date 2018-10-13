@@ -9,12 +9,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class Text
- * @package Paraunit\Proxy\Coverage
  */
 class Text extends AbstractText
 {
     /**
      * Text constructor.
+     *
      * @param OutputInterface $output
      * @param bool $showColors
      * @param OutputFile|null $targetFile

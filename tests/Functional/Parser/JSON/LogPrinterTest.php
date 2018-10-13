@@ -11,7 +11,6 @@ use Tests\BaseFunctionalTestCase;
 
 /**
  * Class LogPrinterTest
- * @package Tests\Functional\Parser\JSON
  */
 class LogPrinterTest extends BaseFunctionalTestCase
 {

@@ -8,7 +8,6 @@ use Paraunit\File\TempDirectory;
 
 /**
  * Class TempFilenameFactory
- * @package Tests\Unit\Parser
  */
 class TempFilenameFactory
 {
@@ -17,6 +16,7 @@ class TempFilenameFactory
 
     /**
      * TempFilenameFactory constructor.
+     *
      * @param TempDirectory $tempDirectory
      */
     public function __construct(TempDirectory $tempDirectory)

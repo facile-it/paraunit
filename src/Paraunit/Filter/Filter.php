@@ -14,7 +14,6 @@ use SebastianBergmann\FileIterator\Facade;
 
 /**
  * Class Filter
- * @package Paraunit\Filter
  */
 class Filter
 {
@@ -59,8 +58,9 @@ class Filter
     }
 
     /**
-     * @return string[]
      * @throws \RuntimeException
+     *
+     * @return string[]
      */
     public function filterTestFiles(): array
     {
@@ -95,6 +95,7 @@ class Filter
     /**
      * @param \DOMElement $testSuiteNode
      * @param array $aggregatedFiles
+     *
      * @return string[]
      */
     private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles): array
@@ -109,6 +110,7 @@ class Filter
 
     /**
      * @param \DOMElement $testSuiteNode
+     *
      * @return string[]
      */
     private function getExcludesArray(\DOMElement $testSuiteNode): array
@@ -178,7 +180,7 @@ class Filter
         string $nodeName,
         string $defaultValue = null
     ): string {
-        /**
+        /*
          * @var string
          * @var \DOMAttr
          */
@@ -194,6 +196,7 @@ class Filter
     /**
      * @param array $aggregatedFiles
      * @param string | null $stringFilter
+     *
      * @return string[]
      */
     private function filterByString(array $aggregatedFiles, $stringFilter): array

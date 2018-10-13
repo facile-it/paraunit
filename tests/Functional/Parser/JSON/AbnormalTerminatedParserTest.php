@@ -12,7 +12,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class AbnormalTerminatedParserTest
- * @package Functional\Parser
  */
 class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
 {

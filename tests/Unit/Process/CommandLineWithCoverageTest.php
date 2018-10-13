@@ -16,7 +16,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TestWithCoverageCliCommandTest
- * @package Tests\Unit\Process
  */
 class CommandLineWithCoverageTest extends BaseUnitTestCase
 {

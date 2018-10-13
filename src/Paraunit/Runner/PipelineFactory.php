@@ -8,7 +8,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class PipelineFactory
- * @package Paraunit\Runner
  */
 class PipelineFactory
 {
@@ -22,6 +21,7 @@ class PipelineFactory
 
     /**
      * @param int $pipelineNumber
+     *
      * @return Pipeline
      */
     public function create(int $pipelineNumber): Pipeline

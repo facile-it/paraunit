@@ -6,7 +6,6 @@ namespace Paraunit\TestResult;
 
 /**
  * Class TestResultWithAbnormalTermination
- * @package Paraunit\TestResult
  */
 class TestResultWithAbnormalTermination extends TestResultWithMessage
 {

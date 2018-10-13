@@ -13,7 +13,6 @@ use Tests\BaseFunctionalTestCase;
 
 /**
  * Class SingleResultFormatterTest
- * @package Tests\Functional\Printer
  */
 class SingleResultFormatterTest extends BaseFunctionalTestCase
 {

@@ -16,7 +16,6 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class ParallelCommandTest
- * @package Tests\Unit\Command
  */
 class ParallelCommandTest extends BaseUnitTestCase
 {

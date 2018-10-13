@@ -6,7 +6,6 @@ namespace Paraunit\TestResult;
 
 /**
  * Class TestResultWithSymbolFormat
- * @package Paraunit\TestResult
  */
 class TestResultWithSymbolFormat extends TestResultFormat
 {
@@ -15,6 +14,7 @@ class TestResultWithSymbolFormat extends TestResultFormat
 
     /**
      * TestResultFormat constructor.
+     *
      * @param string $testResultSymbol
      * @param string $tag
      * @param string $title

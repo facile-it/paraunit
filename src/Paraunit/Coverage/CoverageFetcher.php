@@ -13,7 +13,6 @@ use Symfony\Component\Process\Process;
 
 /**
  * Class CoverageFetcher
- * @package Paraunit\Coverage
  */
 class CoverageFetcher
 {
@@ -25,6 +24,7 @@ class CoverageFetcher
 
     /**
      * CoverageFetcher constructor.
+     *
      * @param TempFilenameFactory $tempFilenameFactory
      * @param TestResultHandlerInterface $failureHandler
      */

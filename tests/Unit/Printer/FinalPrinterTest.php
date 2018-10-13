@@ -14,7 +14,6 @@ use Tests\Stub\UnformattedOutputStub;
 
 /**
  * Class FailuresPrinterTest
- * @package Tests\Unit\Printer
  */
 class FinalPrinterTest extends BaseUnitTestCase
 {

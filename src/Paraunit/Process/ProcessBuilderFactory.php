@@ -11,17 +11,18 @@ use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Class ProcessBuilderFactory
- * @package Paraunit\Process
  */
 class ProcessBuilderFactory implements ProcessFactoryInterface
 {
     /** @var ProcessBuilder */
     private $builderPrototype;
+
     /** @var CommandLine */
     private $cliCommand;
 
     /**
      * ProcessBuilderFactory constructor.
+     *
      * @param CommandLine $cliCommand
      * @param PHPUnitConfig $phpunitConfig
      * @param TempFilenameFactory $tempFilenameFactory

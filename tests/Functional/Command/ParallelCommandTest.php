@@ -16,7 +16,6 @@ use Tests\Stub\RaisingNoticeTestStub;
 
 /**
  * Class ParallelCommandTest
- * @package Tests\Functional\Command
  */
 class ParallelCommandTest extends BaseTestCase
 {

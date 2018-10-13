@@ -12,7 +12,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class CoverageMergerTest
- * @package Tests\Unit\Coverage
  */
 class CoverageMergerTest extends BaseUnitTestCase
 {

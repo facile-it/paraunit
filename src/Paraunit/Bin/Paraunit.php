@@ -13,7 +13,6 @@ use Symfony\Component\Console\Application;
 
 /**
  * Class Paraunit
- * @package Paraunit\Bin
  */
 class Paraunit
 {

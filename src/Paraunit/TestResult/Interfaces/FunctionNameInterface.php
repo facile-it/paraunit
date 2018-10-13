@@ -6,7 +6,6 @@ namespace Paraunit\TestResult\Interfaces;
 
 /**
  * Interface FunctionNameInterface
- * @package Paraunit\TestResult\Interfaces
  */
 interface FunctionNameInterface
 {

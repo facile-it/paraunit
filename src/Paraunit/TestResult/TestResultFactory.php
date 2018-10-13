@@ -9,7 +9,6 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class TestResultFactory
- * @package Paraunit\TestResult
  */
 class TestResultFactory
 {

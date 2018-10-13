@@ -23,12 +23,12 @@ use Tests\BaseUnitTestCase;
 
 /**
  * Class CoverageCommandTest
- * @package Tests\Unit\Command
  */
 class CoverageCommandTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider validCoverageOptionsProvider
+     *
      * @param string $coverageOptionName
      * @param bool $hasOptionalValue
      */

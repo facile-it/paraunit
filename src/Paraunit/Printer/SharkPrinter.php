@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class SharkPrinter
- * @package Paraunit\Printer
  */
 class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
@@ -20,6 +19,7 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
 
     /**
      * SharkPrinter constructor.
+     *
      * @param OutputInterface $output
      * @param bool $showLogo
      */

@@ -8,7 +8,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 /**
  * Interface TestResultHandlerInterface
- * @package Paraunit\TestResult\Interfaces
  */
 interface TestResultHandlerInterface
 {

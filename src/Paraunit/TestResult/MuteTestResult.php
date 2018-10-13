@@ -8,7 +8,6 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 /**
  * Class MuteTestResult
- * @package Paraunit\Output\MuteTestResult
  */
 class MuteTestResult extends NullTestResult implements PrintableTestResultInterface
 {

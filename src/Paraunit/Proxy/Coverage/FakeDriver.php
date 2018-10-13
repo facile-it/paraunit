@@ -7,7 +7,7 @@ namespace Paraunit\Proxy\Coverage;
 use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 
-/**
+/*
  * Class FakeDriver
  * @package Paraunit\Proxy\Coverage
  */

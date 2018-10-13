@@ -12,7 +12,6 @@ use Tests\Stub\StubbedParaunitProcess;
 
 /**
  * Class TestResultContainerTest
- * @package Tests\Unit\TestResult
  */
 class TestResultContainerTest extends BaseUnitTestCase
 {

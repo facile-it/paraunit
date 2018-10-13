@@ -9,7 +9,6 @@ use Tests\BaseFunctionalTestCase;
 
 /**
  * Class FailuresPrinterTest
- * @package Tests\Functional\Printer
  */
 class FailuresPrinterTest extends BaseFunctionalTestCase
 {

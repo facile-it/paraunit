@@ -6,7 +6,6 @@ namespace Paraunit\Configuration;
 
 /**
  * Class OutputFile
- * @package Paraunit\Configuration
  */
 class OutputFile
 {
@@ -15,6 +14,7 @@ class OutputFile
 
     /**
      * OutputPath constructor.
+     *
      * @param string $filePath
      */
     public function __construct($filePath)
@@ -30,8 +30,9 @@ class OutputFile
     }
 
     /**
-     * @return string
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function getFilePath(): string
     {
