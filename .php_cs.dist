@@ -30,6 +30,8 @@ $finder = PhpCsFixer\Finder::create();
 $autoloadPathProvider = new Facile\CodingStandards\AutoloadPathProvider();
 $finder->in($autoloadPathProvider->getPaths());
 
+$finder->exclude('tests/Stub/ParseErrorTestStub.php');
+
 $config->setFinder($finder);
 
 return $config;
