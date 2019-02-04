@@ -18,7 +18,7 @@ class CoverageMerger implements EventSubscriberInterface
     /** @var CoverageFetcher */
     private $coverageFetcher;
 
-    /** @var CodeCoverage */
+    /** @var CodeCoverage|null */
     private $coverageData;
 
     /**

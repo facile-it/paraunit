@@ -62,7 +62,7 @@ class CoverageFetcher
         try {
             $this->overrideCoverageClassDefinition($tempFilename);
 
-            $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
+            $verificationProcess = new Process(['php', '--syntax-check ' . $tempFilename]);
             $verificationProcess->run();
 
             return $verificationProcess->getExitCode() === 0;

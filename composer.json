@@ -31,7 +31,7 @@
         "symfony/console": "^2.8||^3.0||^4.0",
         "symfony/dependency-injection": "^2.8||^3.0||^4.0",
         "symfony/event-dispatcher": "^2.8||^3.0||^4.0",
-        "symfony/process": "^2.8||^3.0||^4.0",
+        "symfony/process": "^3.3||^4.0",
         "symfony/stopwatch": "^2.8||^3.0||^4.0"
     },
     "require-dev": {
