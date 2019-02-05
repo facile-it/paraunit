@@ -11,10 +11,6 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class LogParser
- * @package Paraunit\Parser\JSON
- */
 class LogParser implements EventSubscriberInterface
 {
     /** @var LogFetcher */
@@ -32,13 +28,6 @@ class LogParser implements EventSubscriberInterface
     /** @var ParserChainElementInterface[] */
     private $parsers;
 
-    /**
-     * LogParser constructor.
-     * @param LogFetcher $logLocator
-     * @param TestResultHandlerInterface $noTestExecutedResultContainer
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param RetryParser $retryParser
-     */
     public function __construct(
         LogFetcher $logLocator,
         TestResultHandlerInterface $noTestExecutedResultContainer,
@@ -59,9 +48,6 @@ class LogParser implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ParserChainElementInterface $container
-     */
     public function addParser(ParserChainElementInterface $container)
     {
         $this->parsers[] = $container;
@@ -75,9 +61,6 @@ class LogParser implements EventSubscriberInterface
         return $this->parsers;
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
     public function onProcessTerminated(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();
@@ -102,10 +85,6 @@ class LogParser implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
-    /**
-     * @param AbstractParaunitProcess $process
-     * @param \stdClass $logItem
-     */
     private function processLog(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         /** @var ParserChainElementInterface $resultContainer */
@@ -116,11 +95,6 @@ class LogParser implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param AbstractParaunitProcess $process
-     * @param array $logs
-     * @return bool
-     */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
         return $process->getExitCode() === 0 && count($logs) === 1;

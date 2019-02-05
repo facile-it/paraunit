@@ -7,10 +7,6 @@ namespace Paraunit\TestResult;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
-/**
- * Class TestResultFactory
- * @package Paraunit\TestResult
- */
 class TestResultFactory
 {
     public function createFromLog(\stdClass $log): PrintableTestResultInterface

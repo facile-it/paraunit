@@ -9,20 +9,11 @@ use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class SharkPrinter
- * @package Paraunit\Printer
- */
 class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
     /** @var bool */
     private $showLogo;
 
-    /**
-     * SharkPrinter constructor.
-     * @param OutputInterface $output
-     * @param bool $showLogo
-     */
     public function __construct(OutputInterface $output, bool $showLogo)
     {
         parent::__construct($output);

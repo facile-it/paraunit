@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\File;
 
-/**
- * Class TempDirectory
- * @package Paraunit\File
- */
 class TempDirectory
 {
     /** @var string[] */
@@ -18,16 +14,12 @@ class TempDirectory
     /** @var string */
     private static $timestamp;
 
-    /**
-     * Paraunit constructor.
-     */
     public function __construct()
     {
         self::$timestamp = uniqid(date('Ymd-His'), true);
     }
 
     /**
-     * @return string
      * @throws \RuntimeException If the temp dirs cannot be created
      */
     public function getTempDirForThisExecution(): string
@@ -42,8 +34,6 @@ class TempDirectory
     }
 
     /**
-     * @return string
-     *
      * @throws \RuntimeException
      */
     public static function getTempBaseDir(): string
@@ -70,8 +60,6 @@ class TempDirectory
     }
 
     /**
-     * @param string $path
-     *
      * @throws \RuntimeException If the dir cannot be created
      */
     public static function mkdirIfNotExists(string $path)

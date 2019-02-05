@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-/**
- * Class TestResultWithAbnormalTermination
- * @package Paraunit\TestResult
- */
 class TestResultWithAbnormalTermination extends TestResultWithMessage
 {
     /** @var string */

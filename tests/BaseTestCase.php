@@ -10,10 +10,6 @@ use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
-/**
- * Class BaseTestCase
- * @package Tests
- */
 class BaseTestCase extends TestCase
 {
     /** @var string|null */

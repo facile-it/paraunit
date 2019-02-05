@@ -12,10 +12,6 @@ use Symfony\Component\Stopwatch\Stopwatch;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
-/**
- * Class FailuresPrinterTest
- * @package Tests\Unit\Printer
- */
 class FinalPrinterTest extends BaseUnitTestCase
 {
     public function testOnEngineEndPrintsTheRightCountSummary()

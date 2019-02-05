@@ -6,10 +6,6 @@ namespace Paraunit\TestResult\Interfaces;
 
 use Paraunit\TestResult\TestResultFormat;
 
-/**
- * Interface TestResultContainerInterface
- * @package Paraunit\TestResult\Interfaces
- */
 interface TestResultContainerInterface extends TestResultBearerInterface
 {
     /**

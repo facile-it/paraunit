@@ -8,10 +8,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
-/**
- * Class RetryParser
- * @package Paraunit\Parser\JSON
- */
 class RetryParser
 {
     /** @var TestResultHandlerInterface */
@@ -23,11 +19,6 @@ class RetryParser
     /** @var string */
     private $regexPattern;
 
-    /**
-     * RetryParser constructor.
-     * @param TestResultHandlerInterface $testResultContainer
-     * @param int $maxRetryCount
-     */
     public function __construct(TestResultHandlerInterface $testResultContainer, int $maxRetryCount = 3)
     {
         $this->testResultContainer = $testResultContainer;
@@ -74,7 +65,6 @@ class RetryParser
 
     /**
      * @param string[] $patterns
-     * @return string
      */
     private function buildRegexPattern(array $patterns): string
     {

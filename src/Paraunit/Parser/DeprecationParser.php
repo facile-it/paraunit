@@ -15,10 +15,6 @@ class DeprecationParser implements EventSubscriberInterface
     /** @var TestResultHandlerInterface */
     private $testResultContainer;
 
-    /**
-     * DeprecationParser constructor.
-     * @param TestResultHandlerInterface $testResultContainer
-     */
     public function __construct(TestResultHandlerInterface $testResultContainer)
     {
         $this->testResultContainer = $testResultContainer;

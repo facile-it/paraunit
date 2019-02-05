@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-/**
- * Class TestResultContainer
- * @package Paraunit\TestResult
- */
 class TestResultFormat
 {
     /** @var string */
@@ -22,13 +18,6 @@ class TestResultFormat
     /** @var bool */
     private $printFilesRecap;
 
-    /**
-     * TestResultFormat constructor.
-     * @param string $tag
-     * @param string $title
-     * @param bool $printTestOutput
-     * @param bool $printFilesRecap
-     */
     public function __construct(string $tag, string $title, bool $printTestOutput = true, bool $printFilesRecap = true)
     {
         $this->tag = $tag;

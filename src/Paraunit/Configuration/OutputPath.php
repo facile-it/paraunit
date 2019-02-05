@@ -4,19 +4,11 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-/**
- * Class OutputPath
- * @package Paraunit\Configuration
- */
 class OutputPath
 {
     /** @var string */
     private $path;
 
-    /**
-     * OutputPath constructor.
-     * @param string $path
-     */
     public function __construct(string $path)
     {
         if ($path === '') {
@@ -32,7 +24,6 @@ class OutputPath
     }
 
     /**
-     * @return string
      * @throws \RuntimeException
      */
     public function getPath(): string

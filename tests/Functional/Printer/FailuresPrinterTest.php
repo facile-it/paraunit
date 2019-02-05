@@ -7,10 +7,6 @@ namespace Tests\Functional\Printer;
 use Paraunit\Printer\FailuresPrinter;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * Class FailuresPrinterTest
- * @package Tests\Functional\Printer
- */
 class FailuresPrinterTest extends BaseFunctionalTestCase
 {
     public function testOnEngineEndPrintsInTheRightOrder()

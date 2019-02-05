@@ -11,10 +11,6 @@ use PHPUnit\Util\Xml;
 use SebastianBergmann\FileIterator\Facade;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class FilterTest
- * @package Tests\Unit\Filter
- */
 class FilterTest extends BaseUnitTestCase
 {
     /** @var string */
@@ -242,8 +238,6 @@ class FilterTest extends BaseUnitTestCase
     }
 
     /**
-     * @param string $fileName
-     * @return \DOMDocument
      * @throws \Exception
      */
     private function getStubbedXMLConf(string $fileName): \DOMDocument

@@ -15,10 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class LogParserTest
- * @package Tests\Unit\Parser\JSON
- */
 class LogParserTest extends BaseUnitTestCase
 {
     public function testOnProcessTerminatedHasProperChainInterruption()

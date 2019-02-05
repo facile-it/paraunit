@@ -9,10 +9,6 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\TempDirectory;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class TempFilenameFactoryTest
- * @package Tests\Unit\Configuration
- */
 class TempFilenameFactoryTest extends BaseUnitTestCase
 {
     public function testGetPathForLog()

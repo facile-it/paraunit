@@ -14,10 +14,6 @@ use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\RaisingDeprecationTestStub;
 use Tests\Stub\RaisingNoticeTestStub;
 
-/**
- * Class ParallelCommandTest
- * @package Tests\Functional\Command
- */
 class ParallelCommandTest extends BaseTestCase
 {
     public function testExecutionAllGreen()

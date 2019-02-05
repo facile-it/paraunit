@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e57be0f84139d52fb5ba93125dca7452",
+    "content-hash": "1a1b7c69a8e9000e17ff6e162070a919",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -2292,25 +2292,27 @@
         },
         {
             "name": "facile-it/facile-coding-standard",
-            "version": "0.2.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facile-it/facile-coding-standard.git",
-                "reference": "68f75eb68ab12c3fc688538af15139f2f56b4a11"
+                "reference": "2bceb1aa76d822f88ad945cbbe1330d3290466fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facile-it/facile-coding-standard/zipball/68f75eb68ab12c3fc688538af15139f2f56b4a11",
-                "reference": "68f75eb68ab12c3fc688538af15139f2f56b4a11",
+                "url": "https://api.github.com/repos/facile-it/facile-coding-standard/zipball/2bceb1aa76d822f88ad945cbbe1330d3290466fc",
+                "reference": "2bceb1aa76d822f88ad945cbbe1330d3290466fc",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.1",
-                "friendsofphp/php-cs-fixer": "^2.4.1",
-                "php": "^7.0"
+                "ext-json": "*",
+                "friendsofphp/php-cs-fixer": "^2.13.0",
+                "php": "^7.1"
             },
             "require-dev": {
                 "composer/composer": "^1.3.2",
+                "composer/semver": "^1.4",
                 "mikey179/vfsstream": "^1.6",
                 "phpunit/phpunit": "^6.2"
             },
@@ -2333,7 +2335,7 @@
                 "facile",
                 "facile.it"
             ],
-            "time": "2018-02-28T13:45:23+00:00"
+            "time": "2018-09-19T15:36:21+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",

@@ -9,10 +9,6 @@ use Paraunit\Parser\JSON\LogFetcher;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class LogFetcherTest
- * @package Tests\Unit\Parser\JSON
- */
 class LogFetcherTest extends BaseUnitTestCase
 {
     public function testFetchAppendsLogEndingAnywayWithMissingLog()

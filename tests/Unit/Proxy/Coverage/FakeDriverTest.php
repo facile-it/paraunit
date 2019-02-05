@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 class FakeDriverTest extends TestCase
 {
     /**
-     * @param string $method
      * @dataProvider methodNameProvider
      */
     public function testUnusableMethods(string $method): void

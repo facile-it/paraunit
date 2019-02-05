@@ -8,19 +8,11 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 
-/**
- * Class SingleResultFormatter
- * @package Paraunit\Printer
- */
 class SingleResultFormatter
 {
     /** @var array */
     private $tagMap;
 
-    /**
-     * SingleResultFormatter constructor.
-     * @param TestResultList $testResultList
-     */
     public function __construct(TestResultList $testResultList)
     {
         $this->tagMap = [];

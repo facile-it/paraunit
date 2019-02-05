@@ -48,10 +48,10 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
         ]));
         $container->getDefinition(ProcessFactoryInterface::class)
             ->setArguments([
-            new Reference(CommandLineWithCoverage::class),
-            new Reference(PHPUnitConfig::class),
-            new Reference(TempFilenameFactory::class),
-        ]);
+                new Reference(CommandLineWithCoverage::class),
+                new Reference(PHPUnitConfig::class),
+                new Reference(TempFilenameFactory::class),
+            ]);
     }
 
     private function configureCoverage(ContainerBuilder $container)

@@ -8,10 +8,6 @@ use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
-/**
- * Class TestResultWithMessage
- * @package Paraunit\TestResult
- */
 class TestResultWithMessage extends MuteTestResult implements
     PrintableTestResultInterface,
     FunctionNameInterface,
@@ -23,11 +19,6 @@ class TestResultWithMessage extends MuteTestResult implements
     /** @var string */
     private $failureMessage;
 
-    /**
-     * TestResultWithMessage constructor.
-     * @param string $functionName
-     * @param string $failureMessage
-     */
     public function __construct(string $functionName, string $failureMessage)
     {
         parent::__construct();

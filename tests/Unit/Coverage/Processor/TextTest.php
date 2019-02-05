@@ -10,10 +10,6 @@ use Prophecy\Argument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class TextTest
- * @package Tests\Unit\Proxy
- */
 class TextTest extends BaseUnitTestCase
 {
     /**

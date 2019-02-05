@@ -16,19 +16,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class CoverageCommand
- * @package Paraunit\Command
- */
 class CoverageCommand extends ParallelCommand
 {
     /** @var string[] */
     private $coverageMethods;
 
-    /**
-     * ParallelCommand constructor.
-     * @param CoverageConfiguration $configuration
-     */
     public function __construct(CoverageConfiguration $configuration)
     {
         parent::__construct($configuration);
@@ -59,13 +51,10 @@ class CoverageCommand extends ParallelCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|null
-     *
      * @throws \Exception
      * @throws \InvalidArgumentException
+     *
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

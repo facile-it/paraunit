@@ -10,10 +10,6 @@ use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
-/**
- * Class TestResultContainer
- * @package Paraunit\TestResult
- */
 class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
 {
     /** @var TestResultFormat */
@@ -25,10 +21,6 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /** @var PrintableTestResultInterface[] */
     private $testResults;
 
-    /**
-     * TestResultContainer constructor.
-     * @param TestResultFormat $testResultFormat
-     */
     public function __construct(TestResultFormat $testResultFormat)
     {
         $this->testResultFormat = $testResultFormat;

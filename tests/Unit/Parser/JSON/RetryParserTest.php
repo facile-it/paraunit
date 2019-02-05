@@ -16,10 +16,6 @@ use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class RetryParserTest
- * @package Tests\Unit\Parser\JSON
- */
 class RetryParserTest extends BaseUnitTestCase
 {
     /**

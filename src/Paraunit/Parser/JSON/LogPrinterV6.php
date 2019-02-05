@@ -15,21 +15,20 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util;
 
-/**
- * This class duplicates the original one because in PHPUnit 7 the signatures of the TestListener interface are : void
- *
- * Class LogPrinter
- * @package Paraunit\Parser\JSON
- */
 class LogPrinterV6 extends Util\Printer implements TestListener
 {
     const STATUS_ERROR = 'error';
+
     const STATUS_WARNING = 'warning';
+
     const STATUS_FAIL = 'fail';
+
     const STATUS_PASS = 'pass';
 
     const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+
     const MESSAGE_RISKY_TEST = 'Risky Test: ';
+
     const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
 
     /** @var resource */
@@ -53,8 +52,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * An error occurred.
      *
-     * @param Test $test
-     * @param \Exception $exception
      * @param float $time
      */
     public function addError(Test $test, \Exception $exception, $time)
@@ -73,8 +70,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * A warning occurred.
      *
-     * @param Test $test
-     * @param Warning $warning
      * @param float $time
      */
     public function addWarning(Test $test, Warning $warning, $time)
@@ -93,8 +88,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * A failure occurred.
      *
-     * @param Test $test
-     * @param AssertionFailedError $error
      * @param float $time
      */
     public function addFailure(Test $test, AssertionFailedError $error, $time)
@@ -113,8 +106,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * Incomplete test.
      *
-     * @param Test $test
-     * @param \Exception $error
      * @param float $time
      */
     public function addIncompleteTest(Test $test, \Exception $error, $time)
@@ -133,8 +124,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * Risky test.
      *
-     * @param Test $test
-     * @param \Exception $exception
      * @param float $time
      */
     public function addRiskyTest(Test $test, \Exception $exception, $time)
@@ -153,8 +142,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * Skipped test.
      *
-     * @param Test $test
-     * @param \Exception $exception
      * @param float $time
      */
     public function addSkippedTest(Test $test, \Exception $exception, $time)
@@ -173,7 +160,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * A testsuite started.
      *
-     * @param TestSuite $suite
      * @throws \RuntimeException
      */
     public function startTestSuite(TestSuite $suite)
@@ -209,7 +195,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     /**
      * A test ended.
      *
-     * @param Test $test
      * @param float $time
      */
     public function endTest(Test $test, $time)
@@ -220,9 +205,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     }
 
     /**
-     * @param string $status
-     * @param float $time
-     * @param string $trace
      * @param string $message
      * @param Test|TestCase|null $test
      */
@@ -269,7 +251,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     }
 
     /**
-     * @return string
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
@@ -289,7 +270,6 @@ class LogPrinterV6 extends Util\Printer implements TestListener
     }
 
     /**
-     * @return string
      * @throws \InvalidArgumentException
      */
     private function getLogDirectory(): string

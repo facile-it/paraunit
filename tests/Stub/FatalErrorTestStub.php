@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
-/**
- * Class FatalErrorTestStub
- * @package Tests\Stub
- */
 class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     public function testBrokenTest()
