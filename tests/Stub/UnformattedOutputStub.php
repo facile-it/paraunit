@@ -6,10 +6,6 @@ namespace Tests\Stub;
 
 use Symfony\Component\Console\Output\Output;
 
-/**
- * Class UnformattedOutputStub
- * @package Tests\Stub
- */
 class UnformattedOutputStub extends Output
 {
     /** @var string */

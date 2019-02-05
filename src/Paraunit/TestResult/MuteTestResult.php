@@ -6,18 +6,11 @@ namespace Paraunit\TestResult;
 
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
-/**
- * Class MuteTestResult
- * @package Paraunit\Output\MuteTestResult
- */
 class MuteTestResult extends NullTestResult implements PrintableTestResultInterface
 {
     /** @var TestResultFormat */
     private $testResultFormat;
 
-    /**
-     * AbstractTestResult constructor.
-     */
     public function __construct()
     {
         $this->testResultFormat = new TestResultFormat('null', '');

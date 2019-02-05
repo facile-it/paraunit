@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Crap4j;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class Crap4jTest
- * @package Tests\Unit\Coverage\Processor
- */
 class Crap4jTest extends BaseUnitTestCase
 {
     public function testWriteToFile()

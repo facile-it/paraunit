@@ -9,10 +9,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class CoverageMerger
- * @package Paraunit\Coverage
- */
 class CoverageMerger implements EventSubscriberInterface
 {
     /** @var CoverageFetcher */
@@ -21,10 +17,6 @@ class CoverageMerger implements EventSubscriberInterface
     /** @var CodeCoverage|null */
     private $coverageData;
 
-    /**
-     * CoverageMerger constructor.
-     * @param CoverageFetcher $coverageFetcher
-     */
     public function __construct(CoverageFetcher $coverageFetcher)
     {
         $this->coverageFetcher = $coverageFetcher;
@@ -37,9 +29,6 @@ class CoverageMerger implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
     public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();

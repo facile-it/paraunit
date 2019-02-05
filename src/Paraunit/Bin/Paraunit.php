@@ -11,10 +11,6 @@ use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\ParallelConfiguration;
 use Symfony\Component\Console\Application;
 
-/**
- * Class Paraunit
- * @package Paraunit\Bin
- */
 class Paraunit
 {
     public static function createApplication(): Application

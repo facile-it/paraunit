@@ -10,13 +10,10 @@ use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class ProcessPrinter
- * @package Paraunit\Printer
- */
 class ProcessPrinter implements EventSubscriberInterface
 {
     const MAX_CHAR_LENGTH = 80;
+
     const COUNTER_CHAR_LENGTH = 5;
 
     /** @var SingleResultFormatter */
@@ -31,11 +28,6 @@ class ProcessPrinter implements EventSubscriberInterface
     /** @var int */
     private $singleRowCounter;
 
-    /**
-     * ProcessPrinter constructor.
-     * @param SingleResultFormatter $singleResultFormatter
-     * @param OutputInterface $output
-     */
     public function __construct(SingleResultFormatter $singleResultFormatter, OutputInterface $output)
     {
         $this->singleResultFormatter = $singleResultFormatter;
@@ -54,7 +46,6 @@ class ProcessPrinter implements EventSubscriberInterface
     }
 
     /**
-     * @param ProcessEvent $processEvent
      * @throws \BadMethodCallException
      */
     public function onProcessCompleted(ProcessEvent $processEvent)
@@ -76,9 +67,6 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    /**
-     * @param PrintableTestResultInterface $testResult
-     */
     private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
     {
         if ($this->isRowFull()) {

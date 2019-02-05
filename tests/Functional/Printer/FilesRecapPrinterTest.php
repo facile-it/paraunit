@@ -10,10 +10,6 @@ use Paraunit\TestResult\TestResultContainer;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class FilesRecapPrinterTest
- * @package Tests\Functional\Printer
- */
 class FilesRecapPrinterTest extends BaseFunctionalTestCase
 {
     public function testOnEngineEndPrintsInTheRightOrder()

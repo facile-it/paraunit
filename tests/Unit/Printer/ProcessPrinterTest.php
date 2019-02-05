@@ -13,10 +13,6 @@ use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
-/**
- * Class ProcessPrinterTest
- * @package Tests\Unit\Printer
- */
 class ProcessPrinterTest extends BaseUnitTestCase
 {
     public function testOnProcessParsingCompletedGoesToFormatting()

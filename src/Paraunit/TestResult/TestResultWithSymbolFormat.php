@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-/**
- * Class TestResultWithSymbolFormat
- * @package Paraunit\TestResult
- */
 class TestResultWithSymbolFormat extends TestResultFormat
 {
     /** @var string */
     private $testResultSymbol;
 
-    /**
-     * TestResultFormat constructor.
-     * @param string $testResultSymbol
-     * @param string $tag
-     * @param string $title
-     * @param bool $printTestOutput
-     * @param bool $printFilesRecap
-     */
     public function __construct(
         string $testResultSymbol,
         string $tag,

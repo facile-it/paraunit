@@ -7,10 +7,6 @@ namespace Paraunit\Parser\JSON;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\NullTestResult;
 
-/**
- * Class TestStartParser
- * @package Paraunit\Parser\JSON
- */
 class TestStartParser implements ParserChainElementInterface
 {
     const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
@@ -41,8 +37,6 @@ class TestStartParser implements ParserChainElementInterface
     }
 
     /**
-     * @param AbstractParaunitProcess $process
-     * @param \stdClass $logItem
      * @return null|NullTestResult
      */
     private function handleLogTermination(AbstractParaunitProcess $process, \stdClass $logItem)
@@ -56,20 +50,12 @@ class TestStartParser implements ParserChainElementInterface
         return new NullTestResult();
     }
 
-    /**
-     * @param AbstractParaunitProcess $process
-     * @param \stdClass $logItem
-     */
     private function saveProcessFunction(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         $this->lastProcess = $process;
         $this->lastFunction = property_exists($logItem, 'test') ? $logItem->test : self::UNKNOWN_FUNCTION;
     }
 
-    /**
-     * @param AbstractParaunitProcess $process
-     * @param \stdClass $logItem
-     */
     private function injectLastFunctionInEndingLog(AbstractParaunitProcess $process, \stdClass $logItem)
     {
         $logItem->test = $this->lastFunction;

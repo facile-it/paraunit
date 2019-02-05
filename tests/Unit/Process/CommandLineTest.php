@@ -11,10 +11,6 @@ use Paraunit\Parser\JSON\LogPrinter;
 use Paraunit\Process\CommandLine;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class TestCliCommandTest
- * @package Tests\Unit\Process
- */
 class CommandLineTest extends BaseUnitTestCase
 {
     public function testGetExecutable()

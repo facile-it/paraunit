@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputPath;
 use Paraunit\Coverage\Processor\Xml;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class XmlTest
- * @package Tests\Unit\Proxy
- */
 class XmlTest extends BaseUnitTestCase
 {
     public function testWriteToFile()

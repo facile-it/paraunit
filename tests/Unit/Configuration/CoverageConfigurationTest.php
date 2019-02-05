@@ -33,10 +33,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class ParaunitCoverageTest
- * @package Tests\Unit\Configuration
- */
 class CoverageConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()

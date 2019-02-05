@@ -10,10 +10,6 @@ use Prophecy\Argument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class TextSummaryTest
- * @package Tests\Unit\Coverage\Processor
- */
 class TextSummaryTest extends BaseUnitTestCase
 {
     /**

@@ -10,10 +10,6 @@ use Prophecy\Argument;
 use Symfony\Component\Process\Process;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class SymfonyProcessWrapperTest
- * @package Unit\Process
- */
 class SymfonyProcessWrapperTest extends BaseUnitTestCase
 {
     public function testGetUniqueId()

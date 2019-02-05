@@ -10,10 +10,6 @@ use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class SingleResultFormatterTest
- * @package Tests\Unit\Printer
- */
 class SingleResultFormatterTest extends BaseUnitTestCase
 {
     public function testFormatSingleResult()

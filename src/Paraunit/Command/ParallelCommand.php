@@ -14,9 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class ParallelCommand.
- */
 class ParallelCommand extends Command
 {
     /** @var ParallelConfiguration */
@@ -26,8 +23,6 @@ class ParallelCommand extends Command
     private $phpunitOptions;
 
     /**
-     * ParallelCommand constructor.
-     * @param ParallelConfiguration $configuration
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(ParallelConfiguration $configuration)
@@ -87,12 +82,9 @@ class ParallelCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @throws \Exception
      *
      * @return int|null
-     *
-     * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -108,11 +100,6 @@ class ParallelCommand extends Command
         return $runner->run();
     }
 
-    /**
-     * @param PHPUnitConfig $config
-     * @param InputInterface $input
-     * @return PHPUnitConfig
-     */
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
     {
         foreach ($this->phpunitOptions as $option) {
@@ -125,11 +112,6 @@ class ParallelCommand extends Command
         return $config;
     }
 
-    /**
-     * @param PHPUnitOption $option
-     * @param mixed $cliOption
-     * @return bool
-     */
     private function setOptionValue(PHPUnitOption $option, $cliOption): bool
     {
         if (! $cliOption) {

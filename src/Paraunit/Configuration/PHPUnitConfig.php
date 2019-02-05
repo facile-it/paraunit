@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-/**
- * Class PHPUnitConfig
- * @package Paraunit\Configuration
- */
 class PHPUnitConfig
 {
     const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
@@ -19,7 +15,6 @@ class PHPUnitConfig
     private $phpunitOptions;
 
     /**
-     * @param string $inputPathOrFileName
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
@@ -44,9 +39,6 @@ class PHPUnitConfig
         return dirname($this->configFilename);
     }
 
-    /**
-     * @param PHPUnitOption $option
-     */
     public function addPhpunitOption(PHPUnitOption $option)
     {
         $this->phpunitOptions[] = $option;
@@ -61,8 +53,6 @@ class PHPUnitConfig
     }
 
     /**
-     * @param string $inputPathOrFileName
-     * @return string
      * @throws \InvalidArgumentException
      */
     private function getConfigFileRealpath(string $inputPathOrFileName): string

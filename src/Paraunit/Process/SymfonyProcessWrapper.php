@@ -7,10 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Symfony\Component\Process\Process;
 
-/**
- * Class SymfonyProcessWrapper
- * @package Paraunit\Process
- */
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
     /** @var Process */
@@ -33,9 +29,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
         return $this->process->isTerminated();
     }
 
-    /**
-     * @param int $pipelineNumber
-     */
     public function start(int $pipelineNumber)
     {
         $this->reset();
@@ -48,7 +41,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @return string
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function getOutput(): string
@@ -57,17 +49,15 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @return int|null
      * @throws \Symfony\Component\Process\Exception\RuntimeException
+     *
+     * @return int|null
      */
     public function getExitCode()
     {
         return $this->process->getExitCode();
     }
 
-    /**
-     * @return string
-     */
     public function getCommandLine(): string
     {
         return $this->process->getCommandLine();

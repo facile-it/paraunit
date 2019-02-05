@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Php;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class PhpTest
- * @package Tests\Unit\Coverage\Processor
- */
 class PhpTest extends BaseUnitTestCase
 {
     public function testWriteToFile()

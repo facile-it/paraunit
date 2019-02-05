@@ -10,10 +10,6 @@ use Paraunit\Command\ParallelCommand;
 use Symfony\Component\Console\Application;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class ParaunitTest
- * @package Tests\Unit\Bin
- */
 class ParaunitTest extends BaseUnitTestCase
 {
     public function testCreateApplication()

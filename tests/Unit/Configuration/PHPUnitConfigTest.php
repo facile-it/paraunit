@@ -7,10 +7,6 @@ namespace Tests\Unit\Configuration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class PHPUnitConfigTest
- * @package Tests\Unit\Configuration
- */
 class PHPUnitConfigTest extends BaseUnitTestCase
 {
     public function testGetBaseDirectoryIsNotLazy()

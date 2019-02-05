@@ -9,10 +9,6 @@ use Paraunit\Parser\JSON\LogPrinter;
 use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * Class LogPrinterTest
- * @package Tests\Functional\Parser\JSON
- */
 class LogPrinterTest extends BaseFunctionalTestCase
 {
     protected function setUp()

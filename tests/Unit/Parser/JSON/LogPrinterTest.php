@@ -12,10 +12,6 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class LogPrinterTest
- * @package Tests\Unit\Parser\JSON
- */
 class LogPrinterTest extends BaseUnitTestCase
 {
     public function testStartTestSuite()

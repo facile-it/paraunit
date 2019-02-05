@@ -7,10 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
-/**
- * Class AbstractParaunitProcess
- * @package Paraunit\Process
- */
 abstract class AbstractParaunitProcess
 {
     /** @var int */
@@ -35,7 +31,6 @@ abstract class AbstractParaunitProcess
     private $waitingForTestResult;
 
     /**
-     * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
     public function __construct(string $filename)
@@ -58,9 +53,6 @@ abstract class AbstractParaunitProcess
      */
     abstract public function getExitCode();
 
-    /**
-     * @param int $pipelineNumber
-     */
     abstract public function start(int $pipelineNumber);
 
     public function getUniqueId(): string

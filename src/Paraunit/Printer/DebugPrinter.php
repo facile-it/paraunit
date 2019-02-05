@@ -7,10 +7,6 @@ namespace Paraunit\Printer;
 use Paraunit\Lifecycle\ProcessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class DebugPrinter
- * @package Paraunit\Printer
- */
 class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array

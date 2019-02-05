@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputPath;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
-/**
- * Class HTMLResult
- * @package Paraunit\Proxy\Coverage
- */
 class Html implements CoverageProcessorInterface
 {
     /** @var Facade */
@@ -20,10 +16,6 @@ class Html implements CoverageProcessorInterface
     /** @var OutputPath */
     private $targetPath;
 
-    /**
-     * Html constructor.
-     * @param OutputPath $targetPath
-     */
     public function __construct(OutputPath $targetPath)
     {
         $this->html = new Facade();
@@ -31,7 +23,6 @@ class Html implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $codeCoverage
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

@@ -9,10 +9,6 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Symfony\Component\Process\Process;
 
-/**
- * Class ProcessFactory
- * @package Paraunit\Process
- */
 class ProcessFactory implements ProcessFactoryInterface
 {
     /** @var CommandLine */
@@ -24,12 +20,6 @@ class ProcessFactory implements ProcessFactoryInterface
     /** @var string[] */
     private $environmentVariables;
 
-    /**
-     * ProcessFactory constructor.
-     * @param CommandLine $cliCommand
-     * @param PHPUnitConfig $phpunitConfig
-     * @param TempFilenameFactory $tempFilenameFactory
-     */
     public function __construct(
         CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,

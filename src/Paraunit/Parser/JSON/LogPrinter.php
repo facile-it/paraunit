@@ -26,17 +26,21 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
      * It's copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
      *
      * Class LogPrinter
-     * @package Paraunit\Parser\JSON
      */
     class LogPrinter extends Util\Printer implements TestListener
     {
         const STATUS_ERROR = 'error';
+
         const STATUS_WARNING = 'warning';
+
         const STATUS_FAIL = 'fail';
+
         const STATUS_PASS = 'pass';
 
         const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+
         const MESSAGE_RISKY_TEST = 'Risky Test: ';
+
         const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
 
         /** @var resource */
@@ -63,10 +67,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * An error occurred.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addError(Test $test, \Throwable $exception, float $time): void
         {
@@ -83,10 +83,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A warning occurred.
-         *
-         * @param Test $test
-         * @param Warning $warning
-         * @param float $time
          */
         public function addWarning(Test $test, Warning $warning, float $time): void
         {
@@ -103,10 +99,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A failure occurred.
-         *
-         * @param Test $test
-         * @param AssertionFailedError $error
-         * @param float $time
          */
         public function addFailure(Test $test, AssertionFailedError $error, float $time): void
         {
@@ -123,10 +115,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Incomplete test.
-         *
-         * @param Test $test
-         * @param \Throwable $error
-         * @param float $time
          */
         public function addIncompleteTest(Test $test, \Throwable $error, float $time): void
         {
@@ -143,10 +131,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Risky test.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addRiskyTest(Test $test, \Throwable $exception, float $time): void
         {
@@ -163,10 +147,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Skipped test.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addSkippedTest(Test $test, \Throwable $exception, float $time): void
         {
@@ -184,7 +164,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         /**
          * A testsuite started.
          *
-         * @param TestSuite $suite
          * @throws \RuntimeException
          */
         public function startTestSuite(TestSuite $suite): void
@@ -219,9 +198,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A test ended.
-         *
-         * @param Test $test
-         * @param float $time
          */
         public function endTest(Test $test, float $time): void
         {
@@ -231,9 +207,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @param string $status
-         * @param float $time
-         * @param string $trace
          * @param string $message
          * @param Test|TestCase|null $test
          */
@@ -280,7 +253,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @return string
          * @throws \RuntimeException
          * @throws \InvalidArgumentException
          */
@@ -300,7 +272,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @return string
          * @throws \InvalidArgumentException
          */
         private function getLogDirectory(): string

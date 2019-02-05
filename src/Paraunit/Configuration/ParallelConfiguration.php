@@ -14,13 +14,10 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class Paraunit
- * @package Paraunit\Configuration
- */
 class ParallelConfiguration
 {
     const TAG_EVENT_SUBSCRIBER = 'paraunit.event_subscriber';
+
     const PUBLIC_ALIAS_FORMAT = '%s_public_alias';
 
     /** @var ParallelContainerDefinition */
@@ -29,10 +26,6 @@ class ParallelConfiguration
     /** @var bool */
     private $createPublicServiceAliases;
 
-    /**
-     * ParallelConfiguration constructor.
-     * @param bool $createPublicServiceAliases
-     */
     public function __construct(bool $createPublicServiceAliases = false)
     {
         $this->containerDefinition = new ParallelContainerDefinition();
@@ -40,9 +33,6 @@ class ParallelConfiguration
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return ContainerBuilder
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Exception
      */

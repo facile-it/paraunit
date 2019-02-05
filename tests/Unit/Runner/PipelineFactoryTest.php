@@ -9,10 +9,6 @@ use Paraunit\Runner\PipelineFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class PipelineFactoryTest
- * @package Tests\Unit\Runner
- */
 class PipelineFactoryTest extends BaseUnitTestCase
 {
     public function testCreate()
