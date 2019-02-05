@@ -38,7 +38,7 @@ class BaseTestCase extends TestCase
         return realpath(__DIR__ . DIRECTORY_SEPARATOR . 'Stub') . DIRECTORY_SEPARATOR;
     }
 
-    protected function createRandomTmpDir()
+    protected function createRandomTmpDir(): void
     {
         $this->randomTempDir = uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test-', true);
         $this->randomTempDir .= DIRECTORY_SEPARATOR;
@@ -82,5 +82,55 @@ class BaseTestCase extends TestCase
         }
 
         return $content;
+    }
+
+    /**
+     * BC compat method provided as a workaround for deprecations. 
+     * The newer methods are present only from PHPUnit 7.5.0 onwards
+     */
+    public static function assertContains(
+        $needle,
+        $haystack,
+        string $message = '',
+        bool $ignoreCase = false,
+        bool $checkForObjectIdentity = true,
+        bool $checkForNonObjectIdentity = false
+    ): void {
+        if (\is_string($haystack) && \method_exists(self::class, 'assertStringContainsString')) {
+            if ($ignoreCase) {
+                self::assertStringContainsStringIgnoringCase($needle, $haystack, $message);
+            } else {
+                self::assertStringContainsString($needle, $haystack, $message);
+            }
+            self::assertTrue($checkForObjectIdentity, 'Unsupported parameter!');
+            self::assertFalse($checkForNonObjectIdentity, 'Unsupported parameter!');
+        } else {
+            parent::assertContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
+        }
+    }
+
+    /**
+     * BC compat method provided as a workaround for deprecations.
+     * The newer methods are present only from PHPUnit 7.5.0 onwards
+     */
+    public static function assertNotContains(
+        $needle,
+        $haystack,
+        string $message = '',
+        bool $ignoreCase = false,
+        bool $checkForObjectIdentity = true,
+        bool $checkForNonObjectIdentity = false
+    ): void {
+        if (\is_string($haystack) && \method_exists(self::class, 'assertStringContainsString')) {
+            if ($ignoreCase) {
+                self::assertStringNotContainsStringIgnoringCase($needle, $haystack, $message);
+            } else {
+                self::assertStringNotContainsString($needle, $haystack, $message);
+            }
+            self::assertTrue($checkForObjectIdentity, 'Unsupported parameter!');
+            self::assertFalse($checkForNonObjectIdentity, 'Unsupported parameter!');
+        } else {
+            parent::assertNotContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
+        }
     }
 }

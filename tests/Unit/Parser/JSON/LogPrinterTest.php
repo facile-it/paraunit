@@ -55,7 +55,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
-        $warning = new Warning('Warning message', null, new \Exception());
+        $warning = new Warning('Warning message', 123, new \Exception());
         $line = __LINE__ - 1;
 
         $printer->startTest($test);
@@ -86,7 +86,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
         // has final methods, cannot be mocked
-        $failure = new AssertionFailedError('Failure message', null, new \Exception());
+        $failure = new AssertionFailedError('Failure message', 123, new \Exception());
         $line = __LINE__ - 1;
 
         $printer->startTest($test);
