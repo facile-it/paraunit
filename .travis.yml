@@ -45,7 +45,7 @@ jobs:
         - ./cc-test-reporter before-build
       script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
       after_success:
-        - php bin/coveralls -v
+        - php bin/php-coveralls -v
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 before_deploy:
