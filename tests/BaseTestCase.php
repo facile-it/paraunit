@@ -56,7 +56,7 @@ class BaseTestCase extends TestCase
         return $this->randomTempDir;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         putenv(EnvVariables::LOG_DIR);
         putenv(EnvVariables::PROCESS_UNIQUE_ID);

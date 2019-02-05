@@ -44,14 +44,14 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
 
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 
         $this->cleanUpTempDirForThisExecution();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->cleanUpTempDirForThisExecution();
 

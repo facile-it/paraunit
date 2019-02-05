@@ -6,7 +6,7 @@ namespace Tests;
 
 abstract class BaseFunctionalTestCase extends BaseIntegrationTestCase
 {
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 

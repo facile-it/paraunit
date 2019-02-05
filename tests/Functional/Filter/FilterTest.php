@@ -9,7 +9,7 @@ use Tests\BaseFunctionalTestCase;
 
 class FilterTest extends BaseFunctionalTestCase
 {
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_with_2_testsuites.xml');
         $this->setOption('testsuite', 'suite1,suite2');

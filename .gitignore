@@ -1,7 +1,7 @@
 ._*
 *.tgz
 *.phar
-.php_cs.cache
+.*.cache
 .php_cs
 bin
 gpg
