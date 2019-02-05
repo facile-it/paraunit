@@ -38,9 +38,7 @@ class LogPrinterTest extends BaseFunctionalTestCase
 
         $printer->startTestSuite($testSuite->reveal());
 
-        $this->assertFileExists($logFullPath);
-
-        $content = file_get_contents($logFullPath);
+        $content = $this->getFileContent($logFullPath);
         $this->assertJson($content);
         $decodedJson = json_decode($content, true);
         $this->assertEquals(['event' => 'suiteStart', 'suite' => $testName, 'tests' => 1], $decodedJson);

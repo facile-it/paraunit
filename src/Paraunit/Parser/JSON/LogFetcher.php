@@ -37,6 +37,7 @@ class LogFetcher
         $fileContent = '';
 
         if (file_exists($filePath)) {
+            /** @var string $fileContent */
             $fileContent = file_get_contents($filePath);
             unlink($filePath);
         }

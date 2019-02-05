@@ -76,4 +76,15 @@ class BaseTestCase extends TestCase
     {
         return new CodeCoverage(new FakeDriver());
     }
+
+    protected function getFileContent(string $filePath): string
+    {
+        $this->assertFileExists($filePath);
+        $content = file_get_contents($filePath);
+        if (! \is_string($content)) {
+            $this->fail('Unable to retrieve file content from ' . $filePath);
+        }
+
+        return $content;
+    }
 }

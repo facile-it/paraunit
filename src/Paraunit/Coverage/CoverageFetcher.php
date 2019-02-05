@@ -62,7 +62,7 @@ class CoverageFetcher
         try {
             $this->overrideCoverageClassDefinition($tempFilename);
 
-            $verificationProcess = new Process('php --syntax-check ' . $tempFilename);
+            $verificationProcess = new Process(['php', '--syntax-check ' . $tempFilename]);
             $verificationProcess->run();
 
             return $verificationProcess->getExitCode() === 0;
@@ -71,22 +71,22 @@ class CoverageFetcher
         }
     }
 
-    /**
-     * @param string $tempFilename
-     */
-    private function overrideCoverageClassDefinition($tempFilename)
+    private function overrideCoverageClassDefinition(string $tempFilename): void
     {
-        $fileContent = str_replace(
-            [
-                'new SebastianBergmann\CodeCoverage\CodeCoverage;',
-                'new SebastianBergmann\CodeCoverage\CodeCoverage();',
-                'new CodeCoverage;',
-                'new CodeCoverage();',
-            ],
-            'new SebastianBergmann\CodeCoverage\CodeCoverage(new ' . FakeDriver::class . ');',
-            file_get_contents($tempFilename)
-        );
+        $originalCoverageData = file_get_contents($tempFilename);
+        if ($originalCoverageData) {
+            $fileContent = str_replace(
+                [
+                    'new SebastianBergmann\CodeCoverage\CodeCoverage;',
+                    'new SebastianBergmann\CodeCoverage\CodeCoverage();',
+                    'new CodeCoverage;',
+                    'new CodeCoverage();',
+                ],
+                'new SebastianBergmann\CodeCoverage\CodeCoverage(new ' . FakeDriver::class . ');',
+                $originalCoverageData
+            );
+        }
 
-        file_put_contents($tempFilename, $fileContent);
+        file_put_contents($tempFilename, $fileContent ?? '');
     }
 }

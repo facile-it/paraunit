@@ -52,13 +52,11 @@ abstract class BaseUnitTestCase extends BaseTestCase
         return $filename;
     }
 
-    /**
-     * @return \stdClass
-     */
-    protected function getLogWithTrace()
+    protected function getLogWithTrace(): \stdClass
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         $logs = json_decode($jsonLogs);
+        /** @var \stdClass $log */
         foreach ($logs as $log) {
             if (property_exists($log, 'trace') && $log->trace !== '') {
                 return $log;
@@ -106,10 +104,14 @@ abstract class BaseUnitTestCase extends BaseTestCase
 
         /** @var \SplFileInfo $file */
         foreach ($files as $file) {
+            $realPath = $file->getRealPath();
+            if (! $realPath) {
+                continue;
+            }
             if ($file->isDir()) {
-                $this->removeDirectory($file->getRealPath());
+                $this->removeDirectory($realPath);
             } else {
-                unlink($file->getRealPath());
+                unlink($realPath);
             }
         }
 

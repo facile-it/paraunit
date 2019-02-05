@@ -43,15 +43,16 @@ class PHPDbgBinFile
 
     private function getPhpDbgBinLocation(): string
     {
-        $checkInPath = new Process('phpdbg --version');
+        $checkInPath = new Process(['phpdbg', '--version']);
         $checkInPath->run();
+
         if ($checkInPath->getExitCode() === 0) {
             return 'phpdbg';
         }
 
-        $locator = new Process('command -v phpdbg');
+        $locator = new Process(['command', '-v', 'phpdbg']);
         $locator->run();
 
-        return (string) preg_replace('/\s/', '', $locator->getOutput());
+        return preg_replace('/\s/', '', $locator->getOutput());
     }
 }

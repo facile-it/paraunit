@@ -47,7 +47,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'status' => 'error',
                 'time' => 1,
                 'trace' => __FILE__ . ':' . $line . "\n",
-                'message' => 'Exception: Exception message' . PHP_EOL,
+                'message' => "Exception: Exception message\n",
                 'output' => '',
             ],
         ]);
@@ -78,7 +78,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'status' => 'warning',
                 'time' => 1,
                 'trace' => __FILE__ . ':' . $line . "\n",
-                'message' => 'Warning message' . PHP_EOL,
+                'message' => "Warning message\n",
                 'output' => '',
             ],
         ]);
@@ -109,7 +109,7 @@ class LogPrinterTest extends BaseUnitTestCase
                 'status' => 'fail',
                 'time' => 1,
                 'trace' => __FILE__ . ':' . $line . "\n",
-                'message' => 'Failure message' . PHP_EOL,
+                'message' => "Failure message\n",
                 'output' => '',
             ],
         ]);
@@ -260,9 +260,7 @@ class LogPrinterTest extends BaseUnitTestCase
     private function getLogContent(): string
     {
         $logFilename = $this->getRandomTempDir() . 'log-file-name.json.log';
-        $this->assertFileExists($logFilename, 'Log file missing! Maybe you called this method too early?');
-
-        $content = file_get_contents($logFilename);
+        $content = $this->getFileContent($logFilename);
 
         return preg_replace('/\r\n/', "\n", $content);
     }

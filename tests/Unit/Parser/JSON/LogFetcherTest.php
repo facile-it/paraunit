@@ -33,6 +33,7 @@ class LogFetcherTest extends BaseUnitTestCase
         $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 
         $endingLog = end($logs);
+        $this->assertNotFalse($endingLog);
         $this->assertTrue(property_exists($endingLog, 'status'));
         $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->status);
     }
@@ -58,6 +59,7 @@ class LogFetcherTest extends BaseUnitTestCase
         $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 
         $endingLog = end($logs);
+        $this->assertNotFalse($endingLog);
         $this->assertTrue(property_exists($endingLog, 'status'));
         $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->status);
 

@@ -1,14 +1,15 @@
 parameters:
     ignoreErrors:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
-        - '/Constant PARAUNIT_PHAR_FILE not found/'
         - '/Method Tests\\BaseTestCase::getRandomTempDir\(\) should return string but returns string|null\./'
         - '/Parameter #1 $process of class Paraunit\\Lifecycle\\ProcessEvent constructor expects Paraunit\\Process\\AbstractParaunitProcess, Paraunit\\Process\\AbstractParaunitProcess|null given\./'
-        - '/Call to function is_array\(\) will always evaluate to false./'
+        - '/Call to function is_array\(\) with string will always evaluate to false./'
         - '/Class Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher not found/'
+        - '/Parameter #3 \$offset of function strpos expects int, int\|false given\./'
     excludes_analyse:
         - src/Paraunit/Parser/JSON/LogPrinterV6.php
         - src/Paraunit/Process/ProcessBuilderFactory.php
         - tests/Stub/ParseErrorTestStub.php
 includes:
+	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/jangregor/phpstan-prophecy/src/extension.neon

@@ -23,8 +23,7 @@ class CloverTest extends BaseUnitTestCase
 
         $text->process($this->createCodeCoverage());
 
-        $this->assertFileExists($targetFile->getFilePath());
-        $content = file_get_contents($targetFile->getFilePath());
+        $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?xml', $content);
         $this->assertContains('<coverage generated=', $content);

@@ -23,8 +23,7 @@ class PhpTest extends BaseUnitTestCase
 
         $text->process($this->createCodeCoverage());
 
-        $this->assertFileExists($targetFile->getFilePath());
-        $content = file_get_contents($targetFile->getFilePath());
+        $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?php', $content);
         $this->assertContains('$coverage = new', $content);

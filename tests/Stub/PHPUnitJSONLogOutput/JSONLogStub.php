@@ -43,8 +43,10 @@ class JSONLogStub
         if (! file_exists($fullFilename)) {
             throw new \Exception('Unknown file stub: ' . $filename);
         }
+        /** @var string $rawLog */
+        $rawLog = file_get_contents($fullFilename);
 
-        return self::cleanLog(file_get_contents($fullFilename));
+        return self::cleanLog($rawLog);
     }
 
     /**
