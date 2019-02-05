@@ -40,8 +40,7 @@
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "phpunit/php-invoker": "^1.1",
-        "satooshi/php-coveralls": "^2.0",
-        "scrutinizer/ocular": "^1.4",
+        "php-coveralls/php-coveralls": "^2.0",
         "symfony/expression-language": "^2.8||^3.0||^4.0",
         "symfony/phpunit-bridge": "^4.1.3"
     },
