@@ -24,7 +24,6 @@ class LogFetcherTest extends BaseUnitTestCase
         $logs = $fetcher->fetch($process);
 
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
-        $this->assertInternalType('array', $logs, 'Fetcher returning a non-array');
         $this->assertCount(1, $logs, 'Log ending missing');
         $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 
@@ -50,7 +49,6 @@ class LogFetcherTest extends BaseUnitTestCase
         $logs = $fetcher->fetch($process);
 
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
-        $this->assertInternalType('array', $logs, 'Fetcher returning a non-array');
         $this->assertCount(20 + 1, $logs, 'Log ending missing');
         $this->assertContainsOnlyInstancesOf(\stdClass::class, $logs);
 

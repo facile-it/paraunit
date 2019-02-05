@@ -40,7 +40,6 @@ class CommandLineTest extends BaseUnitTestCase
 
         $cli = new CommandLine($phpunit->reveal());
         $options = $cli->getOptions($config->reveal());
-        $this->assertInternalType('array', $options, 'Expecting an array, got ' . gettype($options));
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
         $this->assertContains('--printer=' . LogPrinter::class, $options);
         $this->assertContains('--opt', $options);

@@ -96,8 +96,6 @@ class RunnerTest extends BaseUnitTestCase
         );
 
         $runner->onProcessParsingCompleted(new ProcessEvent($process));
-
-        $this->assertAttributeNotSame(0, 'exitCode', $runner);
     }
 
     public function testOnProcessToBeRetried()
@@ -125,8 +123,6 @@ class RunnerTest extends BaseUnitTestCase
         );
 
         $runner->onProcessToBeRetried(new ProcessEvent($process));
-
-        $this->assertAttributeSame(0, 'exitCode', $runner);
     }
 
     private function mockEventDispatcher(): EventDispatcherInterface
