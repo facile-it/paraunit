@@ -12,10 +12,6 @@ abstract class AbstractFinalPrinter extends AbstractPrinter
     /** @var TestResultList */
     protected $testResultList;
 
-    /**
-     * @param TestResultList $testResultList
-     * @param OutputInterface $output
-     */
     public function __construct(TestResultList $testResultList, OutputInterface $output)
     {
         parent::__construct($output);

@@ -17,11 +17,6 @@ class ProcessBuilderFactory implements ProcessFactoryInterface
     /** @var CommandLine */
     private $cliCommand;
 
-    /**
-     * @param CommandLine $cliCommand
-     * @param PHPUnitConfig $phpunitConfig
-     * @param TempFilenameFactory $tempFilenameFactory
-     */
     public function __construct(
         CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,

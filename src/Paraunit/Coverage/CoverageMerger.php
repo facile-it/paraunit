@@ -17,9 +17,6 @@ class CoverageMerger implements EventSubscriberInterface
     /** @var CodeCoverage|null */
     private $coverageData;
 
-    /**
-     * @param CoverageFetcher $coverageFetcher
-     */
     public function __construct(CoverageFetcher $coverageFetcher)
     {
         $this->coverageFetcher = $coverageFetcher;
@@ -32,9 +29,6 @@ class CoverageMerger implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
     public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         $process = $processEvent->getProcess();

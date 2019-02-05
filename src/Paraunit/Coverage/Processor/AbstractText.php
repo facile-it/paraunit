@@ -23,12 +23,6 @@ abstract class AbstractText implements CoverageProcessorInterface
     /** @var bool */
     private $showColors;
 
-    /**
-     * @param OutputInterface $output
-     * @param bool $showColors
-     * @param bool $onlySummary
-     * @param OutputFile|null $targetFile
-     */
     public function __construct(OutputInterface $output, bool $showColors, bool $onlySummary, OutputFile $targetFile = null)
     {
         $this->text = new PHPUnitText(50, 90, false, $onlySummary);
@@ -38,8 +32,6 @@ abstract class AbstractText implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $coverage
-     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $coverage)

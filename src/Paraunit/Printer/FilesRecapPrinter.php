@@ -24,9 +24,6 @@ class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberI
         }
     }
 
-    /**
-     * @param TestResultContainerInterface $testResultContainer
-     */
     private function printFileRecap(TestResultContainerInterface $testResultContainer)
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {

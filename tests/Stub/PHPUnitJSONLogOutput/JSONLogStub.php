@@ -29,11 +29,7 @@ class JSONLogStub
     const PARSE_ERROR = 'ParseError';
 
     /**
-     * @param string $filename
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getLogs(string $filename): string
     {
@@ -41,11 +37,7 @@ class JSONLogStub
     }
 
     /**
-     * @param string $filename
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getCleanOutputFileContent(string $filename): string
     {

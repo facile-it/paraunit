@@ -19,10 +19,6 @@ class TestResultWithMessage extends MuteTestResult implements
     /** @var string */
     private $failureMessage;
 
-    /**
-     * @param string $functionName
-     * @param string $failureMessage
-     */
     public function __construct(string $functionName, string $failureMessage)
     {
         parent::__construct();

@@ -25,9 +25,6 @@ class CoverageCommandTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider validCoverageOptionsProvider
-     *
-     * @param string $coverageOptionName
-     * @param bool $hasOptionalValue
      */
     public function testExecute(string $coverageOptionName, bool $hasOptionalValue = false): void
     {

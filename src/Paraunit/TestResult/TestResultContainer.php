@@ -21,9 +21,6 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /** @var PrintableTestResultInterface[] */
     private $testResults;
 
-    /**
-     * @param TestResultFormat $testResultFormat
-     */
     public function __construct(TestResultFormat $testResultFormat)
     {
         $this->testResultFormat = $testResultFormat;

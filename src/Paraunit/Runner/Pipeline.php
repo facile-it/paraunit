@@ -19,10 +19,6 @@ class Pipeline
     /** @var int */
     private $number;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param int $number
-     */
     public function __construct(EventDispatcherInterface $dispatcher, int $number)
     {
         $this->dispatcher = $dispatcher;

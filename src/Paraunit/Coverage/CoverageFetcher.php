@@ -19,10 +19,6 @@ class CoverageFetcher
     /** @var TestResultHandlerInterface */
     private $resultHandler;
 
-    /**
-     * @param TempFilenameFactory $tempFilenameFactory
-     * @param TestResultHandlerInterface $failureHandler
-     */
     public function __construct(TempFilenameFactory $tempFilenameFactory, TestResultHandlerInterface $failureHandler)
     {
         $this->tempFilenameFactory = $tempFilenameFactory;

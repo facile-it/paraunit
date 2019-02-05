@@ -16,9 +16,6 @@ class Crap4j implements CoverageProcessorInterface
     /** @var OutputFile */
     private $targetFile;
 
-    /**
-     * @param OutputFile $targetFile
-     */
     public function __construct(OutputFile $targetFile)
     {
         $this->crap4j = new PHPUnitCrap4j();
@@ -26,8 +23,6 @@ class Crap4j implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $codeCoverage
-     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

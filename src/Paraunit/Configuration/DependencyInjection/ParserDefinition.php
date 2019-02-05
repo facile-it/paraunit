@@ -47,8 +47,6 @@ class ParserDefinition
     }
 
     /**
-     * @param ContainerBuilder $container
-     *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      *
      * @return Reference[]

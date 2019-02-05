@@ -9,13 +9,6 @@ class TestResultWithSymbolFormat extends TestResultFormat
     /** @var string */
     private $testResultSymbol;
 
-    /**
-     * @param string $testResultSymbol
-     * @param string $tag
-     * @param string $title
-     * @param bool $printTestOutput
-     * @param bool $printFilesRecap
-     */
     public function __construct(
         string $testResultSymbol,
         string $tag,

@@ -15,8 +15,6 @@ class PHPUnitConfig
     private $phpunitOptions;
 
     /**
-     * @param string $inputPathOrFileName
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
@@ -41,9 +39,6 @@ class PHPUnitConfig
         return dirname($this->configFilename);
     }
 
-    /**
-     * @param PHPUnitOption $option
-     */
     public function addPhpunitOption(PHPUnitOption $option)
     {
         $this->phpunitOptions[] = $option;
@@ -58,11 +53,7 @@ class PHPUnitConfig
     }
 
     /**
-     * @param string $inputPathOrFileName
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return string
      */
     private function getConfigFileRealpath(string $inputPathOrFileName): string
     {

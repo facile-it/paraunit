@@ -18,12 +18,6 @@ class TestResultFormat
     /** @var bool */
     private $printFilesRecap;
 
-    /**
-     * @param string $tag
-     * @param string $title
-     * @param bool $printTestOutput
-     * @param bool $printFilesRecap
-     */
     public function __construct(string $tag, string $title, bool $printTestOutput = true, bool $printFilesRecap = true)
     {
         $this->tag = $tag;

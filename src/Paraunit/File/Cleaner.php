@@ -12,9 +12,6 @@ class Cleaner implements EventSubscriberInterface
     /** @var TempDirectory */
     private $tempDirectory;
 
-    /**
-     * @param TempDirectory $tempDirectory
-     */
     public function __construct(TempDirectory $tempDirectory)
     {
         $this->tempDirectory = $tempDirectory;
@@ -34,8 +31,6 @@ class Cleaner implements EventSubscriberInterface
     }
 
     /**
-     * @param string $dir
-     *
      * @return bool True if the directory existed and it has been deleted
      */
     public static function cleanUpDir(string $dir): bool

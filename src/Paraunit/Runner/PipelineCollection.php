@@ -21,11 +21,7 @@ class PipelineCollection
     }
 
     /**
-     * @param AbstractParaunitProcess $process
-     *
      * @throws \RuntimeException
-     *
-     * @return Pipeline
      */
     public function push(AbstractParaunitProcess $process): Pipeline
     {

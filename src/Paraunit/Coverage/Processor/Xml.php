@@ -17,9 +17,6 @@ class Xml implements CoverageProcessorInterface
     /** @var OutputPath */
     private $targetPath;
 
-    /**
-     * @param OutputPath $targetPath
-     */
     public function __construct(OutputPath $targetPath)
     {
         $this->xml = new Facade(Version::id());
@@ -27,8 +24,6 @@ class Xml implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $codeCoverage
-     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

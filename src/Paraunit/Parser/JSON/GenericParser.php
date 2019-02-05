@@ -23,8 +23,6 @@ class GenericParser implements ParserChainElementInterface
     protected $messageStartsWith;
 
     /**
-     * @param TestResultFactory $testResultFactory
-     * @param TestResultHandlerInterface $testResultContainer
      * @param string $status The status that the parser should catch
      * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */

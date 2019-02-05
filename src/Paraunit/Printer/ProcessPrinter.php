@@ -28,10 +28,6 @@ class ProcessPrinter implements EventSubscriberInterface
     /** @var int */
     private $singleRowCounter;
 
-    /**
-     * @param SingleResultFormatter $singleResultFormatter
-     * @param OutputInterface $output
-     */
     public function __construct(SingleResultFormatter $singleResultFormatter, OutputInterface $output)
     {
         $this->singleResultFormatter = $singleResultFormatter;
@@ -50,8 +46,6 @@ class ProcessPrinter implements EventSubscriberInterface
     }
 
     /**
-     * @param ProcessEvent $processEvent
-     *
      * @throws \BadMethodCallException
      */
     public function onProcessCompleted(ProcessEvent $processEvent)
@@ -73,9 +67,6 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    /**
-     * @param PrintableTestResultInterface $testResult
-     */
     private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
     {
         if ($this->isRowFull()) {

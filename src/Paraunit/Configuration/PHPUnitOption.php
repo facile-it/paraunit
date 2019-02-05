@@ -19,8 +19,6 @@ class PHPUnitOption
     private $hasValue;
 
     /**
-     * @param string $name
-     * @param bool $hasValue
      * @param string | null $shortName
      */
     public function __construct(string $name, bool $hasValue = true, string $shortName = null)

@@ -104,11 +104,7 @@ class CoverageConfiguration extends ParallelConfiguration
     }
 
     /**
-     * @param string $processorClass
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return string
      */
     private function getOptionName(string $processorClass): string
     {

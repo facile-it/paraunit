@@ -21,8 +21,6 @@ class TempDirectory
 
     /**
      * @throws \RuntimeException If the temp dirs cannot be created
-     *
-     * @return string
      */
     public function getTempDirForThisExecution(): string
     {
@@ -37,8 +35,6 @@ class TempDirectory
 
     /**
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public static function getTempBaseDir(): string
     {
@@ -64,8 +60,6 @@ class TempDirectory
     }
 
     /**
-     * @param string $path
-     *
      * @throws \RuntimeException If the dir cannot be created
      */
     public static function mkdirIfNotExists(string $path)

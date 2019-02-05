@@ -18,8 +18,6 @@ class PHPDbgBinFile
 
     /**
      * @throws \RuntimeException When PHPDBG is not available
-     *
-     * @return string
      */
     public function getPhpDbgBin(): string
     {

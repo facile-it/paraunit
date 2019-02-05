@@ -6,11 +6,6 @@ namespace Paraunit\Parser\JSON;
 
 class UnknownResultParser extends GenericParser
 {
-    /**
-     * @param \stdClass $log
-     *
-     * @return bool
-     */
     protected function logMatches(\stdClass $log): bool
     {
         // catch 'em all!

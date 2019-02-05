@@ -33,9 +33,6 @@ class Filter
     private $stringFilter;
 
     /**
-     * @param PHPUnitUtilXMLProxy $utilXml
-     * @param Facade $fileIteratorFacade
-     * @param PHPUnitConfig $configFile
      * @param string | null $testSuiteFilter
      * @param string | null $stringFilter
      */
@@ -90,9 +87,6 @@ class Filter
     }
 
     /**
-     * @param \DOMElement $testSuiteNode
-     * @param array $aggregatedFiles
-     *
      * @return string[]
      */
     private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles): array
@@ -106,8 +100,6 @@ class Filter
     }
 
     /**
-     * @param \DOMElement $testSuiteNode
-     *
      * @return string[]
      */
     private function getExcludesArray(\DOMElement $testSuiteNode): array
@@ -121,7 +113,6 @@ class Filter
     }
 
     /**
-     * @param \DOMElement $testSuiteNode
      * @param string[] $aggregatedFiles
      * @param string[] $excludes
      */
@@ -144,7 +135,6 @@ class Filter
     }
 
     /**
-     * @param \DOMElement $testSuiteNode
      * @param string[] $aggregatedFiles
      */
     private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
@@ -155,23 +145,12 @@ class Filter
         }
     }
 
-    /**
-     * @param array $aggregatedFiles
-     * @param string $fileName
-     */
     private function addFileToAggregateArray(array &$aggregatedFiles, string $fileName)
     {
         // optimized array_unique
         $aggregatedFiles[$fileName] = $fileName;
     }
 
-    /**
-     * @param \DOMElement $testSuiteNode
-     * @param string $nodeName
-     * @param string|null $defaultValue
-     *
-     * @return string
-     */
     private function getDOMNodeAttribute(
         \DOMElement $testSuiteNode,
         string $nodeName,
@@ -191,7 +170,6 @@ class Filter
     }
 
     /**
-     * @param array $aggregatedFiles
      * @param string | null $stringFilter
      *
      * @return string[]

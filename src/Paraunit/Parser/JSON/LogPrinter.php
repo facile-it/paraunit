@@ -67,10 +67,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * An error occurred.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addError(Test $test, \Throwable $exception, float $time): void
         {
@@ -87,10 +83,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A warning occurred.
-         *
-         * @param Test $test
-         * @param Warning $warning
-         * @param float $time
          */
         public function addWarning(Test $test, Warning $warning, float $time): void
         {
@@ -107,10 +99,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A failure occurred.
-         *
-         * @param Test $test
-         * @param AssertionFailedError $error
-         * @param float $time
          */
         public function addFailure(Test $test, AssertionFailedError $error, float $time): void
         {
@@ -127,10 +115,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Incomplete test.
-         *
-         * @param Test $test
-         * @param \Throwable $error
-         * @param float $time
          */
         public function addIncompleteTest(Test $test, \Throwable $error, float $time): void
         {
@@ -147,10 +131,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Risky test.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addRiskyTest(Test $test, \Throwable $exception, float $time): void
         {
@@ -167,10 +147,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * Skipped test.
-         *
-         * @param Test $test
-         * @param \Throwable $exception
-         * @param float $time
          */
         public function addSkippedTest(Test $test, \Throwable $exception, float $time): void
         {
@@ -187,8 +163,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A testsuite started.
-         *
-         * @param TestSuite $suite
          *
          * @throws \RuntimeException
          */
@@ -224,9 +198,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * A test ended.
-         *
-         * @param Test $test
-         * @param float $time
          */
         public function endTest(Test $test, float $time): void
         {
@@ -236,9 +207,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @param string $status
-         * @param float $time
-         * @param string $trace
          * @param string $message
          * @param Test|TestCase|null $test
          */
@@ -287,8 +255,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         /**
          * @throws \RuntimeException
          * @throws \InvalidArgumentException
-         *
-         * @return string
          */
         private function getLogFilename(): string
         {
@@ -307,8 +273,6 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
 
         /**
          * @throws \InvalidArgumentException
-         *
-         * @return string
          */
         private function getLogDirectory(): string
         {

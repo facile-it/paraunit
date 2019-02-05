@@ -26,9 +26,6 @@ class ParallelConfiguration
     /** @var bool */
     private $createPublicServiceAliases;
 
-    /**
-     * @param bool $createPublicServiceAliases
-     */
     public function __construct(bool $createPublicServiceAliases = false)
     {
         $this->containerDefinition = new ParallelContainerDefinition();
@@ -36,13 +33,8 @@ class ParallelConfiguration
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Exception
-     *
-     * @return ContainerBuilder
      */
     public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder
     {

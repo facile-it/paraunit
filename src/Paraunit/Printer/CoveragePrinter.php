@@ -21,10 +21,6 @@ class CoveragePrinter implements EventSubscriberInterface
     /** @var OutputInterface */
     private $output;
 
-    /**
-     * @param PHPDbgBinFile $phpdgbBin
-     * @param XDebugProxy $xdebug
-     */
     public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug, OutputInterface $output)
     {
         $this->phpdgbBin = $phpdgbBin;

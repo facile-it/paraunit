@@ -26,8 +26,6 @@ class OutputFile
 
     /**
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public function getFilePath(): string
     {

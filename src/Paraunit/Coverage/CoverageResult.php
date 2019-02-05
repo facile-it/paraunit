@@ -16,9 +16,6 @@ class CoverageResult implements EventSubscriberInterface
     /** @var CoverageProcessorInterface[] */
     private $coverageProcessors;
 
-    /**
-     * @param CoverageMerger $coverageMerger
-     */
     public function __construct(CoverageMerger $coverageMerger)
     {
         $this->coverageMerger = $coverageMerger;

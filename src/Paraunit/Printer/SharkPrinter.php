@@ -14,10 +14,6 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
     /** @var bool */
     private $showLogo;
 
-    /**
-     * @param OutputInterface $output
-     * @param bool $showLogo
-     */
     public function __construct(OutputInterface $output, bool $showLogo)
     {
         parent::__construct($output);

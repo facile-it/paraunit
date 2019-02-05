@@ -13,9 +13,6 @@ class SingleResultFormatter
     /** @var array */
     private $tagMap;
 
-    /**
-     * @param TestResultList $testResultList
-     */
     public function __construct(TestResultList $testResultList)
     {
         $this->tagMap = [];

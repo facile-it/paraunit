@@ -29,9 +29,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
         return $this->process->isTerminated();
     }
 
-    /**
-     * @param int $pipelineNumber
-     */
     public function start(int $pipelineNumber)
     {
         $this->reset();
@@ -45,8 +42,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /**
      * @throws \Symfony\Component\Process\Exception\LogicException
-     *
-     * @return string
      */
     public function getOutput(): string
     {
@@ -63,9 +58,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
         return $this->process->getExitCode();
     }
 
-    /**
-     * @return string
-     */
     public function getCommandLine(): string
     {
         return $this->process->getCommandLine();

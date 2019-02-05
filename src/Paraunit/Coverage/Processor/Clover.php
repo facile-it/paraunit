@@ -16,9 +16,6 @@ class Clover implements CoverageProcessorInterface
     /** @var OutputFile */
     private $targetFile;
 
-    /**
-     * @param OutputFile $targetFile
-     */
     public function __construct(OutputFile $targetFile)
     {
         $this->clover = new PHPUnitClover();
@@ -26,8 +23,6 @@ class Clover implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $codeCoverage
-     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

@@ -16,9 +16,6 @@ class Html implements CoverageProcessorInterface
     /** @var OutputPath */
     private $targetPath;
 
-    /**
-     * @param OutputPath $targetPath
-     */
     public function __construct(OutputPath $targetPath)
     {
         $this->html = new Facade();
@@ -26,8 +23,6 @@ class Html implements CoverageProcessorInterface
     }
 
     /**
-     * @param CodeCoverage $codeCoverage
-     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

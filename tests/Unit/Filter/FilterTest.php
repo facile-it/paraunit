@@ -238,11 +238,7 @@ class FilterTest extends BaseUnitTestCase
     }
 
     /**
-     * @param string $fileName
-     *
      * @throws \Exception
-     *
-     * @return \DOMDocument
      */
     private function getStubbedXMLConf(string $fileName): \DOMDocument
     {

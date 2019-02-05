@@ -21,9 +21,6 @@ class CoverageCommand extends ParallelCommand
     /** @var string[] */
     private $coverageMethods;
 
-    /**
-     * @param CoverageConfiguration $configuration
-     */
     public function __construct(CoverageConfiguration $configuration)
     {
         parent::__construct($configuration);
@@ -54,9 +51,6 @@ class CoverageCommand extends ParallelCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
      * @throws \Exception
      * @throws \InvalidArgumentException
      *

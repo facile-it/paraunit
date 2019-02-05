@@ -26,10 +26,6 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     /** @var int */
     private $processRetried;
 
-    /**
-     * @param TestResultList $testResultList
-     * @param OutputInterface $output
-     */
     public function __construct(TestResultList $testResultList, OutputInterface $output)
     {
         parent::__construct($testResultList, $output);

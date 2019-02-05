@@ -11,9 +11,6 @@ abstract class AbstractPrinter
     /** @var OutputInterface */
     private $output;
 
-    /**
-     * @param OutputInterface $output
-     */
     public function __construct(OutputInterface $output)
     {
         $this->output = $output;

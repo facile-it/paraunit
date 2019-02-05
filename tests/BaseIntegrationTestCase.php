@@ -58,10 +58,6 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    /**
-     * @param StubbedParaunitProcess $process
-     * @param string $stubLog
-     */
     protected function createLogForProcessFromStubbedLog(StubbedParaunitProcess $process, string $stubLog): void
     {
         $stubLogFilename = __DIR__ . '/Stub/PHPUnitJSONLogOutput/' . $stubLog . '.json';
@@ -129,8 +125,6 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     }
 
     /**
-     * @param string $serviceName
-     *
      * @throws \Exception
      *
      * @return object
@@ -141,11 +135,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     }
 
     /**
-     * @param string $parameterName
-     *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function getParameter(string $parameterName)
     {

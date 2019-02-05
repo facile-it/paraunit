@@ -9,8 +9,6 @@ use SebastianBergmann\CodeCoverage\CodeCoverage;
 interface CoverageProcessorInterface
 {
     /**
-     * @param CodeCoverage $codeCoverage
-     *
      * @throws \RuntimeException If the processor is missing a needed info, like the target dir/filename
      *
      * @return void

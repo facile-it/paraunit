@@ -9,9 +9,6 @@ class OutputPath
     /** @var string */
     private $path;
 
-    /**
-     * @param string $path
-     */
     public function __construct(string $path)
     {
         if ($path === '') {
@@ -28,8 +25,6 @@ class OutputPath
 
     /**
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public function getPath(): string
     {

@@ -17,11 +17,6 @@ class CommandLineWithCoverage extends CommandLine
     /** @var TempFilenameFactory */
     private $filenameFactory;
 
-    /**
-     * @param PHPUnitBinFile $phpUnitBin
-     * @param PHPDbgBinFile $dbgBinFile
-     * @param TempFilenameFactory $filenameFactory
-     */
     public function __construct(
         PHPUnitBinFile $phpUnitBin,
         PHPDbgBinFile $dbgBinFile,
@@ -48,11 +43,7 @@ class CommandLineWithCoverage extends CommandLine
     }
 
     /**
-     * @param PHPUnitConfig $config
-     *
      * @throws \RuntimeException
-     *
-     * @return array
      */
     public function getOptions(PHPUnitConfig $config): array
     {

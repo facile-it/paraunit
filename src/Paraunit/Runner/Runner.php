@@ -31,12 +31,6 @@ class Runner implements EventSubscriberInterface
     /** @var int */
     private $exitCode;
 
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ProcessFactoryInterface $processFactory
-     * @param Filter $filter
-     * @param PipelineCollection $pipelineCollection
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         ProcessFactoryInterface $processFactory,
@@ -82,9 +76,6 @@ class Runner implements EventSubscriberInterface
         return $this->exitCode;
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
     public function onProcessParsingCompleted(ProcessEvent $processEvent)
     {
         if ($processEvent->getProcess()->getExitCode() !== 0) {
@@ -92,9 +83,6 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param ProcessEvent $processEvent
-     */
     public function onProcessToBeRetried(ProcessEvent $processEvent)
     {
         $this->queuedProcesses->enqueue($processEvent->getProcess());

@@ -14,9 +14,6 @@ class CommandLine
     /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
-    /**
-     * @param PHPUnitBinFile $phpUnitBin
-     */
     public function __construct(PHPUnitBinFile $phpUnitBin)
     {
         $this->phpUnitBin = $phpUnitBin;
@@ -31,11 +28,7 @@ class CommandLine
     }
 
     /**
-     * @param PHPUnitConfig $config
-     *
      * @throws \RuntimeException When the config handling fails
-     *
-     * @return array
      */
     public function getOptions(PHPUnitConfig $config): array
     {
@@ -62,8 +55,6 @@ class CommandLine
     }
 
     /**
-     * @param string $testFilename
-     *
      * @return string[]
      */
     public function getSpecificOptions(string $testFilename): array

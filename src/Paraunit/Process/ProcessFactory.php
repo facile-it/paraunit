@@ -20,11 +20,6 @@ class ProcessFactory implements ProcessFactoryInterface
     /** @var string[] */
     private $environmentVariables;
 
-    /**
-     * @param CommandLine $cliCommand
-     * @param PHPUnitConfig $phpunitConfig
-     * @param TempFilenameFactory $tempFilenameFactory
-     */
     public function __construct(
         CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,

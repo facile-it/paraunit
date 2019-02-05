@@ -19,10 +19,6 @@ class RetryParser
     /** @var string */
     private $regexPattern;
 
-    /**
-     * @param TestResultHandlerInterface $testResultContainer
-     * @param int $maxRetryCount
-     */
     public function __construct(TestResultHandlerInterface $testResultContainer, int $maxRetryCount = 3)
     {
         $this->testResultContainer = $testResultContainer;
@@ -69,8 +65,6 @@ class RetryParser
 
     /**
      * @param string[] $patterns
-     *
-     * @return string
      */
     private function buildRegexPattern(array $patterns): string
     {

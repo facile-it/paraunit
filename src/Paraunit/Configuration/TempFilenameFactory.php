@@ -11,9 +11,6 @@ class TempFilenameFactory
     /** @var TempDirectory */
     private $tempDirectory;
 
-    /**
-     * @param TempDirectory $tempDirectory
-     */
     public function __construct(TempDirectory $tempDirectory)
     {
         $this->tempDirectory = $tempDirectory;

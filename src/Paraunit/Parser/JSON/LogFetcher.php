@@ -14,17 +14,12 @@ class LogFetcher
     /** @var TempFilenameFactory */
     private $fileName;
 
-    /**
-     * @param TempFilenameFactory $fileName
-     */
     public function __construct(TempFilenameFactory $fileName)
     {
         $this->fileName = $fileName;
     }
 
     /**
-     * @param AbstractParaunitProcess $process
-     *
      * @return \stdClass[]
      */
     public function fetch(AbstractParaunitProcess $process): array

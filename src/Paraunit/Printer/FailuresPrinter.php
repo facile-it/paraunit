@@ -29,9 +29,6 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
         }
     }
 
-    /**
-     * @param TestResultContainer $testResultContainer
-     */
     private function printFailuresOutput(TestResultContainer $testResultContainer)
     {
         if (empty($testResultContainer->getTestResults())) {
