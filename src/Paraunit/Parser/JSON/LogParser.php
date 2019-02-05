@@ -11,10 +11,6 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class LogParser
- * @package Paraunit\Parser\JSON
- */
 class LogParser implements EventSubscriberInterface
 {
     /** @var LogFetcher */
@@ -33,7 +29,6 @@ class LogParser implements EventSubscriberInterface
     private $parsers;
 
     /**
-     * LogParser constructor.
      * @param LogFetcher $logLocator
      * @param TestResultHandlerInterface $noTestExecutedResultContainer
      * @param EventDispatcherInterface $eventDispatcher
@@ -119,6 +114,7 @@ class LogParser implements EventSubscriberInterface
     /**
      * @param AbstractParaunitProcess $process
      * @param array $logs
+     *
      * @return bool
      */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool

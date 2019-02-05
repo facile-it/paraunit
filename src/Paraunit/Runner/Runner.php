@@ -11,10 +11,6 @@ use Paraunit\Process\ProcessFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class Runner
- * @package Paraunit\Runner
- */
 class Runner implements EventSubscriberInterface
 {
     /** @var ProcessFactoryInterface */

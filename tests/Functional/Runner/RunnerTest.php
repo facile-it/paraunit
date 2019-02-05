@@ -14,10 +14,6 @@ use Tests\Stub\MissingProviderTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
 
-/**
- * Class RunnerTest
- * @package Tests\Functional\Runner
- */
 class RunnerTest extends BaseIntegrationTestCase
 {
     public function testAllGreen()

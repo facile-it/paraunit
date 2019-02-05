@@ -12,10 +12,6 @@ use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class GenericParserTest
- * @package Tests\Unit\Parser\JSON
- */
 class GenericParserTest extends BaseUnitTestCase
 {
     /**

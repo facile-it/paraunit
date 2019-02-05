@@ -11,10 +11,6 @@ use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class CoverageFetcherTest
- * @package Tests\Unit\Coverage
- */
 class CoverageFetcherTest extends BaseUnitTestCase
 {
     public function testFetch()

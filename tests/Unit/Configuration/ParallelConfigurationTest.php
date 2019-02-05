@@ -24,10 +24,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class ParaunitTest
- * @package Tests\Unit\Configuration
- */
 class ParallelConfigurationTest extends BaseUnitTestCase
 {
     public function testBuildContainer()

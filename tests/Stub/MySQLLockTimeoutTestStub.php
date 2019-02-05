@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
-/**
- * Class MySQLLockTimeoutTestStub
- * @package Tests\Stub
- */
 class MySQLLockTimeoutTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     const OUTPUT = 'SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction';

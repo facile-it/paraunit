@@ -6,17 +6,12 @@ namespace Paraunit\Printer;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class AbstractPrinter
- * @package Paraunit\Printer
- */
 abstract class AbstractPrinter
 {
     /** @var OutputInterface */
     private $output;
 
     /**
-     * AbstractPrinter constructor.
      * @param OutputInterface $output
      */
     public function __construct(OutputInterface $output)

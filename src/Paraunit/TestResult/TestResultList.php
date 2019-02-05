@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-/**
- * Class TestResultList
- * @package Paraunit\TestResult
- */
 class TestResultList
 {
     /** @var TestResultContainer[] */

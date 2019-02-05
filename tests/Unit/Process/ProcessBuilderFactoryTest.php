@@ -11,10 +11,6 @@ use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessBuilderFactory;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class ProcessBuilderFactoryTest
- * @package Tests\Unit\Process
- */
 class ProcessBuilderFactoryTest extends BaseUnitTestCase
 {
     protected function setUp()

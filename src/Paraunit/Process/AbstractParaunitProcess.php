@@ -7,10 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
-/**
- * Class AbstractParaunitProcess
- * @package Paraunit\Process
- */
 abstract class AbstractParaunitProcess
 {
     /** @var int */
@@ -35,7 +31,6 @@ abstract class AbstractParaunitProcess
     private $waitingForTestResult;
 
     /**
-     * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
     public function __construct(string $filename)

@@ -6,10 +6,6 @@ namespace Paraunit\Runner;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class PipelineFactory
- * @package Paraunit\Runner
- */
 class PipelineFactory
 {
     /** @var EventDispatcherInterface */
@@ -22,6 +18,7 @@ class PipelineFactory
 
     /**
      * @param int $pipelineNumber
+     *
      * @return Pipeline
      */
     public function create(int $pipelineNumber): Pipeline

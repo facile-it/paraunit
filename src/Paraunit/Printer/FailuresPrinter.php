@@ -11,10 +11,6 @@ use Paraunit\TestResult\Interfaces\StackTraceInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class FailuresPrinter
- * @package Paraunit\Printer
- */
 class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()

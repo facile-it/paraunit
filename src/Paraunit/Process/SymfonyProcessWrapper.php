@@ -7,10 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Symfony\Component\Process\Process;
 
-/**
- * Class SymfonyProcessWrapper
- * @package Paraunit\Process
- */
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
     /** @var Process */
@@ -48,8 +44,9 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @return string
      * @throws \Symfony\Component\Process\Exception\LogicException
+     *
+     * @return string
      */
     public function getOutput(): string
     {
@@ -57,8 +54,9 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @return int|null
      * @throws \Symfony\Component\Process\Exception\RuntimeException
+     *
+     * @return int|null
      */
     public function getExitCode()
     {

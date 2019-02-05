@@ -18,10 +18,6 @@ use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
-/**
- * Class BaseIntegrationTestCase
- * @package Paraunit\Tests
- */
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
     /** @var ContainerBuilder|null */
@@ -134,8 +130,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     /**
      * @param string $serviceName
-     * @return object
+     *
      * @throws \Exception
+     *
+     * @return object
      */
     public function getService(string $serviceName)
     {
@@ -144,8 +142,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     /**
      * @param string $parameterName
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getParameter(string $parameterName)
     {

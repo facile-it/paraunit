@@ -8,10 +8,6 @@ use Paraunit\Lifecycle\ProcessEvent;
 use Paraunit\Process\AbstractParaunitProcess;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Pipeline
- * @package Paraunit\Runner
- */
 class Pipeline
 {
     /** @var EventDispatcherInterface */
@@ -24,7 +20,6 @@ class Pipeline
     private $number;
 
     /**
-     * Pipeline constructor.
      * @param EventDispatcherInterface $dispatcher
      * @param int $number
      */

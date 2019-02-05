@@ -11,10 +11,6 @@ use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * Class SingleResultFormatterTest
- * @package Tests\Functional\Printer
- */
 class SingleResultFormatterTest extends BaseFunctionalTestCase
 {
     public function testFormatProvider()

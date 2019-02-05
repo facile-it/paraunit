@@ -9,8 +9,6 @@ use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 
 /**
- * Class RunnerWithCoverageTest
- * @package Tests\Functional\Runner
  * @medium
  */
 class RunnerWithCoverageTest extends BaseIntegrationTestCase

@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-/**
- * Class TestResultContainer
- * @package Paraunit\TestResult
- */
 class TestResultFormat
 {
     /** @var string */
@@ -23,7 +19,6 @@ class TestResultFormat
     private $printFilesRecap;
 
     /**
-     * TestResultFormat constructor.
      * @param string $tag
      * @param string $title
      * @param bool $printTestOutput

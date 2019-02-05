@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Clover as PHPUnitClover;
 
-/**
- * Class Clover
- * @package Paraunit\Proxy\Coverage
- */
 class Clover implements CoverageProcessorInterface
 {
     /** @var PHPUnitClover */
@@ -21,7 +17,6 @@ class Clover implements CoverageProcessorInterface
     private $targetFile;
 
     /**
-     * Clover constructor.
      * @param OutputFile $targetFile
      */
     public function __construct(OutputFile $targetFile)
@@ -32,6 +27,7 @@ class Clover implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $codeCoverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

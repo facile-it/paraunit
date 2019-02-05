@@ -10,10 +10,6 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class TestResultContainerTest
- * @package Tests\Unit\TestResult
- */
 class TestResultContainerTest extends BaseUnitTestCase
 {
     public function testAddProcessToFilenames()

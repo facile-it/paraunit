@@ -7,10 +7,6 @@ namespace Tests\Functional\Configuration;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * Class PHPDbgBinFileTest
- * @package Tests\Functional\Configuration
- */
 class PHPDbgBinFileTest extends BaseFunctionalTestCase
 {
     public function testIsAvailable()

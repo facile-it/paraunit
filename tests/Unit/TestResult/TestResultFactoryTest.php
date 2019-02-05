@@ -13,10 +13,6 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Paraunit\TestResult\TestResultWithMessage;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class TestResultFactoryTest
- * @package Tests\Unit\TestResult
- */
 class TestResultFactoryTest extends BaseUnitTestCase
 {
     public function testCreateFromLogMuteWithoutTestName()

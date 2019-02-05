@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-/**
- * Class PHPUnitBinFile
- * @package Paraunit\Configuration
- */
 class PHPUnitBinFile
 {
     // I'm using Paraunit as a vendor package
     private const PHPUNIT_REALPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
+
     // I'm using Paraunit standalone (developing)
     private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
 
@@ -19,7 +16,6 @@ class PHPUnitBinFile
     private $phpUnitBin;
 
     /**
-     * PHPUnitBinFile constructor.
      * @throws \RuntimeException If PHPUnit is not found
      */
     public function __construct()

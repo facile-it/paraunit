@@ -20,10 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class CoverageConfiguration
- * @package Paraunit\Configuration
- */
 class CoverageConfiguration extends ParallelConfiguration
 {
     public function __construct(bool $createPublicServiceAliases = false)
@@ -109,8 +105,10 @@ class CoverageConfiguration extends ParallelConfiguration
 
     /**
      * @param string $processorClass
-     * @return string
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     private function getOptionName(string $processorClass): string
     {

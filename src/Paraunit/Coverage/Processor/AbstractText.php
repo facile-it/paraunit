@@ -24,7 +24,6 @@ abstract class AbstractText implements CoverageProcessorInterface
     private $showColors;
 
     /**
-     * AbstractText constructor.
      * @param OutputInterface $output
      * @param bool $showColors
      * @param bool $onlySummary
@@ -40,6 +39,7 @@ abstract class AbstractText implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $coverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $coverage)

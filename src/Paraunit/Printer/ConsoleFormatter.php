@@ -8,10 +8,6 @@ use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class ConsoleFormatter
- * @package Paraunit\Printer
- */
 class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array

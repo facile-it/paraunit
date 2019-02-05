@@ -13,10 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Stopwatch\StopwatchEvent;
 
-/**
- * Class FinalPrinter
- * @package Paraunit\Printer
- */
 class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
     const STOPWATCH_NAME = 'engine';
@@ -31,7 +27,6 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     private $processRetried;
 
     /**
-     * FinalPrinter constructor.
      * @param TestResultList $testResultList
      * @param OutputInterface $output
      */

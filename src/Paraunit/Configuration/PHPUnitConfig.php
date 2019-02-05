@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-/**
- * Class PHPUnitConfig
- * @package Paraunit\Configuration
- */
 class PHPUnitConfig
 {
     const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
@@ -20,6 +16,7 @@ class PHPUnitConfig
 
     /**
      * @param string $inputPathOrFileName
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
@@ -62,8 +59,10 @@ class PHPUnitConfig
 
     /**
      * @param string $inputPathOrFileName
-     * @return string
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     private function getConfigFileRealpath(string $inputPathOrFileName): string
     {

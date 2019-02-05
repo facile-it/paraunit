@@ -9,10 +9,6 @@ use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
-/**
- * Class XMLResult
- * @package Paraunit\Proxy\Coverage
- */
 class Xml implements CoverageProcessorInterface
 {
     /** @var Facade */
@@ -22,7 +18,6 @@ class Xml implements CoverageProcessorInterface
     private $targetPath;
 
     /**
-     * Xml constructor.
      * @param OutputPath $targetPath
      */
     public function __construct(OutputPath $targetPath)
@@ -33,6 +28,7 @@ class Xml implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $codeCoverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

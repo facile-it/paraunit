@@ -11,10 +11,6 @@ use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\Process\Process;
 
-/**
- * Class CoverageFetcher
- * @package Paraunit\Coverage
- */
 class CoverageFetcher
 {
     /** @var TempFilenameFactory */
@@ -24,7 +20,6 @@ class CoverageFetcher
     private $resultHandler;
 
     /**
-     * CoverageFetcher constructor.
      * @param TempFilenameFactory $tempFilenameFactory
      * @param TestResultHandlerInterface $failureHandler
      */

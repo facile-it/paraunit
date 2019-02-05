@@ -6,26 +6,20 @@ namespace Paraunit\Configuration;
 
 use Symfony\Component\Process\Process;
 
-/**
- * Class PHPDbgBinFile
- * @package Paraunit\Configuration
- */
 class PHPDbgBinFile
 {
     /** @var string Realpath to the PHPDbg bin location */
     private $phpDbgBin;
 
-    /**
-     * PHPDbgBinFile constructor.
-     */
     public function __construct()
     {
         $this->phpDbgBin = $this->getPhpDbgBinLocation();
     }
 
     /**
-     * @return string
      * @throws \RuntimeException When PHPDBG is not available
+     *
+     * @return string
      */
     public function getPhpDbgBin(): string
     {

@@ -7,10 +7,6 @@ namespace Paraunit\Proxy\Coverage;
 use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 
-/**
- * Class FakeDriver
- * @package Paraunit\Proxy\Coverage
- */
 if (version_compare(Version::id(), '7.0.0', '<')) {
     class FakeDriver implements Driver
     {

@@ -10,10 +10,6 @@ use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Prophecy\Argument;
 use Tests\BaseTestCase;
 
-/**
- * Class CoverageResultTest
- * @package Tests\Unit\Coverage
- */
 class CoverageResultTest extends BaseTestCase
 {
     public function testGenerateResults()

@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-/**
- * Class PHPUnitOption
- * @package Paraunit\Configuration
- */
 class PHPUnitOption
 {
     /** @var string */
@@ -23,7 +19,6 @@ class PHPUnitOption
     private $hasValue;
 
     /**
-     * PHPUnitOption constructor.
      * @param string $name
      * @param bool $hasValue
      * @param string | null $shortName

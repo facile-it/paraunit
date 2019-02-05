@@ -7,10 +7,6 @@ namespace Paraunit\Parser\JSON;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 
-/**
- * Class LogFetcher
- * @package Paraunit\Parser\JSON
- */
 class LogFetcher
 {
     const LOG_ENDING_STATUS = 'paraunitEnd';
@@ -19,7 +15,6 @@ class LogFetcher
     private $fileName;
 
     /**
-     * LogFetcher constructor.
      * @param TempFilenameFactory $fileName
      */
     public function __construct(TempFilenameFactory $fileName)
@@ -29,6 +24,7 @@ class LogFetcher
 
     /**
      * @param AbstractParaunitProcess $process
+     *
      * @return \stdClass[]
      */
     public function fetch(AbstractParaunitProcess $process): array
@@ -50,6 +46,7 @@ class LogFetcher
 
     /**
      * @param string $jsonString The dirty output
+     *
      * @return string            The normalized log, as an array of JSON objects
      */
     private static function cleanLog(string $jsonString): string

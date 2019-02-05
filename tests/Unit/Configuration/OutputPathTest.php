@@ -7,10 +7,6 @@ namespace Tests\Unit\Configuration;
 use Paraunit\Configuration\OutputPath;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class OutputPathTest
- * @package Tests\Unit\Configuration
- */
 class OutputPathTest extends BaseUnitTestCase
 {
     public function testConstruct()

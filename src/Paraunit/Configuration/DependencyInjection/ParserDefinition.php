@@ -48,8 +48,10 @@ class ParserDefinition
 
     /**
      * @param ContainerBuilder $container
-     * @return Reference[]
+     *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     *
+     * @return Reference[]
      */
     private function defineParsers(ContainerBuilder $container): array
     {

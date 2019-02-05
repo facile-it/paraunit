@@ -21,14 +21,11 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class CoverageCommandTest
- * @package Tests\Unit\Command
- */
 class CoverageCommandTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider validCoverageOptionsProvider
+     *
      * @param string $coverageOptionName
      * @param bool $hasOptionalValue
      */

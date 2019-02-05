@@ -9,17 +9,12 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Parser\JSON\LogPrinter;
 
-/**
- * Class TestCliCommand
- * @package Paraunit\Process
- */
 class CommandLine
 {
     /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
     /**
-     * TestCliCommand constructor.
      * @param PHPUnitBinFile $phpUnitBin
      */
     public function __construct(PHPUnitBinFile $phpUnitBin)
@@ -37,8 +32,10 @@ class CommandLine
 
     /**
      * @param PHPUnitConfig $config
-     * @return array
+     *
      * @throws \RuntimeException When the config handling fails
+     *
+     * @return array
      */
     public function getOptions(PHPUnitConfig $config): array
     {
@@ -66,6 +63,7 @@ class CommandLine
 
     /**
      * @param string $testFilename
+     *
      * @return string[]
      */
     public function getSpecificOptions(string $testFilename): array

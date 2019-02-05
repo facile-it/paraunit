@@ -8,10 +8,6 @@ use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Lifecycle\EngineEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class CoverageResult
- * @package Paraunit\Coverage
- */
 class CoverageResult implements EventSubscriberInterface
 {
     /** @var CoverageMerger */
@@ -21,7 +17,6 @@ class CoverageResult implements EventSubscriberInterface
     private $coverageProcessors;
 
     /**
-     * CoverageResult constructor.
      * @param CoverageMerger $coverageMerger
      */
     public function __construct(CoverageMerger $coverageMerger)

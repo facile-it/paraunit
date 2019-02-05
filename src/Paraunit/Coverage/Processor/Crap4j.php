@@ -8,10 +8,6 @@ use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Crap4j as PHPUnitCrap4j;
 
-/**
- * Class Crap4jResult
- * @package Paraunit\Proxy\Coverage
- */
 class Crap4j implements CoverageProcessorInterface
 {
     /** @var PHPUnitCrap4j */
@@ -21,7 +17,6 @@ class Crap4j implements CoverageProcessorInterface
     private $targetFile;
 
     /**
-     * Crap4j constructor.
      * @param OutputFile $targetFile
      */
     public function __construct(OutputFile $targetFile)
@@ -32,6 +27,7 @@ class Crap4j implements CoverageProcessorInterface
 
     /**
      * @param CodeCoverage $codeCoverage
+     *
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage)

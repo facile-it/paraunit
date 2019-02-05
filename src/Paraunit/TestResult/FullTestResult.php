@@ -9,17 +9,12 @@ use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
 
-/**
- * Class FullTestResult
- * @package Paraunit\TestResult
- */
 class FullTestResult extends TestResultWithMessage implements PrintableTestResultInterface, FunctionNameInterface, FailureMessageInterface, StackTraceInterface
 {
     /** @var string */
     private $trace;
 
     /**
-     * FullTestResult constructor.
      * @param string $functionName
      * @param string $failureMessage
      * @param string $trace

@@ -26,17 +26,21 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
      * It's copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
      *
      * Class LogPrinter
-     * @package Paraunit\Parser\JSON
      */
     class LogPrinter extends Util\Printer implements TestListener
     {
         const STATUS_ERROR = 'error';
+
         const STATUS_WARNING = 'warning';
+
         const STATUS_FAIL = 'fail';
+
         const STATUS_PASS = 'pass';
 
         const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+
         const MESSAGE_RISKY_TEST = 'Risky Test: ';
+
         const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
 
         /** @var resource */
@@ -185,6 +189,7 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
          * A testsuite started.
          *
          * @param TestSuite $suite
+         *
          * @throws \RuntimeException
          */
         public function startTestSuite(TestSuite $suite): void
@@ -280,9 +285,10 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @return string
          * @throws \RuntimeException
          * @throws \InvalidArgumentException
+         *
+         * @return string
          */
         private function getLogFilename(): string
         {
@@ -300,8 +306,9 @@ if (version_compare(Version::id(), '7.0.0', '<')) {
         }
 
         /**
-         * @return string
          * @throws \InvalidArgumentException
+         *
+         * @return string
          */
         private function getLogDirectory(): string
         {

@@ -12,10 +12,6 @@ use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * Class LogParserTest
- * @package Tests\Functional\Parser
- */
 class LogParserTest extends BaseFunctionalTestCase
 {
     /**

@@ -6,10 +6,6 @@ namespace Tests\Stub;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RaisingNoticeTestStub
- * @package Tests\Stub
- */
 class RaisingNoticeTestStub extends TestCase
 {
     /**

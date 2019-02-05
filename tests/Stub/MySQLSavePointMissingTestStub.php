@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
-/**
- * Class MySQLSavePointMissingTestStub
- * @package Tests\Stub
- */
 class MySQLSavePointMissingTestStub extends BrokenTestBase implements BrokenTestInterface
 {
     const OUTPUT = 'SQLSTATE[42000]: Syntax error or access violation: 1305 SAVEPOINT DOCTRINE2_SAVEPOINT_2 does not exist';

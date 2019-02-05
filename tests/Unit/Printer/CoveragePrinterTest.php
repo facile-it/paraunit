@@ -10,10 +10,6 @@ use Paraunit\Proxy\XDebugProxy;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
-/**
- * Class CoveragePrinterTest
- * @package Tests\Unit\Printer
- */
 class CoveragePrinterTest extends BaseUnitTestCase
 {
     public function testOnEngineBeforeStartWithPHPDBGEngine()

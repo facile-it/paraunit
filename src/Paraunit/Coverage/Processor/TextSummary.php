@@ -7,14 +7,9 @@ namespace Paraunit\Coverage\Processor;
 use Paraunit\Configuration\OutputFile;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class TextSummary
- * @package Paraunit\Proxy\Coverage
- */
 class TextSummary extends AbstractText
 {
     /**
-     * TextSummary constructor.
      * @param OutputInterface $output
      * @param bool $showColors
      * @param OutputFile|null $targetFile

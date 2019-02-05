@@ -11,10 +11,6 @@ use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 
-/**
- * Class PipelineTest
- * @package Tests\Unit\Runner
- */
 class PipelineTest extends BaseUnitTestCase
 {
     public function testExecute()

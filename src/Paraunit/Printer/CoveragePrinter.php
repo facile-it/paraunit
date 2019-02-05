@@ -10,10 +10,6 @@ use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class CoveragePrinter
- * @package Paraunit\Printer
- */
 class CoveragePrinter implements EventSubscriberInterface
 {
     /** @var PHPDbgBinFile */
@@ -26,7 +22,6 @@ class CoveragePrinter implements EventSubscriberInterface
     private $output;
 
     /**
-     * CoveragePrinter constructor.
      * @param PHPDbgBinFile $phpdgbBin
      * @param XDebugProxy $xdebug
      */

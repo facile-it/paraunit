@@ -11,19 +11,17 @@ use Paraunit\TestResult\TestResultWithSymbolFormat;
 use PHPUnit\Framework\AssertionFailedError;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 
-/**
- * Class BaseUnitTestCase
- * @package Paraunit\Tests
- */
 abstract class BaseUnitTestCase extends BaseTestCase
 {
     /**
      * @param string $event
      * @param string $status
      * @param string|null $testOutput
-     * @return \stdClass
+     *
      * @throws AssertionFailedError
      * @throws \Exception
+     *
+     * @return \stdClass
      */
     protected function getLogFromStub(string $event = 'test', string $status = 'fail', string $testOutput = null): \stdClass
     {

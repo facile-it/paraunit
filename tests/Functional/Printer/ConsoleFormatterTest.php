@@ -10,10 +10,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * Class ConsoleFormatterTest
- * @package Tests\Functional\Printer
- */
 class ConsoleFormatterTest extends BaseFunctionalTestCase
 {
     /**
