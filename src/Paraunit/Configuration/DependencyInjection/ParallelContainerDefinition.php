@@ -19,7 +19,6 @@ use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
-use Paraunit\Process\ProcessBuilderFactory;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
@@ -32,11 +31,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Process\Process;
 
 class ParallelContainerDefinition
 {
@@ -69,7 +66,7 @@ class ParallelContainerDefinition
         return $container;
     }
 
-    private function configureConfiguration(ContainerBuilder $container)
+    private function configureConfiguration(ContainerBuilder $container): void
     {
         $container->setDefinition(PHPUnitBinFile::class, new Definition(PHPUnitBinFile::class));
         $container->setDefinition(PHPUnitConfig::class, new Definition(PHPUnitConfig::class, [
@@ -81,16 +78,9 @@ class ParallelContainerDefinition
         ]));
     }
 
-    private function configureEventDispatcher(ContainerBuilder $container)
+    private function configureEventDispatcher(ContainerBuilder $container): void
     {
-        if (class_exists('Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument')) {
-            $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
-        } else {
-            $container->setDefinition(
-                EventDispatcherInterface::class,
-                new Definition(ContainerAwareEventDispatcher::class, [new Reference('service_container')])
-            );
-        }
+        $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
 
         $container->addCompilerPass(
             new RegisterListenersPass(
@@ -101,7 +91,7 @@ class ParallelContainerDefinition
         );
     }
 
-    private function configureFile(ContainerBuilder $container)
+    private function configureFile(ContainerBuilder $container): void
     {
         $container->setDefinition(TempDirectory::class, new Definition(TempDirectory::class));
         $container->setDefinition(Cleaner::class, new Definition(Cleaner::class, [
@@ -109,7 +99,7 @@ class ParallelContainerDefinition
         ]));
     }
 
-    private function configurePrinter(ContainerBuilder $container)
+    private function configurePrinter(ContainerBuilder $container): void
     {
         $output = new Reference(OutputInterface::class);
 
@@ -136,20 +126,20 @@ class ParallelContainerDefinition
         ]));
     }
 
-    private function configureProcess(ContainerBuilder $container)
+    private function configureProcess(ContainerBuilder $container): void
     {
         $container->setDefinition(CommandLine::class, new Definition(CommandLine::class, [
             new Reference(PHPUnitBinFile::class),
         ]));
 
-        $container->setDefinition(ProcessFactoryInterface::class, new Definition($this->getProcessFactoryClass(), [
+        $container->setDefinition(ProcessFactoryInterface::class, new Definition(ProcessFactory::class, [
             new Reference(CommandLine::class),
             new Reference(PHPUnitConfig::class),
             new Reference(TempFilenameFactory::class),
         ]));
     }
 
-    private function configureRunner(ContainerBuilder $container)
+    private function configureRunner(ContainerBuilder $container): void
     {
         $container->setDefinition(PipelineFactory::class, new Definition(PipelineFactory::class, [
             new Reference(EventDispatcherInterface::class),
@@ -167,12 +157,8 @@ class ParallelContainerDefinition
             ->setPublic(true);
     }
 
-    private function configureServices(ContainerBuilder $container)
+    private function configureServices(ContainerBuilder $container): void
     {
-        if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
-            \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
-        }
-
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
@@ -185,17 +171,5 @@ class ParallelContainerDefinition
             '%paraunit.testsuite%',
             '%paraunit.string_filter%',
         ]));
-    }
-
-    private function getProcessFactoryClass(): string
-    {
-        // only reliable way to detect symfony/process 3.3+: CLI parsing
-        $process = new Process(['cmd as array']);
-        if (\is_array($process->getCommandLine())) {
-            // Commandline not parsed, we have Symfony < 3.3
-            return ProcessBuilderFactory::class;
-        }
-
-        return ProcessFactory::class;
     }
 }
