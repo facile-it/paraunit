@@ -6,6 +6,7 @@ parameters:
         - '/Call to function is_array\(\) with string will always evaluate to false./'
         - '/Class Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher not found/'
         - '/Parameter #3 \$offset of function strpos expects int, int\|false given\./'
+        - '/Call to function method_exists.. with .Tests..BaseTestCase. and .assertStringContain.... will always evaluate to false./'
     excludes_analyse:
         - src/Paraunit/Parser/JSON/LogPrinterV6.php
         - src/Paraunit/Process/ProcessBuilderFactory.php
