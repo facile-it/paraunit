@@ -17,7 +17,7 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
         ];
     }
 
-    public function onEngineBeforeStart()
+    public function onEngineBeforeStart(): void
     {
         $formatter = $this->getOutput()->getFormatter();
         $formatter->setStyle('ok', $this->createNewStyle('green'));

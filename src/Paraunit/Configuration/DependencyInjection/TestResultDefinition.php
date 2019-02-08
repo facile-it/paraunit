@@ -15,13 +15,13 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TestResultDefinition
 {
-    public function configure(ContainerBuilder $container)
+    public function configure(ContainerBuilder $container): void
     {
         $container->setDefinition(TestResultFactory::class, new Definition(TestResultFactory::class));
         $this->configureTestResultContainer($container);
     }
 
-    private function configureTestResultContainer(ContainerBuilder $container)
+    private function configureTestResultContainer(ContainerBuilder $container): void
     {
         $testResultList = new Definition(TestResultList::class);
 

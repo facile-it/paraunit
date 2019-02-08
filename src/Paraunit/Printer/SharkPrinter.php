@@ -28,7 +28,7 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
         ];
     }
 
-    public function onEngineBeforeStart()
+    public function onEngineBeforeStart(): void
     {
         $output = $this->getOutput();
 

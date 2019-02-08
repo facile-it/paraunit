@@ -19,7 +19,7 @@ class TestResultWithAbnormalTermination extends TestResultWithMessage
         return $this->testOutput;
     }
 
-    public function setTestOutput(string $testOutput)
+    public function setTestOutput(string $testOutput): void
     {
         $this->testOutput = $testOutput;
     }

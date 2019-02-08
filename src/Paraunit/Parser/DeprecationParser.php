@@ -27,7 +27,7 @@ class DeprecationParser implements EventSubscriberInterface
         ];
     }
 
-    public function handleDeprecations(ProcessEvent $event)
+    public function handleDeprecations(ProcessEvent $event): void
     {
         $process = $event->getProcess();
 

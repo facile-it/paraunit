@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\NullTestResult;
 
 class TestStartParser implements ParserChainElementInterface
@@ -17,7 +18,7 @@ class TestStartParser implements ParserChainElementInterface
     /** @var string */
     private $lastFunction;
 
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem)
+    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem): ?TestResultInterface
     {
         if (property_exists($logItem, 'status') && $logItem->status === LogFetcher::LOG_ENDING_STATUS) {
             return $this->handleLogTermination($process, $logItem);

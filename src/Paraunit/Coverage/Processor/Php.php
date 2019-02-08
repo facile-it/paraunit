@@ -25,7 +25,7 @@ class Php implements CoverageProcessorInterface
     /**
      * @throws \RuntimeException
      */
-    public function process(CodeCoverage $codeCoverage)
+    public function process(CodeCoverage $codeCoverage): void
     {
         $this->php->process($codeCoverage, $this->targetFile->getFilePath());
     }

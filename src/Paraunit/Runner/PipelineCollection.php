@@ -58,7 +58,7 @@ class PipelineCollection
         return true;
     }
 
-    public function triggerProcessTermination()
+    public function triggerProcessTermination(): void
     {
         foreach ($this->pipelines as $pipeline) {
             $pipeline->triggerTermination();

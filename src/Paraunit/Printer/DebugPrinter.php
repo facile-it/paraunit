@@ -19,7 +19,7 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         ];
     }
 
-    public function onProcessStarted(ProcessEvent $event)
+    public function onProcessStarted(ProcessEvent $event): void
     {
         $process = $event->getProcess();
 
@@ -28,7 +28,7 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         $this->getOutput()->writeln('');
     }
 
-    public function onProcessTerminated(ProcessEvent $event)
+    public function onProcessTerminated(ProcessEvent $event): void
     {
         $process = $event->getProcess();
 
@@ -38,12 +38,12 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         $this->getOutput()->writeln('');
     }
 
-    public function onProcessParsingCompleted()
+    public function onProcessParsingCompleted(): void
     {
         $this->getOutput()->write('PROCESS PARSING COMPLETED -- RESULTS: ');
     }
 
-    public function onProcessToBeRetried(ProcessEvent $event)
+    public function onProcessToBeRetried(ProcessEvent $event): void
     {
         $process = $event->getProcess();
 

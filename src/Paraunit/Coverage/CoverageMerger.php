@@ -29,7 +29,7 @@ class CoverageMerger implements EventSubscriberInterface
         ];
     }
 
-    public function onProcessParsingCompleted(ProcessEvent $processEvent)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent): void
     {
         $process = $processEvent->getProcess();
         if ($process->isToBeRetried()) {
@@ -39,7 +39,7 @@ class CoverageMerger implements EventSubscriberInterface
         $this->merge($process);
     }
 
-    private function merge(AbstractParaunitProcess $process)
+    private function merge(AbstractParaunitProcess $process): void
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 

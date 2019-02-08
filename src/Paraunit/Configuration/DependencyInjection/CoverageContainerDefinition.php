@@ -33,13 +33,13 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
         return $container;
     }
 
-    private function configureCoverageConfiguration(ContainerBuilder $container)
+    private function configureCoverageConfiguration(ContainerBuilder $container): void
     {
         $container->setDefinition(PHPDbgBinFile::class, new Definition(PHPDbgBinFile::class));
         $container->setDefinition(XDebugProxy::class, new Definition(XDebugProxy::class));
     }
 
-    private function configureProcessWithCoverage(ContainerBuilder $container)
+    private function configureProcessWithCoverage(ContainerBuilder $container): void
     {
         $container->setDefinition(CommandLineWithCoverage::class, new Definition(CommandLineWithCoverage::class, [
             new Reference(PHPUnitBinFile::class),
@@ -54,7 +54,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
             ]);
     }
 
-    private function configureCoverage(ContainerBuilder $container)
+    private function configureCoverage(ContainerBuilder $container): void
     {
         $container->setDefinition(CoverageFetcher::class, new Definition(CoverageFetcher::class, [
             new Reference(TempFilenameFactory::class),

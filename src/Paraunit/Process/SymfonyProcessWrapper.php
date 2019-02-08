@@ -50,10 +50,8 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
 
     /**
      * @throws \Symfony\Component\Process\Exception\RuntimeException
-     *
-     * @return int|null
      */
-    public function getExitCode()
+    public function getExitCode(): ?int
     {
         return $this->process->getExitCode();
     }

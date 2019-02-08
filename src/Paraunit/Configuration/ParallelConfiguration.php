@@ -51,7 +51,7 @@ class ParallelConfiguration
         return $containerBuilder;
     }
 
-    protected function tagEventSubscribers(ContainerBuilder $container)
+    protected function tagEventSubscribers(ContainerBuilder $container): void
     {
         foreach ($container->getDefinitions() as $definition) {
             if ($definition->isSynthetic() || $definition->isAbstract()) {
@@ -77,7 +77,7 @@ class ParallelConfiguration
         }
     }
 
-    private function enableDebugMode(ContainerBuilder $containerBuilder)
+    private function enableDebugMode(ContainerBuilder $containerBuilder): void
     {
         $definition = new Definition(DebugPrinter::class, [new Reference(OutputInterface::class)]);
         $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
@@ -85,7 +85,7 @@ class ParallelConfiguration
         $containerBuilder->setDefinition(DebugPrinter::class, $definition);
     }
 
-    private function createPublicAliases(ContainerBuilder $containerBuilder)
+    private function createPublicAliases(ContainerBuilder $containerBuilder): void
     {
         if (! $this->createPublicServiceAliases) {
             return;
@@ -95,11 +95,6 @@ class ParallelConfiguration
         // the synthetic service isn't listed
         $services[] = OutputInterface::class;
         foreach ($services as $serviceName) {
-            if ($serviceName === 'service_container') {
-                // needed with SF 3.x
-                continue;
-            }
-
             $containerBuilder->setAlias(
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
                 new Alias($serviceName, true)

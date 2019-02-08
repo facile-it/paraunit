@@ -35,7 +35,7 @@ class CoveragePrinter implements EventSubscriberInterface
         ];
     }
 
-    public function onEngineBeforeStart()
+    public function onEngineBeforeStart(): void
     {
         $this->output->write('Coverage driver in use: ');
 

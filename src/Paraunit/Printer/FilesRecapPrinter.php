@@ -17,14 +17,14 @@ class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberI
         ];
     }
 
-    public function onEngineEnd()
+    public function onEngineEnd(): void
     {
         foreach ($this->testResultList->getTestResultContainers() as $parser) {
             $this->printFileRecap($parser);
         }
     }
 
-    private function printFileRecap(TestResultContainerInterface $testResultContainer)
+    private function printFileRecap(TestResultContainerInterface $testResultContainer): void
     {
         if (! $testResultContainer->getTestResultFormat()->shouldPrintFilesRecap()) {
             return;

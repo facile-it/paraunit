@@ -18,5 +18,5 @@ abstract class AbstractFinalPrinter extends AbstractPrinter
         $this->testResultList = $testResultList;
     }
 
-    abstract public function onEngineEnd();
+    abstract public function onEngineEnd(): void;
 }

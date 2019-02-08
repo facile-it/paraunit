@@ -48,7 +48,7 @@ class ProcessPrinter implements EventSubscriberInterface
     /**
      * @throws \BadMethodCallException
      */
-    public function onProcessCompleted(ProcessEvent $processEvent)
+    public function onProcessCompleted(ProcessEvent $processEvent): void
     {
         $process = $processEvent->getProcess();
 
@@ -57,7 +57,7 @@ class ProcessPrinter implements EventSubscriberInterface
         }
     }
 
-    public function onEngineEnd()
+    public function onEngineEnd(): void
     {
         while (! $this->isRowFull()) {
             $this->output->write(' ');
@@ -67,7 +67,7 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    private function printFormattedWithCounter(PrintableTestResultInterface $testResult)
+    private function printFormattedWithCounter(PrintableTestResultInterface $testResult): void
     {
         if ($this->isRowFull()) {
             $this->printCounter();
@@ -81,7 +81,7 @@ class ProcessPrinter implements EventSubscriberInterface
         );
     }
 
-    private function printCounter()
+    private function printCounter(): void
     {
         $this->output->writeln(sprintf('%6d', $this->counter));
         $this->singleRowCounter = 0;

@@ -159,6 +159,10 @@ class ParallelContainerDefinition
 
     private function configureServices(ContainerBuilder $container): void
     {
+        if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
+            \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
+        }
+
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);

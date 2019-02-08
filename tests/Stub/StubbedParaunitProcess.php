@@ -77,7 +77,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         $this->reset();
     }
 
-    public function getExitCode(): int
+    public function getExitCode(): ?int
     {
         return $this->exitCode;
     }

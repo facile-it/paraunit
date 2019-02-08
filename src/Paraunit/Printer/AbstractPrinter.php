@@ -16,10 +16,7 @@ abstract class AbstractPrinter
         $this->output = $output;
     }
 
-    /**
-     * @return OutputInterface
-     */
-    public function getOutput()
+    public function getOutput(): OutputInterface
     {
         return $this->output;
     }

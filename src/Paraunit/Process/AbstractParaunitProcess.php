@@ -48,10 +48,7 @@ abstract class AbstractParaunitProcess
 
     abstract public function getCommandLine(): string;
 
-    /**
-     * @return int|null
-     */
-    abstract public function getExitCode();
+    abstract public function getExitCode(): ?int;
 
     abstract public function start(int $pipelineNumber);
 
@@ -65,12 +62,12 @@ abstract class AbstractParaunitProcess
         return $this->retryCount;
     }
 
-    public function increaseRetryCount()
+    public function increaseRetryCount(): void
     {
         ++$this->retryCount;
     }
 
-    public function markAsToBeRetried()
+    public function markAsToBeRetried(): void
     {
         $this->reset();
         $this->increaseRetryCount();
@@ -82,7 +79,7 @@ abstract class AbstractParaunitProcess
         return $this->shouldBeRetried;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->shouldBeRetried = false;
         $this->testResults = [];
@@ -93,15 +90,12 @@ abstract class AbstractParaunitProcess
         return $this->filename;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTestClassName()
+    public function getTestClassName(): ?string
     {
         return $this->testClassName;
     }
 
-    public function setTestClassName(string $testClassName)
+    public function setTestClassName(string $testClassName): void
     {
         $this->testClassName = $testClassName;
     }
@@ -114,7 +108,7 @@ abstract class AbstractParaunitProcess
         return $this->testResults;
     }
 
-    public function addTestResult(PrintableTestResultInterface $testResult)
+    public function addTestResult(PrintableTestResultInterface $testResult): void
     {
         $this->testResults[] = $testResult;
         $this->waitingForTestResult = false;
@@ -130,7 +124,7 @@ abstract class AbstractParaunitProcess
         return $this->waitingForTestResult;
     }
 
-    public function setWaitingForTestResult(bool $waitingForTestResult)
+    public function setWaitingForTestResult(bool $waitingForTestResult): void
     {
         $this->waitingForTestResult = $waitingForTestResult;
     }

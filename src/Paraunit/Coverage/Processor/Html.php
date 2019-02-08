@@ -25,7 +25,7 @@ class Html implements CoverageProcessorInterface
     /**
      * @throws \RuntimeException
      */
-    public function process(CodeCoverage $codeCoverage)
+    public function process(CodeCoverage $codeCoverage): void
     {
         $this->html->process($codeCoverage, $this->targetPath->getPath());
     }

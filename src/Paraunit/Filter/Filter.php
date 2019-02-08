@@ -32,10 +32,6 @@ class Filter
     /** @var string | null */
     private $stringFilter;
 
-    /**
-     * @param string | null $testSuiteFilter
-     * @param string | null $stringFilter
-     */
     public function __construct(
         PHPUnitUtilXMLProxy $utilXml,
         Facade $fileIteratorFacade,

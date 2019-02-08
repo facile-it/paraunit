@@ -85,7 +85,7 @@ class BaseTestCase extends TestCase
     }
 
     /**
-     * BC compat method provided as a workaround for deprecations. 
+     * BC compat method provided as a workaround for deprecations.
      * The newer methods are present only from PHPUnit 7.5.0 onwards
      */
     public static function assertContains(

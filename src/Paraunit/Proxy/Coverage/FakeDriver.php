@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Proxy\Coverage;
 
-use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 
 class FakeDriver implements Driver

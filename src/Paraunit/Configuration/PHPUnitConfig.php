@@ -39,7 +39,7 @@ class PHPUnitConfig
         return dirname($this->configFilename);
     }
 
-    public function addPhpunitOption(PHPUnitOption $option)
+    public function addPhpunitOption(PHPUnitOption $option): void
     {
         $this->phpunitOptions[] = $option;
     }

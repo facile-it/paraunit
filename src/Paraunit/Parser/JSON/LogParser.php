@@ -48,7 +48,7 @@ class LogParser implements EventSubscriberInterface
         ];
     }
 
-    public function addParser(ParserChainElementInterface $container)
+    public function addParser(ParserChainElementInterface $container): void
     {
         $this->parsers[] = $container;
     }
@@ -61,7 +61,7 @@ class LogParser implements EventSubscriberInterface
         return $this->parsers;
     }
 
-    public function onProcessTerminated(ProcessEvent $processEvent)
+    public function onProcessTerminated(ProcessEvent $processEvent): void
     {
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
@@ -85,7 +85,7 @@ class LogParser implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
     }
 
-    private function processLog(AbstractParaunitProcess $process, \stdClass $logItem)
+    private function processLog(AbstractParaunitProcess $process, \stdClass $logItem): void
     {
         /** @var ParserChainElementInterface $resultContainer */
         foreach ($this->parsers as $resultContainer) {
