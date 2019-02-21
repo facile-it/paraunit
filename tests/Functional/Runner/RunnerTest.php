@@ -20,7 +20,7 @@ use Tests\Stub\SegFaultTestStub;
  */
 class RunnerTest extends BaseIntegrationTestCase
 {
-    public function testAllGreen()
+    public function testAllGreen(): void
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
@@ -40,7 +40,7 @@ class RunnerTest extends BaseIntegrationTestCase
         ]);
     }
 
-    public function testMaxRetryEntityManagerIsClosed()
+    public function testMaxRetryEntityManagerIsClosed(): void
     {
         $this->setTextFilter('EntityManagerClosedTestStub.php');
         $this->loadContainer();
@@ -65,7 +65,7 @@ class RunnerTest extends BaseIntegrationTestCase
     /**
      * @dataProvider stubFilenameProvider
      */
-    public function testMaxRetryDeadlock(string $stubFilePath)
+    public function testMaxRetryDeadlock(string $stubFilePath): void
     {
         $this->setTextFilter($stubFilePath);
         $this->loadContainer();
@@ -87,7 +87,7 @@ class RunnerTest extends BaseIntegrationTestCase
         ];
     }
 
-    public function testSegFault()
+    public function testSegFault(): void
     {
         $this->setTextFilter('SegFaultTestStub.php');
         $this->loadContainer();
@@ -113,12 +113,12 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testWarning()
+    public function testWarning(): void
     {
         $this->setTextFilter('MissingProviderTestStub.php');
         $this->loadContainer();
 
-        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
+        $this->executeRunner();
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertRegExp('/\nW\s+1\n/', $output, 'Missing W output');
@@ -134,7 +134,7 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination()
+    public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination(): void
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
@@ -155,7 +155,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertContains('ThreeGreenTestStub.php', $output);
     }
 
-    public function testRegressionFatalErrorsRecognizedAsUnknownResults()
+    public function testRegressionFatalErrorsRecognizedAsUnknownResults(): void
     {
         $this->setTextFilter('FatalErrorTestStub.php');
         $this->loadContainer();
@@ -168,7 +168,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
     }
 
-    public function testRegressionMissingLogAsUnknownResults()
+    public function testRegressionMissingLogAsUnknownResults(): void
     {
         $this->setTextFilter('ParseErrorTestStub.php');
         $this->loadContainer();
@@ -185,7 +185,7 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testRegressionFatalErrorsShouldNotLeakToOutput()
+    public function testRegressionFatalErrorsShouldNotLeakToOutput(): void
     {
         $this->setTextFilter('RaisingNoticeTestStub.php');
         $this->loadContainer();
@@ -199,7 +199,7 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testRegressionTestResultsBeforeRetryShouldNotBeReported()
+    public function testRegressionTestResultsBeforeRetryShouldNotBeReported(): void
     {
         $this->setTextFilter('PassThenRetryTestStub');
         $this->loadContainer();
