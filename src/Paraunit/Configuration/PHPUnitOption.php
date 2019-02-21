@@ -33,10 +33,7 @@ class PHPUnitOption
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getShortName()
+    public function getShortName(): ?string
     {
         return $this->shortName;
     }
@@ -44,15 +41,12 @@ class PHPUnitOption
     /**
      * @param string $value
      */
-    public function setValue(string $value = null)
+    public function setValue(string $value = null): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }

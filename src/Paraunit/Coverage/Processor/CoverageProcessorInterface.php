@@ -10,10 +10,8 @@ interface CoverageProcessorInterface
 {
     /**
      * @throws \RuntimeException If the processor is missing a needed info, like the target dir/filename
-     *
-     * @return void
      */
-    public function process(CodeCoverage $codeCoverage);
+    public function process(CodeCoverage $codeCoverage): void;
 
     public static function getConsoleOptionName(): string;
 }

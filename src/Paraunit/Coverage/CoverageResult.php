@@ -29,12 +29,12 @@ class CoverageResult implements EventSubscriberInterface
         ];
     }
 
-    public function addCoverageProcessor(CoverageProcessorInterface $processor)
+    public function addCoverageProcessor(CoverageProcessorInterface $processor): void
     {
         $this->coverageProcessors[] = $processor;
     }
 
-    public function generateResults()
+    public function generateResults(): void
     {
         $coverageData = $this->coverageMerger->getCoverageData();
 

@@ -62,7 +62,7 @@ class TempDirectory
     /**
      * @throws \RuntimeException If the dir cannot be created
      */
-    public static function mkdirIfNotExists(string $path)
+    public static function mkdirIfNotExists(string $path): void
     {
         if (file_exists($path)) {
             return;

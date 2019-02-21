@@ -25,7 +25,7 @@ class Crap4j implements CoverageProcessorInterface
     /**
      * @throws \RuntimeException
      */
-    public function process(CodeCoverage $codeCoverage)
+    public function process(CodeCoverage $codeCoverage): void
     {
         $this->crap4j->process($codeCoverage, $this->targetFile->getFilePath());
     }

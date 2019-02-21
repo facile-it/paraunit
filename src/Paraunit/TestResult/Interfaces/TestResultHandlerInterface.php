@@ -8,7 +8,7 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 interface TestResultHandlerInterface
 {
-    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult);
+    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult): void;
 
-    public function addProcessToFilenames(AbstractParaunitProcess $process);
+    public function addProcessToFilenames(AbstractParaunitProcess $process): void;
 }

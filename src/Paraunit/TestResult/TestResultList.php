@@ -14,7 +14,7 @@ class TestResultList
         $this->testResultContainers = [];
     }
 
-    public function addContainer(TestResultContainer $container)
+    public function addContainer(TestResultContainer $container): void
     {
         $this->testResultContainers[] = $container;
     }

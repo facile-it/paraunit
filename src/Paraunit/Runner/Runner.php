@@ -76,19 +76,19 @@ class Runner implements EventSubscriberInterface
         return $this->exitCode;
     }
 
-    public function onProcessParsingCompleted(ProcessEvent $processEvent)
+    public function onProcessParsingCompleted(ProcessEvent $processEvent): void
     {
         if ($processEvent->getProcess()->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
     }
 
-    public function onProcessToBeRetried(ProcessEvent $processEvent)
+    public function onProcessToBeRetried(ProcessEvent $processEvent): void
     {
         $this->queuedProcesses->enqueue($processEvent->getProcess());
     }
 
-    private function createProcessQueue()
+    private function createProcessQueue(): void
     {
         foreach ($this->filter->filterTestFiles() as $file) {
             $this->queuedProcesses->enqueue(
@@ -97,7 +97,7 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    public function pushToPipeline()
+    public function pushToPipeline(): void
     {
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());

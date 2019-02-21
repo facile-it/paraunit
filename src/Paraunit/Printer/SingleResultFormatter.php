@@ -39,7 +39,7 @@ class SingleResultFormatter
         return sprintf('<%s>%s</%s>', $tag, $resultSymbol, $tag);
     }
 
-    private function addToMap(TestResultWithSymbolFormat $format)
+    private function addToMap(TestResultWithSymbolFormat $format): void
     {
         $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
     }

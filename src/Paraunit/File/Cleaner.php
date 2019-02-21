@@ -25,7 +25,7 @@ class Cleaner implements EventSubscriberInterface
         ];
     }
 
-    public function purgeCurrentTempDir()
+    public function purgeCurrentTempDir(): void
     {
         self::cleanUpDir($this->tempDirectory->getTempDirForThisExecution());
     }

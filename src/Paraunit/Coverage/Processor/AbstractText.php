@@ -34,7 +34,7 @@ abstract class AbstractText implements CoverageProcessorInterface
     /**
      * @throws \RuntimeException
      */
-    public function process(CodeCoverage $coverage)
+    public function process(CodeCoverage $coverage): void
     {
         $coverageResults = $this->text->process($coverage, $this->showColors);
 

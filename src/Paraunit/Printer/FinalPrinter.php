@@ -45,12 +45,12 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         ];
     }
 
-    public function onEngineStart()
+    public function onEngineStart(): void
     {
         $this->stopWatch->start(self::STOPWATCH_NAME);
     }
 
-    public function onEngineEnd()
+    public function onEngineEnd(): void
     {
         $stopEvent = $this->stopWatch->stop(self::STOPWATCH_NAME);
 
@@ -58,24 +58,24 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         $this->printTestCounters();
     }
 
-    public function onProcessTerminated()
+    public function onProcessTerminated(): void
     {
         ++$this->processCompleted;
     }
 
-    public function onProcessToBeRetried()
+    public function onProcessToBeRetried(): void
     {
         ++$this->processRetried;
     }
 
-    private function printExecutionTime(StopwatchEvent $stopEvent)
+    private function printExecutionTime(StopwatchEvent $stopEvent): void
     {
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln('Execution time -- ' . gmdate('H:i:s', (int) ($stopEvent->getDuration() / 1000)));
     }
 
-    private function printTestCounters()
+    private function printTestCounters(): void
     {
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
