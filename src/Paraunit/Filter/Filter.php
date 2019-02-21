@@ -32,10 +32,6 @@ class Filter
     /** @var string | null */
     private $stringFilter;
 
-    /**
-     * @param string | null $testSuiteFilter
-     * @param string | null $stringFilter
-     */
     public function __construct(
         PHPUnitUtilXMLProxy $utilXml,
         Facade $fileIteratorFacade,
@@ -116,7 +112,7 @@ class Filter
      * @param string[] $aggregatedFiles
      * @param string[] $excludes
      */
-    private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes)
+    private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes): void
     {
         foreach ($testSuiteNode->getElementsByTagName('directory') as $directoryNode) {
             $directory = (string) $directoryNode->nodeValue;
@@ -137,15 +133,15 @@ class Filter
     /**
      * @param string[] $aggregatedFiles
      */
-    private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles)
+    private function addTestsFromFileNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles): void
     {
         foreach ($testSuiteNode->getElementsByTagName('file') as $fileNode) {
-            $fileName = $this->relativePath . (string) $fileNode->nodeValue;
+            $fileName = $this->relativePath . $fileNode->nodeValue;
             $this->addFileToAggregateArray($aggregatedFiles, $fileName);
         }
     }
 
-    private function addFileToAggregateArray(array &$aggregatedFiles, string $fileName)
+    private function addFileToAggregateArray(array &$aggregatedFiles, string $fileName): void
     {
         // optimized array_unique
         $aggregatedFiles[$fileName] = $fileName;
@@ -156,25 +152,19 @@ class Filter
         string $nodeName,
         string $defaultValue = null
     ): string {
-        /*
-         * @var string
-         * @var \DOMAttr
-         */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
             if ($attrName === $nodeName) {
                 return $attrNode->value;
             }
         }
 
-        return $defaultValue;
+        return $defaultValue ?? '';
     }
 
     /**
-     * @param string | null $stringFilter
-     *
      * @return string[]
      */
-    private function filterByString(array $aggregatedFiles, $stringFilter): array
+    private function filterByString(array $aggregatedFiles, ?string $stringFilter): array
     {
         if ($stringFilter !== null) {
             $aggregatedFiles = array_filter($aggregatedFiles, function ($value) use ($stringFilter) {

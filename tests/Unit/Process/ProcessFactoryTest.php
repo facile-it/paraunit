@@ -14,7 +14,7 @@ use Tests\BaseUnitTestCase;
 
 class ProcessFactoryTest extends BaseUnitTestCase
 {
-    protected function setUp()
+    protected function setup(): void
     {
         $process = new Process(['cmd as array']);
         if (\is_array($process->getCommandLine())) {

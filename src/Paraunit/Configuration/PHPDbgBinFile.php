@@ -45,6 +45,11 @@ class PHPDbgBinFile
         $locator = new Process(['command', '-v', 'phpdbg']);
         $locator->run();
 
-        return preg_replace('/\s/', '', $locator->getOutput());
+        $trimmed = preg_replace('/\s/', '', $locator->getOutput());
+        if (null === $trimmed) {
+            throw new \RuntimeException('Preg replace failed');
+        }
+
+        return $trimmed;
     }
 }

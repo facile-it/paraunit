@@ -6,9 +6,9 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - 7.1
-  - 7.2
   - 7.3
+  - 7.2
+  - 7.1
 
 before_install: 
   - if [[ !$XDEBUG ]]; then phpenv config-rm xdebug.ini; fi
@@ -23,8 +23,10 @@ jobs:
     - stage: Test
       env: XDEBUG=true
     - env: VENDOR=prefer-lowest
+      php: 7.1
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - env: VENDOR=lock
+      php: 7.2
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
       env: E2E=true

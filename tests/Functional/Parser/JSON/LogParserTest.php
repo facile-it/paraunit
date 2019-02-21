@@ -42,6 +42,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $this->assertEquals($hasAbnormalTermination, $process->hasAbnormalTermination());
 
         if ($process->getTestClassName()) {
+            $this->assertNotNull($process->getTestClassName(), 'Empty test class name');
             $this->assertStringStartsWith('Paraunit\Tests\Stub\\', $process->getTestClassName());
         }
     }

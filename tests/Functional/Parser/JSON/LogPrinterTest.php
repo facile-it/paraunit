@@ -11,7 +11,7 @@ use Tests\BaseFunctionalTestCase;
 
 class LogPrinterTest extends BaseFunctionalTestCase
 {
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 

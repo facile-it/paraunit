@@ -94,7 +94,7 @@ class CoverageCommandTest extends BaseTestCase
     {
         /** @var string $filename */
         $filename = tempnam(sys_get_temp_dir(), 'coverage.txt');
-        $this->assertInternalType('string', $filename);
+        $this->assertNotFalse($filename);
 
         return $filename;
     }

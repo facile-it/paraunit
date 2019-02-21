@@ -13,7 +13,7 @@ use Tests\BaseUnitTestCase;
 
 class ProcessBuilderFactoryTest extends BaseUnitTestCase
 {
-    protected function setUp()
+    protected function setup(): void
     {
         if (! \class_exists('Symfony\Component\Process\ProcessBuilder')) {
             $this->markTestSkipped('This test is legacy, will not work under Symfony 4');
