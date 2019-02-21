@@ -52,6 +52,10 @@ class CoverageMerger implements EventSubscriberInterface
 
     public function getCoverageData(): CodeCoverage
     {
-        return $this->coverageData;
+        if ($this->coverageData) {
+            return $this->coverageData;
+        }
+
+        throw new \RuntimeException('Coverage data not ready');
     }
 }

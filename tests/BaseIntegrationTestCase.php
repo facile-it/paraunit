@@ -84,6 +84,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $previousPosition = 0;
         $previousString = '<beginning of output>';
         foreach ($strings as $string) {
+            /** @var int $position */
             $position = strpos($output->getOutput(), $string, $previousPosition);
             $this->assertNotFalse($position, $output->getOutput() . PHP_EOL . 'String not found: ' . $string);
             $this->assertGreaterThan(
@@ -125,21 +126,24 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     }
 
     /**
-     * @throws \Exception
-     *
      * @return object
      */
     public function getService(string $serviceName)
     {
-        return $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+        if ($this->container) {
+            return $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+        }
+
+        throw new \RuntimeException('Container not ready');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function getParameter(string $parameterName)
     {
-        return $this->container->getParameter($parameterName);
+        if ($this->container) {
+            return $this->container->getParameter($parameterName);
+        }
+
+        throw new \RuntimeException('Container not ready');
     }
 
     protected function loadContainer(): void

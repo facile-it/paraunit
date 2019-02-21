@@ -53,12 +53,13 @@ class ParallelConfiguration
 
     protected function tagEventSubscribers(ContainerBuilder $container): void
     {
-        foreach ($container->getDefinitions() as $definition) {
+        foreach ($container->getDefinitions() as $id => $definition) {
             if ($definition->isSynthetic() || $definition->isAbstract()) {
                 continue;
             }
 
-            if (array_key_exists(EventSubscriberInterface::class, class_implements($definition->getClass()))) {
+            $class = $definition->getClass() ?? (string) $id;
+            if (array_key_exists(EventSubscriberInterface::class, class_implements($class))) {
                 $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
             }
         }

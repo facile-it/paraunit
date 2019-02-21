@@ -12,7 +12,17 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class CoverageMergerTest extends BaseUnitTestCase
 {
-    public function testMergeFirstCoverageData()
+    public function testGetCoverageWhenNotReady(): void
+    {
+        $merger = new CoverageMerger($this->prophesize(CoverageFetcher::class)->reveal());
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('not ready');
+
+        $merger->getCoverageData();
+    }
+
+    public function testMergeFirstCoverageData(): void
     {
         $process = new StubbedParaunitProcess();
 
@@ -30,7 +40,7 @@ class CoverageMergerTest extends BaseUnitTestCase
         $this->assertSame($newCoverageData, $merger->getCoverageData());
     }
 
-    public function testMergeNextCoverageData()
+    public function testMergeNextCoverageData(): void
     {
         $process1 = new StubbedParaunitProcess('test1');
         $process2 = new StubbedParaunitProcess('test2');
