@@ -1,14 +1,8 @@
 parameters:
     ignoreErrors:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
-        # needed with Symfony <3.3
-        - '/Call to function is_array\(\) with string will always evaluate to false./'
-        - '/Class Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher not found/'
         - '/Call to function method_exists.. with .Tests..BaseTestCase. and .assertStringContain.... will always evaluate to false./'
     excludes_analyse:
-        # needed with PHPUnit 6
-        - src/Paraunit/Parser/JSON/LogPrinterV6.php
-        - src/Paraunit/Process/ProcessBuilderFactory.php
         - tests/Stub/ParseErrorTestStub.php
 includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
