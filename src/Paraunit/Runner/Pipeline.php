@@ -25,7 +25,7 @@ class Pipeline
         $this->number = $number;
     }
 
-    public function execute(AbstractParaunitProcess $process)
+    public function execute(AbstractParaunitProcess $process): void
     {
         if (! $this->isFree()) {
             throw new \RuntimeException('This pipeline is not free');
@@ -44,16 +44,16 @@ class Pipeline
 
     public function isTerminated(): bool
     {
-        if ($this->isFree()) {
-            return true;
+        if ($this->process) {
+            return $this->process->isTerminated();
         }
 
-        return $this->process->isTerminated();
+        return true;
     }
 
     public function triggerTermination(): bool
     {
-        if ($this->isFree()) {
+        if (null === $this->process) {
             return false;
         }
 
@@ -71,7 +71,7 @@ class Pipeline
         return $this->number;
     }
 
-    private function handleProcessTermination()
+    private function handleProcessTermination(): void
     {
         $this->dispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, new ProcessEvent($this->process));
         $this->process = null;

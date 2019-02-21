@@ -1,7 +1,6 @@
 parameters:
     ignoreErrors:
         - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
-        - '/Method Tests\\BaseTestCase::getRandomTempDir\(\) should return string but returns string|null\./'
         - '/Parameter #1 $process of class Paraunit\\Lifecycle\\ProcessEvent constructor expects Paraunit\\Process\\AbstractParaunitProcess, Paraunit\\Process\\AbstractParaunitProcess|null given\./'
         - '/Call to function is_array\(\) with string will always evaluate to false./'
         - '/Class Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher not found/'

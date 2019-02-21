@@ -258,7 +258,10 @@ class LogPrinterTest extends BaseUnitTestCase
         $logFilename = $this->getRandomTempDir() . 'log-file-name.json.log';
         $content = $this->getFileContent($logFilename);
 
-        return preg_replace('/\r\n/', "\n", $content);
+        $parsedOutput = preg_replace('/\r\n/', "\n", $content);
+        $this->assertNotNull($parsedOutput, 'Preg replace failed');
+
+        return $parsedOutput;
     }
 
     private function encodeWithStartTestSuite(array $data = []): string
