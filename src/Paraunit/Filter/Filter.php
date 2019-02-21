@@ -151,14 +151,14 @@ class Filter
         \DOMElement $testSuiteNode,
         string $nodeName,
         string $defaultValue = null
-    ): ?string {
+    ): string {
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
             if ($attrName === $nodeName) {
                 return $attrNode->value;
             }
         }
 
-        return $defaultValue;
+        return $defaultValue ?? '';
     }
 
     /**

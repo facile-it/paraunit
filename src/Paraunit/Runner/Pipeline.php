@@ -73,7 +73,9 @@ class Pipeline
 
     private function handleProcessTermination(): void
     {
-        $this->dispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, new ProcessEvent($this->process));
-        $this->process = null;
+        if ($this->process) {
+            $this->dispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, new ProcessEvent($this->process));
+            $this->process = null;
+        }
     }
 }
