@@ -16,12 +16,12 @@ use Tests\BaseUnitTestCase;
 
 class ParallelCommandTest extends BaseUnitTestCase
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
 
         $runner = $this->prophesize(Runner::class);
-        $runner->run(Argument::cetera())
+        $runner->run()
             ->shouldBeCalled()
             ->willReturn(0);
 

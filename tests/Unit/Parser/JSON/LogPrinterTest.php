@@ -14,14 +14,14 @@ use Tests\BaseUnitTestCase;
 
 class LogPrinterTest extends BaseUnitTestCase
 {
-    public function testStartTestSuite()
+    public function testStartTestSuite(): void
     {
         $this->createPrinterAndStartTestSuite();
 
         $this->assertEquals($this->encodeWithStartTestSuite(), $this->getLogContent());
     }
 
-    public function testAddError()
+    public function testAddError(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -50,7 +50,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testAddWarning()
+    public function testAddWarning(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -81,7 +81,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testAddFailure()
+    public function testAddFailure(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -112,7 +112,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testAddIncompleteTest()
+    public function testAddIncompleteTest(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -143,7 +143,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testAddRiskyTest()
+    public function testAddRiskyTest(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -174,7 +174,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testAddSkippedTest()
+    public function testAddSkippedTest(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();
@@ -205,7 +205,7 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    public function testEndTest()
+    public function testEndTest(): void
     {
         $printer = $this->createPrinterAndStartTestSuite();
         $test = $this->prophesize(Test::class)->reveal();

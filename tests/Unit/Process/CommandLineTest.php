@@ -13,7 +13,7 @@ use Tests\BaseUnitTestCase;
 
 class CommandLineTest extends BaseUnitTestCase
 {
-    public function testGetExecutable()
+    public function testGetExecutable(): void
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
@@ -23,7 +23,7 @@ class CommandLineTest extends BaseUnitTestCase
         $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
     }
 
-    public function testGetOptionsFor()
+    public function testGetOptionsFor(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getFileFullPath()

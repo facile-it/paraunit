@@ -12,7 +12,7 @@ use Tests\BaseTestCase;
 
 class CoverageResultTest extends BaseTestCase
 {
-    public function testGenerateResults()
+    public function testGenerateResults(): void
     {
         $merger = $this->prophesize(CoverageMerger::class);
         $merger->getCoverageData()

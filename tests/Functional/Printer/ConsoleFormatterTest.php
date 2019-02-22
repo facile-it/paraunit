@@ -15,7 +15,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     /**
      * @dataProvider serviceTagsProvider
      */
-    public function testOnEngineStartHasAllTagsRegistered(string $containerServiceName)
+    public function testOnEngineStartHasAllTagsRegistered(string $containerServiceName): void
     {
         /** @var TestResultContainer $testResultContainer */
         $testResultContainer = $this->getService($containerServiceName);

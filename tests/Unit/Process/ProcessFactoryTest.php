@@ -13,7 +13,7 @@ use Tests\BaseUnitTestCase;
 
 class ProcessFactoryTest extends BaseUnitTestCase
 {
-    public function testCreateProcess()
+    public function testCreateProcess(): void
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $cliCommand = $this->prophesize(CommandLine::class);

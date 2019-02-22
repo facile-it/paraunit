@@ -13,7 +13,7 @@ use Tests\Stub\UnformattedOutputStub;
 
 class DebugPrinterTest extends BaseUnitTestCase
 {
-    public function testIsSubscribedToAllProcessEvents()
+    public function testIsSubscribedToAllProcessEvents(): void
     {
         $this->assertTrue(
             is_subclass_of(DebugPrinter::class, EventSubscriberInterface::class),
@@ -28,7 +28,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         }
     }
 
-    public function testOnProcessStarted()
+    public function testOnProcessStarted(): void
     {
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
@@ -41,7 +41,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $this->assertContains($process->getCommandLine(), $output->getOutput());
     }
 
-    public function testOnProcessTerminated()
+    public function testOnProcessTerminated(): void
     {
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
@@ -55,7 +55,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $this->assertContains($process->getTestClassName(), $output->getOutput());
     }
 
-    public function testOnProcessParsingCompleted()
+    public function testOnProcessParsingCompleted(): void
     {
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
@@ -66,7 +66,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $this->assertContains('RESULTS', $output->getOutput());
     }
 
-    public function testOnProcessToBeRetried()
+    public function testOnProcessToBeRetried(): void
     {
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);

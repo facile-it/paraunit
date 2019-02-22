@@ -17,7 +17,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class LogParserTest extends BaseUnitTestCase
 {
-    public function testOnProcessTerminatedHasProperChainInterruption()
+    public function testOnProcessTerminatedHasProperChainInterruption(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('All ok');
@@ -41,7 +41,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
     }
 
-    public function testParseHandlesMissingLogs()
+    public function testParseHandlesMissingLogs(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('Test output (core dumped)');
@@ -61,7 +61,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
     }
 
-    public function testParseHandlesNoTestExecuted()
+    public function testParseHandlesNoTestExecuted(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('No tests executed!');
@@ -76,7 +76,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessEvent($process));
     }
 
-    public function testParseHandlesTestToBeRetried()
+    public function testParseHandlesTestToBeRetried(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('No tests executed!');

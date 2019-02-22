@@ -16,7 +16,7 @@ use Tests\Stub\RaisingNoticeTestStub;
 
 class ParallelCommandTest extends BaseTestCase
 {
-    public function testExecutionAllGreen()
+    public function testExecutionAllGreen(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -37,7 +37,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
     }
 
-    public function testExecutionAllGreenWithRepeatOption()
+    public function testExecutionAllGreenWithRepeatOption(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -59,7 +59,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
     }
 
-    public function testExecution()
+    public function testExecution(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -86,7 +86,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('Executed: 13 test classes (18 retried), 23 tests', $output);
     }
 
-    public function testExecutionWithLogo()
+    public function testExecutionWithLogo(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -104,7 +104,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains('BBBBbBBBBBBB', $output, 'Shark logo missing');
     }
 
-    public function testExecutionWithDebugEnabled()
+    public function testExecutionWithDebugEnabled(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -135,7 +135,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertSame($processRetried, substr_count($output, 'PROCESS TO BE RETRIED'));
     }
 
-    public function testExecutionWithParametersWithoutValue()
+    public function testExecutionWithParametersWithoutValue(): void
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
@@ -153,7 +153,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertSame(0, $exitCode);
     }
 
-    public function testExecutionWithoutConfiguration()
+    public function testExecutionWithoutConfiguration(): void
     {
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
@@ -171,7 +171,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertSame(0, $exitCode);
     }
 
-    public function testExecutionWithDeprecationListener()
+    public function testExecutionWithDeprecationListener(): void
     {
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));

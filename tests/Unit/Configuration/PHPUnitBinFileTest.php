@@ -9,7 +9,7 @@ use Tests\BaseUnitTestCase;
 
 class PHPUnitBinFileTest extends BaseUnitTestCase
 {
-    public function testGetPhpunitBin()
+    public function testGetPhpunitBin(): void
     {
         $phpUnitBin = new PHPUnitBinFile();
 

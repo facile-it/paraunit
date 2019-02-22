@@ -12,7 +12,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class TestResultContainerTest extends BaseUnitTestCase
 {
-    public function testAddProcessToFilenames()
+    public function testAddProcessToFilenames(): void
     {
         $testResultFormat = $this->prophesize(TestResultFormat::class);
         $testResultContainer = new TestResultContainer($testResultFormat->reveal());
@@ -28,7 +28,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $this->assertCount(2, $testResultContainer->getFileNames());
     }
 
-    public function testHandleLogItemAddsProcessOutputWhenNeeded()
+    public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
         $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
@@ -41,7 +41,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $this->assertContains('test output', $testResult->getFailureMessage());
     }
 
-    public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty()
+    public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
         $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
         $process = new StubbedParaunitProcess();
@@ -54,7 +54,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
     }
 
-    public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols()
+    public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
         $testResult = new TestResultWithAbnormalTermination('function name', 'some message');
         $process = new StubbedParaunitProcess();

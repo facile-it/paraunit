@@ -9,14 +9,14 @@ use Tests\BaseFunctionalTestCase;
 
 class PHPDbgBinFileTest extends BaseFunctionalTestCase
 {
-    public function testIsAvailable()
+    public function testIsAvailable(): void
     {
         $bin = new PHPDbgBinFile();
 
         $this->assertTrue($bin->isAvailable());
     }
 
-    public function testGetPhpDbgBin()
+    public function testGetPhpDbgBin(): void
     {
         $bin = new PHPDbgBinFile();
 

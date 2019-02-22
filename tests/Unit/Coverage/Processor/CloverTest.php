@@ -10,7 +10,7 @@ use Tests\BaseUnitTestCase;
 
 class CloverTest extends BaseUnitTestCase
 {
-    public function testWriteToFile()
+    public function testWriteToFile(): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'clover.xml');
         $text = new Clover($targetFile);

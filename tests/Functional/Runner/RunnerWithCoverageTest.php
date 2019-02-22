@@ -20,7 +20,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $this->configuration = new CoverageConfiguration(true);
     }
 
-    public function testAllGreen()
+    public function testAllGreen(): void
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();

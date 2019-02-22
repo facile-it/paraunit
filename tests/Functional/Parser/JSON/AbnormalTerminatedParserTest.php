@@ -12,7 +12,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
 {
-    public function testHandleLogItemWithAbnormalTermination()
+    public function testHandleLogItemWithAbnormalTermination(): void
     {
         $process = new StubbedParaunitProcess();
         $log = new \stdClass();
@@ -29,7 +29,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     /**
      * @dataProvider otherStatusesProvider
      */
-    public function testHandleLogItemWithUncatchedLog($otherStatuses)
+    public function testHandleLogItemWithUncaughtLog(string $otherStatuses): void
     {
         $process = new StubbedParaunitProcess();
         $log = new \stdClass();

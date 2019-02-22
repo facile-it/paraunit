@@ -26,7 +26,7 @@ use Tests\BaseUnitTestCase;
 
 class ParallelConfigurationTest extends BaseUnitTestCase
 {
-    public function testBuildContainer()
+    public function testBuildContainer(): void
     {
         $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -43,8 +43,6 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             ->willReturn(null);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
-
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
         $requiredParameters = [
             'paraunit.max_process_count' => 10,
@@ -78,11 +76,11 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertNotContains(CoveragePrinter::class, $servicesIds);
 
         foreach ($requiredDefinitions as $definitionName) {
-            $this->getService($container, $definitionName); // test instantiation, to prevent misconfigurations
+            $this->getService($container, $definitionName); // test instantiation, to prevent misconfiguration
         }
     }
 
-    public function testBuildContainerWithDebug()
+    public function testBuildContainerWithDebug(): void
     {
         $paraunit = new ParallelConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -96,9 +94,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
-
-        // test instantiation, to prevent misconfigurations
+        // test instantiation, to prevent misconfiguration
         $service = $this->getService($container, DebugPrinter::class);
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);

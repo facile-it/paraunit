@@ -16,7 +16,7 @@ use Tests\Stub\StubbedParaunitProcess;
  */
 class PipelineCollectionTest extends BaseUnitTestCase
 {
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $pipelines = [
             $this->prophesize(Pipeline::class)->reveal(),
@@ -29,7 +29,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         new PipelineCollection($this->mockPipelineFactory($pipelines), count($pipelines));
     }
 
-    public function testPush()
+    public function testPush(): void
     {
         $newProcess = new StubbedParaunitProcess();
 
@@ -53,7 +53,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $collection->push($newProcess);
     }
 
-    public function testPushWithNoEmptyPipelines()
+    public function testPushWithNoEmptyPipelines(): void
     {
         $newProcess = new StubbedParaunitProcess();
 
@@ -76,7 +76,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
     /**
      * @dataProvider pipelineStateProvider
      */
-    public function testHasRunningProcesses(bool $isPipeline1Free, bool $isPipeline2Free)
+    public function testHasRunningProcesses(bool $isPipeline1Free, bool $isPipeline2Free): void
     {
         $pipeline1 = $this->prophesize(Pipeline::class);
         $pipeline1->isFree()
@@ -97,7 +97,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
     /**
      * @dataProvider pipelineStateProvider
      */
-    public function testHasEmptySlots(bool $isPipeline1Empty, bool $isPipeline2Empty)
+    public function testHasEmptySlots(bool $isPipeline1Empty, bool $isPipeline2Empty): void
     {
         $pipeline1 = $this->prophesize(Pipeline::class);
         $pipeline1->isFree()

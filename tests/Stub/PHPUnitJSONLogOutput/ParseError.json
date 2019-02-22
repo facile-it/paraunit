@@ -228,11 +228,11 @@
 }{
     "event": "testStart",
     "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anoherMessage', false)"
+    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anotherMessage', false)"
 }{
     "event": "test",
     "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anoherMessage', false)",
+    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anotherMessage', false)",
     "status": "pass",
     "time": 0.002514123916626,
     "trace": "",
@@ -241,11 +241,11 @@
 }{
     "event": "testStart",
     "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anoherMessage', false)"
+    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anotherMessage', false)"
 }{
     "event": "test",
     "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anoherMessage', false)",
+    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anotherMessage', false)",
     "status": "pass",
     "time": 0.002324104309082,
     "trace": "",

@@ -19,7 +19,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class RunnerTest extends BaseUnitTestCase
 {
-    public function testRunEmptyTestSuite()
+    public function testRunEmptyTestSuite(): void
     {
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()
@@ -42,7 +42,7 @@ class RunnerTest extends BaseUnitTestCase
         $this->assertSame(0, $runner->run());
     }
 
-    public function testRunWithSomeGreenTests()
+    public function testRunWithSomeGreenTests(): void
     {
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()
@@ -71,7 +71,7 @@ class RunnerTest extends BaseUnitTestCase
         $this->assertSame(0, $runner->run());
     }
 
-    public function testOnProcessParsingCompletedWithFailedProcess()
+    public function testOnProcessParsingCompletedWithFailedProcess(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setIsToBeRetried(false);
@@ -98,7 +98,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner->onProcessParsingCompleted(new ProcessEvent($process));
     }
 
-    public function testOnProcessToBeRetried()
+    public function testOnProcessToBeRetried(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setIsToBeRetried(true);

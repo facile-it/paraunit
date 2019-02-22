@@ -6,27 +6,27 @@ namespace Tests\Stub\PHPUnitJSONLogOutput;
 
 class JSONLogStub
 {
-    const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
+    public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
 
-    const ALL_GREEN = 'AllGreen';
+    public const ALL_GREEN = 'AllGreen';
 
-    const FATAL_ERROR = 'FatalError';
+    public const FATAL_ERROR = 'FatalError';
 
-    const SEGFAULT = 'SegFault';
+    public const SEGFAULT = 'SegFault';
 
-    const ONE_ERROR = 'SingleError';
+    public const ONE_ERROR = 'SingleError';
 
-    const ONE_INCOMPLETE = 'SingleIncomplete';
+    public const ONE_INCOMPLETE = 'SingleIncomplete';
 
-    const ONE_RISKY = 'SingleRisky';
+    public const ONE_RISKY = 'SingleRisky';
 
-    const ONE_SKIP = 'SingleSkip';
+    public const ONE_SKIP = 'SingleSkip';
 
-    const ONE_WARNING = 'SingleWarning';
+    public const ONE_WARNING = 'SingleWarning';
 
-    const UNKNOWN = 'Unknown';
+    public const UNKNOWN = 'Unknown';
 
-    const PARSE_ERROR = 'ParseError';
+    public const PARSE_ERROR = 'ParseError';
 
     /**
      * @throws \Exception
@@ -56,7 +56,7 @@ class JSONLogStub
      *
      * @return string            The normalized log, as an array of JSON objects
      */
-    private static function cleanLog($jsonString)
+    private static function cleanLog($jsonString): string
     {
         $splitted = preg_replace('/\}\{/', '},{', $jsonString);
 

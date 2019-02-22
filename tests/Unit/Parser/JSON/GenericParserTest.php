@@ -19,11 +19,11 @@ class GenericParserTest extends BaseUnitTestCase
      */
     public function testParsingFoundResult(
         string $statusToMatch,
-        string $startsWithToMatch = null,
+        ?string $startsWithToMatch,
         string $status,
         string $message = null,
         bool $shouldMatch = true
-    ) {
+    ): void {
         $log = $this->getLogFromStub('test', $status, $message);
         if (null === $message) {
             unset($log->message);
@@ -56,9 +56,9 @@ class GenericParserTest extends BaseUnitTestCase
             ['error', 'Error found', 'error', 'Error found'],
 
             ['error', null, 'pass', 'anyMessage', false],
-            ['error', 'Error found', 'error', 'anoherMessage', false],
+            ['error', 'Error found', 'error', 'anotherMessage', false],
             ['error', 'Error found', 'error', null, false],
-            ['error', 'Error found', 'pass', 'anoherMessage', false],
+            ['error', 'Error found', 'pass', 'anotherMessage', false],
         ];
     }
 }

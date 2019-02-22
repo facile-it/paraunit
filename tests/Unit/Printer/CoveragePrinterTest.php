@@ -12,7 +12,7 @@ use Tests\Stub\UnformattedOutputStub;
 
 class CoveragePrinterTest extends BaseUnitTestCase
 {
-    public function testOnEngineBeforeStartWithPHPDBGEngine()
+    public function testOnEngineBeforeStartWithPHPDBGEngine(): void
     {
         $output = new UnformattedOutputStub();
 
@@ -23,7 +23,7 @@ class CoveragePrinterTest extends BaseUnitTestCase
         $this->assertContains('Coverage driver in use: PHPDBG', $output->getOutput());
     }
 
-    public function testOnEngineBeforeStartWithxDebugEngine()
+    public function testOnEngineBeforeStartWithxDebugEngine(): void
     {
         $output = new UnformattedOutputStub();
 
@@ -34,7 +34,7 @@ class CoveragePrinterTest extends BaseUnitTestCase
         $this->assertContains('Coverage driver in use: xDebug', $output->getOutput());
     }
 
-    public function testOnEngineBeforeStartWithWarningForBothEnginesEnabled()
+    public function testOnEngineBeforeStartWithWarningForBothEnginesEnabled(): void
     {
         $output = new UnformattedOutputStub();
 

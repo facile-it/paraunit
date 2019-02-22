@@ -10,7 +10,7 @@ use Tests\BaseUnitTestCase;
 
 class PhpTest extends BaseUnitTestCase
 {
-    public function testWriteToFile()
+    public function testWriteToFile(): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coverage.php');
         $text = new Php($targetFile);

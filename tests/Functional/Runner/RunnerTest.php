@@ -191,7 +191,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertGreaterThan(
             strpos($output, 'Execution time'),
             strpos($output, 'YOU SHOULD NOT SEE THIS'),
-            'REGRESSION: garbage output during tests execution (PHP warnigns, var_dumps...)'
+            'REGRESSION: garbage output during tests execution (PHP warnings, var_dumps...)'
         );
     }
 

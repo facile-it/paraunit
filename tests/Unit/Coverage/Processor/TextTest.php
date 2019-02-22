@@ -15,7 +15,7 @@ class TextTest extends BaseUnitTestCase
     /**
      * @dataProvider colorProvider
      */
-    public function testWriteToFile(bool $withColors, string $expectedString)
+    public function testWriteToFile(bool $withColors, string $expectedString): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coverage.txt');
         $text = new Text(
@@ -37,7 +37,7 @@ class TextTest extends BaseUnitTestCase
     /**
      * @dataProvider colorProvider
      */
-    public function testWriteToOutput(bool $withColors, string $expectedString)
+    public function testWriteToOutput(bool $withColors, string $expectedString): void
     {
         $output = $this->prophesize(OutputInterface::class);
         $output->writeln(Argument::containingString($expectedString))
@@ -48,7 +48,7 @@ class TextTest extends BaseUnitTestCase
         $text->process($this->createCodeCoverage());
     }
 
-    public function colorProvider()
+    public function colorProvider(): array
     {
         return [
             [false, 'Code Coverage Report:'],

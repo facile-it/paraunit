@@ -16,7 +16,7 @@ class UnknownResultParserTest extends BaseUnitTestCase
     /**
      * @dataProvider statusesProvider
      */
-    public function testHandleLogItemShouldCatchAnything(string $statuses)
+    public function testHandleLogItemShouldCatchAnything(string $statuses): void
     {
         $log = new \stdClass();
         $log->status = $statuses;

@@ -12,7 +12,7 @@ use Tests\BaseUnitTestCase;
 
 class SingleResultFormatterTest extends BaseUnitTestCase
 {
-    public function testFormatSingleResult()
+    public function testFormatSingleResult(): void
     {
         $tag = 'tag';
         $symbol = '.';
@@ -31,7 +31,7 @@ class SingleResultFormatterTest extends BaseUnitTestCase
         $this->assertEquals(sprintf('<%s>%s</%s>', $tag, $symbol, $tag), $formattedResult);
     }
 
-    public function testFormatSingleResultDoesNothingForUnknownTags()
+    public function testFormatSingleResultDoesNothingForUnknownTags(): void
     {
         $singleResult = $this->mockPrintableTestResult();
         $testResultList = $this->prophesize(TestResultList::class);

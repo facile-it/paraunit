@@ -15,7 +15,7 @@ class TestStartParserTest extends BaseUnitTestCase
     /**
      * @dataProvider logsProvider
      */
-    public function testHandleLogItem(string $event, bool $chainInterrupted, bool $processExpectsTestResult = false)
+    public function testHandleLogItem(string $event, bool $chainInterrupted, bool $processExpectsTestResult = false): void
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
@@ -47,7 +47,7 @@ class TestStartParserTest extends BaseUnitTestCase
         ];
     }
 
-    public function testHandleLogItemCatchesEndingIfGraceful()
+    public function testHandleLogItemCatchesEndingIfGraceful(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(false);
@@ -60,7 +60,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $this->assertInstanceOf(TestResultInterface::class, $return);
     }
 
-    public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog()
+    public function testHandleLogItemAppendsNoCulpableFunctionForMissingLog(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
@@ -74,7 +74,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $this->assertEquals('UNKNOWN -- log not found', $log->test);
     }
 
-    public function testHandleLogItemAppendsCulpableFunction()
+    public function testHandleLogItemAppendsCulpableFunction(): void
     {
         $process = new StubbedParaunitProcess();
         $process->setWaitingForTestResult(true);
@@ -93,7 +93,7 @@ class TestStartParserTest extends BaseUnitTestCase
         $this->assertEquals('testFunction', $log->test);
     }
 
-    public function testHandleLogItemAppendsCulpableFunctionToRightProcess()
+    public function testHandleLogItemAppendsCulpableFunctionToRightProcess(): void
     {
         $parser = new TestStartParser();
         $log = new \stdClass();

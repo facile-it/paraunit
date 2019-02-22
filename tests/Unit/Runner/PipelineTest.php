@@ -13,7 +13,7 @@ use Tests\BaseUnitTestCase;
 
 class PipelineTest extends BaseUnitTestCase
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
@@ -27,7 +27,7 @@ class PipelineTest extends BaseUnitTestCase
             ->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testExecuteWithOccupiedPipeline()
+    public function testExecuteWithOccupiedPipeline(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
@@ -42,7 +42,7 @@ class PipelineTest extends BaseUnitTestCase
         $pipeline->execute($process->reveal());
     }
 
-    public function testIsFree()
+    public function testIsFree(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
@@ -54,7 +54,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertTrue($pipeline->isTerminated(), 'Pipeline should be considered terminated when empty');
     }
 
-    public function testIsTerminated()
+    public function testIsTerminated(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
@@ -75,7 +75,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertFalse($pipeline->isFree(), 'Pipeline is being freed');
     }
 
-    public function testTriggerTermination()
+    public function testTriggerTermination(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $process = $this->prophesize(AbstractParaunitProcess::class);
@@ -98,7 +98,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertTrue($pipeline->isFree(), 'Pipeline is marked as not free after termination of process');
     }
 
-    public function testIsTerminatedFalse()
+    public function testIsTerminatedFalse(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
@@ -120,7 +120,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertFalse($pipeline->isTerminated(), 'Process should not be terminated');
     }
 
-    public function testGetNumber()
+    public function testGetNumber(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 123456);

@@ -13,7 +13,7 @@ use Tests\BaseFunctionalTestCase;
 
 class SingleResultFormatterTest extends BaseFunctionalTestCase
 {
-    public function testFormatProvider()
+    public function testFormatProvider(): void
     {
         /** @var SingleResultFormatter $formatter */
         $formatter = $this->getService(SingleResultFormatter::class);
@@ -25,7 +25,7 @@ class SingleResultFormatterTest extends BaseFunctionalTestCase
         }
     }
 
-    private function assertMappingIsCorrect(SingleResultFormatter $formatter, TestResultFormat $testResultFormat)
+    private function assertMappingIsCorrect(SingleResultFormatter $formatter, TestResultFormat $testResultFormat): void
     {
         if (! $testResultFormat instanceof TestResultWithSymbolFormat) {
             return;

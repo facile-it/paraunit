@@ -9,7 +9,7 @@ use Tests\BaseFunctionalTestCase;
 
 class FailuresPrinterTest extends BaseFunctionalTestCase
 {
-    public function testOnEngineEndPrintsInTheRightOrder()
+    public function testOnEngineEndPrintsInTheRightOrder(): void
     {
         $this->processAllTheStubLogs();
 

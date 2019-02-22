@@ -31,7 +31,7 @@ class CoverageCommandTest extends BaseUnitTestCase
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
 
         $runner = $this->prophesize(Runner::class);
-        $runner->run(Argument::cetera())
+        $runner->run()
             ->shouldBeCalled()
             ->willReturn(0);
 
