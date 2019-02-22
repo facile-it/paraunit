@@ -47,7 +47,7 @@ abstract class AbstractParaunitProcess
 
     abstract public function getExitCode(): ?int;
 
-    abstract public function start(int $pipelineNumber);
+    abstract public function start(int $pipelineNumber): void;
 
     public function getUniqueId(): string
     {

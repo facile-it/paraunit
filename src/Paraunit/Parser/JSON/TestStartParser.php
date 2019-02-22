@@ -48,13 +48,13 @@ class TestStartParser implements ParserChainElementInterface
         return new NullTestResult();
     }
 
-    private function saveProcessFunction(AbstractParaunitProcess $process, \stdClass $logItem)
+    private function saveProcessFunction(AbstractParaunitProcess $process, \stdClass $logItem): void
     {
         $this->lastProcess = $process;
         $this->lastFunction = property_exists($logItem, 'test') ? $logItem->test : self::UNKNOWN_FUNCTION;
     }
 
-    private function injectLastFunctionInEndingLog(AbstractParaunitProcess $process, \stdClass $logItem)
+    private function injectLastFunctionInEndingLog(AbstractParaunitProcess $process, \stdClass $logItem): void
     {
         $logItem->test = $this->lastFunction;
 
@@ -63,7 +63,7 @@ class TestStartParser implements ParserChainElementInterface
         }
     }
 
-    private function saveTestFQCN(AbstractParaunitProcess $process, \stdClass $logItem)
+    private function saveTestFQCN(AbstractParaunitProcess $process, \stdClass $logItem): void
     {
         if ($process->getTestClassName()) {
             return;

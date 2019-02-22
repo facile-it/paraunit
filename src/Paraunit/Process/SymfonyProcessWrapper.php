@@ -29,7 +29,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
         return $this->process->isTerminated();
     }
 
-    public function start(int $pipelineNumber)
+    public function start(int $pipelineNumber): void
     {
         $this->reset();
         $env = $this->process->getEnv();

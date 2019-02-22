@@ -72,7 +72,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     /**
      * {@inheritdoc}
      */
-    public function start(int $pipeline)
+    public function start(int $pipelineNumber): void
     {
         $this->reset();
     }

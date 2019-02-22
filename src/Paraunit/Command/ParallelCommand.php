@@ -58,7 +58,7 @@ class ParallelCommand extends Command
         $this->configuration = $configuration;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('run');
         $this->setDescription('Run all the requested tests in parallel');
