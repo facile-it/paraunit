@@ -12,9 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProcessPrinter implements EventSubscriberInterface
 {
-    const MAX_CHAR_LENGTH = 80;
+    public const MAX_CHAR_LENGTH = 80;
 
-    const COUNTER_CHAR_LENGTH = 5;
+    private const COUNTER_CHAR_LENGTH = 5;
 
     /** @var SingleResultFormatter */
     private $singleResultFormatter;

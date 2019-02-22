@@ -6,7 +6,7 @@ namespace Paraunit\Configuration;
 
 class PHPUnitConfig
 {
-    const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
+    public const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
 
     /** @var string */
     private $configFilename;

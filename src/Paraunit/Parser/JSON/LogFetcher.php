@@ -9,7 +9,7 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class LogFetcher
 {
-    const LOG_ENDING_STATUS = 'paraunitEnd';
+    public const LOG_ENDING_STATUS = 'paraunitEnd';
 
     /** @var TempFilenameFactory */
     private $fileName;

@@ -23,19 +23,19 @@ use PHPUnit\Util;
  */
 class LogPrinter extends Util\Printer implements TestListener
 {
-    const STATUS_ERROR = 'error';
+    public const STATUS_ERROR = 'error';
 
-    const STATUS_WARNING = 'warning';
+    public const STATUS_WARNING = 'warning';
 
-    const STATUS_FAIL = 'fail';
+    public const STATUS_FAIL = 'fail';
 
-    const STATUS_PASS = 'pass';
+    public const STATUS_PASS = 'pass';
 
-    const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
+    public const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
 
-    const MESSAGE_RISKY_TEST = 'Risky Test: ';
+    public const MESSAGE_RISKY_TEST = 'Risky Test: ';
 
-    const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
+    public const MESSAGE_SKIPPED_TEST = 'Skipped Test: ';
 
     /** @var resource */
     private $logFile;

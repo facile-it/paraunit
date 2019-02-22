@@ -15,7 +15,7 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
 
 class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
-    const STOPWATCH_NAME = 'engine';
+    private const STOPWATCH_NAME = 'engine';
 
     /** @var Stopwatch */
     private $stopWatch;

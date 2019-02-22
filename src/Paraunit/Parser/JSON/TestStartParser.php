@@ -10,7 +10,7 @@ use Paraunit\TestResult\NullTestResult;
 
 class TestStartParser implements ParserChainElementInterface
 {
-    const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
+    private const UNKNOWN_FUNCTION = 'UNKNOWN -- log not found';
 
     /** @var AbstractParaunitProcess */
     private $lastProcess;
