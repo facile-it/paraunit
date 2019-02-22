@@ -45,9 +45,6 @@ class ProcessPrinter implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @throws \BadMethodCallException
-     */
     public function onProcessCompleted(ProcessEvent $processEvent): void
     {
         $process = $processEvent->getProcess();

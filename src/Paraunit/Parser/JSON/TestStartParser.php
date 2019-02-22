@@ -37,10 +37,7 @@ class TestStartParser implements ParserChainElementInterface
         return null;
     }
 
-    /**
-     * @return null|NullTestResult
-     */
-    private function handleLogTermination(AbstractParaunitProcess $process, \stdClass $logItem)
+    private function handleLogTermination(AbstractParaunitProcess $process, \stdClass $logItem): ?NullTestResult
     {
         if ($process->isWaitingForTestResult()) {
             $this->injectLastFunctionInEndingLog($process, $logItem);

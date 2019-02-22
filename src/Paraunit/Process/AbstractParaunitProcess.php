@@ -30,9 +30,6 @@ abstract class AbstractParaunitProcess
     /** @var bool */
     private $waitingForTestResult;
 
-    /**
-     * @throws \InvalidArgumentException
-     */
     public function __construct(string $filename)
     {
         $this->filename = $filename;
