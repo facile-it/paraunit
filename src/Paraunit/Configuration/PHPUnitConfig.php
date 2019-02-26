@@ -66,12 +66,7 @@ class PHPUnitConfig
         }
 
         if (is_dir($configFile)) {
-            $configFileFallback = $configFile . DIRECTORY_SEPARATOR . self::FALLBACK_CONFIG_FILE_NAME;
-            $configFile .= DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME;
-
-            if (! file_exists($configFile)) {
-                $configFile = $configFileFallback;
-            }
+            $configFile .= DIRECTORY_SEPARATOR . $this->getConfigFile($configFile);
         }
 
         if (! is_file($configFile) || ! is_readable($configFile)) {
@@ -79,5 +74,14 @@ class PHPUnitConfig
         }
 
         return $configFile;
+    }
+
+    private function getConfigFile(string $path): string
+    {
+        if (file_exists($path . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME)) {
+            return self::DEFAULT_FILE_NAME;
+        }
+
+        return self::FALLBACK_CONFIG_FILE_NAME;
     }
 }
