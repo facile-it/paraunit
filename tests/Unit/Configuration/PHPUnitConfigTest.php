@@ -48,7 +48,6 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         new PHPUnitConfig($dir);
     }
 
-
     public function testGetFileFullPathWithFileDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
