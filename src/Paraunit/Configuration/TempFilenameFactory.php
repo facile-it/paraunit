@@ -33,7 +33,7 @@ class TempFilenameFactory
 
     public function getFilenameForConfiguration(): string
     {
-        return $this->getTempFilename('config', 'phpunit', 'xml.dist');
+        return $this->getTempFilename('config', 'phpunit', 'xml');
     }
 
     private function getTempFilename(string $subDir, string $filename, string $extension): string

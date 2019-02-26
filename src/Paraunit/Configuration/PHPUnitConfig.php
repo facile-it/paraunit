@@ -6,7 +6,8 @@ namespace Paraunit\Configuration;
 
 class PHPUnitConfig
 {
-    const DEFAULT_FILE_NAME = 'phpunit.xml.dist';
+    public const DEFAULT_FILE_NAME = 'phpunit.xml';
+    public const FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
 
     /** @var string */
     private $configFilename;
@@ -64,7 +65,13 @@ class PHPUnitConfig
         }
 
         if (is_dir($configFile)) {
+            $configFileFallback = $configFile. DIRECTORY_SEPARATOR . self::FALLBACK_CONFIG_FILE_NAME;
             $configFile .= DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME;
+
+            if (!file_exists($configFile)) {
+                $configFile = $configFileFallback;
+            }
+
         }
 
         if (! is_file($configFile) || ! is_readable($configFile)) {
