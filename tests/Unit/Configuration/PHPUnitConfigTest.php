@@ -29,11 +29,30 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $this->assertEquals($configurationFile, $config->getFileFullPath());
     }
 
+    public function testGetFileFullPathWithMissConfigDefault(): void
+    {
+        $dir = $this->getStubPath() . 'StubbedXMLConfigs' . DIRECTORY_SEPARATOR . 'MissDefault';
+        $config = new PHPUnitConfig($dir);
+
+        $configurationFile = $dir . DIRECTORY_SEPARATOR . 'phpunit.xml.dist';
+        $this->assertEquals($configurationFile, $config->getFileFullPath());
+    }
+
+    public function testGetFileFullPathWithMissConfigDefaultAndFallBack(): void
+    {
+        $dir = $this->getStubPath() . 'StubbedXMLConfigs' . DIRECTORY_SEPARATOR . 'MissDefaultAndFallback';
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
+
+        new PHPUnitConfig($dir);
+    }
+
     public function testGetFileFullPathWithFileDoesNotExistWillThrowException()
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(PHPUnitConfig::DEFAULT_FILE_NAME . ' does not exist');
+        $this->expectExceptionMessage(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
 
         new PHPUnitConfig($dir);
     }
