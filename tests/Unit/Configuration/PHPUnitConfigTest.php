@@ -31,7 +31,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
 
     public function testGetFileFullPathWithMissConfigDefault(): void
     {
-        $dir = $this->getStubPath() . 'StubbedXMLConfigs/MissDefault';
+        $dir = $this->getStubPath() . 'StubbedXMLConfigs' . DIRECTORY_SEPARATOR . 'MissDefault';
         $config = new PHPUnitConfig($dir);
 
         $configurationFile = $dir . DIRECTORY_SEPARATOR . 'phpunit.xml.dist';
@@ -40,7 +40,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
 
     public function testGetFileFullPathWithMissConfigDefaultAndFallBack(): void
     {
-        $dir = $this->getStubPath() . 'StubbedXMLConfigs/MissDefaultAndFallback';
+        $dir = $this->getStubPath() . 'StubbedXMLConfigs' . DIRECTORY_SEPARATOR . 'MissDefaultAndFallback';
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
