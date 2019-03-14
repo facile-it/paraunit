@@ -112,7 +112,7 @@ class ParallelCommand extends Command
     {
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());
-            if ($cliOption) {
+            if (is_string($cliOption)) {
                 $option->setValue($cliOption);
                 $config->addPhpunitOption($option);
             }
