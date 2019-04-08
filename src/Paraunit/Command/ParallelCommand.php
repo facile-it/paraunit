@@ -58,7 +58,7 @@ class ParallelCommand extends Command
             new PHPUnitOption('printer'),
 
             new PHPUnitOption('do-not-cache-result', false),
-            
+
             new PHPUnitOption('prepend'),
             new PHPUnitOption('bootstrap'),
             new PHPUnitOption('no-configuration', false),
