@@ -16,7 +16,7 @@ use Tests\BaseUnitTestCase;
 
 class ParallelCommandTest extends BaseUnitTestCase
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
 
