@@ -9,7 +9,7 @@ use Tests\BaseUnitTestCase;
 
 class PHPUnitConfigTest extends BaseUnitTestCase
 {
-    public function testGetBaseDirectoryIsNotLazy()
+    public function testGetBaseDirectoryIsNotLazy(): void
     {
         $config = new PHPUnitConfig('');
 
@@ -19,7 +19,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $this->assertNotEquals('C:\\', $directoryPath);
     }
 
-    public function testGetFileFullPathWithDirAndUseDefaultFileName()
+    public function testGetFileFullPathWithDirAndUseDefaultFileName(): void
     {
         $dir = $this->getStubPath() . 'StubbedXMLConfigs';
         $configurationFile = $dir . DIRECTORY_SEPARATOR . 'phpunit.xml.dist';
@@ -48,7 +48,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         new PHPUnitConfig($dir);
     }
 
-    public function testGetFileFullPathWithFileDoesNotExistWillThrowException()
+    public function testGetFileFullPathWithFileDoesNotExistWillThrowException(): void
     {
         $dir = $this->getStubPath() . 'PHPUnitJSONLogOutput';
         $this->expectException(\InvalidArgumentException::class);
@@ -57,7 +57,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         new PHPUnitConfig($dir);
     }
 
-    public function testGetFileFullPathWithPathDoesNotExistWillThrowException()
+    public function testGetFileFullPathWithPathDoesNotExistWillThrowException(): void
     {
         $dir = $this->getStubPath() . 'foobar';
         $this->expectException(\InvalidArgumentException::class);

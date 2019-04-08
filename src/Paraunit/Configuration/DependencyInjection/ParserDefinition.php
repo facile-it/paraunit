@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParserDefinition
 {
-    public function configure(ContainerBuilder $container)
+    public function configure(ContainerBuilder $container): void
     {
         $logParser = new Definition(LogParser::class, [
             new Reference(LogFetcher::class),

@@ -21,7 +21,7 @@ class FakeDriverTest extends TestCase
         $driver->$method();
     }
 
-    public function methodNameProvider()
+    public function methodNameProvider(): \Generator
     {
         yield ['start'];
         yield ['stop'];

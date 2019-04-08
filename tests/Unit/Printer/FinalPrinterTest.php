@@ -14,7 +14,7 @@ use Tests\Stub\UnformattedOutputStub;
 
 class FinalPrinterTest extends BaseUnitTestCase
 {
-    public function testOnEngineEndPrintsTheRightCountSummary()
+    public function testOnEngineEndPrintsTheRightCountSummary(): void
     {
         ClockMock::register(Stopwatch::class);
         ClockMock::register(__CLASS__);
@@ -55,7 +55,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $this->assertContains('Executed: 5 test classes (1 retried), 44 tests', $output->getOutput());
     }
 
-    public function testOnEngineEndHandlesEmptyMessagesCorrectly()
+    public function testOnEngineEndHandlesEmptyMessagesCorrectly(): void
     {
         $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()

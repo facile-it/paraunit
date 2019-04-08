@@ -10,7 +10,7 @@ use Tests\BaseUnitTestCase;
 
 class Crap4jTest extends BaseUnitTestCase
 {
-    public function testWriteToFile()
+    public function testWriteToFile(): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'crap4j.xml');
         $text = new Crap4j($targetFile);

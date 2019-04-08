@@ -15,7 +15,7 @@ use Tests\BaseUnitTestCase;
 
 class TestResultFactoryTest extends BaseUnitTestCase
 {
-    public function testCreateFromLogMuteWithoutTestName()
+    public function testCreateFromLogMuteWithoutTestName(): void
     {
         $log = new \stdClass();
         $log->event = 'test';
@@ -27,7 +27,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertInstanceOf(TestResultFormat::class, $result->getTestResultFormat());
     }
 
-    public function testCreateFromLogMute()
+    public function testCreateFromLogMute(): void
     {
         $log = new \stdClass();
         $log->test = 'testFunction()';
@@ -40,7 +40,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertInstanceOf(TestResultFormat::class, $result->getTestResultFormat());
     }
 
-    public function testCreateFromLogWithMessage()
+    public function testCreateFromLogWithMessage(): void
     {
         $log = $this->getLogFromStub('test', 'error');
         unset($log->trace);
@@ -54,7 +54,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertEquals($log->test, $result->getFunctionName());
     }
 
-    public function testCreateFromLogWithTrace()
+    public function testCreateFromLogWithTrace(): void
     {
         $log = $this->getLogWithTrace();
 
@@ -68,7 +68,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertSame($log->trace, $result->getTrace());
     }
 
-    public function testCreateFromLogWithAbnormalTermination()
+    public function testCreateFromLogWithAbnormalTermination(): void
     {
         $log = $this->getLogFromStub();
         $log->status = LogFetcher::LOG_ENDING_STATUS;

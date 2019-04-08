@@ -22,9 +22,6 @@ class ParallelCommand extends Command
     /** @var PHPUnitOption[] */
     private $phpunitOptions;
 
-    /**
-     * @throws \Symfony\Component\Console\Exception\LogicException
-     */
     public function __construct(ParallelConfiguration $configuration)
     {
         $this->phpunitOptions = [
@@ -61,7 +58,7 @@ class ParallelCommand extends Command
         $this->configuration = $configuration;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('run');
         $this->setDescription('Run all the requested tests in parallel');
@@ -83,10 +80,8 @@ class ParallelCommand extends Command
 
     /**
      * @throws \Exception
-     *
-     * @return int|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $container = $this->configuration->buildContainer($input, $output);
 

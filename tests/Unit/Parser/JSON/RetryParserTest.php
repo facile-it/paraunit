@@ -21,7 +21,7 @@ class RetryParserTest extends BaseUnitTestCase
     /**
      * @dataProvider toBeRetriedTestsProvider
      */
-    public function testParseAndSetRetry(string $testOutput)
+    public function testParseAndSetRetry(string $testOutput): void
     {
         $log = $this->getLogFromStub('test', 'error', $testOutput);
 
@@ -35,7 +35,7 @@ class RetryParserTest extends BaseUnitTestCase
     /**
      * @dataProvider notToBeRetriedTestLogsProvider
      */
-    public function testParseAndContinueWithNoRetry(string $jsonLogs)
+    public function testParseAndContinueWithNoRetry(string $jsonLogs): void
     {
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(false), 3);
@@ -44,7 +44,7 @@ class RetryParserTest extends BaseUnitTestCase
         $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
     }
 
-    public function testParseAndContinueWithNoRetryAfterLimit()
+    public function testParseAndContinueWithNoRetryAfterLimit(): void
     {
         $process = new StubbedParaunitProcess();
         $log = $this->getLogFromStub('test', 'error', EntityManagerClosedTestStub::OUTPUT);

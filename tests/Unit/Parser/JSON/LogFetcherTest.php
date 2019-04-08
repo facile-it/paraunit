@@ -11,7 +11,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class LogFetcherTest extends BaseUnitTestCase
 {
-    public function testFetchAppendsLogEndingAnywayWithMissingLog()
+    public function testFetchAppendsLogEndingAnywayWithMissingLog(): void
     {
         $process = new StubbedParaunitProcess();
 
@@ -33,7 +33,7 @@ class LogFetcherTest extends BaseUnitTestCase
         $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->status);
     }
 
-    public function testFetch()
+    public function testFetch(): void
     {
         $process = new StubbedParaunitProcess();
         $filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testfile.json';

@@ -13,12 +13,12 @@ class LogPrinterTest extends BaseFunctionalTestCase
 {
     protected function setup(): void
     {
-        parent::setUp();
+        parent::setup();
 
         $this->createRandomTmpDir();
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $testName = __CLASS__;
         $testSuite = $this->prophesize(TestSuite::class);

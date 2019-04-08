@@ -16,7 +16,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class CommandLineWithCoverageTest extends BaseUnitTestCase
 {
-    public function testGetExecutableWithoutDbg()
+    public function testGetExecutableWithoutDbg(): void
     {
         $phpDbg = $this->prophesize(PHPDbgBinFile::class);
         $phpDbg->isAvailable()
@@ -35,7 +35,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
     }
 
-    public function testGetExecutableWithDbg()
+    public function testGetExecutableWithDbg(): void
     {
         $phpDbg = $this->prophesize(PHPDbgBinFile::class);
         $phpDbg->isAvailable()
@@ -54,7 +54,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertEquals(['/path/to/phpdbg'], $cli->getExecutable());
     }
 
-    public function testGetOptionsForWithoutDbg()
+    public function testGetOptionsForWithoutDbg(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
@@ -85,7 +85,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertContains('--optVal=value', $options);
     }
 
-    public function testGetOptionsForWithDbg()
+    public function testGetOptionsForWithDbg(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getFileFullPath()
@@ -114,7 +114,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertContains('--opt', $options);
     }
 
-    public function testGetSpecificOptions()
+    public function testGetSpecificOptions(): void
     {
         $testFilename = 'TestTest.php';
         $process = new StubbedParaunitProcess($testFilename);

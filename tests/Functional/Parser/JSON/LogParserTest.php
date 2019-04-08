@@ -17,7 +17,7 @@ class LogParserTest extends BaseFunctionalTestCase
     /**
      * @dataProvider parsableResultsProvider
      */
-    public function testParse(string $stubLog, string $expectedResult, bool $hasAbnormalTermination = false)
+    public function testParse(string $stubLog, string $expectedResult, bool $hasAbnormalTermination = false): void
     {
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
@@ -47,9 +47,6 @@ class LogParserTest extends BaseFunctionalTestCase
         }
     }
 
-    /**
-     * @return (bool|string)[][]
-     */
     public function parsableResultsProvider(): array
     {
         return [
@@ -67,7 +64,7 @@ class LogParserTest extends BaseFunctionalTestCase
         ];
     }
 
-    public function testParseHandlesMissingLogsAsAbnormalTerminations()
+    public function testParseHandlesMissingLogsAsAbnormalTerminations(): void
     {
         /** @var LogParser $parser */
         $parser = $this->getService(LogParser::class);

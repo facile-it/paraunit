@@ -9,7 +9,7 @@ use Tests\BaseUnitTestCase;
 
 class OutputFileTest extends BaseUnitTestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $outputFile = new OutputFile('sub/dir/from/relfile.xml');
 
@@ -20,7 +20,7 @@ class OutputFileTest extends BaseUnitTestCase
     /**
      * @dataProvider emptyFilesProvider
      */
-    public function testIsEmpty($emptyFile)
+    public function testIsEmpty($emptyFile): void
     {
         $outputFile = new OutputFile($emptyFile);
 

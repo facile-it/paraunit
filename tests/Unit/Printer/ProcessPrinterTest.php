@@ -15,7 +15,7 @@ use Tests\Stub\UnformattedOutputStub;
 
 class ProcessPrinterTest extends BaseUnitTestCase
 {
-    public function testOnProcessParsingCompletedGoesToFormatting()
+    public function testOnProcessParsingCompletedGoesToFormatting(): void
     {
         $testResult = $this->mockPrintableTestResult();
         $process = new StubbedParaunitProcess();
@@ -34,7 +34,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $this->assertEquals('<ok>.</ok>', $output->getOutput());
     }
 
-    public function testOnEngineEnd()
+    public function testOnEngineEnd(): void
     {
         $formatter = $this->prophesize(SingleResultFormatter::class);
         $output = new UnformattedOutputStub();
@@ -50,7 +50,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     /**
      * @dataProvider newLineTimesProvider
      */
-    public function testOnProcessParsingCompletedAddsCounterAndNewlineAtFullRow(int $times, int $newLineTimes)
+    public function testOnProcessParsingCompletedAddsCounterAndNewlineAtFullRow(int $times, int $newLineTimes): void
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < $times; ++$i) {
@@ -90,7 +90,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         ];
     }
 
-    public function testOnProcessParsingCompletedAndOnEngineEndWorkWellTogether()
+    public function testOnProcessParsingCompletedAndOnEngineEndWorkWellTogether(): void
     {
         $process = new StubbedParaunitProcess();
         for ($i = 0; $i < 100; ++$i) {

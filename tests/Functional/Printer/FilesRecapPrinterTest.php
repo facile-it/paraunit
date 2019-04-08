@@ -12,7 +12,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class FilesRecapPrinterTest extends BaseFunctionalTestCase
 {
-    public function testOnEngineEndPrintsInTheRightOrder()
+    public function testOnEngineEndPrintsInTheRightOrder(): void
     {
         $process = new StubbedParaunitProcess();
 
@@ -44,7 +44,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         ]);
     }
 
-    private function addProcessToContainers(AbstractParaunitProcess $process)
+    private function addProcessToContainers(AbstractParaunitProcess $process): void
     {
         /** @var TestResultContainer $noTestExecuted */
         $noTestExecuted = $this->getService('paraunit.test_result.no_test_executed_container');

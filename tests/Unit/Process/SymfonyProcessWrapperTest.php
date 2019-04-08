@@ -12,7 +12,7 @@ use Tests\BaseUnitTestCase;
 
 class SymfonyProcessWrapperTest extends BaseUnitTestCase
 {
-    public function testGetUniqueId()
+    public function testGetUniqueId(): void
     {
         $process = new SymfonyProcessWrapper($this->mockProcess(), 'Test.php');
 
@@ -20,7 +20,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $this->assertEquals(md5('Test.php'), $process->getUniqueId());
     }
 
-    public function testStart()
+    public function testStart(): void
     {
         $process = $this->prophesize(Process::class);
         $process->start()
@@ -41,7 +41,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $processWrapper->start(4);
     }
 
-    public function testAddTestResultShouldResetExpectingFlag()
+    public function testAddTestResultShouldResetExpectingFlag(): void
     {
         $process = new SymfonyProcessWrapper($this->mockProcess(), 'Test.php');
         $process->setWaitingForTestResult(true);

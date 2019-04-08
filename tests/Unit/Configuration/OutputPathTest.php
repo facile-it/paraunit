@@ -9,14 +9,14 @@ use Tests\BaseUnitTestCase;
 
 class OutputPathTest extends BaseUnitTestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $outputPath = new OutputPath('sub/dir/from/relpath');
 
         $this->assertEquals('sub/dir/from/relpath', $outputPath->getPath());
     }
 
-    public function testWithEmptyString()
+    public function testWithEmptyString(): void
     {
         $this->expectException(\Throwable::class);
 

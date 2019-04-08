@@ -34,12 +34,12 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         $this->exitCode = 0;
     }
 
-    public function setFilename(string $filename)
+    public function setFilename(string $filename): void
     {
         $this->filename = $filename;
     }
 
-    public function setIsToBeRetried(bool $isToBeRetried)
+    public function setIsToBeRetried(bool $isToBeRetried): void
     {
         $this->shouldBeRetried = $isToBeRetried;
     }
@@ -49,12 +49,12 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         return $this->commandLine;
     }
 
-    public function setOutput(string $output)
+    public function setOutput(string $output): void
     {
         $this->output = $output;
     }
 
-    public function setExitCode(int $exitCode)
+    public function setExitCode(int $exitCode): void
     {
         $this->exitCode = $exitCode;
     }
@@ -72,7 +72,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     /**
      * {@inheritdoc}
      */
-    public function start(int $pipeline)
+    public function start(int $pipelineNumber): void
     {
         $this->reset();
     }

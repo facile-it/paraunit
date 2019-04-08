@@ -30,9 +30,6 @@ abstract class AbstractParaunitProcess
     /** @var bool */
     private $waitingForTestResult;
 
-    /**
-     * @throws \InvalidArgumentException
-     */
     public function __construct(string $filename)
     {
         $this->filename = $filename;
@@ -50,7 +47,7 @@ abstract class AbstractParaunitProcess
 
     abstract public function getExitCode(): ?int;
 
-    abstract public function start(int $pipelineNumber);
+    abstract public function start(int $pipelineNumber): void;
 
     public function getUniqueId(): string
     {

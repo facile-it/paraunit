@@ -8,7 +8,7 @@ abstract class BaseFunctionalTestCase extends BaseIntegrationTestCase
 {
     protected function setup(): void
     {
-        parent::setUp();
+        parent::setup();
 
         $this->loadContainer();
     }

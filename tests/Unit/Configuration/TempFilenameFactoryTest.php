@@ -11,7 +11,7 @@ use Tests\BaseUnitTestCase;
 
 class TempFilenameFactoryTest extends BaseUnitTestCase
 {
-    public function testGetPathForLog()
+    public function testGetPathForLog(): void
     {
         $tempDir = new TempDirectory();
         $tempFileNameFactory = new TempFilenameFactory($tempDir);
@@ -26,7 +26,7 @@ class TempFilenameFactoryTest extends BaseUnitTestCase
         $this->assertEquals($expected, $pathForLog);
     }
 
-    public function testGetFilenameForLog()
+    public function testGetFilenameForLog(): void
     {
         $processUniqueId = 'asdasdasdasd';
         $tempDir = new TempDirectory();
@@ -45,7 +45,7 @@ class TempFilenameFactoryTest extends BaseUnitTestCase
         $this->assertStringStartsWith($tempFileNameFactory->getPathForLog(), $filenameForLog);
     }
 
-    public function testGetFilenameForCoverage()
+    public function testGetFilenameForCoverage(): void
     {
         $processUniqueId = 'asdasdasdasd';
         $tempDir = new TempDirectory();
@@ -63,7 +63,7 @@ class TempFilenameFactoryTest extends BaseUnitTestCase
         $this->assertEquals($expected, $filenameForCoverage);
     }
 
-    public function testGetFilenameForConfiguration()
+    public function testGetFilenameForConfiguration(): void
     {
         $tempDir = new TempDirectory();
         $tempFileNameFactory = new TempFilenameFactory($tempDir);

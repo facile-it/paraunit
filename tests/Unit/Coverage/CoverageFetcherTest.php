@@ -7,13 +7,12 @@ namespace Tests\Unit\Coverage;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 class CoverageFetcherTest extends BaseUnitTestCase
 {
-    public function testFetch()
+    public function testFetch(): void
     {
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
 
@@ -33,12 +32,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertNotEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }
 
-    public function testFetchIgnoresMissingCoverageFiles()
+    public function testFetchIgnoresMissingCoverageFiles(): void
     {
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
 
@@ -54,11 +52,10 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertEmpty($result->getData());
     }
 
-    public function testFetchIgnoresWrongFiles()
+    public function testFetchIgnoresWrongFiles(): void
     {
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
 
@@ -78,7 +75,6 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertInstanceOf(CodeCoverage::class, $result);
         $this->assertEmpty($result->getData());
         $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
     }

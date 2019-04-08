@@ -10,7 +10,7 @@ use Tests\BaseUnitTestCase;
 
 class HtmlTest extends BaseUnitTestCase
 {
-    public function testWriteToDir()
+    public function testWriteToDir(): void
     {
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'html');
         $text = new Html($targetPath);

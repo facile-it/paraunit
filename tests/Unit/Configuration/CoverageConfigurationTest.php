@@ -35,7 +35,7 @@ use Tests\BaseUnitTestCase;
 
 class CoverageConfigurationTest extends BaseUnitTestCase
 {
-    public function testBuildContainer()
+    public function testBuildContainer(): void
     {
         $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -54,8 +54,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
-
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
         $requiredParameters = [
             'paraunit.max_process_count' => 10,
@@ -89,12 +87,12 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         ];
 
         foreach ($requiredDefinitions as $definitionName) {
-            // test instantiation, to prevent misconfigurations
+            // test instantiation, to prevent misconfiguration
             $this->getService($container, $definitionName);
         }
     }
 
-    public function testBuildContainerWithDebug()
+    public function testBuildContainerWithDebug(): void
     {
         $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -110,9 +108,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
-
-        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfigurations
+        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfiguration
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
@@ -120,7 +116,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     /**
      * @dataProvider cliOptionsProvider
      */
-    public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass)
+    public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass): void
     {
         $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -156,8 +152,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
-
         $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
@@ -181,7 +175,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         ];
     }
 
-    public function testBuildContainerWithColoredTextToConsoleCoverage()
+    public function testBuildContainerWithColoredTextToConsoleCoverage(): void
     {
         $paraunit = new CoverageConfiguration(true);
         $input = $this->prophesize(InputInterface::class);
@@ -223,8 +217,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn(false);
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
-
-        $this->assertInstanceOf(ContainerBuilder::class, $container);
 
         $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);

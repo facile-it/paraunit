@@ -18,9 +18,6 @@ class PHPUnitOption
     /** @var bool */
     private $hasValue;
 
-    /**
-     * @param string | null $shortName
-     */
     public function __construct(string $name, bool $hasValue = true, string $shortName = null)
     {
         $this->name = $name;
