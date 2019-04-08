@@ -69,6 +69,12 @@
         "cs-fix": "php -n bin/php-cs-fixer fix"
     },
     "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1-dev",
+            "dev-0.12.x": "0.12-dev"
+        }
+    },
     "suggest": {
         "dama/doctrine-test-bundle": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
     }
