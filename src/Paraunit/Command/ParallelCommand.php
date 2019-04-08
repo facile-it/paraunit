@@ -25,6 +25,10 @@ class ParallelCommand extends Command
     public function __construct(ParallelConfiguration $configuration)
     {
         $this->phpunitOptions = [
+            new PHPUnitOption('whitelist'),
+            new PHPUnitOption('disable-coverage-ignore', false),
+            new PHPUnitOption('no-coverage', false),
+
             new PHPUnitOption('filter'),
             new PHPUnitOption('testsuite'),
             new PHPUnitOption('group'),
@@ -39,6 +43,9 @@ class ParallelCommand extends Command
             new PHPUnitOption('enforce-time-limit', false),
             new PHPUnitOption('disallow-todo-tests', false),
 
+            new PHPUnitOption('fail-on-warning', false),
+            new PHPUnitOption('fail-on-risky', false),
+
             new PHPUnitOption('process-isolation', false),
             new PHPUnitOption('globals-backup', false),
             new PHPUnitOption('static-backup', false),
@@ -47,10 +54,13 @@ class ParallelCommand extends Command
             new PHPUnitOption('repeat'),
             new PHPUnitOption('printer'),
 
+            new PHPUnitOption('do-not-cache-result', false),
+
+            new PHPUnitOption('prepend'),
             new PHPUnitOption('bootstrap'),
-            new PHPUnitOption('no-configuration'),
-            new PHPUnitOption('no-coverage'),
-            new PHPUnitOption('no-extensions'),
+            new PHPUnitOption('no-configuration', false),
+            new PHPUnitOption('no-logging', false),
+            new PHPUnitOption('no-extensions', false),
             new PHPUnitOption('include-path'),
         ];
 
