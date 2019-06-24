@@ -10,7 +10,7 @@ class PHPUnitBinFile
     private const PHPUNIT_REALPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
 
     // I'm using Paraunit standalone (developing)
-    private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../../vendor/phpunit/phpunit/phpunit';
+    private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../vendor/phpunit/phpunit/phpunit';
 
     /** @var string Realpath to PHPUnit bin location */
     private $phpUnitBin;
