@@ -82,12 +82,16 @@ class ParallelContainerDefinition
 
     private function configureEventDispatcher(ContainerBuilder $container): void
     {
-        if (! class_exists(LegacyEventDispatcherProxy::class)) {
-            $forwardCompat = new Definition(ForwardCompatEventDispatcher::class);
-            $forwardCompat->setDecoratedService(EventDispatcherInterface::class);
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = new Definition(EventDispatcher::class);
+        } else {
+            $eventDispatcher = new Definition(ForwardCompatEventDispatcher::class);
+            $eventDispatcher->setArguments([
+                new Definition(EventDispatcher::class),
+            ]);
         }
 
-        $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
+        $container->setDefinition(EventDispatcherInterface::class, $eventDispatcher);
 
         $container->addCompilerPass(
             new RegisterListenersPass(

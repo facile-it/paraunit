@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Lifecycle;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -17,10 +18,14 @@ class ForwardCompatEventDispatcher implements EventDispatcherInterface
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function dispatch($event)
+    public function dispatch($event, Event $dummyEventArgument = null)
     {
-        if (! is_object($event)) {
+        if (! \is_object($event)) {
             throw new \InvalidArgumentException('Expecting object event, got ' . \gettype($event));
+        }
+
+        if (null !== $dummyEventArgument) {
+            throw new \InvalidArgumentException('Expecting no object event, got ' . \gettype($dummyEventArgument));
         }
 
         $this->eventDispatcher->dispatch(\get_class($event), $event);
