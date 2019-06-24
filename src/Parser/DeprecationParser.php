@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultWithMessage;
@@ -23,11 +23,11 @@ class DeprecationParser implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'handleDeprecations',
+            ProcessParsingCompleted::class => 'handleDeprecations',
         ];
     }
 
-    public function handleDeprecations(ProcessEvent $event): void
+    public function handleDeprecations(ProcessParsingCompleted $event): void
     {
         $process = $event->getProcess();
 

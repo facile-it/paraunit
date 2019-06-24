@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessStarted;
+use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Process\AbstractParaunitProcess;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -34,7 +35,7 @@ class Pipeline
         $this->process = $process;
         $this->process->start($this->number);
 
-        $this->dispatcher->dispatch(ProcessEvent::PROCESS_STARTED, new ProcessEvent($this->process));
+        $this->dispatcher->dispatch(new ProcessStarted($this->process));
     }
 
     public function isFree(): bool
@@ -74,7 +75,7 @@ class Pipeline
     private function handleProcessTermination(): void
     {
         if ($this->process) {
-            $this->dispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, new ProcessEvent($this->process));
+            $this->dispatcher->dispatch(new ProcessTerminated($this->process));
             $this->process = null;
         }
     }

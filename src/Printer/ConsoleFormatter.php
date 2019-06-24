@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\BeforeEngineStart;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -13,7 +13,7 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::BEFORE_START => 'onEngineBeforeStart',
+            BeforeEngineStart::class => 'onEngineBeforeStart',
         ];
     }
 

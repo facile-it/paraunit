@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Paraunit\Runner;
 
 use Paraunit\Filter\Filter;
-use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\BeforeEngineStart;
+use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\EngineStart;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\ProcessFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -48,9 +52,9 @@ class Runner implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_TERMINATED => 'pushToPipeline',
-            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+            ProcessTerminated::class => 'pushToPipeline',
+            ProcessToBeRetried::class => 'onProcessToBeRetried',
+            ProcessParsingCompleted::class => 'onProcessParsingCompleted',
         ];
     }
 
@@ -59,11 +63,11 @@ class Runner implements EventSubscriberInterface
      */
     public function run(): int
     {
-        $this->eventDispatcher->dispatch(EngineEvent::BEFORE_START);
+        $this->eventDispatcher->dispatch(new BeforeEngineStart());
 
         $this->createProcessQueue();
 
-        $this->eventDispatcher->dispatch(EngineEvent::START);
+        $this->eventDispatcher->dispatch(new EngineStart());
 
         do {
             $this->pushToPipeline();
@@ -71,19 +75,19 @@ class Runner implements EventSubscriberInterface
             $this->pipelineCollection->triggerProcessTermination();
         } while (! $this->pipelineCollection->isEmpty() || ! $this->queuedProcesses->isEmpty());
 
-        $this->eventDispatcher->dispatch(EngineEvent::END);
+        $this->eventDispatcher->dispatch(new EngineEnd());
 
         return $this->exitCode;
     }
 
-    public function onProcessParsingCompleted(ProcessEvent $processEvent): void
+    public function onProcessParsingCompleted(ProcessParsingCompleted $processEvent): void
     {
         if ($processEvent->getProcess()->getExitCode() !== 0) {
             $this->exitCode = 10;
         }
     }
 
-    public function onProcessToBeRetried(ProcessEvent $processEvent): void
+    public function onProcessToBeRetried(ProcessToBeRetried $processEvent): void
     {
         $this->queuedProcesses->enqueue($processEvent->getProcess());
     }

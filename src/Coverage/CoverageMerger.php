@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Coverage;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Process\AbstractParaunitProcess;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,11 +25,11 @@ class CoverageMerger implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessParsingCompleted',
+            ProcessParsingCompleted::class => 'onProcessParsingCompleted',
         ];
     }
 
-    public function onProcessParsingCompleted(ProcessEvent $processEvent): void
+    public function onProcessParsingCompleted(ProcessParsingCompleted $processEvent): void
     {
         $process = $processEvent->getProcess();
         if ($process->isToBeRetried()) {

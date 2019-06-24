@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessStarted;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
@@ -12,14 +15,14 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_STARTED => 'onProcessStarted',
-            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
-            ProcessEvent::PROCESS_PARSING_COMPLETED => ['onProcessParsingCompleted', 1],
-            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
+            ProcessStarted::class => 'onProcessStarted',
+            ProcessTerminated::class => 'onProcessTerminated',
+            ProcessParsingCompleted::class => ['onProcessParsingCompleted', 1],
+            ProcessToBeRetried::class => 'onProcessToBeRetried',
         ];
     }
 
-    public function onProcessStarted(ProcessEvent $event): void
+    public function onProcessStarted(ProcessStarted $event): void
     {
         $process = $event->getProcess();
 
@@ -28,7 +31,7 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         $this->getOutput()->writeln('');
     }
 
-    public function onProcessTerminated(ProcessEvent $event): void
+    public function onProcessTerminated(ProcessTerminated $event): void
     {
         $process = $event->getProcess();
 
@@ -43,7 +46,7 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
         $this->getOutput()->write('PROCESS PARSING COMPLETED -- RESULTS: ');
     }
 
-    public function onProcessToBeRetried(ProcessEvent $event): void
+    public function onProcessToBeRetried(ProcessToBeRetried $event): void
     {
         $process = $event->getProcess();
 

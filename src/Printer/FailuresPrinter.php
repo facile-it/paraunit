@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
@@ -16,7 +16,7 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::END => ['onEngineEnd', 200],
+            EngineEnd::class => ['onEngineEnd', 200],
         ];
     }
 

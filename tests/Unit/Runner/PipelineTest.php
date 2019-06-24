@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Runner;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessStarted;
+use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Runner\Pipeline;
 use Prophecy\Argument;
@@ -16,7 +17,7 @@ class PipelineTest extends BaseUnitTestCase
     public function testExecute(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+        $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
@@ -30,7 +31,7 @@ class PipelineTest extends BaseUnitTestCase
     public function testExecuteWithOccupiedPipeline(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+        $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
@@ -45,7 +46,7 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsFree(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
+        $eventDispatcher->dispatch(Argument::type(ProcessTerminated::class))
             ->shouldNotBeCalled();
 
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
@@ -57,7 +58,7 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsTerminated(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+        $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start(5)
@@ -92,7 +93,7 @@ class PipelineTest extends BaseUnitTestCase
         $this->assertFalse($pipeline->isFree(), 'Pipeline is marked free during execution of process');
         $this->assertTrue($pipeline->triggerTermination(), 'I was expecting a termination of the process in the pipeline');
 
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
+        $eventDispatcher->dispatch(Argument::type(ProcessTerminated::class))
             ->shouldHaveBeenCalledTimes(1);
 
         $this->assertTrue($pipeline->isFree(), 'Pipeline is marked as not free after termination of process');
@@ -101,9 +102,9 @@ class PipelineTest extends BaseUnitTestCase
     public function testIsTerminatedFalse(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_STARTED, Argument::type(ProcessEvent::class))
+        $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
-        $eventDispatcher->dispatch(ProcessEvent::PROCESS_TERMINATED, Argument::cetera())
+        $eventDispatcher->dispatch(Argument::type(ProcessTerminated::class))
             ->shouldNotBeCalled();
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start(5)

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -13,7 +13,7 @@ class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberI
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::END => ['onEngineEnd', 100],
+            EngineEnd::class => ['onEngineEnd', 100],
         ];
     }
 

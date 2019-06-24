@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\EngineStart;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,10 +40,10 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::START => 'onEngineStart',
-            EngineEvent::END => ['onEngineEnd', 300],
-            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
-            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessToBeRetried',
+            EngineStart::class => 'onEngineStart',
+            EngineEnd::class => ['onEngineEnd', 300],
+            ProcessTerminated::class => 'onProcessTerminated',
+            ProcessToBeRetried::class => 'onProcessToBeRetried',
         ];
     }
 

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\File;
 
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\BeforeEngineStart;
+use Paraunit\Lifecycle\EngineEnd;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Cleaner implements EventSubscriberInterface
@@ -20,8 +21,8 @@ class Cleaner implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::BEFORE_START => 'purgeCurrentTempDir',
-            EngineEvent::END => 'purgeCurrentTempDir',
+            BeforeEngineStart::class => 'purgeCurrentTempDir',
+            EngineEnd::class => 'purgeCurrentTempDir',
         ];
     }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -31,7 +31,7 @@ class CoveragePrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::BEFORE_START => ['onEngineBeforeStart', 100],
+            BeforeEngineStart::class => ['onEngineBeforeStart', 100],
         ];
     }
 

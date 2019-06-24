@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\AbstractProcessEvent;
+use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -39,13 +41,13 @@ class ProcessPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_PARSING_COMPLETED => 'onProcessCompleted',
-            ProcessEvent::PROCESS_TO_BE_RETRIED => 'onProcessCompleted',
-            EngineEvent::END => ['onEngineEnd', 400],
+            ProcessParsingCompleted::class => 'onProcessCompleted',
+            ProcessToBeRetried::class => 'onProcessCompleted',
+            EngineEnd::class => ['onEngineEnd', 400],
         ];
     }
 
-    public function onProcessCompleted(ProcessEvent $processEvent): void
+    public function onProcessCompleted(AbstractProcessEvent $processEvent): void
     {
         $process = $processEvent->getProcess();
 

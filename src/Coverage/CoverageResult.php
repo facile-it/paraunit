@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
-use Paraunit\Lifecycle\EngineEvent;
+use Paraunit\Lifecycle\EngineEnd;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CoverageResult implements EventSubscriberInterface
@@ -25,7 +25,7 @@ class CoverageResult implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            EngineEvent::END => 'generateResults',
+            EngineEnd::class => 'generateResults',
         ];
     }
 

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
@@ -44,7 +46,7 @@ class LogParser implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessEvent::PROCESS_TERMINATED => 'onProcessTerminated',
+            ProcessTerminated::class => 'onProcessTerminated',
         ];
     }
 
@@ -61,7 +63,7 @@ class LogParser implements EventSubscriberInterface
         return $this->parsers;
     }
 
-    public function onProcessTerminated(ProcessEvent $processEvent): void
+    public function onProcessTerminated(ProcessTerminated $processEvent): void
     {
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
@@ -73,7 +75,7 @@ class LogParser implements EventSubscriberInterface
         }
 
         if ($this->retryParser->processWillBeRetried($process, $logs)) {
-            $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_TO_BE_RETRIED, new ProcessEvent($process));
+            $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
 
             return;
         }
@@ -82,7 +84,7 @@ class LogParser implements EventSubscriberInterface
             $this->processLog($process, $singleLog);
         }
 
-        $this->eventDispatcher->dispatch(ProcessEvent::PROCESS_PARSING_COMPLETED, new ProcessEvent($process));
+        $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 
     private function processLog(AbstractParaunitProcess $process, \stdClass $logItem): void
