@@ -11,6 +11,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Filter\Filter;
+use Paraunit\Lifecycle\ForwardCompatEventDispatcher;
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
@@ -34,6 +35,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 class ParallelContainerDefinition
 {
@@ -80,6 +82,11 @@ class ParallelContainerDefinition
 
     private function configureEventDispatcher(ContainerBuilder $container): void
     {
+        if (! class_exists(LegacyEventDispatcherProxy::class)) {
+            $forwardCompat = new Definition(ForwardCompatEventDispatcher::class);
+            $forwardCompat->setDecoratedService(EventDispatcherInterface::class);
+        }
+
         $container->setDefinition(EventDispatcherInterface::class, new Definition(EventDispatcher::class));
 
         $container->addCompilerPass(
