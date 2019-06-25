@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Parser\JSON;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
@@ -25,7 +25,7 @@ class LogParserTest extends BaseFunctionalTestCase
         /** @var LogParser $parser */
         $parser = $this->getService(LogParser::class);
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
 
         $results = $process->getTestResults();
         $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
@@ -71,7 +71,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
         $process->setExitCode(139);
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
 
         $results = $process->getTestResults();
         $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);

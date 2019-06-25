@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessStarted;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Printer\DebugPrinter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
@@ -20,10 +23,15 @@ class DebugPrinterTest extends BaseUnitTestCase
             DebugPrinter::class . ' is not an EventSubscriber!'
         );
 
-        $reflectionClass = new \ReflectionClass(ProcessEvent::class);
         $subscribedEvents = array_keys(DebugPrinter::getSubscribedEvents());
+        $processEvents = [
+            ProcessParsingCompleted::class,
+            ProcessStarted::class,
+            ProcessTerminated::class,
+            ProcessToBeRetried::class,
+        ];
 
-        foreach ($reflectionClass->getConstants() as $eventName) {
+        foreach ($processEvents as $eventName) {
             $this->assertContains($eventName, $subscribedEvents, 'Not subscribed to event ' . $eventName);
         }
     }
@@ -34,7 +42,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $printer = new DebugPrinter($output);
         $process = new StubbedParaunitProcess();
 
-        $printer->onProcessStarted(new ProcessEvent($process));
+        $printer->onProcessStarted(new ProcessStarted($process));
 
         $this->assertContains('PROCESS STARTED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());
@@ -48,7 +56,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->setTestClassName('Some\Class\Name');
 
-        $printer->onProcessTerminated(new ProcessEvent($process));
+        $printer->onProcessTerminated(new ProcessTerminated($process));
 
         $this->assertContains('PROCESS TERMINATED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());
@@ -72,7 +80,7 @@ class DebugPrinterTest extends BaseUnitTestCase
         $printer = new DebugPrinter($output);
         $process = new StubbedParaunitProcess();
 
-        $printer->onProcessToBeRetried(new ProcessEvent($process));
+        $printer->onProcessToBeRetried(new ProcessToBeRetried($process));
 
         $this->assertContains('PROCESS TO BE RETRIED', $output->getOutput());
         $this->assertContains($process->getFilename(), $output->getOutput());

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
@@ -38,7 +40,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser->addParser($parser2->reveal());
         $parser->addParser($parser3->reveal());
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
     public function testParseHandlesMissingLogs(): void
@@ -58,7 +60,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser->addParser($parser1->reveal());
         $parser->addParser($parser2->reveal());
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
     public function testParseHandlesNoTestExecuted(): void
@@ -73,7 +75,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser = $this->createParser(false, false, true);
         $parser->addParser($parser1->reveal());
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
     public function testParseHandlesTestToBeRetried(): void
@@ -88,7 +90,7 @@ class LogParserTest extends BaseUnitTestCase
         $parser = $this->createParser(true, false, false, true);
         $parser->addParser($parser1->reveal());
 
-        $parser->onProcessTerminated(new ProcessEvent($process));
+        $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
     private function createParser(bool $logFound = true, bool $abnormal = true, bool $noTestExecuted = false, bool $willBeRetried = false): LogParser
@@ -112,21 +114,16 @@ class LogParserTest extends BaseUnitTestCase
             ->shouldBeCalledTimes((int) $noTestExecuted);
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch('OtherEvents')
-            ->shouldNotBeCalled();
 
         if ($willBeRetried) {
-            $eventDispatcher->dispatch(
-                ProcessEvent::PROCESS_TO_BE_RETRIED,
-                Argument::type(ProcessEvent::class)
-            )
+            $eventDispatcher->dispatch(Argument::type(ProcessToBeRetried::class))
                 ->shouldBeCalledTimes(1);
         } elseif (! $noTestExecuted) {
-            $eventDispatcher->dispatch(
-                ProcessEvent::PROCESS_PARSING_COMPLETED,
-                Argument::type(ProcessEvent::class)
-            )
+            $eventDispatcher->dispatch(Argument::type(ProcessParsingCompleted::class))
                 ->shouldBeCalledTimes(1);
+        } else {
+            $eventDispatcher->dispatch(Argument::any())
+                ->shouldNotBeCalled();
         }
 
         $retryParser = $this->prophesize(RetryParser::class);

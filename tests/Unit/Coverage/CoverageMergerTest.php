@@ -6,7 +6,7 @@ namespace Tests\Unit\Coverage;
 
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\Coverage\CoverageMerger;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -35,7 +35,7 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $merger = new CoverageMerger($fetcher->reveal());
 
-        $merger->onProcessParsingCompleted(new ProcessEvent($process));
+        $merger->onProcessParsingCompleted(new ProcessParsingCompleted($process));
 
         $this->assertSame($newCoverageData, $merger->getCoverageData());
     }
@@ -59,11 +59,11 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $merger = new CoverageMerger($fetcher->reveal());
 
-        $merger->onProcessParsingCompleted(new ProcessEvent($process1));
+        $merger->onProcessParsingCompleted(new ProcessParsingCompleted($process1));
 
         $this->assertSame($coverageData1, $merger->getCoverageData());
 
-        $merger->onProcessParsingCompleted(new ProcessEvent($process2));
+        $merger->onProcessParsingCompleted(new ProcessParsingCompleted($process2));
 
         $this->assertSame($coverageData1, $merger->getCoverageData());
         $this->assertSame([__CLASS__], $merger->getCoverageData()->getTests());

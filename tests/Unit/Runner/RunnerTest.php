@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Tests\Unit\Runner;
 
 use Paraunit\Filter\Filter;
-use Paraunit\Lifecycle\EngineEvent;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\BeforeEngineStart;
+use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\EngineStart;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Pipeline;
@@ -95,7 +98,7 @@ class RunnerTest extends BaseUnitTestCase
             $pipelineCollection->reveal()
         );
 
-        $runner->onProcessParsingCompleted(new ProcessEvent($process));
+        $runner->onProcessParsingCompleted(new ProcessParsingCompleted($process));
     }
 
     public function testOnProcessToBeRetried(): void
@@ -122,19 +125,19 @@ class RunnerTest extends BaseUnitTestCase
             $pipelineCollection->reveal()
         );
 
-        $runner->onProcessToBeRetried(new ProcessEvent($process));
+        $runner->onProcessToBeRetried(new ProcessToBeRetried($process));
     }
 
     private function mockEventDispatcher(): EventDispatcherInterface
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher->dispatch(EngineEvent::BEFORE_START, Argument::cetera())
+        $eventDispatcher->dispatch(Argument::type(BeforeEngineStart::class))
             ->shouldBeCalledTimes(1)
             ->will(function () use ($eventDispatcher) {
-                $eventDispatcher->dispatch(EngineEvent::START, Argument::cetera())
+                $eventDispatcher->dispatch(Argument::type(EngineStart::class))
                     ->shouldBeCalledTimes(1)
                     ->will(function () use ($eventDispatcher) {
-                        $eventDispatcher->dispatch(EngineEvent::END, Argument::cetera())
+                        $eventDispatcher->dispatch(Argument::type(EngineEnd::class))
                             ->shouldBeCalledTimes(1);
                     });
             });

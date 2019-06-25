@@ -8,7 +8,7 @@ use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
-use Paraunit\Lifecycle\ProcessEvent;
+use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Parser\JSON\LogParser;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -116,7 +116,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         ];
 
         $process = new StubbedParaunitProcess();
-        $processEvent = new ProcessEvent($process);
+        $processEvent = new ProcessTerminated($process);
 
         foreach ($logsToBeProcessed as $logName) {
             $process->setFilename($logName . '.php');
