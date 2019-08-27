@@ -5,6 +5,3 @@ parameters:
     excludes_analyse:
         - tests/Stub/ParseErrorTestStub.php
         - src/Lifecycle/ForwardCompatEventDispatcher.php
-includes:
-	- vendor/phpstan/phpstan-phpunit/extension.neon
-	- vendor/jangregor/phpstan-prophecy/src/extension.neon

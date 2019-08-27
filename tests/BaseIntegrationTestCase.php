@@ -130,11 +130,17 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      */
     public function getService(string $serviceName)
     {
-        if ($this->container) {
-            return $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+        if (! $this->container) {
+            throw new \RuntimeException('Container not ready');
         }
 
-        throw new \RuntimeException('Container not ready');
+        $service = $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+
+        if (! $service) {
+            throw new \RuntimeException('Service not found: ' . $serviceName);
+        }
+
+        return $service;
     }
 
     public function getParameter(string $parameterName)
