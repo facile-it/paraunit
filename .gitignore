@@ -9,3 +9,4 @@ public
 vendor
 build/
 swiftmailer/
+.idea/
