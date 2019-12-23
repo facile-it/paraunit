@@ -40,7 +40,10 @@ class ProcessFactory implements ProcessFactoryInterface
             $this->environmentVariables
         );
 
-        $process->inheritEnvironmentVariables();
+        if (class_exists(Symfony\Component\Process\ProcessBuilder::class)) {
+            // Symfony 3.4 BC layer
+            $process->inheritEnvironmentVariables();
+        }
 
         return new SymfonyProcessWrapper($process, $testFilePath);
     }
