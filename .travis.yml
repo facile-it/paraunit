@@ -22,8 +22,11 @@ jobs:
   include:
     - stage: Test
       env: XDEBUG=true
-    - env: VENDOR=prefer-lowest
+    - name: Prefer lowest
       php: 7.1
+      env:
+        VENDOR: prefer-lowest
+        SYMFONY_DEPRECATIONS_HELPER: disabled
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - env: VENDOR=lock
       php: 7.2
