@@ -7,7 +7,9 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
+use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessUtils;
 
 class ProcessFactory implements ProcessFactoryInterface
 {
@@ -40,7 +42,7 @@ class ProcessFactory implements ProcessFactoryInterface
             $this->environmentVariables
         );
 
-        if (class_exists(\Symfony\Component\Process\ProcessBuilder::class)) {
+        if (method_exists(ProcessUtils::class, 'escapeArgument')) {
             // Symfony 3.4 BC layer
             $process->inheritEnvironmentVariables();
         }
