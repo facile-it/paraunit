@@ -7,7 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
-use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessUtils;
 
