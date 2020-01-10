@@ -110,8 +110,12 @@ class ParallelCommand extends Command
         foreach ($this->phpunitOptions as $option) {
             $cliOption = $input->getOption($option->getName());
 
+            if (\is_bool($cliOption)) {
+                $cliOption = null;
+            }
+
             if (null !== $cliOption && ! \is_string($cliOption)) {
-                throw new \InvalidArgumentException('Invalid option format for CLI option ' . $option->getName());
+                throw new \InvalidArgumentException('Invalid option format for CLI option ' . $option->getName() . ': ' . gettype($cliOption));
             }
 
             if ($this->setOptionValue($option, $cliOption)) {
@@ -122,7 +126,7 @@ class ParallelCommand extends Command
         return $config;
     }
 
-    private function setOptionValue(PHPUnitOption $option, ?string $cliOption): bool
+    private function setOptionValue(PHPUnitOption $option, $cliOption): bool
     {
         if (! $cliOption) {
             return false;
