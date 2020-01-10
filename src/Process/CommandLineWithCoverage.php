@@ -44,6 +44,8 @@ class CommandLineWithCoverage extends CommandLine
 
     /**
      * @throws \RuntimeException
+     *
+     * @return string[]
      */
     public function getOptions(PHPUnitConfig $config): array
     {

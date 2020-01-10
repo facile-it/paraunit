@@ -32,21 +32,13 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     /** @var string[] */
     private $options;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct($name = null, array $data = [], $dataName = '')
+    protected function setup(): void
     {
-        parent::__construct($name, $data, $dataName);
+        parent::setUp();
 
         $this->configuration = new ParallelConfiguration(true);
         $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
-    }
-
-    protected function setup(): void
-    {
-        parent::setUp();
 
         $this->cleanUpTempDirForThisExecution();
     }
@@ -79,6 +71,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
+    /**
+     * @param string[] $strings
+     */
     protected function assertOutputOrder(UnformattedOutputStub $output, array $strings): void
     {
         $previousPosition = 0;
@@ -143,6 +138,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $service;
     }
 
+    /**
+     * @return int|string
+     */
     public function getParameter(string $parameterName)
     {
         if ($this->container) {

@@ -34,6 +34,9 @@ class UnknownResultParserTest extends BaseUnitTestCase
         $this->assertNotNull($parser->handleLogItem(new StubbedParaunitProcess(), $log));
     }
 
+    /**
+     * @return string[][]
+     */
     public function statusesProvider(): array
     {
         return [

@@ -18,6 +18,9 @@ class Cleaner implements EventSubscriberInterface
         $this->tempDirectory = $tempDirectory;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

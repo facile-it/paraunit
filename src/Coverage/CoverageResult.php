@@ -22,6 +22,9 @@ class CoverageResult implements EventSubscriberInterface
         $this->coverageProcessors = [];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

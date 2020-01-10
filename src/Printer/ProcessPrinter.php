@@ -38,6 +38,9 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->singleRowCounter = 0;
     }
 
+    /**
+     * @return array<string, string|(string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

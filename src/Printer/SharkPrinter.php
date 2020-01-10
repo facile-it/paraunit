@@ -21,6 +21,9 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
         $this->showLogo = $showLogo;
     }
 
+    /**
+     * @return array<string, (string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

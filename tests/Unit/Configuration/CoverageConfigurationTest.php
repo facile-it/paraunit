@@ -162,6 +162,9 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $this->assertInstanceOf($processorClass, $processors[0]);
     }
 
+    /**
+     * @return string[][]
+     */
     public function cliOptionsProvider(): array
     {
         return [

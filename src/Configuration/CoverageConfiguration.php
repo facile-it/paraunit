@@ -44,6 +44,9 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->addFileProcessor($coverageResult, $input, Php::class);
     }
 
+    /**
+     * @param mixed[] $dependencies
+     */
     private function addProcessor(Definition $coverageResult, string $processorClass, array $dependencies): void
     {
         $coverageResult->addMethodCall('addCoverageProcessor', [new Definition($processorClass, $dependencies)]);

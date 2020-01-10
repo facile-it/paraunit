@@ -49,6 +49,9 @@ class Runner implements EventSubscriberInterface
         $this->exitCode = 0;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

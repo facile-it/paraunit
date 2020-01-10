@@ -72,7 +72,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
         return $this->prophesize(TestResultInterface::class)->reveal();
     }
 
-    protected function mockPrintableTestResult($symbol = null): PrintableTestResultInterface
+    protected function mockPrintableTestResult(string $symbol = null): PrintableTestResultInterface
     {
         if ($symbol === null) {
             $format = $this->prophesize(TestResultFormat::class);

@@ -264,6 +264,9 @@ class LogPrinterTest extends BaseUnitTestCase
         return $parsedOutput;
     }
 
+    /**
+     * @param (string|int)[][] $data
+     */
     private function encodeWithStartTestSuite(array $data = []): string
     {
         $logElements = [$this->getStartTestSuiteLog()];
@@ -279,6 +282,9 @@ class LogPrinterTest extends BaseUnitTestCase
         return $result;
     }
 
+    /**
+     * @return (string|int)[]
+     */
     private function getStartTestSuiteLog(): array
     {
         return [

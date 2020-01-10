@@ -10,7 +10,7 @@ use Paraunit\TestResult\TestResultWithSymbolFormat;
 
 class SingleResultFormatter
 {
-    /** @var array */
+    /** @var array<string, string> */
     private $tagMap;
 
     public function __construct(TestResultList $testResultList)

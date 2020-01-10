@@ -46,6 +46,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $this->executeRunner());
 
         $retryCount = $this->getParameter('paraunit.max_retry_count');
+        $this->assertIsInt($retryCount);
         $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
         $this->assertOutputOrder($output, [
             'Errors output',

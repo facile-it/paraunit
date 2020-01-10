@@ -1,8 +1,29 @@
 parameters:
     ignoreErrors:
-        - '/does not call parent constructor from PHPUnit\\Util\\Printer/'
-        - '/Call to function method_exists.. with .Tests..BaseTestCase. and .assertStringContain.... will always evaluate to false./'
-        - '/Call to function method_exists.. with .Symfony..Component.+ and .escapeArgument. will always evaluate to false./'
+        - "#no value type specified in iterable type PHPUnit\\\\Framework\\\\TestSuite\\.$#"
+        - "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process\\.$#"
+        -
+            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\ParallelConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
+            count: 1
+            path: tests/Unit/Configuration/ParallelConfigurationTest.php
+        -
+            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\CoverageConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
+            count: 1
+            path: tests/Unit/Configuration/CoverageConfigurationTest.php
+        -
+            message: "#^Method Tests\\\\BaseTestCase\\:\\:assertContains\\(\\) has parameter \\$needle with no typehint specified\\.$#"
+            count: 1
+            path: tests/BaseTestCase.php
+        
+        -
+            message: "#^Method Tests\\\\BaseTestCase\\:\\:assertNotContains\\(\\) has parameter \\$needle with no typehint specified\\.$#"
+            count: 1
+            path: tests/BaseTestCase.php
+        
+        -
+            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\OutputFileTest\\:\\:testIsEmpty\\(\\) has parameter \\$emptyFile with no typehint specified\\.$#"
+            count: 1
+            path: tests/Unit/Configuration/OutputFileTest.php
     excludes_analyse:
-        - tests/Stub/ParseErrorTestStub.php
+        - tests/Stub/
         - src/Lifecycle/ForwardCompatEventDispatcher.php

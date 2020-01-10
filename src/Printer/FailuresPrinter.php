@@ -13,6 +13,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
+    /**
+     * @return array<string, (string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

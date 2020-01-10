@@ -30,6 +30,9 @@ class OutputFileTest extends BaseUnitTestCase
         $outputFile->getFilePath();
     }
 
+    /**
+     * @return mixed[][]
+     */
     public function emptyFilesProvider(): array
     {
         return [
