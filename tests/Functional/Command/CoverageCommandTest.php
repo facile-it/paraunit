@@ -114,7 +114,7 @@ class CoverageCommandTest extends BaseTestCase
     /**
      * @param array<string, string|null> $additionalArguments
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     private function prepareArguments(array $additionalArguments = []): array
     {

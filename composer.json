@@ -65,7 +65,7 @@
         }
     },
     "scripts": {
-        "phpstan": "phpstan analyse src tests -c phpstan.neon -l 7",
+        "phpstan": "phpstan analyse src tests -c phpstan.neon -l 8",
         "cs-check": "php -n bin/php-cs-fixer fix --dry-run --diff",
         "cs-fix": "php -n bin/php-cs-fixer fix"
     },
