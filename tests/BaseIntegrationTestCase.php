@@ -32,13 +32,21 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     /** @var string[] */
     private $options;
 
-    protected function setup(): void
+    /**
+     * @param mixed[] $data
+     */
+    public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        parent::setUp();
+        parent::__construct($name, $data, $dataName);
 
         $this->configuration = new ParallelConfiguration(true);
         $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
+    }
+
+    protected function setup(): void
+    {
+        parent::setUp();
 
         $this->cleanUpTempDirForThisExecution();
     }

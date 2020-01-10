@@ -126,7 +126,7 @@ class ParallelCommand extends Command
         return $config;
     }
 
-    private function setOptionValue(PHPUnitOption $option, $cliOption): bool
+    private function setOptionValue(PHPUnitOption $option, ?string $cliOption): bool
     {
         if (! $cliOption) {
             return false;
