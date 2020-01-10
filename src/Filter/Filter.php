@@ -59,8 +59,17 @@ class Filter
         $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
-        /** @var \DOMElement $testSuiteNode */
-        foreach ($xpath->query('testsuites/testsuite') as $testSuiteNode) {
+        $nodeList = $xpath->query('testsuites/testsuite');
+
+        if (! $nodeList) {
+            throw new \InvalidArgumentException('No testsuite found in the PHPUnit configuration in ' . $this->configFile->getFileFullPath());
+        }
+
+        foreach ($nodeList as $testSuiteNode) {
+            if (! $testSuiteNode instanceof \DOMElement) {
+                throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuiteNode));
+            }
+
             if ($this->testSuitePassFilter($testSuiteNode, $this->testSuiteFilter)) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
@@ -83,6 +92,8 @@ class Filter
     }
 
     /**
+     * @param string[] $aggregatedFiles
+     *
      * @return string[]
      */
     private function addTestsFromTestSuite(\DOMElement $testSuiteNode, array &$aggregatedFiles): array
@@ -141,6 +152,9 @@ class Filter
         }
     }
 
+    /**
+     * @param string[] $aggregatedFiles
+     */
     private function addFileToAggregateArray(array &$aggregatedFiles, string $fileName): void
     {
         // optimized array_unique
@@ -162,6 +176,8 @@ class Filter
     }
 
     /**
+     * @param string[] $aggregatedFiles
+     *
      * @return string[]
      */
     private function filterByString(array $aggregatedFiles, ?string $stringFilter): array

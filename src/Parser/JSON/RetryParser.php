@@ -37,6 +37,9 @@ class RetryParser
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
 
+    /**
+     * @param \stdClass[] $logs
+     */
     public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
     {
         if ($process->getRetryCount() >= $this->maxRetryCount) {

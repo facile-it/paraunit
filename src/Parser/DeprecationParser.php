@@ -20,6 +20,9 @@ class DeprecationParser implements EventSubscriberInterface
         $this->testResultContainer = $testResultContainer;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

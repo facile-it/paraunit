@@ -201,10 +201,9 @@ class LogPrinter extends Util\Printer implements TestListener
     }
 
     /**
-     * @param string $message
      * @param Test|TestCase|null $test
      */
-    private function writeCase(string $status, float $time, string $trace, $message = '', $test = null)
+    private function writeCase(string $status, float $time, string $trace, string $message = '', $test = null): void
     {
         $output = '';
         if ($test instanceof TestCase) {
@@ -224,9 +223,9 @@ class LogPrinter extends Util\Printer implements TestListener
     }
 
     /**
-     * @param array $buffer
+     * @param (mixed|string)[] $buffer
      */
-    private function writeArray($buffer)
+    private function writeArray($buffer): void
     {
         array_walk_recursive($buffer, function (&$input) {
             if (is_string($input)) {
@@ -237,10 +236,13 @@ class LogPrinter extends Util\Printer implements TestListener
         $this->writeToLog(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 
-    private function writeToLog($buffer)
+    /**
+     * @param string|false $buffer
+     */
+    private function writeToLog($buffer): void
     {
         // ignore everything that is not a JSON object
-        if ($buffer != '' && $buffer[0] === '{') {
+        if ($buffer && $buffer[0] === '{') {
             \fwrite($this->logFile, $buffer);
             \fflush($this->logFile);
         }
@@ -283,7 +285,7 @@ class LogPrinter extends Util\Printer implements TestListener
         return $logDirectory;
     }
 
-    private function convertToUtf8($string): string
+    private function convertToUtf8(string $string): string
     {
         if (! \mb_detect_encoding($string, 'UTF-8', true)) {
             return \mb_convert_encoding($string, 'UTF-8');
@@ -292,7 +294,7 @@ class LogPrinter extends Util\Printer implements TestListener
         return $string;
     }
 
-    private function getStackTrace($error): string
+    private function getStackTrace(\Throwable $error): string
     {
         return Util\Filter::getFilteredStacktrace($error);
     }

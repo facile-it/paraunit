@@ -12,6 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
+    /**
+     * @return array<string, string|(string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

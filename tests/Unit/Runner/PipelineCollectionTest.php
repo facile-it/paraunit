@@ -114,6 +114,9 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $this->assertSame($isPipeline1Empty || $isPipeline2Empty, $pipelineCollection->hasEmptySlots());
     }
 
+    /**
+     * @return bool[][]
+     */
     public function pipelineStateProvider(): array
     {
         return [

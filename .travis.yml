@@ -6,6 +6,7 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
+  - 7.4
   - 7.3
   - 7.2
   - 7.1
@@ -24,10 +25,8 @@ jobs:
       env: XDEBUG=true
     - name: Prefer lowest
       php: 7.1
-      env:
-        VENDOR: prefer-lowest
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
-    - env: VENDOR=lock
+    - name: Use composer.lock
       php: 7.2
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E

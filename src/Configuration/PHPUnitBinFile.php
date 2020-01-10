@@ -48,7 +48,7 @@ class PHPUnitBinFile
         return $this->phpUnitBin;
     }
 
-    private function setPhpUnitBin($phpUnitBin): void
+    private function setPhpUnitBin(string $phpUnitBin): void
     {
         $realpath = realpath($phpUnitBin);
         if (! $realpath) {

@@ -83,7 +83,7 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     private function addProcessOutputToResult(
         TestResultWithAbnormalTermination $result,
         AbstractParaunitProcess $process
-    ) {
+    ): void {
         $tag = $this->testResultFormat->getTag();
         $output = $process->getOutput() ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
         $result->setTestOutput($output);

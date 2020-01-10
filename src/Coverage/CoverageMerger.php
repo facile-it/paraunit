@@ -22,6 +22,9 @@ class CoverageMerger implements EventSubscriberInterface
         $this->coverageFetcher = $coverageFetcher;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

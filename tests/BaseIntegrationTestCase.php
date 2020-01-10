@@ -33,9 +33,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     private $options;
 
     /**
-     * {@inheritdoc}
+     * @param mixed[] $data
+     * @param string $dataName
      */
-    public function __construct($name = null, array $data = [], $dataName = '')
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
@@ -79,6 +80,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
+    /**
+     * @param string[] $strings
+     */
     protected function assertOutputOrder(UnformattedOutputStub $output, array $strings): void
     {
         $previousPosition = 0;
@@ -143,6 +147,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $service;
     }
 
+    /**
+     * @return int|string
+     */
     public function getParameter(string $parameterName)
     {
         if ($this->container) {

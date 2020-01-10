@@ -29,6 +29,8 @@ class CommandLine
 
     /**
      * @throws \RuntimeException When the config handling fails
+     *
+     * @return string[]
      */
     public function getOptions(PHPUnitConfig $config): array
     {

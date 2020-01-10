@@ -16,10 +16,10 @@ class FilterTest extends BaseUnitTestCase
     /** @var string */
     private $absoluteConfigBaseDir;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    protected function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
-        $this->absoluteConfigBaseDir = \dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
+        parent::setUp();
+        $this->absoluteConfigBaseDir = $this->absoluteConfigBaseDir ?? \dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
     }
 
     public function testFilterTestFilesGetsOnlyRequestedTestsuite(): void
@@ -224,7 +224,7 @@ class FilterTest extends BaseUnitTestCase
         return Xml::loadFile($filePath);
     }
 
-    private function mockPHPUnitConfig(string $configFile)
+    private function mockPHPUnitConfig(string $configFile): PHPUnitConfig
     {
         $this->assertFileExists($configFile, 'Mock not possible, config file to pass does not exist');
 

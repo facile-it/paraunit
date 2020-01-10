@@ -31,6 +31,7 @@ class TextTest extends BaseUnitTestCase
         $this->assertFileExists($targetFile->getFilePath());
         $content = file_get_contents($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
+        $this->assertNotFalse($content);
         $this->assertContains($expectedString, $content);
     }
 
@@ -48,6 +49,9 @@ class TextTest extends BaseUnitTestCase
         $text->process($this->createCodeCoverage());
     }
 
+    /**
+     * @return (bool|string)[][]
+     */
     public function colorProvider(): array
     {
         return [
