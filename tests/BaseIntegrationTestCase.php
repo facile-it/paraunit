@@ -34,7 +34,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     /**
      * @param mixed[] $data
-     * @param string|int $dataName
+     * @param string $dataName
      */
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {

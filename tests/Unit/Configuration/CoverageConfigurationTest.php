@@ -159,6 +159,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $processors = $property->getValue($coverageResult);
 
         $this->assertCount(1, $processors, 'Wrong count of coverage processors');
+        $this->assertTrue(class_exists($processorClass));
         $this->assertInstanceOf($processorClass, $processors[0]);
     }
 
