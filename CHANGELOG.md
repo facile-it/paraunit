@@ -16,6 +16,7 @@ First stable release. The following changes are in comparison to the previous, u
  * Scalar and return types added everywhere possible
 
 ### Added
+ * Add support for PHP 7.4
  * Add support for `phpunit/phpunit` 8 and `phpunit/php-code-coverage` 7 [#133](https://github.com/facile-it/paraunit/pull/133)
  * Add explicit requirement for `ext-dom` and `ext-json` [#134](https://github.com/facile-it/paraunit/pull/134)
 
@@ -23,6 +24,6 @@ First stable release. The following changes are in comparison to the previous, u
  * Do not set values on PHPUnit options that do not expect values [#127](https://github.com/facile-it/paraunit/pull/127), thanks @fullbl
 
 ### Changed
- * Update PHPStan to 0.11 [#128](https://github.com/facile-it/paraunit/pull/128)
+ * Update PHPStan to 0.12 [#128](https://github.com/facile-it/paraunit/pull/128), [#145](https://github.com/facile-it/paraunit/pull/145)
  * Update coding standard to 0.3 [#131](https://github.com/facile-it/paraunit/pull/131)
  * Disable Scrutinizer [#132](https://github.com/facile-it/paraunit/pull/132)
