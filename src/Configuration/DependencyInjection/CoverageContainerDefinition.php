@@ -14,6 +14,7 @@ use Paraunit\Coverage\CoverageResult;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Process\ProcessFactoryInterface;
+use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,6 +38,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
     {
         $container->setDefinition(PHPDbgBinFile::class, new Definition(PHPDbgBinFile::class));
         $container->setDefinition(XDebugProxy::class, new Definition(XDebugProxy::class));
+        $container->setDefinition(PcovProxy::class, new Definition(PcovProxy::class));
     }
 
     private function configureProcessWithCoverage(ContainerBuilder $container): void
