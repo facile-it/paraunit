@@ -30,12 +30,19 @@ jobs:
       php: 7.2
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
-      env: E2E=true
+      name: End2End with Pcov
+      env: XDEBUG=true
+      install: composer install --no-dev --no-interaction
+      script:
+        - pecl install pcov
+        - src/Bin/paraunit run FakeDriverTest
+        - src/Bin/paraunit coverage FakeDriverTest --text
+    - name: End2End with Xdebug
+      env: XDEBUG=true
       install: composer install --no-dev --no-interaction
       script: 
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
-        - src/Bin/paraunit coverage FakeDriverTest --text-summary
     - env: PHPSTAN=true
       script: composer phpstan
     - env: CS-FIXER=true
