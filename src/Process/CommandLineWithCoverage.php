@@ -47,6 +47,10 @@ class CommandLineWithCoverage extends CommandLine
      */
     public function getExecutable(): array
     {
+        if ($this->pcovProxy->isInstalled() && ! $this->pcovProxy->isEnabled()) {
+            return ['php', '-d pcov.enable=1', $this->phpUnitBin->getPhpUnitBin()];
+        }
+
         if ($this->xdebugOrPcovAreAvailable()) {
             return parent::getExecutable();
         }
