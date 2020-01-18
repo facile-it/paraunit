@@ -45,9 +45,12 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
     {
         $container->setDefinition(CommandLineWithCoverage::class, new Definition(CommandLineWithCoverage::class, [
             new Reference(PHPUnitBinFile::class),
+            new Reference(PcovProxy::class),
+            new Reference(XDebugProxy::class),
             new Reference(PHPDbgBinFile::class),
             new Reference(TempFilenameFactory::class),
         ]));
+
         $container->getDefinition(ProcessFactoryInterface::class)
             ->setArguments([
                 new Reference(CommandLineWithCoverage::class),
