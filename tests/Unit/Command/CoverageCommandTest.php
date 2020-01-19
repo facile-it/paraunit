@@ -60,6 +60,9 @@ class CoverageCommandTest extends BaseUnitTestCase
         $this->assertEquals(0, $exitCode);
     }
 
+    /**
+     * @return (string|bool)[][]
+     */
     public function validCoverageOptionsProvider(): array
     {
         return [

@@ -43,6 +43,9 @@ class LogParser implements EventSubscriberInterface
         $this->parsers = [];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -97,6 +100,9 @@ class LogParser implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param mixed[] $logs
+     */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
         return $process->getExitCode() === 0 && count($logs) === 1;

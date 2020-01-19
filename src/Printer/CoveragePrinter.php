@@ -28,6 +28,9 @@ class CoveragePrinter implements EventSubscriberInterface
         $this->output = $output;
     }
 
+    /**
+     * @return array<string, (string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

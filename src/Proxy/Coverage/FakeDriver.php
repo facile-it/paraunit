@@ -13,6 +13,9 @@ class FakeDriver implements Driver
         throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');
     }
 
+    /**
+     * @return mixed[]
+     */
     public function stop(): array
     {
         throw new \RuntimeException('This is a fake implementation, it shouldn\'t be used!');

@@ -7,7 +7,7 @@ namespace Paraunit\Configuration;
 class PHPUnitBinFile
 {
     // I'm using Paraunit as a vendor package
-    private const PHPUNIT_REALPATH_FOR_VENDOR = '/../../../../../phpunit/phpunit/phpunit';
+    private const PHPUNIT_REALPATH_FOR_VENDOR = '/../../../../phpunit/phpunit/phpunit';
 
     // I'm using Paraunit standalone (developing)
     private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../vendor/phpunit/phpunit/phpunit';
@@ -48,7 +48,7 @@ class PHPUnitBinFile
         return $this->phpUnitBin;
     }
 
-    private function setPhpUnitBin($phpUnitBin): void
+    private function setPhpUnitBin(string $phpUnitBin): void
     {
         $realpath = realpath($phpUnitBin);
         if (! $realpath) {

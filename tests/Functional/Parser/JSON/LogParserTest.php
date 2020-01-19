@@ -47,6 +47,9 @@ class LogParserTest extends BaseFunctionalTestCase
         }
     }
 
+    /**
+     * @return (string|bool)[][]
+     */
     public function parsableResultsProvider(): array
     {
         return [

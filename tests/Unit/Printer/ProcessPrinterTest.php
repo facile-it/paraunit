@@ -78,6 +78,9 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $printer->onProcessCompleted(new ProcessParsingCompleted($process));
     }
 
+    /**
+     * @return int[][]
+     */
     public function newLineTimesProvider(): array
     {
         return [

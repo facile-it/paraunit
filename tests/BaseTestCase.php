@@ -87,6 +87,8 @@ class BaseTestCase extends TestCase
     /**
      * BC compat method provided as a workaround for deprecations.
      * The newer methods are present only from PHPUnit 7.5.0 onwards
+     *
+     * @param string|array<mixed>|object|\Traversable<mixed> $haystack
      */
     public static function assertContains(
         $needle,
@@ -112,6 +114,8 @@ class BaseTestCase extends TestCase
     /**
      * BC compat method provided as a workaround for deprecations.
      * The newer methods are present only from PHPUnit 7.5.0 onwards
+     *
+     * @param string|array<mixed>|object|\Traversable<mixed> $haystack
      */
     public static function assertNotContains(
         $needle,

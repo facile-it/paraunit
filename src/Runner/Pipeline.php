@@ -35,7 +35,7 @@ class Pipeline
         $this->process = $process;
         $this->process->start($this->number);
 
-        $this->dispatcher->dispatch(new ProcessStarted($this->process));
+        $this->dispatcher->dispatch(new ProcessStarted($process));
     }
 
     public function isFree(): bool

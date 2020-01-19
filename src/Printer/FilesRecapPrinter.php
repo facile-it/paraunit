@@ -10,6 +10,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
+    /**
+     * @return array<string, (string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

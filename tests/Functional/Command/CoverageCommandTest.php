@@ -32,6 +32,7 @@ class CoverageCommandTest extends BaseTestCase
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
+        $this->assertNotFalse($fileContent);
         $this->assertContains('Coverage Report', $fileContent);
         $this->assertContains('StubbedParaunitProcess', $fileContent);
     }
@@ -70,6 +71,7 @@ class CoverageCommandTest extends BaseTestCase
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
+        $this->assertNotFalse($fileContent);
         $this->assertContains('Coverage Report', $fileContent);
         $this->assertNotContains('StubbedParaunitProcess', $fileContent);
     }
@@ -109,6 +111,11 @@ class CoverageCommandTest extends BaseTestCase
         return new CommandTester($command);
     }
 
+    /**
+     * @param array<string, string|null> $additionalArguments
+     *
+     * @return array<string, string|null>
+     */
     private function prepareArguments(array $additionalArguments = []): array
     {
         return array_merge([

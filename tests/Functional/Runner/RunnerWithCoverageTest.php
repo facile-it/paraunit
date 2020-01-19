@@ -13,15 +13,10 @@ use Tests\BaseIntegrationTestCase;
  */
 class RunnerWithCoverageTest extends BaseIntegrationTestCase
 {
-    public function __construct($name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-
-        $this->configuration = new CoverageConfiguration(true);
-    }
-
     public function testAllGreen(): void
     {
+        $this->configuration = new CoverageConfiguration(true);
+
         $this->setTextFilter('ThreeGreenTestStub.php');
         $this->loadContainer();
         /** @var Runner $runner */

@@ -37,6 +37,9 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         $this->processRetried = 0;
     }
 
+    /**
+     * @return array<string, string|(string|int)[]>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -37,6 +37,9 @@ class TestStartParserTest extends BaseUnitTestCase
         }
     }
 
+    /**
+     * @return (string|bool)[][]
+     */
     public function logsProvider(): array
     {
         return [

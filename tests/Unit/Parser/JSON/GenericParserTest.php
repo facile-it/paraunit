@@ -49,6 +49,9 @@ class GenericParserTest extends BaseUnitTestCase
         }
     }
 
+    /**
+     * @return (string|null|bool)[][]
+     */
     public function matchesProvider(): array
     {
         return [
