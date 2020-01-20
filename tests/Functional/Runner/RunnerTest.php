@@ -160,7 +160,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput();
 
-        if (strpos((string)phpversion(), '7.1') === 0) {
+        if (strpos((string) phpversion(), '7.1') === 0) {
             $this->assertEquals(0, $this->executeRunner());
         } else {
             $this->assertNotEquals(0, $this->executeRunner());

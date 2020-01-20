@@ -82,7 +82,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertContains(RaisingNoticeTestStub::class, $output);
         $this->assertContains(MissingProviderTestStub::class, $output);
         $this->assertContains(MySQLDeadLockTestStub::class, $output);
-        if (strpos((string)phpversion(), '7.1') !== 0) {
+        if (strpos((string) phpversion(), '7.1') !== 0) {
             $this->assertContains(SessionTestStub::class, $output);
         }
         $this->assertNotEquals(0, $exitCode);
