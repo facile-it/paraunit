@@ -40,6 +40,8 @@ abstract class AbstractParaunitProcess
     }
 
     abstract public function getOutput(): string;
+    
+    abstract public function getErrorOutput(): string;
 
     abstract public function isTerminated(): bool;
 

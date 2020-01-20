@@ -43,7 +43,8 @@ class PHPUnitConfig
 
     public function addPhpunitOption(PHPUnitOption $option): void
     {
-        $this->phpunitOptions[] = $option;
+        $name = $option->getName();
+        $this->phpunitOptions[$name] = $option;
     }
 
     /**
@@ -52,6 +53,14 @@ class PHPUnitConfig
     public function getPhpunitOptions(): array
     {
         return $this->phpunitOptions;
+    }
+
+    /**
+     * @return PHPUnitOption
+     */
+    public function getPhpunitOption(string $name): ?PHPUnitOption
+    {
+        return $this->phpunitOptions[$name] ?? null;
     }
 
     /**

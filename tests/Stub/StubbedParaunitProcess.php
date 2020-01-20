@@ -12,6 +12,9 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     private $output;
 
     /** @var string */
+    private $errorOutput;
+
+    /** @var string */
     private $commandLine;
 
     /** @var int */
@@ -54,6 +57,11 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
         $this->output = $output;
     }
 
+    public function setErrorOutput(string $errorOutput): void
+    {
+        $this->errorOutput = $errorOutput;
+    }
+
     public function setExitCode(int $exitCode): void
     {
         $this->exitCode = $exitCode;
@@ -62,6 +70,11 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
     public function getOutput(): string
     {
         return $this->output ?? '';
+    }
+
+    public function getErrorOutput(): string
+    {
+        return $this->errorOutput ?? '';
     }
 
     public function isTerminated(): bool

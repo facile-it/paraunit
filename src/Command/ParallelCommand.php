@@ -62,6 +62,7 @@ class ParallelCommand extends Command
             new PHPUnitOption('no-logging', false),
             new PHPUnitOption('no-extensions', false),
             new PHPUnitOption('include-path'),
+            new PHPUnitOption('stderr', false),
         ];
 
         parent::__construct();

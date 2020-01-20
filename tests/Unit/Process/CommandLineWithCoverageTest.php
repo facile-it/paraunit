@@ -57,6 +57,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     public function testGetOptionsForWithoutDbg(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')->willReturn(null);
         $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
         $optionWithValue = new PHPUnitOption('optVal');
         $optionWithValue->setValue('value');
@@ -88,6 +89,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     public function testGetOptionsForWithDbg(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')
+            ->willReturn(null);
         $config->getFileFullPath()
             ->willReturn('/path/to/phpunit.xml');
         $config->getPhpunitOptions()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
@@ -32,6 +33,7 @@ class TestResultDefinition
             $container->setDefinition($formatName, $format);
             $container->setDefinition($testResultContainerName, new Definition(TestResultContainer::class, [
                 new Reference($formatName),
+                new Reference(PHPUnitConfig::class)
             ]));
 
             $testResultList->addMethodCall('addContainer', [new Reference($testResultContainerName)]);
