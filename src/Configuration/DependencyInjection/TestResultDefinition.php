@@ -33,7 +33,7 @@ class TestResultDefinition
             $container->setDefinition($formatName, $format);
             $container->setDefinition($testResultContainerName, new Definition(TestResultContainer::class, [
                 new Reference($formatName),
-                new Reference(PHPUnitConfig::class)
+                new Reference(PHPUnitConfig::class),
             ]));
 
             $testResultList->addMethodCall('addContainer', [new Reference($testResultContainerName)]);
