@@ -160,20 +160,24 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $this->executeRunner());
+        if (strpos(phpversion(), '7.1') === 0) {
+            $this->assertEquals(0, $this->executeRunner());
+        } else {
+            $this->assertNotEquals(0, $this->executeRunner());
 
-        $this->assertContains('EEE', $output->getOutput());
-        $this->assertOutputOrder($output, [
-            'Errors output',
-            SessionTestStub::class . '::testOne',
-            'session_id(): Cannot change session id when headers already sent',
-            SessionTestStub::class . '::testTwo',
-            'session_id(): Cannot change session id when headers already sent',
-            SessionTestStub::class . '::testThree',
-            'session_id(): Cannot change session id when headers already sent',
-            'files with ERRORS',
-            'SessionTestStub',
-        ]);
+            $this->assertContains('EEE', $output->getOutput());
+            $this->assertOutputOrder($output, [
+                'Errors output',
+                SessionTestStub::class . '::testOne',
+                'headers already sent',
+                SessionTestStub::class . '::testTwo',
+                'headers already sent',
+                SessionTestStub::class . '::testThree',
+                'headers already sent',
+                'files with ERRORS',
+                'SessionTestStub',
+            ]);
+        }
 
         $this->assertContains('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
