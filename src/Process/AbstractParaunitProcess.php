@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
-abstract class AbstractParaunitProcess
+abstract class AbstractParaunitProcess extends AbstractInfo
 {
     /** @var int */
     protected $retryCount = 0;
@@ -38,16 +39,6 @@ abstract class AbstractParaunitProcess
         $this->waitingForTestResult = true;
         $this->shouldBeRetried = false;
     }
-
-    abstract public function getOutput(): string;
-
-    abstract public function getErrorOutput(): string;
-
-    abstract public function isTerminated(): bool;
-
-    abstract public function getCommandLine(): string;
-
-    abstract public function getExitCode(): ?int;
 
     abstract public function start(int $pipelineNumber): void;
 
