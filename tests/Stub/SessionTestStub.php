@@ -24,7 +24,7 @@ class SessionTestStub extends TestCase
 
     public function testTwo(): void
     {
-        $this->assertEquals(session_id(), self::SESSION_ID);
+        $this->assertEquals(self::SESSION_ID, session_id());
     }
 
     public function testThree(): void
