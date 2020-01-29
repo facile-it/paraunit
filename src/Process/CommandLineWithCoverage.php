@@ -47,11 +47,11 @@ class CommandLineWithCoverage extends CommandLine
      */
     public function getExecutable(): array
     {
-        if ($this->pcovProxy->isInstalled() && ! $this->pcovProxy->isEnabled()) {
+        if ($this->pcovProxy->isLoaded()) {
             return ['php', '-d pcov.enable=1', $this->phpUnitBin->getPhpUnitBin()];
         }
 
-        if ($this->xdebugOrPcovAreAvailable()) {
+        if ($this->xdebugProxy->isLoaded()) {
             return parent::getExecutable();
         }
 
@@ -69,7 +69,7 @@ class CommandLineWithCoverage extends CommandLine
      */
     public function getOptions(PHPUnitConfig $config): array
     {
-        if ($this->xdebugOrPcovAreAvailable()) {
+        if ($this->pcovProxy->isLoaded() || $this->xdebugProxy->isLoaded()) {
             return parent::getOptions($config);
         }
 
@@ -92,10 +92,5 @@ class CommandLineWithCoverage extends CommandLine
         $options[] = '--coverage-php=' . $this->filenameFactory->getFilenameForCoverage(md5($testFilename));
 
         return $options;
-    }
-
-    private function xdebugOrPcovAreAvailable(): bool
-    {
-        return $this->pcovProxy->isLoaded() || $this->xdebugProxy->isLoaded();
     }
 }

@@ -20,8 +20,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider extensionProxiesProvider
+     * @param string[] $expected
      */
-    public function testGetExecutableWithDriverByExtension(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy): void
+    public function testGetExecutableWithDriverByExtension(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy, array $expected): void
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()
@@ -37,7 +38,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $tempFileNameFactory->reveal()
         );
 
-        $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
+        $this->assertEquals($expected, $cli->getExecutable());
     }
 
     public function testGetExecutableWithDbg(): void
@@ -183,13 +184,13 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     }
 
     /**
-     * @return \Generator<(PcovProxy|XDebugProxy)[]>
+     * @return \Generator<array{PcovProxy, XDebugProxy, string[]}>
      */
     public function extensionProxiesProvider(): \Generator
     {
-        yield [$this->mockPcov(true), $this->mockXdebug(true)];
-        yield [$this->mockPcov(true), $this->mockXdebug(false)];
-        yield [$this->mockPcov(false), $this->mockXdebug(true)];
+        yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enable=1', 'path/to/phpunit']];
+        yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enable=1', 'path/to/phpunit']];
+        yield [$this->mockPcov(false), $this->mockXdebug(true), ['php', 'path/to/phpunit']];
     }
 
     private function mockPcov(bool $enabled): PcovProxy
