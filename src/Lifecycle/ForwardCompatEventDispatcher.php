@@ -17,7 +17,7 @@ class ForwardCompatEventDispatcher implements EventDispatcherInterface
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function dispatch($event, $dummyEventArgument = null)
+    public function dispatch($event, AbstractEvent $dummyEventArgument = null)
     {
         if (! \is_object($event)) {
             throw new \InvalidArgumentException('Expecting object event, got ' . \gettype($event));
