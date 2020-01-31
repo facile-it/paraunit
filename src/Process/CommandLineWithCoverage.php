@@ -6,7 +6,6 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
@@ -56,31 +55,11 @@ class CommandLineWithCoverage extends CommandLine
         }
 
         if ($this->phpDbgBinFile->isAvailable()) {
-            return [$this->phpDbgBinFile->getPhpDbgBin()];
-        }
-
-        throw new \RuntimeException('No coverage driver seems to be available; possible choices are Pcov, xdebug or PHPDBG');
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return string[]
-     */
-    public function getOptions(PHPUnitConfig $config): array
-    {
-        if ($this->pcovProxy->isLoaded() || $this->xdebugProxy->isLoaded()) {
-            return parent::getOptions($config);
-        }
-
-        if ($this->phpDbgBinFile->isAvailable()) {
-            return array_merge(
-                [
-                    '-qrr',
-                    $this->phpUnitBin->getPhpUnitBin(),
-                ],
-                parent::getOptions($config)
-            );
+            return [
+                $this->phpDbgBinFile->getPhpDbgBin(),
+                '-qrr',
+                $this->phpUnitBin->getPhpUnitBin(),
+            ];
         }
 
         throw new \RuntimeException('No coverage driver seems to be available; possible choices are Pcov, xdebug or PHPDBG');
