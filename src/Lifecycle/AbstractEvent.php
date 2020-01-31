@@ -6,10 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 if (class_exists(Event::class)) {
-    abstract class AbstractEvent extends Event
-    {
-
-    }
+    class_alias(Event::class, AbstractEvent::class);
 } else {
     abstract class AbstractEvent
     {
