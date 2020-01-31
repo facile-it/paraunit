@@ -188,8 +188,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
      */
     public function extensionProxiesProvider(): \Generator
     {
-        yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enable=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enable=1', 'path/to/phpunit']];
+        yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
+        yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
         yield [$this->mockPcov(false), $this->mockXdebug(true), ['php', 'path/to/phpunit']];
     }
 
