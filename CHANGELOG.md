@@ -11,9 +11,11 @@ First stable release. The following changes are in comparison to the previous, u
 ## [1.0.0-beta2] - TBA
 ### Added
  * Add support for PHP 7.4
+ * Add support for ext-pcov as a coverage driver [#146](https://github.com/facile-it/paraunit/pull/146)
 
 ### Changed
  * Update PHPStan to 0.12 [#145](https://github.com/facile-it/paraunit/pull/145)
+ * Prefer Pcov or Xdebug over PHPDBG as coverage driver [#146](https://github.com/facile-it/paraunit/pull/146)
 
 ## [1.0.0-beta1] - 2019-04-08
 ### Breaking changes
