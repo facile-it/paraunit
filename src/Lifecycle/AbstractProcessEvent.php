@@ -6,7 +6,7 @@ namespace Paraunit\Lifecycle;
 
 use Paraunit\Process\AbstractParaunitProcess;
 
-abstract class AbstractProcessEvent
+abstract class AbstractProcessEvent extends AbstractEvent
 {
     /** @var AbstractParaunitProcess */
     private $process;

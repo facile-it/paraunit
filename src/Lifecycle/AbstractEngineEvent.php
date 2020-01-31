@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Lifecycle;
 
-class AbstractEngineEvent
+class AbstractEngineEvent extends AbstractEvent
 {
 }
