@@ -32,9 +32,10 @@ jobs:
     - stage: Code style, static analysis and E2E
       name: End2End with Pcov
       env: XDEBUG=true
-      install: composer install --no-dev --no-interaction
-      script:
+      install: 
         - pecl install pcov
+        - composer update --no-dev --no-interaction
+      script:
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
     - name: End2End with Xdebug
