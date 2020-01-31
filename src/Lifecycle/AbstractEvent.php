@@ -5,13 +5,13 @@ namespace Paraunit\Lifecycle;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
-if (class_exists(LegacyEventDispatcherProxy::class)) {
-    abstract class AbstractEvent
+if (class_exists(Event::class)) {
+    abstract class AbstractEvent extends Event
     {
 
     }
 } else {
-    abstract class AbstractEvent extends Event
+    abstract class AbstractEvent
     {
 
     }
