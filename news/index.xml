@@ -5,8 +5,56 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 01 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 1.0.0-beta1: the first approach to a stable release</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/</link>
+      <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/</guid>
+      <description>
+
+&lt;p&gt;After a long hiatus, I decided to start working in the first stable release of Paraunit; the package is good and running smoothly for years, so we no longer have any reason to delay the 1.0 further. This will also be the occasion to force some static analysis onto the codebase.&lt;/p&gt;
+
+&lt;p&gt;This is the full changelog for this first beta release; the following changes are in comparison to the previous, unstable release (0.12.3)&lt;/p&gt;
+
+&lt;h3 id=&#34;breaking-changes&#34;&gt;Breaking changes&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Drop support for older packages: &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/134&#34;&gt;#134&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;phpunit/phpunit&lt;/code&gt; 6&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;phpunit/php-code-coverage&lt;/code&gt; &amp;lt; 6&lt;/li&gt;
+&lt;li&gt;All Symfony components &amp;lt; 3.4&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Scalar and return types added everywhere possible&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add support for &lt;code&gt;phpunit/phpunit&lt;/code&gt; 8 and &lt;code&gt;phpunit/php-code-coverage&lt;/code&gt; 7 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/133&#34;&gt;#133&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add explicit requirement for &lt;code&gt;ext-dom&lt;/code&gt; and &lt;code&gt;ext-json&lt;/code&gt; &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/134&#34;&gt;#134&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Do not set values on PHPUnit options that do not expect values &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/127&#34;&gt;#127&lt;/a&gt;, thanks @fullbl&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Update PHPStan to 0.11 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/128&#34;&gt;#128&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update coding standard to 0.3 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/131&#34;&gt;#131&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Disable Scrutinizer &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/132&#34;&gt;#132&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 0.12.3: allow phpunit/php-file-iterator 2</title>
@@ -377,26 +425,6 @@ With this release I added the continuous integration: at each Git tag, the Travi
 
 &lt;ul&gt;
 &lt;li&gt;Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&amp;rsquo;t rely on paths, so it doesn&amp;rsquo;t have to be a full or relative path; it can also be used in conjunction with the &lt;code&gt;--testsuite&lt;/code&gt; option&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.7.3: PHAR release</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.7.3/</link>
-      <pubDate>Fri, 30 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.7.3/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.7.4&#34;&gt;Paraunit 0.7.3&lt;/a&gt; has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the &lt;a href=&#34;https://github.com/facile-it/paraunit/releases/latest&#34;&gt;latest GitHub release page&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Full changelog text:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

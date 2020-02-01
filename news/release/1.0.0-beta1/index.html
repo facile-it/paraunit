@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 1.0.0-beta1: the first approach to a stable release &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,52 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 1.0.0-beta1: the first approach to a stable release</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;27&#41;</span>
-    </li>
-  
-  </ul>
+
+<p>After a long hiatus, I decided to start working in the first stable release of Paraunit; the package is good and running smoothly for years, so we no longer have any reason to delay the 1.0 further. This will also be the occasion to force some static analysis onto the codebase.</p>
+
+<p>This is the full changelog for this first beta release; the following changes are in comparison to the previous, unstable release (0.12.3)</p>
+
+<h3 id="breaking-changes">Breaking changes</h3>
+
+<ul>
+<li>Drop support for older packages: <a href="https://github.com/facile-it/paraunit/pull/134">#134</a>
+
+<ul>
+<li><code>phpunit/phpunit</code> 6</li>
+<li><code>phpunit/php-code-coverage</code> &lt; 6</li>
+<li>All Symfony components &lt; 3.4</li>
+</ul></li>
+<li>Scalar and return types added everywhere possible</li>
+</ul>
+
+<h3 id="added">Added</h3>
+
+<ul>
+<li>Add support for <code>phpunit/phpunit</code> 8 and <code>phpunit/php-code-coverage</code> 7 <a href="https://github.com/facile-it/paraunit/pull/133">#133</a></li>
+<li>Add explicit requirement for <code>ext-dom</code> and <code>ext-json</code> <a href="https://github.com/facile-it/paraunit/pull/134">#134</a></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+<li>Do not set values on PHPUnit options that do not expect values <a href="https://github.com/facile-it/paraunit/pull/127">#127</a>, thanks @fullbl</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+<li>Update PHPStan to 0.11 <a href="https://github.com/facile-it/paraunit/pull/128">#128</a></li>
+<li>Update coding standard to 0.3 <a href="https://github.com/facile-it/paraunit/pull/131">#131</a></li>
+<li>Disable Scrutinizer <a href="https://github.com/facile-it/paraunit/pull/132">#132</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +228,4 @@
 
 </body>
 </html>
+
