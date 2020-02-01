@@ -7,7 +7,7 @@ toc = true
 Paraunit is a tool for faster executions of PHPUnit test suites. 
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.
 
-Paraunit is developed using [Symfony components](http://symfony.com/components).
+Paraunit is developed using [Symfony components](https://symfony.com/components).
 
 # Requirements
 Paraunit is used in conjunction with PHPUnit. It reads PHPUnit's .xml configuration file, so it's needed to know which test to load.
@@ -71,7 +71,7 @@ Example:
 vendor/bin/paraunit coverage --html=./coverage
 ```
 
-Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146) and in conjunction with PHPUnit 8), [xDebug](https://xdebug.org/) and [PHPDBG](http://phpdbg.com/). 
+Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146) and in conjunction with PHPUnit 8), [xDebug](https://xdebug.org/) and [PHPDBG](https://www.php.net/manual/en/book.phpdbg.php). 
 
 Paraunit checks if `ext-pcov` is installed and uses it as the preferred driver, since it's the fastest; the extensions can remain installed but disabled (`pcov.enabled=0`), since Paraunit will take care of enabling it when launching PHPUnit processes.
  
@@ -210,7 +210,7 @@ Anyhow, Paraunit doesn't rely on the parsed results to provide the final exit co
  **it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code**. 
  So you can safely use it in your CI build ;)
 
-Side note: if you are using [Symfony's PHPUnit bridge](http://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations 
+Side note: if you are using [Symfony's PHPUnit bridge](https://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations 
  since version 0.11.
 
 # Troubleshooting
