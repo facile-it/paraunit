@@ -217,7 +217,7 @@
 <p>Paraunit is a tool for faster executions of PHPUnit test suites.
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.</p>
 
-<p>Paraunit is developed using <a href="http://symfony.com/components">Symfony components</a>.</p>
+<p>Paraunit is developed using <a href="https://symfony.com/components">Symfony components</a>.</p>
 
 <h1 id="requirements">Requirements</h1>
 
@@ -324,7 +324,11 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 <pre><code class="language-bash">vendor/bin/paraunit coverage --html=./coverage
 </code></pre>
 
-<p>Paraunit detects automatically if the <a href="http://phpdbg.com/">PHPDBG</a> binary is available, at it uses that as a preferred coverage driver, since it&rsquo;s a lot faster and uses less memory. If it&rsquo;s not available, it falls back to use xDebug. If you want to use PHPDBG, you are <strong>highly encouraged to disable xDebug</strong>, since Paraunit can&rsquo;t do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.</p>
+<p>Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are <a href="https://github.com/krakjoe/pcov">ext-pcov</a> (only since <a href="https://github.com/facile-it/paraunit/pull/146">1.0.0-beta2</a> and in conjunction with PHPUnit 8), <a href="https://xdebug.org/">xDebug</a> and <a href="https://www.php.net/manual/en/book.phpdbg.php">PHPDBG</a>.</p>
+
+<p>Paraunit checks if <code>ext-pcov</code> is installed and uses it as the preferred driver, since it&rsquo;s the fastest; the extensions can remain installed but disabled (<code>pcov.enabled=0</code>), since Paraunit will take care of enabling it when launching PHPUnit processes.</p>
+
+<p>If that&rsquo;s not available, it will try to detect the presence of xDebug; as a last resource, it will use PHPDbg, which should be always available since it&rsquo;s build into PHP core since 5.6.</p>
 
 <p>If you have issues or random failures when using the <code>coverage</code> command, you can try to use the <code>--parallel 1</code> option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.</p>
 
@@ -457,7 +461,7 @@ class SomeTest extends TestCase
  <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
  So you can safely use it in your CI build ;)</p>
 
-<p>Side note: if you are using <a href="http://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations
+<p>Side note: if you are using <a href="https://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations
  since version 0.11.</p>
 
 <h1 id="troubleshooting">Troubleshooting</h1>
