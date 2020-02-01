@@ -24,7 +24,7 @@ class CoveragePrinterTest extends BaseUnitTestCase
 
         $printer->onEngineBeforeStart();
 
-        $this->assertSame('Coverage driver in use: ' . $expected . PHP_EOL, $output->getOutput());
+        $this->assertSame('Coverage driver in use: ' . $expected, trim($output->getOutput()));
     }
 
     /**
