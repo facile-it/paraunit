@@ -71,7 +71,11 @@ Example:
 vendor/bin/paraunit coverage --html=./coverage
 ```
 
-Paraunit detects automatically if the [PHPDBG](http://phpdbg.com/) binary is available, at it uses that as a preferred coverage driver, since it's a lot faster and uses less memory. If it's not available, it falls back to use xDebug. If you want to use PHPDBG, you are **highly encouraged to disable xDebug**, since Paraunit can't do it on its own, and using PHPDBG with xDebug enabled can lead to an excessive memory consumption, up to the point of crashing your machine.
+Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146) and in conjunction with PHPUnit 8), [xDebug](https://xdebug.org/) and [PHPDBG](http://phpdbg.com/). 
+
+Paraunit checks if `ext-pcov` is installed and uses it as the preferred driver, since it's the fastest; the extensions can remain installed but disabled (`pcov.enabled=0`), since Paraunit will take care of enabling it when launching PHPUnit processes.
+ 
+If that's not available, it will try to detect the presence of xDebug; as a last resource, it will use PHPDbg, which should be always available since it's build into PHP core since 5.6.
 
 If you have issues or random failures when using the `coverage` command, you can try to use the `--parallel 1` option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.
 
