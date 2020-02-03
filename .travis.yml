@@ -45,6 +45,7 @@ jobs:
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
     - env: PHPSTAN=true
+      php: 7.1
       script: composer phpstan
     - env: CS-FIXER=true
       script: composer cs-check 

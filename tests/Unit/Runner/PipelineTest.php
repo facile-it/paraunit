@@ -79,6 +79,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testTriggerTermination(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->willReturnArgument(0);
         $process = $this->prophesize(AbstractParaunitProcess::class);
         $process->start(5)
             ->shouldBeCalledTimes(1);

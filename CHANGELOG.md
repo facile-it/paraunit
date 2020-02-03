@@ -11,6 +11,7 @@ First stable release. The following changes are in comparison to the previous, u
 ## [1.0.0-beta2] - TBA
 ### Added
  * Add support for PHP 7.4
+ * Add support for Symfony 5
  * Add support for ext-pcov as a coverage driver [#146](https://github.com/facile-it/paraunit/pull/146)
 
 ### Changed
