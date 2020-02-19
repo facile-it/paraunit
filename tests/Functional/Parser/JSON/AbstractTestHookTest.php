@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\Parser\JSON\AbstractTestHook;
+use Paraunit\Parser\JSON\TestHook\Successful;
 use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
-class LogPrinterTest extends BaseFunctionalTestCase
+class AbstractTestHookTest extends BaseFunctionalTestCase
 {
     protected function setup(): void
     {
@@ -30,9 +30,9 @@ class LogPrinterTest extends BaseFunctionalTestCase
         putenv(EnvVariables::PROCESS_UNIQUE_ID . '=' . md5(__FILE__));
         $logFullPath = $this->getRandomTempDir() . md5(__FILE__) . '.json.log';
 
-        $printer = new AbstractTestHook();
+        $hook = new Successful();
 
-        $printer->startTestSuite($testSuite->reveal());
+        $hook->executeAfterSuccessfulTest('testname', 0.1);
 
         $content = $this->getFileContent($logFullPath);
         $this->assertJson($content);

@@ -7,11 +7,11 @@ namespace Paraunit\Configuration\DependencyInjection;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\DeprecationParser;
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
-use Paraunit\Parser\JSON\TestHook\AbstractTestHook;
 use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
+use Paraunit\Parser\JSON\TestHook\AbstractTestHook;
 use Paraunit\Parser\JSON\TestStartParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
 use Paraunit\TestResult\TestResultFactory;
@@ -64,17 +64,17 @@ class ParserDefinition
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.incomplete_container'),
-                AbstractTestHook::STATUS_INCOMPLETE
+                AbstractTestHook::STATUS_INCOMPLETE,
             ]),
             'paraunit.parser.skipped_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.skipped_container'),
-                AbstractTestHook::STATUS_SKIPPED
+                AbstractTestHook::STATUS_SKIPPED,
             ]),
             'paraunit.parser.risky_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.risky_container'),
-                AbstractTestHook::STATUS_RISKY
+                AbstractTestHook::STATUS_RISKY,
             ]),
             'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,

@@ -19,15 +19,11 @@ class GenericParserTest extends BaseUnitTestCase
      */
     public function testParsingFoundResult(
         string $statusToMatch,
-        ?string $startsWithToMatch,
         string $status,
-        string $message = null,
-        bool $shouldMatch = true
+        bool $shouldMatch
     ): void {
-        $log = $this->getLogFromStub('test', $status, $message);
-        if (null === $message) {
-            unset($log->message);
-        }
+        $log = new \stdClass();
+        $log->status = $status;
 
         $result = new FullTestResult('b', 'c', 'trace');
 
@@ -37,7 +33,7 @@ class GenericParserTest extends BaseUnitTestCase
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int) $shouldMatch);
 
-        $parser = new GenericParser($factory->reveal(), $resultContainer->reveal(), $statusToMatch, $startsWithToMatch);
+        $parser = new GenericParser($factory->reveal(), $resultContainer->reveal(), $statusToMatch);
 
         /** @var FullTestResult $result */
         $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
@@ -55,13 +51,8 @@ class GenericParserTest extends BaseUnitTestCase
     public function matchesProvider(): array
     {
         return [
-            ['error', null, 'error', 'anyMessage'],
-            ['error', 'Error found', 'error', 'Error found'],
-
-            ['error', null, 'pass', 'anyMessage', false],
-            ['error', 'Error found', 'error', 'anotherMessage', false],
-            ['error', 'Error found', 'error', null, false],
-            ['error', 'Error found', 'pass', 'anotherMessage', false],
+            ['error', 'error', true],
+            ['error', 'pass', false],
         ];
     }
 }
