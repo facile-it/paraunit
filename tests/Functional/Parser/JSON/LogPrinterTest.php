@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\Parser\JSON\LogPrinter;
+use Paraunit\Parser\JSON\AbstractTestHook;
 use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
@@ -30,7 +30,7 @@ class LogPrinterTest extends BaseFunctionalTestCase
         putenv(EnvVariables::PROCESS_UNIQUE_ID . '=' . md5(__FILE__));
         $logFullPath = $this->getRandomTempDir() . md5(__FILE__) . '.json.log';
 
-        $printer = new LogPrinter();
+        $printer = new AbstractTestHook();
 
         $printer->startTestSuite($testSuite->reveal());
 

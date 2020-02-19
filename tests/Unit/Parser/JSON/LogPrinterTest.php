@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\Parser\JSON\LogPrinter;
+use Paraunit\Parser\JSON\AbstractTestHook;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestSuite;
@@ -237,11 +237,11 @@ class LogPrinterTest extends BaseUnitTestCase
         $this->assertEquals($expectedContent, $this->getLogContent());
     }
 
-    private function createPrinterAndStartTestSuite(): LogPrinter
+    private function createPrinterAndStartTestSuite(): AbstractTestHook
     {
         $this->createRandomTmpDir();
         putenv(EnvVariables::PROCESS_UNIQUE_ID . '=log-file-name');
-        $printer = new LogPrinter();
+        $printer = new AbstractTestHook();
         $testSuite = $this->prophesize(TestSuite::class);
         $testSuite->getName()
             ->willReturn(get_class($this));

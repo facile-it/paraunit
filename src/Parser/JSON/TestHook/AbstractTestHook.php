@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Paraunit\Parser\JSON;
+namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
 use PHPUnit\Framework\AssertionFailedError;
@@ -10,26 +10,25 @@ use PHPUnit\Framework\SelfDescribing;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestFailure;
-use PHPUnit\Framework\TestListener;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util;
 
-/**
- * This class comes from Util\Log_JSON.
- * It's copied and refactored here because it's deprecated in PHPUnit 5.7 and it will be dropped in PHPUnit 6
- *
- * Class LogPrinter
- */
-class LogPrinter extends Util\Printer implements TestListener
+abstract class AbstractTestHook
 {
     public const STATUS_ERROR = 'error';
 
     public const STATUS_WARNING = 'warning';
 
-    public const STATUS_FAIL = 'fail';
+    public const STATUS_FAILURE = 'fail';
 
-    public const STATUS_PASS = 'pass';
+    public const STATUS_SUCCESSFUL = 'successful';
+
+    public const STATUS_INCOMPLETE = 'incomplete';
+
+    public const STATUS_SKIPPED = 'skipped';
+
+    public const STATUS_RISKY = 'risky';
 
     public const MESSAGE_INCOMPLETE_TEST = 'Incomplete Test: ';
 
@@ -97,7 +96,7 @@ class LogPrinter extends Util\Printer implements TestListener
     public function addFailure(Test $test, AssertionFailedError $error, float $time): void
     {
         $this->writeCase(
-            self::STATUS_FAIL,
+            self::STATUS_FAILURE,
             $time,
             $this->getStackTrace($error),
             TestFailure::exceptionToString($error),
@@ -196,14 +195,28 @@ class LogPrinter extends Util\Printer implements TestListener
     public function endTest(Test $test, float $time): void
     {
         if ($this->currentTestPass) {
-            $this->writeCase(self::STATUS_PASS, $time, '', '', $test);
+            $this->writeCase(self::STATUS_SUCCESSFUL, $time, '', '', $test);
         }
     }
 
+    protected function write(string $status, string $message, float $time): void
+    {
+        $buffer = json_encode([
+            'status' => $status,
+            'message' => $this->convertToUtf8($message),
+            'time' => $time,
+        ]);
+
+        \fwrite($this->logFile, $buffer);
+        \fflush($this->logFile);
+    }
+
     /**
+     * @deprecated
+     *
      * @param Test|TestCase|null $test
      */
-    private function writeCase(string $status, float $time, string $trace, string $message = '', $test = null): void
+    protected function writeCase(string $status, float $time, string $trace, string $message = '', $test = null): void
     {
         $output = '';
         if ($test instanceof TestCase) {
@@ -223,6 +236,8 @@ class LogPrinter extends Util\Printer implements TestListener
     }
 
     /**
+     * @deprecated
+     *
      * @param (mixed|string)[] $buffer
      */
     private function writeArray($buffer): void
@@ -237,6 +252,8 @@ class LogPrinter extends Util\Printer implements TestListener
     }
 
     /**
+     * @deprecated
+     *
      * @param string|false $buffer
      */
     private function writeToLog($buffer): void
@@ -294,7 +311,7 @@ class LogPrinter extends Util\Printer implements TestListener
         return $string;
     }
 
-    private function getStackTrace(\Throwable $error): string
+    protected function getStackTrace(\Throwable $error): string
     {
         return Util\Filter::getFilteredStacktrace($error);
     }

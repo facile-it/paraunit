@@ -9,7 +9,7 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Parser\JSON\LogPrinter;
+use Paraunit\Parser\JSON\AbstractTestHook;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
@@ -110,7 +110,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
 
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
-        $this->assertContains('--printer=' . LogPrinter::class, $options);
+        $this->assertContains('--printer=' . AbstractTestHook::class, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
     }

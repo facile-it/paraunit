@@ -7,7 +7,7 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Parser\JSON\LogPrinter;
+use Paraunit\Parser\JSON\AbstractTestHook;
 
 class CommandLine
 {
@@ -36,7 +36,7 @@ class CommandLine
     {
         $options = [
             '--configuration=' . $config->getFileFullPath(),
-            '--printer=' . LogPrinter::class,
+            '--printer=' . AbstractTestHook::class,
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {

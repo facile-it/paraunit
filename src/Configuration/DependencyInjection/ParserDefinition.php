@@ -7,10 +7,10 @@ namespace Paraunit\Configuration\DependencyInjection;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\DeprecationParser;
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
+use Paraunit\Parser\JSON\AbstractTestHook;
 use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
-use Paraunit\Parser\JSON\LogPrinter;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Parser\JSON\TestStartParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
@@ -59,40 +59,40 @@ class ParserDefinition
             'paraunit.parser.pass_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.pass_container'),
-                LogPrinter::STATUS_PASS,
+                AbstractTestHook::STATUS_PASS,
             ]),
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.incomplete_container'),
-                LogPrinter::STATUS_ERROR,
-                LogPrinter::MESSAGE_INCOMPLETE_TEST,
+                AbstractTestHook::STATUS_ERROR,
+                AbstractTestHook::MESSAGE_INCOMPLETE_TEST,
             ]),
             'paraunit.parser.skipped_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.skipped_container'),
-                LogPrinter::STATUS_ERROR,
-                LogPrinter::MESSAGE_SKIPPED_TEST,
+                AbstractTestHook::STATUS_ERROR,
+                AbstractTestHook::MESSAGE_SKIPPED_TEST,
             ]),
             'paraunit.parser.risky_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.risky_container'),
-                LogPrinter::STATUS_ERROR,
-                LogPrinter::MESSAGE_RISKY_TEST,
+                AbstractTestHook::STATUS_ERROR,
+                AbstractTestHook::MESSAGE_RISKY_TEST,
             ]),
             'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.warning_container'),
-                LogPrinter::STATUS_WARNING,
+                AbstractTestHook::STATUS_WARNING,
             ]),
             'paraunit.parser.failure_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.failure_container'),
-                LogPrinter::STATUS_FAIL,
+                AbstractTestHook::STATUS_FAIL,
             ]),
             'paraunit.parser.error_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
                 new Reference('paraunit.test_result.error_container'),
-                LogPrinter::STATUS_ERROR,
+                AbstractTestHook::STATUS_ERROR,
             ]),
             AbnormalTerminatedParser::class => new Definition(AbnormalTerminatedParser::class, [
                 $testResultFactory,
