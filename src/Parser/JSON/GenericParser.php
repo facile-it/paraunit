@@ -20,23 +20,17 @@ class GenericParser implements ParserChainElementInterface
     /** @var string */
     protected $status;
 
-    /** @var string|null */
-    protected $messageStartsWith;
-
     /**
      * @param string $status The status that the parser should catch
-     * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
     public function __construct(
         TestResultFactory $testResultFactory,
         TestResultHandlerInterface $testResultContainer,
-        string $status,
-        string $messageStartsWith = null
+        string $status
     ) {
         $this->testResultFactory = $testResultFactory;
         $this->testResultContainer = $testResultContainer;
         $this->status = $status;
-        $this->messageStartsWith = $messageStartsWith;
     }
 
     /**
@@ -60,18 +54,6 @@ class GenericParser implements ParserChainElementInterface
             return false;
         }
 
-        if ($log->status !== $this->status) {
-            return false;
-        }
-
-        if (null === $this->messageStartsWith) {
-            return true;
-        }
-
-        if (! property_exists($log, 'message')) {
-            return false;
-        }
-
-        return 0 === strpos($log->message, $this->messageStartsWith);
+        return $log->status === $this->status;
     }
 }
