@@ -9,14 +9,10 @@ if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
 }
 
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use SebastianBergmann\FileIterator\Facade;
 
 class Filter
 {
-    /** @var PHPUnitUtilXMLProxy */
-    private $utilXml;
-
     /** @var Facade */
     private $fileIteratorFacade;
 
@@ -33,13 +29,11 @@ class Filter
     private $stringFilter;
 
     public function __construct(
-        PHPUnitUtilXMLProxy $utilXml,
         Facade $fileIteratorFacade,
         PHPUnitConfig $configFile,
         string $testSuiteFilter = null,
         string $stringFilter = null
     ) {
-        $this->utilXml = $utilXml;
         $this->fileIteratorFacade = $fileIteratorFacade;
         $this->configFile = $configFile;
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
@@ -55,14 +49,10 @@ class Filter
     public function filterTestFiles(): array
     {
         $aggregatedFiles = [];
-
-        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
-        $xpath = new \DOMXPath($document);
-
-        $nodeList = $xpath->query('testsuites/testsuite');
+        $nodeList = $this->configFile->getConfigDOM()->query('testsuites/testsuite');
 
         if (! $nodeList) {
-            throw new \InvalidArgumentException('No testsuite found in the PHPUnit configuration in ' . $this->configFile->getFileFullPath());
+            throw new \InvalidArgumentException('No testsuite found in the PHPUnit configuration');
         }
 
         foreach ($nodeList as $testSuiteNode) {

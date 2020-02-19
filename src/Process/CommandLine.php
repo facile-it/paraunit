@@ -7,7 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Parser\JSON\AbstractTestHook;
 
 class CommandLine
 {
@@ -35,8 +34,7 @@ class CommandLine
     public function getOptions(PHPUnitConfig $config): array
     {
         $options = [
-            '--configuration=' . $config->getFileFullPath(),
-            '--printer=' . AbstractTestHook::class,
+            '--configuration=' . $config->getConfigPath(),
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {

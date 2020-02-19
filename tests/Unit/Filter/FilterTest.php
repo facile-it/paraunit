@@ -229,7 +229,7 @@ class FilterTest extends BaseUnitTestCase
         $this->assertFileExists($configFile, 'Mock not possible, config file to pass does not exist');
 
         $config = $this->prophesize(PHPUnitConfig::class);
-        $config->getFileFullPath()
+        $config->getConfigPath()
             ->willReturn($configFile);
         $config->getBaseDirectory()
             ->willReturn(dirname($configFile));
