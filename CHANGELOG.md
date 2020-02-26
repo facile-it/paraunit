@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] - TBA
 First stable release. The following changes are in comparison to the previous, unstable release (0.12.3), split into the beta releases that were tagged in the meantime.
 
-## [1.0.0-beta2] - TBA
+## [1.0.0-beta2] - 2020-02-26
 ### Added
  * Add support for PHP 7.4
  * Add support for Symfony 5
