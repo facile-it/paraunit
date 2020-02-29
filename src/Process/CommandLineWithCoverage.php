@@ -6,11 +6,18 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
-use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Proxy\PcovProxy;
+use Paraunit\Proxy\XDebugProxy;
 
 class CommandLineWithCoverage extends CommandLine
 {
+    /** @var PcovProxy */
+    private $pcovProxy;
+
+    /** @var XDebugProxy */
+    private $xdebugProxy;
+
     /** @var PHPDbgBinFile */
     private $phpDbgBinFile;
 
@@ -19,11 +26,15 @@ class CommandLineWithCoverage extends CommandLine
 
     public function __construct(
         PHPUnitBinFile $phpUnitBin,
+        PcovProxy $pcovProxy,
+        XDebugProxy $xdebugProxy,
         PHPDbgBinFile $dbgBinFile,
         TempFilenameFactory $filenameFactory
     ) {
         parent::__construct($phpUnitBin);
 
+        $this->pcovProxy = $pcovProxy;
+        $this->xdebugProxy = $xdebugProxy;
         $this->phpDbgBinFile = $dbgBinFile;
         $this->filenameFactory = $filenameFactory;
     }
@@ -35,31 +46,23 @@ class CommandLineWithCoverage extends CommandLine
      */
     public function getExecutable(): array
     {
+        if ($this->pcovProxy->isLoaded()) {
+            return ['php', '-d pcov.enabled=1', $this->phpUnitBin->getPhpUnitBin()];
+        }
+
+        if ($this->xdebugProxy->isLoaded()) {
+            return parent::getExecutable();
+        }
+
         if ($this->phpDbgBinFile->isAvailable()) {
-            return [$this->phpDbgBinFile->getPhpDbgBin()];
-        }
-
-        return parent::getExecutable();
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return string[]
-     */
-    public function getOptions(PHPUnitConfig $config): array
-    {
-        if (! $this->phpDbgBinFile->isAvailable()) {
-            return parent::getOptions($config);
-        }
-
-        return array_merge(
-            [
+            return [
+                $this->phpDbgBinFile->getPhpDbgBin(),
                 '-qrr',
                 $this->phpUnitBin->getPhpUnitBin(),
-            ],
-            parent::getOptions($config)
-        );
+            ];
+        }
+
+        throw new \RuntimeException('No coverage driver seems to be available; possible choices are Pcov, xdebug or PHPDBG');
     }
 
     public function getSpecificOptions(string $testFilename): array

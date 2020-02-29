@@ -6,45 +6,40 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Printer\CoveragePrinter;
+use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
 class CoveragePrinterTest extends BaseUnitTestCase
 {
-    public function testOnEngineBeforeStartWithPHPDBGEngine(): void
+    /**
+     * @dataProvider coverageDriverProvider
+     */
+    public function testOnEngineBeforeStart(PHPDbgBinFile $phpdbg, XDebugProxy $xdebug, PcovProxy $pcov, string $expected): void
     {
         $output = new UnformattedOutputStub();
 
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $output);
+        $printer = new CoveragePrinter($phpdbg, $xdebug, $pcov, $output);
 
         $printer->onEngineBeforeStart();
 
-        $this->assertContains('Coverage driver in use: PHPDBG', $output->getOutput());
+        $this->assertSame('Coverage driver in use: ' . $expected, trim($output->getOutput()));
     }
 
-    public function testOnEngineBeforeStartWithxDebugEngine(): void
+    /**
+     * @return \Generator<array{PHPDbgBinFile, XDebugProxy, PcovProxy, string}>
+     */
+    public function coverageDriverProvider(): \Generator
     {
-        $output = new UnformattedOutputStub();
-
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $output);
-
-        $printer->onEngineBeforeStart();
-
-        $this->assertContains('Coverage driver in use: xDebug', $output->getOutput());
-    }
-
-    public function testOnEngineBeforeStartWithWarningForBothEnginesEnabled(): void
-    {
-        $output = new UnformattedOutputStub();
-
-        $printer = new CoveragePrinter($this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $output);
-
-        $printer->onEngineBeforeStart();
-
-        $this->assertContains('WARNING', $output->getOutput());
-        $this->assertContains('both driver', $output->getOutput());
-        $this->assertNotContains('xDebug', $output->getOutput());
+        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(true), 'Pcov'];
+        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(true), 'Pcov'];
+        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(true), 'Pcov'];
+        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(true), 'Pcov'];
+        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(false), 'Xdebug'];
+        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(false), 'Xdebug'];
+        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(false), 'PHPDBG'];
+        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(false), 'NO COVERAGE DRIVER FOUND!'];
     }
 
     private function mockPhpdbgBin(bool $shouldReturn): PHPDbgBinFile
@@ -59,6 +54,15 @@ class CoveragePrinterTest extends BaseUnitTestCase
     private function mockXdebugLoaded(bool $shouldReturn): XDebugProxy
     {
         $xdebug = $this->prophesize(XDebugProxy::class);
+        $xdebug->isLoaded()
+            ->willReturn($shouldReturn);
+
+        return $xdebug->reveal();
+    }
+
+    private function mockPcovLoaded(bool $shouldReturn): PcovProxy
+    {
+        $xdebug = $this->prophesize(PcovProxy::class);
         $xdebug->isLoaded()
             ->willReturn($shouldReturn);
 

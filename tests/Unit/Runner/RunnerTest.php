@@ -133,13 +133,17 @@ class RunnerTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::type(BeforeEngineStart::class))
             ->shouldBeCalledTimes(1)
-            ->will(function () use ($eventDispatcher) {
+            ->will(function ($args) use ($eventDispatcher) {
                 $eventDispatcher->dispatch(Argument::type(EngineStart::class))
                     ->shouldBeCalledTimes(1)
-                    ->will(function () use ($eventDispatcher) {
+                    ->will(function ($args) use ($eventDispatcher) {
                         $eventDispatcher->dispatch(Argument::type(EngineEnd::class))
                             ->shouldBeCalledTimes(1);
+
+                        return $args[0];
                     });
+
+                return $args[0];
             });
 
         return $eventDispatcher->reveal();

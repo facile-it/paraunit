@@ -30,11 +30,11 @@
         "phpunit/php-code-coverage": "^6.0||^7.0.2",
         "phpunit/php-file-iterator": "^1.0||^2.0",
         "phpunit/phpunit": "^7.0||^8.0",
-        "symfony/console": "^3.4||^4.0",
-        "symfony/dependency-injection": "^3.4||^4.0",
-        "symfony/event-dispatcher": "^3.4||^4.0",
-        "symfony/process": "^3.4||^4.0",
-        "symfony/stopwatch": "^3.4||^4.0"
+        "symfony/console": "^3.4||^4.0||^5.0",
+        "symfony/dependency-injection": "^3.4||^4.0||^5.0",
+        "symfony/event-dispatcher": "^3.4||^4.0||^5.0",
+        "symfony/process": "^3.4||^4.0||^5.0",
+        "symfony/stopwatch": "^3.4||^4.0||^5.0"
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^0.3.1",
@@ -44,8 +44,8 @@
         "phpstan/phpstan": "^0.12.4",
         "phpstan/phpstan-phpunit": "^0.12.5",
         "phpunit/php-invoker": "^1.1",
-        "symfony/expression-language": "^3.4||^4.0",
-        "symfony/phpunit-bridge": "^4.2"
+        "symfony/expression-language": "^3.4||^4.0||^5.0",
+        "symfony/phpunit-bridge": "^5.0"
     },
     "bin": [
         "src/Bin/paraunit"
@@ -77,6 +77,7 @@
         }
     },
     "suggest": {
+        "ext-pcov": "A coverage driver for faster collection",
         "dama/doctrine-test-bundle": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
     }
 }

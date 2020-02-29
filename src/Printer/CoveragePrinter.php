@@ -6,6 +6,7 @@ namespace Paraunit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Lifecycle\BeforeEngineStart;
+use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -21,11 +22,15 @@ class CoveragePrinter implements EventSubscriberInterface
     /** @var OutputInterface */
     private $output;
 
-    public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug, OutputInterface $output)
+    /** @var PcovProxy */
+    private $pcov;
+
+    public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug, PcovProxy $pcov, OutputInterface $output)
     {
         $this->phpdgbBin = $phpdgbBin;
         $this->xdebug = $xdebug;
         $this->output = $output;
+        $this->pcov = $pcov;
     }
 
     /**
@@ -42,18 +47,14 @@ class CoveragePrinter implements EventSubscriberInterface
     {
         $this->output->write('Coverage driver in use: ');
 
-        if ($this->phpdgbBin->isAvailable()) {
+        if ($this->pcov->isLoaded()) {
+            $this->output->writeln('Pcov');
+        } elseif ($this->xdebug->isLoaded()) {
+            $this->output->writeln('Xdebug');
+        } elseif ($this->phpdgbBin->isAvailable()) {
             $this->output->writeln('PHPDBG');
-
-            if ($this->xdebug->isLoaded()) {
-                $this->output->writeln('WARNING: both drivers enabled; this may lead to memory exhaustion!');
-
-                return;
-            }
-        }
-
-        if ($this->xdebug->isLoaded()) {
-            $this->output->writeln('xDebug');
+        } else {
+            $this->output->writeln('NO COVERAGE DRIVER FOUND!');
         }
     }
 }
