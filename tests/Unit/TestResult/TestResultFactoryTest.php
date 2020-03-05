@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\TestResult;
 
 use Paraunit\Parser\JSON\LogFetcher;
-use Paraunit\TestResult\FullTestResult;
 use Paraunit\TestResult\MuteTestResult;
 use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
@@ -52,20 +51,6 @@ class TestResultFactoryTest extends BaseUnitTestCase
         $this->assertInstanceOf(TestResultWithMessage::class, $result);
         $this->assertInstanceOf(TestResultFormat::class, $result->getTestResultFormat());
         $this->assertEquals($log->test, $result->getFunctionName());
-    }
-
-    public function testCreateFromLogWithTrace(): void
-    {
-        $log = $this->getLogWithTrace();
-
-        $factory = new TestResultFactory();
-        /** @var FullTestResult $result */
-        $result = $factory->createFromLog($log);
-
-        $this->assertInstanceOf(FullTestResult::class, $result);
-        $this->assertInstanceOf(TestResultFormat::class, $result->getTestResultFormat());
-        $this->assertEquals($log->message, $result->getFailureMessage());
-        $this->assertSame($log->trace, $result->getTrace());
     }
 
     public function testCreateFromLogWithAbnormalTermination(): void

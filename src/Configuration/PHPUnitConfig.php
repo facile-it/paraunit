@@ -62,7 +62,7 @@ class PHPUnitConfig
     public function getConfigPath(): string
     {
         if (null === $this->configPath) {
-            $configPath = $this->tempDirectory->getTempDirForThisExecution() . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME;
+            $configPath = $this->getBaseDirectory() . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME .'.paraunit';
 
             touch($configPath);
             if (false === $this->getConfigDOM()->document->save($configPath)) {

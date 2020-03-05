@@ -44,20 +44,6 @@ abstract class BaseUnitTestCase extends BaseTestCase
         return $filename;
     }
 
-    protected function getLogWithTrace(): \stdClass
-    {
-        $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
-        $logs = json_decode($jsonLogs);
-        /** @var \stdClass $log */
-        foreach ($logs as $log) {
-            if (property_exists($log, 'trace') && $log->trace !== '') {
-                return $log;
-            }
-        }
-
-        $this->fail('Feasible log message not found for test');
-    }
-
     protected function mockTestFormat(): TestResultFormat
     {
         $format = $this->prophesize(TestResultFormat::class);

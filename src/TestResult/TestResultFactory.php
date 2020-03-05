@@ -18,14 +18,10 @@ class TestResultFactory
             );
         }
 
-        if (! property_exists($log, 'message')) {
-            return new MuteTestResult();
+        if (property_exists($log, 'message') && $log->message) {
+            return new TestResultWithMessage($log->test, $log->message);
         }
 
-        if (property_exists($log, 'trace')) {
-            return new FullTestResult($log->test, $log->message, $log->trace);
-        }
-
-        return new TestResultWithMessage($log->test, $log->message);
+        return new MuteTestResult();
     }
 }

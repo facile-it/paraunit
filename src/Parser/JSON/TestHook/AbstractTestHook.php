@@ -23,7 +23,7 @@ abstract class AbstractTestHook
     public const STATUS_RISKY = 'risky';
 
     /** @var resource */
-    private static $logFile;
+    protected static $logFile;
 
     public function __construct()
     {
@@ -37,15 +37,18 @@ abstract class AbstractTestHook
         }
     }
 
-    protected function write(string $status, string $message, float $time): void
+    protected function write(string $status, ?string $message, float $time): void
     {
-        $buffer = json_encode([
+        $data = [
             'status' => $status,
-            'message' => $this->convertToUtf8($message),
             'time' => $time,
-        ]);
+        ];
+        
+        if ($message) {
+            $data['message'] = $this->convertToUtf8($message);
+        }
 
-        \fwrite(self::$logFile, $buffer);
+        \fwrite(self::$logFile, json_encode($data));
         \fflush(self::$logFile);
     }
 
