@@ -8,7 +8,7 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class PipelineCollection
 {
-    /** @var Pipeline[] | \SplFixedArray */
+    /** @var \SplFixedArray<Pipeline> */
     private $pipelines;
 
     public function __construct(PipelineFactory $pipelineFactory, int $maxProcessNumber = 10)
