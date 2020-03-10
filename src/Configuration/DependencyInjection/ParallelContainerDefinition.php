@@ -72,8 +72,6 @@ class ParallelContainerDefinition
     {
         $container->setDefinition(PHPUnitBinFile::class, new Definition(PHPUnitBinFile::class));
         $container->setDefinition(PHPUnitConfig::class, new Definition(PHPUnitConfig::class, [
-            new Reference(TempDirectory::class),
-            new Reference(PHPUnitUtilXMLProxy::class),
             '%paraunit.phpunit_config_filename%',
         ]))
             ->setPublic(true);
@@ -182,6 +180,7 @@ class ParallelContainerDefinition
         $container->setDefinition(PHPUnitUtilXMLProxy::class, new Definition(PHPUnitUtilXMLProxy::class));
         $container->setDefinition(Facade::class, new Definition(Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [
+            new Reference(PHPUnitUtilXMLProxy::class),
             new Reference(Facade::class),
             new Reference(PHPUnitConfig::class),
             '%paraunit.testsuite%',

@@ -7,6 +7,7 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
+use Paraunit\Parser\JSON\TestHook as Hooks;
 
 class CommandLine
 {
@@ -34,7 +35,16 @@ class CommandLine
     public function getOptions(PHPUnitConfig $config): array
     {
         $options = [
-            '--configuration=' . $config->getConfigPath(),
+            '--configuration=' . $config->getFileFullPath(),
+            '--extensions=' . implode(',', [
+                Hooks\Error::class,
+                Hooks\Failure::class,
+                Hooks\Incomplete::class,
+                Hooks\Risky::class,
+                Hooks\Skipped::class,
+                Hooks\Successful::class,
+                Hooks\Warning::class,
+            ]),
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {

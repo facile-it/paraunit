@@ -43,7 +43,7 @@ abstract class AbstractTestHook
             'status' => $status,
             'time' => $time,
         ];
-        
+
         if ($message) {
             $data['message'] = $this->convertToUtf8($message);
         }

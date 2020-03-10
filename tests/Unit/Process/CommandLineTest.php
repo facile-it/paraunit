@@ -7,6 +7,7 @@ namespace Tests\Unit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
+use Paraunit\Parser\JSON\AbstractTestHook;
 use Paraunit\Process\CommandLine;
 use Tests\BaseUnitTestCase;
 
@@ -25,7 +26,7 @@ class CommandLineTest extends BaseUnitTestCase
     public function testGetOptionsFor(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
-        $config->getConfigPath()
+        $config->getFileFullPath()
             ->willReturn('/path/to/phpunit.xml');
 
         $optionWithValue = new PHPUnitOption('optVal');
@@ -40,6 +41,7 @@ class CommandLineTest extends BaseUnitTestCase
         $cli = new CommandLine($phpunit->reveal());
         $options = $cli->getOptions($config->reveal());
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
+        $this->assertContains('--printer=' . AbstractTestHook::class, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
     }

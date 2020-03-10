@@ -4,75 +4,33 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-use Paraunit\File\TempDirectory;
-use Paraunit\Parser\JSON\TestHook as Hooks;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
-
 class PHPUnitConfig
 {
     public const DEFAULT_FILE_NAME = 'phpunit.xml';
 
     public const FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
 
-    /** @var TempDirectory */
-    private $tempDirectory;
-
-    /** @var PHPUnitUtilXMLProxy */
-    private $utilXml;
-
     /** @var string */
-    private $originalFilePath;
-
-    /** @var \DOMXPath|null */
-    private $configDOM;
+    private $configFilename;
 
     /** @var PHPUnitOption[] */
     private $phpunitOptions;
 
-    /** @var string|null */
-    private $configPath;
-
     /**
      * @throws \InvalidArgumentException
      */
-    public function __construct(
-        TempDirectory $tempDirectory,
-        PHPUnitUtilXMLProxy $utilXml,
-        string $inputPathOrFileName
-    ) {
-        $this->tempDirectory = $tempDirectory;
-        $this->utilXml = $utilXml;
-        $this->originalFilePath = $this->getConfigFileRealpath($inputPathOrFileName);
+    public function __construct(string $inputPathOrFileName)
+    {
+        $this->configFilename = $this->getConfigFileRealpath($inputPathOrFileName);
         $this->phpunitOptions = [];
     }
 
-    public function getConfigDOM(): \DOMXPath
-    {
-        if (null === $this->configDOM) {
-            $document = $this->utilXml->loadFile($this->originalFilePath);
-            $this->configDOM = $this->createAlteredDOM($document);
-        }
-
-        return $this->configDOM;
-    }
-
     /**
-     * @return string The full path for the altered, temporary configuration file
+     * @return string The full path for this configuration file
      */
-    public function getConfigPath(): string
+    public function getFileFullPath(): string
     {
-        if (null === $this->configPath) {
-            $configPath = $this->getBaseDirectory() . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME .'.paraunit';
-
-            touch($configPath);
-            if (false === $this->getConfigDOM()->document->save($configPath)) {
-                throw new \RuntimeException('Error while writing temporary PHPUnit configuration');
-            }
-
-            $this->configPath = $configPath;
-        }
-
-        return $this->configPath;
+        return $this->configFilename;
     }
 
     /**
@@ -80,7 +38,7 @@ class PHPUnitConfig
      */
     public function getBaseDirectory(): string
     {
-        return dirname($this->originalFilePath);
+        return dirname($this->configFilename);
     }
 
     public function addPhpunitOption(PHPUnitOption $option): void
@@ -125,37 +83,5 @@ class PHPUnitConfig
         }
 
         return self::FALLBACK_CONFIG_FILE_NAME;
-    }
-
-    /**
-     * @param \DOMDocument $document The DOM of the original configuration
-     *
-     * @return \DOMXPath The altered configuration, with the TestHooks added
-     */
-    private function createAlteredDOM(\DOMDocument $document): \DOMXPath
-    {
-        $config = new \DOMXPath($document);
-
-        $extensionsNode = $document->createElement('extensions');
-
-        $hooks = [
-            Hooks\Error::class,
-            Hooks\Failure::class,
-            Hooks\Incomplete::class,
-            Hooks\Risky::class,
-            Hooks\Skipped::class,
-            Hooks\Successful::class,
-            Hooks\Warning::class,
-        ];
-
-        foreach ($hooks as $hook) {
-            $hookNode = $document->createElement('extension');
-            $hookNode->setAttribute('class', $hook);
-            $extensionsNode->appendChild($hookNode);
-        }
-
-        $config->document->firstChild->appendChild($extensionsNode);
-
-        return $config;
     }
 }
