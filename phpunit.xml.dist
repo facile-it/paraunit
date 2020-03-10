@@ -17,20 +17,16 @@
 
     <testsuites>
         <testsuite name="unit">
-            <directory>./tests/Unit/</directory>
+            <directory>tests/Unit</directory>
         </testsuite>
         <testsuite name="functional">
-            <directory>./tests/Functional/</directory>
+            <directory>tests/Functional</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./src/Paraunit/</directory>
-            <exclude>
-                <directory>./src/Paraunit/Resources</directory>
-            </exclude>
+            <directory>src/</directory>
         </whitelist>
     </filter>
-
 </phpunit>
