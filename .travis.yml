@@ -1,6 +1,6 @@
 language: php
 dist: trusty
-sudo: false
+os: linux
 cache:
   directories:
     - $HOME/.composer/cache/files
