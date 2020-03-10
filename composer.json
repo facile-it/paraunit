@@ -43,7 +43,7 @@
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.4",
         "phpstan/phpstan-phpunit": "^0.12.5",
-        "phpunit/php-invoker": "^1.1",
+        "phpunit/php-invoker": "^1.1||^2.0||^3.0",
         "symfony/expression-language": "^3.4||^4.0||^5.0",
         "symfony/phpunit-bridge": "^5.0"
     },
