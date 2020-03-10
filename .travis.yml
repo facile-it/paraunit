@@ -44,10 +44,10 @@ jobs:
       script: 
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
-    - env: PHPSTAN=true
+    - name: PHPStan
       php: 7.1
       script: composer phpstan
-    - env: CS-FIXER=true
+    - name: Check Code Style
       script: composer cs-check 
     - stage: Coverage
       script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
