@@ -41,7 +41,7 @@ class TestResultFactoryTest extends BaseUnitTestCase
 
     public function testCreateFromLogWithMessage(): void
     {
-        $log = $this->getLogFromStub('test', 'error');
+        $log = $this->getLogFromStub('test', 'error', 'message');
         unset($log->trace);
 
         $factory = new TestResultFactory();
