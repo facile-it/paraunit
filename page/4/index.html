@@ -174,17 +174,68 @@
   <h1>Paraunit</h1>
   <h2>A package for faster PHP testsuites</h2>
   <p>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;"></a>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;"></a>
-    <a href="https://travis-ci.org/facile-it/paraunit"><img src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;"></a>
-    <a href="https://coveralls.io/github/facile-it/paraunit?branch=master"><img src="https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&amp;service=github" style="max-width:100%;"></a>
-    <a href="https://scrutinizer-ci.com/g/facile-it/paraunit/?branch=master"><img src="https://scrutinizer-ci.com/g/facile-it/paraunit/badges/quality-score.png?b=master" style="max-width:100%;"></a>
-    <a href="https://codeclimate.com/github/facile-it/paraunit"><img src="https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg" style="max-width:100%;"></a>
-    <a href="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20"><img src="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20/mini.png" style="max-width:100%;"></a>
+    <a href="https://packagist.org/packages/facile-it/paraunit">
+      <img alt="Stable version" src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;">
+    </a>
+    <a href="https://packagist.org/packages/facile-it/paraunit">
+      <img alt="Unstable version" src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;">
+    </a>
+    <a href="https://travis-ci.org/facile-it/paraunit">
+      <img alt="Build status" src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;">
+    </a>
+    <a href="https://ci.appveyor.com/project/Jean85/paraunit">
+      <img alt="AppVeyor build status" src="https://ci.appveyor.com/api/projects/status/ohmhq2s762x3ixli/branch/master?svg=true" style="max-width:100%;">
+    </a>
+    <a href="https://codecov.io/gh/facile-it/paraunit">
+      <img alt="Code coverage" src="https://codecov.io/gh/facile-it/paraunit/branch/master/graph/badge.svg" />
+    </a>
   </p>
 </div>
 
 <div class="content">
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>24 Jan 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.8 has been released! With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to Andreas Heigl that made this not only possible, but very straightforward to implement. Next phase will be the 1.0 stable release milestone, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
 
   
     <article>
@@ -343,49 +394,6 @@
   Paraunit 0.7.2 has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases. Full changelog text: Fixed Disable colored output in text coverage to console, to avoid issues with GitLab integration.
   </p>
 
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7/">Paraunit 0.7: test coverage in parallel</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>12 Dec 2016</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Finally, Paraunit 0.7 has been released! This version includes the long awaited coverage feature: now you can collect your test coverage running your tests in parallel! Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we officially support Windows, and we added an Appveyor CI build to do that.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.7/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
   
 </article>
 

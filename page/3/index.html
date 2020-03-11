@@ -174,17 +174,68 @@
   <h1>Paraunit</h1>
   <h2>A package for faster PHP testsuites</h2>
   <p>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;"></a>
-    <a href="https://packagist.org/packages/facile-it/paraunit"><img src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;"></a>
-    <a href="https://travis-ci.org/facile-it/paraunit"><img src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;"></a>
-    <a href="https://coveralls.io/github/facile-it/paraunit?branch=master"><img src="https://coveralls.io/repos/facile-it/paraunit/badge.svg?branch=master&amp;service=github" style="max-width:100%;"></a>
-    <a href="https://scrutinizer-ci.com/g/facile-it/paraunit/?branch=master"><img src="https://scrutinizer-ci.com/g/facile-it/paraunit/badges/quality-score.png?b=master" style="max-width:100%;"></a>
-    <a href="https://codeclimate.com/github/facile-it/paraunit"><img src="https://codeclimate.com/github/facile-it/paraunit/badges/gpa.svg" style="max-width:100%;"></a>
-    <a href="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20"><img src="https://insight.sensiolabs.com/projects/6571b482-6e1d-4e0c-b215-94d757909b20/mini.png" style="max-width:100%;"></a>
+    <a href="https://packagist.org/packages/facile-it/paraunit">
+      <img alt="Stable version" src="https://poser.pugx.org/facile-it/paraunit/version.svg" style="max-width:100%;">
+    </a>
+    <a href="https://packagist.org/packages/facile-it/paraunit">
+      <img alt="Unstable version" src="https://poser.pugx.org/facile-it/paraunit/v/unstable.svg" style="max-width:100%;">
+    </a>
+    <a href="https://travis-ci.org/facile-it/paraunit">
+      <img alt="Build status" src="https://travis-ci.org/facile-it/paraunit.svg" style="max-width:100%;">
+    </a>
+    <a href="https://ci.appveyor.com/project/Jean85/paraunit">
+      <img alt="AppVeyor build status" src="https://ci.appveyor.com/api/projects/status/ohmhq2s762x3ixli/branch/master?svg=true" style="max-width:100%;">
+    </a>
+    <a href="https://codecov.io/gh/facile-it/paraunit">
+      <img alt="Code coverage" src="https://codecov.io/gh/facile-it/paraunit/branch/master/graph/badge.svg" />
+    </a>
   </p>
 </div>
 
 <div class="content">
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Jul 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&rsquo; package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future. So I decided to release an OSS package for this usage, Jean85/pretty-package-versions, available here: https://github.com/Jean85/pretty-package-versions/. Feel free to use it in your projects, as I&rsquo;ve done inside Paraunit.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
 
   
     <article>
@@ -343,49 +394,6 @@
   Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project: Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir
   </p>
 
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>24 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8 has been released! With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to Andreas Heigl that made this not only possible, but very straightforward to implement. Next phase will be the 1.0 stable release milestone, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
   
 </article>
 

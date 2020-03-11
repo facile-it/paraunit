@@ -5,8 +5,74 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 1.0.0: the stable release</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.0.0/</link>
+      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.0.0/</guid>
+      <description>
+
+&lt;p&gt;Today I decided to release &lt;code&gt;facile-it/paraunit&lt;/code&gt; &lt;code&gt;1.0.0&lt;/code&gt;! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.&lt;/p&gt;
+
+&lt;p&gt;The main reason behind this is that I&amp;rsquo;m currently working &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;on PHPUnit 9 support&lt;/a&gt;, and this will force me to release a new minor that will drop support for previous PHPUnit version altogether. This decision was in reality forced onto me due to the fact that PHUnit 9 drops support for the &lt;code&gt;--printer&lt;/code&gt; CLI option and the relative extension point, which Paraunit was using as a way to extract test results.&lt;/p&gt;
+
+&lt;p&gt;To counter this deprecation, I&amp;rsquo;m working on using &lt;code&gt;TestHook&lt;/code&gt;s as a different, cleaner way to extend PHPUnit and obtain test results; the only downside of this new approach is in the fact that, up until now, there was no way to attach those hooks outside from PHPUnit&amp;rsquo;s XML configuration; this would have meant that Paraunit would&amp;rsquo;ve had to alter the end user&amp;rsquo;s configuration, and I found this a bad approach.&lt;/p&gt;
+
+&lt;p&gt;To resolve this blocker, I issued a &lt;a href=&#34;https://github.com/sebastianbergmann/phpunit/pull/4136&#34;&gt;pull request&lt;/a&gt; that adds an &lt;code&gt;--extensions&lt;/code&gt; CLI option to PHPUnit; that PR got accepted pretty fast, but it will be released only on PHPUnit 9.1, and &lt;a href=&#34;https://github.com/sebastianbergmann/phpunit/issues/4131#issuecomment-596403054&#34;&gt;it will not get backported&lt;/a&gt;, unfortunately. This means that the future Paraunit 1.1 release will support PHPUnit 9.1 (and forward) only, without any support overlap from the previous releases.&lt;/p&gt;
+
+&lt;p&gt;Anyway, this is still good news! Below, you can find the full changelog for this release, compared to the last 0.x tag (0.12.3):&lt;/p&gt;
+
+&lt;h3 id=&#34;breaking-changes&#34;&gt;Breaking changes&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Scalar and return types added everywhere possible&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add support for PHP 7.4&lt;/li&gt;
+&lt;li&gt;Add support for Symfony 5&lt;/li&gt;
+&lt;li&gt;Add support for ext-pcov as a coverage driver &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/146&#34;&gt;#146&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add support for &lt;code&gt;phpunit/phpunit&lt;/code&gt; 8 and &lt;code&gt;phpunit/php-code-coverage&lt;/code&gt; 7 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/133&#34;&gt;#133&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add explicit requirement for &lt;code&gt;ext-dom&lt;/code&gt; and &lt;code&gt;ext-json&lt;/code&gt; &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/134&#34;&gt;#134&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Do not set values on PHPUnit options that do not expect values &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/127&#34;&gt;#127&lt;/a&gt;, thanks @fullbl&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Update PHPStan to 0.12 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/128&#34;&gt;#128&lt;/a&gt; + &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/145&#34;&gt;#145&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prefer Pcov or Xdebug over PHPDBG as coverage driver &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/146&#34;&gt;#146&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update coding standard to 0.3 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/131&#34;&gt;#131&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;removed&#34;&gt;Removed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Drop support for older packages: &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/134&#34;&gt;#134&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;phpunit/phpunit&lt;/code&gt; 6&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;phpunit/php-code-coverage&lt;/code&gt; &amp;lt; 6&lt;/li&gt;
+&lt;li&gt;All Symfony components &amp;lt; 3.4&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;PHAR release (it&amp;rsquo;s not working)&lt;/li&gt;
+&lt;li&gt;Disable Scrutinizer &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/132&#34;&gt;#132&lt;/a&gt;, CodeClimate and Insight, in favor of CodeCov&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Happy testing!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 1.0.0-beta2: Pcov support</title>
@@ -406,34 +472,6 @@
 
 &lt;ul&gt;
 &lt;li&gt;Fix &lt;a href=&#34;https://github.com/facile-it/paraunit/issues/88&#34;&gt;#88&lt;/a&gt;: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.8: PHAR continuous delivery</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.8/</link>
-      <pubDate>Tue, 24 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.8/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8&#34;&gt;Paraunit 0.8&lt;/a&gt; has been released!
-With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&amp;rsquo;s PHAR. Thanks to &lt;a href=&#34;https://andreas.heigl.org/2017/01/19/encrypt-a-build-result-automaticaly/&#34;&gt;Andreas Heigl&lt;/a&gt; that made this not only possible, but very straightforward to implement.&lt;/p&gt;
-
-&lt;p&gt;Next phase will be the &lt;a href=&#34;https://github.com/facile-it/paraunit/milestone/4&#34;&gt;1.0 stable release milestone&lt;/a&gt;, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.&lt;/p&gt;
-
-&lt;p&gt;For the list of the other changes of this release, here&amp;rsquo;s the full changelog:&lt;/p&gt;
-
-&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Add support for two additional coverage output format: &lt;code&gt;--php&lt;/code&gt; and &lt;code&gt;--crap4j&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Add support for colored output when using &lt;code&gt;--text-to-console&lt;/code&gt;: just use the &lt;code&gt;--ansi&lt;/code&gt; option with it&lt;/li&gt;
-&lt;li&gt;Copied and moved the JSON log printer from PHPUnit to Paraunit, to allow further support and better control over the logs&lt;/li&gt;
-&lt;li&gt;When printing the file recap at the end of the execution, print the test&amp;rsquo;s FQCN if possible instead of the filename&lt;/li&gt;
-&lt;li&gt;Various internal refactoring (DI, configuration, runner, coverage processors)&lt;/li&gt;
-&lt;li&gt;Added Continuous Deployment: the PHAR gets built and signed on Travis when tagging, and deployed automatically into a GitHub release (thanks to @heiglandreas for the tips)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
