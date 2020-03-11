@@ -8,8 +8,6 @@ cache:
 php:
   - 7.4
   - 7.3.14
-  - 7.2
-  - 7.1
 
 before_install: 
   - if [ -n "$GITHUB_API_KEY" ]; then composer config -g github-oauth.github.com ${GITHUB_API_KEY}; fi;
@@ -24,10 +22,10 @@ jobs:
   include:
     - stage: Test
       name: Prefer lowest
-      php: 7.1
+      php: 7.3
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - name: Use composer.lock
-      php: 7.2
+      php: 7.3
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
       name: End2End with Pcov
@@ -42,7 +40,6 @@ jobs:
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
     - name: PHPStan
-      php: 7.1
       script: composer phpstan
     - name: Check Code Style
       script: composer cs-check 
