@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "22fff3154832bb745a76f272f814fd0f39747193"
+                "reference": "0f43300b468a055557b121285ae583a7086f15a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/22fff3154832bb745a76f272f814fd0f39747193",
-                "reference": "22fff3154832bb745a76f272f814fd0f39747193",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0f43300b468a055557b121285ae583a7086f15a1",
+                "reference": "0f43300b468a055557b121285ae583a7086f15a1",
                 "shasum": ""
             },
             "require": {
@@ -924,7 +924,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-03-11T07:12:19+00:00"
+            "time": "2020-03-11T20:22:12+00:00"
         },
         {
             "name": "psr/container",
