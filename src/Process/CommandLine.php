@@ -37,6 +37,8 @@ class CommandLine
         $options = [
             '--configuration=' . $config->getFileFullPath(),
             '--extensions=' . implode(',', [
+                Hooks\AfterLastTest::class,
+                Hooks\BeforeTest::class,
                 Hooks\Error::class,
                 Hooks\Failure::class,
                 Hooks\Incomplete::class,
