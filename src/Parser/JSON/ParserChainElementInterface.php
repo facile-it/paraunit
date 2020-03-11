@@ -12,5 +12,5 @@ interface ParserChainElementInterface
     /**
      * @return null|TestResultInterface Returned when the chain needs to stop
      */
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem): ?TestResultInterface;
+    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface;
 }

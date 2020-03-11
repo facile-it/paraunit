@@ -101,7 +101,7 @@ class LogParser implements EventSubscriberInterface
     }
 
     /**
-     * @param mixed[] $logs
+     * @param Log[] $logs
      */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {

@@ -20,7 +20,7 @@ class LogFetcher
     }
 
     /**
-     * @return \stdClass[]
+     * @return Log[]
      */
     public function fetch(AbstractParaunitProcess $process): array
     {
@@ -33,10 +33,9 @@ class LogFetcher
             unlink($filePath);
         }
 
-        $logs = json_decode(self::cleanLog($fileContent));
-        $logs[] = $this->createLogEnding();
+        $logs = json_decode(self::cleanLog($fileContent), true, 10, JSON_THROW_ON_ERROR);
 
-        return $logs;
+        return $this->createLogObjects($logs);
     }
 
     /**
@@ -51,11 +50,25 @@ class LogFetcher
         return '[' . $splitted . ']';
     }
 
-    private function createLogEnding(): \stdClass
+    /**
+     * @param mixed[] $logs
+     *
+     * @return Log[]
+     */
+    private function createLogObjects(array $logs): array
     {
-        $logEnding = new \stdClass();
-        $logEnding->status = self::LOG_ENDING_STATUS;
+        $result = [];
 
-        return $logEnding;
+        foreach ($logs as $log) {
+            if (! array_key_exists('status', $log)) {
+                throw new \InvalidArgumentException('Malformed logs');
+            }
+
+            $result[] = new Log($log['status'], $log['message'] ?? null);
+        }
+
+        $result[] = new Log(self::LOG_ENDING_STATUS);
+
+        return $result;
     }
 }

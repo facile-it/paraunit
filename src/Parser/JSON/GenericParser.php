@@ -36,9 +36,9 @@ class GenericParser implements ParserChainElementInterface
     /**
      * {@inheritdoc}
      */
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem): ?TestResultInterface
+    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
     {
-        if ($this->logMatches($logItem)) {
+        if ($logItem->getStatus() === $this->status) {
             $testResult = $this->testResultFactory->createFromLog($logItem);
             $this->testResultContainer->handleTestResult($process, $testResult);
 
@@ -48,12 +48,8 @@ class GenericParser implements ParserChainElementInterface
         return null;
     }
 
-    protected function logMatches(\stdClass $log): bool
+    protected function logMatches(Log $log): bool
     {
-        if (! property_exists($log, 'status')) {
-            return false;
-        }
-
-        return $log->status === $this->status;
+        return $log->getStatus() === $this->status;
     }
 }

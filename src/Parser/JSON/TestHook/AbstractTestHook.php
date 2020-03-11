@@ -8,24 +8,6 @@ use Paraunit\Configuration\EnvVariables;
 
 abstract class AbstractTestHook
 {
-    public const STATUS_TEST_START = 'testStart';
-
-    public const STATUS_AFTER_LAST_TEST = 'lastTest';
-
-    public const STATUS_ERROR = 'error';
-
-    public const STATUS_WARNING = 'warning';
-
-    public const STATUS_FAILURE = 'fail';
-
-    public const STATUS_SUCCESSFUL = 'successful';
-
-    public const STATUS_INCOMPLETE = 'incomplete';
-
-    public const STATUS_SKIPPED = 'skipped';
-
-    public const STATUS_RISKY = 'risky';
-
     /** @var resource */
     protected static $logFile;
 

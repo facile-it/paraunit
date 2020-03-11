@@ -38,7 +38,7 @@ class RetryParser
     }
 
     /**
-     * @param \stdClass[] $logs
+     * @param Log[] $logs
      */
     public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
     {
@@ -47,7 +47,7 @@ class RetryParser
         }
 
         foreach ($logs as $logItem) {
-            if ($this->containsRetriableError($logItem)) {
+            if ($this->containsRetryableError($logItem)) {
                 $process->markAsToBeRetried();
                 $testResult = new MuteTestResult();
                 $this->testResultContainer->handleTestResult($process, $testResult);
@@ -59,11 +59,10 @@ class RetryParser
         return false;
     }
 
-    private function containsRetriableError(\stdClass $log): bool
+    private function containsRetryableError(Log $log): bool
     {
-        return property_exists($log, 'status')
-            && $log->status === 'error'
-            && preg_match($this->regexPattern, $log->message);
+        return $log->getStatus() === Log::STATUS_ERROR
+            && preg_match($this->regexPattern, $log->getMessage());
     }
 
     /**

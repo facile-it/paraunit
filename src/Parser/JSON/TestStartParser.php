@@ -18,9 +18,9 @@ class TestStartParser implements ParserChainElementInterface
     /** @var string */
     private $lastFunction;
 
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem): ?TestResultInterface
+    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
     {
-        if (property_exists($logItem, 'status') && $logItem->status === LogFetcher::LOG_ENDING_STATUS) {
+        if ($logItem->getStatus() === LogFetcher::LOG_ENDING_STATUS) {
             return $this->handleLogTermination($process, $logItem);
         }
 
