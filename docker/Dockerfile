@@ -23,11 +23,6 @@ COPY config/php.ini /usr/local/etc/php/conf.d/
 #COMPOSER
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# BOX
-RUN curl -LSs https://box-project.github.io/box2/installer.php | php \
-    && mv box.phar /usr/local/bin/box \
-    && chmod 755 /usr/local/bin/box
-
 RUN adduser -u 1000 -G wheel -D paraunit -s /bin/zsh
 USER paraunit
 

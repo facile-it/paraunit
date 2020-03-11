@@ -14,7 +14,6 @@ Paraunit is a tool for faster executions of PHPUnit test suites. It makes this p
 Paraunit is developed using Symfony components.
 
 ## Installation
-### From Composer
 To use this package, use Composer:
 
  * from CLI: `composer require --dev facile-it/paraunit`
@@ -23,21 +22,9 @@ To use this package, use Composer:
 ```json
 {
     "require-dev": {
-        "facile-it/paraunit": "~0.12"
+        "facile-it/paraunit": "~1.0"
     }
 }
-```
-
-### PHAR
-If you prefer you can directly download the latest version in **PHAR format**, from the [latest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar`.
-
-#### Verify the GPG signature
-All the Paraunit PHAR releases are signed with GPG. To verify the signature:
- * Download the PHAR
- * Download the associated GPG signature (the `.asc` file)
- * Use the GPG tool to verify
-```
-gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ```
 
 ## Usage
@@ -48,12 +35,13 @@ vendor/bin/paraunit run
 ```
 This command will launch all the tests in all your configured testsuites.
 
+### Collect test coverage
 Paraunit is also able to **collect the test coverage in parallel**, like this:
 ```
 vendor/bin/paraunit coverage --html=./dir
 ```
 
-It automatically **uses PHPDBG** if available, and it can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
+It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
 
 ## Documentation
 For more details about Paraunit and its usage, see the [documentation](https://engineering.facile.it/paraunit/documentation/)
