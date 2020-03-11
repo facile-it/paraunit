@@ -27,7 +27,6 @@ install:
   - ps: choco install codecov --confirm --no-progress
   - ps: choco install php --confirm --no-progress --package-parameters '""/InstallDir:C:\php""' --version (choco search php --exact --all-versions --limit-output | Select-String -Pattern $env:PHP_VERSION | ForEach-Object {$_ -Replace "php\|", ""} | Sort {[version] $_} -Descending | Select-Object -First 1)
   - cd C:\php
-  - ps: if ($env:INSTALL_PHP -imatch 1) { appveyor-retry appveyor DownloadFile "https://xdebug.org/files/php_xdebug-$env:XDEBUG_VERSION-x86_64.dll" -FileName C:\php\ext\php_xdebug.dll }
   - IF %INSTALL_PHP%==1 copy /Y php.ini-production php.ini
   - IF %INSTALL_PHP%==1 echo extension_dir=C:\php\ext >> php.ini
   - IF %INSTALL_PHP%==1 echo extension=php_openssl.dll >> php.ini
