@@ -10,6 +10,6 @@ class Skipped extends AbstractTestHook implements AfterSkippedTestHook
 {
     public function executeAfterSkippedTest(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_SKIPPED, null, $time);
+        $this->write(self::STATUS_SKIPPED, null);
     }
 }

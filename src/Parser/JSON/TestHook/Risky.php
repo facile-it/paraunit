@@ -10,6 +10,6 @@ class Risky extends AbstractTestHook implements AfterRiskyTestHook
 {
     public function executeAfterRiskyTest(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_RISKY, $message, $time);
+        $this->write(self::STATUS_RISKY, $message);
     }
 }

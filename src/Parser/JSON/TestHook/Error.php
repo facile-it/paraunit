@@ -10,6 +10,6 @@ class Error extends AbstractTestHook implements AfterTestErrorHook
 {
     public function executeAfterTestError(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_ERROR, $message, $time);
+        $this->write(self::STATUS_ERROR, $message);
     }
 }

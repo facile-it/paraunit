@@ -10,6 +10,6 @@ class Failure extends AbstractTestHook implements AfterTestFailureHook
 {
     public function executeAfterTestFailure(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_FAILURE, $message, $time);
+        $this->write(self::STATUS_FAILURE, $message);
     }
 }

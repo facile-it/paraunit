@@ -37,11 +37,10 @@ abstract class AbstractTestHook
         }
     }
 
-    protected function write(string $status, ?string $message, float $time): void
+    protected function write(string $status, ?string $message): void
     {
         $data = [
             'status' => $status,
-            'time' => $time,
         ];
 
         if ($message) {

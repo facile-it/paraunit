@@ -10,6 +10,6 @@ class Warning extends AbstractTestHook implements AfterTestWarningHook
 {
     public function executeAfterTestWarning(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_WARNING, $message, $time);
+        $this->write(self::STATUS_WARNING, $message);
     }
 }

@@ -10,6 +10,6 @@ class Successful extends AbstractTestHook implements AfterSuccessfulTestHook
 {
     public function executeAfterSuccessfulTest(string $test, float $time): void
     {
-        $this->write(self::STATUS_SUCCESSFUL, null, $time);
+        $this->write(self::STATUS_SUCCESSFUL, null);
     }
 }

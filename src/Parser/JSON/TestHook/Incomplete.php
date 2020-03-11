@@ -10,6 +10,6 @@ class Incomplete extends AbstractTestHook implements AfterIncompleteTestHook
 {
     public function executeAfterIncompleteTest(string $test, string $message, float $time): void
     {
-        $this->write(self::STATUS_INCOMPLETE, $message, $time);
+        $this->write(self::STATUS_INCOMPLETE, $message);
     }
 }
