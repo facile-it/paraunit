@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Filter;
 
-if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
-    \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
-}
-
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use SebastianBergmann\FileIterator\Facade;
