@@ -1,29 +1,29 @@
 language: php
 dist: trusty
-sudo: false
+os: linux
 cache:
   directories:
     - $HOME/.composer/cache/files
 
 php:
   - 7.4
-  - 7.3
+  - 7.3.14
   - 7.2
   - 7.1
 
 before_install: 
-  - if [[ !$XDEBUG ]]; then phpenv config-rm xdebug.ini; fi
   - if [ -n "$GITHUB_API_KEY" ]; then composer config -g github-oauth.github.com ${GITHUB_API_KEY}; fi;
 
 install: composer update --prefer-dist --prefer-stable --no-interaction
 
-script: bin/phpunit --enforce-time-limit
+script: 
+  - bin/phpunit --enforce-time-limit --coverage-clover clover.xml
+  - bash <(curl -s https://codecov.io/bash) -f clover.xml
 
 jobs:
   include:
     - stage: Test
-      env: XDEBUG=true
-    - name: Prefer lowest
+      name: Prefer lowest
       php: 7.1
       install: composer update --prefer-lowest --prefer-dist --prefer-stable --no-interaction
     - name: Use composer.lock
@@ -31,50 +31,18 @@ jobs:
       install: composer install --prefer-dist --no-interaction
     - stage: Code style, static analysis and E2E
       name: End2End with Pcov
-      env: XDEBUG=true
-      install: 
+      install:
         - pecl install pcov
         - composer update --no-dev --no-interaction
       script:
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
     - name: End2End with Xdebug
-      env: XDEBUG=true
-      install: composer install --no-dev --no-interaction
       script: 
         - src/Bin/paraunit run FakeDriverTest
         - src/Bin/paraunit coverage FakeDriverTest --text
-    - env: PHPSTAN=true
+    - name: PHPStan
       php: 7.1
       script: composer phpstan
-    - env: CS-FIXER=true
+    - name: Check Code Style
       script: composer cs-check 
-    - stage: Coverage
-      env: CC_TEST_REPORTER_ID=8c560bd57df8d9409ef8d6c077538025cd023256211b5d08f8892910c6ed6b5f
-      before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
-      script: phpdbg -qrr bin/phpunit --enforce-time-limit --coverage-clover ./build/logs/clover.xml
-      after_success:
-        - php bin/php-coveralls -v
-        - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
-
-before_deploy:
-  - composer update --no-dev
-  - curl -LSs https://box-project.github.io/box2/installer.php | php
-  - php box.phar build
-  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 contrib/ParaunitSigningKeys.asc.gpg && gpg --batch --yes --import contrib/ParaunitSigningKeys.asc
-  - echo $SIGN_KEY | gpg --passphrase-fd 0 -u E4F5798D --armor --detach-sig paraunit.phar 
-  - gpg --verify paraunit.phar.asc paraunit.phar
-
-deploy:
-  provider: releases
-  api_key: $GITHUB_API_KEY
-  file:
-    - paraunit.phar
-    - paraunit.phar.asc
-  skip_cleanup: true
-  on:
-    tags: true
-    php: 7.1
