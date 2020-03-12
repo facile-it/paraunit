@@ -26,7 +26,7 @@ class AbnormalTerminatedParser extends GenericParser
         if ($logItem->getStatus() === Log::STATUS_TEST_START) {
             $process->setWaitingForTestResult(true);
             $this->saveTestFQCN($process, $logItem);
-    
+
             return new NullTestResult();
         }
 
