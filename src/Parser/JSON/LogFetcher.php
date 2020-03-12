@@ -64,10 +64,10 @@ class LogFetcher
                 throw new \InvalidArgumentException('Malformed logs');
             }
 
-            $result[] = new Log($log['status'], $log['message'] ?? null);
+            $result[] = new Log($log['status'], $log['test'] ?? null, $log['message'] ?? null);
         }
 
-        $result[] = new Log(self::LOG_ENDING_STATUS);
+        $result[] = new Log(self::LOG_ENDING_STATUS, null, null);
 
         return $result;
     }
