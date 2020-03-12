@@ -6,7 +6,6 @@ namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -27,13 +26,11 @@ class GenericParserTest extends BaseUnitTestCase
 
         $result = new TestResultWithMessage('b', 'c');
 
-        $factory = $this->prophesize(TestResultFactory::class);
-        $factory->createFromLog($log)->willReturn($result);
         $resultContainer = $this->prophesize(TestResultContainer::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int) $shouldMatch);
 
-        $parser = new GenericParser($factory->reveal(), $resultContainer->reveal(), $statusToMatch);
+        $parser = new GenericParser($resultContainer->reveal(), $statusToMatch);
 
         $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
 

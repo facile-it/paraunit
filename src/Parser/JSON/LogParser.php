@@ -90,9 +90,8 @@ class LogParser implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 
-    private function processLog(AbstractParaunitProcess $process, \stdClass $logItem): void
+    private function processLog(AbstractParaunitProcess $process, Log $logItem): void
     {
-        /** @var ParserChainElementInterface $resultContainer */
         foreach ($this->parsers as $resultContainer) {
             if ($resultContainer->handleLogItem($process, $logItem) instanceof TestResultInterface) {
                 return;

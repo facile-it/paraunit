@@ -8,7 +8,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\NullTestResult;
-use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 class AbnormalTerminatedParser extends GenericParser
@@ -16,9 +15,9 @@ class AbnormalTerminatedParser extends GenericParser
     /** @var string */
     private $lastStartedTest = '[UNKNOWN]';
 
-    public function __construct(TestResultFactory $testResultFactory, TestResultHandlerInterface $testResultHandler)
+    public function __construct(TestResultHandlerInterface $testResultHandler)
     {
-        parent::__construct($testResultFactory, $testResultHandler, LogFetcher::LOG_ENDING_STATUS);
+        parent::__construct($testResultHandler, LogFetcher::LOG_ENDING_STATUS);
     }
 
     public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface

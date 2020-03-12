@@ -7,13 +7,11 @@ namespace Paraunit\Parser\JSON;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Paraunit\TestResult\TestResultFactory;
+use Paraunit\TestResult\MuteTestResult;
+use Paraunit\TestResult\TestResultWithMessage;
 
 class GenericParser implements ParserChainElementInterface
 {
-    /** @var TestResultFactory */
-    protected $testResultFactory;
-
     /** @var TestResultHandlerInterface */
     protected $testResultContainer;
 
@@ -24,11 +22,9 @@ class GenericParser implements ParserChainElementInterface
      * @param string $status The status that the parser should catch
      */
     public function __construct(
-        TestResultFactory $testResultFactory,
         TestResultHandlerInterface $testResultContainer,
         string $status
     ) {
-        $this->testResultFactory = $testResultFactory;
         $this->testResultContainer = $testResultContainer;
         $this->status = $status;
     }
@@ -39,7 +35,7 @@ class GenericParser implements ParserChainElementInterface
     public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
     {
         if ($logItem->getStatus() === $this->status) {
-            $testResult = $this->testResultFactory->createFromLog($logItem);
+            $testResult = $this->createFromLog($logItem);
             $this->testResultContainer->handleTestResult($process, $testResult);
 
             return $testResult;
@@ -51,5 +47,14 @@ class GenericParser implements ParserChainElementInterface
     protected function logMatches(Log $log): bool
     {
         return $log->getStatus() === $this->status;
+    }
+
+    private function createFromLog(Log $logItem)
+    {
+        if ($logItem->getMessage()) {
+            return new TestResultWithMessage($logItem->getTest(), $logItem->getMessage());
+        }
+
+        return new MuteTestResult();
     }
 }
