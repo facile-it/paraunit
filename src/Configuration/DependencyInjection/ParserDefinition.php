@@ -12,7 +12,6 @@ use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
-use Paraunit\Parser\JSON\TestStartParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
 use Paraunit\TestResult\TestResultFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -55,10 +54,9 @@ class ParserDefinition
     {
         $testResultFactory = new Reference(TestResultFactory::class);
         $parserDefinitions = [
-            TestStartParser::class => new Definition(TestStartParser::class),
-            'paraunit.parser.pass_parser' => new Definition(GenericParser::class, [
+            'paraunit.parser.success_parser' => new Definition(GenericParser::class, [
                 $testResultFactory,
-                new Reference('paraunit.test_result.pass_container'),
+                new Reference('paraunit.test_result.success_container'),
                 Log::STATUS_SUCCESSFUL,
             ]),
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [

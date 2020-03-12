@@ -75,8 +75,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             Runner::class,
             EventDispatcherInterface::class,
             TestResultFactory::class,
-            'paraunit.test_result.pass_container',
-            'paraunit.test_result.pass_format',
+            'paraunit.test_result.success_container',
+            'paraunit.test_result.success_format',
 
             CoverageFetcher::class,
             CoverageMerger::class,
