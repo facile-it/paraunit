@@ -23,11 +23,15 @@ abstract class AbstractTestHook
         }
     }
 
-    protected function write(string $status, ?string $message): void
+    protected function write(string $status, ?string $test, ?string $message): void
     {
         $data = [
             'status' => $status,
         ];
+
+        if ($test) {
+            $data['test'] = $this->convertToUtf8($test);
+        }
 
         if ($message) {
             $data['message'] = $this->convertToUtf8($message);

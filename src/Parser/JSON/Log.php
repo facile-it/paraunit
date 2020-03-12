@@ -28,17 +28,26 @@ class Log
     private $status;
 
     /** @var string|null */
+    private $test;
+
+    /** @var string|null */
     private $message;
 
-    public function __construct(string $status, ?string $message = null)
+    public function __construct(string $status, ?string $test, ?string $message)
     {
         $this->status = $status;
+        $this->test = $test;
         $this->message = $message;
     }
 
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getTest(): ?string
+    {
+        return $this->test;
     }
 
     public function getMessage(): ?string

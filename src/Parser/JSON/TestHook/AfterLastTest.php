@@ -11,6 +11,6 @@ class AfterLastTest extends AbstractTestHook implements AfterLastTestHook
 {
     public function executeAfterLastTest(): void
     {
-        $this->write(Log::STATUS_AFTER_LAST_TEST, null);
+        $this->write(Log::STATUS_AFTER_LAST_TEST, null, null);
     }
 }
