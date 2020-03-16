@@ -104,6 +104,16 @@ class LogParser implements EventSubscriberInterface
      */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
-        return $process->getExitCode() === 0 && count($logs) === 1;
+        if ($process->getExitCode() !== 0) {
+            return false;
+        }
+
+        foreach ($logs as $log) {
+            if ($log->getStatus() === Log::STATUS_TEST_START) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
