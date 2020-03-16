@@ -20,13 +20,6 @@ class AbstractTestHookTest extends BaseFunctionalTestCase
 
     public function testWrite(): void
     {
-        $testName = __CLASS__;
-        $testSuite = $this->prophesize(TestSuite::class);
-        $testSuite->getName()
-            ->willReturn($testName);
-        $testSuite->count()
-            ->willReturn(1);
-
         putenv(EnvVariables::PROCESS_UNIQUE_ID . '=' . md5(__FILE__));
         $logFullPath = $this->getRandomTempDir() . md5(__FILE__) . '.json.log';
 
@@ -36,7 +29,7 @@ class AbstractTestHookTest extends BaseFunctionalTestCase
 
         $content = $this->getFileContent($logFullPath);
         $this->assertJson($content);
-        $decodedJson = json_decode($content, true);
-        $this->assertEquals(['event' => 'suiteStart', 'suite' => $testName, 'tests' => 1], $decodedJson);
+        $decodedJson = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        $this->assertEquals(['status' => 'successful', 'test' => 'testname'], $decodedJson);
     }
 }
