@@ -45,14 +45,14 @@ class ProcessFactoryTest extends BaseUnitTestCase
 
         $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
         $commandLine = $processWrapper->getCommandLine();
-        $this->assertContains('TestTest.php', $commandLine);
-        $this->assertContains('--specific=value-for-TestTest.php', $commandLine);
+        $this->assertStringContainsString('TestTest.php', $commandLine);
+        $this->assertStringContainsString('--specific=value-for-TestTest.php', $commandLine);
 
         $processWrapper = $factory->create('TestTest2.php');
 
         $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
         $commandLine = $processWrapper->getCommandLine();
-        $this->assertContains('TestTest2.php', $commandLine);
-        $this->assertContains('--specific=value-for-TestTest2.php', $commandLine);
+        $this->assertStringContainsString('TestTest2.php', $commandLine);
+        $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
     }
 }

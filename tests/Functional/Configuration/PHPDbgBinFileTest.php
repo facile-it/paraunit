@@ -21,7 +21,7 @@ class PHPDbgBinFileTest extends BaseFunctionalTestCase
         $bin = new PHPDbgBinFile();
 
         $this->assertStringEndsWith('phpdbg', $bin->getPhpDbgBin());
-        $this->assertNotContains(' ', $bin->getPhpDbgBin());
-        $this->assertNotContains("\n", $bin->getPhpDbgBin());
+        $this->assertStringNotContainsString(' ', $bin->getPhpDbgBin());
+        $this->assertStringNotContainsString("\n", $bin->getPhpDbgBin());
     }
 }

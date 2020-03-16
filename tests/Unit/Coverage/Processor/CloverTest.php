@@ -22,7 +22,7 @@ class CloverTest extends BaseUnitTestCase
         $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?xml', $content);
-        $this->assertContains('<coverage generated=', $content);
-        $this->assertContains('</coverage>', $content);
+        $this->assertStringContainsString('<coverage generated=', $content);
+        $this->assertStringContainsString('</coverage>', $content);
     }
 }

@@ -37,8 +37,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertContains('fail message', $testResult->getFailureMessage());
-        $this->assertContains('test output', $testResult->getFailureMessage());
+        $this->assertStringContainsString('fail message', $testResult->getFailureMessage());
+        $this->assertStringContainsString('test output', $testResult->getFailureMessage());
     }
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
@@ -50,8 +50,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertContains('fail message', $testResult->getFailureMessage());
-        $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
+        $this->assertStringContainsString('fail message', $testResult->getFailureMessage());
+        $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
     }
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void

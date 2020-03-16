@@ -32,7 +32,7 @@ class TextSummaryTest extends BaseUnitTestCase
         $content = file_get_contents($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertNotFalse($content);
-        $this->assertContains($expectedString, $content);
+        $this->assertStringContainsString($expectedString, $content);
     }
 
     /**

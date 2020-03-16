@@ -25,7 +25,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
 
-        $this->assertNotContains('Coverage', $output->getOutput());
+        $this->assertStringNotContainsString('Coverage', $output->getOutput());
         $this->assertOutputOrder($output, [
             'PARAUNIT',
             Paraunit::getVersion(),
@@ -47,7 +47,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         /** @var int $retryCount */
         $retryCount = $this->getParameter('paraunit.max_retry_count');
-        $this->assertContains(str_repeat('A', $retryCount) . 'E', $output->getOutput());
+        $this->assertStringContainsString(str_repeat('A', $retryCount) . 'E', $output->getOutput());
         $this->assertOutputOrder($output, [
             'Errors output',
             EntityManagerClosedTestStub::class . '::testBrokenTest',
@@ -56,7 +56,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'files with RETRIED',
             'EntityManagerClosedTestStub',
         ]);
-        $this->assertContains('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
+        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
     }
 
     /**
@@ -69,7 +69,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $exitCode = $this->executeRunner();
 
-        $this->assertContains(str_repeat('A', 3) . 'E', $this->getConsoleOutput()->getOutput());
+        $this->assertStringContainsString(str_repeat('A', 3) . 'E', $this->getConsoleOutput()->getOutput());
         $this->assertNotEquals(0, $exitCode);
     }
 
@@ -92,18 +92,18 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
-        $this->assertContains(
+        $this->assertMatchesRegularExpression('/\nX\s+1\n/', $output, 'Missing X output');
+        $this->assertStringContainsString(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
             'Missing recap title'
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             SegFaultTestStub::class,
             $output,
             'Missing failing filename'
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Sebastian Bergmann',
             $output,
             'Missing general output from the PHPUnit process'
@@ -118,13 +118,13 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->executeRunner();
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nW\s+1\n/', $output, 'Missing W output');
-        $this->assertContains(
+        $this->assertMatchesRegularExpression('/\nW\s+1\n/', $output, 'Missing W output');
+        $this->assertStringContainsString(
             '1 files with WARNINGS:',
             $output,
             'Missing recap title'
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             MissingProviderTestStub::class,
             $output,
             'Missing warned filename'
@@ -145,11 +145,11 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertEquals(0, $this->executeRunner());
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertNotContains('...', $output);
-        $this->assertNotContains('ABNORMAL TERMINATION', $output);
-        $this->assertContains('Executed: 1 test classes, 0 tests', $output);
-        $this->assertContains('1 files with NO TESTS EXECUTED', $output);
-        $this->assertContains('ThreeGreenTestStub.php', $output);
+        $this->assertStringNotContainsString('...', $output);
+        $this->assertStringNotContainsString('ABNORMAL TERMINATION', $output);
+        $this->assertStringContainsString('Executed: 1 test classes, 0 tests', $output);
+        $this->assertStringContainsString('1 files with NO TESTS EXECUTED', $output);
+        $this->assertStringContainsString('ThreeGreenTestStub.php', $output);
     }
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults(): void
@@ -160,9 +160,9 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
-        $this->assertContains('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
-        $this->assertNotContains('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
+        $this->assertMatchesRegularExpression('/\nX\s+1\n/', $output, 'Missing X output');
+        $this->assertStringContainsString('1 files with ABNORMAL TERMINATIONS', $output, 'Missing fatal error recap title');
+        $this->assertStringNotContainsString('UNKNOWN', $output, 'REGRESSION: fatal error mistaken for unknown result');
     }
 
     public function testRegressionMissingLogAsUnknownResults(): void
@@ -173,9 +173,9 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/\nX\s+1\n/', $output, 'Missing X output');
-        $this->assertContains('UNKNOWN', $output);
-        $this->assertContains(
+        $this->assertMatchesRegularExpression('/\nX\s+1\n/', $output, 'Missing X output');
+        $this->assertStringContainsString('UNKNOWN', $output);
+        $this->assertStringContainsString(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
             'Missing abnormal termination recap title'
@@ -203,10 +203,10 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertRegExp('/^AAA\.F\.E/m', $output);
-        $this->assertContains('Executed: 1 test classes (3 retried), 4 tests', $output);
-        $this->assertContains('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
-        $this->assertNotContains('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
+        $this->assertMatchesRegularExpression('/^AAA\.F\.E/m', $output);
+        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 4 tests', $output);
+        $this->assertStringContainsString('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
+        $this->assertStringNotContainsString('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
     }
 
     private function executeRunner(): int

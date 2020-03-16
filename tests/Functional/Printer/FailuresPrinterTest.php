@@ -21,10 +21,10 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
         $output = $this->getConsoleOutput();
 
         $this->assertNotEmpty($output->getOutput());
-        $this->assertNotContains('PASSED output', $output->getOutput(), '', true);
-        $this->assertNotContains('SKIPPED output', $output->getOutput(), '', true);
-        $this->assertNotContains('INCOMPLETE output', $output->getOutput(), '', true);
-        $this->assertNotContains('files with PASSED', $output->getOutput(), '', true);
+        $this->assertStringNotContainsStringIgnoringCase('PASSED output', $output->getOutput());
+        $this->assertStringNotContainsStringIgnoringCase('SKIPPED output', $output->getOutput());
+        $this->assertStringNotContainsStringIgnoringCase('INCOMPLETE output', $output->getOutput());
+        $this->assertStringNotContainsStringIgnoringCase('files with PASSED', $output->getOutput());
         $this->assertOutputOrder($output, [
             'Unknown',
             'Abnormal Terminations (fatal Errors, Segfaults) output:',

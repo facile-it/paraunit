@@ -25,7 +25,7 @@ class HtmlTest extends BaseUnitTestCase
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<!DOCTYPE html>', $content);
-        $this->assertContains('<title>Code Coverage for', $content);
-        $this->assertContains('</html>', $content);
+        $this->assertStringContainsString('<title>Code Coverage for', $content);
+        $this->assertStringContainsString('</html>', $content);
     }
 }

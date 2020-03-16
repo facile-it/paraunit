@@ -22,7 +22,7 @@ class Crap4jTest extends BaseUnitTestCase
         $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?xml', $content);
-        $this->assertContains('<crap_result>', $content);
-        $this->assertContains('</crap_result>', $content);
+        $this->assertStringContainsString('<crap_result>', $content);
+        $this->assertStringContainsString('</crap_result>', $content);
     }
 }
