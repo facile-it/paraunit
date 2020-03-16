@@ -37,6 +37,7 @@ class GenericParser implements ParserChainElementInterface
         if ($logItem->getStatus() === $this->status) {
             $testResult = $this->createFromLog($logItem);
             $this->testResultContainer->handleTestResult($process, $testResult);
+            $process->setWaitingForTestResult(false);
 
             return $testResult;
         }

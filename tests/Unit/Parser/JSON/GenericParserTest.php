@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\GenericParser;
+use Paraunit\Parser\JSON\Log;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
@@ -21,23 +22,25 @@ class GenericParserTest extends BaseUnitTestCase
         string $status,
         bool $shouldMatch
     ): void {
-        $log = new \stdClass();
-        $log->status = $status;
-
+        $log = new Log($status, 'b', 'c');
         $result = new TestResultWithMessage('b', 'c');
 
         $resultContainer = $this->prophesize(TestResultContainer::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int) $shouldMatch);
+        $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
 
         $parser = new GenericParser($resultContainer->reveal(), $statusToMatch);
 
-        $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
+        $parsedResult = $parser->handleLogItem($process, $log);
 
         if ($shouldMatch) {
             $this->assertEquals($result, $parsedResult);
+            $this->assertFalse($process->isWaitingForTestResult(), 'Process not marked as no longer waiting for results');
         } else {
             $this->assertNull($parsedResult);
+            $this->assertTrue($process->isWaitingForTestResult(), 'Process incorrectly marked as no longer waiting for results');
         }
     }
 

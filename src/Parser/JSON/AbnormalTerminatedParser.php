@@ -29,8 +29,11 @@ class AbnormalTerminatedParser extends GenericParser
             return new NullTestResult();
         }
 
-        if ($logItem->getStatus() === LogFetcher::LOG_ENDING_STATUS) {
-            return new TestResultWithAbnormalTermination($this->lastStartedTest);
+        if ($logItem->getStatus() === LogFetcher::LOG_ENDING_STATUS && $process->isWaitingForTestResult()) {
+            $testResult = new TestResultWithAbnormalTermination($this->lastStartedTest);
+            $this->testResultContainer->handleTestResult($process, $testResult);
+
+            return $testResult;
         }
 
         return null;
