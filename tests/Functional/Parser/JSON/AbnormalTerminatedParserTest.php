@@ -47,7 +47,6 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
         $parsedResult = $parser->handleLogItem($process, $log);
 
         $this->assertNull($parsedResult);
-        $this->assertFalse($process->hasAbnormalTermination());
     }
 
     /**

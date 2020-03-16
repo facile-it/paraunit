@@ -23,6 +23,4 @@
   "status": "warning",
   "test": "Warning",
   "message": "The data provider specified for Tests\\Stub\\ThreeGreenTestStub::testWarning is invalid.\nReflectionException: Trying to invoke private method Tests\\Stub\\ThreeGreenTestStub::someInvalidProvider() from scope ReflectionMethod\n"
-}{
-  "status": "lastTestEnd"
 }

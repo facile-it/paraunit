@@ -52,6 +52,4 @@
 }{
   "status": "successful",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
-}{
-  "status": "lastTestEnd"
 }

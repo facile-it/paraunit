@@ -54,6 +54,4 @@
 }{
   "status": "error",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
-}{
-  "status": "lastTestEnd"
 }

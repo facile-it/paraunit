@@ -49,7 +49,6 @@ class CommandLineTest extends BaseUnitTestCase
         });
         $this->assertCount(1, $extensions, 'Missing --extensions from options');
         $registeredExtensions = array_pop($extensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\AfterLastTest::class, $registeredExtensions);
         $this->assertStringContainsStringIgnoringCase(Hooks\BeforeTest::class, $registeredExtensions);
         $this->assertStringContainsStringIgnoringCase(Hooks\Error::class, $registeredExtensions);
         $this->assertStringContainsStringIgnoringCase(Hooks\Failure::class, $registeredExtensions);

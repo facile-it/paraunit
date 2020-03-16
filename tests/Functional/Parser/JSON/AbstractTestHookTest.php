@@ -6,7 +6,6 @@ namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Parser\JSON\TestHook\Successful;
-use PHPUnit\Framework\TestSuite;
 use Tests\BaseFunctionalTestCase;
 
 class AbstractTestHookTest extends BaseFunctionalTestCase
