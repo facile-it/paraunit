@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f8daf0260b06ebb651a2f5218a66248",
+    "content-hash": "41c6b1e176fbe054defc2a418381986e",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0f43300b468a055557b121285ae583a7086f15a1"
+                "reference": "a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0f43300b468a055557b121285ae583a7086f15a1",
-                "reference": "0f43300b468a055557b121285ae583a7086f15a1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20",
+                "reference": "a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20",
                 "shasum": ""
             },
             "require": {
@@ -924,7 +924,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-03-11T20:22:12+00:00"
+            "time": "2020-03-13T08:30:12+00:00"
         },
         {
             "name": "psr/container",
@@ -3724,14 +3724,7 @@
             "time": "2020-02-04T09:47:34+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "9.1",
-            "alias_normalized": "9.1.0.0",
-            "version": "9999999-dev",
-            "package": "phpunit/phpunit"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "phpunit/phpunit": 20,

@@ -29,7 +29,7 @@
         "jean85/pretty-package-versions": "^1.0.3",
         "phpunit/php-code-coverage": "^8.0",
         "phpunit/php-file-iterator": "^3.0",
-        "phpunit/phpunit": "dev-master as 9.1",
+        "phpunit/phpunit": "^9.1-dev",
         "symfony/console": "^3.4||^4.0||^5.0",
         "symfony/dependency-injection": "^3.4||^4.0||^5.0",
         "symfony/event-dispatcher": "^3.4||^4.0||^5.0",
