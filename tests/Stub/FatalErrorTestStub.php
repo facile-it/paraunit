@@ -6,14 +6,13 @@ namespace Tests\Stub;
 
 class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    public function testBrokenTest()
+    public function testBrokenTest(): void
     {
-        ini_set('memory_limit', '2M');
+        $foo = new class() implements \Serializable {
+        };
 
-        $arr = [];
+        $message = 'This assertion should not happen: ' . json_encode($foo);
 
-        while (true) {
-            $arr[] = 'Allocated memory... allocated memory everywhere!';
-        }
+        self::assertTrue(true, $message);
     }
 }
