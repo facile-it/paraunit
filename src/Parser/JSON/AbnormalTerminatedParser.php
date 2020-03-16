@@ -8,6 +8,7 @@ use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 use Paraunit\TestResult\NullTestResult;
+use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 class AbnormalTerminatedParser extends GenericParser
 {
@@ -32,7 +33,15 @@ class AbnormalTerminatedParser extends GenericParser
             return new NullTestResult();
         }
 
-        return parent::handleLogItem($process, $logItem);
+        if ($this->logMatches($logItem)) {
+            $testResult = new TestResultWithAbnormalTermination($logItem->getTest() ?? $this->lastStartedTest);
+            $this->testResultContainer->handleTestResult($process, $testResult);
+            $process->setWaitingForTestResult(false);
+
+            return $testResult;
+        }
+
+        return null;
     }
 
     private function saveTestFQCN(AbstractParaunitProcess $process, Log $logItem): void

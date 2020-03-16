@@ -17,20 +17,19 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     public function testHandleLogItemWithAbnormalTermination(): void
     {
         $process = new StubbedParaunitProcess();
-        $process->setWaitingForTestResult(false);
         $logStart = new Log(Log::STATUS_TEST_START, __METHOD__, null);
         $logEnding = new Log(LogFetcher::LOG_ENDING_STATUS, __METHOD__, null);
         /** @var AbnormalTerminatedParser $parser */
         $parser = $this->getService(AbnormalTerminatedParser::class);
 
-        $parsedResult = $parser->handleLogItem($process, $logStart);
+        $firstParsedResult = $parser->handleLogItem($process, $logStart);
 
-        $this->assertInstanceOf(NullTestResult::class, $parsedResult);
+        $this->assertInstanceOf(NullTestResult::class, $firstParsedResult);
         $this->assertTrue($process->isWaitingForTestResult());
 
-        $parsedResult = $parser->handleLogItem($process, $logEnding);
+        $secondParsedResult = $parser->handleLogItem($process, $logEnding);
 
-        $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $parsedResult);
+        $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $secondParsedResult);
         $this->assertFalse($process->isWaitingForTestResult());
     }
 
