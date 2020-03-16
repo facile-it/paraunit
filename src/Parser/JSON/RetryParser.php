@@ -49,7 +49,7 @@ class RetryParser
         foreach ($logs as $logItem) {
             if ($this->containsRetryableError($logItem)) {
                 $process->markAsToBeRetried();
-                $testResult = new MuteTestResult();
+                $testResult = new MuteTestResult($logItem->getTest());
                 $this->testResultContainer->handleTestResult($process, $testResult);
 
                 return true;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\Interfaces;
 
-interface FunctionNameInterface
+interface TestNameInterface
 {
-    public function getFunctionName(): string;
+    public function getTestName(): string;
 }

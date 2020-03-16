@@ -56,6 +56,6 @@ class GenericParser implements ParserChainElementInterface
             return new TestResultWithMessage($logItem->getTest(), $logItem->getMessage());
         }
 
-        return new MuteTestResult();
+        return new MuteTestResult($logItem->getTest());
     }
 }
