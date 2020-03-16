@@ -1,740 +1,304 @@
 {
-    "event": "suiteStart",
-    "suite": "",
-    "tests": 118
-}{
-    "event": "suiteStart",
-    "suite": "unit",
-    "tests": 83
-}{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
-    "tests": 1
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
-    "test": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest::testGenerate"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest",
-    "test": "Paraunit\\Tests\\Stub\\JSONLogFilenameTest::testGenerate",
-    "status": "pass",
-    "time": 0.002932071685791,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
-    "tests": 1
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest::testGetPhpunitBin"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitBinFileTest::testGetPhpunitBin",
-    "status": "pass",
-    "time": 0.00070714950561523,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "tests": 4
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryDoesUseDefaultFileName",
-    "status": "pass",
-    "time": 0.00086498260498047,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeFilenameDoesNotUseDefaultFileName",
-    "status": "pass",
-    "time": 0.0005488395690918,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testRelativeDirectoryAndDefaultFileDoesNotExistThrowException",
-    "status": "pass",
-    "time": 0.00083804130554199,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest",
-    "test": "Paraunit\\Tests\\Stub\\PHPUnitConfigTest::testInvalidDirectoryProvidedThrowException",
-    "status": "pass",
-    "time": 0.00037598609924316,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "tests": 6
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_gets_only_requested_testsuite"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_gets_only_requested_testsuite",
-    "status": "pass",
-    "time": 0.023076057434082,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_suffix_attribute"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_suffix_attribute",
-    "status": "pass",
-    "time": 0.0053908824920654,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_prefix_attribute"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_prefix_attribute",
-    "status": "pass",
-    "time": 0.0055530071258545,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_exclude_nodes"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_exclude_nodes",
-    "status": "pass",
-    "time": 0.0064339637756348,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_avoids_duplicate_runs"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_avoids_duplicate_runs",
-    "status": "pass",
-    "time": 0.0071191787719727,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_file_nodes"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Filter\\FilterTest",
-    "test": "Tests\\Unit\\Filter\\FilterTest::testFilterTestFiles_supports_file_nodes",
-    "status": "pass",
-    "time": 0.0063328742980957,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest",
-    "tests": 5
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "tests": 5
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #0 ('error', null, 'error', 'anyMessage')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #0 ('error', null, 'error', 'anyMessage')",
-    "status": "pass",
-    "time": 0.0068230628967285,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #1 ('error', 'Error found', 'error', 'Error found')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #1 ('error', 'Error found', 'error', 'Error found')",
-    "status": "pass",
-    "time": 0.0030789375305176,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #2 ('error', null, 'pass', 'anyMessage', false)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #2 ('error', null, 'pass', 'anyMessage', false)",
-    "status": "pass",
-    "time": 0.0025160312652588,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anotherMessage', false)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #3 ('error', 'Error found', 'error', 'anotherMessage', false)",
-    "status": "pass",
-    "time": 0.002514123916626,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anotherMessage', false)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult",
-    "test": "Tests\\Unit\\Parser\\AbstractParserTest::testParsingFoundResult with data set #4 ('error', 'Error found', 'pass', 'anotherMessage', false)",
-    "status": "pass",
-    "time": 0.002324104309082,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogFetcherTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogFetcherTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetchAppendsLogEndingAnywayWithMissingLog"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\JSONLogFetcherTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetchAppendsLogEndingAnywayWithMissingLog",
-    "status": "pass",
-    "time": 0.0021848678588867,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogFetcherTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetch"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\JSONLogFetcherTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogFetcherTest::testFetch",
-    "status": "pass",
-    "time": 0.0017800331115723,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogParserTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogParserTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testOnProcessTerminatedHasProperChainInterruption"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\JSONLogParserTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testOnProcessTerminatedHasProperChainInterruption",
-    "status": "pass",
-    "time": 0.0074429512023926,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\JSONLogParserTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testParseHandlesMissingLogs"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\JSONLogParserTest",
-    "test": "Tests\\Unit\\Parser\\JSONLogParserTest::testParseHandlesMissingLogs",
-    "status": "pass",
-    "time": 0.0031771659851074,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest",
-    "tests": 14
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "tests": 4
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #0 ('Blah Blah The EntityManager i...h Blah')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #0 ('Blah Blah The EntityManager i...h Blah')",
-    "status": "pass",
-    "time": 0.0025858879089355,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #1 ('SQLSTATE[HY000]: General erro...action')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #1 ('SQLSTATE[HY000]: General erro...action')",
-    "status": "pass",
-    "time": 0.0016548633575439,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #2 ('SQLSTATE[HY000]: General erro...action')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #2 ('SQLSTATE[HY000]: General erro...action')",
-    "status": "pass",
-    "time": 0.0018491744995117,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #3 ('SQLSTATE[HY000]: General erro...7:38))')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndSetRetry with data set #3 ('SQLSTATE[HY000]: General erro...7:38))')",
-    "status": "pass",
-    "time": 0.0015778541564941,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "tests": 9
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #0 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #0 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.0021200180053711,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #1 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #1 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.0018699169158936,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #2 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #2 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')",
-    "status": "pass",
-    "time": 0.0019128322601318,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #3 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #3 ('[{\\n    \"event\": \"suiteStart\",...l)\"\\n}]')",
-    "status": "pass",
-    "time": 0.0017600059509277,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #4 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #4 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.0016791820526123,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #5 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #5 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.0016958713531494,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #6 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #6 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.0026688575744629,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #7 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #7 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.001971960067749,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #8 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetry with data set #8 ('[{\\n    \"event\": \"suiteStart\",... \"\"\\n}]')",
-    "status": "pass",
-    "time": 0.00164794921875,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetryAfterLimit"
-}{
-    "event": "test",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\RetryParserTest::testParseAndContinueWithNoRetryAfterLimit",
-    "status": "pass",
-    "time": 0.0017259120941162,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest",
-    "tests": 8
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "tests": 4
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #0 ('testStart', true, true)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #0 ('testStart', true, true)",
-    "status": "pass",
-    "time": 0.00087904930114746,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #1 ('suiteStart', true, true)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #1 ('suiteStart', true, true)",
-    "status": "pass",
-    "time": 0.00017881393432617,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #2 ('test', false, false)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #2 ('test', false, false)",
-    "status": "pass",
-    "time": 0.00022411346435547,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #3 ('aaaa', false, false)"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItem with data set #3 ('aaaa', false, false)",
-    "status": "pass",
-    "time": 0.0002601146697998,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemCatchesEndingIfGraceful"
-}{
-    "event": "test",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemCatchesEndingIfGraceful",
-    "status": "pass",
-    "time": 0.00044107437133789,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsNoCulpableFunctionForMissingLog"
-}{
-    "event": "test",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsNoCulpableFunctionForMissingLog",
-    "status": "pass",
-    "time": 0.00029182434082031,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunction"
-}{
-    "event": "test",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunction",
-    "status": "pass",
-    "time": 0.00015807151794434,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunctionToRightProcess"
-}{
-    "event": "test",
-    "suite": "",
-    "test": "Tests\\Unit\\Parser\\TestStartParserTest::testHandleLogItemAppendsCulpableFunctionToRightProcess",
-    "status": "pass",
-    "time": 0.00027894973754883,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest",
-    "tests": 8
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "tests": 8
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #0 ('pass')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #0 ('pass')",
-    "status": "pass",
-    "time": 0.0035140514373779,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #1 ('error')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #1 ('error')",
-    "status": "pass",
-    "time": 0.0032780170440674,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #2 ('fail')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #2 ('fail')",
-    "status": "pass",
-    "time": 0.0033349990844727,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #3 ('pass')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #3 ('pass')",
-    "status": "pass",
-    "time": 0.0030758380889893,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #4 ('testStart')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #4 ('testStart')",
-    "status": "pass",
-    "time": 0.003093957901001,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #5 ('suiteStart')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #5 ('suiteStart')",
-    "status": "pass",
-    "time": 0.0030770301818848,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #6 ('qwerty')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #6 ('qwerty')",
-    "status": "pass",
-    "time": 0.0037579536437988,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #7 ('trollingYou')"
-}{
-    "event": "test",
-    "suite": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything",
-    "test": "Tests\\Unit\\Parser\\UnknownResultParserTest::testHandleLogItemShouldCatchAnything with data set #7 ('trollingYou')",
-    "status": "pass",
-    "time": 0.0029809474945068,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Tests\\Unit\\Printer\\FinalPrinterTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Tests\\Unit\\Printer\\FinalPrinterTest",
-    "test": "Tests\\Unit\\Printer\\FinalPrinterTest::testOnEngineEndPrintsTheRightCountSummary"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }

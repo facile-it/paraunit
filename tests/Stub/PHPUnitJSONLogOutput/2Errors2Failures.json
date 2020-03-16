@@ -1,126 +1,59 @@
 {
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 9
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo"
 }{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "tests": 9
+  "status": "fail",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
+  "message": "Failed asserting that false is true."
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (false)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (false)",
-    "status": "fail",
-    "time": 0.0016591548919678,
-    "trace": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php:19",
-    "message": "Failed asserting that false is true.",
-    "output": ""
+  "status": "fail",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree",
+  "message": "Failed asserting that false is true."
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (false)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (false)",
-    "status": "fail",
-    "time": 0.00036907196044922,
-    "trace": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php:19",
-    "message": "Failed asserting that false is true.",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
-    "status": "pass",
-    "time": 0.00014805793762207,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #3 (true)",
-    "status": "pass",
-    "time": 0.00024509429931641,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "error",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherTer"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "status": "error",
-    "time": 0.00033283233642578,
-    "trace": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php:14",
-    "message": "Missing argument 1 for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne()",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherTer"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherQuater"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #5 (true)",
-    "status": "pass",
-    "time": 0.00015401840209961,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherQuater"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBisQuintus"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #6 (true)",
-    "status": "pass",
-    "time": 0.00013208389282227,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBisQuintus"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #7 (true)",
-    "status": "pass",
-    "time": 0.0001370906829834,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "error",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "status": "error",
-    "time": 0.00030803680419922,
-    "trace": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php:14",
-    "message": "Missing argument 1 for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne()",
-    "output": ""
+  "status": "lastTestEnd"
 }

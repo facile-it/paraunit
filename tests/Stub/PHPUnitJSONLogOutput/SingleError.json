@@ -1,44 +1,21 @@
 {
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 3
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "status": "pass",
-    "time": 0.00094890594482422,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo"
+  "status": "error",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
-    "status": "error",
-    "time": 0.00032281875610352,
-    "trace": "\/home\/paraunit\/projects\/src\/Paraunit\/Tests\/Stub\/ThreeGreenTestStub.php:18\n",
-    "message": "Undefined variable: asd",
-    "output": ""
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenThree"
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenThree",
-    "status": "pass",
-    "time": 0.00020599365234375,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "lastTestEnd"
 }

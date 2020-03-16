@@ -1,5 +1,4 @@
 {
-    "event": "troll",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 3
+    "status": "troll",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub"
 }
