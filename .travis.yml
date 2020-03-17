@@ -15,7 +15,7 @@ before_install:
 install: composer update --prefer-dist --prefer-stable --no-interaction
 
 script: 
-  - bin/phpunit --enforce-time-limit --coverage-clover clover.xml
+  - bin/phpunit --coverage-clover clover.xml
   - bash <(curl -s https://codecov.io/bash) -f clover.xml
 
 jobs:
