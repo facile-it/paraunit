@@ -11,6 +11,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Filter\Filter;
+use Paraunit\Lifecycle\ForwardCompatEventDispatcher;
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
@@ -35,7 +36,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 class ParallelContainerDefinition
 {
@@ -82,14 +82,15 @@ class ParallelContainerDefinition
 
     private function configureEventDispatcher(ContainerBuilder $container): void
     {
-        $eventDispatcher = new Definition(EventDispatcher::class);
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $container->setDefinition(LegacyEventDispatcherProxy::class, new Definition(LegacyEventDispatcherProxy::class));
-            $eventDispatcher->setDecoratedService(LegacyEventDispatcherProxy::class);
-        }
+        $dispatcher = new Definition(EventDispatcher::class);
+        $container->setDefinition(SymfonyEventDispatcherInterface::class, $dispatcher);
 
-        $container->setDefinition(SymfonyEventDispatcherInterface::class, $eventDispatcher);
-        $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
+        if (is_subclass_of(EventDispatcher::class, PsrEventDispatcherInterface::class)) {
+            $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
+        } else {
+            $container->setDefinition(ForwardCompatEventDispatcher::class, new Definition(ForwardCompatEventDispatcher::class, [new Reference(SymfonyEventDispatcherInterface::class)]));
+            $container->setAlias(PsrEventDispatcherInterface::class, ForwardCompatEventDispatcher::class);
+        }
 
         $container->addCompilerPass(
             new RegisterListenersPass(
