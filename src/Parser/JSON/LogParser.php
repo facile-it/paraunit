@@ -10,7 +10,7 @@ use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LogParser implements EventSubscriberInterface

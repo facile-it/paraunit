@@ -16,10 +16,10 @@ use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
 use Prophecy\Argument;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 

@@ -16,7 +16,7 @@ use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\Runner;
 use Prophecy\Argument;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 

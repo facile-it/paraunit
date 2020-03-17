@@ -15,7 +15,7 @@ use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 

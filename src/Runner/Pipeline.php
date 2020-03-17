@@ -7,7 +7,7 @@ namespace Paraunit\Runner;
 use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Process\AbstractParaunitProcess;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Pipeline
 {

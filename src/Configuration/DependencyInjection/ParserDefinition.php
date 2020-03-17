@@ -13,10 +13,10 @@ use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParserDefinition
 {

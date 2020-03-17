@@ -9,7 +9,7 @@ use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Runner\Pipeline;
 use Prophecy\Argument;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 
 class PipelineTest extends BaseUnitTestCase

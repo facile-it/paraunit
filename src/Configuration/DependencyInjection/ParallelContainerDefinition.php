@@ -11,7 +11,6 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Filter\Filter;
-use Paraunit\Lifecycle\ForwardCompatEventDispatcher;
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
@@ -27,6 +26,7 @@ use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultList;
+use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -34,7 +34,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 class ParallelContainerDefinition
@@ -82,20 +82,18 @@ class ParallelContainerDefinition
 
     private function configureEventDispatcher(ContainerBuilder $container): void
     {
+        $eventDispatcher = new Definition(EventDispatcher::class);
         if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = new Definition(EventDispatcher::class);
-        } else {
-            $eventDispatcher = new Definition(ForwardCompatEventDispatcher::class);
-            $eventDispatcher->setArguments([
-                new Definition(EventDispatcher::class),
-            ]);
+            $container->setDefinition(LegacyEventDispatcherProxy::class, new Definition(LegacyEventDispatcherProxy::class));
+            $eventDispatcher->setDecoratedService(LegacyEventDispatcherProxy::class);
         }
 
-        $container->setDefinition(EventDispatcherInterface::class, $eventDispatcher);
+        $container->setDefinition(SymfonyEventDispatcherInterface::class, $eventDispatcher);
+        $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
 
         $container->addCompilerPass(
             new RegisterListenersPass(
-                EventDispatcherInterface::class,
+                SymfonyEventDispatcherInterface::class,
                 '',
                 ParallelConfiguration::TAG_EVENT_SUBSCRIBER
             )
@@ -153,14 +151,14 @@ class ParallelContainerDefinition
     private function configureRunner(ContainerBuilder $container): void
     {
         $container->setDefinition(PipelineFactory::class, new Definition(PipelineFactory::class, [
-            new Reference(EventDispatcherInterface::class),
+            new Reference(PsrEventDispatcherInterface::class),
         ]));
         $container->setDefinition(PipelineCollection::class, new Definition(PipelineCollection::class, [
             new Reference(PipelineFactory::class),
             '%paraunit.max_process_count%',
         ]));
         $container->setDefinition(Runner::class, new Definition(Runner::class, [
-            new Reference(EventDispatcherInterface::class),
+            new Reference(PsrEventDispatcherInterface::class),
             new Reference(ProcessFactoryInterface::class),
             new Reference(Filter::class),
             new Reference(PipelineCollection::class),
