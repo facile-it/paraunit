@@ -25,7 +25,7 @@ class Log
     /** @var string */
     private $status;
 
-    /** @var string|null */
+    /** @var string */
     private $test;
 
     /** @var string|null */
@@ -34,7 +34,7 @@ class Log
     public function __construct(string $status, ?string $test, ?string $message)
     {
         $this->status = $status;
-        $this->test = $test;
+        $this->test = $test ?? '[UNKNOWN]';
         $this->message = $message;
     }
 
@@ -43,7 +43,7 @@ class Log
         return $this->status;
     }
 
-    public function getTest(): ?string
+    public function getTest(): string
     {
         return $this->test;
     }

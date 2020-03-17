@@ -37,7 +37,7 @@ abstract class AbstractTestHook
             $data['message'] = $this->convertToUtf8($message);
         }
 
-        \fwrite(self::$logFile, json_encode($data));
+        \fwrite(self::$logFile, json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE, 512));
         \fflush(self::$logFile);
     }
 

@@ -50,12 +50,14 @@ class GenericParser implements ParserChainElementInterface
         return $log->getStatus() === $this->status;
     }
 
-    private function createFromLog(Log $logItem)
+    private function createFromLog(Log $logItem): TestResultInterface
     {
-        if ($logItem->getMessage()) {
-            return new TestResultWithMessage($logItem->getTest(), $logItem->getMessage());
+        $message = $logItem->getMessage();
+
+        if ($message) {
+            return new TestResultWithMessage($logItem->getTest(), $message);
         }
 
-        return new MuteTestResult($logItem->getTest() ?? '[N/A]');
+        return new MuteTestResult($logItem->getTest());
     }
 }

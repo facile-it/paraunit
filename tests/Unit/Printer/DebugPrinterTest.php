@@ -60,7 +60,9 @@ class DebugPrinterTest extends BaseUnitTestCase
 
         $this->assertStringContainsString('PROCESS TERMINATED', $output->getOutput());
         $this->assertStringContainsString($process->getFilename(), $output->getOutput());
-        $this->assertStringContainsString($process->getTestClassName(), $output->getOutput());
+        $testClassName = $process->getTestClassName();
+        $this->assertNotNull($testClassName);
+        $this->assertStringContainsString($testClassName, $output->getOutput());
     }
 
     public function testOnProcessParsingCompleted(): void

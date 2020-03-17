@@ -93,6 +93,9 @@ class RetryParserTest extends BaseUnitTestCase
         ];
     }
 
+    /**
+     * @return Log[]
+     */
     private function getArrayOfLogsFromStubFile(string $filename): array
     {
         $jsonObjects = json_decode(JSONLogStub::getCleanOutputFileContent($filename), true, 3, JSON_THROW_ON_ERROR);

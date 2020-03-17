@@ -130,6 +130,9 @@ class LogParserTest extends BaseUnitTestCase
         $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
+    /**
+     * @param Log[] $logs
+     */
     private function mockLogFetcher(array $logs): LogFetcher
     {
         $logLocator = $this->prophesize(LogFetcher::class);
@@ -150,7 +153,7 @@ class LogParserTest extends BaseUnitTestCase
     }
 
     /**
-     * @param class-string<AbstractProcessEvent>|null $eventToBeDispatched
+     * @param class-string|null $eventToBeDispatched
      */
     private function mockEventDispatcher(string $eventToBeDispatched = null): EventDispatcherInterface
     {
