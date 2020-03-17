@@ -33,7 +33,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $result = $fetcher->fetch($process);
 
         $this->assertNotEmpty($result->getData());
-        $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
+        $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
     public function testFetchIgnoresMissingCoverageFiles(): void
@@ -76,7 +76,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $result = $fetcher->fetch($process);
 
         $this->assertEmpty($result->getData());
-        $this->assertFileNotExists($filename, 'Coverage file should be deleted to preserve memory');
+        $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
     private function getTempFilename(): string

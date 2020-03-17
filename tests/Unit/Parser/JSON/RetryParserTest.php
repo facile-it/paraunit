@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
+use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
@@ -23,7 +24,7 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndSetRetry(string $testOutput): void
     {
-        $log = $this->getLogFromStub('test', 'error', $testOutput);
+        $log = new Log(Log::STATUS_ERROR, 'test', $testOutput);
 
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(true), 3);
@@ -35,19 +36,21 @@ class RetryParserTest extends BaseUnitTestCase
     /**
      * @dataProvider notToBeRetriedTestLogsProvider
      */
-    public function testParseAndContinueWithNoRetry(string $jsonLogs): void
+    public function testParseAndContinueWithNoRetry(string $stubFilename): void
     {
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(false), 3);
 
-        $this->assertFalse($parser->processWillBeRetried($process, json_decode($jsonLogs)), 'Fake retry detected');
+        $result = $parser->processWillBeRetried($process, $this->getArrayOfLogsFromStubFile($stubFilename));
+
+        $this->assertFalse($result, 'Fake retry detected');
         $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
     }
 
     public function testParseAndContinueWithNoRetryAfterLimit(): void
     {
         $process = new StubbedParaunitProcess();
-        $log = $this->getLogFromStub('test', 'error', EntityManagerClosedTestStub::OUTPUT);
+        $log = new Log(Log::STATUS_ERROR, 'test', EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());
@@ -78,16 +81,32 @@ class RetryParserTest extends BaseUnitTestCase
     public function notToBeRetriedTestLogsProvider(): array
     {
         return [
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::TWO_ERRORS_TWO_FAILURES)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ALL_GREEN)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::FATAL_ERROR)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::SEGFAULT)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_INCOMPLETE)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_RISKY)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_SKIP)],
-            [JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_WARNING)],
+            [JSONLogStub::TWO_ERRORS_TWO_FAILURES],
+            [JSONLogStub::ALL_GREEN],
+            [JSONLogStub::FATAL_ERROR],
+            [JSONLogStub::SEGFAULT],
+            [JSONLogStub::ONE_ERROR],
+            [JSONLogStub::ONE_INCOMPLETE],
+            [JSONLogStub::ONE_RISKY],
+            [JSONLogStub::ONE_SKIP],
+            [JSONLogStub::ONE_WARNING],
         ];
+    }
+
+    private function getArrayOfLogsFromStubFile(string $filename): array
+    {
+        $jsonObjects = json_decode(JSONLogStub::getCleanOutputFileContent($filename), true, 3, JSON_THROW_ON_ERROR);
+        $logs = [];
+
+        foreach ($jsonObjects as $jsonObject) {
+            $logs[] = new Log(
+                $jsonObject['status'],
+                $jsonObject['test'] ?? null,
+                $jsonObject['message'] ?? null
+            );
+        }
+
+        return $logs;
     }
 
     private function getResultHandlerMock(bool $shouldBeCalled): TestResultHandlerInterface

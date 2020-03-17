@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Stub\PHPUnitJSONLogOutput;
 
+use Paraunit\Parser\JSON\Log;
+
 class JSONLogStub
 {
     public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
@@ -52,11 +54,9 @@ class JSONLogStub
     }
 
     /**
-     * @param string $jsonString The dirty output
-     *
-     * @return string            The normalized log, as an array of JSON objects
+     * @return Log[] The normalized log, as an array of JSON objects
      */
-    private static function cleanLog($jsonString): string
+    private static function cleanLog(string $jsonString): string
     {
         $splitted = preg_replace('/\}\{/', '},{', $jsonString);
 

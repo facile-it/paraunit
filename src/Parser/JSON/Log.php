@@ -8,8 +8,6 @@ class Log
 {
     public const STATUS_TEST_START = 'testStart';
 
-    public const STATUS_AFTER_LAST_TEST = 'lastTestEnd';
-
     public const STATUS_ERROR = 'error';
 
     public const STATUS_FAILURE = 'fail';

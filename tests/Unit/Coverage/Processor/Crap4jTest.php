@@ -15,7 +15,7 @@ class Crap4jTest extends BaseUnitTestCase
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'crap4j.xml');
         $text = new Crap4j($targetFile);
 
-        $this->assertFileNotExists($targetFile->getFilePath());
+        $this->assertFileDoesNotExist($targetFile->getFilePath());
 
         $text->process($this->createCodeCoverage());
 

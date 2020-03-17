@@ -15,7 +15,7 @@ class HtmlTest extends BaseUnitTestCase
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'html');
         $text = new Html($targetPath);
 
-        $this->assertDirectoryNotExists($targetPath->getPath());
+        $this->assertDirectoryDoesNotExist($targetPath->getPath());
 
         $text->process($this->createCodeCoverage());
 

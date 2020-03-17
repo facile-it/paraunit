@@ -15,7 +15,7 @@ class CloverTest extends BaseUnitTestCase
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'clover.xml');
         $text = new Clover($targetFile);
 
-        $this->assertFileNotExists($targetFile->getFilePath());
+        $this->assertFileDoesNotExist($targetFile->getFilePath());
 
         $text->process($this->createCodeCoverage());
 

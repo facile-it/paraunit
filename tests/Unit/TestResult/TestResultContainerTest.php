@@ -30,33 +30,33 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
         $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertStringContainsString('fail message', $testResult->getFailureMessage());
+        $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('test output', $testResult->getFailureMessage());
     }
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
         $testResultContainer = new TestResultContainer($this->mockTestFormat());
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertStringContainsString('fail message', $testResult->getFailureMessage());
+        $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
     }
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'some message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);

@@ -24,7 +24,7 @@ class TextSummaryTest extends BaseUnitTestCase
             $targetFile
         );
 
-        $this->assertFileNotExists($targetFile->getFilePath());
+        $this->assertFileDoesNotExist($targetFile->getFilePath());
 
         $text->process($this->createCodeCoverage());
 
