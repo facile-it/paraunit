@@ -7,7 +7,7 @@ cache:
 
 php:
   - 7.4
-  - 7.3.14
+  - 7.3
 
 before_install: 
   - if [ -n "$GITHUB_API_KEY" ]; then composer config -g github-oauth.github.com ${GITHUB_API_KEY}; fi;
