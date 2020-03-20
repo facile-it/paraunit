@@ -27,7 +27,7 @@ install:
   - ps: choco install codecov --confirm --no-progress
   - ps: choco install php --confirm --no-progress --package-parameters '""/InstallDir:C:\php""' --version (choco search php --exact --all-versions --limit-output | Select-String -Pattern $env:PHP_VERSION | ForEach-Object {$_ -Replace "php\|", ""} | Sort {[version] $_} -Descending | Select-Object -First 1)
   - cd C:\php
-  - IF %INSTALL_PHP%==1 copy /Y php.ini-production php.ini
+  - IF %INSTALL_PHP%==1 copy /Y php.ini-development php.ini
   - IF %INSTALL_PHP%==1 echo extension_dir=C:\php\ext >> php.ini
   - IF %INSTALL_PHP%==1 echo extension=php_openssl.dll >> php.ini
   - IF %INSTALL_PHP%==1 echo extension=php_curl.dll >> php.ini
