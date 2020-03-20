@@ -62,7 +62,11 @@ class BaseTestCase extends TestCase
         putenv(EnvVariables::PROCESS_UNIQUE_ID);
 
         if ($this->randomTempDir && is_dir($this->randomTempDir)) {
-            Cleaner::cleanUpDir($this->randomTempDir);
+            try {
+                Cleaner::cleanUpDir($this->randomTempDir);
+            } catch (\Throwable $exception) {
+                $this->addWarning('Error while cleaning up temp folders: ' . $exception->getMessage());
+            }
         }
 
         parent::tearDown();
