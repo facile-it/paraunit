@@ -7,7 +7,9 @@ image: Visual Studio 2019
 environment:
   matrix:
     - PHP_VERSION: 7.3
+      XDEBUG_VERSION: 2.9.3-7.3-vc15-nts
     - PHP_VERSION: 7.4
+      XDEBUG_VERSION: 2.9.3-7.4-vc15-nts
 
 cache:
   - composer.phar
@@ -34,6 +36,14 @@ install:
   - IF %INSTALL_PHP%==1 echo extension=php_mbstring.dll >> php.ini
   - IF %INSTALL_PHP%==1 echo date.timezone="Europe/Rome" >> php.ini
   - IF %INSTALL_PHP%==1 echo curl.cainfo=c:\php\cacert.pem >> php.ini
+## install Xdebug for coverage collection
+  - ps: if ($env:INSTALL_PHP -imatch 1) { appveyor-retry appveyor DownloadFile "https://xdebug.org/files/php_xdebug-$env:XDEBUG_VERSION-x86_64.dll" -FileName C:\php\ext\php_xdebug.dll }
+  - IF %INSTALL_PHP%==1 echo zend_extension=C:\php\ext\php_xdebug.dll >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.overload_var_dump=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.collect_includes=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.dump_globals=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.collect_vars=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.extended_info=0 >> php.ini
 ## install composer and dependencies
   - cd c:\projects\paraunit
   - IF NOT EXIST composer.phar appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
