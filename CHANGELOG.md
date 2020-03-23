@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
+### Added
+ * Add support for PHPUnit 9.1 [#149](https://github.com/facile-it/paraunit/pull/149)
+### Changed
+ * Large internal refactor from using PHPUnit's `--printer` to `TestHook`s [#149](https://github.com/facile-it/paraunit/pull/149)
+### Removed
+ * Drop support for PHP <= 7.2 [#149](https://github.com/facile-it/paraunit/pull/149)
+ * Drop support for PHPUnit <= 9.0 [#149](https://github.com/facile-it/paraunit/pull/149)
 
 ## [1.0.1] - 2020-03-23
 ### Fixed

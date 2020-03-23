@@ -160,26 +160,21 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput();
 
-        if (strpos((string) phpversion(), '7.1') === 0) {
-            $this->assertEquals(0, $this->executeRunner());
-        } else {
-            $this->assertNotEquals(0, $this->executeRunner());
+        $this->assertNotEquals(0, $this->executeRunner());
+        $this->assertStringContainsString('EEE', $output->getOutput());
+        $this->assertOutputOrder($output, [
+            'Errors output',
+            SessionTestStub::class . '::testOne',
+            'headers already sent',
+            SessionTestStub::class . '::testTwo',
+            'headers already sent',
+            SessionTestStub::class . '::testThree',
+            'headers already sent',
+            'files with ERRORS',
+            'SessionTestStub',
+        ]);
 
-            $this->assertContains('EEE', $output->getOutput());
-            $this->assertOutputOrder($output, [
-                'Errors output',
-                SessionTestStub::class . '::testOne',
-                'headers already sent',
-                SessionTestStub::class . '::testTwo',
-                'headers already sent',
-                SessionTestStub::class . '::testThree',
-                'headers already sent',
-                'files with ERRORS',
-                'SessionTestStub',
-            ]);
-        }
-
-        $this->assertContains('Executed: 1 test classes, 3 tests', $output->getOutput());
+        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
 
     public function testSessionStderr(): void
@@ -195,9 +190,9 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput();
 
-        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
+        $this->assertSame(0, $this->executeRunner(), $output->getOutput());
 
-        $this->assertNotContains('Coverage', $output->getOutput());
+        $this->assertStringNotContainsString('Coverage', $output->getOutput());
         $this->assertOutputOrder($output, [
             'PARAUNIT',
             Paraunit::getVersion(),
