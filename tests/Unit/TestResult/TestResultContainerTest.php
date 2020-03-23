@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\TestResult;
 
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
@@ -14,8 +15,12 @@ class TestResultContainerTest extends BaseUnitTestCase
 {
     public function testAddProcessToFilenames(): void
     {
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $testResultFormat = $this->prophesize(TestResultFormat::class);
-        $testResultContainer = new TestResultContainer($testResultFormat->reveal());
+        $testResultContainer = new TestResultContainer(
+            $testResultFormat->reveal(),
+            $phpUnitConfig->reveal()
+        );
 
         $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');
         $unitTestProcess->setFilename('ClassTest.php');
@@ -34,7 +39,11 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
-        $testResultContainer = new TestResultContainer($this->mockTestFormat());
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
+        $testResultContainer = new TestResultContainer(
+            $this->mockTestFormat(),
+            $phpUnitConfig->reveal()
+        );
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
@@ -47,7 +56,11 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
-        $testResultContainer = new TestResultContainer($this->mockTestFormat());
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
+        $testResultContainer = new TestResultContainer(
+            $this->mockTestFormat(),
+            $phpUnitConfig->reveal()
+        );
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
@@ -63,7 +76,11 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testFormat->getTag()
             ->willReturn('tag');
 
-        $testResultContainer = new TestResultContainer($testFormat->reveal());
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
+        $testResultContainer = new TestResultContainer(
+            $testFormat->reveal(),
+            $phpUnitConfig->reveal()
+        );
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertSame(0, $testResultContainer->countTestResults());

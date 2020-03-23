@@ -13,6 +13,7 @@ use Tests\Stub\MissingProviderTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\RaisingDeprecationTestStub;
 use Tests\Stub\RaisingNoticeTestStub;
+use Tests\Stub\SessionTestStub;
 
 class ParallelCommandTest extends BaseTestCase
 {
@@ -81,9 +82,12 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(RaisingNoticeTestStub::class, $output);
         $this->assertStringContainsString(MissingProviderTestStub::class, $output);
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
+        if (strpos((string) phpversion(), '7.1') !== 0) {
+            $this->assertContains(SessionTestStub::class, $output);
+        }
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertStringContainsString('Executed: 13 test classes (18 retried), 23 tests', $output);
+        $this->assertStringContainsString('Executed: 14 test classes (18 retried), 26 tests', $output);
     }
 
     public function testExecutionWithLogo(): void
@@ -121,11 +125,11 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $classExecuted = 13;
+        $classExecuted = 14;
         $processRetried = 18;
         $processesCount = $classExecuted + $processRetried;
         $this->assertStringContainsString(
-            sprintf('Executed: %d test classes (%d retried), 23 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 26 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );

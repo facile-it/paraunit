@@ -26,6 +26,9 @@ class CommandLineTest extends BaseUnitTestCase
     public function testGetOptionsFor(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')
+            ->willReturn(null);
+
         $config->getFileFullPath()
             ->willReturn('/path/to/phpunit.xml');
 
