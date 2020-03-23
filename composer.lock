@@ -845,12 +845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20"
+                "reference": "c4d290af4893bc62037cb955733b14e32cf8bbab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20",
-                "reference": "a89383cb3e4eb0cdb69c509c31d0cc6b64e5cb20",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c4d290af4893bc62037cb955733b14e32cf8bbab",
+                "reference": "c4d290af4893bc62037cb955733b14e32cf8bbab",
                 "shasum": ""
             },
             "require": {
@@ -924,7 +924,17 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-03-13T08:30:12+00:00"
+            "funding": [
+                {
+                    "url": "https://phpunit.de/donate.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-03-23T14:20:50+00:00"
         },
         {
             "name": "psr/container",
@@ -1027,12 +1037,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit.git",
-                "reference": "25ce308bec3e63df3a3f5155b5ae1129af8500df"
+                "reference": "dde01b7318295fa5d6734810880b5d9c57fae068"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/25ce308bec3e63df3a3f5155b5ae1129af8500df",
-                "reference": "25ce308bec3e63df3a3f5155b5ae1129af8500df",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/dde01b7318295fa5d6734810880b5d9c57fae068",
+                "reference": "dde01b7318295fa5d6734810880b5d9c57fae068",
                 "shasum": ""
             },
             "require": {
@@ -1065,7 +1075,13 @@
             ],
             "description": "Collection of value objects that represent the PHP code units",
             "homepage": "https://github.com/sebastianbergmann/code-unit",
-            "time": "2020-03-11T03:58:59+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-03-23T14:22:38+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2957,16 +2973,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.16",
+            "version": "0.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "766dd42f741faa174391e8888babeb5150fcde8d"
+                "reference": "1ce27fe29c8660a27926127d350d53d80c4d4286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/766dd42f741faa174391e8888babeb5150fcde8d",
-                "reference": "766dd42f741faa174391e8888babeb5150fcde8d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1ce27fe29c8660a27926127d350d53d80c4d4286",
+                "reference": "1ce27fe29c8660a27926127d350d53d80c4d4286",
                 "shasum": ""
             },
             "require": {
@@ -2992,7 +3008,21 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-03-17T14:31:10+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-22T16:51:47+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -3737,5 +3767,6 @@
         "ext-dom": "*",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
