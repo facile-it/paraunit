@@ -197,6 +197,49 @@
   
     <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.10/">Paraunit 0.10: small fixes and improvements</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Sep 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  With this release, I&rsquo;m grouping a few fixes and improvements that I collected in the past month. Mainly, I&rsquo;ve fixed the --debug option and the --text-to-console coverage output. Also, now the logo is optional, and at the end of each line it&rsquo;s printed a partial count of executed tests. Here&rsquo;s the full changelog: Added Add official support to PHP 7.2 (added to Travis CI matrix) Add executed tests counter at the end of each line in output (#91) Changed The Shark logo is now optional; to show it at the top, use the --logo option The --debug output has been completely rewritten and now is more useful than ever!
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.10/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
 
     <div class="post-meta">
@@ -353,45 +396,6 @@
 
   <p>
   Paraunit 0.8.2 has been released to fix an issued caused by an unwanted overwrite of the write() method in the LogWriter class. Full changelog: Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures)
-  </p>
-
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.1/">Paraunit 0.8.1: fixed regression with Symfony</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>25 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release/">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project: Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir
   </p>
 
   

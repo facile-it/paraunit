@@ -5,8 +5,29 @@
     <link>https://engineering.facile.it/paraunit/tags/release/</link>
     <description>Recent content in Release on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 11 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/tags/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 1.0.1: two small fixes</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.0.1/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.0.1/</guid>
+      <description>
+
+&lt;p&gt;While I&amp;rsquo;m actively working on a big refactor toward &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;supporting PHPUnit 9&lt;/a&gt;, I&amp;rsquo;ve find two small fixes that have to be released as the first stable patch since the 1.0 release.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the changelog:&lt;/p&gt;
+
+&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fix handling of PHPUnit &lt;code&gt;--stderr&lt;/code&gt; option &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/144&#34;&gt;#144&lt;/a&gt;, thanks @pczerkas&lt;/li&gt;
+&lt;li&gt;Fix small issue in checking coverage data syntax &lt;a href=&#34;https://github.com/facile-it/paraunit/commit/8f70c479adf266ccec59103b20895c02ac7ef4c3&#34;&gt;8f70c&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 1.0.0: the stable release</title>
@@ -454,24 +475,6 @@
 
 &lt;ul&gt;
 &lt;li&gt;Fix the signature of &lt;code&gt;LogPrinter&lt;/code&gt;, to avoid warnings (this would lead to no test execution when considering warnings as test failures)&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.8.1: fixed regression with Symfony</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.8.1/</link>
-      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.8.1/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.1&lt;/a&gt; has been released to fix a small regression that happens when running functional tests in a Symfony project:&lt;/p&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Fix &lt;a href=&#34;https://github.com/facile-it/paraunit/issues/88&#34;&gt;#88&lt;/a&gt;: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
