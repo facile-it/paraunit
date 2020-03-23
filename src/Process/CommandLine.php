@@ -8,6 +8,7 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Parser\JSON\LogPrinter;
+use Paraunit\Parser\JSON\LogPrinterStderr;
 
 class CommandLine
 {
@@ -34,9 +35,13 @@ class CommandLine
      */
     public function getOptions(PHPUnitConfig $config): array
     {
+        $printer = $config->getPhpunitOption('stderr') ?
+            LogPrinterStderr::class
+            : LogPrinter::class;
+
         $options = [
             '--configuration=' . $config->getFileFullPath(),
-            '--printer=' . LogPrinter::class,
+            '--printer=' . $printer,
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {

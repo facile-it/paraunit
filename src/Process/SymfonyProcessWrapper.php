@@ -49,6 +49,14 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     */
+    public function getErrorOutput(): string
+    {
+        return $this->process->getErrorOutput() ?? '';
+    }
+
+    /**
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function getExitCode(): ?int

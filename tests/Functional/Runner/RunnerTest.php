@@ -13,6 +13,7 @@ use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MissingProviderTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
+use Tests\Stub\SessionTestStub;
 
 class RunnerTest extends BaseIntegrationTestCase
 {
@@ -150,6 +151,61 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertContains('Executed: 1 test classes, 0 tests', $output);
         $this->assertContains('1 files with NO TESTS EXECUTED', $output);
         $this->assertContains('ThreeGreenTestStub.php', $output);
+    }
+
+    public function testSessionStdout(): void
+    {
+        $this->setTextFilter('SessionTestStub.php');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        if (strpos((string) phpversion(), '7.1') === 0) {
+            $this->assertEquals(0, $this->executeRunner());
+        } else {
+            $this->assertNotEquals(0, $this->executeRunner());
+
+            $this->assertContains('EEE', $output->getOutput());
+            $this->assertOutputOrder($output, [
+                'Errors output',
+                SessionTestStub::class . '::testOne',
+                'headers already sent',
+                SessionTestStub::class . '::testTwo',
+                'headers already sent',
+                SessionTestStub::class . '::testThree',
+                'headers already sent',
+                'files with ERRORS',
+                'SessionTestStub',
+            ]);
+        }
+
+        $this->assertContains('Executed: 1 test classes, 3 tests', $output->getOutput());
+    }
+
+    public function testSessionStderr(): void
+    {
+        $this->setTextFilter('SessionTestStub.php');
+        $this->loadContainer();
+
+        /** @var PHPUnitConfig $phpunitConfig */
+        $phpunitConfig = $this->getService(PHPUnitConfig::class);
+        $option = new PHPUnitOption('stderr');
+        $option->setValue('');
+        $phpunitConfig->addPhpunitOption($option);
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
+
+        $this->assertNotContains('Coverage', $output->getOutput());
+        $this->assertOutputOrder($output, [
+            'PARAUNIT',
+            Paraunit::getVersion(),
+            '...',
+            '     3',
+            'Execution time',
+            'Executed: 1 test classes, 3 tests',
+        ]);
     }
 
     public function testRegressionFatalErrorsRecognizedAsUnknownResults(): void

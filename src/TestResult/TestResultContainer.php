@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
@@ -15,15 +16,19 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /** @var TestResultFormat */
     private $testResultFormat;
 
+    /** @var PHPUnitConfig */
+    private $config;
+
     /** @var string[] */
     private $filenames;
 
     /** @var PrintableTestResultInterface[] */
     private $testResults;
 
-    public function __construct(TestResultFormat $testResultFormat)
+    public function __construct(TestResultFormat $testResultFormat, PHPUnitConfig $config)
     {
         $this->testResultFormat = $testResultFormat;
+        $this->config = $config;
         $this->filenames = [];
         $this->testResults = [];
     }
@@ -85,7 +90,12 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
         AbstractParaunitProcess $process
     ): void {
         $tag = $this->testResultFormat->getTag();
-        $output = $process->getOutput() ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
+
+        $output = $this->config->getPhpunitOption('stderr') ?
+            $process->getErrorOutput()
+            : $process->getOutput();
+
+        $output = $output ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
         $result->setTestOutput($output);
     }
 }

@@ -49,8 +49,12 @@ class LogPrinter extends Util\Printer implements TestListener
     /** @var bool */
     private $currentTestPass;
 
-    public function __construct()
+    /**
+     * @param null|mixed $out
+     */
+    public function __construct($out = null)
     {
+        parent::__construct($out);
         $file = fopen($this->getLogFilename(), 'wt');
         if (! \is_resource($file)) {
             throw new \RuntimeException('Unable to create log file');
