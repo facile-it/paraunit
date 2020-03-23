@@ -16,7 +16,7 @@
       <guid>https://engineering.facile.it/paraunit/news/release/1.0.1/</guid>
       <description>
 
-&lt;p&gt;While I&amp;rsquo;m actively working on a big refactor toward &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;supporting PHPUnit 9&lt;/a&gt;, I&amp;rsquo;ve find two small fixes that have to be released as the first stable patch since the 1.0 release.&lt;/p&gt;
+&lt;p&gt;While I&amp;rsquo;m actively working on a big refactor toward &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;supporting PHPUnit 9&lt;/a&gt;, I&amp;rsquo;ve found two small fixes that have to be released as the first stable patch since the 1.0 release.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s the changelog:&lt;/p&gt;
 
