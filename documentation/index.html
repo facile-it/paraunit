@@ -179,17 +179,8 @@
   <div id="toc" class="well col-md-4 col-sm-6">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#requirements">Requirements</a>
-<ul>
-<li><a href="#installation">Installation</a>
-<ul>
-<li><a href="#from-composer">From Composer</a></li>
-<li><a href="#phar">PHAR</a>
-<ul>
-<li><a href="#verify-the-gpg-signature">Verify the GPG signature</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a>
 <ul>
 <li><a href="#run-command"><code>run</code> command</a></li>
@@ -226,9 +217,7 @@ It makes this possible by launching multiple test in parallel with single PHPUni
 <p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/dmaicher/doctrine-test-bundle">dama/doctrine-test-bundle</a>, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>, in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
 
-<h2 id="installation">Installation</h2>
-
-<h3 id="from-composer">From Composer</h3>
+<h1 id="installation">Installation</h1>
 
 <p>To use this package, use Composer:</p>
 
@@ -239,23 +228,9 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <pre><code>{
     &quot;require-dev&quot;: {
-        &quot;facile-it/paraunit&quot;: &quot;^0.12&quot;
+        &quot;facile-it/paraunit&quot;: &quot;^1.1&quot;
     }
 }
-</code></pre>
-
-<h3 id="phar">PHAR</h3>
-
-<p>If you prefer you can directly download the latest version in <strong>PHAR format</strong>, from the <a href="https://github.com/facile-it/paraunit/releases/latest">lastest GitHub release page</a>, starting from 0.7.3. In this case, you need to replace <code>vendor/bin/paraunit</code> with <code>./paraunit.phar</code> in all the following examples.</p>
-
-<h4 id="verify-the-gpg-signature">Verify the GPG signature</h4>
-
-<p>All the Paraunit PHAR releases are signed with GPG. To verify the signature:
- * Download the PHAR
- * Download the associated GPG signature (the <code>.asc</code> file)
- * Use the GPG tool to verify</p>
-
-<pre><code class="language-bash">gpg --verify paraunit-x.y.phar.asc paraunit.phar
 </code></pre>
 
 <h1 id="usage">Usage</h1>
@@ -303,7 +278,7 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 </tr>
 
 <tr>
-<td>`&ndash;text</td>
+<td><code>--text</code></td>
 <td>Coverage in text format, printed directly in the console, at the end of the process</td>
 </tr>
 
@@ -326,9 +301,9 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 
 <p>Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are <a href="https://github.com/krakjoe/pcov">ext-pcov</a> (only since <a href="https://github.com/facile-it/paraunit/pull/146">1.0.0-beta2</a> and in conjunction with PHPUnit 8), <a href="https://xdebug.org/">xDebug</a> and <a href="https://www.php.net/manual/en/book.phpdbg.php">PHPDBG</a>.</p>
 
-<p>Paraunit checks if <code>ext-pcov</code> is installed and uses it as the preferred driver, since it&rsquo;s the fastest; the extensions can remain installed but disabled (<code>pcov.enabled=0</code>), since Paraunit will take care of enabling it when launching PHPUnit processes.</p>
+<p>Paraunit checks if <code>ext-pcov</code> is installed and uses it as the preferred driver, since it&rsquo;s the fastest; the extensions can remain installed but disabled (<code>pcov.enabled=0</code>), and Paraunit will take care of enabling it when launching PHPUnit processes.</p>
 
-<p>If that&rsquo;s not available, it will try to detect the presence of xDebug; as a last resource, it will use PHPDbg, which should be always available since it&rsquo;s build into PHP core since 5.6.</p>
+<p>If that&rsquo;s not available, it will try to detect the presence of Xdebug; as a last resource, it will use PHPDbg, which should be always available since it&rsquo;s built into PHP core since 5.6.</p>
 
 <p>If you have issues or random failures when using the <code>coverage</code> command, you can try to use the <code>--parallel 1</code> option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.</p>
 
@@ -345,7 +320,7 @@ use PHPUnit\Framework\TestCase;
 
 class SomeTest extends TestCase
 {
-    protected function setup()
+    protected function setup(): void
     {
         $pipelineNumber = getenv(EnvVariables::PARAUNIT_PIPELINE_NUMBER);
         $this-&gt;databaseName = 'db_test_' . $pipelineNumber;
@@ -455,14 +430,13 @@ class SomeTest extends TestCase
 
 <h1 id="parsing-results">Parsing results</h1>
 
-<p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit&rsquo;s JSON log output, so it&rsquo;s a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.</p>
+<p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done hooking into PHPUnit, so it&rsquo;s a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.</p>
 
 <p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&rsquo; exit codes:
  <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
  So you can safely use it in your CI build ;)</p>
 
-<p>Side note: if you are using <a href="https://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations
- since version 0.11.</p>
+<p>Side note: if you are using <a href="https://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations since version 0.11.</p>
 
 <h1 id="troubleshooting">Troubleshooting</h1>
 

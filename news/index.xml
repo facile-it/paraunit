@@ -5,8 +5,38 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 23 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.1.0/</link>
+      <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.1.0/</guid>
+      <description>
+
+&lt;p&gt;As reported &lt;a href=&#34;https://engineering.facile.it/paraunit/news/release/1.0.1&#34;&gt;in the previous release&lt;/a&gt;, I was working on &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;supporting PHPUnit 9&lt;/a&gt;. Today, PHPUnit 9.1 was released, and so I&amp;rsquo;ve released Paraunit 1.1.0, which supports &lt;em&gt;only&lt;/em&gt; PHPUnit 9.1 and forward: this is due to the fact that the &lt;code&gt;--printer&lt;/code&gt; option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using &lt;code&gt;TestHook&lt;/code&gt;, and opted for a small refactor of how Paraunit fetches PHPUnit test results.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the full changelog of the release:&lt;/p&gt;
+
+&lt;h3 id=&#34;added&#34;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Add support for PHPUnit 9.1 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;#149&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;changed&#34;&gt;Changed&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Large internal refactor from using PHPUnit&amp;rsquo;s &lt;code&gt;--printer&lt;/code&gt; to &lt;code&gt;TestHook&lt;/code&gt;s &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;#149&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;removed&#34;&gt;Removed&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Drop support for PHP &amp;lt;= 7.2 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;#149&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Drop support for PHPUnit &amp;lt;= 9.0 &lt;a href=&#34;https://github.com/facile-it/paraunit/pull/149&#34;&gt;#149&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Paraunit 1.0.1: two small fixes</title>
@@ -457,24 +487,6 @@
 &lt;ul&gt;
 &lt;li&gt;The &lt;code&gt;--repeat&lt;/code&gt; option now works correctly (see &lt;a href=&#34;https://github.com/facile-it/paraunit/issues/92&#34;&gt;#92&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;The PHPUnit configuration is no longer copied temporarily in the current working folder, it&amp;rsquo;s no longer needed&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Paraunit 0.8.2: avoid failures due to warnings</title>
-      <link>https://engineering.facile.it/paraunit/news/release/0.8.2/</link>
-      <pubDate>Thu, 26 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://engineering.facile.it/paraunit/news/release/0.8.2/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facile-it/paraunit/releases/tag/0.8.2&#34;&gt;Paraunit 0.8.2&lt;/a&gt; has been released to fix an issued caused by an unwanted overwrite of the &lt;code&gt;write()&lt;/code&gt; method in the &lt;code&gt;LogWriter&lt;/code&gt; class. Full changelog:&lt;/p&gt;
-
-&lt;h3 id=&#34;fixed&#34;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Fix the signature of &lt;code&gt;LogPrinter&lt;/code&gt;, to avoid warnings (this would lead to no test execution when considering warnings as test failures)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

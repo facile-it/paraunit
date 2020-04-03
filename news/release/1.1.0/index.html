@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.16" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 1.1.0: PHPUnit 9.1 and internal refactor &middot; Paraunit</title>
 
   
   
@@ -171,18 +171,34 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
   
+
   
-    <li>
-      <a href="release">release</a>
-      <span>&#40;31&#41;</span>
-    </li>
-  
-  </ul>
+
+<p>As reported <a href="https://engineering.facile.it/paraunit/news/release/1.0.1">in the previous release</a>, I was working on <a href="https://github.com/facile-it/paraunit/pull/149">supporting PHPUnit 9</a>. Today, PHPUnit 9.1 was released, and so I&rsquo;ve released Paraunit 1.1.0, which supports <em>only</em> PHPUnit 9.1 and forward: this is due to the fact that the <code>--printer</code> option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using <code>TestHook</code>, and opted for a small refactor of how Paraunit fetches PHPUnit test results.</p>
+
+<p>Here&rsquo;s the full changelog of the release:</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+<li><p>Add support for PHPUnit 9.1 <a href="https://github.com/facile-it/paraunit/pull/149">#149</a></p>
+
+<h3 id="changed">Changed</h3></li>
+
+<li><p>Large internal refactor from using PHPUnit&rsquo;s <code>--printer</code> to <code>TestHook</code>s <a href="https://github.com/facile-it/paraunit/pull/149">#149</a></p>
+
+<h3 id="removed">Removed</h3></li>
+
+<li><p>Drop support for PHP &lt;= 7.2 <a href="https://github.com/facile-it/paraunit/pull/149">#149</a></p></li>
+
+<li><p>Drop support for PHPUnit &lt;= 9.0 <a href="https://github.com/facile-it/paraunit/pull/149">#149</a></p></li>
+</ul>
+
 </div>
 
 </div>
@@ -194,3 +210,4 @@
 
 </body>
 </html>
+
