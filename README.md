@@ -57,11 +57,11 @@ For more details about Paraunit and its usage, see the [documentation](https://e
 
 [Last stable image]: https://poser.pugx.org/facile-it/paraunit/version.svg
 [Last unstable image]: https://poser.pugx.org/facile-it/paraunit/v/unstable.svg
-[Master build image]: https://travis-ci.org/facile-it/paraunit.svg
+[Master build image]: https://travis-ci.com/facile-it/paraunit.svg
 [Appveyor build image]: https://ci.appveyor.com/api/projects/status/ohmhq2s762x3ixli/branch/master?svg=true
 [Master coverage image]: https://codecov.io/gh/facile-it/paraunit/branch/master/graph/badge.svg
 
 [Packagist link]: https://packagist.org/packages/facile-it/paraunit
-[Master build link]: https://travis-ci.org/facile-it/paraunit
+[Master build link]: https://travis-ci.com/facile-it/paraunit
 [Appveyor build link]: https://ci.appveyor.com/project/Jean85/paraunit/branch/master
 [Master coverage link]: https://codecov.io/gh/facile-it/paraunit
