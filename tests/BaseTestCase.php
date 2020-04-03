@@ -8,10 +8,13 @@ use Paraunit\Configuration\EnvVariables;
 use Paraunit\File\Cleaner;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 class BaseTestCase extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var string|null */
     private $randomTempDir;
 
