@@ -15,8 +15,7 @@ Paraunit is used in conjunction with PHPUnit. It reads PHPUnit's .xml configurat
 If you are testing a Symfony+Doctrine application, it's suggested to use also [dama/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle), to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to **warm up the cache before**, in order to avoid a mass cache miss (and relative [cache stampede](https://en.wikipedia.org/wiki/Cache_stampede)) with concurrency problems, and subsequent random failures. 
 
-## Installation
-### From Composer
+# Installation
 To use this package, use Composer:
 
  * from CLI: `composer require --dev facile-it/paraunit`
@@ -25,21 +24,9 @@ To use this package, use Composer:
 ``` 
 {
     "require-dev": {
-        "facile-it/paraunit": "^0.12"
+        "facile-it/paraunit": "^1.1"
     }
 }
-```
-
-### PHAR
-If you prefer you can directly download the latest version in **PHAR format**, from the [lastest GitHub release page](https://github.com/facile-it/paraunit/releases/latest), starting from 0.7.3. In this case, you need to replace `vendor/bin/paraunit` with `./paraunit.phar` in all the following examples.
-
-#### Verify the GPG signature
-All the Paraunit PHAR releases are signed with GPG. To verify the signature:
- * Download the PHAR
- * Download the associated GPG signature (the `.asc` file)
- * Use the GPG tool to verify
-```bash
-gpg --verify paraunit-x.y.phar.asc paraunit.phar
 ```
 
 # Usage
@@ -61,7 +48,7 @@ The `coverage` command is used to generate the test coverage in parallel. It sup
 `--clover=filename.xml` | Coverage in XML-clover format, with the specified filename
 `--xml=dir` | Coverage in PHPUnit XML format, inside the specified directory
 `--text=filename.txt` | Coverage in text format, into the specified filename
-`--text | Coverage in text format, printed directly in the console, at the end of the process
+`--text` | Coverage in text format, printed directly in the console, at the end of the process
 `--text-summary=filename.txt` | Coverage summary in text format, into the specified filename
 `--text-summary` | Coverage in text format, printed directly in the console, at the end of the process
 
@@ -73,9 +60,9 @@ vendor/bin/paraunit coverage --html=./coverage
 
 Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146) and in conjunction with PHPUnit 8), [xDebug](https://xdebug.org/) and [PHPDBG](https://www.php.net/manual/en/book.phpdbg.php). 
 
-Paraunit checks if `ext-pcov` is installed and uses it as the preferred driver, since it's the fastest; the extensions can remain installed but disabled (`pcov.enabled=0`), since Paraunit will take care of enabling it when launching PHPUnit processes.
+Paraunit checks if `ext-pcov` is installed and uses it as the preferred driver, since it's the fastest; the extensions can remain installed but disabled (`pcov.enabled=0`), and Paraunit will take care of enabling it when launching PHPUnit processes.
  
-If that's not available, it will try to detect the presence of xDebug; as a last resource, it will use PHPDbg, which should be always available since it's build into PHP core since 5.6.
+If that's not available, it will try to detect the presence of Xdebug; as a last resource, it will use PHPDbg, which should be always available since it's built into PHP core since 5.6.
 
 If you have issues or random failures when using the `coverage` command, you can try to use the `--parallel 1` option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.
 
@@ -93,7 +80,7 @@ use PHPUnit\Framework\TestCase;
 
 class SomeTest extends TestCase
 {
-    protected function setup()
+    protected function setup(): void
     {
         $pipelineNumber = getenv(EnvVariables::PARAUNIT_PIPELINE_NUMBER);
         $this->databaseName = 'db_test_' . $pipelineNumber;
@@ -204,15 +191,13 @@ It will show a verbose output with the full running test queue.
 
 # Parsing results
 
-Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done using PHPUnit's JSON log output, so it's a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.
+Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done hooking into PHPUnit, so it's a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.
 
 Anyhow, Paraunit doesn't rely on the parsed results to provide the final exit code; instead, it looks only to the processes' exit codes:
  **it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code**. 
  So you can safely use it in your CI build ;)
 
-Side note: if you are using [Symfony's PHPUnit bridge](https://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations 
- since version 0.11.
+Side note: if you are using [Symfony's PHPUnit bridge](https://symfony.com/doc/current/components/phpunit_bridge.html) to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations since version 0.11.
 
 # Troubleshooting
-
 If you are experiencing any problems, you can try the `--debug` option to identify the problematic test, and try running it alone; if failures seems to appear at randoms during Paraunit runs, check for concurrency problem, like database access; otherwise, please open an issue [here on GitHub](https://github.com/facile-it/paraunit/issues).
