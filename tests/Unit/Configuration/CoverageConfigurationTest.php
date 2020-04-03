@@ -24,12 +24,11 @@ use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
-use Paraunit\TestResult\TestResultFactory;
 use Prophecy\Argument;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
@@ -74,9 +73,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
-            TestResultFactory::class,
-            'paraunit.test_result.pass_container',
-            'paraunit.test_result.pass_format',
+            'paraunit.test_result.success_container',
+            'paraunit.test_result.success_format',
 
             CoverageFetcher::class,
             CoverageMerger::class,

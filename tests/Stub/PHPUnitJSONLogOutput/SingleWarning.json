@@ -1,65 +1,26 @@
 {
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 4
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "tests": 3
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #0 (true)",
-    "status": "pass",
-    "time": 0.00048184394836426,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)"
+  "status": "testStart",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #1 (true)",
-    "status": "pass",
-    "time": 0.00011897087097168,
-    "trace": "",
-    "message": "",
-    "output": ""
+  "status": "successful",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)"
+  "status": "testStart",
+  "test": "Warning"
 }{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
-    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenOne with data set #2 (true)",
-    "status": "pass",
-    "time": 0.00016307830810547,
-    "trace": "",
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
-    "tests": 1
-}{
-    "event": "testStart",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
-    "test": "Warning"
-}{
-    "event": "test",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
-    "test": "Warning",
-    "status": "warning",
-    "time": 0.0048871040344238,
-    "trace": "",
-    "message": "The data provider specified for Paraunit\\Tests\\Stub\\ThreeGreenTestStub::testGreenTwo is invalid.\nTrying to invoke private method Paraunit\\Tests\\Stub\\ThreeGreenTestStub::provider2() from scope ReflectionMethod",
-    "output": ""
+  "status": "warning",
+  "test": "Warning",
+  "message": "The data provider specified for Tests\\Stub\\ThreeGreenTestStub::testWarning is invalid.\nReflectionException: Trying to invoke private method Tests\\Stub\\ThreeGreenTestStub::someInvalidProvider() from scope ReflectionMethod\n"
 }

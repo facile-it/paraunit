@@ -6,7 +6,6 @@ namespace Paraunit\Process;
 
 use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 abstract class AbstractParaunitProcess extends AbstractInfo
 {
@@ -102,11 +101,6 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     {
         $this->testResults[] = $testResult;
         $this->waitingForTestResult = false;
-    }
-
-    public function hasAbnormalTermination(): bool
-    {
-        return end($this->testResults) instanceof TestResultWithAbnormalTermination;
     }
 
     public function isWaitingForTestResult(): bool

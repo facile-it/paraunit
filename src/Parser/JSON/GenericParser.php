@@ -7,46 +7,37 @@ namespace Paraunit\Parser\JSON;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Paraunit\TestResult\TestResultFactory;
+use Paraunit\TestResult\MuteTestResult;
+use Paraunit\TestResult\TestResultWithMessage;
 
 class GenericParser implements ParserChainElementInterface
 {
-    /** @var TestResultFactory */
-    protected $testResultFactory;
-
     /** @var TestResultHandlerInterface */
     protected $testResultContainer;
 
     /** @var string */
     protected $status;
 
-    /** @var string|null */
-    protected $messageStartsWith;
-
     /**
      * @param string $status The status that the parser should catch
-     * @param string | null $messageStartsWith The start of the message that the parser should look for, if any
      */
     public function __construct(
-        TestResultFactory $testResultFactory,
         TestResultHandlerInterface $testResultContainer,
-        string $status,
-        string $messageStartsWith = null
+        string $status
     ) {
-        $this->testResultFactory = $testResultFactory;
         $this->testResultContainer = $testResultContainer;
         $this->status = $status;
-        $this->messageStartsWith = $messageStartsWith;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handleLogItem(AbstractParaunitProcess $process, \stdClass $logItem): ?TestResultInterface
+    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
     {
         if ($this->logMatches($logItem)) {
-            $testResult = $this->testResultFactory->createFromLog($logItem);
+            $testResult = $this->createFromLog($logItem);
             $this->testResultContainer->handleTestResult($process, $testResult);
+            $process->setWaitingForTestResult(false);
 
             return $testResult;
         }
@@ -54,24 +45,19 @@ class GenericParser implements ParserChainElementInterface
         return null;
     }
 
-    protected function logMatches(\stdClass $log): bool
+    protected function logMatches(Log $log): bool
     {
-        if (! property_exists($log, 'status')) {
-            return false;
+        return $log->getStatus() === $this->status;
+    }
+
+    private function createFromLog(Log $logItem): TestResultInterface
+    {
+        $message = $logItem->getMessage();
+
+        if ($message) {
+            return new TestResultWithMessage($logItem->getTest(), $message);
         }
 
-        if ($log->status !== $this->status) {
-            return false;
-        }
-
-        if (null === $this->messageStartsWith) {
-            return true;
-        }
-
-        if (! property_exists($log, 'message')) {
-            return false;
-        }
-
-        return 0 === strpos($log->message, $this->messageStartsWith);
+        return new MuteTestResult($logItem->getTest());
     }
 }

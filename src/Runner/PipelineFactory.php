@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PipelineFactory
 {

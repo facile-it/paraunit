@@ -7,13 +7,15 @@ namespace Tests\Unit\Parser\JSON;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
 use Paraunit\Parser\JSON\RetryParser;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -23,19 +25,31 @@ class LogParserTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
         $process->setOutput('All ok');
+
         $parser1 = $this->prophesize(ParserChainElementInterface::class);
         $parser1->handleLogItem($process, Argument::cetera())
-            ->shouldBeCalledTimes(2)
-            ->willReturn(null);
+            ->shouldBeCalledTimes(3)
+            ->willReturn(null, null, null);
         $parser2 = $this->prophesize(ParserChainElementInterface::class);
         $parser2->handleLogItem($process, Argument::cetera())
-            ->shouldBeCalledTimes(2)
-            ->willReturn($this->mockTestResult());
+            ->shouldBeCalledTimes(3)
+            ->willReturn($this->mockTestResult(), $this->mockTestResult(), null);
         $parser3 = $this->prophesize(ParserChainElementInterface::class);
         $parser3->handleLogItem($process, Argument::cetera())
-            ->shouldNotBeCalled();
+            ->shouldBeCalledOnce()
+            ->willReturn($this->mockTestResult());
 
-        $parser = $this->createParser(true, false);
+        $parser = new LogParser(
+            $this->mockLogFetcher([
+                $this->createLog(Log::STATUS_TEST_START),
+                $this->createLog(Log::STATUS_SUCCESSFUL),
+                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+            ]),
+            $this->mockNoTestExecutedContainer(false),
+            $this->mockEventDispatcher(ProcessParsingCompleted::class),
+            $this->mockRetryParser(false)
+        );
+
         $parser->addParser($parser1->reveal());
         $parser->addParser($parser2->reveal());
         $parser->addParser($parser3->reveal());
@@ -56,7 +70,15 @@ class LogParserTest extends BaseUnitTestCase
         $parser2->handleLogItem($process, Argument::cetera())
             ->shouldNotBeCalled();
 
-        $parser = $this->createParser(false);
+        $parser = new LogParser(
+            $this->mockLogFetcher([
+                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+            ]),
+            $this->mockNoTestExecutedContainer(false),
+            $this->mockEventDispatcher(ProcessParsingCompleted::class),
+            $this->mockRetryParser(false)
+        );
+
         $parser->addParser($parser1->reveal());
         $parser->addParser($parser2->reveal());
 
@@ -72,7 +94,14 @@ class LogParserTest extends BaseUnitTestCase
         $parser1->handleLogItem($process, Argument::cetera())
             ->shouldNotBeCalled();
 
-        $parser = $this->createParser(false, false, true);
+        $parser = new LogParser(
+            $this->mockLogFetcher([
+                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+            ]),
+            $this->mockNoTestExecutedContainer(true),
+            $this->mockEventDispatcher(),
+            $this->mockRetryParser(false)
+        );
         $parser->addParser($parser1->reveal());
 
         $parser->onProcessTerminated(new ProcessTerminated($process));
@@ -81,61 +110,79 @@ class LogParserTest extends BaseUnitTestCase
     public function testParseHandlesTestToBeRetried(): void
     {
         $process = new StubbedParaunitProcess();
-        $process->setOutput('No tests executed!');
-        $process->setExitCode(0);
         $parser1 = $this->prophesize(ParserChainElementInterface::class);
         $parser1->handleLogItem($process, Argument::cetera())
             ->shouldNotBeCalled();
 
-        $parser = $this->createParser(true, false, false, true);
+        $parser = new LogParser(
+            $this->mockLogFetcher([
+                $this->createLog(Log::STATUS_TEST_START),
+                $this->createLog(Log::STATUS_ERROR),
+                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+            ]),
+            $this->mockNoTestExecutedContainer(false),
+            $this->mockEventDispatcher(ProcessToBeRetried::class),
+            $this->mockRetryParser(true)
+        );
+
         $parser->addParser($parser1->reveal());
 
         $parser->onProcessTerminated(new ProcessTerminated($process));
     }
 
-    private function createParser(bool $logFound = true, bool $abnormal = true, bool $noTestExecuted = false, bool $willBeRetried = false): LogParser
+    /**
+     * @param Log[] $logs
+     */
+    private function mockLogFetcher(array $logs): LogFetcher
     {
         $logLocator = $this->prophesize(LogFetcher::class);
-        $endLog = new \stdClass();
-        $endLog->status = LogFetcher::LOG_ENDING_STATUS;
-        if ($logFound) {
-            $log1 = new \stdClass();
-            $log1->event = $abnormal ? 'testStart' : 'test';
-            $log1->test = 'testSomething';
-            $logLocator->fetch(Argument::cetera())
-                ->willReturn([$log1, $endLog]);
-        } else {
-            $logLocator->fetch(Argument::cetera())
-                ->willReturn([$endLog]);
-        }
+        $logLocator->fetch(Argument::cetera())
+            ->shouldBeCalledOnce()
+            ->willReturn($logs);
 
+        return $logLocator->reveal();
+    }
+
+    private function mockNoTestExecutedContainer(bool $noTestExecuted): TestResultHandlerInterface
+    {
         $noTestExecutedContainer = $this->prophesize(TestResultHandlerInterface::class);
-        $noTestExecutedContainer->addProcessToFilenames(Argument::any())
+        $noTestExecutedContainer->addProcessToFilenames(Argument::type(AbstractParaunitProcess::class))
             ->shouldBeCalledTimes((int) $noTestExecuted);
 
+        return $noTestExecutedContainer->reveal();
+    }
+
+    /**
+     * @param class-string|null $eventToBeDispatched
+     */
+    private function mockEventDispatcher(string $eventToBeDispatched = null): EventDispatcherInterface
+    {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
 
-        if ($willBeRetried) {
-            $eventDispatcher->dispatch(Argument::type(ProcessToBeRetried::class))
-                ->shouldBeCalledTimes(1);
-        } elseif (! $noTestExecuted) {
-            $eventDispatcher->dispatch(Argument::type(ProcessParsingCompleted::class))
-                ->shouldBeCalledTimes(1);
+        if ($eventToBeDispatched) {
+            $eventDispatcher->dispatch(Argument::type($eventToBeDispatched))
+                ->shouldBeCalledOnce()
+                ->willReturnArgument();
         } else {
             $eventDispatcher->dispatch(Argument::any())
-                ->shouldNotBeCalled();
+                ->shouldNotBeCalled()
+                ->willReturnArgument();
         }
 
+        return $eventDispatcher->reveal();
+    }
+
+    private function mockRetryParser(bool $willBeRetried): RetryParser
+    {
         $retryParser = $this->prophesize(RetryParser::class);
         $retryParser->processWillBeRetried(Argument::cetera())
-            ->shouldBeCalledTimes((int) ! $noTestExecuted)
             ->willReturn($willBeRetried);
 
-        return new LogParser(
-            $logLocator->reveal(),
-            $noTestExecutedContainer->reveal(),
-            $eventDispatcher->reveal(),
-            $retryParser->reveal()
-        );
+        return $retryParser->reveal();
+    }
+
+    private function createLog(string $status): Log
+    {
+        return new Log($status, 'testSomething', null);
     }
 }

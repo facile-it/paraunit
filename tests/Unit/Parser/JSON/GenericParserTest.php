@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\GenericParser;
-use Paraunit\TestResult\FullTestResult;
+use Paraunit\Parser\JSON\Log;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFactory;
+use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -19,33 +19,28 @@ class GenericParserTest extends BaseUnitTestCase
      */
     public function testParsingFoundResult(
         string $statusToMatch,
-        ?string $startsWithToMatch,
         string $status,
-        string $message = null,
-        bool $shouldMatch = true
+        bool $shouldMatch
     ): void {
-        $log = $this->getLogFromStub('test', $status, $message);
-        if (null === $message) {
-            unset($log->message);
-        }
+        $log = new Log($status, 'b', 'c');
+        $result = new TestResultWithMessage('b', 'c');
 
-        $result = new FullTestResult('b', 'c', 'trace');
-
-        $factory = $this->prophesize(TestResultFactory::class);
-        $factory->createFromLog($log)->willReturn($result);
         $resultContainer = $this->prophesize(TestResultContainer::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalledTimes((int) $shouldMatch);
+        $process = new StubbedParaunitProcess();
+        $process->setWaitingForTestResult(true);
 
-        $parser = new GenericParser($factory->reveal(), $resultContainer->reveal(), $statusToMatch, $startsWithToMatch);
+        $parser = new GenericParser($resultContainer->reveal(), $statusToMatch);
 
-        /** @var FullTestResult $result */
-        $parsedResult = $parser->handleLogItem(new StubbedParaunitProcess(), $log);
+        $parsedResult = $parser->handleLogItem($process, $log);
 
         if ($shouldMatch) {
             $this->assertEquals($result, $parsedResult);
+            $this->assertFalse($process->isWaitingForTestResult(), 'Process not marked as no longer waiting for results');
         } else {
             $this->assertNull($parsedResult);
+            $this->assertTrue($process->isWaitingForTestResult(), 'Process incorrectly marked as no longer waiting for results');
         }
     }
 
@@ -55,13 +50,8 @@ class GenericParserTest extends BaseUnitTestCase
     public function matchesProvider(): array
     {
         return [
-            ['error', null, 'error', 'anyMessage'],
-            ['error', 'Error found', 'error', 'Error found'],
-
-            ['error', null, 'pass', 'anyMessage', false],
-            ['error', 'Error found', 'error', 'anotherMessage', false],
-            ['error', 'Error found', 'error', null, false],
-            ['error', 'Error found', 'pass', 'anotherMessage', false],
+            ['error', 'error', true],
+            ['error', 'pass', false],
         ];
     }
 }

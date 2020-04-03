@@ -24,7 +24,7 @@ class TextSummaryTest extends BaseUnitTestCase
             $targetFile
         );
 
-        $this->assertFileNotExists($targetFile->getFilePath());
+        $this->assertFileDoesNotExist($targetFile->getFilePath());
 
         $text->process($this->createCodeCoverage());
 
@@ -32,7 +32,7 @@ class TextSummaryTest extends BaseUnitTestCase
         $content = file_get_contents($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertNotFalse($content);
-        $this->assertContains($expectedString, $content);
+        $this->assertStringContainsString($expectedString, $content);
     }
 
     /**

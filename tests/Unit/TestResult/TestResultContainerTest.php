@@ -35,7 +35,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
@@ -46,13 +46,13 @@ class TestResultContainerTest extends BaseUnitTestCase
         );
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertContains('fail message', $testResult->getFailureMessage());
-        $this->assertContains('test output', $testResult->getFailureMessage());
+        $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
+        $this->assertStringContainsString('test output', $testResult->getFailureMessage());
     }
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'fail message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
@@ -63,13 +63,13 @@ class TestResultContainerTest extends BaseUnitTestCase
         );
         $testResultContainer->handleTestResult($process, $testResult);
 
-        $this->assertContains('fail message', $testResult->getFailureMessage());
-        $this->assertContains('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
+        $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
+        $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
     }
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name', 'some message');
+        $testResult = new TestResultWithAbnormalTermination('function name');
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);

@@ -2,39 +2,56 @@ build: false
 version: '{branch}-{build}'
 clone_depth: 1
 skip_branch_with_pr: true
+image: Visual Studio 2019
+
+environment:
+  matrix:
+    - PHP_VERSION: 7.3
+      XDEBUG_VERSION: 2.9.3-7.3-vc15-nts
+    - PHP_VERSION: 7.4
+      XDEBUG_VERSION: 2.9.3-7.4-vc15-nts
 
 cache:
   - composer.phar
-  - C:\Users\appveyor\AppData\Local\Composer\files
+  - '%LOCALAPPDATA%\Composer\files'
   - c:\php -> appveyor.yml
 
 init:
-  - SET PATH=c:\php;%PATH%
+  - SET PATH=C:\php;%PATH%
   - SET COMPOSER_NO_INTERACTION=1
   - SET ANSICON=121x90 (121x90)
-  - SET PHP=1
+  - SET INSTALL_PHP=1
 
 install:
 ## install PHP
-  - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
-  - cd c:\php
-  - IF %PHP%==1 appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
-  - IF NOT EXIST php-7.1.3-Win32-VC14-x86.zip (appveyor DownloadFile https://github.com/symfony/binary-utils/releases/download/v0.1/php-7.1.3-Win32-VC14-x86.zip)
-  - IF %PHP%==1 7z x php-7.1.3-Win32-VC14-x86.zip -y >nul
-  - IF %PHP%==1 copy /Y php.ini-development php.ini
-  - IF %PHP%==1 echo extension_dir=ext >> php.ini
-  - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
-  - IF %PHP%==1 echo extension=php_curl.dll >> php.ini
-  - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
-  - IF %PHP%==1 echo date.timezone="Europe/Rome" >> php.ini
-  - IF %PHP%==1 echo curl.cainfo=c:\php\cacert.pem >> php.ini
+  - IF EXIST C:\php SET INSTALL_PHP=0
+  - ps: choco upgrade chocolatey --confirm --no-progress --allow-downgrade --version 0.10.13
+  - ps: choco install codecov --confirm --no-progress
+  - ps: choco install php --confirm --no-progress --package-parameters '""/InstallDir:C:\php""' --version (choco search php --exact --all-versions --limit-output | Select-String -Pattern $env:PHP_VERSION | ForEach-Object {$_ -Replace "php\|", ""} | Sort {[version] $_} -Descending | Select-Object -First 1)
+  - cd C:\php
+  - IF %INSTALL_PHP%==1 copy /Y php.ini-development php.ini
+  - IF %INSTALL_PHP%==1 echo extension_dir=C:\php\ext >> php.ini
+  - IF %INSTALL_PHP%==1 echo extension=php_openssl.dll >> php.ini
+  - IF %INSTALL_PHP%==1 echo extension=php_curl.dll >> php.ini
+  - IF %INSTALL_PHP%==1 echo extension=php_mbstring.dll >> php.ini
+  - IF %INSTALL_PHP%==1 echo date.timezone="Europe/Rome" >> php.ini
+  - IF %INSTALL_PHP%==1 echo curl.cainfo=c:\php\cacert.pem >> php.ini
+## install Xdebug for coverage collection
+  - ps: if ($env:INSTALL_PHP -imatch 1) { appveyor-retry appveyor DownloadFile "https://xdebug.org/files/php_xdebug-$env:XDEBUG_VERSION-x86_64.dll" -FileName C:\php\ext\php_xdebug.dll }
+  - IF %INSTALL_PHP%==1 echo zend_extension=C:\php\ext\php_xdebug.dll >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.overload_var_dump=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.collect_includes=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.dump_globals=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.collect_vars=0 >> php.ini
+  - IF %INSTALL_PHP%==1 echo xdebug.extended_info=0 >> php.ini
 ## install composer and dependencies
   - cd c:\projects\paraunit
-  - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/composer.phar)
+  - IF NOT EXIST composer.phar appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
   - php composer.phar self-update
   - php composer.phar remove --dev phpunit/php-invoker --no-update
   - php composer.phar update --prefer-dist --prefer-stable --no-interaction --no-progress --no-suggest --ansi 
 
 test_script:
-  - cd c:\projects\paraunit
-  - bin\phpunit.bat
+  - cd C:\projects\paraunit
+  - bin\phpunit.bat --coverage-clover=coverage-report.xml
+  - codecov -f coverage-report.xml

@@ -15,14 +15,14 @@ class CloverTest extends BaseUnitTestCase
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'clover.xml');
         $text = new Clover($targetFile);
 
-        $this->assertFileNotExists($targetFile->getFilePath());
+        $this->assertFileDoesNotExist($targetFile->getFilePath());
 
         $text->process($this->createCodeCoverage());
 
         $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?xml', $content);
-        $this->assertContains('<coverage generated=', $content);
-        $this->assertContains('</coverage>', $content);
+        $this->assertStringContainsString('<coverage generated=', $content);
+        $this->assertStringContainsString('</coverage>', $content);
     }
 }

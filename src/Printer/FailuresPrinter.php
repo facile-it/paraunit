@@ -6,8 +6,8 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
-use Paraunit\TestResult\Interfaces\FunctionNameInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
+use Paraunit\TestResult\Interfaces\TestNameInterface;
 use Paraunit\TestResult\TestResultContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -50,8 +50,8 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
             $output->writeln('');
             $output->write(sprintf('<%s>%d) ', $tag, $i++));
 
-            if ($testResult instanceof FunctionNameInterface) {
-                $output->writeln($testResult->getFunctionName());
+            if ($testResult instanceof TestNameInterface) {
+                $output->writeln($testResult->getTestName());
             }
 
             $output->write(sprintf('</%s>', $tag));

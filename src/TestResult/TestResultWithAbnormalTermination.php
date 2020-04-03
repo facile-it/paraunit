@@ -9,6 +9,11 @@ class TestResultWithAbnormalTermination extends TestResultWithMessage
     /** @var string */
     private $testOutput;
 
+    public function __construct(string $testName)
+    {
+        parent::__construct($testName, 'Possible abnormal termination, last test was ' . $testName);
+    }
+
     public function getFailureMessage(): string
     {
         return parent::getFailureMessage() . "\n" . $this->testOutput;

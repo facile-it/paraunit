@@ -44,9 +44,9 @@ class DebugPrinterTest extends BaseUnitTestCase
 
         $printer->onProcessStarted(new ProcessStarted($process));
 
-        $this->assertContains('PROCESS STARTED', $output->getOutput());
-        $this->assertContains($process->getFilename(), $output->getOutput());
-        $this->assertContains($process->getCommandLine(), $output->getOutput());
+        $this->assertStringContainsString('PROCESS STARTED', $output->getOutput());
+        $this->assertStringContainsString($process->getFilename(), $output->getOutput());
+        $this->assertStringContainsString($process->getCommandLine(), $output->getOutput());
     }
 
     public function testOnProcessTerminated(): void
@@ -58,9 +58,11 @@ class DebugPrinterTest extends BaseUnitTestCase
 
         $printer->onProcessTerminated(new ProcessTerminated($process));
 
-        $this->assertContains('PROCESS TERMINATED', $output->getOutput());
-        $this->assertContains($process->getFilename(), $output->getOutput());
-        $this->assertContains($process->getTestClassName(), $output->getOutput());
+        $this->assertStringContainsString('PROCESS TERMINATED', $output->getOutput());
+        $this->assertStringContainsString($process->getFilename(), $output->getOutput());
+        $testClassName = $process->getTestClassName();
+        $this->assertNotNull($testClassName);
+        $this->assertStringContainsString($testClassName, $output->getOutput());
     }
 
     public function testOnProcessParsingCompleted(): void
@@ -70,8 +72,8 @@ class DebugPrinterTest extends BaseUnitTestCase
 
         $printer->onProcessParsingCompleted();
 
-        $this->assertContains('PROCESS PARSING COMPLETED', $output->getOutput());
-        $this->assertContains('RESULTS', $output->getOutput());
+        $this->assertStringContainsString('PROCESS PARSING COMPLETED', $output->getOutput());
+        $this->assertStringContainsString('RESULTS', $output->getOutput());
     }
 
     public function testOnProcessToBeRetried(): void
@@ -82,7 +84,7 @@ class DebugPrinterTest extends BaseUnitTestCase
 
         $printer->onProcessToBeRetried(new ProcessToBeRetried($process));
 
-        $this->assertContains('PROCESS TO BE RETRIED', $output->getOutput());
-        $this->assertContains($process->getFilename(), $output->getOutput());
+        $this->assertStringContainsString('PROCESS TO BE RETRIED', $output->getOutput());
+        $this->assertStringContainsString($process->getFilename(), $output->getOutput());
     }
 }

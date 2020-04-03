@@ -10,7 +10,7 @@ use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LogParser implements EventSubscriberInterface
@@ -90,9 +90,8 @@ class LogParser implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 
-    private function processLog(AbstractParaunitProcess $process, \stdClass $logItem): void
+    private function processLog(AbstractParaunitProcess $process, Log $logItem): void
     {
-        /** @var ParserChainElementInterface $resultContainer */
         foreach ($this->parsers as $resultContainer) {
             if ($resultContainer->handleLogItem($process, $logItem) instanceof TestResultInterface) {
                 return;
@@ -101,10 +100,20 @@ class LogParser implements EventSubscriberInterface
     }
 
     /**
-     * @param mixed[] $logs
+     * @param Log[] $logs
      */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
-        return $process->getExitCode() === 0 && count($logs) === 1;
+        if ($process->getExitCode() !== 0) {
+            return false;
+        }
+
+        foreach ($logs as $log) {
+            if ($log->getStatus() === Log::STATUS_TEST_START) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -15,7 +15,7 @@ class HtmlTest extends BaseUnitTestCase
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'html');
         $text = new Html($targetPath);
 
-        $this->assertDirectoryNotExists($targetPath->getPath());
+        $this->assertDirectoryDoesNotExist($targetPath->getPath());
 
         $text->process($this->createCodeCoverage());
 
@@ -25,7 +25,7 @@ class HtmlTest extends BaseUnitTestCase
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<!DOCTYPE html>', $content);
-        $this->assertContains('<title>Code Coverage for', $content);
-        $this->assertContains('</html>', $content);
+        $this->assertStringContainsString('<title>Code Coverage for', $content);
+        $this->assertStringContainsString('</html>', $content);
     }
 }

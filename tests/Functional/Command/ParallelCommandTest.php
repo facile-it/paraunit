@@ -32,9 +32,9 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertNotContains('NO TESTS EXECUTED', $output);
-        $this->assertNotContains('Executed: 0 test classes', $output);
-        $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
+        $this->assertStringNotContainsString('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
     }
 
@@ -54,9 +54,9 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertNotContains('NO TESTS EXECUTED', $output);
-        $this->assertNotContains('Executed: 0 test classes', $output);
-        $this->assertNotContains('ABNORMAL TERMINATIONS', $output);
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
+        $this->assertStringNotContainsString('ABNORMAL TERMINATIONS', $output);
         $this->assertEquals(0, $exitCode);
     }
 
@@ -74,20 +74,18 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertNotContains('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
-        $this->assertNotContains('NO TESTS EXECUTED', $output);
-        $this->assertNotContains('Executed: 0 test classes', $output);
-        $this->assertContains('ABNORMAL TERMINATIONS', $output);
-        $this->assertContains('ParseErrorTestStub.php', $output);
-        $this->assertContains(RaisingNoticeTestStub::class, $output);
-        $this->assertContains(MissingProviderTestStub::class, $output);
-        $this->assertContains(MySQLDeadLockTestStub::class, $output);
-        if (strpos((string) phpversion(), '7.1') !== 0) {
-            $this->assertContains(SessionTestStub::class, $output);
-        }
+        $this->assertStringNotContainsString('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
+        $this->assertStringContainsString('ABNORMAL TERMINATIONS', $output);
+        $this->assertStringContainsString('ParseErrorTestStub.php', $output);
+        $this->assertStringContainsString(RaisingNoticeTestStub::class, $output);
+        $this->assertStringContainsString(MissingProviderTestStub::class, $output);
+        $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
+        $this->assertStringContainsString(SessionTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
 
-        $this->assertContains('Executed: 14 test classes (18 retried), 26 tests', $output);
+        $this->assertStringContainsString('Executed: 14 test classes (18 retried), 26 tests', $output);
     }
 
     public function testExecutionWithLogo(): void
@@ -105,7 +103,7 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('BBBBbBBBBBBB', $output, 'Shark logo missing');
+        $this->assertStringContainsString('BBBBbBBBBBBB', $output, 'Shark logo missing');
     }
 
     public function testExecutionWithDebugEnabled(): void
@@ -128,7 +126,7 @@ class ParallelCommandTest extends BaseTestCase
         $classExecuted = 14;
         $processRetried = 18;
         $processesCount = $classExecuted + $processRetried;
-        $this->assertContains(
+        $this->assertStringContainsString(
             sprintf('Executed: %d test classes (%d retried), 26 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
@@ -170,8 +168,8 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('NO TESTS EXECUTED', $output);
-        $this->assertContains('0 tests', $output);
+        $this->assertStringContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringContainsString('0 tests', $output);
         $this->assertSame(0, $exitCode);
     }
 
@@ -189,10 +187,10 @@ class ParallelCommandTest extends BaseTestCase
 
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
-        $this->assertContains('Executed: 1 test classes, 3 tests', $output, 'Precondition failed');
-        $this->assertContains('1 files with DEPRECATION WARNINGS:', $output);
-        $this->assertContains(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
-        $this->assertContains('RaisingDeprecationTestStub::testDeprecation', $output);
-        $this->assertNotContains('2)', $output, 'Deprecations are shown more than once per test file');
+        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output, 'Precondition failed');
+        $this->assertStringContainsString('1 files with DEPRECATION WARNINGS:', $output);
+        $this->assertStringContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
+        $this->assertStringContainsString('RaisingDeprecationTestStub::testDeprecation', $output);
+        $this->assertStringNotContainsString('2)', $output, 'Deprecations are shown more than once per test file');
     }
 }

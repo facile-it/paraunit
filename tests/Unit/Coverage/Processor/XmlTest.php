@@ -15,7 +15,7 @@ class XmlTest extends BaseUnitTestCase
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'xml');
         $text = new Xml($targetPath);
 
-        $this->assertDirectoryNotExists($targetPath->getPath());
+        $this->assertDirectoryDoesNotExist($targetPath->getPath());
 
         $text->process($this->createCodeCoverage());
 
@@ -25,7 +25,7 @@ class XmlTest extends BaseUnitTestCase
         $this->removeDirectory($targetPath->getPath());
 
         $this->assertStringStartsWith('<?xml version="1.0"?>', $content);
-        $this->assertContains('<phpunit xmlns="http', $content);
-        $this->assertContains('</phpunit>', $content);
+        $this->assertStringContainsString('<phpunit xmlns="http', $content);
+        $this->assertStringContainsString('</phpunit>', $content);
     }
 }

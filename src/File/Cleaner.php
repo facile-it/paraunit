@@ -48,7 +48,7 @@ class Cleaner implements EventSubscriberInterface
 
         foreach ($files as $file) {
             if ($file->isDir()) {
-                rmdir($file->getRealPath());
+                self::cleanUpDir($file->getRealPath());
             } else {
                 unlink($file->getRealPath());
             }

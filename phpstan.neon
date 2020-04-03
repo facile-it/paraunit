@@ -1,7 +1,22 @@
 parameters:
+    level: 8
+    paths:
+        - src/
+        - tests/
     ignoreErrors:
-        - "#no value type specified in iterable type PHPUnit\\\\Framework\\\\TestSuite\\.$#"
         - "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process\\.$#"
+        -
+            message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+            count: 1
+            path: src/Configuration/DependencyInjection/ParallelContainerDefinition.php
+        -
+            message: "#^Class Symfony\\\\Component\\\\EventDispatcher\\\\Event not found\\.$#"
+            count: 2
+            path: src/Lifecycle/AbstractEvent.php
+        -
+            message: "#^Call to an undefined method Symfony\\\\Component\\\\Process\\\\Process\\:\\:inheritEnvironmentVariables\\(\\)\\.$#"
+            count: 1
+            path: src/Process/ProcessFactory.php
         -
             message: "#^Method Tests\\\\Unit\\\\Configuration\\\\ParallelConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
             count: 1
@@ -10,16 +25,6 @@ parameters:
             message: "#^Method Tests\\\\Unit\\\\Configuration\\\\CoverageConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
             count: 1
             path: tests/Unit/Configuration/CoverageConfigurationTest.php
-        -
-            message: "#^Method Tests\\\\BaseTestCase\\:\\:assertContains\\(\\) has parameter \\$needle with no typehint specified\\.$#"
-            count: 1
-            path: tests/BaseTestCase.php
-        
-        -
-            message: "#^Method Tests\\\\BaseTestCase\\:\\:assertNotContains\\(\\) has parameter \\$needle with no typehint specified\\.$#"
-            count: 1
-            path: tests/BaseTestCase.php
-        
         -
             message: "#^Method Tests\\\\Unit\\\\Configuration\\\\OutputFileTest\\:\\:testIsEmpty\\(\\) has parameter \\$emptyFile with no typehint specified\\.$#"
             count: 1

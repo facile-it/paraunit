@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Runner;
 
 use Paraunit\Runner\PipelineFactory;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 
 class PipelineFactoryTest extends BaseUnitTestCase

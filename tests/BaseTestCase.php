@@ -8,10 +8,13 @@ use Paraunit\Configuration\EnvVariables;
 use Paraunit\File\Cleaner;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
 class BaseTestCase extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var string|null */
     private $randomTempDir;
 
@@ -62,7 +65,11 @@ class BaseTestCase extends TestCase
         putenv(EnvVariables::PROCESS_UNIQUE_ID);
 
         if ($this->randomTempDir && is_dir($this->randomTempDir)) {
-            Cleaner::cleanUpDir($this->randomTempDir);
+            try {
+                Cleaner::cleanUpDir($this->randomTempDir);
+            } catch (\Throwable $exception) {
+                $this->addWarning('Error while cleaning up temp folders: ' . $exception->getMessage());
+            }
         }
 
         parent::tearDown();
@@ -82,59 +89,5 @@ class BaseTestCase extends TestCase
         }
 
         return $content;
-    }
-
-    /**
-     * BC compat method provided as a workaround for deprecations.
-     * The newer methods are present only from PHPUnit 7.5.0 onwards
-     *
-     * @param string|array<mixed>|object|\Traversable<mixed> $haystack
-     */
-    public static function assertContains(
-        $needle,
-        $haystack,
-        string $message = '',
-        bool $ignoreCase = false,
-        bool $checkForObjectIdentity = true,
-        bool $checkForNonObjectIdentity = false
-    ): void {
-        if (\is_string($haystack) && \method_exists(self::class, 'assertStringContainsString')) {
-            if ($ignoreCase) {
-                self::assertStringContainsStringIgnoringCase($needle, $haystack, $message);
-            } else {
-                self::assertStringContainsString($needle, $haystack, $message);
-            }
-            self::assertTrue($checkForObjectIdentity, 'Unsupported parameter!');
-            self::assertFalse($checkForNonObjectIdentity, 'Unsupported parameter!');
-        } else {
-            parent::assertContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        }
-    }
-
-    /**
-     * BC compat method provided as a workaround for deprecations.
-     * The newer methods are present only from PHPUnit 7.5.0 onwards
-     *
-     * @param string|array<mixed>|object|\Traversable<mixed> $haystack
-     */
-    public static function assertNotContains(
-        $needle,
-        $haystack,
-        string $message = '',
-        bool $ignoreCase = false,
-        bool $checkForObjectIdentity = true,
-        bool $checkForNonObjectIdentity = false
-    ): void {
-        if (\is_string($haystack) && \method_exists(self::class, 'assertStringContainsString')) {
-            if ($ignoreCase) {
-                self::assertStringNotContainsStringIgnoringCase($needle, $haystack, $message);
-            } else {
-                self::assertStringNotContainsString($needle, $haystack, $message);
-            }
-            self::assertTrue($checkForObjectIdentity, 'Unsupported parameter!');
-            self::assertFalse($checkForNonObjectIdentity, 'Unsupported parameter!');
-        } else {
-            parent::assertNotContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        }
     }
 }

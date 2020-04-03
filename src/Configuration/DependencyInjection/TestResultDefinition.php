@@ -6,7 +6,6 @@ namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFactory;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
@@ -17,12 +16,6 @@ use Symfony\Component\DependencyInjection\Reference;
 class TestResultDefinition
 {
     public function configure(ContainerBuilder $container): void
-    {
-        $container->setDefinition(TestResultFactory::class, new Definition(TestResultFactory::class));
-        $this->configureTestResultContainer($container);
-    }
-
-    private function configureTestResultContainer(ContainerBuilder $container): void
     {
         $testResultList = new Definition(TestResultList::class);
 
@@ -108,7 +101,7 @@ class TestResultDefinition
                 'RETRIED',
                 false,
             ]),
-            'pass' => new Definition(TestResultWithSymbolFormat::class, [
+            'success' => new Definition(TestResultWithSymbolFormat::class, [
                 '.',
                 'ok',
                 'PASSED',

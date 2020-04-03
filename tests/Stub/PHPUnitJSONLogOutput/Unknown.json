@@ -1,5 +1,10 @@
 {
-    "event": "troll",
-    "suite": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub",
-    "tests": 3
+    "status": "testStart",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+    "status": "successful",
+    "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+}{
+    "status": "troll",
+    "test": "Paraunit\\Tests\\Stub\\ThreeGreenTestStub"
 }

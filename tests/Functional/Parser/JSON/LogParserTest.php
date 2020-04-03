@@ -17,7 +17,7 @@ class LogParserTest extends BaseFunctionalTestCase
     /**
      * @dataProvider parsableResultsProvider
      */
-    public function testParse(string $stubLog, string $expectedResult, bool $hasAbnormalTermination = false): void
+    public function testParse(string $stubLog, string $expectedResult): void
     {
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
@@ -39,11 +39,9 @@ class LogParserTest extends BaseFunctionalTestCase
         }
         $this->assertEquals($expectedResult, $textResults);
 
-        $this->assertEquals($hasAbnormalTermination, $process->hasAbnormalTermination());
-
         if ($process->getTestClassName()) {
             $this->assertNotNull($process->getTestClassName(), 'Empty test class name');
-            $this->assertStringStartsWith('Paraunit\Tests\Stub\\', $process->getTestClassName());
+            $this->assertStringStartsWith('Tests\\Stub\\', $process->getTestClassName());
         }
     }
 
@@ -60,10 +58,10 @@ class LogParserTest extends BaseFunctionalTestCase
             [JSONLogStub::ONE_RISKY, '..R.'],
             [JSONLogStub::ONE_SKIP, '..S.'],
             [JSONLogStub::ONE_WARNING, '...W'],
-            [JSONLogStub::FATAL_ERROR, '...X', true],
-            [JSONLogStub::SEGFAULT, '...X', true],
-            [JSONLogStub::PARSE_ERROR, '...................................................X', true],
-            [JSONLogStub::UNKNOWN, '?', false],
+            [JSONLogStub::FATAL_ERROR, 'EEX'],
+            [JSONLogStub::SEGFAULT, '...X'],
+            [JSONLogStub::PARSE_ERROR, '..................................................X'],
+            [JSONLogStub::UNKNOWN, '.?'],
         ];
     }
 
@@ -84,6 +82,5 @@ class LogParserTest extends BaseFunctionalTestCase
         $formatWithSymbol = $results[0]->getTestResultFormat();
         $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
         $this->assertEquals('X', $formatWithSymbol->getTestResultSymbol());
-        $this->assertTrue($process->hasAbnormalTermination());
     }
 }

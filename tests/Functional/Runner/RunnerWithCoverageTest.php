@@ -26,7 +26,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput();
         $this->assertEquals(0, $exitCode, $output->getOutput());
-        $this->assertNotContains('COVERAGE NOT FETCHED', $output->getOutput());
+        $this->assertStringNotContainsString('COVERAGE NOT FETCHED', $output->getOutput());
         $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',

@@ -1,4 +1,4 @@
-FROM php:7.1-alpine
+FROM php:7.3-alpine
 
 RUN apk --no-cache add \
         $PHPIZE_DEPS \
@@ -11,7 +11,7 @@ RUN apk --no-cache add \
         less \
         vim \
         nano \
-        zlib-dev \
+        libzip-dev \
     && docker-php-ext-install -j5 zip pcntl \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
