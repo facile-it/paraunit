@@ -30,6 +30,8 @@ class RetryParser
             'Deadlock found',
             'Lock wait timeout exceeded',
             'SAVEPOINT \w+ does not exist',
+            // PostgreSQL
+            'Deadlock detected',
             // SQLite
             'General error: 5 database is locked',
         ];
