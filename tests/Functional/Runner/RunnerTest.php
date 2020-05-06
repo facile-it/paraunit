@@ -81,6 +81,7 @@ class RunnerTest extends BaseIntegrationTestCase
     {
         return [
             ['MySQLDeadLockTestStub.php'],
+            ['PostgreSQLDeadLockTestStub.php'],
             ['SQLiteDeadLockTestStub.php'],
         ];
     }
