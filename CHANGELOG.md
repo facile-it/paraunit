@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [1.1.1] - 2020-05-06
+### Added
+ * Add support for deadlock detection on PostgreSQL [#152](https://github.com/facile-it/paraunit/pull/152), thanks @elernonelma
+
 ## [1.1.0] - 2020-04-03
 ### Added
  * Add support for PHPUnit 9.1 [#149](https://github.com/facile-it/paraunit/pull/149)
