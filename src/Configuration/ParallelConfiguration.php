@@ -6,10 +6,12 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Configuration\DependencyInjection\ParallelContainerDefinition;
 use Paraunit\Printer\DebugPrinter;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -96,6 +98,11 @@ class ParallelConfiguration
         // the synthetic service isn't listed
         $services[] = OutputInterface::class;
         foreach ($services as $serviceName) {
+            if ($serviceName === ContainerInterface::class || $serviceName === SymfonyContainerInterface::class) {
+                // avoid deprecation
+                continue;
+            }
+            
             $containerBuilder->setAlias(
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
                 new Alias($serviceName, true)
