@@ -102,7 +102,7 @@ class ParallelConfiguration
                 // avoid deprecation
                 continue;
             }
-            
+
             $containerBuilder->setAlias(
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
                 new Alias($serviceName, true)

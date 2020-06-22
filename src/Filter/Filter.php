@@ -162,7 +162,7 @@ class Filter
         string $nodeName,
         string $defaultValue = null
     ): string {
-        foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
+        foreach ($testSuiteNode->attributes ?? [] as $attrName => $attrNode) {
             if ($attrName === $nodeName) {
                 return $attrNode->value;
             }

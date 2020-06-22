@@ -11,6 +11,7 @@ use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,7 +30,7 @@ class Runner implements EventSubscriberInterface
     /** @var PipelineCollection */
     private $pipelineCollection;
 
-    /** @var \SplQueue */
+    /** @var \SplQueue<AbstractParaunitProcess> */
     private $queuedProcesses;
 
     /** @var int */
