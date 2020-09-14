@@ -5,26 +5,6 @@ parameters:
         - tests/
     ignoreErrors:
         - "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process\\.$#"
-        -
-            message: "#^Else branch is unreachable because previous condition is always true\\.$#"
-            count: 1
-            path: src/Configuration/DependencyInjection/ParallelContainerDefinition.php
-        -
-            message: "#^Call to an undefined method Symfony\\\\Component\\\\Process\\\\Process\\:\\:inheritEnvironmentVariables\\(\\)\\.$#"
-            count: 1
-            path: src/Process/ProcessFactory.php
-        -
-            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\ParallelConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
-            count: 1
-            path: tests/Unit/Configuration/ParallelConfigurationTest.php
-        -
-            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\CoverageConfigurationTest\\:\\:getService\\(\\) has no return typehint specified\\.$#"
-            count: 1
-            path: tests/Unit/Configuration/CoverageConfigurationTest.php
-        -
-            message: "#^Method Tests\\\\Unit\\\\Configuration\\\\OutputFileTest\\:\\:testIsEmpty\\(\\) has parameter \\$emptyFile with no typehint specified\\.$#"
-            count: 1
-            path: tests/Unit/Configuration/OutputFileTest.php
     excludes_analyse:
         - tests/Stub/
         - src/Lifecycle/ForwardCompatEventDispatcher.php
