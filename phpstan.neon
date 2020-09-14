@@ -8,3 +8,6 @@ parameters:
     excludes_analyse:
         - tests/Stub/
         - src/Lifecycle/ForwardCompatEventDispatcher.php
+
+includes:
+    - phpstan-baseline.neon
