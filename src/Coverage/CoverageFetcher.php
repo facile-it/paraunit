@@ -9,6 +9,7 @@ use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Filter;
 use Symfony\Component\Process\Process;
 
 class CoverageFetcher
@@ -41,7 +42,7 @@ class CoverageFetcher
 
         $this->resultHandler->addProcessToFilenames($process);
 
-        return new CodeCoverage(new FakeDriver());
+        return new CodeCoverage(new FakeDriver(), new Filter());
     }
 
     private function coverageFileIsValid(string $tempFilename): bool

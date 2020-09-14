@@ -10,6 +10,7 @@ use Paraunit\Proxy\Coverage\FakeDriver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Filter;
 
 class BaseTestCase extends TestCase
 {
@@ -77,7 +78,7 @@ class BaseTestCase extends TestCase
 
     protected function createCodeCoverage(): CodeCoverage
     {
-        return new CodeCoverage(new FakeDriver());
+        return new CodeCoverage(new FakeDriver(), new Filter());
     }
 
     protected function getFileContent(string $filePath): string
