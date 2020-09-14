@@ -26,7 +26,6 @@ use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultList;
-use PHPUnit\Util\Xml\Loader;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -172,10 +171,8 @@ class ParallelContainerDefinition
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
-        $container->setDefinition(Loader::class, new Definition(Loader::class));
         $container->setDefinition(Facade::class, new Definition(Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [
-            new Reference(Loader::class),
             new Reference(Facade::class),
             new Reference(PHPUnitConfig::class),
             '%paraunit.testsuite%',

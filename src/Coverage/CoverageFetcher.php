@@ -52,8 +52,6 @@ class CoverageFetcher
         }
 
         try {
-            $this->overrideCoverageClassDefinition($tempFilename);
-
             $verificationProcess = new Process(['php', '--syntax-check', $tempFilename]);
             $verificationProcess->run();
 
@@ -61,24 +59,5 @@ class CoverageFetcher
         } catch (\Exception $e) {
             return false;
         }
-    }
-
-    private function overrideCoverageClassDefinition(string $tempFilename): void
-    {
-        $originalCoverageData = file_get_contents($tempFilename);
-        if ($originalCoverageData) {
-            $fileContent = str_replace(
-                [
-                    'new SebastianBergmann\CodeCoverage\CodeCoverage;',
-                    'new SebastianBergmann\CodeCoverage\CodeCoverage();',
-                    'new CodeCoverage;',
-                    'new CodeCoverage();',
-                ],
-                'new SebastianBergmann\CodeCoverage\CodeCoverage(new ' . FakeDriver::class . ');',
-                $originalCoverageData
-            );
-        }
-
-        file_put_contents($tempFilename, $fileContent ?? '');
     }
 }

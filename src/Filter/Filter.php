@@ -29,13 +29,12 @@ class Filter
     private $stringFilter;
 
     public function __construct(
-        Loader $xmlLoader,
         Facade $fileIteratorFacade,
         PHPUnitConfig $configFile,
         string $testSuiteFilter = null,
         string $stringFilter = null
     ) {
-        $this->xmlLoader = $xmlLoader;
+        $this->xmlLoader = new Loader();
         $this->fileIteratorFacade = $fileIteratorFacade;
         $this->configFile = $configFile;
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;

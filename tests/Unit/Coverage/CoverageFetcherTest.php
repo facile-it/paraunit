@@ -32,7 +32,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertNotEmpty($result->getData());
+        $this->assertSame(['foo' => 'bar'], $result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
@@ -52,7 +52,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertEmpty($result->getData());
+        $this->assertEmpty($result->getTests());
     }
 
     public function testFetchIgnoresWrongFiles(): void
@@ -75,7 +75,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertEmpty($result->getData());
+        $this->assertEmpty($result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
