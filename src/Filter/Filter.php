@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Paraunit\Filter;
 
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
+use PHPUnit\Util\Xml\Loader;
 use SebastianBergmann\FileIterator\Facade;
 
 class Filter
 {
-    /** @var PHPUnitUtilXMLProxy */
-    private $utilXml;
+    /** @var Loader */
+    private $xmlLoader;
 
     /** @var Facade */
     private $fileIteratorFacade;
@@ -29,13 +29,13 @@ class Filter
     private $stringFilter;
 
     public function __construct(
-        PHPUnitUtilXMLProxy $utilXml,
+        Loader $xmlLoader,
         Facade $fileIteratorFacade,
         PHPUnitConfig $configFile,
         string $testSuiteFilter = null,
         string $stringFilter = null
     ) {
-        $this->utilXml = $utilXml;
+        $this->xmlLoader = $xmlLoader;
         $this->fileIteratorFacade = $fileIteratorFacade;
         $this->configFile = $configFile;
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
@@ -52,7 +52,7 @@ class Filter
     {
         $aggregatedFiles = [];
 
-        $document = $this->utilXml->loadFile($this->configFile->getFileFullPath());
+        $document = $this->xmlLoader->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
         $nodeList = $xpath->query('testsuites/testsuite');

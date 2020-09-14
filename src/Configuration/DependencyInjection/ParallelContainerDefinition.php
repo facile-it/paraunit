@@ -22,11 +22,11 @@ use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultList;
+use PHPUnit\Util\Xml\Loader;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -169,17 +169,13 @@ class ParallelContainerDefinition
 
     private function configureServices(ContainerBuilder $container): void
     {
-        if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
-            \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
-        }
-
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
-        $container->setDefinition(PHPUnitUtilXMLProxy::class, new Definition(PHPUnitUtilXMLProxy::class));
+        $container->setDefinition(Loader::class, new Definition(Loader::class));
         $container->setDefinition(Facade::class, new Definition(Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [
-            new Reference(PHPUnitUtilXMLProxy::class),
+            new Reference(Loader::class),
             new Reference(Facade::class),
             new Reference(PHPUnitConfig::class),
             '%paraunit.testsuite%',

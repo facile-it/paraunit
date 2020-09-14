@@ -6,8 +6,8 @@ namespace Tests\Unit\Filter;
 
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Filter\Filter;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use PHPUnit\Util\Xml;
+use PHPUnit\Util\Xml\Loader;
 use SebastianBergmann\FileIterator\Facade;
 use Tests\BaseUnitTestCase;
 
@@ -29,7 +29,7 @@ class FilterTest extends BaseUnitTestCase
 
         $testSuiteName = 'test_only_requested_testsuite';
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -58,7 +58,7 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_suffix_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -85,7 +85,7 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_exclude.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -122,7 +122,7 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -149,7 +149,7 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_node_file.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -184,7 +184,7 @@ class FilterTest extends BaseUnitTestCase
         $configFile = $this->absoluteConfigBaseDir . 'stubbed_for_filter_test.xml';
         $configFilePhpUnit = $this->mockPHPUnitConfig($configFile);
 
-        $utilXml = $this->prophesize(PHPUnitUtilXMLProxy::class);
+        $utilXml = $this->prophesize(Loader::class);
         $utilXml->loadFile($configFile)
             ->willReturn($this->getStubbedXMLConf($configFile))
             ->shouldBeCalled();
@@ -221,7 +221,7 @@ class FilterTest extends BaseUnitTestCase
             throw new \RuntimeException('Stub XML config file missing: ' . $fileName);
         }
 
-        return Xml::loadFile($filePath);
+        return (new Loader())->loadFile($filePath);
     }
 
     private function mockPHPUnitConfig(string $configFile): PHPUnitConfig
