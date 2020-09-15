@@ -4,14 +4,17 @@ Blackburn is a clear and responsive theme for [Hugo](//gohugo.io).
 
 ## Overview
 
-* Based on Yahoo's [Pure CSS] (http://purecss.io/) (v0.6.0)
+* Based on Yahoo's [Pure CSS](http://purecss.io/) (v1.0.0)
 * Fixed sidebar with social links:
   * Twitter
+  * GNU social
   * Facebook
   * Google+
   * Weibo
+  * Tumblr
   * Instagram
   * Flickr
+  * 500px
   * Pinterest
   * YouTube
   * Vimeo
@@ -22,12 +25,19 @@ Blackburn is a clear and responsive theme for [Hugo](//gohugo.io).
   * Reddit
   * Hacker News
   * GitHub
+  * GitLab
   * Bitbucket
   * Stack Overflow
-* Client-side syntax highlighting by [Highlight.js](//highlightjs.org) (v9.1.0)
+  * Server Fault
+  * Steam
+  * MobyGames
+  * Last.fm
+  * Discogs
+  * Keybase
+* Client-side syntax highlighting by [Highlight.js](//highlightjs.org) (v9.12.0)
 * Web analytics by Google Analytics
 * Comments by Disqus
-* Icons by Font Awesome (v4.5.0)
+* Icons by Font Awesome (v5.9.0)
 
 ## Demo
 
@@ -36,7 +46,7 @@ Blackburn is a clear and responsive theme for [Hugo](//gohugo.io).
 
 ## Screenshots
 
-![screenshot](/images/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/yoshiharuyamashita/blackburn/master/images/screenshot.png)
 
 ## Installation
 
@@ -57,7 +67,7 @@ See [Hugo Quickstart Guide](//gohugo.io/overview/quickstart/) for more informati
 Example config.toml:
 
 ```toml
-baseurl = "http://replace-this-with-your-hugo-site.com/"
+baseurl = "https://www.example.com/" # Make sure to end baseurl with a '/'
 title = "Your site title"
 author = "Your name"
 # Shown in the side menu
@@ -77,47 +87,59 @@ paginate = 10
   disqus = "Your Disqus shortname"
   # CSS name for highlight.js
   highlightjs = "androidstudio"
+  highlightjs_extra_languages = ["yaml"]
   dateFormat = "02 Jan 2006, 15:04"
+  # Include any custom CSS and/or JS files
+  # (relative to /static folder)
+  custom_css = ["css/my.css"]
+  custom_js = ["js/my.js"]
+
+  [params.piwikAnalytics]
+    siteid = 2
+    piwikroot = "//analytics.example.com/"
 
 [menu]
   # Shown in the side menu.
   [[menu.main]]
     name = "Home"
     pre = "<i class='fa fa-home fa-fw'></i>"
-    weight = 0
+    weight = 1
     identifier = "home"
     url = "/"
   [[menu.main]]
     name = "Posts"
     pre = "<i class='fa fa-list fa-fw'></i>"
-    weight = 1
+    weight = 2
     identifier = "post"
     url = "/post/"
   [[menu.main]]
     name = "About"
     pre = "<i class='fa fa-user fa-fw'></i>"
-    weight = 2
+    weight = 3
     identifier = "about"
     url = "/about/"
   [[menu.main]]
     name = "Contact"
     pre = "<i class='fa fa-phone fa-fw'></i>"
-    weight = 3
+    weight = 4
     url = "/contact/"
 
 [social]
-  # Link your social networking accouns to the side menu
+  # Link your social networking accounts to the side menu
   # by entering your username or ID.
 
   # SNS microblogging
   twitter = "*"
+  gnusocial = "*" # Specify href (e.g. https://quitter.se/yourusername)
   facebook = "*"
   googleplus = "*"
   weibo = "*"
+  tumblr = "*"
 
   # SNS photo/video sharing
   instagram = "*"
   flickr = "*"
+  photo500px = "*"
   pinterest = "*"
   youtube = "*"
   vimeo = "*"
@@ -134,8 +156,21 @@ paginate = 10
 
   # Techie
   github = "yoshiharuyamashita"
+  gitlab = "*"
   bitbucket = "*"
   stackoverflow = "*"
+  serverfault = "*"
+
+  # Gaming
+  steam = "*"
+  mobygames = "*"
+
+  # Music
+  lastfm = "*"
+  discogs = "*"
+
+  # Other
+  keybase = "*"
 ```
 
 ## Usage
@@ -152,15 +187,62 @@ paginate = 10
   url = "/about/"
 ```
 
+* Override the theme by linking to custom CSS files or URLs:
+
+```toml
+[params]
+  custom_css = ["css/my.css"]
+```
+
+* Add new behaviours by linking to custom JS files or URLs:
+
+```toml
+[params]
+  custom_js = ["js/my.js", "https://cdnjs.cloudflare.com/ajax/libs/zooming/1.4.2/zooming.min.js"]
+```
+
 ## Shortcodes
 
-### Positional
+### pure_table
+```
+{{< pure_table
+  "columnName1|columnName2|...|columnName99"
+  "dataValue1|dataValue2|...|dataValue99"
+  "dataValue1|dataValue2|...|dataValue99"
+  "dataValue1|dataValue2|...|dataValue99"
+  "... and so on"
+>}}
+```
+
+where each positional parameter is separated by the vertical bar (i.e., |). The resulting `<table>` is set to have `class="pure-table pure-table-striped"`.
+
+### fluid_imgs
+
+```
+{{< fluid_imgs
+  "class|src|alt"
+  "class|src|alt"
+  "... and so on"
+>}}
+```
+
+where each positional parameter is separated by the vertical bar (i.e., |).
+
+- `class`: specifies a Pure CSS unit class name (**required**)
+- `src`: specifies the URL of an image (**required**)
+- `alt`: specifies an alternate text for an image (optional)
+
+See [here](http://yoshiharuyamashita.com/post/hugo-shortcode-to-show-multiple-images/) for examples.
+
+### fluid_img (obsolete)
+
+#### Positional
 
 ```
 {{% fluid_img "/path/to/img" %}}
 ```
 
-### Named
+#### Named
 
 ```
 {{% fluid_img class="pure-u-1-2" src="/path/to/img" alt="img description" %}}

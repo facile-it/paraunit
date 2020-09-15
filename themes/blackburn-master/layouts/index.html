@@ -23,8 +23,7 @@
 </div>
 
 <div class="content">
-
-  {{ range ( .Paginate (where .Data.Pages "Type" "news")).Pages }}
+  {{ range ( .Paginate (where .Site.RegularPages "Type" "news")).Pages }}
     {{ .Render "summary"}}
   {{ end }}
 

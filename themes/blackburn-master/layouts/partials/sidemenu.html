@@ -16,13 +16,13 @@
           <ul class="pure-menu-children">
             {{ range .Children }}
             <li class="pure-menu-item">
-              <a href="{{ .URL }}">{{ .Name }}</a>
+              <a class="pure-menu-link" href="{{ .URL }}">{{ .Name }}</a>
             </li>
             {{ end }}
           </ul>
       {{else}}
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="{{ .URL }}">{{ .Pre }}{{ .Name }}</a>
+          <a class="pure-menu-link" {{ printf "href=%q" .URL | safeHTMLAttr }}>{{ .Pre }}{{ .Name }}</a>
       {{end}}
         </li>
       {{end}}
