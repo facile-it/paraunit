@@ -1,6 +1,6 @@
 # facile-it/paraunit
 
-[![PHP Version](https://img.shields.io/badge/php-%5E7.1-blue.svg)](https://img.shields.io/badge/php-%5E7.1-blue.svg)
+![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.0-blue)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
 [![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
@@ -32,7 +32,8 @@ You can use Paraunit with many different versions of PHPUnit or Symfony, followi
 
 | Paraunit version | Compatible PHPUnit Version | Compatible Symfony Version |
 |------------------|----------------------------|----------------------------|
-| 1.1+             | 9.1+                       | 3.4, 4, 5                  |
+| 1.2              | 9.3+                       | 3.4, 4, 5                  |
+| 1.1              | 9.1, 9.2                   | 3.4, 4, 5                  |
 | 1.0.*            | 7, 8                       | 3.4, 4, 5                  |
 | 0.12.*           | 6, 7                       | 2.8, 3, 4                  |
 
