@@ -5,19 +5,21 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.16" />
+  <meta name="generator" content="Hugo 0.75.1" />
 
   <title>Paraunit 0.7: test coverage in parallel &middot; Paraunit</title>
 
+    
+
   
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
 
   <!--[if lte IE 8]>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
   <![endif]-->
   <!--[if gt IE 8]><!-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
   <!--<![endif]-->
 
   <!--[if lte IE 8]>
@@ -30,21 +32,28 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="Paraunit" href="https://engineering.facile.it/paraunit/index.xml" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
   <script>hljs.initHighlightingOnLoad();</script>
   
 
   <link rel="shortcut icon" href="https://engineering.facile.it/paraunit/img/favicon.ico" type="image/x-icon" />
+
+  
+  
 
 </head>
 
@@ -68,12 +77,6 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
-      
-        </li>
-      
-      
-        <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
       
         </li>
@@ -90,16 +93,70 @@
       
         </li>
       
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
     </ul>
   </div>
 
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
     </li>
-
     
 
     
@@ -120,30 +177,6 @@
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
-    </li>
     
 
     
@@ -154,11 +187,11 @@
 </div>
 
 
-  <div class="pure-g">
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div>
+  <div class="small-print">
     <small></small>
   </div>
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div class="small-print">
     <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
     <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
   </div>
@@ -175,28 +208,19 @@
   <h2></h2>
 </div>
 <div class="content">
-  
-
-  
-
-<p>Finally, <a href="https://github.com/facile-it/paraunit/releases/tag/0.7">Paraunit 0.7</a> has been released!
+  <p>Finally, <a href="https://github.com/facile-it/paraunit/releases/tag/0.7">Paraunit 0.7</a> has been released!
 This version includes the long awaited <strong>coverage feature</strong>: now you can collect your test coverage running your tests
 in parallel!</p>
-
 <p>Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit
 options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we
 <strong>officially support Windows</strong>, and we added an <a href="https://ci.appveyor.com/project/Jean85/paraunit">Appveyor CI build</a> to
 do that.</p>
-
 <p>In the meantime, the <a href="https://github.com/facile-it/paraunit/milestone/4">1.0 milestone</a> has been defined: it will drop
 support to PHPUnit 4.x series, since its support is going to end by Feb. 27th, 2017; with that, also PHP &lt; 5.6 will lose
 support, and Paraunit will follow along. I will be able to drop a lot of BC-tricks in this way, preferring <code>::class</code>
 and array short syntax everywhere in the codebase.</p>
-
 <p>Here&rsquo;s the full 0.7 changelog:</p>
-
 <h3 id="changed">Changed</h3>
-
 <ul>
 <li>Paraunit is now capable of producing the test coverage of your test suites in parallel! To use it, use the new
 <code>coverage</code> command (instead of the normal <code>run</code>), along with at least an option to specify the requested format; for
@@ -204,7 +228,6 @@ more information, please use the <code>--help</code> option on the CLI or refer 
 <li>It&rsquo;s possible to choose how many concurrent processes Paraunit should spawn using the new <code>--parallel</code> option.</li>
 <li>A lot of new options are now supported by Paraunit, and carried over to the single PHPUnit processes. The full list of
 new supported options is:
-
 <ul>
 <li><code>filter</code></li>
 <li><code>group</code></li>
@@ -223,18 +246,17 @@ new supported options is:
 <li><code>printer</code></li>
 <li><code>bootstrap</code></li>
 <li><code>no-configuration</code></li>
-<li><code>include-path</code>
-<br /></li>
-</ul></li>
+<li><code>include-path</code></li>
 </ul>
-
-<p><code>testsuite</code> and <code>configuration</code> options are still supported; thanks to @sergeyz for suggesting the feature (#56)
-* Added support to Windows (thanks to R.D. for the help) and Appveyor CI build
-* PHP 7.1 added to the Travis build matrix
-* Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)</p>
-
+</li>
+</ul>
+<p><code>testsuite</code> and <code>configuration</code> options are still supported; thanks to @sergeyz for suggesting the feature (#56)</p>
+<ul>
+<li>Added support to Windows (thanks to R.D. for the help) and Appveyor CI build</li>
+<li>PHP 7.1 added to the Travis build matrix</li>
+<li>Log (and coverage) temp files are deleted right after being read, to reduce memory consumption (#63)</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
-
 <ul>
 <li>Symfony 2.3 compatibility restored: the Travis build now tests with <code>--prefer-lowest</code> under PHP 5.3; this added
 <code>symfony/http-kernel</code> to the required packages</li>
@@ -246,6 +268,11 @@ new supported options is:
 </div>
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
+<script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
+
+
 
 
 

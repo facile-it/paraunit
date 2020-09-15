@@ -47,6 +47,14 @@ article > footer {
   overflow: hidden;
 }
 
+#menu {
+  overflow-y: visible;
+}
+
+#menu a {
+  padding: 0.6em;
+}
+
 #menu .brand {
   font-family: Raleway;
   font-weight: bold;
@@ -62,6 +70,10 @@ article > footer {
   font-size: 0.9em;
 }
 
+#menu .pure-menu ul.pure-menu-children {
+  border-top: none;
+}
+
 i {
   display: inline-block;
   margin-right: 0.2em;
@@ -69,4 +81,9 @@ i {
 
 .pagination {
   text-align: center;
+  margin-top: 3em;
+}
+
+.pagination a {
+  color: #265778;
 }

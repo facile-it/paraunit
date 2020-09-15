@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.75.1" />
 
-  <title>Paraunit 0.7.2: coverage in text format &middot; Paraunit</title>
+  <title>Paraunit 1.1.1: PostgreSQL retry support &middot; Paraunit</title>
 
     
 
@@ -204,15 +204,15 @@
 
 
 <div class="header">
-  <h1>Paraunit 0.7.2: coverage in text format</h1>
+  <h1>Paraunit 1.1.1: PostgreSQL retry support</h1>
   <h2></h2>
 </div>
 <div class="content">
-  <p><a href="https://github.com/facile-it/paraunit/releases/tag/0.7.2">Paraunit 0.7.2</a> has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.</p>
-<p>Full changelog text:</p>
-<h3 id="fixed">Fixed</h3>
+  <p>This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.</p>
+<p>Here&rsquo;s the full changelog of the release:</p>
+<h3 id="added">Added</h3>
 <ul>
-<li>Disable colored output in text coverage to console, to avoid issues with GitLab integration.</li>
+<li>Add support for deadlock detection on PostgreSQL <a href="https://github.com/facile-it/paraunit/pull/152">#152</a>, thanks @elernonelma</li>
 </ul>
 
 </div>

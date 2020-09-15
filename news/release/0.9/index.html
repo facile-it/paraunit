@@ -5,19 +5,21 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.16" />
+  <meta name="generator" content="Hugo 0.75.1" />
 
   <title>Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines &middot; Paraunit</title>
 
+    
+
   
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
 
   <!--[if lte IE 8]>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
   <![endif]-->
   <!--[if gt IE 8]><!-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
   <!--<![endif]-->
 
   <!--[if lte IE 8]>
@@ -30,21 +32,28 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="Paraunit" href="https://engineering.facile.it/paraunit/index.xml" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
   <script>hljs.initHighlightingOnLoad();</script>
   
 
   <link rel="shortcut icon" href="https://engineering.facile.it/paraunit/img/favicon.ico" type="image/x-icon" />
+
+  
+  
 
 </head>
 
@@ -68,12 +77,6 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
-      
-        </li>
-      
-      
-        <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
       
         </li>
@@ -90,16 +93,70 @@
       
         </li>
       
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
     </ul>
   </div>
 
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
     </li>
-
     
 
     
@@ -120,30 +177,6 @@
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
-    </li>
     
 
     
@@ -154,11 +187,11 @@
 </div>
 
 
-  <div class="pure-g">
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div>
+  <div class="small-print">
     <small></small>
   </div>
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div class="small-print">
     <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
     <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
   </div>
@@ -175,20 +208,11 @@
   <h2></h2>
 </div>
 <div class="content">
-  
-
-  
-
-<p>After a long time and a lot of work, <a href="https://github.com/facile-it/paraunit/releases/tag/0.9">Paraunit 0.9</a> has been released. This release is a big step ahead: now Paraunit runs with <strong>PHPUnit 6</strong>, and support to older versions is dropped; this also means that the <strong>minimum supported PHP version is now 7.0</strong>, and the minimum version of the <strong>Symfony components is bumped to 2.7</strong>, since older versions are out of support since may.</p>
-
+  <p>After a long time and a lot of work, <a href="https://github.com/facile-it/paraunit/releases/tag/0.9">Paraunit 0.9</a> has been released. This release is a big step ahead: now Paraunit runs with <strong>PHPUnit 6</strong>, and support to older versions is dropped; this also means that the <strong>minimum supported PHP version is now 7.0</strong>, and the minimum version of the <strong>Symfony components is bumped to 2.7</strong>, since older versions are out of support since may.</p>
 <p>All these changes brought along a lot of refactoring, and I took the occasion to sprinkle scalar and return types everywhere in the code (see <a href="https://github.com/facile-it/paraunit/pull/93">#93</a>); this was also behind <a href="https://engineering.facile.it/blog/eng/visual-debt-typehints/">a blog post of mine</a> that I wrote in response to the &ldquo;visual debt&rdquo; controversy.</p>
-
 <p>But the biggest change of all is the new <strong>pipeline system</strong>: now every test is run in a pipeline collection, where each pipe is numbered. This number is the injected in the test as an environment variable, meaning that Paraunit itself can be leveraged to achieve separation in resource access while testing your application. More details on this feature are available in the <a href="https://engineering.facile.it/paraunit/documentation/#the-pipelines">documentation</a>.</p>
-
 <p>Here&rsquo;s the full changelog:</p>
-
 <h3 id="changed">Changed</h3>
-
 <ul>
 <li>Implement pipelines: now every single test process has an environment variable called <code>PARAUNIT_PIPELINE_NUMBER</code> injected which is a number that identifies the pipeline in which the test is executed; it can be used as a discriminator to access a different set of resources (i.e. a different copy of a test DB). See the <a href="https://engineering.facile.it/paraunit/documentation/">documentation</a> for more details.</li>
 <li>Support for PHPUnit 6</li>
@@ -196,7 +220,6 @@
 <li>Minimum PHP version required: 7.0</li>
 <li>Improvement to the whole codebase (scalar and return type hints, strict types enforced, see <a href="https://github.com/facile-it/paraunit/pull/93">#93</a>)</li>
 <li>Realign options passed through to PHPUnit:
-
 <ul>
 <li>Added <code>--strict-coverage</code></li>
 <li>Added <code>--disallow-resource-usage</code></li>
@@ -204,11 +227,10 @@
 <li>Added <code>--no-extensions</code></li>
 <li>Changed <code>--report-useless-tests</code> to <code>--dont-report-useless-tests</code></li>
 <li>Changed <code>--no-globals-backup</code> to <code>--globals-backup</code></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
-
 <ul>
 <li>The <code>--repeat</code> option now works correctly (see <a href="https://github.com/facile-it/paraunit/issues/92">#92</a>)</li>
 <li>The PHPUnit configuration is no longer copied temporarily in the current working folder, it&rsquo;s no longer needed</li>
@@ -219,6 +241,11 @@
 </div>
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
+<script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
+
+
 
 
 

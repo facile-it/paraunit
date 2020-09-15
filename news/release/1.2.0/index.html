@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.75.1" />
 
-  <title>Paraunit 0.7.2: coverage in text format &middot; Paraunit</title>
+  <title>Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support &middot; Paraunit</title>
 
     
 
@@ -204,15 +204,20 @@
 
 
 <div class="header">
-  <h1>Paraunit 0.7.2: coverage in text format</h1>
+  <h1>Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</h1>
   <h2></h2>
 </div>
 <div class="content">
-  <p><a href="https://github.com/facile-it/paraunit/releases/tag/0.7.2">Paraunit 0.7.2</a> has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.</p>
-<p>Full changelog text:</p>
-<h3 id="fixed">Fixed</h3>
+  <p>This release contains only support for newer versions of PHP &amp; PHPUnit; due to PHPUnit 9.3 requiring a new major version of <code>phpunit/php-code-coverage</code>, I&rsquo;m forced to drop support to all PHPUnit versions below 9.3. Usage of Paraunit is unchanged.</p>
+<p>Here&rsquo;s the full changelog of the release:</p>
+<h3 id="added">Added</h3>
 <ul>
-<li>Disable colored output in text coverage to console, to avoid issues with GitLab integration.</li>
+<li>Add support for PHP 8.0 <a href="https://github.com/facile-it/paraunit/pull/154">#154</a></li>
+<li>Add support for PHPUnit 9.3 <a href="https://github.com/facile-it/paraunit/pull/153">#153</a></li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>Drop support for PHPUnit &lt; 9.3 <a href="https://github.com/facile-it/paraunit/pull/153">#153</a></li>
 </ul>
 
 </div>

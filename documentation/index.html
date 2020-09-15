@@ -5,19 +5,21 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.16" />
+  <meta name="generator" content="Hugo 0.75.1" />
 
   <title>Documentation &middot; Paraunit</title>
 
+    
+
   
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
 
   <!--[if lte IE 8]>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
   <![endif]-->
   <!--[if gt IE 8]><!-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
   <!--<![endif]-->
 
   <!--[if lte IE 8]>
@@ -30,21 +32,28 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="Paraunit" href="https://engineering.facile.it/paraunit/index.xml" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
   <script>hljs.initHighlightingOnLoad();</script>
   
 
   <link rel="shortcut icon" href="https://engineering.facile.it/paraunit/img/favicon.ico" type="image/x-icon" />
+
+  
+  
 
 </head>
 
@@ -68,12 +77,6 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
-      
-        </li>
-      
-      
-        <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
       
         </li>
@@ -90,16 +93,70 @@
       
         </li>
       
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
     </ul>
   </div>
 
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
     </li>
-
     
 
     
@@ -120,30 +177,6 @@
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
-    </li>
     
 
     
@@ -154,11 +187,11 @@
 </div>
 
 
-  <div class="pure-g">
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div>
+  <div class="small-print">
     <small></small>
   </div>
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div class="small-print">
     <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
     <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
   </div>
@@ -175,79 +208,31 @@
   <h2></h2>
 </div>
 <div class="content">
-  
-  <div id="toc" class="well col-md-4 col-sm-6">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a>
-<ul>
-<li><a href="#run-command"><code>run</code> command</a></li>
-<li><a href="#coverage-command"><code>coverage</code> command</a></li>
-<li><a href="#the-pipelines">The pipelines</a></li>
-<li><a href="#optional-arguments-and-parameters">Optional arguments and parameters</a>
-<ul>
-<li><a href="#string-filter">String filter</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#parallel">Parallel</a></li>
-<li><a href="#testsuite">Testsuite</a></li>
-<li><a href="#phpunit-inherited-options">PHPUnit inherited options</a></li>
-<li><a href="#debug-mode">Debug mode</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#parsing-results">Parsing results</a></li>
-<li><a href="#troubleshooting">Troubleshooting</a></li>
-</ul>
-</nav>
-  </div>
-  
-
-  
-
-<p>Paraunit is a tool for faster executions of PHPUnit test suites.
+  <p>Paraunit is a tool for faster executions of PHPUnit test suites.
 It makes this possible by launching multiple test in parallel with single PHPUnit processes.</p>
-
 <p>Paraunit is developed using <a href="https://symfony.com/components">Symfony components</a>.</p>
-
 <h1 id="requirements">Requirements</h1>
-
 <p>Paraunit is used in conjunction with PHPUnit. It reads PHPUnit&rsquo;s .xml configuration file, so it&rsquo;s needed to know which test to load.</p>
-
 <p>If you are testing a Symfony+Doctrine application, it&rsquo;s suggested to use also <a href="https://github.com/dmaicher/doctrine-test-bundle">dama/doctrine-test-bundle</a>, to avoid database concurrency problems during functional testing;
 also, if your want to run functional tests, remember to <strong>warm up the cache before</strong>, in order to avoid a mass cache miss (and relative <a href="https://en.wikipedia.org/wiki/Cache_stampede">cache stampede</a>) with concurrency problems, and subsequent random failures.</p>
-
 <h1 id="installation">Installation</h1>
-
 <p>To use this package, use Composer:</p>
-
 <ul>
 <li>from CLI: <code>composer require --dev facile-it/paraunit</code></li>
 <li>or, directly in your <code>composer.json</code>:</li>
 </ul>
-
 <pre><code>{
     &quot;require-dev&quot;: {
         &quot;facile-it/paraunit&quot;: &quot;^1.1&quot;
     }
 }
-</code></pre>
-
-<h1 id="usage">Usage</h1>
-
+</code></pre><h1 id="usage">Usage</h1>
 <h2 id="run-command"><code>run</code> command</h2>
-
 <p>The <code>run</code> command is the main functionality of Paraunit; it launches all the tests in all your configured test suites in parallel; you can run it like this: (assuming your composer&rsquo;s bin dir is <code>vendor/bin</code>)</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run
-</code></pre>
-
-<p>This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run
+</code></pre></div><p>This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.</p>
 <h2 id="coverage-command"><code>coverage</code> command</h2>
-
 <p>The <code>coverage</code> command is used to generate the test coverage in parallel. It supports all the same options of the <code>run</code> command (documented below) but it requires <strong>at least one of those options</strong> to choose the coverage output format:</p>
-
 <table>
 <thead>
 <tr>
@@ -255,145 +240,91 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 <th>Description</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td><code>--html=dir</code></td>
 <td>Coverage in HTML format, inside the specified directory</td>
 </tr>
-
 <tr>
 <td><code>--clover=filename.xml</code></td>
 <td>Coverage in XML-clover format, with the specified filename</td>
 </tr>
-
 <tr>
 <td><code>--xml=dir</code></td>
 <td>Coverage in PHPUnit XML format, inside the specified directory</td>
 </tr>
-
 <tr>
 <td><code>--text=filename.txt</code></td>
 <td>Coverage in text format, into the specified filename</td>
 </tr>
-
 <tr>
 <td><code>--text</code></td>
 <td>Coverage in text format, printed directly in the console, at the end of the process</td>
 </tr>
-
 <tr>
 <td><code>--text-summary=filename.txt</code></td>
 <td>Coverage summary in text format, into the specified filename</td>
 </tr>
-
 <tr>
 <td><code>--text-summary</code></td>
 <td>Coverage in text format, printed directly in the console, at the end of the process</td>
 </tr>
 </tbody>
 </table>
-
 <p>Example:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit coverage --html=./coverage
-</code></pre>
-
-<p>Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are <a href="https://github.com/krakjoe/pcov">ext-pcov</a> (only since <a href="https://github.com/facile-it/paraunit/pull/146">1.0.0-beta2</a> and in conjunction with PHPUnit 8), <a href="https://xdebug.org/">xDebug</a> and <a href="https://www.php.net/manual/en/book.phpdbg.php">PHPDBG</a>.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit coverage --html<span style="color:#f92672">=</span>./coverage
+</code></pre></div><p>Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are <a href="https://github.com/krakjoe/pcov">ext-pcov</a> (only since <a href="https://github.com/facile-it/paraunit/pull/146">1.0.0-beta2</a> and in conjunction with PHPUnit 8), <a href="https://xdebug.org/">xDebug</a> and <a href="https://www.php.net/manual/en/book.phpdbg.php">PHPDBG</a>.</p>
 <p>Paraunit checks if <code>ext-pcov</code> is installed and uses it as the preferred driver, since it&rsquo;s the fastest; the extensions can remain installed but disabled (<code>pcov.enabled=0</code>), and Paraunit will take care of enabling it when launching PHPUnit processes.</p>
-
 <p>If that&rsquo;s not available, it will try to detect the presence of Xdebug; as a last resource, it will use PHPDbg, which should be always available since it&rsquo;s built into PHP core since 5.6.</p>
-
 <p>If you have issues or random failures when using the <code>coverage</code> command, you can try to use the <code>--parallel 1</code> option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.</p>
-
 <h2 id="the-pipelines">The pipelines</h2>
-
 <p>Since version 0.9, Paraunit executes the tests using a <strong>pipeline logic</strong>: this means that if we ask to run 10 tests in parallel at the same time, Paraunit will instantiate 10 pipeline to do it, and each pipeline will be numbered, from 1 to 10.</p>
-
 <p>The only perceivable difference to the user is the <strong>environment variable</strong>, called <code>PARAUNIT_PIPELINE_NUMBER</code>, which is injected in every test process; this variable contains the number of the pipeline. This number can be easily retrieved in your tests, and it can be used to access without concurrency issues to a diverse copy of a resource, i.e. a database, like in this little example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 
-<pre><code class="language-php">&lt;?php
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Paraunit\Configuration\EnvVariables</span>;
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">PHPUnit\Framework\TestCase</span>;
 
-use Paraunit\Configuration\EnvVariables;
-use PHPUnit\Framework\TestCase;
-
-class SomeTest extends TestCase
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeTest</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TestCase</span>
 {
-    protected function setup(): void
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setup</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">void</span>
     {
-        $pipelineNumber = getenv(EnvVariables::PARAUNIT_PIPELINE_NUMBER);
-        $this-&gt;databaseName = 'db_test_' . $pipelineNumber;
-        // ...
-    }
+        $pipelineNumber <span style="color:#f92672">=</span> <span style="color:#a6e22e">getenv</span>(<span style="color:#a6e22e">EnvVariables</span><span style="color:#f92672">::</span><span style="color:#a6e22e">PARAUNIT_PIPELINE_NUMBER</span>);
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">databaseName</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;db_test_&#39;</span> <span style="color:#f92672">.</span> $pipelineNumber;
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
 }
-</code></pre>
-
-<p>This little piece of code will obtain <code>db_test_1</code>, <code>db_test_2</code> etc. as a value for the <code>databaseName</code> property, achieving actual separation when accessing the test fixtures in the database. The setup and cleanup of the fixtures after each test is still up to the developer, obviously.</p>
-
+</code></pre></div><p>This little piece of code will obtain <code>db_test_1</code>, <code>db_test_2</code> etc. as a value for the <code>databaseName</code> property, achieving actual separation when accessing the test fixtures in the database. The setup and cleanup of the fixtures after each test is still up to the developer, obviously.</p>
 <p>As the snippet shows, the name of the environment variables are available as constants in the <code>Paraunit\Configuration\EnvVariables</code> class.</p>
-
 <h2 id="optional-arguments-and-parameters">Optional arguments and parameters</h2>
-
 <h3 id="string-filter">String filter</h3>
-
 <p>Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run path/to/my/tests
-</code></pre>
-
-<p>In Paraunit this functionality is more powerful, since:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run path/to/my/tests
+</code></pre></div><p>In Paraunit this functionality is more powerful, since:</p>
 <ul>
 <li>it&rsquo;s case insensitive</li>
 <li>it works in combination with <code>--testsuite</code> (PHPUnit ignores that if the argument is provided)</li>
 <li>it searches a match everywhere in the filename, so it doesn&rsquo;t have to be a full or relative path</li>
 </ul>
-
 <p>Let&rsquo;s use an example to show how powerful this feature is. You are working on the <code>MyApp\SpecialPanel\SomeClass</code> class, and you want to run all the tests of the <code>MyApp\SpecialPanel</code> namespace. Those tests are in the <code>tests/Unit/SpecialPanel/</code> and <code>tests/Functional/SpecialPanel/</code> directories. You can run both dir at the same time with</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run specialpanel
-</code></pre>
-
-<p>You don&rsquo;t have to bother about the fact that the tests are splitted into different subdirectories, and about the uppercase letters too.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run specialpanel
+</code></pre></div><p>You don&rsquo;t have to bother about the fact that the tests are splitted into different subdirectories, and about the uppercase letters too.</p>
 <h3 id="configuration">Configuration</h3>
-
 <p>If your <code>phpunit.xml.dist</code> file is not in the default base dir, you can specify it by:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist
-</code></pre>
-
-<p>or with the short version:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist
-</code></pre>
-
-<p>Also it&rsquo;s possible to provide only a directory, in such case Paraunit will look a file with the default name, <code>phpunit.xml.dist</code>:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run -c=relPath/to/xml/file/
-</code></pre>
-
-<h3 id="parallel">Parallel</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --configuration<span style="color:#f92672">=</span>relPath/to/phpunit.xml.dist
+</code></pre></div><p>or with the short version:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run -c<span style="color:#f92672">=</span>relPath/to/phpunit.xml.dist
+</code></pre></div><p>Also it&rsquo;s possible to provide only a directory, in such case Paraunit will look a file with the default name, <code>phpunit.xml.dist</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run -c<span style="color:#f92672">=</span>relPath/to/xml/file/
+</code></pre></div><h3 id="parallel">Parallel</h3>
 <p>You can choose how many concurrent processes (pipelines) you want to spawn at the same time, using the <code>--parallel</code> option. The default value is <code>10</code>:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run --parallel=5
-</code></pre>
-
-<h3 id="testsuite">Testsuite</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --parallel<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</code></pre></div><h3 id="testsuite">Testsuite</h3>
 <p>You can run a single test suite (as defined in your configuration file) using:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run --testsuite=testSuiteName
-</code></pre>
-
-<h3 id="phpunit-inherited-options">PHPUnit inherited options</h3>
-
-<p>A large number of PHPUnit options (apart from the aforementioned <code>--testsuite</code>) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options&rsquo; behavior, see the <a href="https://phpunit.de/manual/current/en/textui.html#textui.clioptions">PHPUnit CLI documentation</a>.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --testsuite<span style="color:#f92672">=</span>testSuiteName
+</code></pre></div><h3 id="phpunit-inherited-options">PHPUnit inherited options</h3>
+<p>A large number of PHPUnit options (apart from the aforementioned <code>--testsuite</code>) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options' behavior, see the <a href="https://phpunit.de/manual/current/en/textui.html#textui.clioptions">PHPUnit CLI documentation</a>.</p>
 <p>This is the complete list of supported options:</p>
-
 <ul>
 <li><code>filter</code></li>
 <li><code>group</code></li>
@@ -418,28 +349,17 @@ class SomeTest extends TestCase
 <li><code>no-extensions</code></li>
 <li><code>include-path</code></li>
 </ul>
-
 <h3 id="debug-mode">Debug mode</h3>
-
 <p>If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:</p>
-
-<pre><code class="language-bash">vendor/bin/paraunit run --debug
-</code></pre>
-
-<p>It will show a verbose output with the full running test queue.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --debug
+</code></pre></div><p>It will show a verbose output with the full running test queue.</p>
 <h1 id="parsing-results">Parsing results</h1>
-
 <p>Paraunit prints a parsed result from the single PHPUnit processes. This parsing is done hooking into PHPUnit, so it&rsquo;s a resilient and reliable process; it allows to be also resilient to fatal errors and other abnormal process termination.</p>
-
-<p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes&rsquo; exit codes:
- <strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
- So you can safely use it in your CI build ;)</p>
-
+<p>Anyhow, Paraunit doesn&rsquo;t rely on the parsed results to provide the final exit code; instead, it looks only to the processes' exit codes:
+<strong>it will return a clean zero exit code only if all the PHPUnit processes gave it a zero exit code</strong>.
+So you can safely use it in your CI build ;)</p>
 <p>Side note: if you are using <a href="https://symfony.com/doc/current/components/phpunit_bridge.html">Symfony&rsquo;s PHPUnit bridge</a> to spot deprecations (or any other plugin that outputs something), you will be able to detect test failures due to deprecations since version 0.11.</p>
-
 <h1 id="troubleshooting">Troubleshooting</h1>
-
 <p>If you are experiencing any problems, you can try the <code>--debug</code> option to identify the problematic test, and try running it alone; if failures seems to appear at randoms during Paraunit runs, check for concurrency problem, like database access; otherwise, please open an issue <a href="https://github.com/facile-it/paraunit/issues">here on GitHub</a>.</p>
 
 </div>
@@ -447,8 +367,16 @@ class SomeTest extends TestCase
 </div>
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
+<script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
 
 
+
+
+
+
+<script src="https://engineering.facile.it/paraunit/js/math-code.js"></script>
+  <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
 
 
 </body>

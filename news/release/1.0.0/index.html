@@ -5,19 +5,21 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.16" />
+  <meta name="generator" content="Hugo 0.75.1" />
 
   <title>Paraunit 1.0.0: the stable release &middot; Paraunit</title>
 
+    
+
   
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
 
   <!--[if lte IE 8]>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
   <![endif]-->
   <!--[if gt IE 8]><!-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
   <!--<![endif]-->
 
   <!--[if lte IE 8]>
@@ -30,21 +32,28 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="Paraunit" href="https://engineering.facile.it/paraunit/index.xml" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
   <script>hljs.initHighlightingOnLoad();</script>
   
 
   <link rel="shortcut icon" href="https://engineering.facile.it/paraunit/img/favicon.ico" type="image/x-icon" />
+
+  
+  
 
 </head>
 
@@ -68,12 +77,6 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
-      
-        </li>
-      
-      
-        <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/tags/release/"><i class='fa fa-tags fa-fw'></i>Releases</a>
       
         </li>
@@ -90,16 +93,70 @@
       
         </li>
       
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
     </ul>
   </div>
 
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://engineering.facile.it/paraunit/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
     </li>
-
     
 
     
@@ -120,30 +177,6 @@
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://github.com/facile-it/paraunit" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
-    </li>
     
 
     
@@ -154,11 +187,11 @@
 </div>
 
 
-  <div class="pure-g">
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div>
+  <div class="small-print">
     <small></small>
   </div>
-  <div class="small-print pure-u-1 pure-u-md-1-1">
+  <div class="small-print">
     <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
     <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
   </div>
@@ -175,28 +208,16 @@
   <h2></h2>
 </div>
 <div class="content">
-  
-
-  
-
-<p>Today I decided to release <code>facile-it/paraunit</code> <code>1.0.0</code>! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.</p>
-
+  <p>Today I decided to release <code>facile-it/paraunit</code> <code>1.0.0</code>! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.</p>
 <p>The main reason behind this is that I&rsquo;m currently working <a href="https://github.com/facile-it/paraunit/pull/149">on PHPUnit 9 support</a>, and this will force me to release a new minor that will drop support for previous PHPUnit version altogether. This decision was in reality forced onto me due to the fact that PHUnit 9 drops support for the <code>--printer</code> CLI option and the relative extension point, which Paraunit was using as a way to extract test results.</p>
-
 <p>To counter this deprecation, I&rsquo;m working on using <code>TestHook</code>s as a different, cleaner way to extend PHPUnit and obtain test results; the only downside of this new approach is in the fact that, up until now, there was no way to attach those hooks outside from PHPUnit&rsquo;s XML configuration; this would have meant that Paraunit would&rsquo;ve had to alter the end user&rsquo;s configuration, and I found this a bad approach.</p>
-
 <p>To resolve this blocker, I issued a <a href="https://github.com/sebastianbergmann/phpunit/pull/4136">pull request</a> that adds an <code>--extensions</code> CLI option to PHPUnit; that PR got accepted pretty fast, but it will be released only on PHPUnit 9.1, and <a href="https://github.com/sebastianbergmann/phpunit/issues/4131#issuecomment-596403054">it will not get backported</a>, unfortunately. This means that the future Paraunit 1.1 release will support PHPUnit 9.1 (and forward) only, without any support overlap from the previous releases.</p>
-
 <p>Anyway, this is still good news! Below, you can find the full changelog for this release, compared to the last 0.x tag (0.12.3):</p>
-
 <h3 id="breaking-changes">Breaking changes</h3>
-
 <ul>
 <li>Scalar and return types added everywhere possible</li>
 </ul>
-
 <h3 id="added">Added</h3>
-
 <ul>
 <li>Add support for PHP 7.4</li>
 <li>Add support for Symfony 5</li>
@@ -204,35 +225,28 @@
 <li>Add support for <code>phpunit/phpunit</code> 8 and <code>phpunit/php-code-coverage</code> 7 <a href="https://github.com/facile-it/paraunit/pull/133">#133</a></li>
 <li>Add explicit requirement for <code>ext-dom</code> and <code>ext-json</code> <a href="https://github.com/facile-it/paraunit/pull/134">#134</a></li>
 </ul>
-
 <h3 id="fixed">Fixed</h3>
-
 <ul>
 <li>Do not set values on PHPUnit options that do not expect values <a href="https://github.com/facile-it/paraunit/pull/127">#127</a>, thanks @fullbl</li>
 </ul>
-
 <h3 id="changed">Changed</h3>
-
 <ul>
 <li>Update PHPStan to 0.12 <a href="https://github.com/facile-it/paraunit/pull/128">#128</a> + <a href="https://github.com/facile-it/paraunit/pull/145">#145</a></li>
 <li>Prefer Pcov or Xdebug over PHPDBG as coverage driver <a href="https://github.com/facile-it/paraunit/pull/146">#146</a></li>
 <li>Update coding standard to 0.3 <a href="https://github.com/facile-it/paraunit/pull/131">#131</a></li>
 </ul>
-
 <h3 id="removed">Removed</h3>
-
 <ul>
 <li>Drop support for older packages: <a href="https://github.com/facile-it/paraunit/pull/134">#134</a>
-
 <ul>
 <li><code>phpunit/phpunit</code> 6</li>
 <li><code>phpunit/php-code-coverage</code> &lt; 6</li>
 <li>All Symfony components &lt; 3.4</li>
-</ul></li>
+</ul>
+</li>
 <li>PHAR release (it&rsquo;s not working)</li>
 <li>Disable Scrutinizer <a href="https://github.com/facile-it/paraunit/pull/132">#132</a>, CodeClimate and Insight, in favor of CodeCov</li>
 </ul>
-
 <p>Happy testing!</p>
 
 </div>
@@ -240,6 +254,11 @@
 </div>
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
+<script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
+
+
 
 
 
