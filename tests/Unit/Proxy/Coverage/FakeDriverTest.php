@@ -9,6 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class FakeDriverTest extends TestCase
 {
+    public function testName(): void
+    {
+        $driver = new FakeDriver();
+
+        $this->assertStringContainsString('Fake', $driver->nameAndVersion());
+    }
+
     /**
      * @dataProvider methodNameProvider
      */
