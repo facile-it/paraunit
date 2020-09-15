@@ -27,6 +27,9 @@ jobs:
     - name: Use composer.lock
       php: 7.3
       install: composer install --prefer-dist --no-interaction
+    - name: PHP 8
+      php: nightly
+      install: composer update --ignore-platform-reqs --prefer-dist --prefer-stable --no-interaction
     - stage: Code style, static analysis and E2E
       name: End2End with Pcov
       install:
