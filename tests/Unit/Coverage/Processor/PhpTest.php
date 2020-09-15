@@ -22,7 +22,6 @@ class PhpTest extends BaseUnitTestCase
         $content = $this->getFileContent($targetFile->getFilePath());
         unlink($targetFile->getFilePath());
         $this->assertStringStartsWith('<?php', $content);
-        $this->assertStringContainsString('$coverage = new', $content);
-        $this->assertStringContainsString('return $coverage;', $content);
+        $this->assertStringContainsString('return \\unserialize', $content);
     }
 }

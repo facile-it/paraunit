@@ -98,7 +98,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
 
-    private function getService(ContainerBuilder $container, string $serviceName)
+    private function getService(ContainerBuilder $container, string $serviceName): ?object
     {
         return $container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
     }

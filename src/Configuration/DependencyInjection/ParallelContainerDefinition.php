@@ -22,7 +22,6 @@ use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
-use Paraunit\Proxy\PHPUnitUtilXMLProxy;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
@@ -169,17 +168,11 @@ class ParallelContainerDefinition
 
     private function configureServices(ContainerBuilder $container): void
     {
-        if (! class_exists('SebastianBergmann\FileIterator\Facade')) {
-            \class_alias('\File_Iterator_Facade', 'SebastianBergmann\FileIterator\Facade');
-        }
-
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
-        $container->setDefinition(PHPUnitUtilXMLProxy::class, new Definition(PHPUnitUtilXMLProxy::class));
         $container->setDefinition(Facade::class, new Definition(Facade::class));
         $container->setDefinition(Filter::class, new Definition(Filter::class, [
-            new Reference(PHPUnitUtilXMLProxy::class),
             new Reference(Facade::class),
             new Reference(PHPUnitConfig::class),
             '%paraunit.testsuite%',

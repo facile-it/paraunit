@@ -236,8 +236,11 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $this->assertTrue($property->getValue($processor));
     }
 
-    private function getService(ContainerBuilder $container, string $serviceName)
+    private function getService(ContainerBuilder $container, string $serviceName): object
     {
-        return $container->get(sprintf(CoverageConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+        $service = $container->get(sprintf(CoverageConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
+        $this->assertNotNull($service);
+
+        return $service;
     }
 }

@@ -19,6 +19,8 @@ class OutputFileTest extends BaseUnitTestCase
 
     /**
      * @dataProvider emptyFilesProvider
+     *
+     * @param string|bool|null $emptyFile
      */
     public function testIsEmpty($emptyFile): void
     {

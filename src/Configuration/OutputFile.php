@@ -10,7 +10,7 @@ class OutputFile
     private $filePath;
 
     /**
-     * @param string $filePath
+     * @param string|mixed $filePath The path to the file; if invalid, getFilePath() will fail later
      */
     public function __construct($filePath)
     {
