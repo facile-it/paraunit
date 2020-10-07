@@ -18,21 +18,21 @@ jobs:
           - '7.3'
         experimental: [false]
         include:
-          - description: 'PHP 8.0'
+          - description: 'nightly'
             os: 'ubuntu-latest'
             php: '8.0'
             composer_option: '--ignore-platform-reqs'
           - description: 'Windows'
             os: 'windows-latest'
             php: '7.4'
-          - description: 'prefer lowest'
+          - description: '--prefer lowest'
             os: 'ubuntu-latest'
             php: '7.3'
             composer_option: '--prefer-lowest'
             env:
               SYMFONY_DEPRECATIONS_HELPER: disabled
 
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
