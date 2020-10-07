@@ -19,12 +19,14 @@ jobs:
         experimental: [false]
         include:
           - description: 'PHP 8.0'
+            os: 'ubuntu-latest'
             php: '8.0'
             composer_option: '--ignore-platform-reqs'
           - description: 'Windows'
             os: 'windows-latest'
             php: '7.4'
           - description: 'prefer lowest'
+            os: 'ubuntu-latest'
             php: '7.3'
             composer_option: '--prefer-lowest'
             env:
