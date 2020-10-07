@@ -87,6 +87,5 @@ jobs:
           php-version: '7.4'
           coverage: ${{ matrix.coverage-driver }}
       - run: composer install --no-progress --ansi
-      - run:
-        - src/Bin/paraunit run FakeDriverTest
-        - src/Bin/paraunit coverage FakeDriverTest --text
+      - run: src/Bin/paraunit run FakeDriverTest
+      - run: src/Bin/paraunit coverage FakeDriverTest --text
