@@ -16,6 +16,7 @@ jobs:
         php:
           - '7.4'
           - '7.3'
+        composer_option: ['']
         experimental: [false]
         include:
           - description: 'nightly'
