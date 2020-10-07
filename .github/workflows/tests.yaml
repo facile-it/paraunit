@@ -69,3 +69,24 @@ jobs:
           php-version: '7.4'
       - run: composer install --no-progress --ansi
       - run: vendor/bin/phpstan analyse
+  End to end:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        coverage-driver:
+          - pcov
+          - xdebug
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache/files
+          key: '7.4'
+      - uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.4'
+          coverage: ${{ matrix.coverage-driver }}
+      - run: composer install --no-progress --ansi
+      - run:
+        - src/Bin/paraunit run FakeDriverTest
+        - src/Bin/paraunit coverage FakeDriverTest --text
