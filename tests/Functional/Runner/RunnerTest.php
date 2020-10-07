@@ -166,11 +166,11 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertOutputOrder($output, [
             'Errors output',
             SessionTestStub::class . '::testOne',
-            'headers already sent',
+            'session_id',
             SessionTestStub::class . '::testTwo',
-            'headers already sent',
+            'session_id',
             SessionTestStub::class . '::testThree',
-            'headers already sent',
+            'session_id',
             'files with ERRORS',
             'SessionTestStub',
         ]);
