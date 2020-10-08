@@ -5,8 +5,7 @@
 [![Unstable release][Last unstable image]][Packagist link]
 [![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
 
-[![Build status][Master build image]][Master build link]
-[![Appveyor build status][Appveyor build image]][Appveyor build link]
+[![Build status](https://img.shields.io/github/workflow/status/facile-it/paraunit/CI)](https://github.com/facile-it/paraunit/actions)
 [![Coverage Status][Master coverage image]][Master coverage link]
 
 Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible by launching multiple test in parallel with single PHPUnit processes.
@@ -58,11 +57,7 @@ For more details about Paraunit and its usage, see the [documentation](https://e
 
 [Last stable image]: https://poser.pugx.org/facile-it/paraunit/version.svg
 [Last unstable image]: https://poser.pugx.org/facile-it/paraunit/v/unstable.svg
-[Master build image]: https://travis-ci.com/facile-it/paraunit.svg
-[Appveyor build image]: https://ci.appveyor.com/api/projects/status/ohmhq2s762x3ixli/branch/master?svg=true
 [Master coverage image]: https://codecov.io/gh/facile-it/paraunit/branch/master/graph/badge.svg
 
 [Packagist link]: https://packagist.org/packages/facile-it/paraunit
-[Master build link]: https://travis-ci.com/facile-it/paraunit
-[Appveyor build link]: https://ci.appveyor.com/project/Jean85/paraunit/branch/master
 [Master coverage link]: https://codecov.io/gh/facile-it/paraunit
