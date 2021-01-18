@@ -14,15 +14,12 @@ jobs:
       matrix:
         os: ['ubuntu-latest']
         php:
+          - '8.0'
           - '7.4'
           - '7.3'
         composer_option: ['']
         experimental: [false]
         include:
-          - description: 'nightly'
-            os: 'ubuntu-latest'
-            php: '8.0'
-            composer_option: '--ignore-platform-reqs'
           - description: 'Windows'
             os: 'windows-latest'
             php: '7.4'
@@ -40,7 +37,7 @@ jobs:
         with:
           path: ~/.composer/cache/files
           key: ${{ matrix.php }}${{ matrix.composer_option }} 
-      - uses: shivammathur/setup-php@v1
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
@@ -59,7 +56,7 @@ jobs:
         with:
           path: ~/.composer/cache/files
           key: '7.4'
-      - uses: shivammathur/setup-php@v1
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
       - run: composer install --no-progress --ansi
@@ -73,7 +70,7 @@ jobs:
         with:
           path: ~/.composer/cache/files
           key: '7.4'
-      - uses: shivammathur/setup-php@v1
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
       - run: composer install --no-progress --ansi
@@ -91,7 +88,7 @@ jobs:
         with:
           path: ~/.composer/cache/files
           key: '7.4'
-      - uses: shivammathur/setup-php@v1
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
           coverage: ${{ matrix.coverage-driver }}
