@@ -20,6 +20,10 @@ jobs:
         composer_option: ['']
         experimental: [false]
         include:
+          - description: 'ignore platform reqs'
+            os: 'ubuntu-latest'
+            php: '8.0'
+            composer_option: '--ignore-platform-reqs'
           - description: 'Windows'
             os: 'windows-latest'
             php: '7.4'
