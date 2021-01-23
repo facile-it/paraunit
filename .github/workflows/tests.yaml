@@ -9,7 +9,7 @@ on:
 jobs:
   Tests:
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: true
     strategy:
       matrix:
         os: ['ubuntu-latest']
