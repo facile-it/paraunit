@@ -38,7 +38,7 @@
         "symfony/stopwatch": "^3.4||^4.0||^5.0"
     },
     "require-dev": {
-        "facile-it/facile-coding-standard": "^0.3.1",
+        "facile-it/facile-coding-standard": "dev-master#5b3fd61 as 0.4.1",
         "jangregor/phpstan-prophecy": "^0.6.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.0",
