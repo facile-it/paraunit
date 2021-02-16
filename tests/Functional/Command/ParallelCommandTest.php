@@ -9,7 +9,7 @@ use Paraunit\Configuration\ParallelConfiguration;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
-use Tests\Stub\MissingProviderTestStub;
+use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\PostgreSQLDeadLockTestStub;
 use Tests\Stub\RaisingDeprecationTestStub;
@@ -81,7 +81,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('ABNORMAL TERMINATIONS', $output);
         $this->assertStringContainsString('ParseErrorTestStub.php', $output);
         $this->assertStringContainsString(RaisingNoticeTestStub::class, $output);
-        $this->assertStringContainsString(MissingProviderTestStub::class, $output);
+        $this->assertStringContainsString(IntentionalWarningTestStub::class, $output);
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(PostgreSQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(SessionTestStub::class, $output);
