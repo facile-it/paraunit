@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d58306ced32c7af34f3328012b46f70",
+    "content-hash": "5e1d0f1be634ce8992f897a976049c6a",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -3533,7 +3533,7 @@
         },
         {
             "name": "facile-it/facile-coding-standard",
-            "version": "dev-master",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facile-it/facile-coding-standard.git",
@@ -4806,18 +4806,9 @@
             "time": "2020-06-07T15:42:22+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "0.4.1",
-            "alias_normalized": "0.4.1.0",
-            "version": "9999999-dev",
-            "package": "facile-it/facile-coding-standard"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "facile-it/facile-coding-standard": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
