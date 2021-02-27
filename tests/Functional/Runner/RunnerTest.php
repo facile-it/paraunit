@@ -10,7 +10,7 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
-use Tests\Stub\MissingProviderTestStub;
+use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
 use Tests\Stub\SessionTestStub;
@@ -114,7 +114,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testWarning(): void
     {
-        $this->setTextFilter('MissingProviderTestStub.php');
+        $this->setTextFilter('IntentionalWarningTestStub.php');
         $this->loadContainer();
 
         $this->executeRunner();
@@ -127,7 +127,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing recap title'
         );
         $this->assertStringContainsString(
-            MissingProviderTestStub::class,
+            IntentionalWarningTestStub::class,
             $output,
             'Missing warned filename'
         );
