@@ -5,7 +5,18 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 15 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paraunit 1.2.1: allow jean85/pretty-package-versions v2</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.2.1/</link>
+      <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.2.1/</guid>
+      <description>This small patch is just to allow a dependency bump for end users.
+Here&amp;rsquo;s the full changelog of the release:
+Added  Allow jean85/pretty-package-versions v2 90f84b5  </description>
+    </item>
+    
     <item>
       <title>Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</title>
       <link>https://engineering.facile.it/paraunit/news/release/1.2.0/</link>

@@ -237,6 +237,50 @@
   
     <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Paraunit 1.0.0: the stable release</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>11 Mar 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Today I decided to release facile-it/paraunit 1.0.0! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.
+The main reason behind this is that I&rsquo;m currently working on PHPUnit 9 support, and this will force me to release a new minor that will drop support for previous PHPUnit version altogether. This decision was in reality forced onto me due to the fact that PHUnit 9 drops support for the --printer CLI option and the relative extension point, which Paraunit was using as a way to extract test results.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta2/">Paraunit 1.0.0-beta2: Pcov support</a></h2>
 
     <div class="post-meta">
@@ -399,47 +443,6 @@ Fixed  Allow explicitly phpunit/php-file-iterator 2 #126
   Today I released a new small patch for Paraunit, fixing an output bug and intercepting a new king of retryable exception.
 Here&rsquo;s the full changelog:
 Fixed  Allow multiple, comma-separated values with the --testsuite option, like with PHPUnit 6+ #122 Avoid letting the colored console output blink (dots, errors) #124 thanks to @elegos Add a new exception about MySQL savepoint to the retryable ones #125  
-  </p>
-
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.12.1/">Paraunit 0.12.1: a small fix</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>05 Apr 2018</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  I had to release a fast fix for a problem introduced in the 0.12 release, due to the new behavior of the --text and --text-summary options. At first, it seemed that having an option with an optional argument was impossible, but I was able to do that anyway, and it spured a PR to the Symfony Docs too!
-Here&rsquo;s the full changelog:
-Fixed  Fix the behavior of the new --text and --text-summary options (#121)  
   </p>
 
   
