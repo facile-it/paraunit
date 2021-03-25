@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [1.2.1] - 2021-03-25
+### Added
+ * Allow `jean85/pretty-package-versions` v2 [90f84b5](https://github.com/facile-it/paraunit/commit/90f84b545323053833834ea6d1b2641bd2d810f0)
+
 ## [1.2.0] - 2020-09-15
 ### Added
  * Add support for PHP 8.0 [#154](https://github.com/facile-it/paraunit/pull/154)
