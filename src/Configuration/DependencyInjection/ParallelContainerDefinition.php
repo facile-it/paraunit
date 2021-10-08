@@ -83,6 +83,7 @@ class ParallelContainerDefinition
     {
         $dispatcher = new Definition(EventDispatcher::class);
         $container->setDefinition(SymfonyEventDispatcherInterface::class, $dispatcher);
+        $container->setAlias('event_dispatcher', SymfonyEventDispatcherInterface::class);
 
         if (is_subclass_of(EventDispatcher::class, PsrEventDispatcherInterface::class)) {
             $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
@@ -91,13 +92,7 @@ class ParallelContainerDefinition
             $container->setAlias(PsrEventDispatcherInterface::class, ForwardCompatEventDispatcher::class);
         }
 
-        $container->addCompilerPass(
-            new RegisterListenersPass(
-                SymfonyEventDispatcherInterface::class,
-                '',
-                ParallelConfiguration::TAG_EVENT_SUBSCRIBER
-            )
-        );
+        $container->addCompilerPass(new RegisterListenersPass());
     }
 
     private function configureFile(ContainerBuilder $container): void
