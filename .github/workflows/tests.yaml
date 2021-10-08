@@ -42,6 +42,8 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
+      - run: composer remove --dev facile-it/facile-coding-standard --no-update
+        if: matrix.composer_option == '--prefer-lowest'
       - run: composer update --no-progress --ansi ${{ matrix.composer_option }}
       - run: bin/phpunit --coverage-clover=coverage.xml
       - uses: codecov/codecov-action@v1
