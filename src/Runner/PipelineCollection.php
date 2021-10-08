@@ -8,15 +8,15 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class PipelineCollection
 {
-    /** @var \SplFixedArray<Pipeline> */
+    /** @var Pipeline[] */
     private $pipelines;
 
     public function __construct(PipelineFactory $pipelineFactory, int $maxProcessNumber = 10)
     {
-        $this->pipelines = new \SplFixedArray($maxProcessNumber);
+        $this->pipelines = [];
 
         for ($pipelineNumber = 1; $pipelineNumber <= $maxProcessNumber; ++$pipelineNumber) {
-            $this->pipelines->offsetSet($pipelineNumber - 1, $pipelineFactory->create($pipelineNumber));
+            $this->pipelines[] = $pipelineFactory->create($pipelineNumber);
         }
     }
 

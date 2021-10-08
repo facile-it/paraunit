@@ -111,11 +111,12 @@ class CoverageConfiguration extends ParallelConfiguration
      */
     private function getOptionName(string $processorClass): string
     {
-        if (! \in_array(CoverageProcessorInterface::class, class_implements($processorClass), true)) {
-            throw new \InvalidArgumentException('Expecting FQCN of class implementing ' . CoverageProcessorInterface::class . ', got ' . $processorClass);
+        $implements = class_implements($processorClass);
+        if (is_array($implements) && \in_array(CoverageProcessorInterface::class, $implements, true)) {
+            return $processorClass::getConsoleOptionName();
         }
 
-        return $processorClass::getConsoleOptionName();
+        throw new \InvalidArgumentException('Expecting FQCN of class implementing ' . CoverageProcessorInterface::class . ', got ' . $processorClass);
     }
 
     private function optionIsEnabled(InputInterface $input, string $optionName): bool
