@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
-use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;

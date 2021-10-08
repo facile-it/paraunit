@@ -157,7 +157,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     public function getParameter(string $parameterName)
     {
         if ($this->container) {
-            /* @var int|string */
+            /** @var int|string */
             return $this->container->getParameter($parameterName);
         }
 
