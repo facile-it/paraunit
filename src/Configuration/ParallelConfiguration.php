@@ -61,7 +61,8 @@ class ParallelConfiguration
             }
 
             $class = $definition->getClass() ?? (string) $id;
-            if (array_key_exists(EventSubscriberInterface::class, class_implements($class))) {
+            $implements = class_implements($class);
+            if ($implements && array_key_exists(EventSubscriberInterface::class, $implements)) {
                 $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
             }
         }
