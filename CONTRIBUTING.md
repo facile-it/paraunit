@@ -2,8 +2,8 @@
 
 ## Dev environment
 Paraunit comes with a containerized environment which makes contributing really easy.
-The project adopted Docker as container technology, you can find an useful guide for the installation process 
-[here](https://docs.docker.com/engine/installation/).
+The project adopted Docker Compose and Docker as container technology, you can find an useful guide for the installation process 
+[here](https://docs.docker.com/engine/installation/) and [here](https://docs.docker.com/compose/install/).
 
 The container already has Composer installed globally, and [OhMyZsh](https://github.com/robbyrussell/oh-my-zsh) installed 
 as shell for some nice autocompletion features. 
@@ -18,10 +18,12 @@ git clone git@github.com:facile-it/paraunit.git
 ```
 cd paraunit
 ```
-* Build and launch the container:
+* Open a shell, which will build the container as preparation:
 ```
-docker/setup.sh
+make shell
 ```
+Keep in mind that the build process will be cached by Docker, so it will be slow only the first time.
+
  * Now you are inside the container! You should install all the dependencies:
 ```
 composer install
@@ -32,7 +34,7 @@ phpunit
 ```
  
 And now your're ready! You should always use git commands (pull/commit/push) outside the container, since it does not 
-have your GitHub credentials available. 
+have your GitHub credentials available.
 
 ## Coding Standard
 

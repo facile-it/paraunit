@@ -77,3 +77,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias xdebug_enable='export XDEBUG_MODE=debug'
+alias xdebug_disable='export XDEBUG_MODE=off'
