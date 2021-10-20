@@ -7,7 +7,6 @@ namespace Paraunit\Parser\JSON\TestHook;
 use Paraunit\Parser\JSON\Log;
 use PHPUnit\Event\Test\Passed;
 use PHPUnit\Event\Test\PassedSubscriber;
-use PHPUnit\Runner\AfterSuccessfulTestHook;
 
 class Successful extends AbstractTestHook implements PassedSubscriber
 {
