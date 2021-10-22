@@ -12,6 +12,6 @@ class Incomplete extends AbstractTestHook implements AbortedSubscriber
 {
     public function notify(Aborted $event): void
     {
-        $this->write(Log::STATUS_INCOMPLETE, $event->test()->name(), $event->throwable()->message());
+        $this->write(Log::STATUS_INCOMPLETE, $event->test(), $event->throwable()->message());
     }
 }

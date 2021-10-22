@@ -12,6 +12,6 @@ class Successful extends AbstractTestHook implements PassedSubscriber
 {
     public function notify(Passed $event): void
     {
-        $this->write(Log::STATUS_SUCCESSFUL, $event->test()->name(), null);
+        $this->write(Log::STATUS_SUCCESSFUL, $event->test(), null);
     }
 }

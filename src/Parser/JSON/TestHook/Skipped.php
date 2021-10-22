@@ -12,6 +12,6 @@ class Skipped extends AbstractTestHook implements SkippedSubscriber
 {
     public function notify(PHPUnitSkipped $event): void
     {
-        $this->write(Log::STATUS_SKIPPED, $event->test()->name(), $event->message());
+        $this->write(Log::STATUS_SKIPPED, $event->test(), $event->message());
     }
 }

@@ -12,6 +12,6 @@ class BeforeTest extends AbstractTestHook implements PreparedSubscriber
 {
     public function notify(Prepared $event): void
     {
-        $this->write(Log::STATUS_TEST_START, $event->test()->name(), null);
+        $this->write(Log::STATUS_TEST_START, $event->test(), null);
     }
 }

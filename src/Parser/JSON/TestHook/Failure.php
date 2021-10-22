@@ -12,6 +12,6 @@ class Failure extends AbstractTestHook implements FailedSubscriber
 {
     public function notify(Failed $event): void
     {
-        $this->write(Log::STATUS_FAILURE, $event->test()->name(), $event->throwable()->message());
+        $this->write(Log::STATUS_FAILURE, $event->test(), $event->throwable()->message());
     }
 }

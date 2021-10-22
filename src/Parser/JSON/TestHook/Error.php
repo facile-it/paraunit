@@ -12,6 +12,6 @@ class Error extends AbstractTestHook implements ErroredSubscriber
 {
     public function notify(Errored $event): void
     {
-        $this->write(Log::STATUS_ERROR, $event->test()->name(), $event->throwable()->message());
+        $this->write(Log::STATUS_ERROR, $event->test(), $event->throwable()->message());
     }
 }

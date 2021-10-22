@@ -12,6 +12,6 @@ class Risky extends AbstractTestHook implements ConsideredRiskySubscriber
 {
     public function notify(ConsideredRisky $event): void
     {
-        $this->write(Log::STATUS_RISKY, $event->test()->name(), $event->throwable()->message());
+        $this->write(Log::STATUS_RISKY, $event->test(), $event->throwable()->message());
     }
 }
