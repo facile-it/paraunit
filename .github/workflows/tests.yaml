@@ -16,17 +16,15 @@ jobs:
         php:
           - '8.1'
           - '8.0'
-          - '7.4'
-          - '7.3'
         composer_option: ['']
         experimental: [false]
         include:
           - description: 'Windows'
             os: 'windows-latest'
-            php: '7.4'
+            php: '8.0'
           - description: '--prefer lowest'
             os: 'ubuntu-latest'
-            php: '7.3'
+            php: '8.0'
             composer_option: '--prefer-lowest'
             env:
               SYMFONY_DEPRECATIONS_HELPER: disabled
@@ -58,10 +56,10 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '7.4'
+          key: '8.0'
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
       - run: composer install --no-progress --ansi
       - run: bin/php-cs-fixer fix --ansi --verbose --dry-run
   PHPStan:
@@ -72,10 +70,10 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '7.4'
+          key: '8.0'
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
       - run: composer install --no-progress --ansi
       - run: bin/phpstan analyse
   End2End:
@@ -90,10 +88,10 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '7.4'
+          key: '8.0'
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
           coverage: ${{ matrix.coverage-driver }}
       - run: composer install --no-progress --ansi
       - run: src/Bin/paraunit run FakeDriverTest
