@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Parser\JSON\Log;
-use PHPUnit\Runner\AfterSkippedTestHook;
+use PHPUnit\Event\Test\Skipped as PHPUnitSkipped;
+use PHPUnit\Event\Test\SkippedSubscriber;
 
-class Skipped extends AbstractTestHook implements AfterSkippedTestHook
+class Skipped extends AbstractTestHook implements SkippedSubscriber
 {
-    public function executeAfterSkippedTest(string $test, string $message, float $time): void
+    public function notify(PHPUnitSkipped $event): void
     {
-        $this->write(Log::STATUS_SKIPPED, $test, $message);
+        $this->write(Log::STATUS_SKIPPED, $event->test()->name(), $event->message());
     }
 }
