@@ -32,13 +32,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     /** @var string[] */
     private $options;
 
-    /**
-     * @param mixed[] $data
-     * @param string $dataName
-     */
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    public function __construct(string $name)
     {
-        parent::__construct($name, $data, $dataName);
+        parent::__construct($name);
 
         $this->configuration = new ParallelConfiguration(true);
         $this->options = [];
