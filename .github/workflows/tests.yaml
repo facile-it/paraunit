@@ -35,7 +35,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: ${{ matrix.php }}${{ matrix.dependencies }} 
+          key: ${{ matrix.php }}-${{ matrix.dependencies }} 
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '8.0'
+          key: '8.0-locked'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
@@ -74,7 +74,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '8.0'
+          key: '8.0-locked'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
@@ -94,7 +94,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.composer/cache/files
-          key: '8.0'
+          key: '8.0-locked'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
