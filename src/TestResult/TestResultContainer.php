@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
@@ -19,16 +20,23 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     /** @var PHPUnitConfig */
     private $config;
 
+    /** @var ChunkSize */
+    private $chunkSize;
+
     /** @var string[] */
     private $filenames;
 
     /** @var PrintableTestResultInterface[] */
     private $testResults;
 
-    public function __construct(TestResultFormat $testResultFormat, PHPUnitConfig $config)
-    {
+    public function __construct(
+        TestResultFormat $testResultFormat,
+        PHPUnitConfig $config,
+        ChunkSize $chunkSize
+    ) {
         $this->testResultFormat = $testResultFormat;
         $this->config = $config;
+        $this->chunkSize = $chunkSize;
         $this->filenames = [];
         $this->testResults = [];
     }
@@ -51,8 +59,13 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
 
     public function addProcessToFilenames(AbstractParaunitProcess $process): void
     {
+        $processFilename = $process->getFilename();
+        if ($this->chunkSize->isChunked()) {
+            $processFilename = basename($processFilename);
+        }
+
         // trick for unique
-        $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $process->getFilename();
+        $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $processFilename;
     }
 
     public function getTestResultFormat(): TestResultFormat

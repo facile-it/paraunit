@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
@@ -21,6 +22,7 @@ use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
+use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
@@ -76,6 +78,9 @@ class ParallelContainerDefinition
         $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
             new Reference(TempDirectory::class),
         ]));
+        $container->setDefinition(ChunkSize::class, new Definition(ChunkSize::class, [
+            '%paraunit.chunk_size%',
+        ]));
     }
 
     private function configureEventDispatcher(ContainerBuilder $container): void
@@ -118,6 +123,7 @@ class ParallelContainerDefinition
         $finalPrinterArguments = [
             new Reference(TestResultList::class),
             $output,
+            new Reference(ChunkSize::class),
         ];
         $container->setDefinition(FinalPrinter::class, new Definition(FinalPrinter::class, $finalPrinterArguments));
         $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, $finalPrinterArguments));
@@ -133,12 +139,14 @@ class ParallelContainerDefinition
     {
         $container->setDefinition(CommandLine::class, new Definition(CommandLine::class, [
             new Reference(PHPUnitBinFile::class),
+            new Reference(ChunkSize::class),
         ]));
 
         $container->setDefinition(ProcessFactoryInterface::class, new Definition(ProcessFactory::class, [
             new Reference(CommandLine::class),
             new Reference(PHPUnitConfig::class),
             new Reference(TempFilenameFactory::class),
+            new Reference(ChunkSize::class),
         ]));
     }
 
@@ -156,8 +164,14 @@ class ParallelContainerDefinition
             new Reference(ProcessFactoryInterface::class),
             new Reference(Filter::class),
             new Reference(PipelineCollection::class),
+            new Reference(ChunkSize::class),
+            new Reference(ChunkFile::class),
         ]))
             ->setPublic(true);
+
+        $container->setDefinition(ChunkFile::class, new Definition(ChunkFile::class, [
+            new Reference(PHPUnitConfig::class),
+        ]));
     }
 
     private function configureServices(ContainerBuilder $container): void

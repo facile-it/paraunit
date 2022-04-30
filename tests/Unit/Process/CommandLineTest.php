@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
@@ -17,8 +18,11 @@ class CommandLineTest extends BaseUnitTestCase
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()->willReturn('path/to/phpunit');
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldNotBeCalled();
 
-        $cli = new CommandLine($phpunit->reveal());
+        $cli = new CommandLine($phpunit->reveal(), $chunkSize->reveal());
 
         $this->assertEquals(['php', 'path/to/phpunit'], $cli->getExecutable());
     }
@@ -41,7 +45,7 @@ class CommandLineTest extends BaseUnitTestCase
 
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
 
-        $cli = new CommandLine($phpunit->reveal());
+        $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(false));
         $options = $cli->getOptions($config->reveal());
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
         $this->assertContains('--opt', $options);
@@ -61,5 +65,34 @@ class CommandLineTest extends BaseUnitTestCase
         $this->assertStringContainsStringIgnoringCase(Hooks\Skipped::class, $registeredExtensions);
         $this->assertStringContainsStringIgnoringCase(Hooks\Successful::class, $registeredExtensions);
         $this->assertStringContainsStringIgnoringCase(Hooks\Warning::class, $registeredExtensions);
+    }
+
+    public function testGetOptionsChunkedNotContainsConfiguration(): void
+    {
+        $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')
+            ->willReturn(null);
+
+        $config->getFileFullPath()
+            ->willReturn('/path/to/phpunit.xml');
+
+        $config->getPhpunitOptions()
+            ->willReturn([]);
+
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
+
+        $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(true));
+        $options = $cli->getOptions($config->reveal());
+        $this->assertNotContains('--configuration=/path/to/phpunit.xml', $options);
+    }
+
+    private function mockChunkSize(bool $enabled): ChunkSize
+    {
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn($enabled);
+
+        return $chunkSize->reveal();
     }
 }

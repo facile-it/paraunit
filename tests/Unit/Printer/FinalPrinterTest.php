@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
@@ -19,6 +20,10 @@ class FinalPrinterTest extends BaseUnitTestCase
         ClockMock::register(Stopwatch::class);
         ClockMock::register(__CLASS__);
         $output = new UnformattedOutputStub();
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn(false);
 
         $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
@@ -34,7 +39,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultList->getTestResultContainers()
             ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
 
-        $printer = new FinalPrinter($testResultList->reveal(), $output);
+        $printer = new FinalPrinter($testResultList->reveal(), $output, $chunkSize->reveal());
 
         ClockMock::withClockMock(true);
 
@@ -55,6 +60,51 @@ class FinalPrinterTest extends BaseUnitTestCase
         $this->assertStringContainsString('Executed: 5 test classes (1 retried), 44 tests', $output->getOutput());
     }
 
+    public function testOnEngineEndPrintsTheRightChunkedCountSummary(): void
+    {
+        ClockMock::register(Stopwatch::class);
+        ClockMock::register(__CLASS__);
+        $output = new UnformattedOutputStub();
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->countTestResults()
+            ->willReturn(3);
+        $testResultContainer->getTestResults()
+            ->willReturn(array_fill(0, 3, $this->mockTestResult()));
+        $testResultContainer->getTestResultFormat()
+            ->willReturn($this->mockTestFormat());
+        $testResultContainer->getFileNames()
+            ->willReturn(['Test.php']);
+
+        $testResultList = $this->prophesize(TestResultList::class);
+        $testResultList->getTestResultContainers()
+            ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
+
+        $printer = new FinalPrinter($testResultList->reveal(), $output, $chunkSize->reveal());
+
+        ClockMock::withClockMock(true);
+
+        $printer->onEngineStart();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessTerminated();
+        $printer->onProcessToBeRetried();
+        $printer->onProcessTerminated();
+        usleep(60499999);
+        $printer->onEngineEnd();
+
+        ClockMock::withClockMock(false);
+
+        $this->assertStringContainsString('Execution time -- 00:01:00', $output->getOutput());
+        $this->assertStringContainsString('Executed: 5 chunks (1 retried), 44 tests', $output->getOutput());
+    }
+
     public function testOnEngineEndHandlesEmptyMessagesCorrectly(): void
     {
         $testResultContainer = $this->prophesize(TestResultContainer::class);
@@ -71,8 +121,12 @@ class FinalPrinterTest extends BaseUnitTestCase
         $testResultList->getTestResultContainers()
             ->willReturn(array_fill(0, 15, $testResultContainer->reveal()));
         $output = new UnformattedOutputStub();
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn(false);
 
-        $printer = new FinalPrinter($testResultList->reveal(), $output);
+        $printer = new FinalPrinter($testResultList->reveal(), $output, $chunkSize->reveal());
 
         $printer->onEngineStart();
         $printer->onEngineEnd();

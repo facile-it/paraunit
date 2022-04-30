@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Lifecycle\EngineEnd;
@@ -13,6 +14,7 @@ use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
+use Paraunit\Runner\ChunkFile;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -30,6 +32,12 @@ class Runner implements EventSubscriberInterface
     /** @var PipelineCollection */
     private $pipelineCollection;
 
+    /** @var ChunkSize */
+    private $chunkSize;
+
+    /** @var ChunkFile */
+    private $chunkFile;
+
     /** @var \SplQueue<AbstractParaunitProcess> */
     private $queuedProcesses;
 
@@ -40,12 +48,16 @@ class Runner implements EventSubscriberInterface
         EventDispatcherInterface $eventDispatcher,
         ProcessFactoryInterface $processFactory,
         Filter $filter,
-        PipelineCollection $pipelineCollection
+        PipelineCollection $pipelineCollection,
+        ChunkSize $chunkSize,
+        ChunkFile $chunkFile
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->processFactory = $processFactory;
         $this->filter = $filter;
         $this->pipelineCollection = $pipelineCollection;
+        $this->chunkSize = $chunkSize;
+        $this->chunkFile = $chunkFile;
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
     }
@@ -69,7 +81,11 @@ class Runner implements EventSubscriberInterface
     {
         $this->eventDispatcher->dispatch(new BeforeEngineStart());
 
-        $this->createProcessQueue();
+        if ($this->chunkSize->isChunked()) {
+            $this->createChunkedProcessQueue();
+        } else {
+            $this->createProcessQueue();
+        }
 
         $this->eventDispatcher->dispatch(new EngineStart());
 
@@ -105,8 +121,26 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    public function pushToPipeline(): void
+    private function createChunkedProcessQueue(): void
     {
+        $files = $this->filter->filterTestFiles();
+        foreach (array_chunk($files, $this->chunkSize->getChunkSize()) as $chunkNumber => $filesChunk) {
+            $chunkFileName = $this->chunkFile->createChunkFile($chunkNumber, $filesChunk);
+            $this->queuedProcesses->enqueue(
+                $this->processFactory->create($chunkFileName)
+            );
+        }
+    }
+
+    public function pushToPipeline(ProcessTerminated $event = null): void
+    {
+        if ($event && $this->chunkSize->isChunked()) {
+            $process = $event->getProcess();
+            if (!$process->isToBeRetried()) {
+                unlink($process->getFilename());
+            }
+        }
+
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
         }

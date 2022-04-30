@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
@@ -14,9 +15,15 @@ class CommandLine
     /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
-    public function __construct(PHPUnitBinFile $phpUnitBin)
-    {
+    /** @var ChunkSize */
+    protected $chunkSize;
+
+    public function __construct(
+        PHPUnitBinFile $phpUnitBin,
+        ChunkSize $chunkSize
+    ) {
         $this->phpUnitBin = $phpUnitBin;
+        $this->chunkSize = $chunkSize;
     }
 
     /**
@@ -34,19 +41,22 @@ class CommandLine
      */
     public function getOptions(PHPUnitConfig $config): array
     {
-        $options = [
-            '--configuration=' . $config->getFileFullPath(),
-            '--extensions=' . implode(',', [
-                Hooks\BeforeTest::class,
-                Hooks\Error::class,
-                Hooks\Failure::class,
-                Hooks\Incomplete::class,
-                Hooks\Risky::class,
-                Hooks\Skipped::class,
-                Hooks\Successful::class,
-                Hooks\Warning::class,
-            ]),
-        ];
+        $options = [];
+
+        if (!$this->chunkSize->isChunked()) {
+            $options[] = '--configuration=' . $config->getFileFullPath();
+        }
+
+        $options[] = '--extensions=' . implode(',', [
+            Hooks\BeforeTest::class,
+            Hooks\Error::class,
+            Hooks\Failure::class,
+            Hooks\Incomplete::class,
+            Hooks\Risky::class,
+            Hooks\Skipped::class,
+            Hooks\Successful::class,
+            Hooks\Warning::class,
+        ]);
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
             $options[] = $this->buildPhpunitOptionString($phpunitOption);
