@@ -64,5 +64,6 @@ class AbnormalTerminatedParser extends GenericParser
         } else {
             $suiteName = explode('::', $logItem->getTest())[0];
         }
-        $process->setTestClassName($suiteName);    }
+        $process->setTestClassName($suiteName);
+    }
 }
