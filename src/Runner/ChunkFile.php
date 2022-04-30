@@ -21,6 +21,9 @@ class ChunkFile
         $this->phpunitConfig = $phpunitConfig;
     }
 
+    /**
+     * @param array<string> $files
+     */
     public function createChunkFile(
         int $chunkNumber,
         array $files
@@ -30,6 +33,11 @@ class ChunkFile
         $xpath = new \DOMXPath($document);
 
         $nodeList = $xpath->query('testsuites');
+
+        if (! $nodeList) {
+            throw new \InvalidArgumentException('No testsuites node found in the PHPUnit configuration in ' . $fileFullPath);
+        }
+
         foreach ($nodeList as $testSuitesNode) {
             if (! $testSuitesNode instanceof \DOMElement) {
                 throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuitesNode));
@@ -49,7 +57,10 @@ class ChunkFile
             $newTestSuitesNode = $document->createElement('testsuites');
             $newTestSuitesNode->appendChild($newTestSuiteNode);
 
-            $testSuitesNode->parentNode->replaceChild($newTestSuitesNode, $testSuitesNode);
+            $parentNode = $testSuitesNode->parentNode;
+            if ($parentNode instanceof \DOMElement) {
+                $parentNode->replaceChild($newTestSuitesNode, $testSuitesNode);
+            }
             break;
         }
 
