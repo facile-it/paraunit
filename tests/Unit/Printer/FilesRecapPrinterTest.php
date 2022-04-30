@@ -7,8 +7,8 @@ namespace Tests\Unit\Printer;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultFormat;
+use Paraunit\TestResult\TestResultList;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 

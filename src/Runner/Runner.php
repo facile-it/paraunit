@@ -14,7 +14,6 @@ use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
-use Paraunit\Runner\ChunkFile;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -136,7 +135,7 @@ class Runner implements EventSubscriberInterface
     {
         if ($event && $this->chunkSize->isChunked()) {
             $process = $event->getProcess();
-            if (!$process->isToBeRetried()) {
+            if (! $process->isToBeRetried()) {
                 unlink($process->getFilename());
             }
         }

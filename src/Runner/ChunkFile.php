@@ -21,9 +21,6 @@ class ChunkFile
         $this->phpunitConfig = $phpunitConfig;
     }
 
-    /**
-     * @return string
-     */
     public function createChunkFile(
         int $chunkNumber,
         array $files
@@ -62,9 +59,6 @@ class ChunkFile
         return $chunkFileName;
     }
 
-    /**
-     * @return string
-     */
     public function getChunkFileName(string $fileName, int $chunkNumber): string
     {
         $dirname = dirname($fileName);

@@ -83,10 +83,10 @@ class ChunkFileTest extends BaseIntegrationTestCase
         /** @var ChunkFile $chunkFileService */
         $chunkFileService = $this->getService(ChunkFile::class);
         $fileFullPath = $this->getConfigForStubs();
-        $this->assertTrue(file_exists($fileFullPath));
+        $this->assertFileExists($fileFullPath);
         foreach (range(0, $chunkCount - 1) as $chunkNumber) {
             $chunkFileName = $chunkFileService->getChunkFileName($fileFullPath, $chunkNumber);
-            $this->assertFalse(file_exists($chunkFileName));
+            $this->assertFileDoesNotExist($chunkFileName);
         }
     }
 

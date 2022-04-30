@@ -43,7 +43,7 @@ class CommandLine
     {
         $options = [];
 
-        if (!$this->chunkSize->isChunked()) {
+        if (! $this->chunkSize->isChunked()) {
             $options[] = '--configuration=' . $config->getFileFullPath();
         }
 
