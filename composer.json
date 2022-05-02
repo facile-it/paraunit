@@ -54,7 +54,11 @@
     ],
     "config": {
         "sort-packages": true,
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "facile-it/facile-coding-standard": true,
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {

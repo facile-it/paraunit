@@ -8,4 +8,4 @@ build:
 setup: build composer-install
 
 composer-install:
-	docker-compose exec run --rm composer install
+	docker-compose run --rm php composer install
