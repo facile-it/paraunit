@@ -49,6 +49,9 @@
         "symfony/expression-language": "^3.4||^4.0||^5.0",
         "symfony/phpunit-bridge": "^5.1"
     },
+    "conflict": {
+        "composer/package-versions-deprecated": "<1.11.99"
+    },
     "bin": [
         "src/Bin/paraunit"
     ],
