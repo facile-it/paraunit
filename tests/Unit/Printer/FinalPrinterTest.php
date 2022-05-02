@@ -62,8 +62,6 @@ class FinalPrinterTest extends BaseUnitTestCase
 
     public function testOnEngineEndPrintsTheRightChunkedCountSummary(): void
     {
-        ClockMock::register(Stopwatch::class);
-        ClockMock::register(__CLASS__);
         $output = new UnformattedOutputStub();
         $chunkSize = $this->prophesize(ChunkSize::class);
         $chunkSize->isChunked()
@@ -86,8 +84,6 @@ class FinalPrinterTest extends BaseUnitTestCase
 
         $printer = new FinalPrinter($testResultList->reveal(), $output, $chunkSize->reveal());
 
-        ClockMock::withClockMock(true);
-
         $printer->onEngineStart();
         $printer->onProcessTerminated();
         $printer->onProcessTerminated();
@@ -96,12 +92,8 @@ class FinalPrinterTest extends BaseUnitTestCase
         $printer->onProcessTerminated();
         $printer->onProcessToBeRetried();
         $printer->onProcessTerminated();
-        usleep(60499999);
         $printer->onEngineEnd();
 
-        ClockMock::withClockMock(false);
-
-        $this->assertStringContainsString('Execution time -- 00:01:00', $output->getOutput());
         $this->assertStringContainsString('Executed: 5 chunks (1 retried), 44 tests', $output->getOutput());
     }
 
