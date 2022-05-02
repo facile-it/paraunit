@@ -37,16 +37,6 @@ class CommandLine
         $options = [
             '--configuration=' . $config->getFileFullPath(),
             '--bootstrap=' . dirname(__DIR__) . DIRECTORY_SEPARATOR . '/Configuration/register_subscribers.php',
-            //            '--extensions=' . implode(',', [
-            //                Hooks\BeforeTest::class,
-            //                Hooks\Error::class,
-            //                Hooks\Failure::class,
-            //                Hooks\Incomplete::class,
-            //                Hooks\Risky::class,
-            //                Hooks\Skipped::class,
-            //                Hooks\Successful::class,
-            //                Hooks\Warning::class,
-            //            ]),
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
