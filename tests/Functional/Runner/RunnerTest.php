@@ -106,7 +106,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing failing filename'
         );
         $this->assertStringContainsString(
-            'Sebastian Bergmann',
+            'PHPUnit 9.',
             $output,
             'Missing general output from the PHPUnit process'
         );
