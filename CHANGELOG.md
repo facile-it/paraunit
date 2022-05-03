@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [1.2.2]
+### Added
+ * Add `--chunk-size` option [#164](https://github.com/facile-it/paraunit/pull/164)
+
 ## [1.2.1] - 2021-03-25
 ### Added
  * Allow `jean85/pretty-package-versions` v2 [90f84b5](https://github.com/facile-it/paraunit/commit/90f84b545323053833834ea6d1b2641bd2d810f0)
@@ -53,7 +57,7 @@ First stable release. The following changes are in comparison to the previous, u
 ## [1.0.0-beta1] - 2019-04-08
 ### Breaking changes
  * Drop support for older packages: [#134](https://github.com/facile-it/paraunit/pull/134)
-   * `phpunit/phpunit` 6 
+   * `phpunit/phpunit` 6
    * `phpunit/php-code-coverage` < 6
    * All Symfony components < 3.4
  * Scalar and return types added everywhere possible
