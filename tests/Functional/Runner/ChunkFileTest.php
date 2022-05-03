@@ -11,9 +11,9 @@ use Tests\BaseIntegrationTestCase;
 
 class ChunkFileTest extends BaseIntegrationTestCase
 {
-    public function testChunkedAllGreen(): void
+    public function testChunkedAllStubsSuite(): void
     {
-        $chunkCount = 8;
+        $chunkCount = 9;
 
         $this->setOption('chunk-size', '2');
         $this->loadContainer();
@@ -28,19 +28,21 @@ class ChunkFileTest extends BaseIntegrationTestCase
             'PARAUNIT',
             Paraunit::getVersion(),
             '...',
-            '     36',
+            '     39',
             'Execution time',
-            "Executed: $chunkCount chunks (15 retried), 20 tests",
+            "Executed: $chunkCount chunks (15 retried), 23 tests",
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
             'Deprecation Warnings output:',
+            'Risky Outcome output:',
             '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
             '5 chunks with ERRORS:',
             '1 chunks with FAILURES:',
             '1 chunks with WARNINGS:',
             '1 chunks with DEPRECATION WARNINGS:',
+            '2 chunks with RISKY OUTCOME:',
             '5 chunks with RETRIED:',
         ]);
 
@@ -79,6 +81,33 @@ class ChunkFileTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Remaining self deprecation notices (3)', $outputText);
         $this->assertStringContainsString('3x: This "Foo" method is deprecated', $outputText);
         $this->assertStringContainsString('3x in RaisingDeprecationTestStub::testDeprecation from Tests\Stub', $outputText);
+
+        $this->assertStringContainsString('Tests\Stub\TestASigIntTestStub::testBrokenTest', $outputText);
+        $this->assertStringContainsString('Tests\Stub\TestBSigIntTestStub::testBrokenTest', $outputText);
+        $this->assertStringContainsString('Tests\Stub\TestCSigIntTestStub::testBrokenTest', $outputText);
+        $this->assertStringContainsString('This test did not perform any assertions', $outputText);
+
+        /** @var ChunkFile $chunkFileService */
+        $chunkFileService = $this->getService(ChunkFile::class);
+        $fileFullPath = $this->getConfigForStubs();
+        $this->assertFileExists($fileFullPath);
+        foreach (range(0, $chunkCount - 1) as $chunkNumber) {
+            $chunkFileName = $chunkFileService->getChunkFileName($fileFullPath, $chunkNumber);
+            $this->assertFileDoesNotExist($chunkFileName);
+        }
+    }
+
+    public function testChunkedSigIntHandling(): void
+    {
+        $chunkCount = 2;
+
+        $this->setTextFilter('SigIntTestStub.php');
+        $this->setOption('chunk-size', '2');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
 
         /** @var ChunkFile $chunkFileService */
         $chunkFileService = $this->getService(ChunkFile::class);

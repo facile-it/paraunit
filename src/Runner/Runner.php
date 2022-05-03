@@ -15,6 +15,7 @@ use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Runner implements EventSubscriberInterface
@@ -59,6 +60,11 @@ class Runner implements EventSubscriberInterface
         $this->chunkFile = $chunkFile;
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
+
+        if (function_exists('pcntl_async_signals') && function_exists('pcntl_signal')) {
+            pcntl_async_signals(true);
+            pcntl_signal(SIGINT, [$this, 'onShutdown']);
+        }
     }
 
     /**
@@ -136,12 +142,27 @@ class Runner implements EventSubscriberInterface
         if ($event && $this->chunkSize->isChunked()) {
             $process = $event->getProcess();
             if (! $process->isToBeRetried()) {
-                unlink($process->getFilename());
+                $this->chunkFile->deleteChunkFile($process);
             }
         }
 
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
+        }
+    }
+
+    public function onShutdown(): void
+    {
+        $this->pipelineCollection->triggerProcessTermination();
+
+        if ($this->chunkSize->isChunked()) {
+            do {
+                try {
+                    $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
+                } catch (RuntimeException $e) {
+                    //pass
+                }
+            } while (! $this->queuedProcesses->isEmpty());
         }
     }
 }
