@@ -23,7 +23,7 @@ class ChunkFile
     }
 
     /**
-     * @param array<string> $files
+     * @param array<int, string> $files
      */
     public function createChunkFile(
         int $chunkNumber,

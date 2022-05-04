@@ -58,6 +58,22 @@ class PipelineCollection
         return true;
     }
 
+    /**
+     * @return array<int, AbstractParaunitProcess>
+     */
+    public function getRunningProcesses(): array
+    {
+        $processes = [];
+        foreach ($this->pipelines as $pipeline) {
+            $process = $pipeline->getProcess();
+            if ($process) {
+                $processes[] = $process;
+            }
+        }
+
+        return $processes;
+    }
+
     public function triggerProcessTermination(): void
     {
         foreach ($this->pipelines as $pipeline) {

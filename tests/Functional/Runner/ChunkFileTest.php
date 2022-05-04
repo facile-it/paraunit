@@ -13,7 +13,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
 {
     public function testChunkedAllStubsSuite(): void
     {
-        $chunkCount = 9;
+        $chunkCount = 8;
 
         $this->setOption('chunk-size', '2');
         $this->loadContainer();
@@ -28,21 +28,19 @@ class ChunkFileTest extends BaseIntegrationTestCase
             'PARAUNIT',
             Paraunit::getVersion(),
             '...',
-            '     39',
+            '     36',
             'Execution time',
-            "Executed: $chunkCount chunks (15 retried), 23 tests",
+            "Executed: $chunkCount chunks (15 retried), 20 tests",
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
             'Deprecation Warnings output:',
-            'Risky Outcome output:',
             '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
             '5 chunks with ERRORS:',
             '1 chunks with FAILURES:',
             '1 chunks with WARNINGS:',
             '1 chunks with DEPRECATION WARNINGS:',
-            '2 chunks with RISKY OUTCOME:',
             '5 chunks with RETRIED:',
         ]);
 
@@ -82,11 +80,6 @@ class ChunkFileTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('3x: This "Foo" method is deprecated', $outputText);
         $this->assertStringContainsString('3x in RaisingDeprecationTestStub::testDeprecation from Tests\Stub', $outputText);
 
-        $this->assertStringContainsString('Tests\Stub\TestASigIntTestStub::testBrokenTest', $outputText);
-        $this->assertStringContainsString('Tests\Stub\TestBSigIntTestStub::testBrokenTest', $outputText);
-        $this->assertStringContainsString('Tests\Stub\TestCSigIntTestStub::testBrokenTest', $outputText);
-        $this->assertStringContainsString('This test did not perform any assertions', $outputText);
-
         /** @var ChunkFile $chunkFileService */
         $chunkFileService = $this->getService(ChunkFile::class);
         $fileFullPath = $this->getConfigForStubs();
@@ -101,13 +94,30 @@ class ChunkFileTest extends BaseIntegrationTestCase
     {
         $chunkCount = 2;
 
-        $this->setTextFilter('SigIntTestStub.php');
+        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_sigint_stubs.xml');
+        $this->setTextFilter('TestStubSigInt.php');
         $this->setOption('chunk-size', '2');
         $this->loadContainer();
 
         $output = $this->getConsoleOutput();
 
         $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
+
+        $outputText = $output->getOutput();
+        $this->assertStringNotContainsString('Coverage', $outputText);
+        $this->assertOutputOrder($output, [
+            'PARAUNIT',
+            Paraunit::getVersion(),
+            '     3',
+            'Execution time',
+            "Executed: $chunkCount chunks, 3 tests",
+            'Risky Outcome output:',
+            '2 chunks with RISKY OUTCOME:',
+        ]);
+
+        $this->assertStringContainsString('Tests\Stub\TestBTestStubSigInt::testBrokenTest', $outputText);
+        $this->assertStringContainsString('Tests\Stub\TestCTestStubSigInt::testBrokenTest', $outputText);
+        $this->assertStringContainsString('This test did not perform any assertions', $outputText);
 
         /** @var ChunkFile $chunkFileService */
         $chunkFileService = $this->getService(ChunkFile::class);

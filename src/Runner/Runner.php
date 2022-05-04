@@ -156,6 +156,10 @@ class Runner implements EventSubscriberInterface
         $this->pipelineCollection->triggerProcessTermination();
 
         if ($this->chunkSize->isChunked()) {
+            $processes = $this->pipelineCollection->getRunningProcesses();
+            foreach ($processes as $process) {
+                $this->chunkFile->deleteChunkFile($process);
+            }
             do {
                 try {
                     $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
