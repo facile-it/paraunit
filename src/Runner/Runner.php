@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
+use function function_exists;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\BeforeEngineStart;

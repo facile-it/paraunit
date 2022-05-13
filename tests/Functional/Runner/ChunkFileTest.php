@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Runner;
 
+use function function_exists;
 use Paraunit\Bin\Paraunit;
 use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\Runner;
@@ -115,6 +116,10 @@ class ChunkFileTest extends BaseIntegrationTestCase
 
     public function testChunkedSigIntHandling(): void
     {
+        if (!function_exists('posix_kill')) {
+            $this->markTestSkipped('posix_kill is unavailable');
+        }
+
         $chunkCount = 2;
 
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_sigint_stubs.xml');
