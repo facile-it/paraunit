@@ -116,7 +116,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
 
     public function testChunkedSigIntHandling(): void
     {
-        if (!function_exists('posix_kill')) {
+        if (! function_exists('posix_kill')) {
             $this->markTestSkipped('posix_kill is unavailable');
         }
 
