@@ -24,25 +24,46 @@ class ChunkFileTest extends BaseIntegrationTestCase
 
         $outputText = $output->getOutput();
         $this->assertStringNotContainsString('Coverage', $outputText);
-        $this->assertOutputOrder($output, [
-            'PARAUNIT',
-            Paraunit::getVersion(),
-            '...',
-            '     36',
-            'Execution time',
-            "Executed: $chunkCount chunks (15 retried), 20 tests",
-            'Abnormal Terminations (fatal Errors, Segfaults) output:',
-            'Errors output:',
-            'Failures output:',
-            'Warnings output:',
-            'Deprecation Warnings output:',
-            '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
-            '5 chunks with ERRORS:',
-            '1 chunks with FAILURES:',
-            '1 chunks with WARNINGS:',
-            '1 chunks with DEPRECATION WARNINGS:',
-            '5 chunks with RETRIED:',
-        ]);
+
+        if ('disabled' === getenv('SYMFONY_DEPRECATIONS_HELPER')) {
+            $this->assertOutputOrder($output, [
+                'PARAUNIT',
+                Paraunit::getVersion(),
+                '...',
+                '     35',
+                'Execution time',
+                "Executed: $chunkCount chunks (15 retried), 20 tests",
+                'Abnormal Terminations (fatal Errors, Segfaults) output:',
+                'Errors output:',
+                'Failures output:',
+                'Warnings output:',
+                '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
+                '5 chunks with ERRORS:',
+                '1 chunks with FAILURES:',
+                '1 chunks with WARNINGS:',
+                '5 chunks with RETRIED:',
+            ]);
+        } else {
+            $this->assertOutputOrder($output, [
+                'PARAUNIT',
+                Paraunit::getVersion(),
+                '...',
+                '     36',
+                'Execution time',
+                "Executed: $chunkCount chunks (15 retried), 20 tests",
+                'Abnormal Terminations (fatal Errors, Segfaults) output:',
+                'Errors output:',
+                'Failures output:',
+                'Warnings output:',
+                'Deprecation Warnings output:',
+                '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
+                '5 chunks with ERRORS:',
+                '1 chunks with FAILURES:',
+                '1 chunks with WARNINGS:',
+                '1 chunks with DEPRECATION WARNINGS:',
+                '5 chunks with RETRIED:',
+            ]);
+        }
 
         $this->assertStringContainsString('Tests\Stub\EntityManagerClosedTestStub::testBrokenTest', $outputText);
         $this->assertStringContainsString('Blah Blah The EntityManager is closed Blah Blah', $outputText);
@@ -76,9 +97,11 @@ class ChunkFileTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Tests\Stub\PostgreSQLDeadLockTestStub::testBrokenTest', $outputText);
         $this->assertStringContainsString('Exception: SQLSTATE[40P01]: Deadlock detected: 7 ERROR:  deadlock detected', $outputText);
 
-        $this->assertStringContainsString('Remaining self deprecation notices (3)', $outputText);
-        $this->assertStringContainsString('3x: This "Foo" method is deprecated', $outputText);
-        $this->assertStringContainsString('3x in RaisingDeprecationTestStub::testDeprecation from Tests\Stub', $outputText);
+        if ('disabled' !== getenv('SYMFONY_DEPRECATIONS_HELPER')) {
+            $this->assertStringContainsString('Remaining self deprecation notices (3)', $outputText);
+            $this->assertStringContainsString('3x: This "Foo" method is deprecated', $outputText);
+            $this->assertStringContainsString('3x in RaisingDeprecationTestStub::testDeprecation from Tests\Stub', $outputText);
+        }
 
         /** @var ChunkFile $chunkFileService */
         $chunkFileService = $this->getService(ChunkFile::class);
