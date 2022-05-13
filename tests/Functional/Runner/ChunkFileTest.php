@@ -93,11 +93,11 @@ class ChunkFileTest extends BaseIntegrationTestCase
 
         $this->assertStringContainsString('Tests\Stub\RaisingNoticeTestStub::testVarDump', $outputText);
 
-        $this->assertStringContainsString('There was 1 error:', $outputText);
-        $this->assertStringContainsString('Tests\Stub\PostgreSQLDeadLockTestStub::testBrokenTest', $outputText);
-        $this->assertStringContainsString('Exception: SQLSTATE[40P01]: Deadlock detected: 7 ERROR:  deadlock detected', $outputText);
-
         if ('disabled' !== getenv('SYMFONY_DEPRECATIONS_HELPER')) {
+            $this->assertStringContainsString('There was 1 error:', $outputText);
+            $this->assertStringContainsString('Tests\Stub\PostgreSQLDeadLockTestStub::testBrokenTest', $outputText);
+            $this->assertStringContainsString('Exception: SQLSTATE[40P01]: Deadlock detected: 7 ERROR:  deadlock detected', $outputText);
+
             $this->assertStringContainsString('Remaining self deprecation notices (3)', $outputText);
             $this->assertStringContainsString('3x: This "Foo" method is deprecated', $outputText);
             $this->assertStringContainsString('3x in RaisingDeprecationTestStub::testDeprecation from Tests\Stub', $outputText);
