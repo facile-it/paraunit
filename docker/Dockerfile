@@ -25,6 +25,6 @@ USER paraunit
 WORKDIR /home/paraunit/projects
 
 #Zsh minimal installation
-RUN git clone --depth=1 git://github.com/robbyrussell/oh-my-zsh.git  ~/.oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 ENV TERM xterm-256color
