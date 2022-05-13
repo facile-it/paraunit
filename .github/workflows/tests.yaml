@@ -19,7 +19,7 @@ jobs:
           - '8.0'
           - '7.4'
           - '7.3'
-        composer_option: ['']
+        dependencies: ['highest']
         deprecations: ['max[direct]=0']
         include:
           - description: 'Windows'
@@ -28,23 +28,21 @@ jobs:
           - description: '--prefer lowest'
             os: 'ubuntu-latest'
             php: '7.3'
-            composer_option: '--prefer-lowest'
+            dependencies: 'lowest'
             deprecations: disabled
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache/files
-          key: ${{ matrix.php }}${{ matrix.composer_option }} 
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
       - run: composer remove --dev facile-it/facile-coding-standard --no-update
-        if: matrix.composer_option == '--prefer-lowest'
-      - run: composer update --no-progress --ansi ${{ matrix.composer_option }}
+        if: matrix.dependencies == 'lowest'
+      - uses: ramsey/composer-install@v2
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
       - run: bin/phpunit --coverage-clover=coverage.xml
       - uses: codecov/codecov-action@v1
         with:
@@ -55,28 +53,20 @@ jobs:
     name: Code style
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache/files
-          key: '7.4'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-      - run: composer install --no-progress --ansi
+      - uses: ramsey/composer-install@v2
       - run: bin/php-cs-fixer fix --ansi --verbose --dry-run
   PHPStan:
     runs-on: ubuntu-latest
     name: PHPStan
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache/files
-          key: '7.4'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-      - run: composer install --no-progress --ansi
+      - uses: ramsey/composer-install@v2
       - run: bin/phpstan analyse
   End2End:
     runs-on: ubuntu-latest
@@ -87,14 +77,10 @@ jobs:
           - xdebug
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache/files
-          key: '7.4'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
           coverage: ${{ matrix.coverage-driver }}
-      - run: composer install --no-progress --ansi
+      - uses: ramsey/composer-install@v2
       - run: src/Bin/paraunit run FakeDriverTest
       - run: src/Bin/paraunit coverage FakeDriverTest --text
