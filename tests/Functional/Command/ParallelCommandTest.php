@@ -176,6 +176,10 @@ class ParallelCommandTest extends BaseTestCase
 
     public function testExecutionWithDeprecationListener(): void
     {
+        if ('disabled' === getenv('SYMFONY_DEPRECATIONS_HELPER')) {
+            $this->markTestSkipped('Deprecation handler is disabled');
+        }
+
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
