@@ -9,7 +9,8 @@ on:
 jobs:
   Tests:
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == true }}
+    env:
+      SYMFONY_DEPRECATIONS_HELPER: ${{ matrix.deprecations }}      
     strategy:
       matrix:
         os: ['ubuntu-latest']
@@ -19,7 +20,7 @@ jobs:
           - '7.4'
           - '7.3'
         composer_option: ['']
-        experimental: [false]
+        deprecations: ['max[direct]=0']
         include:
           - description: 'Windows'
             os: 'windows-latest'
@@ -28,8 +29,7 @@ jobs:
             os: 'ubuntu-latest'
             php: '7.3'
             composer_option: '--prefer-lowest'
-            env:
-              SYMFONY_DEPRECATIONS_HELPER: disabled
+            deprecations: disabled
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
