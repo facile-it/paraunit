@@ -15,8 +15,8 @@ class TestATestStubSigInt extends BrokenTestBase implements BrokenTestInterface
         posix_kill(posix_getppid(), SIGINT);
 
         // give parent process 5s to react
-        for ($i = 1; $i <= 100; $i++) {
-            if (!file_exists($chunkFileName)) {
+        for ($i = 1; $i <= 100; ++$i) {
+            if (! file_exists($chunkFileName)) {
                 break;
             }
             usleep(50000);
