@@ -39,30 +39,30 @@ class ChunkFile
             throw new \InvalidArgumentException('No testsuites node found in the PHPUnit configuration in ' . $fileFullPath);
         }
 
-        foreach ($nodeList as $testSuitesNode) {
-            if (! $testSuitesNode instanceof \DOMElement) {
-                throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuitesNode));
-            }
+        $nodeList = iterator_to_array($nodeList);
+        $testSuitesNode = array_shift($nodeList);
 
-            $nameAttribute = $document->createAttribute('name');
-            $nameAttribute->value = "Tests Suite $chunkNumber";
+        if (! $testSuitesNode instanceof \DOMElement) {
+            throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuitesNode));
+        }
 
-            $newTestSuiteNode = $document->createElement('testsuite');
-            $newTestSuiteNode->appendChild($nameAttribute);
+        $nameAttribute = $document->createAttribute('name');
+        $nameAttribute->value = "Tests Suite $chunkNumber";
 
-            foreach ($files as $file) {
-                $newTestFileNode = $document->createElement('file', $file);
-                $newTestSuiteNode->appendChild($newTestFileNode);
-            }
+        $newTestSuiteNode = $document->createElement('testsuite');
+        $newTestSuiteNode->appendChild($nameAttribute);
 
-            $newTestSuitesNode = $document->createElement('testsuites');
-            $newTestSuitesNode->appendChild($newTestSuiteNode);
+        foreach ($files as $file) {
+            $newTestFileNode = $document->createElement('file', $file);
+            $newTestSuiteNode->appendChild($newTestFileNode);
+        }
 
-            $parentNode = $testSuitesNode->parentNode;
-            if ($parentNode instanceof \DOMElement) {
-                $parentNode->replaceChild($newTestSuitesNode, $testSuitesNode);
-            }
-            break;
+        $newTestSuitesNode = $document->createElement('testsuites');
+        $newTestSuitesNode->appendChild($newTestSuiteNode);
+
+        $parentNode = $testSuitesNode->parentNode;
+        if ($parentNode instanceof \DOMElement) {
+            $parentNode->replaceChild($newTestSuitesNode, $testSuitesNode);
         }
 
         $chunkFileName = $this->getChunkFileName($fileFullPath, $chunkNumber);
