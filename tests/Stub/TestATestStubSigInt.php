@@ -12,25 +12,27 @@ class TestATestStubSigInt extends BrokenTestBase implements BrokenTestInterface
         $otherChunkFileName = __DIR__ . DIRECTORY_SEPARATOR . 'phpunit_for_sigint_stubs_1.xml';
 
         // wait 5s for other chunk to finish
-        for ($i = 1; $i <= 100; ++$i) {
-            usleep(50000);
-            if (! file_exists($otherChunkFileName)) {
-                break;
-            }
-        }
+        $this->waitIfFileExist($otherChunkFileName, 5);
 
         $this->assertFileExists($chunkFileName);
 
         posix_kill(posix_getppid(), SIGINT);
 
         // give parent process 5s to react
-        for ($i = 1; $i <= 100; ++$i) {
-            if (! file_exists($chunkFileName)) {
-                break;
-            }
-            usleep(50000);
-        }
+        $this->waitIfFileExist($chunkFileName, 5);
 
         $this->assertFileDoesNotExist($chunkFileName);
+    }
+
+    private function waitIfFileExist(
+        string $fileName,
+        int $time
+    ): void {
+        for ($i = 1; $i <= $time * 20; ++$i) {
+            usleep(50000);
+            if (! file_exists($fileName)) {
+                break;
+            }
+        }
     }
 }
