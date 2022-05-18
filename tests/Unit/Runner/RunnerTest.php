@@ -17,6 +17,7 @@ use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\Runner;
+use Paraunit\Runner\TestChunkerInterface;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
@@ -39,6 +40,9 @@ class RunnerTest extends BaseUnitTestCase
         $chunkFile = $this->prophesize(ChunkFile::class);
         $chunkFile->createChunkFile()
             ->shouldNotBeCalled();
+        $chunker = $this->prophesize(TestChunkerInterface::class);
+        $chunker->chunk()
+            ->shouldNotBeCalled();
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
@@ -46,7 +50,8 @@ class RunnerTest extends BaseUnitTestCase
             $filter->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
+            $chunker->reveal()
         );
 
         $this->assertSame(0, $runner->run());
@@ -73,6 +78,9 @@ class RunnerTest extends BaseUnitTestCase
         $chunkFile = $this->prophesize(ChunkFile::class);
         $chunkFile->createChunkFile()
             ->shouldNotBeCalled();
+        $chunker = $this->prophesize(TestChunkerInterface::class);
+        $chunker->chunk()
+            ->shouldNotBeCalled();
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
@@ -80,7 +88,8 @@ class RunnerTest extends BaseUnitTestCase
             $filter->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
+            $chunker->reveal()
         );
 
         $this->assertSame(0, $runner->run());
@@ -88,13 +97,14 @@ class RunnerTest extends BaseUnitTestCase
 
     public function testRunWithChunkedSomeGreenTests(): void
     {
+        $tests = [
+            'Test1.php',
+            'Test2.php',
+            'Test3.php',
+        ];
         $filter = $this->prophesize(Filter::class);
         $filter->filterTestFiles()
-            ->willReturn([
-                'Test1.php',
-                'Test2.php',
-                'Test3.php',
-            ]);
+            ->willReturn($tests);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
         $pipelineCollection->triggerProcessTermination()
             ->shouldBeCalled();
@@ -112,14 +122,20 @@ class RunnerTest extends BaseUnitTestCase
         $chunkFile->createChunkFile(1, ['Test3.php'])
             ->shouldBeCalled()
             ->willReturn('abcd_1.xml');
+        $chunkSize = $this->mockChunkSize(true);
+        $chunker = $this->prophesize(TestChunkerInterface::class);
+        $chunker->chunk($tests, $chunkSize)
+            ->shouldBeCalled()
+            ->willReturn([['Test1.php', 'Test2.php'], ['Test3.php']]);
 
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessFactory('.xml'),
             $filter->reveal(),
             $pipelineCollection->reveal(),
-            $this->mockChunkSize(true),
-            $chunkFile->reveal()
+            $chunkSize,
+            $chunkFile->reveal(),
+            $chunker->reveal()
         );
 
         $this->assertSame(0, $runner->run());
@@ -145,6 +161,9 @@ class RunnerTest extends BaseUnitTestCase
         $chunkFile = $this->prophesize(ChunkFile::class);
         $chunkFile->createChunkFile()
             ->shouldNotBeCalled();
+        $chunker = $this->prophesize(TestChunkerInterface::class);
+        $chunker->chunk()
+            ->shouldNotBeCalled();
 
         $runner = new Runner(
             $eventDispatcher->reveal(),
@@ -152,7 +171,8 @@ class RunnerTest extends BaseUnitTestCase
             $filter->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
+            $chunker->reveal()
         );
 
         $runner->onProcessParsingCompleted(new ProcessParsingCompleted($process));
@@ -178,6 +198,9 @@ class RunnerTest extends BaseUnitTestCase
         $chunkFile = $this->prophesize(ChunkFile::class);
         $chunkFile->createChunkFile()
             ->shouldNotBeCalled();
+        $chunker = $this->prophesize(TestChunkerInterface::class);
+        $chunker->chunk()
+            ->shouldNotBeCalled();
 
         $runner = new Runner(
             $eventDispatcher->reveal(),
@@ -185,7 +208,8 @@ class RunnerTest extends BaseUnitTestCase
             $filter->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
+            $chunker->reveal()
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried($process));
@@ -227,12 +251,6 @@ class RunnerTest extends BaseUnitTestCase
         $chunkSize->isChunked()
             ->shouldBeCalled()
             ->willReturn($enabled);
-
-        if ($enabled) {
-            $chunkSize->getChunkSize()
-                ->shouldBeCalled()
-                ->willReturn(2);
-        }
 
         return $chunkSize->reveal();
     }

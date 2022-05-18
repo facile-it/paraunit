@@ -23,9 +23,11 @@ use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\ChunkFile;
+use Paraunit\Runner\EqualChunker;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
+use Paraunit\Runner\TestChunkerInterface;
 use Paraunit\TestResult\TestResultList;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
@@ -166,12 +168,14 @@ class ParallelContainerDefinition
             new Reference(PipelineCollection::class),
             new Reference(ChunkSize::class),
             new Reference(ChunkFile::class),
+            new Reference(TestChunkerInterface::class),
         ]))
             ->setPublic(true);
 
         $container->setDefinition(ChunkFile::class, new Definition(ChunkFile::class, [
             new Reference(PHPUnitConfig::class),
         ]));
+        $container->setDefinition(TestChunkerInterface::class, new Definition(EqualChunker::class));
     }
 
     private function configureServices(ContainerBuilder $container): void

@@ -39,6 +39,9 @@ class Runner implements EventSubscriberInterface
     /** @var ChunkFile */
     private $chunkFile;
 
+    /** @var TestChunkerInterface */
+    private $chunker;
+
     /** @var \SplQueue<AbstractParaunitProcess> */
     private $queuedProcesses;
 
@@ -51,7 +54,8 @@ class Runner implements EventSubscriberInterface
         Filter $filter,
         PipelineCollection $pipelineCollection,
         ChunkSize $chunkSize,
-        ChunkFile $chunkFile
+        ChunkFile $chunkFile,
+        TestChunkerInterface $chunker
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->processFactory = $processFactory;
@@ -59,6 +63,7 @@ class Runner implements EventSubscriberInterface
         $this->pipelineCollection = $pipelineCollection;
         $this->chunkSize = $chunkSize;
         $this->chunkFile = $chunkFile;
+        $this->chunker = $chunker;
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
 
@@ -130,7 +135,7 @@ class Runner implements EventSubscriberInterface
     private function createChunkedProcessQueue(): void
     {
         $files = $this->filter->filterTestFiles();
-        foreach (array_chunk($files, $this->chunkSize->getChunkSize()) as $chunkNumber => $filesChunk) {
+        foreach ($this->chunker->chunk($files, $this->chunkSize) as $chunkNumber => $filesChunk) {
             $chunkFileName = $this->chunkFile->createChunkFile($chunkNumber, $filesChunk);
             $this->queuedProcesses->enqueue(
                 $this->processFactory->create($chunkFileName)
