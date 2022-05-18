@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
@@ -38,7 +39,8 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $factory = new ProcessFactory(
             $cliCommand->reveal(),
             $phpUnitConfig->reveal(),
-            $tempFilenameFactory->reveal()
+            $tempFilenameFactory->reveal(),
+            $this->mockChunkSize(false)
         );
 
         $processWrapper = $factory->create('TestTest.php');
@@ -54,5 +56,48 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('TestTest2.php', $commandLine);
         $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
+    }
+
+    public function testCreateProcessChunked(): void
+    {
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
+        $cliCommand = $this->prophesize(CommandLine::class);
+        $cliCommand->getExecutable()->willReturn(['sapi', 'executable']);
+        $cliCommand
+            ->getOptions($phpUnitConfig->reveal())
+            ->shouldBeCalled()
+            ->willReturn([]);
+        $cliCommand
+            ->getSpecificOptions('phpunit.xml')
+            ->shouldBeCalledTimes(1)
+            ->willReturn(['--specific=value-for-phpunit.xml']);
+
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getPathForLog()
+            ->willReturn('/path/for/log/');
+
+        $factory = new ProcessFactory(
+            $cliCommand->reveal(),
+            $phpUnitConfig->reveal(),
+            $tempFilenameFactory->reveal(),
+            $this->mockChunkSize(true)
+        );
+
+        $processWrapper = $factory->create('phpunit.xml');
+
+        $this->assertInstanceOf(AbstractParaunitProcess::class, $processWrapper);
+        $commandLine = $processWrapper->getCommandLine();
+        $this->assertStringContainsString('--configuration=phpunit.xml', $commandLine);
+        $this->assertStringContainsString('--specific=value-for-phpunit.xml', $commandLine);
+    }
+
+    private function mockChunkSize(bool $enabled): ChunkSize
+    {
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn($enabled);
+
+        return $chunkSize->reveal();
     }
 }

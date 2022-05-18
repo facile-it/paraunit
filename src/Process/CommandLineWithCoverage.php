@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\TempFilenameFactory;
@@ -26,12 +27,13 @@ class CommandLineWithCoverage extends CommandLine
 
     public function __construct(
         PHPUnitBinFile $phpUnitBin,
+        ChunkSize $chunkSize,
         PcovProxy $pcovProxy,
         XDebugProxy $xdebugProxy,
         PHPDbgBinFile $dbgBinFile,
         TempFilenameFactory $filenameFactory
     ) {
-        parent::__construct($phpUnitBin);
+        parent::__construct($phpUnitBin, $chunkSize);
 
         $this->pcovProxy = $pcovProxy;
         $this->xdebugProxy = $xdebugProxy;

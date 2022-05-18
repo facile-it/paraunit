@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\DeprecationParser;
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
@@ -82,6 +83,7 @@ class ParserDefinition
             ]),
             AbnormalTerminatedParser::class => new Definition(AbnormalTerminatedParser::class, [
                 new Reference('paraunit.test_result.abnormal_terminated_container'),
+                new Reference(ChunkSize::class),
                 LogFetcher::LOG_ENDING_STATUS,
             ]),
             UnknownResultParser::class => new Definition(UnknownResultParser::class, [

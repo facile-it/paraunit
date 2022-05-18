@@ -72,6 +72,14 @@ class Pipeline
         return $this->number;
     }
 
+    /**
+     * @return AbstractParaunitProcess|null
+     */
+    public function getProcess()
+    {
+        return $this->process;
+    }
+
     private function handleProcessTermination(): void
     {
         if ($this->process) {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
+use function function_exists;
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Filter\Filter;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Lifecycle\EngineEnd;
@@ -14,6 +16,7 @@ use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\ProcessFactoryInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Runner implements EventSubscriberInterface
@@ -30,6 +33,15 @@ class Runner implements EventSubscriberInterface
     /** @var PipelineCollection */
     private $pipelineCollection;
 
+    /** @var ChunkSize */
+    private $chunkSize;
+
+    /** @var ChunkFile */
+    private $chunkFile;
+
+    /** @var TestChunkerInterface */
+    private $chunker;
+
     /** @var \SplQueue<AbstractParaunitProcess> */
     private $queuedProcesses;
 
@@ -40,14 +52,25 @@ class Runner implements EventSubscriberInterface
         EventDispatcherInterface $eventDispatcher,
         ProcessFactoryInterface $processFactory,
         Filter $filter,
-        PipelineCollection $pipelineCollection
+        PipelineCollection $pipelineCollection,
+        ChunkSize $chunkSize,
+        ChunkFile $chunkFile,
+        TestChunkerInterface $chunker
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->processFactory = $processFactory;
         $this->filter = $filter;
         $this->pipelineCollection = $pipelineCollection;
+        $this->chunkSize = $chunkSize;
+        $this->chunkFile = $chunkFile;
+        $this->chunker = $chunker;
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
+
+        if (function_exists('pcntl_async_signals') && function_exists('pcntl_signal')) {
+            pcntl_async_signals(true);
+            pcntl_signal(SIGINT, [$this, 'onShutdown']);
+        }
     }
 
     /**
@@ -69,7 +92,11 @@ class Runner implements EventSubscriberInterface
     {
         $this->eventDispatcher->dispatch(new BeforeEngineStart());
 
-        $this->createProcessQueue();
+        if ($this->chunkSize->isChunked()) {
+            $this->createChunkedProcessQueue();
+        } else {
+            $this->createProcessQueue();
+        }
 
         $this->eventDispatcher->dispatch(new EngineStart());
 
@@ -105,10 +132,47 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    public function pushToPipeline(): void
+    private function createChunkedProcessQueue(): void
     {
+        $files = $this->filter->filterTestFiles();
+        foreach ($this->chunker->chunk($files, $this->chunkSize) as $chunkNumber => $filesChunk) {
+            $chunkFileName = $this->chunkFile->createChunkFile($chunkNumber, $filesChunk);
+            $this->queuedProcesses->enqueue(
+                $this->processFactory->create($chunkFileName)
+            );
+        }
+    }
+
+    public function pushToPipeline(ProcessTerminated $event = null): void
+    {
+        if ($event && $this->chunkSize->isChunked()) {
+            $process = $event->getProcess();
+            if (! $process->isToBeRetried()) {
+                $this->chunkFile->deleteChunkFile($process);
+            }
+        }
+
         while (! $this->queuedProcesses->isEmpty() && $this->pipelineCollection->hasEmptySlots()) {
             $this->pipelineCollection->push($this->queuedProcesses->dequeue());
+        }
+    }
+
+    public function onShutdown(): void
+    {
+        $this->pipelineCollection->triggerProcessTermination();
+
+        if ($this->chunkSize->isChunked()) {
+            $processes = $this->pipelineCollection->getRunningProcesses();
+            foreach ($processes as $process) {
+                $this->chunkFile->deleteChunkFile($process);
+            }
+            do {
+                try {
+                    $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
+                } catch (RuntimeException $e) {
+                    //pass
+                }
+            } while (! $this->queuedProcesses->isEmpty());
         }
     }
 }

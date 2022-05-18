@@ -34,6 +34,8 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             ->willReturn('text');
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('chunk-size')
+            ->willReturn(1);
         $input->getOption('testsuite')
             ->willReturn('testsuite');
         $input->getOption('configuration')
