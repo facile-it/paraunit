@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Proxy\Coverage;
 
+use SebastianBergmann\CodeCoverage\Data\RawCodeCoverageData;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
-use SebastianBergmann\CodeCoverage\RawCodeCoverageData;
 
 /**
  * @psalm-suppress InternalClass

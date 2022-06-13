@@ -7,6 +7,7 @@ namespace Paraunit\Coverage\Processor;
 use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Text as PHPUnitText;
+use SebastianBergmann\CodeCoverage\Report\Thresholds;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractText implements CoverageProcessorInterface
@@ -25,7 +26,7 @@ abstract class AbstractText implements CoverageProcessorInterface
 
     public function __construct(OutputInterface $output, bool $showColors, bool $onlySummary, OutputFile $targetFile = null)
     {
-        $this->text = new PHPUnitText(50, 90, false, $onlySummary);
+        $this->text = new PHPUnitText(Thresholds::default(), false, $onlySummary);
         $this->output = $output;
         $this->targetFile = $targetFile;
         $this->showColors = $showColors;
