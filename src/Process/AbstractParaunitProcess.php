@@ -21,8 +21,8 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     /** @var string */
     protected $filename;
 
-    /** @var string */
-    protected $testClassName;
+    /** @var string|null */
+    protected $testClassName = null;
 
     /** @var PrintableTestResultInterface[] */
     protected $testResults;

@@ -13,34 +13,14 @@ class OutputFileTest extends BaseUnitTestCase
     {
         $outputFile = new OutputFile('sub/dir/from/relfile.xml');
 
-        $this->assertFalse($outputFile->isEmpty());
         $this->assertEquals('sub/dir/from/relfile.xml', $outputFile->getFilePath());
     }
 
-    /**
-     * @dataProvider emptyFilesProvider
-     *
-     * @param string|bool|null $emptyFile
-     */
-    public function testIsEmpty($emptyFile): void
+    public function testIsEmpty(): void
     {
-        $outputFile = new OutputFile($emptyFile);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Empty path provided: not valid');
 
-        $this->assertTrue($outputFile->isEmpty());
-
-        $this->expectException(\RuntimeException::class);
-        $outputFile->getFilePath();
-    }
-
-    /**
-     * @return mixed[][]
-     */
-    public function emptyFilesProvider(): array
-    {
-        return [
-            [null],
-            [''],
-            [false],
-        ];
+        new OutputFile('');
     }
 }

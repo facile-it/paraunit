@@ -18,11 +18,6 @@ class OutputPath
         $this->path = $path;
     }
 
-    public function isEmpty(): bool
-    {
-        return $this->path === null;
-    }
-
     /**
      * @throws \RuntimeException
      */

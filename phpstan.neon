@@ -3,5 +3,5 @@ parameters:
     paths:
         - src/
         - tests/
-    excludes_analyse:
+    excludePaths:
         - tests/Stub/

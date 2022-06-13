@@ -7,6 +7,9 @@ namespace Paraunit\Proxy\Coverage;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 use SebastianBergmann\CodeCoverage\RawCodeCoverageData;
 
+/**
+ * @psalm-suppress InternalClass
+ */
 class FakeDriver extends Driver
 {
     public function nameAndVersion(): string

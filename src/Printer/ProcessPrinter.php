@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\AbstractProcessEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
@@ -39,7 +40,7 @@ class ProcessPrinter implements EventSubscriberInterface
     }
 
     /**
-     * @return array<string, string|(string|int)[]>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
