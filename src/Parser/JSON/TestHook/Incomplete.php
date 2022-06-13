@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Parser\JSON\Log;
-use PHPUnit\Event\Test\Aborted;
-use PHPUnit\Event\Test\AbortedSubscriber;
+use PHPUnit\Event\Test\MarkedIncomplete;
+use PHPUnit\Event\Test\MarkedIncompleteSubscriber;
 
-class Incomplete extends AbstractTestHook implements AbortedSubscriber
+class Incomplete extends AbstractTestHook implements MarkedIncompleteSubscriber
 {
-    public function notify(Aborted $event): void
+    public function notify(MarkedIncomplete $event): void
     {
         $this->write(Log::STATUS_INCOMPLETE, $event->test(), $event->throwable()->message());
     }
