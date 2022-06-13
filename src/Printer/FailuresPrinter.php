@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\StackTraceInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
 {
     /**
-     * @return array<string, (string|int)[]>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

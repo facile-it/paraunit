@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterface
 {
     /**
-     * @return array<string, string>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

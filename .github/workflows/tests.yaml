@@ -66,6 +66,16 @@ jobs:
           php-version: '7.4'
       - uses: ramsey/composer-install@v2
       - run: bin/phpstan analyse
+  Psalm:
+    runs-on: ubuntu-latest
+    name: Psalm
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - uses: ramsey/composer-install@v2
+      - run: bin/psalm
   End2End:
     runs-on: ubuntu-latest
     strategy:

@@ -3,9 +3,5 @@ parameters:
     paths:
         - src/
         - tests/
-    excludes_analyse:
+    excludePaths:
         - tests/Stub/
-        - src/Lifecycle/ForwardCompatEventDispatcher.php
-
-includes:
-    - phpstan-baseline.neon

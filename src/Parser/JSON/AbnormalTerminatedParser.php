@@ -34,7 +34,7 @@ class AbnormalTerminatedParser extends GenericParser
         }
 
         if ($this->logMatches($logItem)) {
-            $testResult = new TestResultWithAbnormalTermination($this->lastStartedTest ?? $logItem->getTest());
+            $testResult = new TestResultWithAbnormalTermination($this->lastStartedTest);
             $this->testResultContainer->handleTestResult($process, $testResult);
             $process->setWaitingForTestResult(false);
 
