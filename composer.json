@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-dom": "*",
         "ext-json": "*",
         "jean85/pretty-package-versions": "^1.5.1||^2.0.1",
@@ -45,17 +45,21 @@
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.7",
         "phpstan/phpstan-phpunit": "^1.1",
-        "phpunit/php-invoker": "^3.0",
+        "phpunit/php-invoker": "^4.0",
         "psalm/plugin-phpunit": "^0.16.1",
         "psalm/plugin-symfony": "^3.1",
         "symfony/expression-language": "^4.4||^5.0||^6.0",
         "symfony/phpunit-bridge": "^6.1",
-        "vimeo/psalm": "^4.23"
+        "vimeo/psalm": "dev-allow-diff-5 as 4.23.1"
     },
     "conflict": {
         "composer/package-versions-deprecated": "<1.11.99"
     },
     "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/Jean85/psalm"
+        },
         {
             "type": "github",
             "url": "https://github.com/Jean85/prophecy"

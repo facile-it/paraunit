@@ -1,6 +1,6 @@
 # facile-it/paraunit
 
-![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.0-blue)
+![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.1-blue)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
 [![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
@@ -21,16 +21,18 @@ To use this package, use Composer:
 ```json
 {
     "require-dev": {
-        "facile-it/paraunit": "^1.1"
+        "facile-it/paraunit": "^2.0"
     }
 }
 ```
 
 ### Compatibility
-You can use Paraunit with many different versions of PHPUnit or Symfony, following this compatibility list:
+You can use Paraunit with many versions of PHPUnit or Symfony, following this compatibility list:
 
 | Paraunit version | Compatible PHPUnit Version | Compatible Symfony Version |
 |------------------|----------------------------|----------------------------|
+| 2.0              | 10+                        | 4.4, 5, 6                  |
+| 1.3              | 9.3+                       | 4.4, 5, 6                  |
 | 1.2              | 9.3+                       | 3.4, 4, 5                  |
 | 1.1              | 9.1, 9.2                   | 3.4, 4, 5                  |
 | 1.0.*            | 7, 8                       | 3.4, 4, 5                  |

@@ -7,7 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Parser\JSON\TestHook as Hooks;
 
 class CommandLine
 {
