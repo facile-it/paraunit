@@ -32,7 +32,7 @@
         "phpunit/phpunit": "^10.0",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^3.4||^4.0||^5.0",
-        "symfony/dependency-injection": "^3.4||^4.0||^5.0",
+        "symfony/dependency-injection": "^3.4.6||^4.0||^5.0",
         "symfony/event-dispatcher": "^3.4||^4.0||^5.0",
         "symfony/process": "^3.4||^4.0||^5.0",
         "symfony/stopwatch": "^3.4||^4.0||^5.0"
@@ -47,7 +47,10 @@
         "phpstan/phpstan-phpunit": "^0.12.22",
         "phpunit/php-invoker": "^4.0",
         "symfony/expression-language": "^3.4||^4.0||^5.0",
-        "symfony/phpunit-bridge": "^5.3"
+        "symfony/phpunit-bridge": "^5.4"
+    },
+    "conflict": {
+        "composer/package-versions-deprecated": "<1.11.99"
     },
     "repositories": [
         {
@@ -64,7 +67,11 @@
     ],
     "config": {
         "sort-packages": true,
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "facile-it/facile-coding-standard": true,
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {
