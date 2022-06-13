@@ -45,7 +45,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
      */
     public function getOutput(): string
     {
-        return $this->process->getOutput() ?? '';
+        return $this->process->getOutput();
     }
 
     /**
@@ -53,7 +53,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
      */
     public function getErrorOutput(): string
     {
-        return $this->process->getErrorOutput() ?? '';
+        return $this->process->getErrorOutput();
     }
 
     /**

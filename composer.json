@@ -39,12 +39,12 @@
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^0.5.1",
-        "jangregor/phpstan-prophecy": "^0.8.1",
+        "jangregor/phpstan-prophecy": "^1.0.0",
         "phpspec/prophecy": "^1.12",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^0.12.42",
-        "phpstan/phpstan-phpunit": "^0.12.6",
+        "phpstan/phpstan": "^1.7",
+        "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^3.0",
         "symfony/expression-language": "^4.4||^5.0||^6.0",
         "symfony/phpunit-bridge": "^6.1"

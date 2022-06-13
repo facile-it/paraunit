@@ -19,7 +19,7 @@ cs-fix: start
 	docker-compose exec php bin/php-cs-fixer fix --verbose --ansi
 
 phpstan: start
-	docker-compose exec php bin/phpstan analyse --ansi
+	docker-compose exec php bin/phpstan analyse --ansi --memory-limit=-1
 
 tests: start
 	docker-compose exec php bin/phpunit --colors=always
