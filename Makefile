@@ -13,10 +13,13 @@ start:
 composer-install: start
 	docker-compose exec php composer install
 
-pre-commit-check: cs-fix phpstan tests
+pre-commit-check: cs-fix psalm phpstan tests
 
 cs-fix: start
 	docker-compose exec php bin/php-cs-fixer fix --verbose --ansi
+
+psalm: start
+	docker-compose exec php bin/psalm
 
 phpstan: start
 	docker-compose exec php bin/phpstan analyse --ansi --memory-limit=-1
