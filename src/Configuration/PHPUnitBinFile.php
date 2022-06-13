@@ -12,7 +12,10 @@ class PHPUnitBinFile
     // I'm using Paraunit standalone (developing)
     private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../vendor/phpunit/phpunit/phpunit';
 
-    /** @var string Realpath to PHPUnit bin location */
+    /**
+     * @var string Realpath to PHPUnit bin location
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private $phpUnitBin;
 
     /**

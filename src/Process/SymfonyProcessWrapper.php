@@ -12,9 +12,6 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     /** @var Process */
     private $process;
 
-    /** @var string */
-    protected $commandLine;
-
     /**
      * {@inheritdoc}
      */

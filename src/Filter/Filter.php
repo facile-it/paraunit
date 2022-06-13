@@ -34,6 +34,7 @@ class Filter
         string $testSuiteFilter = null,
         string $stringFilter = null
     ) {
+        /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
         $this->fileIteratorFacade = $fileIteratorFacade;
         $this->configFile = $configFile;
@@ -51,6 +52,7 @@ class Filter
     {
         $aggregatedFiles = [];
 
+        /** @psalm-suppress InternalMethod */
         $document = $this->xmlLoader->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
@@ -161,9 +163,12 @@ class Filter
         string $nodeName,
         string $defaultValue = null
     ): string {
-        foreach ($testSuiteNode->attributes ?? [] as $attrName => $attrNode) {
-            if ($attrName === $nodeName) {
-                return $attrNode->value;
+        /** @psalm-suppress RedundantCondition */
+        if ($testSuiteNode->attributes) {
+            foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
+                if ($attrName === $nodeName) {
+                    return $attrNode->value;
+                }
             }
         }
 
