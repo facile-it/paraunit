@@ -10,7 +10,6 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Filter\Filter;
-use Paraunit\Lifecycle\ForwardCompatEventDispatcher;
 use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
@@ -83,13 +82,7 @@ class ParallelContainerDefinition
         $dispatcher = new Definition(EventDispatcher::class);
         $container->setDefinition(SymfonyEventDispatcherInterface::class, $dispatcher);
         $container->setAlias('event_dispatcher', SymfonyEventDispatcherInterface::class);
-
-        if (is_subclass_of(EventDispatcher::class, PsrEventDispatcherInterface::class)) {
-            $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
-        } else {
-            $container->setDefinition(ForwardCompatEventDispatcher::class, new Definition(ForwardCompatEventDispatcher::class, [new Reference(SymfonyEventDispatcherInterface::class)]));
-            $container->setAlias(PsrEventDispatcherInterface::class, ForwardCompatEventDispatcher::class);
-        }
+        $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
 
         $container->addCompilerPass(new RegisterListenersPass());
     }
