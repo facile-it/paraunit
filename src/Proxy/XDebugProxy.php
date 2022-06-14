@@ -20,13 +20,10 @@ class XDebugProxy
             throw new \RuntimeException('Xdebug is not loaded');
         }
 
+        /** @var string $xdebugVersion */
         $xdebugVersion = phpversion('xdebug');
 
-        if (! is_string($xdebugVersion)) {
-            throw new \RuntimeException('Unable to detect Xdebug version');
-        }
-
-        if (version_compare('3.0', $xdebugVersion, '>=')) {
+        if (version_compare('3.0', $xdebugVersion, '<=')) {
             return 3;
         }
 
