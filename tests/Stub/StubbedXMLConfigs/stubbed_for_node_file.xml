@@ -13,13 +13,10 @@
 
     <testsuites>
         <testsuite name="test_only_requested_testsuite">
-            <directory>./only/selected/test/suite/</directory>
-            <file>./this/file.php</file>
-            <file>./this/file2.php</file>
+            <file>../FatalErrorTestStub.php</file>
         </testsuite>
         <testsuite name="an_other_test_suite">
-            <directory>./other/test/suite/</directory>
-            <file>./this/file.php</file>
+            <file>../SegFaultTestStub.php</file>
         </testsuite>
     </testsuites>
 

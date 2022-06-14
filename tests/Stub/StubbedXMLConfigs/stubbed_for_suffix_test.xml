@@ -13,10 +13,10 @@
 
     <testsuites>
         <testsuite name="selected">
-            <directory suffix="TestSuffix.php">./only/selected/test/suite/</directory>
+            <directory suffix="FaultTestStub.php">../</directory>
         </testsuite>
         <testsuite name="other">
-            <directory>./other/test/suite/</directory>
+            <directory>../</directory>
         </testsuite>
     </testsuites>
 
