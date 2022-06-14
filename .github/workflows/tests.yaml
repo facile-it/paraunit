@@ -21,7 +21,12 @@ jobs:
           - '7.3'
         dependencies: ['highest']
         deprecations: ['max[direct]=0']
+        coverage: ['xdebug']
         include:
+          - description: 'Xdebug 2'
+            coverage: 'xdebug2'
+          - description: 'PCov'
+            coverage: 'pcov'
           - description: 'Windows'
             os: 'windows-latest'
             php: '7.4'
