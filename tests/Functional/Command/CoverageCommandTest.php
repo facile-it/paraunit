@@ -16,6 +16,10 @@ class CoverageCommandTest extends BaseTestCase
 
     public function testExecutionWithTextToFile(): void
     {
+        if (! extension_loaded('xdebug')) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
         $coverageFileName = $this->getTempCoverageFilename();
         $commandTester = $this->createCommandTester();
 
@@ -39,6 +43,10 @@ class CoverageCommandTest extends BaseTestCase
 
     public function testExecutionWithTextToConsole(): void
     {
+        if (! extension_loaded('xdebug')) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
         $commandTester = $this->createCommandTester();
 
         $arguments = $this->prepareArguments([
