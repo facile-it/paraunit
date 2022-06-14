@@ -25,9 +25,11 @@ jobs:
         include:
           - description: 'Xdebug 2'
             coverage: 'xdebug2'
+            os: 'ubuntu-latest'
             php: '7.4'
           - description: 'PCov'
             coverage: 'pcov'
+            os: 'ubuntu-latest'
             php: '7.4'
           - description: 'Windows'
             os: 'windows-latest'
@@ -44,7 +46,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+          coverage: ${{ matrix.coverage }}
       - run: composer remove --dev facile-it/facile-coding-standard --no-update
         if: matrix.dependencies == 'lowest'
       - uses: ramsey/composer-install@v2
