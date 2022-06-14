@@ -35,6 +35,7 @@ jobs:
             os: 'windows-latest'
             php: '7.4'
           - description: '--prefer lowest'
+            coverage: 'xdebug2'
             os: 'ubuntu-latest'
             php: '7.3'
             dependencies: 'lowest'
