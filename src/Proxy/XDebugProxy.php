@@ -16,7 +16,17 @@ class XDebugProxy
      */
     public function getMajorVersion(): int
     {
-        if (version_compare('3.0', phpversion('xdebug'), '>=')) {
+        if (! $this->isLoaded()) {
+            throw new \RuntimeException('Xdebug is not loaded');
+        }
+
+        $xdebugVersion = phpversion('xdebug');
+
+        if (! is_string($xdebugVersion)) {
+            throw new \RuntimeException('Unable to detect Xdebug version');
+        }
+
+        if (version_compare('3.0', $xdebugVersion, '>=')) {
             return 3;
         }
 
