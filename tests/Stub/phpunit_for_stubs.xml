@@ -3,6 +3,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="../../vendor/autoload.php"
+         beStrictAboutOutputDuringTests="true"
         >
     <php>
         <ini name="error_reporting" value="-1"/>

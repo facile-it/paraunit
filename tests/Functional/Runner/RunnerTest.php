@@ -106,7 +106,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'Missing failing filename'
         );
         $this->assertStringContainsString(
-            'PHPUnit 9.',
+            'PHPUnit 10.',
             $output,
             'Missing general output from the PHPUnit process'
         );
@@ -154,24 +154,24 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('ThreeGreenTestStub.php', $output);
     }
 
-    public function testSessionStdout(): void
+    public function testWarningsToStdout(): void
     {
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();
 
         $output = $this->getConsoleOutput();
 
-        $this->assertNotEquals(0, $this->executeRunner());
-        $this->assertStringContainsString('EEE', $output->getOutput());
+        $this->assertEquals(0, $this->executeRunner());
+        $this->assertStringContainsString('RRR', $output->getOutput());
         $this->assertOutputOrder($output, [
-            'Errors output',
+            'Risky Outcome output',
             SessionTestStub::class . '::testOne',
             'session_id',
             SessionTestStub::class . '::testTwo',
             'session_id',
             SessionTestStub::class . '::testThree',
             'session_id',
-            'files with ERRORS',
+            'files with RISKY OUTCOME',
             'SessionTestStub',
         ]);
 
