@@ -35,7 +35,7 @@ class CommandLine
     {
         $options = [
             '--configuration=' . $config->getFileFullPath(),
-            '--bootstrap=' . dirname(__DIR__) . DIRECTORY_SEPARATOR . '/Configuration/register_subscribers.php',
+            '--bootstrap=' . dirname(__DIR__) . '/Configuration/register_subscribers.php',
         ];
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
