@@ -6,18 +6,21 @@ namespace Paraunit\Configuration;
 
 class ChunkSize
 {
-    /** @var int */
+    /** @var positive-int */
     private $chunkSize;
 
     public function __construct(int $chunkSize)
     {
         if ($chunkSize < 1) {
-            throw new \InvalidArgumentException('Chunk size has to be 1 or greater');
+            throw new \InvalidArgumentException('Chunk size must be 1 or greater');
         }
 
         $this->chunkSize = $chunkSize;
     }
 
+    /**
+     * @return positive-int
+     */
     public function getChunkSize(): int
     {
         return $this->chunkSize;

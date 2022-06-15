@@ -18,6 +18,7 @@ class ChunkFile
 
     public function __construct(PHPUnitConfig $phpunitConfig)
     {
+        /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
         $this->phpunitConfig = $phpunitConfig;
     }
@@ -30,6 +31,7 @@ class ChunkFile
         array $files
     ): string {
         $fileFullPath = $this->phpunitConfig->getFileFullPath();
+        /** @psalm-suppress InternalMethod */
         $document = $this->xmlLoader->loadFile($fileFullPath);
         $xpath = new \DOMXPath($document);
 
@@ -42,8 +44,8 @@ class ChunkFile
         $nodeList = iterator_to_array($nodeList);
         $testSuitesNode = array_shift($nodeList);
 
-        if (! $testSuitesNode instanceof \DOMElement) {
-            throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuitesNode));
+        if (null === $testSuitesNode) {
+            throw new \InvalidArgumentException('Expecting \DOMElement, got null');
         }
 
         $nameAttribute = $document->createAttribute('name');
