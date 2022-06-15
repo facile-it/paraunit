@@ -11,6 +11,10 @@ class ChunkSize
 
     public function __construct(int $chunkSize)
     {
+        if ($chunkSize < 1) {
+            throw new \InvalidArgumentException('Chunk size has to be 1 or greater');
+        }
+
         $this->chunkSize = $chunkSize;
     }
 
