@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
@@ -13,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
     /**
-     * @return array<string, string|(string|int)[]>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
@@ -40,8 +41,11 @@ class DebugPrinter extends AbstractPrinter implements EventSubscriberInterface
 
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln('PROCESS TERMINATED: ' . $process->getFilename());
-        $this->getOutput()->writeln(' - with class name: ' . $process->getTestClassName() ?? 'N/A');
+        $this->getOutput()->writeln(' - with class name: ' . ($process->getTestClassName() ?? 'N/A'));
         $this->getOutput()->writeln('');
+        $this->getOutput()->writeln('PROCESS FULL OUTPUT:');
+        $this->getOutput()->writeln('');
+        $this->getOutput()->writeln($process->getOutput());
     }
 
     public function onProcessParsingCompleted(): void

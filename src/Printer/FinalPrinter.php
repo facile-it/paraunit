@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Configuration\ChunkSize;
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessTerminated;
@@ -42,7 +43,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     }
 
     /**
-     * @return array<string, string|(string|int)[]>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

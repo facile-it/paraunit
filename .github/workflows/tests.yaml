@@ -21,11 +21,22 @@ jobs:
           - '7.3'
         dependencies: ['highest']
         deprecations: ['max[direct]=0']
+        coverage: ['xdebug']
         include:
+          - description: 'Xdebug 2'
+            coverage: 'xdebug2'
+            os: 'ubuntu-latest'
+            php: '7.4'
+          - description: 'PCov'
+            coverage: 'pcov'
+            os: 'ubuntu-latest'
+            php: '7.4'
           - description: 'Windows'
+            coverage: 'xdebug'
             os: 'windows-latest'
             php: '7.4'
           - description: '--prefer lowest'
+            coverage: 'xdebug2'
             os: 'ubuntu-latest'
             php: '7.3'
             dependencies: 'lowest'
@@ -37,7 +48,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+          coverage: ${{ matrix.coverage }}
       - run: composer remove --dev facile-it/facile-coding-standard --no-update
         if: matrix.dependencies == 'lowest'
       - uses: ramsey/composer-install@v2
@@ -68,6 +79,16 @@ jobs:
           php-version: '7.4'
       - uses: ramsey/composer-install@v2
       - run: bin/phpstan analyse
+  Psalm:
+    runs-on: ubuntu-latest
+    name: Psalm
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - uses: ramsey/composer-install@v2
+      - run: bin/psalm
   End2End:
     runs-on: ubuntu-latest
     strategy:

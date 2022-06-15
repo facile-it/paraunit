@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+  <file src="src/Bin/run-paraunit.inc.php">
+    <MixedArrayAssignment occurrences="1">
+      <code>$_SERVER['argv'][0]</code>
+    </MixedArrayAssignment>
+  </file>
+  <file src="src/Configuration/ParallelConfiguration.php">
+    <MixedArgument occurrences="5">
+      <code>$input-&gt;getArgument('stringFilter')</code>
+      <code>$input-&gt;getOption('configuration') ?? '.'</code>
+      <code>$input-&gt;getOption('logo')</code>
+      <code>$input-&gt;getOption('parallel')</code>
+      <code>$input-&gt;getOption('testsuite')</code>
+    </MixedArgument>
+  </file>
+  <file src="src/Coverage/CoverageFetcher.php">
+    <MixedAssignment occurrences="1">
+      <code>$codeCoverage</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/File/Cleaner.php">
+    <MixedArgument occurrences="2">
+      <code>$file-&gt;getRealPath()</code>
+      <code>$file-&gt;getRealPath()</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$file</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>getRealPath</code>
+      <code>getRealPath</code>
+      <code>isDir</code>
+    </MixedMethodCall>
+  </file>
+  <file src="src/Filter/Filter.php">
+    <MixedArgument occurrences="1">
+      <code>$fileName</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$fileName</code>
+    </MixedAssignment>
+    <PossiblyNullOperand occurrences="3">
+      <code>$fileNode-&gt;nodeValue</code>
+      <code>$this-&gt;relativePath</code>
+      <code>$this-&gt;relativePath</code>
+    </PossiblyNullOperand>
+  </file>
+  <file src="src/Parser/JSON/LogFetcher.php">
+    <MixedArgument occurrences="5">
+      <code>$log</code>
+      <code>$log['message'] ?? null</code>
+      <code>$log['status']</code>
+      <code>$log['test'] ?? null</code>
+      <code>$logs</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$log</code>
+      <code>$logs</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Process/CommandLine.php">
+    <PossiblyNullOperand occurrences="1">
+      <code>$option-&gt;getValue()</code>
+    </PossiblyNullOperand>
+  </file>
+  <file src="src/Process/SymfonyProcessWrapper.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$env</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+</files>

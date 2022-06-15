@@ -9,30 +9,17 @@ class OutputFile
     /** @var string */
     private $filePath;
 
-    /**
-     * @param string|mixed $filePath The path to the file; if invalid, getFilePath() will fail later
-     */
-    public function __construct($filePath)
+    public function __construct(string $filePath)
     {
-        if (is_string($filePath) && $filePath !== '') {
-            $this->filePath = $filePath;
+        if ($filePath === '') {
+            throw new \InvalidArgumentException('Empty path provided: not valid');
         }
+
+        $this->filePath = $filePath;
     }
 
-    public function isEmpty(): bool
-    {
-        return $this->filePath === null;
-    }
-
-    /**
-     * @throws \RuntimeException
-     */
     public function getFilePath(): string
     {
-        if ($this->isEmpty()) {
-            throw new \RuntimeException('Program requested an empty file path');
-        }
-
         return $this->filePath;
     }
 }

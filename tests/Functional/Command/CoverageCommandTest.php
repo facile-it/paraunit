@@ -6,6 +6,7 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
@@ -16,6 +17,10 @@ class CoverageCommandTest extends BaseTestCase
 
     public function testExecutionWithTextToFile(): void
     {
+        if ($this->isXdebugCoverageDisabled()) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
         $coverageFileName = $this->getTempCoverageFilename();
         $commandTester = $this->createCommandTester();
 
@@ -39,6 +44,10 @@ class CoverageCommandTest extends BaseTestCase
 
     public function testExecutionWithTextToConsole(): void
     {
+        if ($this->isXdebugCoverageDisabled()) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
         $commandTester = $this->createCommandTester();
 
         $arguments = $this->prepareArguments([
@@ -123,5 +132,30 @@ class CoverageCommandTest extends BaseTestCase
             '--configuration' => $this->getConfigForStubs(),
             'stringFilter' => 'green',
         ], $additionalArguments);
+    }
+
+    private function isXdebugCoverageDisabled(): bool
+    {
+        $xdebug = new XDebugProxy();
+
+        if (! $xdebug->isLoaded()) {
+            return true;
+        }
+
+        $majorVersion = $xdebug->getMajorVersion();
+
+        if (2 === $majorVersion) {
+            return false;
+        }
+
+        $xdebugMode = getenv('XDEBUG_MODE');
+        if (! is_string($xdebugMode) || '' === $xdebugMode) {
+            $xdebugMode = ini_get('xdebug.mode');
+        }
+
+        $this->assertIsString($xdebugMode, 'Unable to retrieve Xdebug mode');
+
+        return ! str_contains($xdebugMode, 'coverage')
+            && ! str_contains($xdebugMode, 'debug');
     }
 }

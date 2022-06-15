@@ -10,7 +10,7 @@
         "testing",
         "phpunit"
     ],
-    "homepage": "http://github.com/facile-it/paraunit",
+    "homepage": "https://github.com/facile-it/paraunit",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -31,23 +31,26 @@
         "phpunit/php-file-iterator": "^3.0",
         "phpunit/phpunit": "^9.3",
         "psr/event-dispatcher": "^1.0",
-        "symfony/console": "^3.4||^4.0||^5.0",
-        "symfony/dependency-injection": "^3.4.6||^4.0||^5.0",
-        "symfony/event-dispatcher": "^3.4||^4.0||^5.0",
-        "symfony/process": "^3.4||^4.0||^5.0",
-        "symfony/stopwatch": "^3.4||^4.0||^5.0"
+        "symfony/console": "^4.4||^5.0||^6.0",
+        "symfony/dependency-injection": "^4.4||^5.0||^6.0",
+        "symfony/event-dispatcher": "^4.4||^5.0||^6.0",
+        "symfony/process": "^4.4||^5.0||^6.0",
+        "symfony/stopwatch": "^4.4||^5.0||^6.0"
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^0.5.1",
-        "jangregor/phpstan-prophecy": "^0.8.1",
+        "jangregor/phpstan-prophecy": "^1.0.0",
         "phpspec/prophecy": "^1.12",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^0.12.42",
-        "phpstan/phpstan-phpunit": "^0.12.6",
+        "phpstan/phpstan": "^1.7",
+        "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^3.0",
-        "symfony/expression-language": "^3.4||^4.0||^5.0",
-        "symfony/phpunit-bridge": "^5.4"
+        "psalm/plugin-phpunit": "^0.16.1",
+        "psalm/plugin-symfony": "^3.1",
+        "symfony/expression-language": "^4.4||^5.0||^6.0",
+        "symfony/phpunit-bridge": "^6.1",
+        "vimeo/psalm": "^4.23"
     },
     "conflict": {
         "composer/package-versions-deprecated": "<1.11.99"

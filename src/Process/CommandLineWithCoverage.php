@@ -53,6 +53,10 @@ class CommandLineWithCoverage extends CommandLine
         }
 
         if ($this->xdebugProxy->isLoaded()) {
+            if (3 === $this->xdebugProxy->getMajorVersion()) {
+                return ['php', '-d xdebug.mode=coverage', $this->phpUnitBin->getPhpUnitBin()];
+            }
+
             return parent::getExecutable();
         }
 

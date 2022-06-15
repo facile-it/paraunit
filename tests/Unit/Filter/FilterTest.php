@@ -12,7 +12,7 @@ use Tests\BaseUnitTestCase;
 
 class FilterTest extends BaseUnitTestCase
 {
-    /** @var string */
+    /** @var string|null */
     private $absoluteConfigBaseDir;
 
     protected function setUp(): void

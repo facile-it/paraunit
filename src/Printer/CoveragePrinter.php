@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
@@ -34,7 +35,7 @@ class CoveragePrinter implements EventSubscriberInterface
     }
 
     /**
-     * @return array<string, (string|int)[]>
+     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

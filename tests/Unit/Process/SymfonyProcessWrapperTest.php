@@ -34,6 +34,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
 
             return true;
         }))
+            ->willReturn($process->reveal())
             ->shouldBeCalled();
 
         $processWrapper = new SymfonyProcessWrapper($process->reveal(), 'Test.php');

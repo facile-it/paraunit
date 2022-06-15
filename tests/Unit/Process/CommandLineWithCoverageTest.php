@@ -194,7 +194,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     {
         yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
         yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(false), $this->mockXdebug(true), ['php', 'path/to/phpunit']];
+        yield [$this->mockPcov(false), $this->mockXdebug(true, 3), ['php', '-d xdebug.mode=coverage', 'path/to/phpunit']];
+        yield [$this->mockPcov(false), $this->mockXdebug(true, 2), ['php', 'path/to/phpunit']];
     }
 
     /**
@@ -202,7 +203,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
      */
     public function noExtensionsEnabledProvider(): \Generator
     {
-        yield [$this->mockPcov(false), $this->mockXdebug(false)];
+        yield [$this->mockPcov(false), $this->mockXdebug(false, 3)];
     }
 
     private function mockPHPUnit(): PHPUnitBinFile
@@ -234,11 +235,13 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         return $pcovProxy->reveal();
     }
 
-    private function mockXdebug(bool $enabled): XDebugProxy
+    private function mockXdebug(bool $enabled, int $majorVersion = 3): XDebugProxy
     {
         $xdebugProxy = $this->prophesize(XDebugProxy::class);
         $xdebugProxy->isLoaded()
             ->willReturn($enabled);
+        $xdebugProxy->getMajorVersion()
+            ->willReturn($majorVersion);
 
         return $xdebugProxy->reveal();
     }

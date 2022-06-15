@@ -59,6 +59,11 @@ class Runner implements EventSubscriberInterface
         $this->pipelineCollection = $pipelineCollection;
         $this->chunkSize = $chunkSize;
         $this->chunkFile = $chunkFile;
+        /**
+         * @psalm-suppress MixedPropertyTypeCoercion
+         *
+         * @see https://github.com/vimeo/psalm/issues/8103
+         */
         $this->queuedProcesses = new \SplQueue();
         $this->exitCode = 0;
 

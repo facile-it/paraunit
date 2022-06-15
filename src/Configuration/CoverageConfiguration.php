@@ -28,11 +28,11 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->containerDefinition = new CoverageContainerDefinition();
     }
 
-    protected function loadCommandLineOptions(ContainerBuilder $container, InputInterface $input): void
+    protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input): void
     {
-        parent::loadCommandLineOptions($container, $input);
+        parent::loadCommandLineOptions($containerBuilder, $input);
 
-        $coverageResult = $container->getDefinition(CoverageResult::class);
+        $coverageResult = $containerBuilder->getDefinition(CoverageResult::class);
 
         $this->addPathProcessor($coverageResult, $input, Xml::class);
         $this->addPathProcessor($coverageResult, $input, Html::class);
@@ -113,6 +113,7 @@ class CoverageConfiguration extends ParallelConfiguration
     {
         $implements = class_implements($processorClass);
         if (is_array($implements) && \in_array(CoverageProcessorInterface::class, $implements, true)) {
+            /** @var class-string<CoverageProcessorInterface> $processorClass */
             return $processorClass::getConsoleOptionName();
         }
 
