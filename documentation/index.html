@@ -319,6 +319,10 @@ also, if your want to run functional tests, remember to <strong>warm up the cach
 </code></pre></div><h3 id="parallel">Parallel</h3>
 <p>You can choose how many concurrent processes (pipelines) you want to spawn at the same time, using the <code>--parallel</code> option. The default value is <code>10</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --parallel<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</code></pre></div><h3 id="chunk-size">Chunk size</h3>
+<p><strong>NEW</strong>: introduced in 1.3.0.</p>
+<p>You can choose how many test classes should be executed inside a single concurrent process (pipeline). The default value is <code>1</code>, so each pipeline runs a single test class; higher values could benefit in terms of total execution time if your tests have a complex and slow class setup.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --chunk-size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
 </code></pre></div><h3 id="testsuite">Testsuite</h3>
 <p>You can run a single test suite (as defined in your configuration file) using:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vendor/bin/paraunit run --testsuite<span style="color:#f92672">=</span>testSuiteName

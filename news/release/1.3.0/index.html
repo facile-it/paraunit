@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.75.1" />
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 1.3.0: new chunk size feature, Symfony 6 support &middot; Paraunit</title>
 
     
 
@@ -41,9 +41,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -108,11 +105,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss"></i>RSS</a>
-    </li>
     
 
     
@@ -212,18 +204,25 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 1.3.0: new chunk size feature, Symfony 6 support</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;35&#41;</span>
-    </li>
-  
-  </ul>
+  <p>This new minor release comes after more than a year since the last tag.</p>
+<p>It actually comes with a couple of new interesting features, one of which is a new behavior for tests parallelization. The new <code>--chunk-size</code> option, when set at a value higher that <code>1</code>, will execute more than one test class per single process, making the execution faster for test suites where the class setup is expensive.</p>
+<p>Here&rsquo;s the full changelog of the release:</p>
+<h3 id="added">Added</h3>
+<ul>
+<li>Add <code>--chunk-size</code> option <a href="https://github.com/facile-it/paraunit/pull/164">#164</a></li>
+<li>Add native enabling of Xdebug coverage mode <a href="https://github.com/facile-it/paraunit/pull/170">#170</a></li>
+<li>Report full process output when in debug mode <a href="https://github.com/facile-it/paraunit/pull/170">#170</a></li>
+<li>Add support for Symfony 6 <a href="https://github.com/facile-it/paraunit/pull/168">#168</a></li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>Drop support for Symfony &lt; 4.4 <a href="https://github.com/facile-it/paraunit/pull/168">#168</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -240,3 +239,4 @@
 
 </body>
 </html>
+

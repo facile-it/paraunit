@@ -5,7 +5,18 @@
     <link>https://engineering.facile.it/paraunit/</link>
     <description>Recent content on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 25 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paraunit 1.3.0: new chunk size feature, Symfony 6 support</title>
+      <link>https://engineering.facile.it/paraunit/news/release/1.3.0/</link>
+      <pubDate>Wed, 15 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/1.3.0/</guid>
+      <description>This new minor release comes after more than a year since the last tag.
+It actually comes with a couple of new interesting features, one of which is a new behavior for tests parallelization. The new --chunk-size option, when set at a value higher that 1, will execute more than one test class per single process, making the execution faster for test suites where the class setup is expensive.
+Here&amp;rsquo;s the full changelog of the release:</description>
+    </item>
+    
     <item>
       <title>Paraunit 1.2.1: allow jean85/pretty-package-versions v2</title>
       <link>https://engineering.facile.it/paraunit/news/release/1.2.1/</link>
