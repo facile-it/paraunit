@@ -142,6 +142,16 @@ You can choose how many concurrent processes (pipelines) you want to spawn at th
 vendor/bin/paraunit run --parallel=5
 ```
 
+### Chunk size
+
+**NEW**: introduced in 1.3.0.
+
+You can choose how many test classes should be executed inside a single concurrent process (pipeline). The default value is `1`, so each pipeline runs a single test class; higher values could benefit in terms of total execution time if your tests have a complex and slow class setup.
+
+```bash
+vendor/bin/paraunit run --chunk-size=3
+```
+
 ### Testsuite
 
 You can run a single test suite (as defined in your configuration file) using:
