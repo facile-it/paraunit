@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
+
+## [1.3.0] - 2022-06-15
 ### Added
  * Add `--chunk-size` option [#164](https://github.com/facile-it/paraunit/pull/164)
  * Add native enabling of Xdebug coverage mode [#170](https://github.com/facile-it/paraunit/pull/170)
