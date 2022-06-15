@@ -171,6 +171,8 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             ->willReturn($this->textFilter);
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('chunk-size')
+            ->willReturn(1);
         $input->getOption('logo')
             ->willReturn(false);
         $input->getOption(Argument::cetera())

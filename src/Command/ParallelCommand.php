@@ -76,6 +76,7 @@ class ParallelCommand extends Command
         $this->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'The PHPUnit XML config filename or path');
         $this->addArgument('stringFilter', InputArgument::OPTIONAL, 'A case-insensitive string to filter tests filename');
         $this->addOption('parallel', null, InputOption::VALUE_REQUIRED, 'Number of concurrent processes to launch', 10);
+        $this->addOption('chunk-size', null, InputOption::VALUE_REQUIRED, 'Number of test files in chunk', 1);
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
         $this->addOption('logo', null, InputOption::VALUE_NONE, 'Print the Shark logo at the top');
 

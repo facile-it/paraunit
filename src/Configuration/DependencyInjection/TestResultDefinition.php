@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
@@ -27,6 +28,7 @@ class TestResultDefinition
             $container->setDefinition($testResultContainerName, new Definition(TestResultContainer::class, [
                 new Reference($formatName),
                 new Reference(PHPUnitConfig::class),
+                new Reference(ChunkSize::class),
             ]));
 
             $testResultList->addMethodCall('addContainer', [new Reference($testResultContainerName)]);

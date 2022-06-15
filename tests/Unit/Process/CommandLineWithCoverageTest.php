@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
@@ -33,6 +34,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
+            $this->prophesize(ChunkSize::class)->reveal(),
             $pcovProxy,
             $xdebugProxy,
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
@@ -46,6 +48,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     {
         $cli = new CommandLineWithCoverage(
             $this->mockPHPUnit(),
+            $this->prophesize(ChunkSize::class)->reveal(),
             $this->mockPcov(false),
             $this->mockXdebug(false),
             $this->mockPhpDbg(true),
@@ -69,6 +72,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
+            $this->prophesize(ChunkSize::class)->reveal(),
             $this->mockPcov(false),
             $this->mockXdebug(false),
             $this->mockPhpDbg(false),
@@ -102,6 +106,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
+            $this->mockChunkSize(false),
             $pcovProxy,
             $xdebugProxy,
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
@@ -130,6 +135,35 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertStringContainsStringIgnoringCase(Hooks\Warning::class, $registeredExtensions);
     }
 
+    public function testGetOptionsChunkedNotContainsConfiguration(): void
+    {
+        $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')->willReturn(null);
+        $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
+        $optionWithValue = new PHPUnitOption('optVal');
+        $optionWithValue->setValue('value');
+        $config->getPhpunitOptions()
+            ->willReturn([
+                new PHPUnitOption('opt', false),
+                $optionWithValue,
+            ]);
+
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
+
+        $cli = new CommandLineWithCoverage(
+            $phpunit->reveal(),
+            $this->mockChunkSize(true),
+            $this->prophesize(PcovProxy::class)->reveal(),
+            $this->prophesize(XDebugProxy::class)->reveal(),
+            $this->prophesize(PHPDbgBinFile::class)->reveal(),
+            $this->prophesize(TempFilenameFactory::class)->reveal()
+        );
+
+        $options = $cli->getOptions($config->reveal());
+
+        $this->assertNotContains('--configuration=/path/to/phpunit.xml', $options);
+    }
+
     public function testGetSpecificOptions(): void
     {
         $testFilename = 'TestTest.php';
@@ -141,6 +175,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
         $cli = new CommandLineWithCoverage(
             $this->prophesize(PHPUnitBinFile::class)->reveal(),
+            $this->prophesize(ChunkSize::class)->reveal(),
             $this->prophesize(PcovProxy::class)->reveal(),
             $this->prophesize(XDebugProxy::class)->reveal(),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
@@ -179,6 +214,16 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             ->willReturn('path/to/phpunit');
 
         return $phpunit->reveal();
+    }
+
+    private function mockChunkSize(bool $enabled): ChunkSize
+    {
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn($enabled);
+
+        return $chunkSize->reveal();
     }
 
     private function mockPcov(bool $enabled): PcovProxy

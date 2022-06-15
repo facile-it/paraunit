@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
@@ -45,6 +46,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
     {
         $container->setDefinition(CommandLineWithCoverage::class, new Definition(CommandLineWithCoverage::class, [
             new Reference(PHPUnitBinFile::class),
+            new Reference(ChunkSize::class),
             new Reference(PcovProxy::class),
             new Reference(XDebugProxy::class),
             new Reference(PHPDbgBinFile::class),
@@ -56,6 +58,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
                 new Reference(CommandLineWithCoverage::class),
                 new Reference(PHPUnitConfig::class),
                 new Reference(TempFilenameFactory::class),
+                new Reference(ChunkSize::class),
             ]);
     }
 

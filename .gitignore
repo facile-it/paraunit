@@ -10,3 +10,4 @@ vendor
 build/
 swiftmailer/
 docker-compose.override.yml
+.vscode/
