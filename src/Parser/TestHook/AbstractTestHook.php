@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\Parser\TestStatus;
+use Paraunit\Parser\DTO\TestStatus;
 use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Code\TestMethod;
 
@@ -27,21 +27,15 @@ abstract class AbstractTestHook
         }
     }
 
-    final protected function write(TestStatus $status, ?Test $test, ?string $message): void
+    final protected function write(TestStatus $status, Test $test, ?string $message): void
     {
         $data = [
             'status' => $status->value,
+            'test' => $test instanceof TestMethod
+                ? $test->className() . '::' . $test->name()
+                : $test->file(),
+            'message' => $message,
         ];
-
-        if ($test instanceof TestMethod) {
-            $data['test'] = $test->className() . '::' . $test->name();
-        } elseif (null !== $test) {
-            $data['test'] = $test->file();
-        }
-
-        if ($message) {
-            $data['message'] = $message;
-        }
 
         $data = array_map([$this, 'convertToUtf8'], $data);
 

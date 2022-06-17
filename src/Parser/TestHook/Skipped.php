@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\TestHook;
 
-use Paraunit\Parser\TestStatus;
+use Paraunit\Parser\DTO\TestStatus;
 use PHPUnit\Event\Test\Skipped as PHPUnitSkipped;
 use PHPUnit\Event\Test\SkippedSubscriber;
 
