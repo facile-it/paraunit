@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Paraunit\Parser\JSON\TestHook;
+use Paraunit\Parser\TestHook;
 use PHPUnit\Event\Facade;
 
 // TODO - wait for feedback and refactor accordingly

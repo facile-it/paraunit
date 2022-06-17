@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Paraunit\Parser\JSON\TestHook;
+namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Parser\JSON\Log;
 use PHPUnit\Event\Test\Prepared;
