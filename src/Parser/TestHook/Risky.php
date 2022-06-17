@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\TestHook;
 
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\TestStatus;
 use PHPUnit\Event\Test\ConsideredRisky;
 use PHPUnit\Event\Test\ConsideredRiskySubscriber;

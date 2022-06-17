@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\TestHook;
 
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\TestStatus;
-use PHPUnit\Event\Test\Passed;
+use PHPUnit\Event\Test\Passed as PassedEvent;
 use PHPUnit\Event\Test\PassedSubscriber;
 
-class Successful extends AbstractTestHook implements PassedSubscriber
+class Passed extends AbstractTestHook implements PassedSubscriber
 {
-    public function notify(Passed $event): void
+    public function notify(PassedEvent $event): void
     {
         $this->write(TestStatus::Passed, $event->test(), null);
     }
