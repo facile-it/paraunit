@@ -1,6 +1,6 @@
 # facile-it/paraunit
 
-![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.0-blue)
+![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.1-blue)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
 [![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
@@ -21,7 +21,7 @@ To use this package, use Composer:
 ```json
 {
     "require-dev": {
-        "facile-it/paraunit": "^1.3"
+        "facile-it/paraunit": "^2.0"
     }
 }
 ```
@@ -29,14 +29,14 @@ To use this package, use Composer:
 ### Compatibility
 You can use Paraunit with many versions of PHPUnit or Symfony, following this compatibility list:
 
-| Paraunit version     | Compatible PHPUnit Version | Compatible Symfony Version |
-|----------------------|----------------------------|----------------------------|
-| 2.0 (to be released) | 10+                        | 4.4, 5, 6                  |
-| 1.3                  | 9.3+                       | 4.4, 5, 6                  |
-| 1.2                  | 9.3+                       | 3.4, 4, 5                  |
-| 1.1                  | 9.1, 9.2                   | 3.4, 4, 5                  |
-| 1.0.*                | 7, 8                       | 3.4, 4, 5                  |
-| 0.12.*               | 6, 7                       | 2.8, 3, 4                  |
+| Paraunit version | Compatible PHPUnit Version | Compatible Symfony Version |
+|------------------|----------------------------|----------------------------|
+| 2.0              | 10+                        | 4.4, 5, 6                  |
+| 1.3              | 9.3+                       | 4.4, 5, 6                  |
+| 1.2              | 9.3+                       | 3.4, 4, 5                  |
+| 1.1              | 9.1, 9.2                   | 3.4, 4, 5                  |
+| 1.0.*            | 7, 8                       | 3.4, 4, 5                  |
+| 0.12.*           | 6, 7                       | 2.8, 3, 4                  |
 
 ## Usage
 Paraunit starts as a Symfony console command, but it's provided through a bin launcher; you can run it like this:<br/>

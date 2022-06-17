@@ -10,7 +10,6 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Parser\JSON\TestHook as Hooks;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
@@ -120,19 +119,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertContains('--optVal=value', $options);
 
         $extensions = array_filter($options, static function (string $a) {
-            return 0 === strpos($a, '--extensions');
+            return str_starts_with($a, '--extensions');
         });
-        $this->assertCount(1, $extensions, 'Missing --extensions from options');
-        $registeredExtensions = array_pop($extensions);
-        $this->assertNotNull($registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\BeforeTest::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Error::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Failure::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Incomplete::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Risky::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Skipped::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Successful::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Warning::class, $registeredExtensions);
+        $this->assertCount(0, $extensions, '--extensions should no longer be used');
     }
 
     public function testGetOptionsChunkedNotContainsConfiguration(): void

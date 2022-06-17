@@ -1,5 +1,5 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -13,10 +13,10 @@
 
     <testsuites>
         <testsuite name="test_only_requested_testsuite">
-            <directory>./only/selected/test/suite/</directory>
+            <file>../FatalErrorTestStub.php</file>
         </testsuite>
         <testsuite name="an_other_test_suite">
-            <directory>./other/test/suite/</directory>
+            <file>../PassThenRetryTestStub.php</file>
         </testsuite>
     </testsuites>
 

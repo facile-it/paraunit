@@ -8,7 +8,6 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Parser\JSON\TestHook as Hooks;
 use Paraunit\Process\CommandLine;
 use Tests\BaseUnitTestCase;
 
@@ -48,23 +47,16 @@ class CommandLineTest extends BaseUnitTestCase
         $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(false));
         $options = $cli->getOptions($config->reveal());
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
+        $registrationScript = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'src/Configuration/register_subscribers.php';
+        $this->assertFileExists($registrationScript);
+        $this->assertContains('--bootstrap=' . $registrationScript, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
 
         $extensions = array_filter($options, static function (string $a) {
-            return 0 === strpos($a, '--extensions');
+            return str_starts_with($a, '--extensions');
         });
-        $this->assertCount(1, $extensions, 'Missing --extensions from options');
-        $registeredExtensions = array_pop($extensions);
-        $this->assertNotNull($registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\BeforeTest::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Error::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Failure::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Incomplete::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Risky::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Skipped::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Successful::class, $registeredExtensions);
-        $this->assertStringContainsStringIgnoringCase(Hooks\Warning::class, $registeredExtensions);
+        $this->assertCount(0, $extensions, '--extensions should no longer be used');
     }
 
     public function testGetOptionsChunkedNotContainsConfiguration(): void

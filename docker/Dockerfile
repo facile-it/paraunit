@@ -1,4 +1,4 @@
-FROM php:7.3-alpine
+FROM php:8.1-alpine
 
 RUN apk --no-cache add \
         $PHPIZE_DEPS \

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
+use PHPUnit\Event\Code\Test;
+use PHPUnit\Event\Code\TestMethod;
 
 abstract class AbstractTestHook
 {
@@ -24,14 +26,16 @@ abstract class AbstractTestHook
         }
     }
 
-    protected function write(string $status, ?string $test, ?string $message): void
+    protected function write(string $status, ?Test $test, ?string $message): void
     {
         $data = [
             'status' => $status,
         ];
 
-        if ($test) {
-            $data['test'] = $this->convertToUtf8($test);
+        if ($test instanceof TestMethod) {
+            $data['test'] = $this->convertToUtf8($test->className()) . '::' . $test->name();
+        } elseif (null !== $test) {
+            $data['test'] = $this->convertToUtf8($test->file());
         }
 
         if ($message) {

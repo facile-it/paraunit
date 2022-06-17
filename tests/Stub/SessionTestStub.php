@@ -10,6 +10,14 @@ class SessionTestStub extends TestCase
 {
     private const SESSION_ID = '42';
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        session_id(self::SESSION_ID);
+        session_start();
+    }
+
     protected function setUp(): void
     {
         session_id(self::SESSION_ID);

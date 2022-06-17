@@ -14,7 +14,6 @@ use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\PostgreSQLDeadLockTestStub;
 use Tests\Stub\RaisingDeprecationTestStub;
 use Tests\Stub\RaisingNoticeTestStub;
-use Tests\Stub\SessionTestStub;
 
 class ParallelCommandTest extends BaseTestCase
 {
@@ -75,6 +74,8 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
+        file_put_contents('output.log', $output);
+
         $this->assertStringNotContainsString('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
         $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
         $this->assertStringNotContainsString('Executed: 0 test classes', $output);
@@ -84,9 +85,8 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(IntentionalWarningTestStub::class, $output);
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(PostgreSQLDeadLockTestStub::class, $output);
-        $this->assertStringContainsString(SessionTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertStringContainsString('Executed: 15 test classes (21 retried), 27 tests', $output);
+        $this->assertStringContainsString('Executed: 15 test classes (21 retried), 29 tests', $output);
     }
 
     public function testExecutionWithLogo(): void
@@ -128,7 +128,7 @@ class ParallelCommandTest extends BaseTestCase
         $processRetried = 21;
         $processesCount = $classExecuted + $processRetried;
         $this->assertStringContainsString(
-            sprintf('Executed: %d test classes (%d retried), 27 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 29 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );

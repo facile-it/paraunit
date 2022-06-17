@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Parser\JSON\Log;
-use PHPUnit\Runner\AfterTestErrorHook;
+use PHPUnit\Event\Test\Errored;
+use PHPUnit\Event\Test\ErroredSubscriber;
 
-class Error extends AbstractTestHook implements AfterTestErrorHook
+class Error extends AbstractTestHook implements ErroredSubscriber
 {
-    public function executeAfterTestError(string $test, string $message, float $time): void
+    public function notify(Errored $event): void
     {
-        $this->write(Log::STATUS_ERROR, $test, $message);
+        $this->write(Log::STATUS_ERROR, $event->test(), $event->throwable()->message());
     }
 }

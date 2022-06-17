@@ -1,5 +1,5 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -13,10 +13,10 @@
 
     <testsuites>
         <testsuite name="selected">
-            <directory suffix="TestSuffix.php">./only/selected/test/suite/</directory>
+            <directory suffix="FaultTestStub.php">../</directory>
         </testsuite>
         <testsuite name="other">
-            <directory>./other/test/suite/</directory>
+            <directory>../</directory>
         </testsuite>
     </testsuites>
 

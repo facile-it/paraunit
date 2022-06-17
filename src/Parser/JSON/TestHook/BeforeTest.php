@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON\TestHook;
 
 use Paraunit\Parser\JSON\Log;
-use PHPUnit\Runner\BeforeTestHook;
+use PHPUnit\Event\Test\Prepared;
+use PHPUnit\Event\Test\PreparedSubscriber;
 
-class BeforeTest extends AbstractTestHook implements BeforeTestHook
+class BeforeTest extends AbstractTestHook implements PreparedSubscriber
 {
-    public function executeBeforeTest(string $test): void
+    public function notify(Prepared $event): void
     {
-        $this->write(Log::STATUS_TEST_START, $test, null);
+        $this->write(Log::STATUS_TEST_START, $event->test(), null);
     }
 }

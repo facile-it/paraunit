@@ -8,7 +8,6 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
-use Paraunit\Parser\JSON\TestHook as Hooks;
 
 class CommandLine
 {
@@ -41,22 +40,13 @@ class CommandLine
      */
     public function getOptions(PHPUnitConfig $config): array
     {
-        $options = [];
+        $options = [
+            '--bootstrap=' . dirname(__DIR__) . '/Configuration/register_subscribers.php',
+        ];
 
         if (! $this->chunkSize->isChunked()) {
             $options[] = '--configuration=' . $config->getFileFullPath();
         }
-
-        $options[] = '--extensions=' . implode(',', [
-            Hooks\BeforeTest::class,
-            Hooks\Error::class,
-            Hooks\Failure::class,
-            Hooks\Incomplete::class,
-            Hooks\Risky::class,
-            Hooks\Skipped::class,
-            Hooks\Successful::class,
-            Hooks\Warning::class,
-        ]);
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
             $options[] = $this->buildPhpunitOptionString($phpunitOption);
