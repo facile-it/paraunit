@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
+use Paraunit\Parser\TestStatus;
 use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Code\TestMethod;
 
@@ -26,23 +27,25 @@ abstract class AbstractTestHook
         }
     }
 
-    protected function write(string $status, ?Test $test, ?string $message): void
+    final protected function write(TestStatus $status, ?Test $test, ?string $message): void
     {
         $data = [
-            'status' => $status,
+            'status' => $status->value,
         ];
 
         if ($test instanceof TestMethod) {
-            $data['test'] = $this->convertToUtf8($test->className()) . '::' . $test->name();
+            $data['test'] = $test->className() . '::' . $test->name();
         } elseif (null !== $test) {
-            $data['test'] = $this->convertToUtf8($test->file());
+            $data['test'] = $test->file();
         }
 
         if ($message) {
-            $data['message'] = $this->convertToUtf8($message);
+            $data['message'] = $message;
         }
 
-        \fwrite(self::$logFile, json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE, 512));
+        $data = array_map([$this, 'convertToUtf8'], $data);
+
+        \fwrite(self::$logFile, json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
         \fflush(self::$logFile);
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Parser\JSON\Log;
+use Paraunit\Parser\TestStatus;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber;
 
@@ -12,6 +13,6 @@ class Failure extends AbstractTestHook implements FailedSubscriber
 {
     public function notify(Failed $event): void
     {
-        $this->write(Log::STATUS_FAILURE, $event->test(), $event->throwable()->message());
+        $this->write(TestStatus::Failed, $event->test(), $event->throwable()->message());
     }
 }
