@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\TestHook;
 
-use Paraunit\Parser\DTO\TestStatus;
+use Paraunit\Parser\ValueObject\TestStatus;
 use PHPUnit\Event\Test\Finished as FinishedEvent;
 use PHPUnit\Event\Test\FinishedSubscriber;
 

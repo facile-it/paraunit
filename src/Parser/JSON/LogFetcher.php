@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Parser\DTO\Test;
-use Paraunit\Parser\DTO\TestStatus;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 
 class LogFetcher

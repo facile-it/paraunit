@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
-use Paraunit\Parser\DTO\TestStatus;
+use Paraunit\Parser\ValueObject\TestStatus;
 use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Code\TestMethod;
 

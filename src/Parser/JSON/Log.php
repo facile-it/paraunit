@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
-use Paraunit\Parser\DTO\Test;
-use Paraunit\Parser\DTO\TestStatus;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 
 class Log
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Paraunit\Parser\DTO;
+namespace Paraunit\Parser\ValueObject;
 
 enum TestStatus: string
 {
