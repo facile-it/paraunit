@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
+
+## [1.3.0] - 2022-06-15
 ### Added
+ * Add `--chunk-size` option [#164](https://github.com/facile-it/paraunit/pull/164)
  * Add native enabling of Xdebug coverage mode [#170](https://github.com/facile-it/paraunit/pull/170)
  * Report full process output when in debug mode [#170](https://github.com/facile-it/paraunit/pull/170)
  * Add support for Symfony 6 [#168](https://github.com/facile-it/paraunit/pull/168)
@@ -58,7 +61,7 @@ First stable release. The following changes are in comparison to the previous, u
 ## [1.0.0-beta1] - 2019-04-08
 ### Breaking changes
  * Drop support for older packages: [#134](https://github.com/facile-it/paraunit/pull/134)
-   * `phpunit/phpunit` 6 
+   * `phpunit/phpunit` 6
    * `phpunit/php-code-coverage` < 6
    * All Symfony components < 3.4
  * Scalar and return types added everywhere possible

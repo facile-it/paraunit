@@ -43,6 +43,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ->willReturn('text');
         $input->getOption('parallel')
             ->willReturn(10);
+        $input->getOption('chunk-size')
+            ->willReturn(1);
         $input->getOption('testsuite')
             ->willReturn('testsuite');
         $input->getOption('configuration')
@@ -131,6 +133,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'php',
             'ansi',
             'logo',
+            'chunk-size',
         ];
 
         foreach ($options as $optionName) {
@@ -145,6 +148,9 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
+        $input->getOption('chunk-size')
+            ->shouldBeCalled()
+            ->willReturn(1);
         $input->getOption('debug')
             ->willReturn(null);
 
@@ -191,6 +197,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'text',
             'crap4j',
             'php',
+            'chunk-size',
         ];
 
         foreach ($options as $optionName) {
@@ -203,6 +210,9 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $input->getOption('parallel')
             ->shouldBeCalled()
             ->willReturn(10);
+        $input->getOption('chunk-size')
+            ->shouldBeCalled()
+            ->willReturn(1);
         $input->getOption('text-summary')
             ->shouldBeCalled()
             ->willReturn(true);

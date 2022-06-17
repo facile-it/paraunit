@@ -6,8 +6,9 @@
     </MixedArrayAssignment>
   </file>
   <file src="src/Configuration/ParallelConfiguration.php">
-    <MixedArgument occurrences="5">
+    <MixedArgument occurrences="6">
       <code>$input-&gt;getArgument('stringFilter')</code>
+      <code>$input-&gt;getOption('chunk-size')</code>
       <code>$input-&gt;getOption('configuration') ?? '.'</code>
       <code>$input-&gt;getOption('logo')</code>
       <code>$input-&gt;getOption('parallel')</code>

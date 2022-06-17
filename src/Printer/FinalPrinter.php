@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
@@ -29,9 +30,12 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     /** @var int */
     private $processRetried;
 
-    public function __construct(TestResultList $testResultList, OutputInterface $output)
-    {
-        parent::__construct($testResultList, $output);
+    public function __construct(
+        TestResultList $testResultList,
+        OutputInterface $output,
+        ChunkSize $chunkSize
+    ) {
+        parent::__construct($testResultList, $output, $chunkSize);
 
         $this->stopWatch = new Stopwatch();
         $this->processCompleted = 0;
@@ -91,7 +95,13 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         }
 
         $this->getOutput()->writeln('');
-        $this->getOutput()->write(sprintf('Executed: %d test classes', $this->processCompleted - $this->processRetried));
+        $executedNum = $this->processCompleted - $this->processRetried;
+        if ($this->chunkSize->isChunked()) {
+            $executedTitle = 'chunks';
+        } else {
+            $executedTitle = 'test classes';
+        }
+        $this->getOutput()->write(sprintf("Executed: %d $executedTitle", $executedNum));
         if ($this->processRetried > 0) {
             $this->getOutput()->write(sprintf(' (%d retried)', $this->processRetried));
         }

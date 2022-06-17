@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\TestResult;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
@@ -19,7 +20,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $testResultFormat = $this->prophesize(TestResultFormat::class);
         $testResultContainer = new TestResultContainer(
             $testResultFormat->reveal(),
-            $phpUnitConfig->reveal()
+            $phpUnitConfig->reveal(),
+            $this->mockChunkSize(false)
         );
 
         $unitTestProcess = new StubbedParaunitProcess('phpunit Unit/ClassTest.php');
@@ -42,7 +44,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $testResultContainer = new TestResultContainer(
             $this->mockTestFormat(),
-            $phpUnitConfig->reveal()
+            $phpUnitConfig->reveal(),
+            $this->mockChunkSize(false)
         );
         $testResultContainer->handleTestResult($process, $testResult);
 
@@ -59,7 +62,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $testResultContainer = new TestResultContainer(
             $this->mockTestFormat(),
-            $phpUnitConfig->reveal()
+            $phpUnitConfig->reveal(),
+            $this->mockChunkSize(false)
         );
         $testResultContainer->handleTestResult($process, $testResult);
 
@@ -79,10 +83,21 @@ class TestResultContainerTest extends BaseUnitTestCase
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $testResultContainer = new TestResultContainer(
             $testFormat->reveal(),
-            $phpUnitConfig->reveal()
+            $phpUnitConfig->reveal(),
+            $this->mockChunkSize(false)
         );
         $testResultContainer->handleTestResult($process, $testResult);
 
         $this->assertSame(0, $testResultContainer->countTestResults());
+    }
+
+    private function mockChunkSize(bool $enabled): ChunkSize
+    {
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->shouldBeCalled()
+            ->willReturn($enabled);
+
+        return $chunkSize->reveal();
     }
 }

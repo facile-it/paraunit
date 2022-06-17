@@ -33,10 +33,7 @@ abstract class AbstractTestHook
         ];
 
         if ($test instanceof TestMethod) {
-            $data['test'] = $this->convertToUtf8($test->className());
-            if ($test->isTestMethod()) {
-                $data['test'] .= '::' . $test->methodName();
-            }
+            $data['test'] = $this->convertToUtf8($test->className()) . '::' . $test->name();
         } elseif (null !== $test) {
             $data['test'] = $this->convertToUtf8($test->file());
         }

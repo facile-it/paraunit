@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Process;
 
+use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
@@ -13,9 +14,15 @@ class CommandLine
     /** @var PHPUnitBinFile */
     protected $phpUnitBin;
 
-    public function __construct(PHPUnitBinFile $phpUnitBin)
-    {
+    /** @var ChunkSize */
+    protected $chunkSize;
+
+    public function __construct(
+        PHPUnitBinFile $phpUnitBin,
+        ChunkSize $chunkSize
+    ) {
         $this->phpUnitBin = $phpUnitBin;
+        $this->chunkSize = $chunkSize;
     }
 
     /**
@@ -34,9 +41,12 @@ class CommandLine
     public function getOptions(PHPUnitConfig $config): array
     {
         $options = [
-            '--configuration=' . $config->getFileFullPath(),
             '--bootstrap=' . dirname(__DIR__) . '/Configuration/register_subscribers.php',
         ];
+
+        if (! $this->chunkSize->isChunked()) {
+            $options[] = '--configuration=' . $config->getFileFullPath();
+        }
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
             $options[] = $this->buildPhpunitOptionString($phpunitOption);
