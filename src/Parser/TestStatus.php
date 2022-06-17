@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\Parser;
 
 enum TestStatus: string
@@ -12,4 +14,5 @@ enum TestStatus: string
     case Skipped = 'Skipped';
     case Passed = 'Passed';
     case PassedWithWarning = 'PassedWithWarning';
+    case Finished = 'Finished';
 }
