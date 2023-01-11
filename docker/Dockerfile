@@ -6,14 +6,15 @@ RUN apk --no-cache add \
         git \
         zsh \
         openssh-client \
+        linux-headers \
         supervisor \
         sudo \
         less \
         vim \
         nano \
-        libzip-dev \
-    && docker-php-ext-install -j5 zip pcntl \
-    && pecl install xdebug \
+        libzip-dev
+RUN docker-php-ext-install -j5 zip pcntl
+RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 #COMPOSER
