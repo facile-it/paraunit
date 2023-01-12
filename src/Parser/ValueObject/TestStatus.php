@@ -13,6 +13,6 @@ enum TestStatus: string
     case ConsideredRisky = 'ConsideredRisky';
     case Skipped = 'Skipped';
     case Passed = 'Passed';
-    case PassedWithWarning = 'PassedWithWarning';
+    case WarningTriggered = 'WarningTriggered';
     case Finished = 'Finished';
 }

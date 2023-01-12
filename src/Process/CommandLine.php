@@ -40,6 +40,7 @@ class CommandLine
      */
     public function getOptions(PHPUnitConfig $config): array
     {
+        // TODO - what happens if the users wants to use its own bootstrap script?
         $options = [
             '--bootstrap=' . dirname(__DIR__) . '/Configuration/register_subscribers.php',
         ];
