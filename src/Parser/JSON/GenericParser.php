@@ -44,7 +44,7 @@ class GenericParser implements ParserChainElementInterface
         return $log->status === $this->status;
     }
 
-    private function createFromLog(LogData $logItem): TestResultInterface
+    protected function createFromLog(LogData $logItem): TestResultInterface
     {
         if ($logItem->message) {
             return new TestResultWithMessage($logItem->test, $logItem->message);

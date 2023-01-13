@@ -13,6 +13,7 @@ use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
+use Paraunit\Parser\JSON\WarningParser;
 use Paraunit\Parser\ValueObject\TestStatus;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -69,7 +70,7 @@ class ParserDefinition
                 new Reference('paraunit.test_result.risky_container'),
                 TestStatus::ConsideredRisky,
             ]),
-            'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
+            'paraunit.parser.warning_parser' => new Definition(WarningParser::class, [
                 new Reference('paraunit.test_result.warning_container'),
                 TestStatus::WarningTriggered,
             ]),
