@@ -130,9 +130,11 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     }
 
     /**
-     * @return object
+     * @template T of object
+     * @param string|class-string<T> $serviceName
+     * @return ($serviceName is class-string ? T : object)
      */
-    public function getService(string $serviceName)
+    public function getService(string $serviceName): object
     {
         if (! $this->container) {
             throw new \RuntimeException('Container not ready');
