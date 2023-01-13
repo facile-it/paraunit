@@ -21,6 +21,28 @@ class LogData implements \JsonSerializable
     }
 
     /**
+     * @psalm-assert array{status: string, test: string, message: string|null} $log
+     */
+    private static function validateLogFormat(mixed $log): void
+    {
+        if (! isset($log['status'], $log['test'])) {
+            throw new \InvalidArgumentException('Missing fields in Paraunit logs');
+        }
+
+        if (! is_string($log['status'])) {
+            throw new \InvalidArgumentException('Invalid field status in Paraunit logs');
+        }
+
+        if (! is_string($log['test'])) {
+            throw new \InvalidArgumentException('Invalid field test in Paraunit logs');
+        }
+
+        if (! is_string($log['message'] ?? '')) {
+            throw new \InvalidArgumentException('Invalid field message in Paraunit logs');
+        }
+    }
+
+    /**
      * @return array{status: string, test: string, message?: string}
      */
     public function jsonSerialize(): array
@@ -54,12 +76,15 @@ class LogData implements \JsonSerializable
     {
         $decodedLogs = json_decode(self::cleanLog($jsonLog), true, 10, JSON_THROW_ON_ERROR);
         $logs = [];
+        $lastTest = null;
 
         try {
             foreach ($decodedLogs as $log) {
+                self::validateLogFormat($log);
+
                 $logs[] = new self(
-                    TestStatus::from($log['status'] ?? ''),
-                    $lastTest = new Test($log['test'] ?? ''),
+                    TestStatus::from($log['status']),
+                    $lastTest = new Test($log['test']),
                     $log['message'] ?? null,
                 );
             }
@@ -79,7 +104,7 @@ class LogData implements \JsonSerializable
     /**
      * @param string $jsonString The dirty output
      *
-     * @return string            The normalized log, as an array of JSON objects
+     * @return non-empty-string  The normalized log, as an array of JSON objects
      */
     private static function cleanLog(string $jsonString): string
     {
