@@ -48,7 +48,7 @@ class LogParserTest extends BaseFunctionalTestCase
     /**
      * @return (string|bool)[][]
      */
-    public function parsableResultsProvider(): array
+    public static function parsableResultsProvider(): array
     {
         return [
             [JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'],

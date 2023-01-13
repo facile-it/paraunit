@@ -77,7 +77,7 @@ class RunnerTest extends BaseIntegrationTestCase
     /**
      * @return string[][]
      */
-    public function stubFilenameProvider(): array
+    public static function stubFilenameProvider(): array
     {
         return [
             ['MySQLDeadLockTestStub.php'],
