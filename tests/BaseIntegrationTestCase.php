@@ -131,7 +131,9 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     /**
      * @template T of object
+     *
      * @param string|class-string<T> $serviceName
+     *
      * @return ($serviceName is class-string ? T : object)
      */
     public function getService(string $serviceName): object

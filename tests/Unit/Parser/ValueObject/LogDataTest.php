@@ -50,6 +50,17 @@ class LogDataTest extends TestCase
         $this->assertSame('some/test.phpt', $parsedResult[0]->test->name);
     }
 
+    public function testSerializationError(): void
+    {
+        $parsedResult = LogData::parse('{}');
+
+        $this->assertCount(2, $parsedResult);
+        $this->assertInstanceOf(LogData::class, $parsedResult[0]);
+        $this->assertEquals(TestStatus::Unknown, $parsedResult[0]->status);
+        $this->assertEquals(Test::unknown(), $parsedResult[0]->test);
+        $this->assertStringStartsWith('Error while parsing Paraunit logs: ', $parsedResult[0]->message);
+    }
+
     /**
      * @return TestMethod|\Prophecy\Prophecy\ObjectProphecy
      */

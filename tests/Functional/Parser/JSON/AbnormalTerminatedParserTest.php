@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\ValueObject\LogData;
 use Paraunit\Parser\ValueObject\Test;
 use Paraunit\Parser\ValueObject\TestStatus;
@@ -59,7 +58,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
             if (in_array($status, [TestStatus::Prepared, TestStatus::LogTerminated], true)) {
                 continue;
             }
-            
+
             yield [$status];
         }
     }

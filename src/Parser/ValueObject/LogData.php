@@ -55,11 +55,19 @@ class LogData implements \JsonSerializable
         $decodedLogs = json_decode(self::cleanLog($jsonLog), true, 10, JSON_THROW_ON_ERROR);
         $logs = [];
 
-        foreach ($decodedLogs as $log) {
+        try {
+            foreach ($decodedLogs as $log) {
+                $logs[] = new self(
+                    TestStatus::from($log['status'] ?? ''),
+                    $lastTest = new Test($log['test'] ?? ''),
+                    $log['message'] ?? null,
+                );
+            }
+        } catch (\Throwable $e) {
             $logs[] = new self(
-                TestStatus::from($log['status']),
-                $lastTest = new Test($log['test']),
-                $log['message'] ?? null,
+                TestStatus::Unknown,
+                Test::unknown(),
+                'Error while parsing Paraunit logs: ' . $e->getMessage(),
             );
         }
 

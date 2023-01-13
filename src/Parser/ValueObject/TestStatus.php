@@ -16,4 +16,5 @@ enum TestStatus: string
     case WarningTriggered = 'WarningTriggered';
     case Finished = 'Finished';
     case LogTerminated = 'ParaunitLogTerminated';
+    case Unknown = 'Unknown';
 }
