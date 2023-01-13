@@ -74,7 +74,6 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        file_put_contents('output.log', $output);
 
         $this->assertStringNotContainsString('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
         $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
