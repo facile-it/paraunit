@@ -8,37 +8,51 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 
 class CommandLineWithCoverage extends CommandLine
 {
-    /** @var PcovProxy */
-    private $pcovProxy;
-
-    /** @var XDebugProxy */
-    private $xdebugProxy;
-
-    /** @var PHPDbgBinFile */
-    private $phpDbgBinFile;
-
-    /** @var TempFilenameFactory */
-    private $filenameFactory;
+    private readonly CoverageDriver $coverageDriver;
 
     public function __construct(
         PHPUnitBinFile $phpUnitBin,
         ChunkSize $chunkSize,
-        PcovProxy $pcovProxy,
-        XDebugProxy $xdebugProxy,
-        PHPDbgBinFile $dbgBinFile,
-        TempFilenameFactory $filenameFactory
+        private readonly PcovProxy $pcovProxy,
+        private readonly XDebugProxy $xdebugProxy,
+        private readonly PHPDbgBinFile $phpDbgBinFile,
+        private readonly TempFilenameFactory $filenameFactory
     ) {
         parent::__construct($phpUnitBin, $chunkSize);
 
-        $this->pcovProxy = $pcovProxy;
-        $this->xdebugProxy = $xdebugProxy;
-        $this->phpDbgBinFile = $dbgBinFile;
-        $this->filenameFactory = $filenameFactory;
+        $this->coverageDriver = $this->chooseCoverageDriver();
+    }
+
+    private function chooseCoverageDriver(): CoverageDriver
+    {
+        if ($this->xdebugProxy->isLoaded() && $this->xdebugProxy->getMajorVersion() > 2) {
+            return CoverageDriver::Xdebug;
+        }
+
+        if ($this->pcovProxy->isLoaded()) {
+            return CoverageDriver::Pcov;
+        }
+
+        if ($this->xdebugProxy->isLoaded()) {
+            return CoverageDriver::Xdebug;
+        }
+
+        if ($this->phpDbgBinFile->isAvailable()) {
+            return CoverageDriver::PHPDbg;
+        }
+
+        throw new \RuntimeException('No coverage driver seems to be available; possible choices are Pcov, Xdebug 2/3 or PHPDBG');
+    }
+
+    public function getCoverageDriver(): CoverageDriver
+    {
+        return $this->coverageDriver;
     }
 
     /**
@@ -48,27 +62,15 @@ class CommandLineWithCoverage extends CommandLine
      */
     public function getExecutable(): array
     {
-        if ($this->pcovProxy->isLoaded()) {
-            return ['php', '-d pcov.enabled=1', $this->phpUnitBin->getPhpUnitBin()];
-        }
-
-        if ($this->xdebugProxy->isLoaded()) {
-            if (3 === $this->xdebugProxy->getMajorVersion()) {
-                return ['php', '-d xdebug.mode=coverage', $this->phpUnitBin->getPhpUnitBin()];
-            }
-
-            return parent::getExecutable();
-        }
-
-        if ($this->phpDbgBinFile->isAvailable()) {
-            return [
+        return match ($this->coverageDriver) {
+            CoverageDriver::Xdebug => ['php', '-d pcov.enabled=0', $this->phpUnitBin->getPhpUnitBin()],
+            CoverageDriver::Pcov => ['php', '-d pcov.enabled=1', $this->phpUnitBin->getPhpUnitBin()],
+            CoverageDriver::PHPDbg => [
                 $this->phpDbgBinFile->getPhpDbgBin(),
                 '-qrr',
                 $this->phpUnitBin->getPhpUnitBin(),
-            ];
-        }
-
-        throw new \RuntimeException('No coverage driver seems to be available; possible choices are Pcov, xdebug or PHPDBG');
+            ],
+        };
     }
 
     public function getSpecificOptions(string $testFilename): array

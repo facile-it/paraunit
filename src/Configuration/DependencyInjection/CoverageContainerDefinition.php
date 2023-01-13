@@ -75,9 +75,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
             new Reference(CoverageMerger::class),
         ]));
         $container->setDefinition(CoveragePrinter::class, new Definition(CoveragePrinter::class, [
-            new Reference(PHPDbgBinFile::class),
-            new Reference(XDebugProxy::class),
-            new Reference(PcovProxy::class),
+            new Reference(CommandLineWithCoverage::class),
             new Reference(OutputInterface::class),
         ]));
     }

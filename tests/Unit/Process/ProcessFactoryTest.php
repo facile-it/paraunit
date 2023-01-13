@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\ChunkSize;
+use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\CommandLine;
+use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Process\ProcessFactory;
 use Tests\BaseUnitTestCase;
 
@@ -56,6 +59,47 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('TestTest2.php', $commandLine);
         $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
+    }
+
+    /**
+     * @dataProvider coverageDriverDataProvider
+     */
+    public function testCreateProcessWithCoverageDriver(CoverageDriver $coverageDriver, string $expectedXdebugMode): void
+    {
+        $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
+        $cliCommand = $this->prophesize(CommandLineWithCoverage::class);
+        $cliCommand->getCoverageDriver()
+            ->willReturn($coverageDriver);
+        $cliCommand->getExecutable()
+            ->willReturn(['sapi', 'executable']);
+        $cliCommand->getOptions($phpUnitConfig->reveal())
+            ->shouldBeCalled()
+            ->willReturn(['--configuration=config.xml']);
+
+        $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
+        $tempFilenameFactory->getPathForLog()
+            ->willReturn('/path/for/log/');
+
+        $factory = new ProcessFactory(
+            $cliCommand->reveal(),
+            $phpUnitConfig->reveal(),
+            $tempFilenameFactory->reveal(),
+            $this->prophesize(ChunkSize::class)->reveal(),
+        );
+
+        $this->assertEquals([
+            EnvVariables::LOG_DIR => '/path/for/log/',
+            'XDEBUG_MODE' => $expectedXdebugMode,
+        ], $factory->environmentVariables);
+    }
+
+    public static function coverageDriverDataProvider(): array
+    {
+        return [
+            [CoverageDriver::Xdebug, 'coverage'],
+            [CoverageDriver::Pcov, 'off'],
+            [CoverageDriver::PHPDbg, 'off'],
+        ];
     }
 
     public function testCreateProcessChunked(): void

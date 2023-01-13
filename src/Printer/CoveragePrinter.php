@@ -4,34 +4,19 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
-use Paraunit\Proxy\PcovProxy;
-use Paraunit\Proxy\XDebugProxy;
+use Paraunit\Process\CommandLineWithCoverage;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CoveragePrinter implements EventSubscriberInterface
 {
-    /** @var PHPDbgBinFile */
-    private $phpdgbBin;
-
-    /** @var XDebugProxy */
-    private $xdebug;
-
-    /** @var OutputInterface */
-    private $output;
-
-    /** @var PcovProxy */
-    private $pcov;
-
-    public function __construct(PHPDbgBinFile $phpdgbBin, XDebugProxy $xdebug, PcovProxy $pcov, OutputInterface $output)
-    {
-        $this->phpdgbBin = $phpdgbBin;
-        $this->xdebug = $xdebug;
-        $this->output = $output;
-        $this->pcov = $pcov;
+    public function __construct(
+        private readonly CommandLineWithCoverage $commandLine,
+        private readonly OutputInterface $output
+    ) {
     }
 
     /**
@@ -46,16 +31,12 @@ class CoveragePrinter implements EventSubscriberInterface
 
     public function onEngineBeforeStart(): void
     {
-        $this->output->write('Coverage driver in use: ');
+        $driver = match ($this->commandLine->getCoverageDriver()) {
+            CoverageDriver::Xdebug => 'Xdebug',
+            CoverageDriver::Pcov => 'Pcov',
+            CoverageDriver::PHPDbg => 'PHPDBG',
+        };
 
-        if ($this->pcov->isLoaded()) {
-            $this->output->writeln('Pcov');
-        } elseif ($this->xdebug->isLoaded()) {
-            $this->output->writeln('Xdebug');
-        } elseif ($this->phpdgbBin->isAvailable()) {
-            $this->output->writeln('PHPDBG');
-        } else {
-            $this->output->writeln('NO COVERAGE DRIVER FOUND!');
-        }
+        $this->output->write('Coverage driver in use: ' . $driver);
     }
 }
