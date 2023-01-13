@@ -50,7 +50,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return array{TestStatus}[]
+     * @return \Generator<array{TestStatus}>
      */
     public static function otherStatusesProvider(): \Generator
     {

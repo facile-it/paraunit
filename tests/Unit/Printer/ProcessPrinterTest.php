@@ -81,7 +81,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
     /**
      * @return int[][]
      */
-    public function newLineTimesProvider(): array
+    public static function newLineTimesProvider(): array
     {
         return [
             [73, 0],

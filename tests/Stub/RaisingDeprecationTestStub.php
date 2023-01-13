@@ -19,7 +19,7 @@ class RaisingDeprecationTestStub extends TestCase
         @trigger_error(self::DEPRECATION_MESSAGE, E_USER_DEPRECATED);
     }
 
-    public function multirunDataprovider(): array
+    public static function multirunDataprovider(): array
     {
         return [
             [],

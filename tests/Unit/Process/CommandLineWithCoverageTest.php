@@ -23,7 +23,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
      *
      * @param string[] $expected
      */
-    public function testGetExecutableWithDriverByExtension(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy, array $expected): void
+    public function testGetExecutableWithDriverByExtension(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion, array $expected): void
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()
@@ -34,8 +34,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
             $this->prophesize(ChunkSize::class)->reveal(),
-            $pcovProxy,
-            $xdebugProxy,
+            $this->mockPcov($enablePcov),
+            $this->mockXdebug($enableXdebug, $xdebugVersion),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
             $tempFileNameFactory->reveal()
         );
@@ -88,7 +88,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
      * @dataProvider extensionProxiesProvider
      * @dataProvider noExtensionsEnabledProvider
      */
-    public function testGetOptions(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy): void
+    public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getPhpunitOption('stderr')->willReturn(null);
@@ -106,8 +106,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
             $this->mockChunkSize(false),
-            $pcovProxy,
-            $xdebugProxy,
+            $this->mockPcov($enablePcov),
+            $this->mockXdebug($enableXdebug, $xdebugVersion),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
             $this->prophesize(TempFilenameFactory::class)->reveal()
         );
@@ -177,22 +177,22 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     }
 
     /**
-     * @return \Generator<array{PcovProxy, XDebugProxy, string[]}>
+     * @return \Generator<array{bool, bool, int|null, string[]}>
      */
-    public function extensionProxiesProvider(): \Generator
+    public static function extensionProxiesProvider(): \Generator
     {
-        yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(false), $this->mockXdebug(true, 3), ['php', '-d xdebug.mode=coverage', 'path/to/phpunit']];
-        yield [$this->mockPcov(false), $this->mockXdebug(true, 2), ['php', 'path/to/phpunit']];
+        yield [true, true, null, ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
+        yield [true, false, null, ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
+        yield [false, true, 3, ['php', '-d xdebug.mode=coverage', 'path/to/phpunit']];
+        yield [false, true, 2, ['php', 'path/to/phpunit']];
     }
 
     /**
-     * @return \Generator<array{PcovProxy, XDebugProxy}>
+     * @return \Generator<array{bool, bool, int|null}>
      */
-    public function noExtensionsEnabledProvider(): \Generator
+    public static function noExtensionsEnabledProvider(): \Generator
     {
-        yield [$this->mockPcov(false), $this->mockXdebug(false, 3)];
+        yield [false, false, 3];
     }
 
     private function mockPHPUnit(): PHPUnitBinFile
@@ -224,8 +224,10 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         return $pcovProxy->reveal();
     }
 
-    private function mockXdebug(bool $enabled, int $majorVersion = 3): XDebugProxy
+    private function mockXdebug(bool $enabled, ?int $majorVersion = null): XDebugProxy
     {
+        $majorVersion ??= 3;
+
         $xdebugProxy = $this->prophesize(XDebugProxy::class);
         $xdebugProxy->isLoaded()
             ->willReturn($enabled);

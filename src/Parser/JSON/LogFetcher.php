@@ -10,8 +10,6 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class LogFetcher
 {
-    public const LOG_ENDING_STATUS = 'paraunitEnd';
-
     public function __construct(private readonly TempFilenameFactory $fileName)
     {
     }

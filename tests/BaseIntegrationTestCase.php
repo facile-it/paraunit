@@ -50,11 +50,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function tearDown(): void
     {
-        try {
-            $this->cleanUpTempDirForThisExecution();
-        } catch (\Throwable $exception) {
-            $this->addWarning('Error while cleaning up temp folders: ' . $exception->getMessage());
-        }
+        $this->cleanUpTempDirForThisExecution();
 
         parent::tearDown();
     }

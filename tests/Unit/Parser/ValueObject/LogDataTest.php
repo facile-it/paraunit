@@ -35,14 +35,14 @@ class LogDataTest extends TestCase
     {
         $logData = new LogData(TestStatus::Passed, $this->createTestMethod(), 'Test message');
 
-        $this->assertSame('Foo::testMethod', $logData->test->name);
+        $this->assertSame(self::class . '::testMethod', $logData->test->name);
     }
 
     public function testSerialization(): void
     {
         $logData = new LogData(TestStatus::Passed, new Phpt('some/test.phpt'), 'Test message');
 
-        $parsedResult = LogData::parse(json_encode($logData));
+        $parsedResult = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
 
         $this->assertCount(2, $parsedResult);
         $this->assertInstanceOf(LogData::class, $parsedResult[0]);
@@ -58,16 +58,14 @@ class LogDataTest extends TestCase
         $this->assertInstanceOf(LogData::class, $parsedResult[0]);
         $this->assertEquals(TestStatus::Unknown, $parsedResult[0]->status);
         $this->assertEquals(Test::unknown(), $parsedResult[0]->test);
+        $this->assertIsString($parsedResult[0]->message);
         $this->assertStringStartsWith('Error while parsing Paraunit logs: ', $parsedResult[0]->message);
     }
 
-    /**
-     * @return TestMethod|\Prophecy\Prophecy\ObjectProphecy
-     */
-    protected function createTestMethod(): TestMethod
+    private function createTestMethod(): TestMethod
     {
         return new TestMethod(
-            'Foo',
+            self::class,
             'testMethod',
             __FILE__,
             __LINE__,

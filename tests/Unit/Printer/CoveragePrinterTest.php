@@ -16,11 +16,16 @@ class CoveragePrinterTest extends BaseUnitTestCase
     /**
      * @dataProvider coverageDriverProvider
      */
-    public function testOnEngineBeforeStart(PHPDbgBinFile $phpdbg, XDebugProxy $xdebug, PcovProxy $pcov, string $expected): void
+    public function testOnEngineBeforeStart(bool $enablePhpdbg, bool $enableXdebug, bool $enablePcov, string $expected): void
     {
         $output = new UnformattedOutputStub();
 
-        $printer = new CoveragePrinter($phpdbg, $xdebug, $pcov, $output);
+        $printer = new CoveragePrinter(
+            $this->mockPhpdbgBin($enablePhpdbg),
+            $this->mockXdebugLoaded($enableXdebug),
+            $this->mockPcovLoaded($enablePcov),
+            $output
+        );
 
         $printer->onEngineBeforeStart();
 
@@ -28,18 +33,18 @@ class CoveragePrinterTest extends BaseUnitTestCase
     }
 
     /**
-     * @return \Generator<array{PHPDbgBinFile, XDebugProxy, PcovProxy, string}>
+     * @return \Generator<array{bool, bool, bool, string}>
      */
-    public function coverageDriverProvider(): \Generator
+    public static function coverageDriverProvider(): \Generator
     {
-        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(true), 'Pcov'];
-        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(true), 'Pcov'];
-        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(true), 'Pcov'];
-        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(true), 'Pcov'];
-        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(false), 'Xdebug'];
-        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(true), $this->mockPcovLoaded(false), 'Xdebug'];
-        yield [$this->mockPhpdbgBin(true), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(false), 'PHPDBG'];
-        yield [$this->mockPhpdbgBin(false), $this->mockXdebugLoaded(false), $this->mockPcovLoaded(false), 'NO COVERAGE DRIVER FOUND!'];
+        yield [true, true, true, 'Pcov'];
+        yield [true, false, true, 'Pcov'];
+        yield [false, true, true, 'Pcov'];
+        yield [false, false, true, 'Pcov'];
+        yield [true, true, false, 'Xdebug'];
+        yield [false, true, false, 'Xdebug'];
+        yield [true, false, false, 'PHPDBG'];
+        yield [false, false, false, 'NO COVERAGE DRIVER FOUND!'];
     }
 
     private function mockPhpdbgBin(bool $shouldReturn): PHPDbgBinFile

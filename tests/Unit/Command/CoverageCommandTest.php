@@ -63,7 +63,7 @@ class CoverageCommandTest extends BaseUnitTestCase
     /**
      * @return (string|bool)[][]
      */
-    public function validCoverageOptionsProvider(): array
+    public static function validCoverageOptionsProvider(): array
     {
         return [
             [Clover::getConsoleOptionName()],
