@@ -93,6 +93,9 @@ class ProcessFactoryTest extends BaseUnitTestCase
         ], $factory->environmentVariables);
     }
 
+    /**
+     * @return array{CoverageDriver, string}[]
+     */
     public static function coverageDriverDataProvider(): array
     {
         return [
