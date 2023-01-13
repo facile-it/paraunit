@@ -9,11 +9,11 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Parser\DeprecationParser;
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
 use Paraunit\Parser\JSON\GenericParser;
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -55,40 +55,39 @@ class ParserDefinition
         $parserDefinitions = [
             'paraunit.parser.success_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.success_container'),
-                Log::STATUS_SUCCESSFUL,
+                TestStatus::Passed,
             ]),
             'paraunit.parser.incomplete_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.incomplete_container'),
-                Log::STATUS_INCOMPLETE,
+                TestStatus::MarkedIncomplete,
             ]),
             'paraunit.parser.skipped_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.skipped_container'),
-                Log::STATUS_SKIPPED,
+                TestStatus::Skipped,
             ]),
             'paraunit.parser.risky_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.risky_container'),
-                Log::STATUS_RISKY,
+                TestStatus::ConsideredRisky,
             ]),
             'paraunit.parser.warning_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.warning_container'),
-                Log::STATUS_WARNING,
+                TestStatus::WarningTriggered,
             ]),
             'paraunit.parser.failure_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.failure_container'),
-                Log::STATUS_FAILURE,
+                TestStatus::Failed,
             ]),
             'paraunit.parser.error_parser' => new Definition(GenericParser::class, [
                 new Reference('paraunit.test_result.error_container'),
-                Log::STATUS_ERROR,
+                TestStatus::Errored,
             ]),
             AbnormalTerminatedParser::class => new Definition(AbnormalTerminatedParser::class, [
                 new Reference('paraunit.test_result.abnormal_terminated_container'),
                 new Reference(ChunkSize::class),
-                LogFetcher::LOG_ENDING_STATUS,
+                TestStatus::LogTerminated,
             ]),
             UnknownResultParser::class => new Definition(UnknownResultParser::class, [
                 new Reference('paraunit.test_result.unknown_container'),
-                '',
             ]),
         ];
 

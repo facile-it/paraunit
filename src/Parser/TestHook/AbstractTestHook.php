@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Paraunit\Parser\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
+use Paraunit\Parser\ValueObject\LogData;
 use Paraunit\Parser\ValueObject\TestStatus;
 use PHPUnit\Event\Code\Test;
-use PHPUnit\Event\Code\TestMethod;
 
 abstract class AbstractTestHook
 {
@@ -29,17 +29,7 @@ abstract class AbstractTestHook
 
     final protected function write(TestStatus $status, Test $test, ?string $message): void
     {
-        $data = [
-            'status' => $status->value,
-            'test' => $test instanceof TestMethod
-                ? $test->className() . '::' . $test->name()
-                : $test->file(),
-            'message' => $message,
-        ];
-
-        $data = array_map([$this, 'convertToUtf8'], $data);
-
-        \fwrite(self::$logFile, json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
+        \fwrite(self::$logFile, json_encode(new LogData($status, $test, $message), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
         \fflush(self::$logFile);
     }
 
@@ -78,14 +68,5 @@ abstract class AbstractTestHook
         }
 
         return $logDirectory;
-    }
-
-    private function convertToUtf8(string $string): string
-    {
-        if (! \mb_detect_encoding($string, 'UTF-8', true)) {
-            return \mb_convert_encoding($string, 'UTF-8');
-        }
-
-        return $string;
     }
 }

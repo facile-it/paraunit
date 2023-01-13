@@ -34,7 +34,17 @@ class LogData implements \JsonSerializable
             $data['message'] = $this->message;
         }
 
-        return $data;
+        // TODO: test UTF8 conversion
+        return array_map($this->convertToUtf8(...), $data);
+    }
+
+    private function convertToUtf8(string $string): string
+    {
+        if (! \mb_detect_encoding($string, 'UTF-8', true)) {
+            return \mb_convert_encoding($string, 'UTF-8');
+        }
+
+        return $string;
     }
 
     /**

@@ -14,7 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class DeprecationParser implements EventSubscriberInterface
 {
     public function __construct(private readonly TestResultHandlerInterface $testResultContainer)
-    {}
+    {
+    }
 
     /**
      * @return array<string, string>
