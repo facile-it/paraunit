@@ -1,57 +1,57 @@
 {
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo"
 }{
-  "status": "fail",
+  "status": "Failed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenTwo",
   "message": "Failed asserting that false is true."
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree"
 }{
-  "status": "fail",
+  "status": "Failed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenThree",
   "message": "Failed asserting that false is true."
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
-  "status": "error",
+  "status": "Errored",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherTer"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherTer"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherQuater"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherQuater"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBisQuintus"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBisQuintus"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
 }{
-  "status": "error",
+  "status": "Errored",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
 }

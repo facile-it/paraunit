@@ -1,26 +1,26 @@
 {
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testRisky"
 }{
-  "status": "risky",
+  "status": "ConsideredRisky",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testRisky",
   "message": "This test did not perform any assertions\n\n\/home\/paraunit\/projects\/tests\/Stub\/ThreeGreenTestStub.php:21"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }

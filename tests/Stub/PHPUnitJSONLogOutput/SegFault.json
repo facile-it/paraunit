@@ -1,22 +1,22 @@
 {
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }
