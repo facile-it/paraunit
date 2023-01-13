@@ -73,16 +73,17 @@ class CoverageCommandTest extends BaseTestCase
         $exitCode = $commandTester->execute($arguments);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
-        $this->assertStringNotContainsString('Coverage Report', $output);
-        $this->assertStringNotContainsString('StubbedParaunitProcess', $output);
-        $this->assertEquals(0, $exitCode);
+        $this->assertStringNotContainsStringIgnoringCase('NO TESTS EXECUTED', $output);
+        $this->assertStringNotContainsStringIgnoringCase('Coverage Report', $output);
+        $this->assertStringNotContainsStringIgnoringCase('COVERAGE NOT FETCHED', $output);
+        $this->assertStringNotContainsStringIgnoringCase('StubbedParaunitProcess', $output);
+        $this->assertEquals(0, $exitCode, $output);
         $this->assertFileExists($coverageFileName);
         $fileContent = file_get_contents($coverageFileName);
         unlink($coverageFileName);
         $this->assertNotFalse($fileContent);
         $this->assertStringContainsString('Coverage Report', $fileContent);
-        $this->assertStringNotContainsString('StubbedParaunitProcess', $fileContent);
+        $this->assertStringNotContainsStringIgnoringCase('StubbedParaunitProcess', $fileContent);
     }
 
     public function testExecutionWithTextSummaryToConsole(): void
