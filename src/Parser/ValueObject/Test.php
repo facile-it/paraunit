@@ -21,4 +21,9 @@ class Test
 
         return new self($name);
     }
+
+    public static function unknown(): self
+    {
+        return new self('[UNKNOWN]');
+    }
 }

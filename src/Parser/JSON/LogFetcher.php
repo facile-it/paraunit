@@ -17,9 +17,9 @@ class LogFetcher
     }
 
     /**
-     * @return \Generator<LogData>
+     * @return LogData[]
      */
-    public function fetch(AbstractParaunitProcess $process): \Generator
+    public function fetch(AbstractParaunitProcess $process): array
     {
         $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
         $fileContent = '';
@@ -30,6 +30,6 @@ class LogFetcher
             unlink($filePath);
         }
 
-        yield from LogData::parse($fileContent);
+        return LogData::parse($fileContent);
     }
 }

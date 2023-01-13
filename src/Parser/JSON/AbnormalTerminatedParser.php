@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Paraunit\Parser\JSON;
 
 use Paraunit\Configuration\ChunkSize;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
@@ -13,23 +16,19 @@ use Paraunit\TestResult\TestResultWithAbnormalTermination;
 
 class AbnormalTerminatedParser extends GenericParser
 {
-    /** @var ChunkSize */
-    private $chunkSize;
-
-    /** @var string */
-    private $lastStartedTest = '[UNKNOWN]';
+    private Test $lastStartedTest;
 
     public function __construct(
         TestResultHandlerInterface $testResultHandler,
-        ChunkSize $chunkSize
+        private readonly ChunkSize $chunkSize,
     ) {
-        parent::__construct($testResultHandler, LogFetcher::LOG_ENDING_STATUS);
-        $this->chunkSize = $chunkSize;
+        parent::__construct($testResultHandler, TestStatus::LogTerminated);
+        $this->lastStartedTest = Test::unknown();
     }
 
-    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
+    public function handleLogItem(AbstractParaunitProcess $process, LogData $logItem): ?TestResultInterface
     {
-        if ($logItem->getStatus() === Log::STATUS_TEST_START) {
+        if ($logItem->status === TestStatus::Prepared) {
             $process->setWaitingForTestResult(true);
             $this->saveTestFQCN($process, $logItem);
 
@@ -51,9 +50,9 @@ class AbnormalTerminatedParser extends GenericParser
         return null;
     }
 
-    private function saveTestFQCN(AbstractParaunitProcess $process, Log $logItem): void
+    private function saveTestFQCN(AbstractParaunitProcess $process, LogData $logItem): void
     {
-        $this->lastStartedTest = $logItem->getTest();
+        $this->lastStartedTest = $logItem->test;
 
         if ($process->getTestClassName()) {
             return;
@@ -62,8 +61,9 @@ class AbnormalTerminatedParser extends GenericParser
         if ($this->chunkSize->isChunked()) {
             $suiteName = basename($process->getFilename());
         } else {
-            $suiteName = explode('::', $logItem->getTest())[0];
+            $suiteName = explode('::', $logItem->test->name)[0];
         }
+
         $process->setTestClassName($suiteName);
     }
 }

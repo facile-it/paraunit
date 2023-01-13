@@ -20,6 +20,9 @@ class LogData implements \JsonSerializable
             : Test::fromPHPUnitTest($test);
     }
 
+    /**
+     * @return array{status: string, test: string, message?: string}
+     */
     public function jsonSerialize(): array
     {
         $data = [
@@ -45,10 +48,12 @@ class LogData implements \JsonSerializable
         foreach ($decodedLogs as $log) {
             $logs[] = new self(
                 TestStatus::from($log['status']),
-                new Test($log['test']),
+                $lastTest = new Test($log['test']),
                 $log['message'] ?? null,
             );
         }
+
+        $logs[] = new self(TestStatus::LogTerminated, $lastTest ?? Test::unknown(), null);
 
         return $logs;
     }
