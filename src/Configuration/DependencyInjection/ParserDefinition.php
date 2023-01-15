@@ -12,6 +12,7 @@ use Paraunit\Parser\JSON\GenericParser;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\RetryParser;
+use Paraunit\Parser\JSON\RiskyParser;
 use Paraunit\Parser\JSON\UnknownResultParser;
 use Paraunit\Parser\JSON\WarningParser;
 use Paraunit\Parser\ValueObject\TestStatus;
@@ -66,9 +67,8 @@ class ParserDefinition
                 new Reference('paraunit.test_result.skipped_container'),
                 TestStatus::Skipped,
             ]),
-            'paraunit.parser.risky_parser' => new Definition(GenericParser::class, [
+            'paraunit.parser.risky_parser' => new Definition(RiskyParser::class, [
                 new Reference('paraunit.test_result.risky_container'),
-                TestStatus::ConsideredRisky,
             ]),
             'paraunit.parser.warning_parser' => new Definition(WarningParser::class, [
                 new Reference('paraunit.test_result.warning_container'),
