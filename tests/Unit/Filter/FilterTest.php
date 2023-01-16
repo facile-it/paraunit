@@ -12,12 +12,12 @@ use Tests\BaseUnitTestCase;
 class FilterTest extends BaseUnitTestCase
 {
     /** @var string|null */
-    private $absoluteConfigBaseDir;
+    private string $absoluteConfigBaseDir = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->absoluteConfigBaseDir = $this->absoluteConfigBaseDir ?? \dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
+        $this->absoluteConfigBaseDir ??= \dirname(__DIR__, 2) . '/Stub/StubbedXMLConfigs' . DIRECTORY_SEPARATOR;
     }
 
     public function testFilterTestFilesGetsOnlyRequestedTestsuite(): void

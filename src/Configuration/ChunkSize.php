@@ -7,7 +7,7 @@ namespace Paraunit\Configuration;
 class ChunkSize
 {
     /** @var positive-int */
-    private $chunkSize;
+    private readonly int $chunkSize;
 
     public function __construct(int $chunkSize)
     {

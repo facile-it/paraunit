@@ -8,12 +8,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PipelineFactory
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(private readonly EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher = $dispatcher;
     }
 
     public function create(int $pipelineNumber): Pipeline

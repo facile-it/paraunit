@@ -6,7 +6,7 @@ namespace Tests\Stub;
 
 class SegFaultTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    public function testBrokenTest()
+    public function testBrokenTest(): never
     {
         exit(139);
     }

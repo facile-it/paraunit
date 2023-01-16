@@ -13,10 +13,9 @@ class PHPUnitBinFile
     private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../vendor/phpunit/phpunit/phpunit';
 
     /**
-     * @var string Realpath to PHPUnit bin location
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    private $phpUnitBin;
+    private ?string $phpUnitBin = null;
 
     /**
      * @throws \RuntimeException If PHPUnit is not found

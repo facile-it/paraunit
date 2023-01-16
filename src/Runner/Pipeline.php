@@ -11,19 +11,12 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Pipeline
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
+    private ?AbstractParaunitProcess $process = null;
 
-    /** @var AbstractParaunitProcess|null */
-    private $process;
-
-    /** @var int */
-    private $number;
-
-    public function __construct(EventDispatcherInterface $dispatcher, int $number)
-    {
-        $this->dispatcher = $dispatcher;
-        $this->number = $number;
+    public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly int $number
+    ) {
     }
 
     public function execute(AbstractParaunitProcess $process): void

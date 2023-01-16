@@ -9,12 +9,10 @@ use Paraunit\Process\AbstractParaunitProcess;
 class PipelineCollection
 {
     /** @var Pipeline[] */
-    private $pipelines;
+    private array $pipelines = [];
 
     public function __construct(PipelineFactory $pipelineFactory, int $maxProcessNumber = 10)
     {
-        $this->pipelines = [];
-
         for ($pipelineNumber = 1; $pipelineNumber <= $maxProcessNumber; ++$pipelineNumber) {
             $this->pipelines[] = $pipelineFactory->create($pipelineNumber);
         }

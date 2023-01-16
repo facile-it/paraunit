@@ -6,12 +6,12 @@ namespace Tests\Stub;
 
 class MySQLDeadLockTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    public const OUTPUT = 'SQLSTATE[HY000]: General error: Deadlock found; try restarting transaction';
+    final public const OUTPUT = 'SQLSTATE[HY000]: General error: Deadlock found; try restarting transaction';
 
     /**
      * @throws \Exception
      */
-    public function testBrokenTest()
+    public function testBrokenTest(): never
     {
         throw new \Exception(self::OUTPUT);
     }

@@ -13,29 +13,25 @@ use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParallelConfiguration
 {
-    public const TAG_EVENT_SUBSCRIBER = 'kernel.event_subscriber';
+    final public const TAG_EVENT_SUBSCRIBER = 'kernel.event_subscriber';
 
-    public const PUBLIC_ALIAS_FORMAT = '%s_public_alias';
+    final public const PUBLIC_ALIAS_FORMAT = '%s_public_alias';
 
-    /** @var ParallelContainerDefinition */
-    protected $containerDefinition;
+    protected ParallelContainerDefinition $containerDefinition;
 
-    /** @var bool */
-    private $createPublicServiceAliases;
-
-    public function __construct(bool $createPublicServiceAliases = false)
+    public function __construct(private readonly bool $createPublicServiceAliases = false)
     {
         $this->containerDefinition = new ParallelContainerDefinition();
-        $this->createPublicServiceAliases = $createPublicServiceAliases;
     }
 
     /**
-     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws BadMethodCallException
      * @throws \Exception
      */
     public function buildContainer(InputInterface $input, OutputInterface $output): ContainerBuilder

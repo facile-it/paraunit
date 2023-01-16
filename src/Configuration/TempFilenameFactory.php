@@ -8,12 +8,8 @@ use Paraunit\File\TempDirectory;
 
 class TempFilenameFactory
 {
-    /** @var TempDirectory */
-    private $tempDirectory;
-
-    public function __construct(TempDirectory $tempDirectory)
+    public function __construct(private readonly TempDirectory $tempDirectory)
     {
-        $this->tempDirectory = $tempDirectory;
     }
 
     /**

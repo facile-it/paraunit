@@ -8,17 +8,13 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class StubbedParaunitProcess extends AbstractParaunitProcess
 {
-    /** @var string */
-    private $output;
+    private ?string $output = null;
 
-    /** @var string */
-    private $errorOutput;
+    private ?string $errorOutput = null;
 
-    /** @var string */
-    private $commandLine;
+    private readonly string $commandLine;
 
-    /** @var int */
-    private $exitCode;
+    private int $exitCode;
 
     /**
      * {@inheritdoc}

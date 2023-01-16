@@ -11,12 +11,10 @@ use Paraunit\TestResult\TestResultWithSymbolFormat;
 class SingleResultFormatter
 {
     /** @var array<string, string> */
-    private $tagMap;
+    private array $tagMap = [];
 
     public function __construct(TestResultList $testResultList)
     {
-        $this->tagMap = [];
-
         foreach ($testResultList->getTestResultContainers() as $parser) {
             $format = $parser->getTestResultFormat();
             if ($format instanceof TestResultWithSymbolFormat) {

@@ -20,8 +20,7 @@ use Tests\Stub\UnformattedOutputStub;
 
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
-    /** @var ContainerBuilder|null */
-    private $container;
+    private ?ContainerBuilder $container = null;
 
     /** @var ParallelConfiguration */
     protected $configuration;
@@ -30,14 +29,13 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     protected $textFilter;
 
     /** @var string[] */
-    private $options;
+    private array $options = [];
 
     public function __construct(string $name)
     {
         parent::__construct($name);
 
         $this->configuration = new ParallelConfiguration(true);
-        $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
 
@@ -147,10 +145,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $service;
     }
 
-    /**
-     * @return int|string
-     */
-    public function getParameter(string $parameterName)
+    public function getParameter(string $parameterName): int|string
     {
         if ($this->container) {
             /** @var int|string */

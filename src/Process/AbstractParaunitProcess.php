@@ -12,11 +12,9 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     /** @var int */
     protected $retryCount = 0;
 
-    /** @var bool */
-    protected $shouldBeRetried;
+    protected bool $shouldBeRetried = false;
 
-    /** @var string */
-    protected $uniqueId;
+    protected string $uniqueId;
 
     /** @var string */
     protected $filename;
@@ -25,18 +23,14 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     protected $testClassName = null;
 
     /** @var PrintableTestResultInterface[] */
-    protected $testResults;
+    protected array $testResults = [];
 
-    /** @var bool */
-    private $waitingForTestResult;
+    private bool $waitingForTestResult = true;
 
     public function __construct(string $filename)
     {
         $this->filename = $filename;
         $this->uniqueId = md5($this->filename);
-        $this->testResults = [];
-        $this->waitingForTestResult = true;
-        $this->shouldBeRetried = false;
     }
 
     abstract public function start(int $pipelineNumber): void;

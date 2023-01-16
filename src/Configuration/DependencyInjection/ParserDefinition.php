@@ -19,6 +19,7 @@ use Paraunit\Parser\ValueObject\TestStatus;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\DependencyInjection\Reference;
 
 class ParserDefinition
@@ -48,7 +49,7 @@ class ParserDefinition
     }
 
     /**
-     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws BadMethodCallException
      *
      * @return Reference[]
      */

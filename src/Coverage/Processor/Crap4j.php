@@ -10,16 +10,11 @@ use SebastianBergmann\CodeCoverage\Report\Crap4j as PHPUnitCrap4j;
 
 class Crap4j implements CoverageProcessorInterface
 {
-    /** @var PHPUnitCrap4j */
-    private $crap4j;
+    private readonly PHPUnitCrap4j $crap4j;
 
-    /** @var OutputFile */
-    private $targetFile;
-
-    public function __construct(OutputFile $targetFile)
+    public function __construct(private readonly OutputFile $targetFile)
     {
         $this->crap4j = new PHPUnitCrap4j();
-        $this->targetFile = $targetFile;
     }
 
     /**

@@ -15,28 +15,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProcessPrinter implements EventSubscriberInterface
 {
-    public const MAX_CHAR_LENGTH = 80;
+    final public const MAX_CHAR_LENGTH = 80;
 
     private const COUNTER_CHAR_LENGTH = 5;
 
-    /** @var SingleResultFormatter */
-    private $singleResultFormatter;
+    private int $counter = 0;
 
-    /** @var OutputInterface */
-    private $output;
+    private int $singleRowCounter = 0;
 
-    /** @var int */
-    private $counter;
-
-    /** @var int */
-    private $singleRowCounter;
-
-    public function __construct(SingleResultFormatter $singleResultFormatter, OutputInterface $output)
+    public function __construct(private readonly SingleResultFormatter $singleResultFormatter, private readonly OutputInterface $output)
     {
-        $this->singleResultFormatter = $singleResultFormatter;
-        $this->output = $output;
-        $this->counter = 0;
-        $this->singleRowCounter = 0;
     }
 
     /**

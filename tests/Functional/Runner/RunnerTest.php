@@ -112,7 +112,7 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testWarning(): void
+    public function testWarning(): never
     {
         $this->setTextFilter('IntentionalWarningTestStub.php');
         $this->loadContainer();
@@ -155,7 +155,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('ThreeGreenTestStub.php', $output);
     }
 
-    public function testWarningsToStdout(): void
+    public function testWarningsToStdout(): never
     {
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();
@@ -180,7 +180,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
 
-    public function testSessionStderr(): void
+    public function testSessionStderr(): never
     {
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();

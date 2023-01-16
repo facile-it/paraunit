@@ -21,7 +21,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         /** @var \stdClass[] $logs */
-        $logs = json_decode($jsonLogs);
+        $logs = json_decode($jsonLogs, null, 512, JSON_THROW_ON_ERROR);
         foreach ($logs as $log) {
             if ($log->event === $event) {
                 if ($testOutput) {

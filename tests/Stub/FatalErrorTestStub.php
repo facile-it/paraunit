@@ -11,7 +11,7 @@ class FatalErrorTestStub extends BrokenTestBase implements BrokenTestInterface
         $foo = new class() implements \JsonSerializable {
         };
 
-        $message = 'This assertion should not happen: ' . json_encode($foo);
+        $message = 'This assertion should not happen: ' . json_encode($foo, JSON_THROW_ON_ERROR);
 
         self::assertTrue(true, $message);
     }

@@ -10,37 +10,20 @@ use SebastianBergmann\FileIterator\Facade;
 
 class Filter
 {
-    /** @var Loader */
-    private $xmlLoader;
-
-    /** @var Facade */
-    private $fileIteratorFacade;
-
-    /** @var PHPUnitConfig */
-    private $configFile;
+    private readonly Loader $xmlLoader;
 
     /** @var string | null */
-    private $relativePath;
-
-    /** @var string | null */
-    private $testSuiteFilter;
-
-    /** @var string | null */
-    private $stringFilter;
+    private readonly string $relativePath;
 
     public function __construct(
-        Facade $fileIteratorFacade,
-        PHPUnitConfig $configFile,
-        string $testSuiteFilter = null,
-        string $stringFilter = null
+        private readonly Facade $fileIteratorFacade,
+        private readonly PHPUnitConfig $configFile,
+        private readonly ?string $testSuiteFilter = null,
+        private readonly ?string $stringFilter = null
     ) {
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
-        $this->fileIteratorFacade = $fileIteratorFacade;
-        $this->configFile = $configFile;
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
-        $this->testSuiteFilter = $testSuiteFilter;
-        $this->stringFilter = $stringFilter;
     }
 
     /**
@@ -64,7 +47,7 @@ class Filter
 
         foreach ($nodeList as $testSuiteNode) {
             if (! $testSuiteNode instanceof \DOMElement) {
-                throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . get_class($testSuiteNode));
+                throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . $testSuiteNode::class);
             }
 
             if ($this->testSuitePassFilter($testSuiteNode, $this->testSuiteFilter)) {
@@ -183,9 +166,7 @@ class Filter
     private function filterByString(array $aggregatedFiles, ?string $stringFilter): array
     {
         if ($stringFilter !== null) {
-            $aggregatedFiles = array_filter($aggregatedFiles, function ($value) use ($stringFilter) {
-                return stripos($value, $stringFilter) !== false;
-            });
+            $aggregatedFiles = array_filter($aggregatedFiles, fn ($value) => stripos((string) $value, $stringFilter) !== false);
         }
 
         return array_values($aggregatedFiles);

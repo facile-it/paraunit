@@ -6,12 +6,12 @@ namespace Tests\Stub;
 
 class PassThenRetryTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    public function testPass()
+    public function testPass(): void
     {
         $this->assertTrue(true);
     }
 
-    public function testFail()
+    public function testFail(): never
     {
         $this->fail();
     }
@@ -21,7 +21,7 @@ class PassThenRetryTestStub extends BrokenTestBase implements BrokenTestInterfac
         $this->assertTrue(true);
     }
 
-    public function testBrokenTest()
+    public function testBrokenTest(): never
     {
         throw new \Exception(MySQLDeadLockTestStub::OUTPUT);
     }

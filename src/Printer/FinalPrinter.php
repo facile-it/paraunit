@@ -21,14 +21,11 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 {
     private const STOPWATCH_NAME = 'engine';
 
-    /** @var Stopwatch */
-    private $stopWatch;
+    private readonly Stopwatch $stopWatch;
 
-    /** @var int */
-    private $processCompleted;
+    private int $processCompleted = 0;
 
-    /** @var int */
-    private $processRetried;
+    private int $processRetried = 0;
 
     public function __construct(
         TestResultList $testResultList,
@@ -38,8 +35,6 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         parent::__construct($testResultList, $output, $chunkSize);
 
         $this->stopWatch = new Stopwatch();
-        $this->processCompleted = 0;
-        $this->processRetried = 0;
     }
 
     /**

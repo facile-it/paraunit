@@ -20,7 +20,7 @@ class ParallelCommand extends Command
     protected $configuration;
 
     /** @var PHPUnitOption[] */
-    private $phpunitOptions;
+    private readonly array $phpunitOptions;
 
     public function __construct(ParallelConfiguration $configuration)
     {

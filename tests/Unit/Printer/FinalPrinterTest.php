@@ -18,7 +18,7 @@ class FinalPrinterTest extends BaseUnitTestCase
     public function testOnEngineEndPrintsTheRightCountSummary(): void
     {
         ClockMock::register(Stopwatch::class);
-        ClockMock::register(__CLASS__);
+        ClockMock::register(self::class);
         $output = new UnformattedOutputStub();
         $chunkSize = $this->prophesize(ChunkSize::class);
         $chunkSize->isChunked()
@@ -51,7 +51,7 @@ class FinalPrinterTest extends BaseUnitTestCase
         $printer->onProcessTerminated();
         $printer->onProcessToBeRetried();
         $printer->onProcessTerminated();
-        usleep(60499999);
+        usleep(60_499_999);
         $printer->onEngineEnd();
 
         ClockMock::withClockMock(false);

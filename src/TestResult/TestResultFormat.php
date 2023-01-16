@@ -6,24 +6,8 @@ namespace Paraunit\TestResult;
 
 class TestResultFormat
 {
-    /** @var string */
-    private $tag;
-
-    /** @var string */
-    private $title;
-
-    /** @var bool */
-    private $printTestOutput;
-
-    /** @var bool */
-    private $printFilesRecap;
-
-    public function __construct(string $tag, string $title, bool $printTestOutput = true, bool $printFilesRecap = true)
+    public function __construct(private readonly string $tag, private readonly string $title, private readonly bool $printTestOutput = true, private readonly bool $printFilesRecap = true)
     {
-        $this->tag = $tag;
-        $this->title = $title;
-        $this->printTestOutput = $printTestOutput;
-        $this->printFilesRecap = $printFilesRecap;
     }
 
     public function getTag(): string

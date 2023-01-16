@@ -16,7 +16,7 @@ composer-install: start
 pre-commit-check: rector cs-fix psalm phpstan tests
 
 rector: start
-	docker-compose exec php vendor/bin/php-cs-fixer fix --verbose --ansi
+	docker-compose exec php vendor/bin/rector --ansi
 
 cs-fix: start
 	docker-compose exec php vendor/bin/php-cs-fixer fix --verbose --ansi

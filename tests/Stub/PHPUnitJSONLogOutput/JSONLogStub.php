@@ -8,34 +8,34 @@ use Paraunit\Parser\JSON\Log;
 
 class JSONLogStub
 {
-    public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
+    final public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
 
-    public const ALL_GREEN = 'AllGreen';
+    final public const ALL_GREEN = 'AllGreen';
 
-    public const FATAL_ERROR = 'FatalError';
+    final public const FATAL_ERROR = 'FatalError';
 
-    public const SEGFAULT = 'SegFault';
+    final public const SEGFAULT = 'SegFault';
 
-    public const ONE_ERROR = 'SingleError';
+    final public const ONE_ERROR = 'SingleError';
 
-    public const ONE_INCOMPLETE = 'SingleIncomplete';
+    final public const ONE_INCOMPLETE = 'SingleIncomplete';
 
-    public const ONE_RISKY = 'SingleRisky';
+    final public const ONE_RISKY = 'SingleRisky';
 
-    public const ONE_SKIP = 'SingleSkip';
+    final public const ONE_SKIP = 'SingleSkip';
 
-    public const ONE_WARNING = 'SingleWarning';
+    final public const ONE_WARNING = 'SingleWarning';
 
-    public const UNKNOWN = 'Unknown';
+    final public const UNKNOWN = 'Unknown';
 
-    public const PARSE_ERROR = 'ParseError';
+    final public const PARSE_ERROR = 'ParseError';
 
     /**
      * @throws \Exception
      */
     public static function getLogs(string $filename): string
     {
-        return json_decode(self::getCleanOutputFileContent($filename));
+        return json_decode(self::getCleanOutputFileContent($filename), null, 512, JSON_THROW_ON_ERROR);
     }
 
     /**

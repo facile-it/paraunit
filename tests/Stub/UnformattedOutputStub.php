@@ -8,13 +8,11 @@ use Symfony\Component\Console\Output\Output;
 
 class UnformattedOutputStub extends Output
 {
-    /** @var string */
-    private $buffer;
+    private string $buffer = '';
 
     public function __construct()
     {
         parent::__construct();
-        $this->buffer = '';
     }
 
     public function getOutput(): string

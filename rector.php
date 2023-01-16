@@ -7,6 +7,8 @@ use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->importNames();
+    $rectorConfig->importShortClasses(false);
     $rectorConfig->parallel();
     $rectorConfig->paths([
         __FILE__,

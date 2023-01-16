@@ -16,8 +16,7 @@ class BaseTestCase extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var string|null */
-    private $randomTempDir;
+    private ?string $randomTempDir = null;
 
     protected function getCoverageStubFilePath(): string
     {

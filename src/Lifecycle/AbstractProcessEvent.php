@@ -8,12 +8,8 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 abstract class AbstractProcessEvent extends AbstractEvent
 {
-    /** @var AbstractParaunitProcess */
-    private $process;
-
-    public function __construct(AbstractParaunitProcess $process)
+    public function __construct(private readonly AbstractParaunitProcess $process)
     {
-        $this->process = $process;
     }
 
     public function getProcess(): AbstractParaunitProcess

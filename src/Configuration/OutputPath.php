@@ -6,8 +6,7 @@ namespace Paraunit\Configuration;
 
 class OutputPath
 {
-    /** @var string */
-    private $path;
+    private readonly string $path;
 
     public function __construct(string $path)
     {
