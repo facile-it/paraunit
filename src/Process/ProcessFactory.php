@@ -8,6 +8,7 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Coverage\CoverageDriver;
 use Symfony\Component\Process\Process;
 
 class ProcessFactory implements ProcessFactoryInterface
@@ -19,7 +20,7 @@ class ProcessFactory implements ProcessFactoryInterface
     private $baseCommandLine;
 
     /** @var string[] */
-    private $environmentVariables;
+    public readonly array $environmentVariables;
 
     /** @var ChunkSize */
     private $chunkSize;
@@ -34,8 +35,22 @@ class ProcessFactory implements ProcessFactoryInterface
         $this->baseCommandLine = array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($phpunitConfig));
         $this->environmentVariables = [
             EnvVariables::LOG_DIR => $tempFilenameFactory->getPathForLog(),
+            EnvVariables::XDEBUG_MODE => $this->getDesiredXdebugMode(),
         ];
         $this->chunkSize = $chunkSize;
+    }
+
+    private function getDesiredXdebugMode(): string
+    {
+        if (! $this->cliCommand instanceof CommandLineWithCoverage) {
+            return 'off';
+        }
+
+        if ($this->cliCommand->getCoverageDriver() !== CoverageDriver::Xdebug) {
+            return 'off';
+        }
+
+        return 'coverage';
     }
 
     public function create(string $testFilePath): AbstractParaunitProcess

@@ -7,6 +7,8 @@ namespace Paraunit\Parser\JSON;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
@@ -58,14 +60,6 @@ class LogParser implements EventSubscriberInterface
         $this->parsers[] = $container;
     }
 
-    /**
-     * @return ParserChainElementInterface[]
-     */
-    public function getParsers(): array
-    {
-        return $this->parsers;
-    }
-
     public function onProcessTerminated(ProcessTerminated $processEvent): void
     {
         $process = $processEvent->getProcess();
@@ -90,7 +84,7 @@ class LogParser implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 
-    private function processLog(AbstractParaunitProcess $process, Log $logItem): void
+    private function processLog(AbstractParaunitProcess $process, LogData $logItem): void
     {
         foreach ($this->parsers as $resultContainer) {
             if ($resultContainer->handleLogItem($process, $logItem) instanceof TestResultInterface) {
@@ -100,7 +94,7 @@ class LogParser implements EventSubscriberInterface
     }
 
     /**
-     * @param Log[] $logs
+     * @param LogData[] $logs
      */
     private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
     {
@@ -109,7 +103,7 @@ class LogParser implements EventSubscriberInterface
         }
 
         foreach ($logs as $log) {
-            if ($log->getStatus() === Log::STATUS_TEST_START) {
+            if ($log->status === TestStatus::Prepared) {
                 return false;
             }
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Parser;
 
 use Paraunit\Lifecycle\ProcessParsingCompleted;
+use Paraunit\Parser\ValueObject\Test;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultWithMessage;
@@ -12,12 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DeprecationParser implements EventSubscriberInterface
 {
-    /** @var TestResultHandlerInterface */
-    private $testResultContainer;
-
-    public function __construct(TestResultHandlerInterface $testResultContainer)
+    public function __construct(private readonly TestResultHandlerInterface $testResultContainer)
     {
-        $this->testResultContainer = $testResultContainer;
     }
 
     /**
@@ -38,7 +35,7 @@ class DeprecationParser implements EventSubscriberInterface
             return;
         }
 
-        if (strpos($process->getOutput(), 'deprecation') !== false) {
+        if (str_contains($process->getOutput(), 'deprecation')) {
             $testResult = $this->createTestResult($process);
             $this->testResultContainer->handleTestResult($process, $testResult);
         }
@@ -47,7 +44,7 @@ class DeprecationParser implements EventSubscriberInterface
     private function createTestResult(AbstractParaunitProcess $process): TestResultWithMessage
     {
         return new TestResultWithMessage(
-            $process->getTestClassName() ?? $process->getFilename(),
+            new Test($process->getTestClassName() ?? $process->getFilename()),
             $process->getOutput()
         );
     }

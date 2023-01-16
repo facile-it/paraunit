@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -26,11 +27,11 @@ class LogFetcherTest extends BaseUnitTestCase
 
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertCount(1, $logs, 'Log ending missing');
-        $this->assertContainsOnlyInstancesOf(Log::class, $logs);
+        $this->assertContainsOnlyInstancesOf(LogData::class, $logs);
 
         $endingLog = end($logs);
-        $this->assertNotFalse($endingLog);
-        $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->getStatus());
+        $this->assertInstanceOf(LogData::class, $endingLog);
+        $this->assertEquals(TestStatus::LogTerminated, $endingLog->status);
     }
 
     public function testFetch(): void
@@ -50,11 +51,11 @@ class LogFetcherTest extends BaseUnitTestCase
 
         $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertCount(18 + 1, $logs, 'Log ending missing');
-        $this->assertContainsOnlyInstancesOf(Log::class, $logs);
+        $this->assertContainsOnlyInstancesOf(LogData::class, $logs);
 
         $endingLog = end($logs);
-        $this->assertNotFalse($endingLog);
-        $this->assertEquals(LogFetcher::LOG_ENDING_STATUS, $endingLog->getStatus());
+        $this->assertInstanceOf(LogData::class, $endingLog);
+        $this->assertEquals(TestStatus::LogTerminated, $endingLog->status);
 
         $this->assertFileDoesNotExist($filename, 'Log file should be deleted to preserve memory');
     }

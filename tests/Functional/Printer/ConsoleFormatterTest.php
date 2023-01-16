@@ -39,7 +39,7 @@ class ConsoleFormatterTest extends BaseFunctionalTestCase
     /**
      * @return string[][]
      */
-    public function serviceTagsProvider(): array
+    public static function serviceTagsProvider(): array
     {
         return [
             ['paraunit.test_result.abnormal_terminated_container'],

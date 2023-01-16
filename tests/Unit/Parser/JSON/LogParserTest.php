@@ -7,11 +7,13 @@ namespace Tests\Unit\Parser\JSON;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\LogFetcher;
 use Paraunit\Parser\JSON\LogParser;
 use Paraunit\Parser\JSON\ParserChainElementInterface;
 use Paraunit\Parser\JSON\RetryParser;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
@@ -41,9 +43,9 @@ class LogParserTest extends BaseUnitTestCase
 
         $parser = new LogParser(
             $this->mockLogFetcher([
-                $this->createLog(Log::STATUS_TEST_START),
-                $this->createLog(Log::STATUS_SUCCESSFUL),
-                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+                $this->createLog(TestStatus::Prepared),
+                $this->createLog(TestStatus::Passed),
+                $this->createLog(TestStatus::LogTerminated),
             ]),
             $this->mockNoTestExecutedContainer(false),
             $this->mockEventDispatcher(ProcessParsingCompleted::class),
@@ -72,7 +74,7 @@ class LogParserTest extends BaseUnitTestCase
 
         $parser = new LogParser(
             $this->mockLogFetcher([
-                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+                $this->createLog(TestStatus::LogTerminated),
             ]),
             $this->mockNoTestExecutedContainer(false),
             $this->mockEventDispatcher(ProcessParsingCompleted::class),
@@ -96,7 +98,7 @@ class LogParserTest extends BaseUnitTestCase
 
         $parser = new LogParser(
             $this->mockLogFetcher([
-                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+                $this->createLog(TestStatus::LogTerminated),
             ]),
             $this->mockNoTestExecutedContainer(true),
             $this->mockEventDispatcher(),
@@ -116,9 +118,9 @@ class LogParserTest extends BaseUnitTestCase
 
         $parser = new LogParser(
             $this->mockLogFetcher([
-                $this->createLog(Log::STATUS_TEST_START),
-                $this->createLog(Log::STATUS_ERROR),
-                $this->createLog(LogFetcher::LOG_ENDING_STATUS),
+                $this->createLog(TestStatus::Prepared),
+                $this->createLog(TestStatus::Errored),
+                $this->createLog(TestStatus::LogTerminated),
             ]),
             $this->mockNoTestExecutedContainer(false),
             $this->mockEventDispatcher(ProcessToBeRetried::class),
@@ -131,7 +133,7 @@ class LogParserTest extends BaseUnitTestCase
     }
 
     /**
-     * @param Log[] $logs
+     * @param LogData[] $logs
      */
     private function mockLogFetcher(array $logs): LogFetcher
     {
@@ -181,8 +183,8 @@ class LogParserTest extends BaseUnitTestCase
         return $retryParser->reveal();
     }
 
-    private function createLog(string $status): Log
+    private function createLog(TestStatus $status): LogData
     {
-        return new Log($status, 'testSomething', null);
+        return new LogData($status, new Test('testSomething'), null);
     }
 }

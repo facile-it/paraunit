@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
@@ -12,27 +14,19 @@ use Paraunit\TestResult\TestResultWithMessage;
 
 class GenericParser implements ParserChainElementInterface
 {
-    /** @var TestResultHandlerInterface */
-    protected $testResultContainer;
-
-    /** @var string */
-    protected $status;
-
     /**
-     * @param string $status The status that the parser should catch
+     * @param TestStatus $status The status that the parser should catch
      */
     public function __construct(
-        TestResultHandlerInterface $testResultContainer,
-        string $status
+        protected readonly TestResultHandlerInterface $testResultContainer,
+        protected readonly TestStatus $status,
     ) {
-        $this->testResultContainer = $testResultContainer;
-        $this->status = $status;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handleLogItem(AbstractParaunitProcess $process, Log $logItem): ?TestResultInterface
+    public function handleLogItem(AbstractParaunitProcess $process, LogData $logItem): ?TestResultInterface
     {
         if ($this->logMatches($logItem)) {
             $testResult = $this->createFromLog($logItem);
@@ -45,19 +39,17 @@ class GenericParser implements ParserChainElementInterface
         return null;
     }
 
-    protected function logMatches(Log $log): bool
+    protected function logMatches(LogData $log): bool
     {
-        return $log->getStatus() === $this->status;
+        return $log->status === $this->status;
     }
 
-    private function createFromLog(Log $logItem): TestResultInterface
+    protected function createFromLog(LogData $logItem): TestResultInterface
     {
-        $message = $logItem->getMessage();
-
-        if ($message) {
-            return new TestResultWithMessage($logItem->getTest(), $message);
+        if ($logItem->message) {
+            return new TestResultWithMessage($logItem->test, $logItem->message);
         }
 
-        return new MuteTestResult($logItem->getTest());
+        return new MuteTestResult($logItem->test);
     }
 }

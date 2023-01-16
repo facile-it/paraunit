@@ -41,7 +41,7 @@
         "facile-it/facile-coding-standard": "^0.5.1",
         "jangregor/phpstan-prophecy": "^1.0.0",
         "phpspec/prophecy": "dev-allow-sebastian-comparator-5 as 1.15",
-        "phpspec/prophecy-phpunit": "dev-allow-phpunit-10",
+        "phpspec/prophecy-phpunit": "dev-phpunit-10",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.7",
         "phpstan/phpstan-phpunit": "^1.1",

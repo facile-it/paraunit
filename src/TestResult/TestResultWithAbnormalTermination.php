@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
+use Paraunit\Parser\ValueObject\Test;
+
 class TestResultWithAbnormalTermination extends TestResultWithMessage
 {
-    /** @var string */
-    private $testOutput;
+    private string $testOutput = '';
 
-    public function __construct(string $testName)
+    public function __construct(Test $test)
     {
-        parent::__construct($testName, 'Possible abnormal termination, last test was ' . $testName);
-        $this->testOutput = '';
+        parent::__construct($test, 'Possible abnormal termination, last test was ' . $test->name);
     }
 
     public function getFailureMessage(): string
     {
         return parent::getFailureMessage() . "\n" . $this->testOutput;
-    }
-
-    public function getTestOutput(): string
-    {
-        return $this->testOutput;
     }
 
     public function setTestOutput(string $testOutput): void

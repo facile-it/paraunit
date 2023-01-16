@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Paraunit\Parser\JSON\TestHook;
+namespace Paraunit\Parser\TestHook;
 
-use Paraunit\Parser\JSON\Log;
+use Paraunit\Parser\ValueObject\TestStatus;
 use PHPUnit\Event\Test\MarkedIncomplete;
 use PHPUnit\Event\Test\MarkedIncompleteSubscriber;
 
@@ -12,6 +12,6 @@ class Incomplete extends AbstractTestHook implements MarkedIncompleteSubscriber
 {
     public function notify(MarkedIncomplete $event): void
     {
-        $this->write(Log::STATUS_INCOMPLETE, $event->test(), $event->throwable()->message());
+        $this->write(TestStatus::MarkedIncomplete, $event->test(), $event->throwable()->message());
     }
 }

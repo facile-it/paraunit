@@ -10,6 +10,7 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
@@ -20,24 +21,40 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 {
     /**
      * @dataProvider extensionProxiesProvider
-     *
-     * @param string[] $expected
      */
-    public function testGetExecutableWithDriverByExtension(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy, array $expected): void
+    public function testChooseCoverageDriver(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion, CoverageDriver $expected): void
+    {
+        $cli = new CommandLineWithCoverage(
+            $this->prophesize(PHPUnitBinFile::class)->reveal(),
+            $this->prophesize(ChunkSize::class)->reveal(),
+            $this->mockPcov($enablePcov),
+            $this->mockXdebug($enableXdebug, $xdebugVersion),
+            $this->mockPhpDbg(),
+            $this->prophesize(TempFilenameFactory::class)->reveal()
+        );
+
+        $this->assertEquals($expected, $cli->getCoverageDriver());
+    }
+
+    /**
+     * @dataProvider coverageDriverProvider
+     *
+     * @param array<string, string> $expected
+     */
+    public function testGetExecutableByDriver(CoverageDriver $coverageDriver, array $expected): void
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
         $phpunit->getPhpUnitBin()
             ->shouldBeCalled()
             ->willReturn('path/to/phpunit');
-        $tempFileNameFactory = $this->prophesize(TempFilenameFactory::class);
 
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
             $this->prophesize(ChunkSize::class)->reveal(),
-            $pcovProxy,
-            $xdebugProxy,
-            $this->prophesize(PHPDbgBinFile::class)->reveal(),
-            $tempFileNameFactory->reveal()
+            $this->mockPcov($coverageDriver === CoverageDriver::Pcov),
+            $this->mockXdebug($coverageDriver === CoverageDriver::Xdebug),
+            $this->mockPhpDbg(),
+            $this->prophesize(TempFilenameFactory::class)->reveal()
         );
 
         $this->assertEquals($expected, $cli->getExecutable());
@@ -65,30 +82,24 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
     public function testGetExecutableWithNoDriverAvailable(): void
     {
-        $phpunit = $this->prophesize(PHPUnitBinFile::class);
-        $phpunit->getPhpUnitBin()
-            ->shouldNotBeCalled();
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No coverage driver seems to be available');
 
-        $cli = new CommandLineWithCoverage(
-            $phpunit->reveal(),
+        new CommandLineWithCoverage(
+            $this->prophesize(PHPUnitBinFile::class)->reveal(),
             $this->prophesize(ChunkSize::class)->reveal(),
             $this->mockPcov(false),
             $this->mockXdebug(false),
             $this->mockPhpDbg(false),
             $this->prophesize(TempFilenameFactory::class)->reveal()
         );
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('No coverage driver');
-
-        $cli->getExecutable();
     }
 
     /**
      * @dataProvider extensionProxiesProvider
      * @dataProvider noExtensionsEnabledProvider
      */
-    public function testGetOptions(PcovProxy $pcovProxy, XDebugProxy $xdebugProxy): void
+    public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getPhpunitOption('stderr')->willReturn(null);
@@ -106,9 +117,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $cli = new CommandLineWithCoverage(
             $phpunit->reveal(),
             $this->mockChunkSize(false),
-            $pcovProxy,
-            $xdebugProxy,
-            $this->prophesize(PHPDbgBinFile::class)->reveal(),
+            $this->mockPcov($enablePcov),
+            $this->mockXdebug($enableXdebug, $xdebugVersion),
+            $this->mockPhpDbg(),
             $this->prophesize(TempFilenameFactory::class)->reveal()
         );
 
@@ -143,7 +154,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $phpunit->reveal(),
             $this->mockChunkSize(true),
             $this->prophesize(PcovProxy::class)->reveal(),
-            $this->prophesize(XDebugProxy::class)->reveal(),
+            $this->mockXdebug(true),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
             $this->prophesize(TempFilenameFactory::class)->reveal()
         );
@@ -166,7 +177,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->prophesize(PHPUnitBinFile::class)->reveal(),
             $this->prophesize(ChunkSize::class)->reveal(),
             $this->prophesize(PcovProxy::class)->reveal(),
-            $this->prophesize(XDebugProxy::class)->reveal(),
+            $this->mockXdebug(true),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
             $fileNameFactory->reveal()
         );
@@ -177,22 +188,33 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     }
 
     /**
-     * @return \Generator<array{PcovProxy, XDebugProxy, string[]}>
+     * @return \Generator<array{bool, bool, int|null, CoverageDriver}>
      */
-    public function extensionProxiesProvider(): \Generator
+    public static function extensionProxiesProvider(): \Generator
     {
-        yield [$this->mockPcov(true), $this->mockXdebug(true), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(true), $this->mockXdebug(false), ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
-        yield [$this->mockPcov(false), $this->mockXdebug(true, 3), ['php', '-d xdebug.mode=coverage', 'path/to/phpunit']];
-        yield [$this->mockPcov(false), $this->mockXdebug(true, 2), ['php', 'path/to/phpunit']];
+        yield 'Xdebug 3 + Pcov' => [true, true, 3, CoverageDriver::Xdebug];
+        yield 'Xdebug 2 + Pcov' => [true, true, 2, CoverageDriver::Pcov];
+        yield 'Pcov only' => [true, false, null, CoverageDriver::Pcov];
+        yield 'Xdebug only' => [false, true, null, CoverageDriver::Xdebug];
+        yield 'Xdebug off + Pcov off' => [false, false, null, CoverageDriver::PHPDbg];
     }
 
     /**
-     * @return \Generator<array{PcovProxy, XDebugProxy}>
+     * @return \Generator<array{CoverageDriver, string[]}>
      */
-    public function noExtensionsEnabledProvider(): \Generator
+    public static function coverageDriverProvider(): \Generator
     {
-        yield [$this->mockPcov(false), $this->mockXdebug(false, 3)];
+        yield [CoverageDriver::Xdebug, ['php', '-d pcov.enabled=0', 'path/to/phpunit']];
+        yield [CoverageDriver::Pcov, ['php', '-d pcov.enabled=1', 'path/to/phpunit']];
+        yield [CoverageDriver::PHPDbg, ['/path/to/phpdbg', '-qrr', 'path/to/phpunit']];
+    }
+
+    /**
+     * @return \Generator<array{bool, bool, int|null}>
+     */
+    public static function noExtensionsEnabledProvider(): \Generator
+    {
+        yield [false, false, null];
     }
 
     private function mockPHPUnit(): PHPUnitBinFile
@@ -224,8 +246,10 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         return $pcovProxy->reveal();
     }
 
-    private function mockXdebug(bool $enabled, int $majorVersion = 3): XDebugProxy
+    private function mockXdebug(bool $enabled, ?int $majorVersion = null): XDebugProxy
     {
+        $majorVersion ??= 3;
+
         $xdebugProxy = $this->prophesize(XDebugProxy::class);
         $xdebugProxy->isLoaded()
             ->willReturn($enabled);
@@ -235,7 +259,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         return $xdebugProxy->reveal();
     }
 
-    private function mockPhpDbg(bool $enabled): PHPDbgBinFile
+    private function mockPhpDbg(bool $enabled = true): PHPDbgBinFile
     {
         $phpDbg = $this->prophesize(PHPDbgBinFile::class);
         $phpDbg->isAvailable()

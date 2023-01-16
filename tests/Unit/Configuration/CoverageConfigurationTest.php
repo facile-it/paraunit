@@ -170,7 +170,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     /**
      * @return string[][]
      */
-    public function cliOptionsProvider(): array
+    public static function cliOptionsProvider(): array
     {
         return [
             ['clover', Clover::class],

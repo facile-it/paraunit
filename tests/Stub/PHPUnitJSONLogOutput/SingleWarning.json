@@ -1,26 +1,29 @@
 {
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreen"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
-  "status": "testStart",
+  "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-  "status": "successful",
+  "status": "Passed",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
 }{
-  "status": "testStart",
-  "test": "Warning"
+  "status": "Prepared",
+  "test": "WarningTriggered"
 }{
-  "status": "warning",
-  "test": "Warning",
+  "status": "WarningTriggered",
+  "test": "WarningTriggered",
   "message": "The data provider specified for Tests\\Stub\\ThreeGreenTestStub::testWarning is invalid.\nReflectionException: Trying to invoke private method Tests\\Stub\\ThreeGreenTestStub::someInvalidProvider() from scope ReflectionMethod\n"
+}{
+  "status": "Passed",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testWarning"
 }

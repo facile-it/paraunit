@@ -52,7 +52,7 @@ class TextSummaryTest extends BaseUnitTestCase
     /**
      * @return (bool|string)[][]
      */
-    public function colorProvider(): array
+    public static function colorProvider(): array
     {
         return [
             [false, 'Code Coverage Report Summary:'],

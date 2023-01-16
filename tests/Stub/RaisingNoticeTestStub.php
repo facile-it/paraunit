@@ -17,7 +17,7 @@ class RaisingNoticeTestStub extends TestCase
         $this->fail();
     }
 
-    public function errorProvider(): array
+    public static function errorProvider(): array
     {
         return [
             ['YOU SHOULD NOT SEE THIS -- E_USER_NOTICE', E_USER_NOTICE],

@@ -67,8 +67,7 @@ class TestResultDefinition
                 'fail',
                 'failures',
             ]),
-            'warning' => new Definition(TestResultWithSymbolFormat::class, [
-                'W',
+            'warning' => new Definition(TestResultFormat::class, [
                 'warning',
                 'warnings',
             ]),

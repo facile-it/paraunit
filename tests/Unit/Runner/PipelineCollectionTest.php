@@ -117,7 +117,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
     /**
      * @return bool[][]
      */
-    public function pipelineStateProvider(): array
+    public static function pipelineStateProvider(): array
     {
         return [
             [false, false],

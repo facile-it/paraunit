@@ -31,7 +31,7 @@ class FakeDriverTest extends TestCase
     /**
      * @return \Generator<string[]>
      */
-    public function methodNameProvider(): \Generator
+    public static function methodNameProvider(): \Generator
     {
         yield ['start'];
         yield ['stop'];

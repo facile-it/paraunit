@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Parser\JSON;
 
 use Paraunit\Parser\JSON\GenericParser;
-use Paraunit\Parser\JSON\Log;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultWithMessage;
 use Prophecy\Argument;
@@ -18,12 +20,12 @@ class GenericParserTest extends BaseUnitTestCase
      * @dataProvider matchesProvider
      */
     public function testParsingFoundResult(
-        string $statusToMatch,
-        string $status,
+        TestStatus $statusToMatch,
+        TestStatus $status,
         bool $shouldMatch
     ): void {
-        $log = new Log($status, 'b', 'c');
-        $result = new TestResultWithMessage('b', 'c');
+        $log = new LogData($status, new Test('b'), 'c');
+        $result = new TestResultWithMessage(new Test('b'), 'c');
 
         $resultContainer = $this->prophesize(TestResultContainer::class);
         $resultContainer->handleTestResult(Argument::cetera())
@@ -45,13 +47,13 @@ class GenericParserTest extends BaseUnitTestCase
     }
 
     /**
-     * @return (string|null|bool)[][]
+     * @return array{TestStatus, TestStatus, bool}[]
      */
-    public function matchesProvider(): array
+    public static function matchesProvider(): array
     {
         return [
-            ['error', 'error', true],
-            ['error', 'pass', false],
+            [TestStatus::Errored, TestStatus::Errored, true],
+            [TestStatus::Errored, TestStatus::Passed, false],
         ];
     }
 }

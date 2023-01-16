@@ -6,6 +6,7 @@ namespace Tests\Unit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Parser\ValueObject\Test;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
@@ -37,7 +38,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name');
+        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
@@ -55,7 +56,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name');
+        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
@@ -73,7 +74,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestResultWithAbnormalTermination('function name');
+        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);

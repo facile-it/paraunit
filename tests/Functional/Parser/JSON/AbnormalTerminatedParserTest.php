@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Tests\Functional\Parser\JSON;
 
 use Paraunit\Parser\JSON\AbnormalTerminatedParser;
-use Paraunit\Parser\JSON\Log;
-use Paraunit\Parser\JSON\LogFetcher;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\TestResult\NullTestResult;
 use Paraunit\TestResult\TestResultWithAbnormalTermination;
 use Tests\BaseFunctionalTestCase;
@@ -17,8 +18,8 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     public function testHandleLogItemWithAbnormalTermination(): void
     {
         $process = new StubbedParaunitProcess();
-        $logStart = new Log(Log::STATUS_TEST_START, __METHOD__, null);
-        $logEnding = new Log(LogFetcher::LOG_ENDING_STATUS, __METHOD__, null);
+        $logStart = new LogData(TestStatus::Prepared, new Test('Foo'), null);
+        $logEnding = new LogData(TestStatus::LogTerminated, Test::unknown(), null);
         /** @var AbnormalTerminatedParser $parser */
         $parser = $this->getService(AbnormalTerminatedParser::class);
 
@@ -36,10 +37,10 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     /**
      * @dataProvider otherStatusesProvider
      */
-    public function testHandleLogItemWithUncaughtLog(string $otherStatuses): void
+    public function testHandleLogItemWithUncaughtLog(TestStatus $otherStatuses): void
     {
         $process = new StubbedParaunitProcess();
-        $log = new Log($otherStatuses, __METHOD__, null);
+        $log = new LogData($otherStatuses, new Test('Foo'), null);
         /** @var AbnormalTerminatedParser $parser */
         $parser = $this->getService(AbnormalTerminatedParser::class);
 
@@ -49,17 +50,16 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return string[][]
+     * @return \Generator<array{TestStatus}>
      */
-    public function otherStatusesProvider(): array
+    public static function otherStatusesProvider(): \Generator
     {
-        return [
-            ['error'],
-            ['fail'],
-            ['pass'],
-            ['suiteStart'],
-            ['qwerty'],
-            ['trollingYou'],
-        ];
+        foreach (TestStatus::cases() as $status) {
+            if (in_array($status, [TestStatus::Prepared, TestStatus::LogTerminated], true)) {
+                continue;
+            }
+
+            yield [$status];
+        }
     }
 }

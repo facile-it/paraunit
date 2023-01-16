@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace Paraunit\Parser\JSON;
 
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\MuteTestResult;
 
 class RetryParser
 {
-    /** @var TestResultHandlerInterface */
-    private $testResultContainer;
+    private readonly string $regexPattern;
 
-    /** @var int */
-    private $maxRetryCount;
-
-    /** @var string */
-    private $regexPattern;
-
-    public function __construct(TestResultHandlerInterface $testResultContainer, int $maxRetryCount = 3)
-    {
-        $this->testResultContainer = $testResultContainer;
-        $this->maxRetryCount = $maxRetryCount;
-
+    public function __construct(
+        private readonly TestResultHandlerInterface $testResultContainer,
+        private readonly int $maxRetryCount = 3
+    ) {
         $patterns = [
             'The EntityManager is closed',
             // MySQL
@@ -40,7 +34,7 @@ class RetryParser
     }
 
     /**
-     * @param Log[] $logs
+     * @param LogData[] $logs
      */
     public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
     {
@@ -51,7 +45,7 @@ class RetryParser
         foreach ($logs as $logItem) {
             if ($this->containsRetryableError($logItem)) {
                 $process->markAsToBeRetried();
-                $testResult = new MuteTestResult($logItem->getTest());
+                $testResult = new MuteTestResult($logItem->test);
                 $this->testResultContainer->handleTestResult($process, $testResult);
 
                 return true;
@@ -61,13 +55,11 @@ class RetryParser
         return false;
     }
 
-    private function containsRetryableError(Log $log): bool
+    private function containsRetryableError(LogData $log): bool
     {
-        $message = $log->getMessage();
-
-        return $log->getStatus() === Log::STATUS_ERROR
-            && $message
-            && preg_match($this->regexPattern, $message);
+        return $log->status === TestStatus::Errored
+            && $log->message
+            && preg_match($this->regexPattern, $log->message);
     }
 
     /**

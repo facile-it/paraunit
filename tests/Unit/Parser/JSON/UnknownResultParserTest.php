@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Parser\JSON;
 
-use Paraunit\Parser\JSON\Log;
 use Paraunit\Parser\JSON\UnknownResultParser;
+use Paraunit\Parser\ValueObject\LogData;
+use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -16,34 +18,26 @@ class UnknownResultParserTest extends BaseUnitTestCase
     /**
      * @dataProvider statusesProvider
      */
-    public function testHandleLogItemShouldCatchAnything(string $statuses): void
+    public function testHandleLogItemShouldCatchAnything(TestStatus $status): void
     {
-        $log = new Log($statuses, 'test', 'message');
+        $log = new LogData($status, new Test('test'), 'message');
 
         $resultContainer = $this->prophesize(TestResultHandlerInterface::class);
         $resultContainer->handleTestResult(Argument::cetera())
             ->shouldBeCalled();
 
-        $parser = new UnknownResultParser($resultContainer->reveal(), 'no-status-required');
+        $parser = new UnknownResultParser($resultContainer->reveal());
+
         $this->assertNotNull($parser->handleLogItem(new StubbedParaunitProcess(), $log));
     }
 
     /**
-     * @return string[][]
+     * @return \Generator<array{TestStatus}>
      */
-    public function statusesProvider(): array
+    public static function statusesProvider(): \Generator
     {
-        return [
-            [Log::STATUS_SUCCESSFUL],
-            [Log::STATUS_TEST_START],
-            [Log::STATUS_ERROR],
-            [Log::STATUS_FAILURE],
-            [Log::STATUS_INCOMPLETE],
-            [Log::STATUS_RISKY],
-            [Log::STATUS_SKIPPED],
-            [Log::STATUS_SUCCESSFUL],
-            ['qwerty'],
-            ['trollingYou'],
-        ];
+        foreach (TestStatus::cases() as $status) {
+            yield [$status];
+        }
     }
 }

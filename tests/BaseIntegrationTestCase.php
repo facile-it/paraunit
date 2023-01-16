@@ -50,11 +50,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function tearDown(): void
     {
-        try {
-            $this->cleanUpTempDirForThisExecution();
-        } catch (\Throwable $exception) {
-            $this->addWarning('Error while cleaning up temp folders: ' . $exception->getMessage());
-        }
+        $this->cleanUpTempDirForThisExecution();
 
         parent::tearDown();
     }
@@ -130,9 +126,13 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     }
 
     /**
-     * @return object
+     * @template T of object
+     *
+     * @param string|class-string<T> $serviceName
+     *
+     * @return ($serviceName is class-string ? T : object)
      */
-    public function getService(string $serviceName)
+    public function getService(string $serviceName): object
     {
         if (! $this->container) {
             throw new \RuntimeException('Container not ready');
