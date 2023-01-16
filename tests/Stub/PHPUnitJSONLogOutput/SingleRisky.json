@@ -14,6 +14,9 @@
   "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testRisky"
 }{
+  "status": "Passed",
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testRisky"
+}{
   "status": "ConsideredRisky",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testRisky",
   "message": "This test did not perform any assertions\n\n\/home\/paraunit\/projects\/tests\/Stub\/ThreeGreenTestStub.php:21"
