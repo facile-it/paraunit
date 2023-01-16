@@ -6,6 +6,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="psalm-baseline.xml"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src" />
@@ -18,4 +19,12 @@
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
     </plugins>
+    
+    <issueHandlers>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="PHPUnit\Event\Facade::registerSubscriber" />
+            </errorLevel>
+        </InternalMethod>
+    </issueHandlers>
 </psalm>
