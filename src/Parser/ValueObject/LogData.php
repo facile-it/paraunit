@@ -21,10 +21,14 @@ class LogData implements \JsonSerializable
     }
 
     /**
-     * @psalm-assert array{status: string, test: string, message: string|null} $log
+     * @psalm-assert array{status: string, test: string, message?: string|null} $log
      */
     private static function validateLogFormat(mixed $log): void
     {
+        if (! is_array($log)) {
+            throw new \InvalidArgumentException('Expecting array from log entry, got ' . get_debug_type($log));
+        }
+
         if (! isset($log['status'], $log['test'])) {
             throw new \InvalidArgumentException('Missing fields in Paraunit logs');
         }
@@ -79,6 +83,10 @@ class LogData implements \JsonSerializable
         $lastTest = null;
 
         try {
+            if (! is_array($decodedLogs)) {
+                throw new \InvalidArgumentException('Expecting array from json_decode, got ' . get_debug_type($decodedLogs));
+            }
+
             foreach ($decodedLogs as $log) {
                 self::validateLogFormat($log);
 

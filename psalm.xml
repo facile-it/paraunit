@@ -18,4 +18,12 @@
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
     </plugins>
+    
+    <issueHandlers>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="PHPUnit\Event\Facade::registerSubscriber" />
+            </errorLevel>
+        </InternalMethod>
+    </issueHandlers>
 </psalm>
