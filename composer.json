@@ -48,6 +48,7 @@
         "phpunit/php-invoker": "^4.0",
         "psalm/plugin-phpunit": "^0.16.1",
         "psalm/plugin-symfony": "^3.1",
+        "rector/rector": "^0.15",
         "symfony/expression-language": "^4.4||^5.0||^6.0",
         "symfony/phpunit-bridge": "^6.1",
         "vimeo/psalm": "dev-allow-diff-5 as 4.23.1"

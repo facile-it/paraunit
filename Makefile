@@ -13,7 +13,10 @@ start:
 composer-install: start
 	docker-compose exec php composer install
 
-pre-commit-check: cs-fix psalm phpstan tests
+pre-commit-check: rector cs-fix psalm phpstan tests
+
+rector: start
+	docker-compose exec php bin/php-cs-fixer fix --verbose --ansi
 
 cs-fix: start
 	docker-compose exec php bin/php-cs-fixer fix --verbose --ansi
