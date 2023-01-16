@@ -19,10 +19,11 @@ class WarningParser extends GenericParser
 
     public function handleLogItem(AbstractParaunitProcess $process, LogData $logItem): ?TestResultInterface
     {
-        if (parent::handleLogItem($process, $logItem)) {
+        $testResult = parent::handleLogItem($process, $logItem);
+        if ($testResult) {
             $process->setWaitingForTestResult(true);
         }
 
-        return null;
+        return $testResult;
     }
 }

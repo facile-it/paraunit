@@ -88,6 +88,32 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('Executed: 15 test classes (21 retried), 29 tests', $output);
     }
 
+    public function testExecutionWithWarning(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            'stringFilter' => 'warning',
+            '--configuration' => $this->getConfigForStubs(),
+        ]);
+
+        $output = $commandTester->getDisplay();
+
+        $this->assertStringNotContainsString('BBBBbBBBBBBB', $output, 'Shark logo shown but not required');
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringNotContainsString('UNKNOWN RESULTS', $output);
+        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
+        $this->assertStringContainsString('WARNINGS', $output);
+        $this->assertStringContainsString('This is an intentional warning', $output);
+        $this->assertStringContainsString(IntentionalWarningTestStub::class, $output);
+        $this->assertEquals(0, $exitCode);
+        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output);
+    }
+
     public function testExecutionWithLogo(): void
     {
         $configurationPath = $this->getConfigForStubs();
