@@ -146,7 +146,7 @@ class Filter
         string $defaultValue = null
     ): string {
         /** @psalm-suppress RedundantCondition */
-        if ($testSuiteNode->attributes) {
+        if ($testSuiteNode->attributes !== null) {
             foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
                 if ($attrName === $nodeName) {
                     return $attrNode->value;

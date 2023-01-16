@@ -20,7 +20,7 @@ class WarningParser extends GenericParser
     public function handleLogItem(AbstractParaunitProcess $process, LogData $logItem): ?TestResultInterface
     {
         $testResult = parent::handleLogItem($process, $logItem);
-        if ($testResult) {
+        if ($testResult !== null) {
             $process->setWaitingForTestResult(true);
         }
 

@@ -35,13 +35,9 @@ class FilesRecapPrinter extends AbstractFinalPrinter implements EventSubscriberI
         }
 
         $filenames = $testResultContainer->getFileNames();
-        if ($this->chunkSize->isChunked()) {
-            $fileTitle = 'chunks';
-        } else {
-            $fileTitle = 'files';
-        }
+        $fileTitle = $this->chunkSize->isChunked() ? 'chunks' : 'files';
 
-        if (count($filenames)) {
+        if (count($filenames) > 0) {
             $tag = $testResultContainer->getTestResultFormat()->getTag();
             $title = $testResultContainer->getTestResultFormat()->getTitle();
             $this->getOutput()->writeln('');

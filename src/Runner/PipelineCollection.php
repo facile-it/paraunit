@@ -64,7 +64,7 @@ class PipelineCollection
         $processes = [];
         foreach ($this->pipelines as $pipeline) {
             $process = $pipeline->getProcess();
-            if ($process) {
+            if ($process !== null) {
                 $processes[] = $process;
             }
         }

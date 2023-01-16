@@ -88,11 +88,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 
         $this->getOutput()->writeln('');
         $executedNum = $this->processCompleted - $this->processRetried;
-        if ($this->chunkSize->isChunked()) {
-            $executedTitle = 'chunks';
-        } else {
-            $executedTitle = 'test classes';
-        }
+        $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
         $this->getOutput()->write(sprintf("Executed: %d $executedTitle", $executedNum));
         if ($this->processRetried > 0) {
             $this->getOutput()->write(sprintf(' (%d retried)', $this->processRetried));

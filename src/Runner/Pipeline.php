@@ -38,7 +38,7 @@ class Pipeline
 
     public function isTerminated(): bool
     {
-        if ($this->process) {
+        if ($this->process !== null) {
             return $this->process->isTerminated();
         }
 
@@ -72,7 +72,7 @@ class Pipeline
 
     private function handleProcessTermination(): void
     {
-        if ($this->process) {
+        if ($this->process !== null) {
             $this->dispatcher->dispatch(new ProcessTerminated($this->process));
             $this->process = null;
         }

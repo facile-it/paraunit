@@ -39,7 +39,7 @@ class ChunkFile
         $nodeList = iterator_to_array($nodeList);
         $testSuitesNode = array_shift($nodeList);
 
-        if (null === $testSuitesNode) {
+        if (! $testSuitesNode instanceof \DOMNode) {
             throw new \InvalidArgumentException('Expecting \DOMElement, got null');
         }
 

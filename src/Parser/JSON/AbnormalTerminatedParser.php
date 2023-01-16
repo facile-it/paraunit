@@ -58,11 +58,9 @@ class AbnormalTerminatedParser extends GenericParser
             return;
         }
 
-        if ($this->chunkSize->isChunked()) {
-            $suiteName = basename($process->getFilename());
-        } else {
-            $suiteName = explode('::', $logItem->test->name)[0];
-        }
+        $suiteName = $this->chunkSize->isChunked() 
+            ? basename($process->getFilename()) 
+            : explode('::', $logItem->test->name)[0];
 
         $process->setTestClassName($suiteName);
     }

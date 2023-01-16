@@ -66,7 +66,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function cleanUpTempDirForThisExecution(): void
     {
-        if ($this->container) {
+        if ($this->container !== null) {
             /** @var TempDirectory $tempDirectory */
             $tempDirectory = $this->getService(TempDirectory::class);
             Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
@@ -131,7 +131,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      */
     public function getService(string $serviceName): object
     {
-        if (! $this->container) {
+        if ($this->container === null) {
             throw new \RuntimeException('Container not ready');
         }
 
@@ -146,7 +146,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function getParameter(string $parameterName): bool|int|float|string
     {
-        if ($this->container) {
+        if ($this->container !== null) {
             $unitEnum = $this->container->getParameter($parameterName);
             $this->assertIsScalar($unitEnum);
 

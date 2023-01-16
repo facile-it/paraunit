@@ -30,7 +30,7 @@ abstract class AbstractText implements CoverageProcessorInterface
     {
         $coverageResults = $this->text->process($codeCoverage, $this->showColors);
 
-        if ($this->targetFile) {
+        if ($this->targetFile !== null) {
             file_put_contents($this->targetFile->getFilePath(), $coverageResults);
         } else {
             $this->output->writeln($coverageResults);

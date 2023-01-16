@@ -87,8 +87,8 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     ): void {
         $tag = $this->testResultFormat->getTag();
 
-        $output = $this->config->getPhpunitOption('stderr') ?
-            $process->getErrorOutput()
+        $output = $this->config->getPhpunitOption('stderr') !== null 
+            ? $process->getErrorOutput()
             : $process->getOutput();
 
         $output = $output ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);

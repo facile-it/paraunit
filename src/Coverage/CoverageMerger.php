@@ -50,7 +50,7 @@ class CoverageMerger implements EventSubscriberInterface
 
     public function getCoverageData(): CodeCoverage
     {
-        if ($this->coverageData) {
+        if ($this->coverageData !== null) {
             return $this->coverageData;
         }
 
