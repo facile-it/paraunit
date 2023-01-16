@@ -76,7 +76,6 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "bin-dir": "bin",
         "allow-plugins": {
             "facile-it/facile-coding-standard": true,
             "phpstan/extension-installer": true
@@ -91,11 +90,6 @@
         "psr-4": {
             "Tests\\": "tests"
         }
-    },
-    "scripts": {
-        "phpstan": "phpstan analyse",
-        "cs-check": "php -n bin/php-cs-fixer fix --dry-run --diff",
-        "cs-fix": "php -n bin/php-cs-fixer fix"
     },
     "minimum-stability": "dev",
     "extra": {
