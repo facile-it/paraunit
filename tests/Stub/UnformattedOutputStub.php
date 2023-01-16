@@ -10,11 +10,6 @@ class UnformattedOutputStub extends Output
 {
     private string $buffer = '';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getOutput(): string
     {
         return $this->buffer;

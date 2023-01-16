@@ -26,7 +26,7 @@ class RiskyParserTest extends BaseUnitTestCase
         $resultContainer = $this->prophesize(TestResultContainer::class);
         $methodProphecy = $resultContainer->handleTestResult($process, Argument::allOf(
             Argument::type(TestResultWithMessage::class),
-            Argument::that(fn (TestResultWithMessage $result) => $result->getFailureMessage() === 'Risky message')
+            Argument::that(fn (TestResultWithMessage $result): bool => $result->getFailureMessage() === 'Risky message')
         ));
         $methodProphecy->shouldNotBeCalled();
 

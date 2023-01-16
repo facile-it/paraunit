@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+namespace Paraunit\Configuration;
+
 use Paraunit\Parser\TestHook\BeforeTest;
 use Paraunit\Parser\TestHook\Error;
 use Paraunit\Parser\TestHook\Failure;
@@ -14,7 +17,6 @@ use PHPUnit\Event\Facade;
 // TODO - wait for feedback and refactor accordingly
 // see https://github.com/sebastianbergmann/phpunit/issues/4807
 // or  https://github.com/sebastianbergmann/phpunit/issues/4676
-
 Facade::registerSubscriber(new BeforeTest());
 Facade::registerSubscriber(new Error());
 Facade::registerSubscriber(new Failure());

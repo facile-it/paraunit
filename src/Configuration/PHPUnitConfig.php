@@ -53,9 +53,6 @@ class PHPUnitConfig
         return $this->phpunitOptions;
     }
 
-    /**
-     * @return PHPUnitOption
-     */
     public function getPhpunitOption(string $name): ?PHPUnitOption
     {
         return $this->phpunitOptions[$name] ?? null;

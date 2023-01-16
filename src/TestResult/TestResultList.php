@@ -9,10 +9,6 @@ class TestResultList
     /** @var TestResultContainer[] */
     private array $testResultContainers = [];
 
-    public function __construct()
-    {
-    }
-
     public function addContainer(TestResultContainer $container): void
     {
         $this->testResultContainers[] = $container;

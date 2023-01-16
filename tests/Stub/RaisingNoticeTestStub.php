@@ -11,7 +11,7 @@ class RaisingNoticeTestStub extends TestCase
     /**
      * @dataProvider errorProvider
      */
-    public function testRaise($errorMessage, $errorLevel): never
+    public function testRaise(string $errorMessage, int $errorLevel): never
     {
         trigger_error($errorMessage, $errorLevel);
         $this->fail();

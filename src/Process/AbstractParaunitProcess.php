@@ -16,20 +16,15 @@ abstract class AbstractParaunitProcess extends AbstractInfo
 
     protected string $uniqueId;
 
-    /** @var string */
-    protected $filename;
-
-    /** @var string|null */
-    protected $testClassName = null;
+    protected ?string $testClassName = null;
 
     /** @var PrintableTestResultInterface[] */
     protected array $testResults = [];
 
     private bool $waitingForTestResult = true;
 
-    public function __construct(string $filename)
+    public function __construct(protected string $filename)
     {
-        $this->filename = $filename;
         $this->uniqueId = md5($this->filename);
     }
 

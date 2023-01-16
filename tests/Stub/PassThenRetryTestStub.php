@@ -16,7 +16,7 @@ class PassThenRetryTestStub extends BrokenTestBase implements BrokenTestInterfac
         $this->fail();
     }
 
-    public function testPass2()
+    public function testPass2(): void
     {
         $this->assertTrue(true);
     }

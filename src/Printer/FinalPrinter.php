@@ -10,7 +10,6 @@ use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -84,9 +83,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     {
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
-            if ($container instanceof TestResultContainerInterface) {
-                $testsCount += $container->countTestResults();
-            }
+            $testsCount += $container->countTestResults();
         }
 
         $this->getOutput()->writeln('');

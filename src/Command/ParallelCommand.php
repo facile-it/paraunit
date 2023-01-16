@@ -16,13 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ParallelCommand extends Command
 {
-    /** @var ParallelConfiguration */
-    protected $configuration;
-
     /** @var PHPUnitOption[] */
     private readonly array $phpunitOptions;
 
-    public function __construct(ParallelConfiguration $configuration)
+    public function __construct(protected ParallelConfiguration $configuration)
     {
         $this->phpunitOptions = [
             new PHPUnitOption('whitelist'),
@@ -66,7 +63,6 @@ class ParallelCommand extends Command
         ];
 
         parent::__construct();
-        $this->configuration = $configuration;
     }
 
     protected function configure(): void

@@ -12,7 +12,6 @@ class Filter
 {
     private readonly Loader $xmlLoader;
 
-    /** @var string | null */
     private readonly string $relativePath;
 
     public function __construct(
@@ -166,7 +165,7 @@ class Filter
     private function filterByString(array $aggregatedFiles, ?string $stringFilter): array
     {
         if ($stringFilter !== null) {
-            $aggregatedFiles = array_filter($aggregatedFiles, fn ($value) => stripos((string) $value, $stringFilter) !== false);
+            $aggregatedFiles = array_filter($aggregatedFiles, fn ($value): bool => stripos($value, $stringFilter) !== false);
         }
 
         return array_values($aggregatedFiles);

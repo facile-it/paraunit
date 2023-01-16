@@ -22,8 +22,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 {
     private ?ContainerBuilder $container = null;
 
-    /** @var ParallelConfiguration */
-    protected $configuration;
+    protected ParallelConfiguration $configuration;
 
     /** @var string */
     protected $textFilter;
@@ -145,11 +144,13 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $service;
     }
 
-    public function getParameter(string $parameterName): int|string
+    protected function getParameter(string $parameterName): bool|int|float|string
     {
         if ($this->container) {
-            /** @var int|string */
-            return $this->container->getParameter($parameterName);
+            $unitEnum = $this->container->getParameter($parameterName);
+            $this->assertIsScalar($unitEnum);
+
+            return $unitEnum;
         }
 
         throw new \RuntimeException('Container not ready');

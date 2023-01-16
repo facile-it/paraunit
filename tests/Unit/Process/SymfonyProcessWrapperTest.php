@@ -27,7 +27,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
             ->shouldBeCalledTimes(1);
         $process->getEnv()
             ->willReturn([]);
-        $process->setEnv(Argument::that(function ($envVariables) {
+        $process->setEnv(Argument::that(function ($envVariables): bool {
             $this->assertArrayHasKey(EnvVariables::PROCESS_UNIQUE_ID, $envVariables);
             $this->assertArrayHasKey(EnvVariables::PIPELINE_NUMBER, $envVariables);
             $this->assertEquals(4, $envVariables[EnvVariables::PIPELINE_NUMBER]);

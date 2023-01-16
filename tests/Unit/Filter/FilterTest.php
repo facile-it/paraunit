@@ -11,8 +11,7 @@ use Tests\BaseUnitTestCase;
 
 class FilterTest extends BaseUnitTestCase
 {
-    /** @var string|null */
-    private string $absoluteConfigBaseDir = null;
+    private string $absoluteConfigBaseDir;
 
     protected function setUp(): void
     {

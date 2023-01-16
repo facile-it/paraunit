@@ -65,10 +65,7 @@ class Pipeline
         return $this->number;
     }
 
-    /**
-     * @return AbstractParaunitProcess|null
-     */
-    public function getProcess()
+    public function getProcess(): ?AbstractParaunitProcess
     {
         return $this->process;
     }

@@ -15,7 +15,7 @@ class PHPUnitBinFile
     /**
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    private ?string $phpUnitBin = null;
+    private string $phpUnitBin;
 
     /**
      * @throws \RuntimeException If PHPUnit is not found

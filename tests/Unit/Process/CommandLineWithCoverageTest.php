@@ -129,7 +129,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
 
-        $extensions = array_filter($options, static fn (string $a) => str_starts_with($a, '--extensions'));
+        $extensions = array_filter($options, static fn (string $a): bool => str_starts_with($a, '--extensions'));
         $this->assertCount(0, $extensions, '--extensions should no longer be used');
     }
 
