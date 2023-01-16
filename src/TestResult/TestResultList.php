@@ -7,12 +7,7 @@ namespace Paraunit\TestResult;
 class TestResultList
 {
     /** @var TestResultContainer[] */
-    private $testResultContainers;
-
-    public function __construct()
-    {
-        $this->testResultContainers = [];
-    }
+    private array $testResultContainers = [];
 
     public function addContainer(TestResultContainer $container): void
     {

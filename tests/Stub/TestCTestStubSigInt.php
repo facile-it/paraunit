@@ -8,5 +8,6 @@ class TestCTestStubSigInt extends BrokenTestBase implements BrokenTestInterface
 {
     public function testBrokenTest(): void
     {
+        // noop
     }
 }

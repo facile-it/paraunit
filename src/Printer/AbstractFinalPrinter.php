@@ -10,20 +10,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractFinalPrinter extends AbstractPrinter
 {
-    /** @var TestResultList */
-    protected $testResultList;
-
-    /** @var ChunkSize */
-    protected $chunkSize;
-
     public function __construct(
-        TestResultList $testResultList,
+        protected TestResultList $testResultList,
         OutputInterface $output,
-        ChunkSize $chunkSize
+        protected ChunkSize $chunkSize
     ) {
         parent::__construct($output);
-        $this->testResultList = $testResultList;
-        $this->chunkSize = $chunkSize;
     }
 
     abstract public function onEngineEnd(): void;

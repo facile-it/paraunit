@@ -10,16 +10,11 @@ use SebastianBergmann\CodeCoverage\Report\PHP as PHPUnitPhp;
 
 class Php implements CoverageProcessorInterface
 {
-    /** @var PHPUnitPhp */
-    private $php;
+    private readonly PHPUnitPhp $php;
 
-    /** @var OutputFile */
-    private $targetFile;
-
-    public function __construct(OutputFile $targetFile)
+    public function __construct(private readonly OutputFile $targetFile)
     {
         $this->php = new PHPUnitPhp();
-        $this->targetFile = $targetFile;
     }
 
     /**

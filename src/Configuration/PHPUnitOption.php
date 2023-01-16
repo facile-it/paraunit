@@ -6,23 +6,13 @@ namespace Paraunit\Configuration;
 
 class PHPUnitOption
 {
-    /** @var string */
-    private $name;
+    private ?string $value = null;
 
-    /** @var string|null */
-    private $shortName;
-
-    /** @var string|null */
-    private $value;
-
-    /** @var bool */
-    private $hasValue;
-
-    public function __construct(string $name, bool $hasValue = true, string $shortName = null)
-    {
-        $this->name = $name;
-        $this->hasValue = $hasValue;
-        $this->shortName = $shortName;
+    public function __construct(
+        private readonly string $name,
+        private readonly bool $hasValue = true,
+        private readonly ?string $shortName = null
+    ) {
     }
 
     public function getName(): string
@@ -35,9 +25,6 @@ class PHPUnitOption
         return $this->shortName;
     }
 
-    /**
-     * @param string $value
-     */
     public function setValue(string $value = null): void
     {
         $this->value = $value;

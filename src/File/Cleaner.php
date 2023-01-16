@@ -10,12 +10,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Cleaner implements EventSubscriberInterface
 {
-    /** @var TempDirectory */
-    private $tempDirectory;
-
-    public function __construct(TempDirectory $tempDirectory)
+    public function __construct(private readonly TempDirectory $tempDirectory)
     {
-        $this->tempDirectory = $tempDirectory;
     }
 
     /**

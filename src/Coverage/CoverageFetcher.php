@@ -14,16 +14,10 @@ use Symfony\Component\Process\Process;
 
 class CoverageFetcher
 {
-    /** @var TempFilenameFactory */
-    private $tempFilenameFactory;
-
-    /** @var TestResultHandlerInterface */
-    private $resultHandler;
-
-    public function __construct(TempFilenameFactory $tempFilenameFactory, TestResultHandlerInterface $failureHandler)
-    {
-        $this->tempFilenameFactory = $tempFilenameFactory;
-        $this->resultHandler = $failureHandler;
+    public function __construct(
+        private readonly TempFilenameFactory $tempFilenameFactory,
+        private readonly TestResultHandlerInterface $resultHandler
+    ) {
     }
 
     public function fetch(AbstractParaunitProcess $process): CodeCoverage
@@ -57,7 +51,7 @@ class CoverageFetcher
             $verificationProcess->run();
 
             return $verificationProcess->getExitCode() === 0;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }

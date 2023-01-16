@@ -21,55 +21,29 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Runner implements EventSubscriberInterface
 {
-    /** @var ProcessFactoryInterface */
-    private $processFactory;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var Filter */
-    private $filter;
-
-    /** @var PipelineCollection */
-    private $pipelineCollection;
-
-    /** @var ChunkSize */
-    private $chunkSize;
-
-    /** @var ChunkFile */
-    private $chunkFile;
-
     /** @var \SplQueue<AbstractParaunitProcess> */
-    private $queuedProcesses;
+    private readonly \SplQueue $queuedProcesses;
 
-    /** @var int */
-    private $exitCode;
+    private int $exitCode = 0;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        ProcessFactoryInterface $processFactory,
-        Filter $filter,
-        PipelineCollection $pipelineCollection,
-        ChunkSize $chunkSize,
-        ChunkFile $chunkFile
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ProcessFactoryInterface $processFactory,
+        private readonly Filter $filter,
+        private readonly PipelineCollection $pipelineCollection,
+        private readonly ChunkSize $chunkSize,
+        private readonly ChunkFile $chunkFile
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->processFactory = $processFactory;
-        $this->filter = $filter;
-        $this->pipelineCollection = $pipelineCollection;
-        $this->chunkSize = $chunkSize;
-        $this->chunkFile = $chunkFile;
         /**
          * @psalm-suppress MixedPropertyTypeCoercion
          *
          * @see https://github.com/vimeo/psalm/issues/8103
          */
         $this->queuedProcesses = new \SplQueue();
-        $this->exitCode = 0;
 
         if (function_exists('pcntl_async_signals') && function_exists('pcntl_signal')) {
             pcntl_async_signals(true);
-            pcntl_signal(SIGINT, [$this, 'onShutdown']);
+            pcntl_signal(SIGINT, $this->onShutdown(...));
         }
     }
 
@@ -169,7 +143,7 @@ class Runner implements EventSubscriberInterface
             do {
                 try {
                     $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
-                } catch (RuntimeException $e) {
+                } catch (RuntimeException) {
                     //pass
                 }
             } while (! $this->queuedProcesses->isEmpty());

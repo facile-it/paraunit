@@ -48,6 +48,7 @@
         "phpunit/php-invoker": "^4.0",
         "psalm/plugin-phpunit": "^0.16.1",
         "psalm/plugin-symfony": "^3.1",
+        "rector/rector": "^0.15",
         "symfony/expression-language": "^4.4||^5.0||^6.0",
         "symfony/phpunit-bridge": "^6.1",
         "vimeo/psalm": "dev-allow-diff-5 as 4.23.1"
@@ -75,7 +76,6 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "bin-dir": "bin",
         "allow-plugins": {
             "facile-it/facile-coding-standard": true,
             "phpstan/extension-installer": true
@@ -90,11 +90,6 @@
         "psr-4": {
             "Tests\\": "tests"
         }
-    },
-    "scripts": {
-        "phpstan": "phpstan analyse",
-        "cs-check": "php -n bin/php-cs-fixer fix --dry-run --diff",
-        "cs-fix": "php -n bin/php-cs-fixer fix"
     },
     "minimum-stability": "dev",
     "extra": {

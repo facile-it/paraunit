@@ -6,15 +6,14 @@ namespace Paraunit\Configuration;
 
 class PHPUnitConfig
 {
-    public const DEFAULT_FILE_NAME = 'phpunit.xml';
+    final public const DEFAULT_FILE_NAME = 'phpunit.xml';
 
-    public const FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
+    final public const FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
 
-    /** @var string */
-    private $configFilename;
+    private readonly string $configFilename;
 
     /** @var PHPUnitOption[] */
-    private $phpunitOptions;
+    private array $phpunitOptions = [];
 
     /**
      * @throws \InvalidArgumentException
@@ -22,7 +21,6 @@ class PHPUnitConfig
     public function __construct(string $inputPathOrFileName)
     {
         $this->configFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        $this->phpunitOptions = [];
     }
 
     /**
@@ -55,9 +53,6 @@ class PHPUnitConfig
         return $this->phpunitOptions;
     }
 
-    /**
-     * @return PHPUnitOption
-     */
     public function getPhpunitOption(string $name): ?PHPUnitOption
     {
         return $this->phpunitOptions[$name] ?? null;

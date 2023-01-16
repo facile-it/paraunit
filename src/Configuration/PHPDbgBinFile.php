@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 class PHPDbgBinFile
 {
     /** @var string Realpath to the PHPDbg bin location */
-    private $phpDbgBin;
+    private readonly string $phpDbgBin;
 
     public function __construct()
     {

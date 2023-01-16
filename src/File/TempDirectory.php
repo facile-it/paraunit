@@ -7,12 +7,11 @@ namespace Paraunit\File;
 class TempDirectory
 {
     /** @var string[] */
-    private static $tempDirs = [
+    private static array $tempDirs = [
         '/dev/shm',
     ];
 
-    /** @var string */
-    private static $timestamp;
+    private static string $timestamp;
 
     public function __construct()
     {
@@ -50,7 +49,7 @@ class TempDirectory
                     self::mkdirIfNotExists($baseDir);
 
                     return $baseDir;
-                } catch (\RuntimeException $e) {
+                } catch (\RuntimeException) {
                     // ignore and try next dir
                 }
             }

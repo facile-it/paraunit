@@ -11,15 +11,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CoverageMerger implements EventSubscriberInterface
 {
-    /** @var CoverageFetcher */
-    private $coverageFetcher;
+    private ?CodeCoverage $coverageData = null;
 
-    /** @var CodeCoverage|null */
-    private $coverageData;
-
-    public function __construct(CoverageFetcher $coverageFetcher)
+    public function __construct(private readonly CoverageFetcher $coverageFetcher)
     {
-        $this->coverageFetcher = $coverageFetcher;
     }
 
     /**
@@ -55,7 +50,7 @@ class CoverageMerger implements EventSubscriberInterface
 
     public function getCoverageData(): CodeCoverage
     {
-        if ($this->coverageData) {
+        if ($this->coverageData !== null) {
             return $this->coverageData;
         }
 

@@ -11,18 +11,10 @@ use Paraunit\Configuration\PHPUnitOption;
 
 class CommandLine
 {
-    /** @var PHPUnitBinFile */
-    protected $phpUnitBin;
-
-    /** @var ChunkSize */
-    protected $chunkSize;
-
     public function __construct(
-        PHPUnitBinFile $phpUnitBin,
-        ChunkSize $chunkSize
+        protected PHPUnitBinFile $phpUnitBin,
+        protected ChunkSize $chunkSize
     ) {
-        $this->phpUnitBin = $phpUnitBin;
-        $this->chunkSize = $chunkSize;
     }
 
     /**

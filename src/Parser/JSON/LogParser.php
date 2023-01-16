@@ -17,32 +17,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LogParser implements EventSubscriberInterface
 {
-    /** @var LogFetcher */
-    private $logLocator;
-
-    /** @var TestResultHandlerInterface */
-    private $noTestExecutedResultContainer;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var RetryParser */
-    private $retryParser;
-
     /** @var ParserChainElementInterface[] */
-    private $parsers;
+    private array $parsers = [];
 
-    public function __construct(
-        LogFetcher $logLocator,
-        TestResultHandlerInterface $noTestExecutedResultContainer,
-        EventDispatcherInterface $eventDispatcher,
-        RetryParser $retryParser
-    ) {
-        $this->logLocator = $logLocator;
-        $this->noTestExecutedResultContainer = $noTestExecutedResultContainer;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->retryParser = $retryParser;
-        $this->parsers = [];
+    public function __construct(private readonly LogFetcher $logLocator, private readonly TestResultHandlerInterface $noTestExecutedResultContainer, private readonly EventDispatcherInterface $eventDispatcher, private readonly RetryParser $retryParser)
+    {
     }
 
     /**

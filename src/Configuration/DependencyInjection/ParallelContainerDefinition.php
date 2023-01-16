@@ -38,11 +38,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDi
 
 class ParallelContainerDefinition
 {
-    /** @var ParserDefinition */
-    private $parserDefinition;
+    private readonly ParserDefinition $parserDefinition;
 
-    /** @var TestResultDefinition */
-    private $testResult;
+    private readonly TestResultDefinition $testResult;
 
     public function __construct()
     {

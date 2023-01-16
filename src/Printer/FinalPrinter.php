@@ -10,7 +10,6 @@ use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -21,14 +20,11 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 {
     private const STOPWATCH_NAME = 'engine';
 
-    /** @var Stopwatch */
-    private $stopWatch;
+    private readonly Stopwatch $stopWatch;
 
-    /** @var int */
-    private $processCompleted;
+    private int $processCompleted = 0;
 
-    /** @var int */
-    private $processRetried;
+    private int $processRetried = 0;
 
     public function __construct(
         TestResultList $testResultList,
@@ -38,8 +34,6 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         parent::__construct($testResultList, $output, $chunkSize);
 
         $this->stopWatch = new Stopwatch();
-        $this->processCompleted = 0;
-        $this->processRetried = 0;
     }
 
     /**
@@ -89,18 +83,12 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     {
         $testsCount = 0;
         foreach ($this->testResultList->getTestResultContainers() as $container) {
-            if ($container instanceof TestResultContainerInterface) {
-                $testsCount += $container->countTestResults();
-            }
+            $testsCount += $container->countTestResults();
         }
 
         $this->getOutput()->writeln('');
         $executedNum = $this->processCompleted - $this->processRetried;
-        if ($this->chunkSize->isChunked()) {
-            $executedTitle = 'chunks';
-        } else {
-            $executedTitle = 'test classes';
-        }
+        $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
         $this->getOutput()->write(sprintf("Executed: %d $executedTitle", $executedNum));
         if ($this->processRetried > 0) {
             $this->getOutput()->write(sprintf(' (%d retried)', $this->processRetried));

@@ -11,7 +11,7 @@ class RaisingNoticeTestStub extends TestCase
     /**
      * @dataProvider errorProvider
      */
-    public function testRaise($errorMessage, $errorLevel)
+    public function testRaise(string $errorMessage, int $errorLevel): never
     {
         trigger_error($errorMessage, $errorLevel);
         $this->fail();
@@ -26,7 +26,7 @@ class RaisingNoticeTestStub extends TestCase
         ];
     }
 
-    public function testVarDump()
+    public function testVarDump(): never
     {
         var_dump('YOU SHOULD NOT SEE THIS -- var_dump');
         $this->fail();

@@ -10,17 +10,12 @@ use PHPUnit\Util\Xml\Loader;
 
 class ChunkFile
 {
-    /** @var Loader */
-    private $xmlLoader;
+    private readonly Loader $xmlLoader;
 
-    /** @var PHPUnitConfig */
-    private $phpunitConfig;
-
-    public function __construct(PHPUnitConfig $phpunitConfig)
+    public function __construct(private readonly PHPUnitConfig $phpunitConfig)
     {
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
-        $this->phpunitConfig = $phpunitConfig;
     }
 
     /**
@@ -44,7 +39,7 @@ class ChunkFile
         $nodeList = iterator_to_array($nodeList);
         $testSuitesNode = array_shift($nodeList);
 
-        if (null === $testSuitesNode) {
+        if (! $testSuitesNode instanceof \DOMNode) {
             throw new \InvalidArgumentException('Expecting \DOMElement, got null');
         }
 

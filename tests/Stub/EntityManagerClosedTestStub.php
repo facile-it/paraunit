@@ -6,12 +6,12 @@ namespace Tests\Stub;
 
 class EntityManagerClosedTestStub extends BrokenTestBase implements BrokenTestInterface
 {
-    public const OUTPUT = 'Blah Blah The EntityManager is closed Blah Blah';
+    final public const OUTPUT = 'Blah Blah The EntityManager is closed Blah Blah';
 
     /**
      * @throws \Exception
      */
-    public function testBrokenTest()
+    public function testBrokenTest(): never
     {
         throw new \Exception(self::OUTPUT);
     }

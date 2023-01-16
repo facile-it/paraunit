@@ -13,31 +13,23 @@ use Symfony\Component\Process\Process;
 
 class ProcessFactory implements ProcessFactoryInterface
 {
-    /** @var CommandLine */
-    private $cliCommand;
-
     /** @var string[] */
-    private $baseCommandLine;
+    private readonly array $baseCommandLine;
 
     /** @var string[] */
     public readonly array $environmentVariables;
 
-    /** @var ChunkSize */
-    private $chunkSize;
-
     public function __construct(
-        CommandLine $cliCommand,
+        private readonly CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,
         TempFilenameFactory $tempFilenameFactory,
-        ChunkSize $chunkSize
+        private readonly ChunkSize $chunkSize
     ) {
-        $this->cliCommand = $cliCommand;
         $this->baseCommandLine = array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($phpunitConfig));
         $this->environmentVariables = [
             EnvVariables::LOG_DIR => $tempFilenameFactory->getPathForLog(),
             EnvVariables::XDEBUG_MODE => $this->getDesiredXdebugMode(),
         ];
-        $this->chunkSize = $chunkSize;
     }
 
     private function getDesiredXdebugMode(): string

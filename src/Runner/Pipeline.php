@@ -11,19 +11,12 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Pipeline
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
+    private ?AbstractParaunitProcess $process = null;
 
-    /** @var AbstractParaunitProcess|null */
-    private $process;
-
-    /** @var int */
-    private $number;
-
-    public function __construct(EventDispatcherInterface $dispatcher, int $number)
-    {
-        $this->dispatcher = $dispatcher;
-        $this->number = $number;
+    public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly int $number
+    ) {
     }
 
     public function execute(AbstractParaunitProcess $process): void
@@ -45,7 +38,7 @@ class Pipeline
 
     public function isTerminated(): bool
     {
-        if ($this->process) {
+        if ($this->process !== null) {
             return $this->process->isTerminated();
         }
 
@@ -72,17 +65,14 @@ class Pipeline
         return $this->number;
     }
 
-    /**
-     * @return AbstractParaunitProcess|null
-     */
-    public function getProcess()
+    public function getProcess(): ?AbstractParaunitProcess
     {
         return $this->process;
     }
 
     private function handleProcessTermination(): void
     {
-        if ($this->process) {
+        if ($this->process !== null) {
             $this->dispatcher->dispatch(new ProcessTerminated($this->process));
             $this->process = null;
         }

@@ -14,31 +14,14 @@ use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
 {
-    /** @var TestResultFormat */
-    private $testResultFormat;
-
-    /** @var PHPUnitConfig */
-    private $config;
-
-    /** @var ChunkSize */
-    private $chunkSize;
-
     /** @var string[] */
-    private $filenames;
+    private array $filenames = [];
 
     /** @var PrintableTestResultInterface[] */
-    private $testResults;
+    private array $testResults = [];
 
-    public function __construct(
-        TestResultFormat $testResultFormat,
-        PHPUnitConfig $config,
-        ChunkSize $chunkSize
-    ) {
-        $this->testResultFormat = $testResultFormat;
-        $this->config = $config;
-        $this->chunkSize = $chunkSize;
-        $this->filenames = [];
-        $this->testResults = [];
+    public function __construct(private readonly TestResultFormat $testResultFormat, private readonly PHPUnitConfig $config, private readonly ChunkSize $chunkSize)
+    {
     }
 
     public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult): void
@@ -104,8 +87,8 @@ class TestResultContainer implements TestResultContainerInterface, TestResultHan
     ): void {
         $tag = $this->testResultFormat->getTag();
 
-        $output = $this->config->getPhpunitOption('stderr') ?
-            $process->getErrorOutput()
+        $output = $this->config->getPhpunitOption('stderr') !== null 
+            ? $process->getErrorOutput()
             : $process->getOutput();
 
         $output = $output ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);

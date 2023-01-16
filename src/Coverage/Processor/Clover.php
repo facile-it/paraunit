@@ -10,16 +10,11 @@ use SebastianBergmann\CodeCoverage\Report\Clover as PHPUnitClover;
 
 class Clover implements CoverageProcessorInterface
 {
-    /** @var PHPUnitClover */
-    private $clover;
+    private readonly PHPUnitClover $clover;
 
-    /** @var OutputFile */
-    private $targetFile;
-
-    public function __construct(OutputFile $targetFile)
+    public function __construct(private readonly OutputFile $targetFile)
     {
         $this->clover = new PHPUnitClover();
-        $this->targetFile = $targetFile;
     }
 
     /**

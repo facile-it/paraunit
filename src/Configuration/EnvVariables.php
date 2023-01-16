@@ -6,11 +6,11 @@ namespace Paraunit\Configuration;
 
 class EnvVariables
 {
-    public const LOG_DIR = 'PARAUNIT_LOG_DIR';
+    final public const LOG_DIR = 'PARAUNIT_LOG_DIR';
 
-    public const PIPELINE_NUMBER = 'PARAUNIT_PIPELINE_NUMBER';
+    final public const PIPELINE_NUMBER = 'PARAUNIT_PIPELINE_NUMBER';
 
-    public const PROCESS_UNIQUE_ID = 'PARAUNIT_PROCESS_UNIQUE_ID';
+    final public const PROCESS_UNIQUE_ID = 'PARAUNIT_PROCESS_UNIQUE_ID';
 
-    public const XDEBUG_MODE = 'XDEBUG_MODE';
+    final public const XDEBUG_MODE = 'XDEBUG_MODE';
 }

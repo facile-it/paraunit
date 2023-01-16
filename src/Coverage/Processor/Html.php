@@ -10,16 +10,11 @@ use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 class Html implements CoverageProcessorInterface
 {
-    /** @var Facade */
-    private $html;
+    private readonly Facade $html;
 
-    /** @var OutputPath */
-    private $targetPath;
-
-    public function __construct(OutputPath $targetPath)
+    public function __construct(private readonly OutputPath $targetPath)
     {
         $this->html = new Facade();
-        $this->targetPath = $targetPath;
     }
 
     /**

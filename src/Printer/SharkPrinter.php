@@ -12,14 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
 {
-    /** @var bool */
-    private $showLogo;
-
-    public function __construct(OutputInterface $output, bool $showLogo)
+    public function __construct(OutputInterface $output, private readonly bool $showLogo)
     {
         parent::__construct($output);
-
-        $this->showLogo = $showLogo;
     }
 
     /**

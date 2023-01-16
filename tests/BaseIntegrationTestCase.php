@@ -20,24 +20,21 @@ use Tests\Stub\UnformattedOutputStub;
 
 abstract class BaseIntegrationTestCase extends BaseTestCase
 {
-    /** @var ContainerBuilder|null */
-    private $container;
+    private ?ContainerBuilder $container = null;
 
-    /** @var ParallelConfiguration */
-    protected $configuration;
+    protected ParallelConfiguration $configuration;
 
     /** @var string */
     protected $textFilter;
 
     /** @var string[] */
-    private $options;
+    private array $options = [];
 
     public function __construct(string $name)
     {
         parent::__construct($name);
 
         $this->configuration = new ParallelConfiguration(true);
-        $this->options = [];
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
     }
 
@@ -69,7 +66,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected function cleanUpTempDirForThisExecution(): void
     {
-        if ($this->container) {
+        if ($this->container !== null) {
             /** @var TempDirectory $tempDirectory */
             $tempDirectory = $this->getService(TempDirectory::class);
             Cleaner::cleanUpDir($tempDirectory->getTempDirForThisExecution());
@@ -134,7 +131,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      */
     public function getService(string $serviceName): object
     {
-        if (! $this->container) {
+        if ($this->container === null) {
             throw new \RuntimeException('Container not ready');
         }
 
@@ -147,14 +144,13 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         return $service;
     }
 
-    /**
-     * @return int|string
-     */
-    public function getParameter(string $parameterName)
+    protected function getParameter(string $parameterName): bool|int|float|string
     {
-        if ($this->container) {
-            /** @var int|string */
-            return $this->container->getParameter($parameterName);
+        if ($this->container !== null) {
+            $unitEnum = $this->container->getParameter($parameterName);
+            $this->assertIsScalar($unitEnum);
+
+            return $unitEnum;
         }
 
         throw new \RuntimeException('Container not ready');

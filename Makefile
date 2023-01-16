@@ -13,16 +13,19 @@ start:
 composer-install: start
 	docker-compose exec php composer install
 
-pre-commit-check: cs-fix psalm phpstan tests
+pre-commit-check: rector cs-fix psalm phpstan tests
+
+rector: start
+	docker-compose exec php vendor/bin/rector --ansi
 
 cs-fix: start
-	docker-compose exec php bin/php-cs-fixer fix --verbose --ansi
+	docker-compose exec php vendor/bin/php-cs-fixer fix --verbose --ansi
 
 psalm: start
-	docker-compose exec php bin/psalm
+	docker-compose exec php vendor/bin/psalm
 
 phpstan: start
-	docker-compose exec php bin/phpstan analyse --ansi --memory-limit=-1
+	docker-compose exec php vendor/bin/phpstan analyse --ansi --memory-limit=-1
 
 tests: start
-	docker-compose exec php bin/phpunit --colors=always
+	docker-compose exec php vendor/bin/phpunit --colors=always

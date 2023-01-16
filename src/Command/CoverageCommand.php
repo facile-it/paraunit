@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CoverageCommand extends ParallelCommand
 {
     /** @var string[] */
-    private $coverageMethods;
+    private readonly array $coverageMethods;
 
     public function __construct(CoverageConfiguration $configuration)
     {

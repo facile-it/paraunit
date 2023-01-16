@@ -10,16 +10,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CoverageResult implements EventSubscriberInterface
 {
-    /** @var CoverageMerger */
-    private $coverageMerger;
-
     /** @var CoverageProcessorInterface[] */
-    private $coverageProcessors;
+    private array $coverageProcessors = [];
 
-    public function __construct(CoverageMerger $coverageMerger)
+    public function __construct(private readonly CoverageMerger $coverageMerger)
     {
-        $this->coverageMerger = $coverageMerger;
-        $this->coverageProcessors = [];
     }
 
     /**

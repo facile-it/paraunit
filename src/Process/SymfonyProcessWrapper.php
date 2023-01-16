@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Paraunit\Process;
 
 use Paraunit\Configuration\EnvVariables;
+use Symfony\Component\Process\Exception\LogicException;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 class SymfonyProcessWrapper extends AbstractParaunitProcess
 {
-    /** @var Process */
-    private $process;
-
     /**
      * {@inheritdoc}
      */
-    public function __construct(Process $process, string $filename)
+    public function __construct(private readonly Process $process, string $filename)
     {
         parent::__construct($filename);
-        $this->process = $process;
     }
 
     public function isTerminated(): bool
@@ -38,7 +36,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws LogicException
      */
     public function getOutput(): string
     {
@@ -46,7 +44,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws LogicException
      */
     public function getErrorOutput(): string
     {
@@ -54,7 +52,7 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     }
 
     /**
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function getExitCode(): ?int
     {

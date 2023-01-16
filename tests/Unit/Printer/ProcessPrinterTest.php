@@ -60,7 +60,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $output = $this->prophesize(Output::class);
         $output->write(Argument::any())
             ->shouldBeCalledTimes($times);
-        $output->writeln(Argument::that(function ($input) {
+        $output->writeln(Argument::that(function ($input): bool {
             $this->assertEquals(6, strlen($input), 'Wrong output: ' . $input);
 
             return true;

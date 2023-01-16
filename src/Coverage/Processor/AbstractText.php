@@ -12,24 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractText implements CoverageProcessorInterface
 {
-    /** @var PHPUnitText */
-    private $text;
+    private readonly PHPUnitText $text;
 
-    /** @var OutputInterface */
-    private $output;
-
-    /** @var OutputFile|null */
-    private $targetFile;
-
-    /** @var bool */
-    private $showColors;
-
-    public function __construct(OutputInterface $output, bool $showColors, bool $onlySummary, OutputFile $targetFile = null)
-    {
+    public function __construct(
+        private readonly OutputInterface $output,
+        private readonly bool $showColors,
+        bool $onlySummary,
+        private readonly ?OutputFile $targetFile = null
+    ) {
         $this->text = new PHPUnitText(Thresholds::default(), false, $onlySummary);
-        $this->output = $output;
-        $this->targetFile = $targetFile;
-        $this->showColors = $showColors;
     }
 
     /**
@@ -39,7 +30,7 @@ abstract class AbstractText implements CoverageProcessorInterface
     {
         $coverageResults = $this->text->process($codeCoverage, $this->showColors);
 
-        if ($this->targetFile) {
+        if ($this->targetFile !== null) {
             file_put_contents($this->targetFile->getFilePath(), $coverageResults);
         } else {
             $this->output->writeln($coverageResults);
