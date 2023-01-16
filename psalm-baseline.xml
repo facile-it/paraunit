@@ -38,8 +38,6 @@
     </MixedAssignment>
     <PossiblyNullOperand>
       <code>$fileNode-&gt;nodeValue</code>
-      <code>$this-&gt;relativePath</code>
-      <code>$this-&gt;relativePath</code>
     </PossiblyNullOperand>
   </file>
   <file src="src/Process/CommandLine.php">

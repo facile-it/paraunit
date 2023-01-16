@@ -36,6 +36,7 @@ class PHPUnitOption
     }
 
     /**
+     * @psalm-assert-if-true string $this->value
      * @psalm-assert-if-true string $this->getValue()
      */
     public function hasValue(): bool
