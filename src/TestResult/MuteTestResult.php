@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestNameInterface;
 

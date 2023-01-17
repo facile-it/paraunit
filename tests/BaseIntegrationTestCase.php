@@ -9,7 +9,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
 use Paraunit\Lifecycle\ProcessTerminated;
-use Paraunit\Parser\JSON\LogParser;
+use Paraunit\Logs\JSON\LogParser;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

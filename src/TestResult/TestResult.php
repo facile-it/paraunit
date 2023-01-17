@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\ValueObject\LogData;
-use Paraunit\Parser\ValueObject\Test;
-use Paraunit\Parser\ValueObject\TestStatus;
+use Paraunit\Logs\ValueObject\LogData;
+use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Logs\ValueObject\TestStatus;
 
 class TestResult
 {
     public function __construct(
         public readonly Test $test,
         public readonly TestStatus $status,
-    ) {}
+    ) {
+    }
 
     public static function from(LogData $log): self
     {

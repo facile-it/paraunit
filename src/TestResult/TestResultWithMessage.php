@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\ValueObject\Test;
-use Paraunit\Parser\ValueObject\TestStatus;
-use Paraunit\TestResult\Interfaces\FailureMessageInterface;
+use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Logs\ValueObject\TestStatus;
 
 class TestResultWithMessage extends TestResult
 {

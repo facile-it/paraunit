@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Paraunit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
-use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Parser\ValueObject\TestStatus;
+use Paraunit\Logs\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
 
 class TestResultContainer
 {
@@ -21,7 +17,8 @@ class TestResultContainer
     /** @var array<TestStatus, TestResultWithMessage[]> */
     private array $testResults = [];
 
-    public function __construct(private readonly ChunkSize $chunkSize) {
+    public function __construct(private readonly ChunkSize $chunkSize)
+    {
     }
 
     public function handleTestResult(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void

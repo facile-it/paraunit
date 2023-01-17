@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Stub\PHPUnitJSONLogOutput;
 
-use Paraunit\Parser\JSON\Log;
+use Paraunit\Logs\JSON\Log;
 
 class JSONLogStub
 {

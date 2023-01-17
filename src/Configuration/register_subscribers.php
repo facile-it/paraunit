@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
-use Paraunit\Parser\TestHook\BeforeTest;
-use Paraunit\Parser\TestHook\Error;
-use Paraunit\Parser\TestHook\Failure;
-use Paraunit\Parser\TestHook\Incomplete;
-use Paraunit\Parser\TestHook\Passed;
-use Paraunit\Parser\TestHook\Risky;
-use Paraunit\Parser\TestHook\Skipped;
-use Paraunit\Parser\TestHook\Warning;
+use Paraunit\Logs\TestHook\BeforeTest;
+use Paraunit\Logs\TestHook\Error;
+use Paraunit\Logs\TestHook\Failure;
+use Paraunit\Logs\TestHook\Incomplete;
+use Paraunit\Logs\TestHook\Passed;
+use Paraunit\Logs\TestHook\Risky;
+use Paraunit\Logs\TestHook\Skipped;
+use Paraunit\Logs\TestHook\Warning;
 use PHPUnit\Event\Facade;
 
 // TODO - wait for feedback and refactor accordingly

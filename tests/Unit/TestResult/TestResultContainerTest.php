@@ -6,7 +6,7 @@ namespace Tests\Unit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestWithAbnormalTermination;
