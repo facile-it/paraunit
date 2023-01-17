@@ -8,10 +8,16 @@ use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Printer\ValueObject\OutputStyle;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterface
+class ConsoleFormatter implements EventSubscriberInterface
 {
+    // TODO - inject formatter directly
+    public function __construct(private readonly OutputInterface $output)
+    {
+    }
+
     /**
      * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
@@ -34,7 +40,7 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
 
     private function setStyle(OutputStyle $style, string $color): void
     {
-        $formatter = $this->getOutput()->getFormatter();
+        $formatter = $this->output->getFormatter();
         $formatter->setStyle($style->value, $this->createNewStyle($color));
     }
 

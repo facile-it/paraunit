@@ -13,15 +13,13 @@ use Paraunit\TestResult\TestResultContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FilesRecapPrinter extends AbstractPrinter implements EventSubscriberInterface
+class FilesRecapPrinter implements EventSubscriberInterface
 {
     public function __construct(
-        OutputInterface $output,
+        private readonly OutputInterface $output,
         private readonly TestResultContainer $testResultContainer,
         private readonly ChunkSize $chunkSize,
-    ) {
-        parent::__construct($output);
-    }
+    ) {}
 
     /**
      * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
@@ -53,11 +51,10 @@ class FilesRecapPrinter extends AbstractPrinter implements EventSubscriberInterf
             return;
         }
 
-        $output = $this->getOutput();
         $fileTitle = $this->chunkSize->isChunked() ? 'chunks' : 'files';
 
-        $output->writeln('');
-        $output->writeln(
+        $this->output->writeln('');
+        $this->output->writeln(
             sprintf(
                 "<%s>%d $fileTitle with %s:</%s>",
                 $style->value,
@@ -68,7 +65,7 @@ class FilesRecapPrinter extends AbstractPrinter implements EventSubscriberInterf
         );
 
         foreach ($filenames as $fileName) {
-            $output->writeln(sprintf(' <%s>%s</%s>', $style->value, $fileName, $style->value));
+            $this->output->writeln(sprintf(' <%s>%s</%s>', $style->value, $fileName, $style->value));
         }
     }
 }

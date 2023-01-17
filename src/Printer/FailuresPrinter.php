@@ -13,12 +13,12 @@ use Paraunit\TestResult\TestResultWithMessage;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FailuresPrinter extends AbstractPrinter implements EventSubscriberInterface
+class FailuresPrinter implements EventSubscriberInterface
 {
-    public function __construct(OutputInterface $output, private readonly TestResultContainer $testResultContainer)
-    {
-        parent::__construct($output);
-    }
+    public function __construct(
+        private readonly OutputInterface $output,
+        private readonly TestResultContainer $testResultContainer
+    ) {}
 
     /**
      * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
@@ -50,22 +50,18 @@ class FailuresPrinter extends AbstractPrinter implements EventSubscriberInterfac
 
     private function printFailuresHeading(TestOutcome $outcome, OutputStyle $style): void
     {
-        $output = $this->getOutput();
-
-        $output->writeln('');
-        $output->writeln(sprintf('<%s>%s output:</%s>', $style, ucwords($outcome->getTitle()), $style));
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('<%s>%s output:</%s>', $style, ucwords($outcome->getTitle()), $style));
     }
 
     private function printFailureOutput(TestResultWithMessage $testResult, OutputStyle $style, int $counter): void
     {
-        $output = $this->getOutput();
+        $this->output->writeln('');
+        $this->output->write(sprintf('<%s>%d) ', $style, $counter));
+        $this->output->writeln($testResult->test->name);
 
-        $output->writeln('');
-        $output->write(sprintf('<%s>%d) ', $style, $counter));
-        $output->writeln($testResult->test->name);
+        $this->output->write(sprintf('</%s>', $style));
 
-        $output->write(sprintf('</%s>', $style));
-
-        $output->writeln($testResult->message);
+        $this->output->writeln($testResult->message);
     }
 }
