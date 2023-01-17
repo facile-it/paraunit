@@ -19,7 +19,8 @@ class FilesRecapPrinter implements EventSubscriberInterface
         private readonly OutputInterface $output,
         private readonly TestResultContainer $testResultContainer,
         private readonly ChunkSize $chunkSize,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>

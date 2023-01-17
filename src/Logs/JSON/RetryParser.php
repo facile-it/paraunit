@@ -7,15 +7,12 @@ namespace Paraunit\Logs\JSON;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use Paraunit\TestResult\MuteTestResult;
 
 class RetryParser
 {
     private readonly string $regexPattern;
 
     public function __construct(
-        private readonly TestResultHandlerInterface $testResultContainer,
         private readonly int $maxRetryCount = 3
     ) {
         $patterns = [
@@ -44,8 +41,6 @@ class RetryParser
         }
 
         $process->markAsToBeRetried();
-        $testResult = new MuteTestResult($log->test);
-        $this->testResultContainer->handleTestResult($process, $testResult);
 
         return true;
     }

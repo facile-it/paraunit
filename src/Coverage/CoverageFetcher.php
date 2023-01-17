@@ -7,7 +7,6 @@ namespace Paraunit\Coverage;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Proxy\Coverage\FakeDriver;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Filter;
 use Symfony\Component\Process\Process;
@@ -16,7 +15,6 @@ class CoverageFetcher
 {
     public function __construct(
         private readonly TempFilenameFactory $tempFilenameFactory,
-        private readonly TestResultHandlerInterface $resultHandler
     ) {
     }
 
@@ -35,7 +33,8 @@ class CoverageFetcher
             return $codeCoverage;
         }
 
-        $this->resultHandler->addProcessToFilenames($process);
+        // TODO - rework
+//        $this->resultHandler->handleTestResult($process);
 
         return new CodeCoverage(new FakeDriver(), new Filter());
     }

@@ -74,7 +74,7 @@ class LogData implements \JsonSerializable
     }
 
     /**
-     * @return self[]
+     * @return non-empty-list<self>
      */
     public static function parse(string $jsonLog): array
     {

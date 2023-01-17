@@ -15,7 +15,8 @@ class SharkPrinter implements EventSubscriberInterface
     public function __construct(
         private readonly OutputInterface $output,
         private readonly bool $showLogo
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<class-string<AbstractEvent>, array{0: string, 1: int}>

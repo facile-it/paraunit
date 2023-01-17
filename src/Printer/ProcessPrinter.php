@@ -68,7 +68,7 @@ class ProcessPrinter implements EventSubscriberInterface
         ++$this->counter;
         ++$this->singleRowCounter;
 
-        $style = OutputStyle::fromOutcome($testResult->outcome);
+        $style = OutputStyle::fromOutcome($testResult->outcome)->value;
 
         $this->output->write(sprintf('<%s>%s</%s>', $style, $testResult->outcome->getSymbol(), $style));
     }

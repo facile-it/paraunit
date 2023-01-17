@@ -69,7 +69,6 @@ enum TestOutcome: string
         };
     }
 
-
     public function getSymbol(): string
     {
         return match ($this) {

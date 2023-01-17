@@ -24,6 +24,7 @@ class FinalPrinter implements EventSubscriberInterface
     private int $processCompleted = 0;
 
     private int $processRetried = 0;
+
     private int $testsCount = 0;
 
     public function __construct(

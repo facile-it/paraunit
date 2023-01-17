@@ -15,7 +15,7 @@ class LogFetcher
     }
 
     /**
-     * @return LogData[]
+     * @return non-empty-list<LogData>
      */
     public function fetch(AbstractParaunitProcess $process): array
     {

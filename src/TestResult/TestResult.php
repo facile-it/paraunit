@@ -25,7 +25,7 @@ class TestResult
         return new self($log->test, TestOutcome::fromStatus($log->status));
     }
 
-    public function isMoreImportantThan(self $other): bool
+    public function isMoreImportantThan(?self $other): bool
     {
         // TODO - more complex logic
         return $this->outcome === TestOutcome::Passed;

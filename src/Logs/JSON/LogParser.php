@@ -8,7 +8,8 @@ use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Logs\ValueObject\TestStatus;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\TestResult;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -17,7 +18,6 @@ class LogParser implements EventSubscriberInterface
     public function __construct(
         private readonly LogFetcher $logLocator,
         private readonly LogHandler $logHandler,
-        private readonly TestResultHandlerInterface $noTestExecutedResultContainer,
         private readonly RetryParser $retryParser,
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {
@@ -53,7 +53,7 @@ class LogParser implements EventSubscriberInterface
         }
 
         if ($process->getExitCode() === 0 && ! $testPrepared) {
-            $this->noTestExecutedResultContainer->addProcessToFilenames($process);
+            $process->addTestResult(new TestResult($logs[0]->test, TestOutcome::NoTestExecuted));
 
             return;
         }
