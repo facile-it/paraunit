@@ -49,7 +49,7 @@ class RetryParser
     {
         return $log->status === TestStatus::Errored
             && $log->message
-            && preg_match($this->regexPattern, $log->message);
+            && 1 === preg_match($this->regexPattern, $log->message);
     }
 
     /**

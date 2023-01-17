@@ -38,12 +38,18 @@ class FailuresPrinter implements EventSubscriberInterface
                 continue;
             }
 
+            $testResults = $this->testResultContainer->getTestResults($outcome);
+
+            if ($testResults === []) {
+                continue;
+            }
+
             $style = OutputStyle::fromOutcome($outcome);
             $counter = 1;
 
             $this->printFailuresHeading($outcome, $style);
 
-            foreach ($this->testResultContainer->getTestResults($outcome) as $testResult) {
+            foreach ($testResults as $testResult) {
                 $this->printFailureOutput($testResult, $style, $counter++);
             }
         }

@@ -37,7 +37,7 @@ class TestResultContainer
      */
     public function getFileNames(TestOutcome $outcome): array
     {
-        return $this->filenames[$outcome->value];
+        return $this->filenames[$outcome->value] ?? [];
     }
 
     /**
@@ -45,7 +45,7 @@ class TestResultContainer
      */
     public function getTestResults(TestOutcome $outcome): array
     {
-        return $this->testResults[$outcome->value];
+        return $this->testResults[$outcome->value] ?? [];
     }
 
     private function getProcessFilename(AbstractParaunitProcess $process): string

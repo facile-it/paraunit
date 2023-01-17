@@ -44,13 +44,17 @@ class LogHandler
             $this->testResultContainer->addTestResult($process, $result);
         }
 
-        if ($result->isMoreImportantThan($this->lastTestResult)) {
+        if ($result?->isMoreImportantThan($this->lastTestResult)) {
             $this->lastTestResult = $result;
         }
     }
 
-    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): TestResult
+    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): ?TestResult
     {
+        if ($this->lastTestResult === null && $log->status === TestStatus::Prepared) {
+            return null;
+        }
+
         if ($this->lastTestResult === null) {
             $this->lastTestResult = new TestWithAbnormalTermination($this->currentTest, $process);
         }

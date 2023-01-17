@@ -27,7 +27,11 @@ class TestResult
 
     public function isMoreImportantThan(?self $other): bool
     {
+        if ($other === null) {
+            return true;
+        }
+
         // TODO - more complex logic
-        return $this->outcome === TestOutcome::Passed;
+        return $other->outcome === TestOutcome::Passed;
     }
 }
