@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Paraunit\Process;
 
 use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\TestResult;
 
 abstract class AbstractParaunitProcess extends AbstractInfo
@@ -19,7 +18,7 @@ abstract class AbstractParaunitProcess extends AbstractInfo
 
     protected ?string $testClassName = null;
 
-    /** @var PrintableTestResultInterface[] */
+    /** @var TestResult[] */
     protected array $testResults = [];
 
     // TODO - remove?

@@ -48,7 +48,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process, $testResult);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('test output', $testResult->getFailureMessage());
@@ -66,7 +66,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process, $testResult);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
@@ -87,7 +87,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process, $testResult);
 
         $this->assertSame(0, $testResultContainer->countTestResults());
     }

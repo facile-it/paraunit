@@ -41,27 +41,25 @@ class LogHandler
         };
 
         if ($result instanceof TestResultWithMessage) {
-            $this->testResultContainer->handleTestResult($process, $result);
+            $this->testResultContainer->addTestResult($process, $result);
         }
 
-        if ($result?->isMoreImportantThan($this->lastTestResult)) {
+        if ($result->isMoreImportantThan($this->lastTestResult)) {
             $this->lastTestResult = $result;
         }
     }
 
-    /**
-     * @return null
-     */
-    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): ?TestResult
+    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): TestResult
     {
         if ($this->lastTestResult === null) {
             $this->lastTestResult = new TestWithAbnormalTermination($this->currentTest, $process);
         }
 
         $process->addTestResult($this->lastTestResult);
-        $this->lastTestResult = null;
         $this->currentTest = $log->test;
+        $result = $this->lastTestResult;
+        $this->lastTestResult = null;
 
-        return null;
+        return $result;
     }
 }

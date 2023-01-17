@@ -37,7 +37,7 @@ class DeprecationParser implements EventSubscriberInterface
         }
 
         if (str_contains($process->getOutput(), 'deprecation')) {
-            $testResult = $this->createTestResult($process);
+            $this->createTestResult($process);
             // TODO
 //            $this->testResultContainer->handleTestResult($process, $testResult);
         }

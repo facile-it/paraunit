@@ -20,7 +20,7 @@ class TestResultContainer
     {
     }
 
-    public function handleTestResult(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
+    public function addTestResult(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
     {
         $this->addProcessToFilenames($process, $testResult);
         $this->testResults[$testResult->outcome->value][] = $testResult;

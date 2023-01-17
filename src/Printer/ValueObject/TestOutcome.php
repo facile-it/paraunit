@@ -21,7 +21,6 @@ enum TestOutcome: string
     case Retry = 'Retry';
     case Passed = 'Passed';
 
-    /** @var self[] */
     public const PRINT_ORDER = [
         self::AbnormalTermination,
         self::CoverageFailure,
@@ -40,6 +39,9 @@ enum TestOutcome: string
     public static function fromStatus(TestStatus $status): self
     {
         return match ($status) {
+            TestStatus::Prepared,
+            TestStatus::Finished,
+            TestStatus::LogTerminated => throw new \InvalidArgumentException('Unexpected status as outcome: ' . $status->value),
             TestStatus::Errored => self::Error,
             TestStatus::Failed => self::Failure,
             TestStatus::MarkedIncomplete => self::Incomplete,
@@ -72,6 +74,9 @@ enum TestOutcome: string
     public function getSymbol(): string
     {
         return match ($this) {
+            self::CoverageFailure,
+            self::Deprecation,
+            self::NoTestExecuted => throw new \InvalidArgumentException('Outcome does not expect symbol: ' . $this->value),
             self::AbnormalTermination => 'X',
             self::Error => 'E',
             self::Failure => 'F',

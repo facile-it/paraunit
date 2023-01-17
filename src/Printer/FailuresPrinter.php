@@ -52,16 +52,16 @@ class FailuresPrinter implements EventSubscriberInterface
     private function printFailuresHeading(TestOutcome $outcome, OutputStyle $style): void
     {
         $this->output->writeln('');
-        $this->output->writeln(sprintf('<%s>%s output:</%s>', $style, ucwords($outcome->getTitle()), $style));
+        $this->output->writeln(sprintf('<%s>%s output:</%s>', $style->value, ucwords($outcome->getTitle()), $style->value));
     }
 
     private function printFailureOutput(TestResultWithMessage $testResult, OutputStyle $style, int $counter): void
     {
         $this->output->writeln('');
-        $this->output->write(sprintf('<%s>%d) ', $style, $counter));
+        $this->output->write(sprintf('<%s>%d) ', $style->value, $counter));
         $this->output->writeln($testResult->test->name);
 
-        $this->output->write(sprintf('</%s>', $style));
+        $this->output->write(sprintf('</%s>', $style->value));
 
         $this->output->writeln($testResult->message);
     }

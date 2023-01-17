@@ -41,7 +41,7 @@ class LogParser implements EventSubscriberInterface
         $testPrepared = false;
 
         foreach ($logs as $singleLog) {
-            $testPrepared |= $singleLog->status === TestStatus::Prepared;
+            $testPrepared = $testPrepared || $singleLog->status === TestStatus::Prepared;
 
             if ($this->retryParser->processWillBeRetried($process, $singleLog)) {
                 $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
