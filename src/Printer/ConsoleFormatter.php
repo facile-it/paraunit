@@ -6,6 +6,7 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
+use Paraunit\Printer\ValueObject\OutputStyle;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -23,14 +24,18 @@ class ConsoleFormatter extends AbstractPrinter implements EventSubscriberInterfa
 
     public function onEngineBeforeStart(): void
     {
+        $this->setStyle(OutputStyle::Ok, 'green');
+        $this->setStyle(OutputStyle::Skip, 'yellow');
+        $this->setStyle(OutputStyle::Warning, 'yellow');
+        $this->setStyle(OutputStyle::Incomplete, 'blue');
+        $this->setStyle(OutputStyle::Error, 'red');
+        $this->setStyle(OutputStyle::Abnormal, 'magenta');
+    }
+
+    private function setStyle(OutputStyle $style, string $color): void
+    {
         $formatter = $this->getOutput()->getFormatter();
-        $formatter->setStyle('ok', $this->createNewStyle('green'));
-        $formatter->setStyle('skip', $this->createNewStyle('yellow'));
-        $formatter->setStyle('warning', $this->createNewStyle('yellow'));
-        $formatter->setStyle('incomplete', $this->createNewStyle('blue'));
-        $formatter->setStyle('fail', $this->createNewStyle('red'));
-        $formatter->setStyle('error', $this->createNewStyle('red'));
-        $formatter->setStyle('abnormal', $this->createNewStyle('magenta'));
+        $formatter->setStyle($style->value, $this->createNewStyle($color));
     }
 
     private function createNewStyle(string $color): OutputFormatterStyle

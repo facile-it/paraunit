@@ -81,7 +81,7 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     }
 
     /**
-     * @return PrintableTestResultInterface[]
+     * @return TestResult[]
      */
     public function getTestResults(): array
     {

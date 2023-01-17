@@ -6,6 +6,7 @@ namespace Paraunit\Logs;
 
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\TestResultWithMessage;
@@ -45,7 +46,8 @@ class DeprecationParser implements EventSubscriberInterface
     {
         return new TestResultWithMessage(
             new Test($process->getTestClassName() ?? $process->getFilename()),
-            $process->getOutput()
+            TestOutcome::Deprecation,
+            $process->getOutput(),
         );
     }
 }

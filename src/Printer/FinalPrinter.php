@@ -25,6 +25,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     private int $processCompleted = 0;
 
     private int $processRetried = 0;
+    private int $testsCount = 0;
 
     public function __construct(
         TestResultList $testResultList,
@@ -62,9 +63,10 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         $this->printTestCounters();
     }
 
-    public function onProcessTerminated(): void
+    public function onProcessTerminated(ProcessTerminated $event): void
     {
         ++$this->processCompleted;
+        $this->testsCount += count($event->getProcess()->getTestResults());
     }
 
     public function onProcessToBeRetried(): void
@@ -81,11 +83,6 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
 
     private function printTestCounters(): void
     {
-        $testsCount = 0;
-        foreach ($this->testResultList->getTestResultContainers() as $container) {
-            $testsCount += $container->countTestResults();
-        }
-
         $this->getOutput()->writeln('');
         $executedNum = $this->processCompleted - $this->processRetried;
         $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
@@ -93,7 +90,7 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
         if ($this->processRetried > 0) {
             $this->getOutput()->write(sprintf(' (%d retried)', $this->processRetried));
         }
-        $this->getOutput()->write(sprintf(', %d tests', $testsCount - $this->processRetried));
+        $this->getOutput()->write(sprintf(', %d tests', $this->testsCount));
         $this->getOutput()->writeln('');
     }
 }

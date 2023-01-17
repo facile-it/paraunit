@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Paraunit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
-use Paraunit\Logs\ValueObject\TestStatus;
+use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 
 class TestResultContainer
 {
-    /** @var array<TestStatus, string[]> */
+    /** @var array<value-of<TestOutcome>, array<string, string>> */
     private array $filenames = [];
 
-    /** @var array<TestStatus, TestResultWithMessage[]> */
+    /** @var array<value-of<TestOutcome>, TestResultWithMessage[]> */
     private array $testResults = [];
 
     public function __construct(private readonly ChunkSize $chunkSize)
@@ -24,29 +23,29 @@ class TestResultContainer
     public function handleTestResult(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
     {
         $this->addProcessToFilenames($process, $testResult);
-        $this->testResults[$testResult->status->value] = $testResult;
+        $this->testResults[$testResult->outcome->value][] = $testResult;
     }
 
     private function addProcessToFilenames(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
     {
         // trick for unique
-        $this->filenames[$testResult->status->value][$process->getUniqueId()] = $process->getTestClassName() ?? $this->getProcessFilename($process);
+        $this->filenames[$testResult->outcome->value][$process->getUniqueId()] = $process->getTestClassName() ?? $this->getProcessFilename($process);
     }
 
     /**
      * @return string[]
      */
-    public function getFileNames(TestStatus $status): array
+    public function getFileNames(TestOutcome $outcome): array
     {
-        return $this->filenames[$status->value];
+        return $this->filenames[$outcome->value];
     }
 
     /**
-     * @return PrintableTestResultInterface[]
+     * @return TestResultWithMessage[]
      */
-    public function getTestResults(TestStatus $status): array
+    public function getTestResults(TestOutcome $outcome): array
     {
-        return $this->testResults[$status->value];
+        return $this->testResults[$outcome->value];
     }
 
     private function getProcessFilename(AbstractParaunitProcess $process): string

@@ -9,7 +9,9 @@ use Paraunit\Lifecycle\AbstractProcessEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Printer\ValueObject\OutputStyle;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResult;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -58,7 +60,7 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    private function printFormattedWithCounter(PrintableTestResultInterface $testResult): void
+    private function printFormattedWithCounter(TestResult $testResult): void
     {
         if ($this->isRowFull()) {
             $this->printCounter();
@@ -67,9 +69,9 @@ class ProcessPrinter implements EventSubscriberInterface
         ++$this->counter;
         ++$this->singleRowCounter;
 
-        $this->output->write(
-            $this->singleResultFormatter->formatSingleResult($testResult)
-        );
+        $style = OutputStyle::fromOutcome($testResult->outcome);
+
+        $this->output->write(sprintf('<%s>%s</%s>', $style, $testResult->outcome->getSymbol(), $style));
     }
 
     private function printCounter(): void
