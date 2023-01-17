@@ -17,11 +17,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LogParser implements EventSubscriberInterface
 {
-    /** @var ParserChainElementInterface[] */
-    private array $parsers = [];
-
-    public function __construct(private readonly LogFetcher $logLocator, private readonly TestResultHandlerInterface $noTestExecutedResultContainer, private readonly EventDispatcherInterface $eventDispatcher, private readonly RetryParser $retryParser)
-    {
+    public function __construct(
+        private readonly LogFetcher $logLocator,
+        private readonly LogHandler $logHandler,
+        private readonly TestResultHandlerInterface $noTestExecutedResultContainer,
+        private readonly RetryParser $retryParser,
+        private readonly EventDispatcherInterface $eventDispatcher, 
+    ) {
     }
 
     /**
@@ -34,59 +36,31 @@ class LogParser implements EventSubscriberInterface
         ];
     }
 
-    public function addParser(ParserChainElementInterface $container): void
-    {
-        $this->parsers[] = $container;
-    }
-
     public function onProcessTerminated(ProcessTerminated $processEvent): void
     {
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
 
-        if ($this->noTestsExecuted($process, $logs)) {
+        $testPrepared = false;
+        
+        foreach ($logs as $singleLog) {
+            $testPrepared |= $singleLog->status === TestStatus::Prepared;
+            
+            if ($this->retryParser->processWillBeRetried($process, $singleLog)) {
+                $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
+
+                return;
+            }
+
+            $this->logHandler->processLog($process, $singleLog);
+        }
+        
+        if ($process->getExitCode() === 0 && ! $testPrepared) {
             $this->noTestExecutedResultContainer->addProcessToFilenames($process);
 
             return;
         }
 
-        if ($this->retryParser->processWillBeRetried($process, $logs)) {
-            $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
-
-            return;
-        }
-
-        foreach ($logs as $singleLog) {
-            $this->processLog($process, $singleLog);
-        }
-
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
-    }
-
-    private function processLog(AbstractParaunitProcess $process, LogData $logItem): void
-    {
-        foreach ($this->parsers as $resultContainer) {
-            if ($resultContainer->handleLogItem($process, $logItem) instanceof TestResultInterface) {
-                return;
-            }
-        }
-    }
-
-    /**
-     * @param LogData[] $logs
-     */
-    private function noTestsExecuted(AbstractParaunitProcess $process, array $logs): bool
-    {
-        if ($process->getExitCode() !== 0) {
-            return false;
-        }
-
-        foreach ($logs as $log) {
-            if ($log->status === TestStatus::Prepared) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

@@ -9,7 +9,7 @@ use Paraunit\Parser\ValueObject\LogData;
 use Paraunit\Parser\ValueObject\Test;
 use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\TestResult\NullTestResult;
-use Paraunit\TestResult\TestResultWithAbnormalTermination;
+use Paraunit\TestResult\TestWithAbnormalTermination;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -30,7 +30,7 @@ class AbnormalTerminatedParserTest extends BaseFunctionalTestCase
 
         $secondParsedResult = $parser->handleLogItem($process, $logEnding);
 
-        $this->assertInstanceOf(TestResultWithAbnormalTermination::class, $secondParsedResult);
+        $this->assertInstanceOf(TestWithAbnormalTermination::class, $secondParsedResult);
         $this->assertFalse($process->isWaitingForTestResult());
     }
 

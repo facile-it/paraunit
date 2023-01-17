@@ -9,7 +9,7 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Parser\ValueObject\Test;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultWithAbnormalTermination;
+use Paraunit\TestResult\TestWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -38,7 +38,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        $testResult = new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
@@ -56,7 +56,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        $testResult = new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
@@ -74,7 +74,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        $testResult = new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);

@@ -6,92 +6,56 @@ namespace Paraunit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
+use Paraunit\Parser\ValueObject\TestStatus;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Paraunit\TestResult\Interfaces\TestResultInterface;
 
-class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
+class TestResultContainer
 {
-    /** @var string[] */
+    /** @var array<TestStatus, string[]> */
     private array $filenames = [];
 
-    /** @var PrintableTestResultInterface[] */
+    /** @var array<TestStatus, TestResultWithMessage[]> */
     private array $testResults = [];
 
-    public function __construct(private readonly TestResultFormat $testResultFormat, private readonly PHPUnitConfig $config, private readonly ChunkSize $chunkSize)
-    {
+    public function __construct(private readonly ChunkSize $chunkSize) {
     }
 
-    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult): void
+    public function handleTestResult(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
     {
-        $this->addProcessToFilenames($process);
-
-        if ($testResult instanceof TestResultWithAbnormalTermination) {
-            $this->addProcessOutputToResult($testResult, $process);
-        }
-
-        if ($testResult instanceof PrintableTestResultInterface) {
-            $testResult->setTestResultFormat($this->testResultFormat);
-            $this->testResults[] = $testResult;
-
-            $process->addTestResult($testResult);
-        }
+        $this->addProcessToFilenames($process, $testResult);
+        $this->testResults[$testResult->status->value] = $testResult;
     }
 
-    public function addProcessToFilenames(AbstractParaunitProcess $process): void
+    private function addProcessToFilenames(AbstractParaunitProcess $process, TestResultWithMessage $testResult): void
     {
-        $processFilename = $process->getFilename();
-        if ($this->chunkSize->isChunked()) {
-            $processFilename = basename($processFilename);
-        }
-
         // trick for unique
-        $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $processFilename;
-    }
-
-    public function getTestResultFormat(): TestResultFormat
-    {
-        return $this->testResultFormat;
+        $this->filenames[$testResult->status->value][$process->getUniqueId()] = $process->getTestClassName() ?? $this->getProcessFilename($process);
     }
 
     /**
      * @return string[]
      */
-    public function getFileNames(): array
+    public function getFileNames(TestStatus $status): array
     {
-        return $this->filenames;
+        return $this->filenames[$status->value];
     }
 
     /**
      * @return PrintableTestResultInterface[]
      */
-    public function getTestResults(): array
+    public function getTestResults(TestStatus $status): array
     {
-        return $this->testResults;
+        return $this->testResults[$status->value];
     }
 
-    public function countTestResults(): int
+    private function getProcessFilename(AbstractParaunitProcess $process): string
     {
-        if (! $this->testResultFormat instanceof TestResultWithSymbolFormat) {
-            return 0;
-        }
-
-        return count($this->testResults);
-    }
-
-    private function addProcessOutputToResult(
-        TestResultWithAbnormalTermination $result,
-        AbstractParaunitProcess $process
-    ): void {
-        $tag = $this->testResultFormat->getTag();
-
-        $output = $this->config->getPhpunitOption('stderr') !== null
-            ? $process->getErrorOutput()
-            : $process->getOutput();
-
-        $output = $output ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
-        $result->setTestOutput($output);
+        return $this->chunkSize->isChunked()
+            ? basename($process->getFilename())
+            : $process->getFilename();
     }
 }

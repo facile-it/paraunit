@@ -33,26 +33,21 @@ class RetryParser
         $this->regexPattern = $this->buildRegexPattern($patterns);
     }
 
-    /**
-     * @param LogData[] $logs
-     */
-    public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
+    public function processWillBeRetried(AbstractParaunitProcess $process, LogData $log): bool
     {
         if ($process->getRetryCount() >= $this->maxRetryCount) {
             return false;
         }
 
-        foreach ($logs as $logItem) {
-            if ($this->containsRetryableError($logItem)) {
-                $process->markAsToBeRetried();
-                $testResult = new MuteTestResult($logItem->test);
-                $this->testResultContainer->handleTestResult($process, $testResult);
-
-                return true;
-            }
+        if (! $this->containsRetryableError($log)) {
+            return false;
         }
 
-        return false;
+        $process->markAsToBeRetried();
+        $testResult = new MuteTestResult($log->test);
+        $this->testResultContainer->handleTestResult($process, $testResult);
+
+        return true;
     }
 
     private function containsRetryableError(LogData $log): bool

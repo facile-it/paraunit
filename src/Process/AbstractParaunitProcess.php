@@ -6,6 +6,7 @@ namespace Paraunit\Process;
 
 use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResult;
 
 abstract class AbstractParaunitProcess extends AbstractInfo
 {
@@ -21,6 +22,7 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     /** @var PrintableTestResultInterface[] */
     protected array $testResults = [];
 
+    // TODO - remove?
     private bool $waitingForTestResult = true;
 
     public function __construct(protected string $filename)
@@ -86,7 +88,7 @@ abstract class AbstractParaunitProcess extends AbstractInfo
         return $this->testResults;
     }
 
-    public function addTestResult(PrintableTestResultInterface $testResult): void
+    public function addTestResult(TestResult $testResult): void
     {
         $this->testResults[] = $testResult;
         $this->waitingForTestResult = false;
