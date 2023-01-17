@@ -4309,12 +4309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jean85/prophecy.git",
-                "reference": "8759ac27c8b5e84e36e9668822cb245a59023c95"
+                "reference": "236677c5c39ece6cabd6fb581e3752b4fc3b3434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/prophecy/zipball/8759ac27c8b5e84e36e9668822cb245a59023c95",
-                "reference": "8759ac27c8b5e84e36e9668822cb245a59023c95",
+                "url": "https://api.github.com/repos/Jean85/prophecy/zipball/236677c5c39ece6cabd6fb581e3752b4fc3b3434",
+                "reference": "236677c5c39ece6cabd6fb581e3752b4fc3b3434",
                 "shasum": ""
             },
             "require": {
@@ -4371,7 +4371,7 @@
             "support": {
                 "source": "https://github.com/Jean85/prophecy/tree/allow-sebastian-comparator-5"
             },
-            "time": "2023-01-12T11:44:24+00:00"
+            "time": "2023-01-17T22:05:01+00:00"
         },
         {
             "name": "phpspec/prophecy-phpunit",
@@ -6489,7 +6489,7 @@
         "phpspec/prophecy-phpunit": 20,
         "vimeo/psalm": 20
     },
-    "prefer-stable": true,
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
