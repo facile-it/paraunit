@@ -6,8 +6,8 @@ namespace Paraunit\Logs\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Logs\ValueObject\LogData;
+use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestStatus;
-use PHPUnit\Event\Code\Test;
 
 abstract class AbstractTestHook
 {

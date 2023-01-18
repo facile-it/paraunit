@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace Paraunit\Logs\ValueObject;
 
-use PHPUnit\Event\Code\Test as PHPUnitTest;
-
 class LogData implements \JsonSerializable
 {
-    public readonly Test $test;
-
     public function __construct(
         public readonly TestStatus $status,
-        PHPUnitTest|Test $test,
+        public readonly Test $test,
         public readonly ?string $message
     ) {
-        $this->test = $test instanceof Test
-            ? $test
-            : Test::fromPHPUnitTest($test);
     }
 
     /**

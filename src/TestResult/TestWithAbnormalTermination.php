@@ -15,8 +15,8 @@ class TestWithAbnormalTermination extends TestResultWithMessage
         parent::__construct(
             $test,
             TestOutcome::AbnormalTermination,
-            'Possible abnormal termination, last prepared test was ' 
-            . $test->name 
+            'Possible abnormal termination, last prepared test was '
+            . $test->name
             . PHP_EOL . PHP_EOL
             . $process->getOutput()
         );

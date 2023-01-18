@@ -7,9 +7,6 @@ namespace Paraunit\Logs\JSON;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\Logs\ValueObject\TestStatus;
-use Paraunit\Printer\ValueObject\TestOutcome;
-use Paraunit\TestResult\TestResult;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -35,14 +32,11 @@ class LogParser implements EventSubscriberInterface
 
     public function onProcessTerminated(ProcessTerminated $processEvent): void
     {
+        $this->logHandler->reset();
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
 
-        $testPrepared = false;
-
         foreach ($logs as $singleLog) {
-            $testPrepared = $testPrepared || $singleLog->status === TestStatus::Prepared;
-
             if ($this->retryParser->processWillBeRetried($process, $singleLog)) {
                 $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
 
@@ -51,13 +45,7 @@ class LogParser implements EventSubscriberInterface
 
             $this->logHandler->processLog($process, $singleLog);
         }
-
-        if ($process->getExitCode() === 0 && ! $testPrepared) {
-            $process->addTestResult(new TestResult($logs[0]->test, TestOutcome::NoTestExecuted));
-
-            return;
-        }
-
+        
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 }

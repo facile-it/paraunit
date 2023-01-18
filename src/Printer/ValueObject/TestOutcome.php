@@ -40,7 +40,7 @@ enum TestOutcome: string
     {
         return match ($status) {
             TestStatus::Prepared,
-            TestStatus::Finished,
+            TestStatus::Started,
             TestStatus::LogTerminated => throw new \InvalidArgumentException('Unexpected status as outcome: ' . $status->value),
             TestStatus::Errored => self::Error,
             TestStatus::Failed => self::Failure,
@@ -61,7 +61,7 @@ enum TestOutcome: string
             self::Failure => 'failures',
             self::Warning => 'warnings',
             self::Deprecation => 'deprecations', // TODO - should listen to native event?
-            self::NoTestExecuted => 'no test executed', // TODO
+            self::NoTestExecuted => 'no tests executed',
             self::Risky => 'risky outcome',
             self::Skipped => 'skipped',
             self::Incomplete => 'incomplete',

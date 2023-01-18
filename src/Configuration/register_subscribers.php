@@ -6,6 +6,7 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Logs\TestHook\BeforeTest;
 use Paraunit\Logs\TestHook\Error;
+use Paraunit\Logs\TestHook\ExecutionStarted;
 use Paraunit\Logs\TestHook\Failure;
 use Paraunit\Logs\TestHook\Incomplete;
 use Paraunit\Logs\TestHook\Passed;
@@ -20,6 +21,7 @@ use PHPUnit\Event\Facade;
 Facade::registerSubscriber(new BeforeTest());
 Facade::registerSubscriber(new Error());
 Facade::registerSubscriber(new Failure());
+Facade::registerSubscriber(new ExecutionStarted());
 Facade::registerSubscriber(new Incomplete());
 Facade::registerSubscriber(new Risky());
 Facade::registerSubscriber(new Skipped());

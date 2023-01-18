@@ -10,6 +10,8 @@ use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\TestResult;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -63,7 +65,12 @@ class FinalPrinter implements EventSubscriberInterface
     public function onProcessTerminated(ProcessTerminated $event): void
     {
         ++$this->processCompleted;
-        $this->testsCount += count($event->getProcess()->getTestResults());
+
+        $testResults = array_filter(
+            $event->getProcess()->getTestResults(),
+            static fn (TestResult $t): bool => TestOutcome::NoTestExecuted !== $t->outcome
+        );
+        $this->testsCount += count($testResults);
     }
 
     public function onProcessToBeRetried(): void

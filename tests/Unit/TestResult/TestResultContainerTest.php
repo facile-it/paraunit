@@ -48,7 +48,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->addTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('test output', $testResult->getFailureMessage());
@@ -66,7 +66,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->addTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
@@ -74,7 +74,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestWithAbnormalTermination(new Test('function name'));
+        new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);
@@ -87,7 +87,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->addTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertSame(0, $testResultContainer->countTestResults());
     }

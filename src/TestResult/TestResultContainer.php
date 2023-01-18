@@ -18,7 +18,7 @@ class TestResultContainer
     public function addTestResult(TestResult $testResult): void
     {
         $this->addToFilenames($testResult);
-        
+
         if ($testResult instanceof TestResultWithMessage) {
             $this->testResults[$testResult->outcome->value][] = $testResult;
         }

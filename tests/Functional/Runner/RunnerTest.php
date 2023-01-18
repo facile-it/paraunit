@@ -14,6 +14,7 @@ use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
 use Tests\Stub\SessionTestStub;
+use Tests\Stub\ThreeGreenTestStub;
 
 class RunnerTest extends BaseIntegrationTestCase
 {
@@ -152,7 +153,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringNotContainsString('ABNORMAL TERMINATION', $output);
         $this->assertStringContainsString('Executed: 1 test classes, 0 tests', $output);
         $this->assertStringContainsString('1 files with NO TESTS EXECUTED', $output);
-        $this->assertStringContainsString('ThreeGreenTestStub.php', $output);
+        $this->assertStringContainsString(ThreeGreenTestStub::class, $output);
     }
 
     public function testWarningsToStdout(): never
