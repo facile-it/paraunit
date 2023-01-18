@@ -26,33 +26,23 @@ class LogHandler
 
     public function processLog(AbstractParaunitProcess $process, LogData $log): void
     {
-        $result = match ($log->status) {
-            TestStatus::LogTerminated,
-            TestStatus::Prepared => $this->flushLastStatus($process, $log),
-            TestStatus::Errored,
-            TestStatus::Failed,
-            TestStatus::MarkedIncomplete,
-            TestStatus::Skipped,
-            TestStatus::Passed,
-            TestStatus::Unknown,
-            TestStatus::WarningTriggered,
-            TestStatus::ConsideredRisky,
-            TestStatus::Finished => TestResult::from($log),
-        };
+        if (in_array($log->status, [TestStatus::LogTerminated, TestStatus::Prepared], true)) {
+            $this->flushLastStatus($process, $log);
 
-        if ($result instanceof TestResultWithMessage) {
-            $this->testResultContainer->addTestResult($process, $result);
+            return;
         }
 
-        if ($result?->isMoreImportantThan($this->lastTestResult)) {
+        $result = TestResult::from($log);
+
+        if ($result->isMoreImportantThan($this->lastTestResult)) {
             $this->lastTestResult = $result;
         }
     }
 
-    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): ?TestResult
+    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): void
     {
         if ($this->lastTestResult === null && $log->status === TestStatus::Prepared) {
-            return null;
+            return;
         }
 
         if ($this->lastTestResult === null) {
@@ -60,10 +50,11 @@ class LogHandler
         }
 
         $process->addTestResult($this->lastTestResult);
-        $this->currentTest = $log->test;
-        $result = $this->lastTestResult;
-        $this->lastTestResult = null;
+        if ($this->lastTestResult instanceof TestResultWithMessage) {
+            $this->testResultContainer->addTestResult($this->lastTestResult);
+        }
 
-        return $result;
+        $this->currentTest = $log->test;
+        $this->lastTestResult = null;
     }
 }
