@@ -10,11 +10,15 @@ use Paraunit\Process\AbstractParaunitProcess;
 
 class TestWithAbnormalTermination extends TestResultWithMessage
 {
-    public readonly string $testOutput;
-
     public function __construct(Test $test, AbstractParaunitProcess $process)
     {
-        parent::__construct($test, TestOutcome::AbnormalTermination, 'Possible abnormal termination, last prepared test was ' . $test->name);
-        $this->testOutput = $process->getOutput();
+        parent::__construct(
+            $test,
+            TestOutcome::AbnormalTermination,
+            'Possible abnormal termination, last prepared test was ' 
+            . $test->name 
+            . PHP_EOL . PHP_EOL
+            . $process->getOutput()
+        );
     }
 }
