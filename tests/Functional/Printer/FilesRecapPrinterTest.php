@@ -49,10 +49,10 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
     {
         /** @var TestResultContainer $noTestExecuted */
         $noTestExecuted = $this->getService('paraunit.test_result.no_test_executed_container');
-        $noTestExecuted->addProcessToFilenames($process);
+        $noTestExecuted->addToFilenames($process);
 
         /** @var TestResultContainer $coverageFailure */
         $coverageFailure = $this->getService('paraunit.test_result.coverage_failure_container');
-        $coverageFailure->addProcessToFilenames($process);
+        $coverageFailure->addToFilenames($process);
     }
 }

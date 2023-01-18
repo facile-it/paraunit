@@ -30,8 +30,8 @@ class TestResultContainerTest extends BaseUnitTestCase
         $functionalTestProcess = new StubbedParaunitProcess('phpunit Functional/ClassTest.php');
         $functionalTestProcess->setFilename('ClassTest.php');
 
-        $testResultContainer->addProcessToFilenames($unitTestProcess);
-        $testResultContainer->addProcessToFilenames($functionalTestProcess);
+        $testResultContainer->addToFilenames($unitTestProcess);
+        $testResultContainer->addToFilenames($functionalTestProcess);
 
         $this->assertCount(2, $testResultContainer->getFileNames());
     }

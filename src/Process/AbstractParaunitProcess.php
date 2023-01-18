@@ -48,7 +48,6 @@ abstract class AbstractParaunitProcess extends AbstractInfo
 
     public function markAsToBeRetried(): void
     {
-        $this->reset();
         $this->increaseRetryCount();
         $this->shouldBeRetried = true;
     }

@@ -32,6 +32,7 @@ class ParserDefinition
         ]));
 
         $container->setDefinition(RetryParser::class, new Definition(RetryParser::class, [
+            new Reference(TestResultContainer::class),
             '%paraunit.max_retry_count%',
         ]));
 

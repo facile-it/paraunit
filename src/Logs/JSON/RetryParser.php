@@ -6,13 +6,17 @@ namespace Paraunit\Logs\JSON;
 
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\TestStatus;
+use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\TestResult\TestResult;
+use Paraunit\TestResult\TestResultContainer;
 
 class RetryParser
 {
     private readonly string $regexPattern;
 
     public function __construct(
+        private readonly TestResultContainer $testResultContainer,
         private readonly int $maxRetryCount = 3
     ) {
         $patterns = [
@@ -40,6 +44,9 @@ class RetryParser
             return false;
         }
 
+        $testResult = new TestResult($log->test, TestOutcome::Retry);
+        $this->testResultContainer->addTestResult($testResult);
+        $process->addTestResult($testResult);
         $process->markAsToBeRetried();
 
         return true;

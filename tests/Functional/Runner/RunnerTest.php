@@ -57,7 +57,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'files with RETRIED',
             'EntityManagerClosedTestStub',
         ]);
-        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
+        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 4 tests', $output->getOutput());
     }
 
     /**

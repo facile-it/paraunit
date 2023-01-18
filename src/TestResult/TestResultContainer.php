@@ -15,13 +15,16 @@ class TestResultContainer
     /** @var array<value-of<TestOutcome>, TestResultWithMessage[]> */
     private array $testResults = [];
 
-    public function addTestResult(TestResultWithMessage $testResult): void
+    public function addTestResult(TestResult $testResult): void
     {
-        $this->addProcessToFilenames($testResult);
-        $this->testResults[$testResult->outcome->value][] = $testResult;
+        $this->addToFilenames($testResult);
+        
+        if ($testResult instanceof TestResultWithMessage) {
+            $this->testResults[$testResult->outcome->value][] = $testResult;
+        }
     }
 
-    private function addProcessToFilenames(TestResultWithMessage $testResult): void
+    private function addToFilenames(TestResult $testResult): void
     {
         $name = $testResult->test instanceof TestMethod
             ? $testResult->test->className
