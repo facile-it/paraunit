@@ -5,25 +5,51 @@ declare(strict_types=1);
 namespace Paraunit\Logs\ValueObject;
 
 use PHPUnit\Event\Code\Test as PHPUnitTest;
-use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Event\Code\TestMethod as PHPUnitTestMethod;
 
-class Test
+class Test implements \JsonSerializable
 {
     public function __construct(public readonly string $name)
     {
     }
 
-    public static function fromPHPUnitTest(PHPUnitTest $test): self
+    final public static function fromPHPUnitTest(PHPUnitTest $test): self
     {
-        $name = $test instanceof TestMethod
-            ? $test->nameWithClass()
-            : $test->name();
+        if ($test instanceof PHPUnitTestMethod) {
+            return TestMethod::fromPHPUnitTestMethod($test);
+        }
 
-        return new self($name);
+        return new self($test->name());
+    }
+
+    /**
+     * @return string|array<string, scalar>
+     */
+    public function jsonSerialize(): string|array
+    {
+        return $this->name;
+    }
+
+    public static function deserialize(mixed $data): self
+    {
+        if (is_array($data)) {
+            return TestMethod::deserialize($data);
+        }
+
+        if (is_string($data)) {
+            return new self($data);
+        }
+
+        throw self::invalidDeserializeInput($data);
     }
 
     public static function unknown(): self
     {
         return new self('[UNKNOWN]');
+    }
+
+    final protected static function invalidDeserializeInput(mixed $data): \InvalidArgumentException
+    {
+        return new \InvalidArgumentException('Unable to deserialize from ' . get_debug_type($data));
     }
 }
