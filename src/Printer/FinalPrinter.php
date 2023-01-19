@@ -68,8 +68,13 @@ class FinalPrinter implements EventSubscriberInterface
 
         $testResults = array_filter(
             $event->getProcess()->getTestResults(),
-            static fn (TestResult $t): bool => TestOutcome::NoTestExecuted !== $t->outcome
+            static fn (TestResult $t): bool => !in_array($t->outcome, [
+                TestOutcome::AbnormalTermination,
+                TestOutcome::NoTestExecuted, 
+                TestOutcome::Retry, 
+            ], true)
         );
+
         $this->testsCount += count($testResults);
     }
 
@@ -96,6 +101,6 @@ class FinalPrinter implements EventSubscriberInterface
             $this->output->write(sprintf(' (%d retried)', $this->processRetried));
         }
 
-        $this->output->writeln(sprintf(', %d tests', $this->testsCount - $this->processRetried));
+        $this->output->writeln(sprintf(', %d tests', $this->testsCount));
     }
 }
