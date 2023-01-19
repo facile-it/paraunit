@@ -45,7 +45,11 @@ class LogParser implements EventSubscriberInterface
 
             $this->logHandler->processLog($process, $singleLog);
         }
-        
+
+        if ($logs === []) {
+            $this->logHandler->processNoLogAvailable($process);
+        }
+
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));
     }
 }

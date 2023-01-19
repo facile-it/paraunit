@@ -15,18 +15,19 @@ class LogFetcher
     }
 
     /**
-     * @return non-empty-list<LogData>
+     * @return list<LogData>
      */
     public function fetch(AbstractParaunitProcess $process): array
     {
         $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
-        $fileContent = '';
 
-        if (file_exists($filePath)) {
-            /** @var string $fileContent */
-            $fileContent = file_get_contents($filePath);
-            unlink($filePath);
+        if (! file_exists($filePath)) {
+            return [];
         }
+
+        /** @var string $fileContent */
+        $fileContent = file_get_contents($filePath);
+        unlink($filePath);
 
         return LogData::parse($fileContent);
     }

@@ -67,10 +67,14 @@ class LogData implements \JsonSerializable
     }
 
     /**
-     * @return non-empty-list<self>
+     * @return list<self>
      */
     public static function parse(string $jsonLog): array
     {
+        if ($jsonLog === '') {
+            return [];
+        }
+
         $decodedLogs = json_decode(self::cleanLog($jsonLog), true, 10, JSON_THROW_ON_ERROR);
         $logs = [];
         $lastTest = null;

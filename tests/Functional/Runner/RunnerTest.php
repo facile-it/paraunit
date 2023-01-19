@@ -223,14 +223,15 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionMissingLogAsUnknownResults(): void
     {
-        $this->setTextFilter('ParseErrorTestStub.php');
+        $stubFile = dirname(__DIR__, 2) . '/Stub/ParseErrorTestStub.php';
+        $this->setTextFilter(basename($stubFile));
         $this->loadContainer();
 
         $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertMatchesRegularExpression('/\nX\s+1\n/', $output, 'Missing X output');
-        $this->assertStringContainsString('UNKNOWN', $output);
+        $this->assertStringContainsString($stubFile, $output);
         $this->assertStringContainsString(
             '1 files with ABNORMAL TERMINATIONS',
             $output,

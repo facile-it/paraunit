@@ -82,4 +82,12 @@ final class LogHandler
         $this->currentTest = $log->test;
         $this->lastTestResult = null;
     }
+
+    public function processNoLogAvailable(AbstractParaunitProcess $process): void
+    {
+        $testResult = new TestWithAbnormalTermination(new Test($process->getFilename()), $process);
+
+        $process->addTestResult($testResult);
+        $this->testResultContainer->addTestResult($testResult);
+    }
 }
