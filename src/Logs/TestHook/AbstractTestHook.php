@@ -8,6 +8,7 @@ use Paraunit\Configuration\EnvVariables;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestStatus;
+use PHPUnit\Event\Code\Throwable;
 
 abstract class AbstractTestHook
 {
@@ -25,6 +26,13 @@ abstract class AbstractTestHook
 
             self::$logFile = $file;
         }
+    }
+
+    protected function createMessageFromThrowable(Throwable $throwable): string
+    {
+        return trim($throwable->message())
+            . PHP_EOL. PHP_EOL
+            . trim($throwable->stackTrace());
     }
 
     final protected function write(TestStatus $status, Test $test, ?string $message): void

@@ -88,13 +88,14 @@ class FinalPrinter implements EventSubscriberInterface
     private function printTestCounters(): void
     {
         $this->output->writeln('');
-        $executedNum = $this->processCompleted - $this->processRetried;
         $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
-        $this->output->write(sprintf("Executed: %d $executedTitle", $executedNum));
+
+        $this->output->write(sprintf("Executed: %d $executedTitle", $this->processCompleted - $this->processRetried));
+
         if ($this->processRetried > 0) {
             $this->output->write(sprintf(' (%d retried)', $this->processRetried));
         }
-        $this->output->write(sprintf(', %d tests', $this->testsCount));
-        $this->output->writeln('');
+
+        $this->output->writeln(sprintf(', %d tests', $this->testsCount - $this->processRetried));
     }
 }

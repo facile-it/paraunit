@@ -58,7 +58,7 @@ class RunnerTest extends BaseIntegrationTestCase
             'files with RETRIED',
             'EntityManagerClosedTestStub',
         ]);
-        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 4 tests', $output->getOutput());
+        $this->assertStringContainsString('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
     }
 
     /**
@@ -251,6 +251,18 @@ class RunnerTest extends BaseIntegrationTestCase
             strpos($output, 'YOU SHOULD NOT SEE THIS'),
             'REGRESSION: garbage output during tests execution (PHP warnings, var_dumps...)'
         );
+    }
+
+    public function testRegressionFailuresNotReported(): void
+    {
+        $this->setTextFilter('PassThenRetryTestStub');
+        $this->loadContainer();
+
+        $this->assertNotEquals(0, $this->executeRunner(), 'Exit code should not be 0');
+        $output = $this->getConsoleOutput()->getOutput();
+        $this->assertMatchesRegularExpression('/^AAA\.F\.E/m', $output);
+        $this->assertStringContainsString('1 files with FAILURES:', $output);
+        $this->assertStringContainsString('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
     }
 
     public function testRegressionTestResultsBeforeRetryShouldNotBeReported(): void

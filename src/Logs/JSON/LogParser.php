@@ -36,18 +36,18 @@ class LogParser implements EventSubscriberInterface
         $process = $processEvent->getProcess();
         $logs = $this->logLocator->fetch($process);
 
-        foreach ($logs as $singleLog) {
-            if ($this->retryParser->processWillBeRetried($process, $singleLog)) {
-                $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
+        if ($this->retryParser->processWillBeRetried($process, $logs)) {
+            $this->eventDispatcher->dispatch(new ProcessToBeRetried($process));
 
-                return;
-            }
-
-            $this->logHandler->processLog($process, $singleLog);
+            return;
         }
 
         if ($logs === []) {
             $this->logHandler->processNoLogAvailable($process);
+        }
+
+        foreach ($logs as $singleLog) {
+            $this->logHandler->processLog($process, $singleLog);
         }
 
         $this->eventDispatcher->dispatch(new ProcessParsingCompleted($process));

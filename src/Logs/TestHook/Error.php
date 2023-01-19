@@ -13,6 +13,6 @@ class Error extends AbstractTestHook implements ErroredSubscriber
 {
     public function notify(Errored $event): void
     {
-        $this->write(TestStatus::Errored, Test::fromPHPUnitTest($event->test()), $event->throwable()->message());
+        $this->write(TestStatus::Errored, Test::fromPHPUnitTest($event->test()), $this->createMessageFromThrowable($event->throwable()));
     }
 }
