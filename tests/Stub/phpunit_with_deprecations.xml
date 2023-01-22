@@ -18,12 +18,8 @@
     </testsuites>
 
     <coverage>
-        <whitelist>
+        <include>
             <file>./RaisingDeprecationTestStub.php</file>
-        </whitelist>
+        </include>
     </coverage>
-
-    <listeners>
-        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
 </phpunit>
