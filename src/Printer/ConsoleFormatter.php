@@ -13,7 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleFormatter implements EventSubscriberInterface
 {
-    // TODO - inject formatter directly
     public function __construct(private readonly OutputFormatterInterface $outputFormatter)
     {
     }
