@@ -46,6 +46,7 @@ enum TestOutcome: string
             TestStatus::Failed => self::Failure,
             TestStatus::MarkedIncomplete => self::Incomplete,
             TestStatus::ConsideredRisky => self::Risky,
+            TestStatus::Deprecation => self::Deprecation,
             TestStatus::Skipped => self::Skipped,
             TestStatus::Passed => self::Passed,
             TestStatus::WarningTriggered => self::Warning,
@@ -60,7 +61,7 @@ enum TestOutcome: string
             self::Error => 'errors',
             self::Failure => 'failures',
             self::Warning => 'warnings',
-            self::Deprecation => 'deprecations', // TODO - should listen to native event?
+            self::Deprecation => 'deprecations',
             self::NoTestExecuted => 'no tests executed',
             self::Risky => 'risky outcome',
             self::Skipped => 'skipped',
@@ -75,12 +76,12 @@ enum TestOutcome: string
     {
         return match ($this) {
             self::CoverageFailure,
-            self::Deprecation,
             self::NoTestExecuted => throw new \InvalidArgumentException('Outcome does not expect symbol: ' . $this->value),
             self::AbnormalTermination => 'X',
             self::Error => 'E',
             self::Failure => 'F',
             self::Warning => 'W',
+            self::Deprecation => 'D',
             self::Risky => 'R',
             self::Skipped => 'S',
             self::Incomplete => 'I',

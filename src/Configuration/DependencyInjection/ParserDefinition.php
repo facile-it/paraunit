@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Logs\DeprecationParser;
 use Paraunit\Logs\JSON\LogFetcher;
 use Paraunit\Logs\JSON\LogHandler;
 use Paraunit\Logs\JSON\LogParser;
@@ -39,7 +38,5 @@ class ParserDefinition
         $container->setDefinition(LogFetcher::class, new Definition(LogFetcher::class, [
             new Reference(TempFilenameFactory::class),
         ]));
-
-        $container->setDefinition(DeprecationParser::class, new Definition(DeprecationParser::class));
     }
 }

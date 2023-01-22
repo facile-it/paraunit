@@ -24,6 +24,8 @@ class JSONLogStub
 
     final public const ONE_WARNING = 'SingleWarning';
 
+    final public const ONE_DEPRECATION = 'SingleDeprecation';
+
     final public const UNKNOWN = 'Unknown';
 
     final public const PARSE_ERROR = 'ParseError';

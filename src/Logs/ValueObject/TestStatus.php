@@ -17,4 +17,5 @@ enum TestStatus: string
     case Started = 'Started';
     case LogTerminated = 'ParaunitLogTerminated';
     case Unknown = 'Unknown';
+    case Deprecation = 'Deprecation';
 }

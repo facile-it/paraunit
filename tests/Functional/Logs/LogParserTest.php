@@ -56,6 +56,7 @@ class LogParserTest extends BaseFunctionalTestCase
             [JSONLogStub::ONE_RISKY, '..R.'],
             [JSONLogStub::ONE_SKIP, '..S.'],
             [JSONLogStub::ONE_WARNING, '...W'],
+            [JSONLogStub::ONE_DEPRECATION, '...D'],
             [JSONLogStub::FATAL_ERROR, 'EEX'],
             [JSONLogStub::SEGFAULT, '...X'],
             [JSONLogStub::PARSE_ERROR, '..................................................X'],
