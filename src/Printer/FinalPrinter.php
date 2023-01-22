@@ -68,10 +68,10 @@ class FinalPrinter implements EventSubscriberInterface
 
         $testResults = array_filter(
             $event->getProcess()->getTestResults(),
-            static fn (TestResult $t): bool => !in_array($t->outcome, [
+            static fn (TestResult $t): bool => ! in_array($t->outcome, [
                 TestOutcome::AbnormalTermination,
-                TestOutcome::NoTestExecuted, 
-                TestOutcome::Retry, 
+                TestOutcome::NoTestExecuted,
+                TestOutcome::Retry,
             ], true)
         );
 

@@ -6,10 +6,9 @@ namespace Tests\Functional\Logs;
 
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Logs\JSON\LogParser;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\TestResultWithSymbolFormat;
+use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\TestResult;
 use Tests\BaseFunctionalTestCase;
-use function Tests\Functional\Parser\JSON\str_contains;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -20,10 +19,6 @@ class LogParserTest extends BaseFunctionalTestCase
      */
     public function testParse(string $stubLog, string $expectedResult): void
     {
-        if (str_contains($stubLog, 'Warning')) {
-            $this->markTestIncomplete('Warnings are handled differently in PHPUnit 10');
-        }
-
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
@@ -33,15 +28,13 @@ class LogParserTest extends BaseFunctionalTestCase
         $parser->onProcessTerminated(new ProcessTerminated($process));
 
         $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
+        $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
         $textResults = '';
 
         foreach ($results as $singleResult) {
-            $formatWithSymbol = $singleResult->getTestResultFormat();
-            $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
-            $textResults .= $formatWithSymbol->getTestResultSymbol();
+            $textResults .= $singleResult->outcome->getSymbol();
         }
-        $this->markTestIncomplete();
+
         $this->assertEquals($expectedResult, $textResults);
 
         if ($process->getTestClassName()) {
@@ -66,7 +59,7 @@ class LogParserTest extends BaseFunctionalTestCase
             [JSONLogStub::FATAL_ERROR, 'EEX'],
             [JSONLogStub::SEGFAULT, '...X'],
             [JSONLogStub::PARSE_ERROR, '..................................................X'],
-            [JSONLogStub::UNKNOWN, '.?'],
+            [JSONLogStub::UNKNOWN, 'X'],
         ];
     }
 
@@ -80,11 +73,8 @@ class LogParserTest extends BaseFunctionalTestCase
         $parser->onProcessTerminated(new ProcessTerminated($process));
 
         $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf(PrintableTestResultInterface::class, $results);
+        $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
         $this->assertCount(1, $results);
-
-        $formatWithSymbol = $results[0]->getTestResultFormat();
-        $this->assertInstanceOf(TestResultWithSymbolFormat::class, $formatWithSymbol);
-        $this->assertEquals('X', $formatWithSymbol->getTestResultSymbol());
+        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->outcome);
     }
 }

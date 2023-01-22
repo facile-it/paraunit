@@ -31,7 +31,7 @@ abstract class AbstractTestHook
     protected function createMessageFromThrowable(Throwable $throwable): string
     {
         return trim($throwable->message())
-            . PHP_EOL. PHP_EOL
+            . PHP_EOL . PHP_EOL
             . trim($throwable->stackTrace());
     }
 

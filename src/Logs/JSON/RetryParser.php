@@ -35,9 +35,7 @@ class RetryParser
     }
 
     /**
-     * @param AbstractParaunitProcess $process
      * @param LogData[] $logs
-     * @return bool
      */
     public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
     {

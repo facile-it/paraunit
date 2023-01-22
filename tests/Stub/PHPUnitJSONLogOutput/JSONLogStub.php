@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Stub\PHPUnitJSONLogOutput;
 
-use Paraunit\Logs\JSON\Log;
-
 class JSONLogStub
 {
     final public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
@@ -33,14 +31,6 @@ class JSONLogStub
     /**
      * @throws \Exception
      */
-    public static function getLogs(string $filename): string
-    {
-        return json_decode(self::getCleanOutputFileContent($filename), null, 512, JSON_THROW_ON_ERROR);
-    }
-
-    /**
-     * @throws \Exception
-     */
     public static function getCleanOutputFileContent(string $filename): string
     {
         $fullFilename = __DIR__ . DIRECTORY_SEPARATOR . $filename . '.json';
@@ -54,7 +44,7 @@ class JSONLogStub
     }
 
     /**
-     * @return Log[] The normalized log, as an array of JSON objects
+     * @return non-empty-string The normalized log, as an array of JSON objects
      */
     private static function cleanLog(string $jsonString): string
     {
