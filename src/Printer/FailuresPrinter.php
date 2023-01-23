@@ -49,6 +49,12 @@ class FailuresPrinter implements EventSubscriberInterface
 
             $this->printFailuresHeading($outcome, $style);
 
+            if ($outcome === TestOutcome::Deprecation) {
+                $this->printDeduplicated($style, ...$testResults);
+
+                continue;
+            }
+
             foreach ($testResults as $testResult) {
                 $this->printFailureOutput($testResult, $style, $counter++);
             }
@@ -59,6 +65,23 @@ class FailuresPrinter implements EventSubscriberInterface
     {
         $this->output->writeln('');
         $this->output->writeln(sprintf('<%s>%s output:</%s>', $style->value, ucwords($outcome->getTitle()), $style->value));
+    }
+
+    private function printDeduplicated(OutputStyle $style, TestResultWithMessage ...$results): void
+    {
+        $deduplicated = [];
+        foreach ($results as $result) {
+            $deduplicated[$result->message][$result->test->name] ??= 0;
+            $deduplicated[$result->message][$result->test->name] += 1;
+        }
+
+        foreach ($deduplicated as $message => $tests) {
+            $this->output->writeln(sprintf('<%s>%s</%s>', $style->value, $message, $style->value));
+
+            foreach ($tests as $testName => $count) {
+                $this->output->writeln(sprintf('  %dx %s', $count, $testName));
+            }
+        }
     }
 
     private function printFailureOutput(TestResultWithMessage $testResult, OutputStyle $style, int $counter): void
