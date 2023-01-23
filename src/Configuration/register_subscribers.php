@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Configuration;
 
 use Paraunit\Logs\TestHook\BeforeTest;
+use Paraunit\Logs\TestHook\Deprecation;
 use Paraunit\Logs\TestHook\Error;
 use Paraunit\Logs\TestHook\ExecutionStarted;
 use Paraunit\Logs\TestHook\Failure;
@@ -24,6 +25,7 @@ Facade::registerSubscriber(new Failure());
 Facade::registerSubscriber(new ExecutionStarted());
 Facade::registerSubscriber(new Incomplete());
 Facade::registerSubscriber(new Risky());
+Facade::registerSubscriber(new Deprecation());
 Facade::registerSubscriber(new Skipped());
 Facade::registerSubscriber(new Passed());
 Facade::registerSubscriber(new Warning());
