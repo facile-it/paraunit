@@ -33,7 +33,8 @@
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
 }{
   "status": "Errored",
-  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne"
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOne",
+  "message": "Some error message"
 }{
   "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherTer"
@@ -57,5 +58,6 @@
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
 }{
   "status": "Errored",
-  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis"
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOneBis",
+  "message": "Some error message"
 }

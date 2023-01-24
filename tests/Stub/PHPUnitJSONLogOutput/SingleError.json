@@ -13,7 +13,8 @@
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{
   "status": "Errored",
-  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
+  "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther",
+  "message": "Some error message"
 }{
   "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOtherBis"
