@@ -86,7 +86,7 @@ class Filter
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     private function getExcludesArray(\DOMElement $testSuiteNode): array
     {
@@ -100,7 +100,7 @@ class Filter
 
     /**
      * @param string[] $aggregatedFiles
-     * @param string[] $excludes
+     * @param list<string> $excludes
      */
     private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes): void
     {
