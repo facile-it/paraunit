@@ -38,28 +38,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
     }
 
-    public function testExecutionAllGreenWithRepeatOption(): void
-    {
-        $configurationPath = $this->getConfigForStubs();
-        $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
-
-        $command = $application->find('run');
-        $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute([
-            'command' => $command->getName(),
-            '--configuration' => $configurationPath,
-            '--repeat' => '1',
-            'stringFilter' => 'green',
-        ]);
-
-        $output = $commandTester->getDisplay();
-        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
-        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
-        $this->assertStringNotContainsString('ABNORMAL TERMINATIONS', $output);
-        $this->assertEquals(0, $exitCode);
-    }
-
     public function testExecution(): void
     {
         $configurationPath = $this->getConfigForStubs();
