@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "183ee15783daadc74b5622dfba9ee2dc",
+    "content-hash": "4d698b0b4d48db28b6dfdb5b8be2544f",
     "packages": [
         {
             "name": "jean85/pretty-package-versions",
@@ -611,16 +611,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.0.1",
+            "version": "dev-fix-multiple-subscriber-interfaces",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e2aa0bba46b3d913be20921e88e5a6f9d5cfc9b5"
+                "url": "https://github.com/Jean85/phpunit.git",
+                "reference": "22ce08704384ed92367bc0a283b3b0127d7f78d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e2aa0bba46b3d913be20921e88e5a6f9d5cfc9b5",
-                "reference": "e2aa0bba46b3d913be20921e88e5a6f9d5cfc9b5",
+                "url": "https://api.github.com/repos/Jean85/phpunit/zipball/22ce08704384ed92367bc0a283b3b0127d7f78d3",
+                "reference": "22ce08704384ed92367bc0a283b3b0127d7f78d3",
                 "shasum": ""
             },
             "require": {
@@ -664,14 +664,23 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/Framework/Assert/Functions.php"
-                ],
                 "classmap": [
                     "src/"
+                ],
+                "files": [
+                    "src/Framework/Assert/Functions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ],
+                "files": [
+                    "tests/_files/CoverageNamespacedFunctionTest.php",
+                    "tests/_files/CoveredFunction.php",
+                    "tests/_files/NamespaceCoveredFunction.php"
+                ]
+            },
             "license": [
                 "BSD-3-Clause"
             ],
@@ -691,23 +700,19 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.0.1"
+                "source": "https://github.com/Jean85/phpunit/tree/fix-multiple-subscriber-interfaces"
             },
             "funding": [
                 {
-                    "url": "https://phpunit.de/sponsors.html",
-                    "type": "custom"
+                    "type": "github",
+                    "url": "https://github.com/sebastianbergmann"
                 },
                 {
-                    "url": "https://github.com/sebastianbergmann",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
-                    "type": "tidelift"
+                    "type": "custom",
+                    "url": "https://phpunit.de/sponsors.html"
                 }
             ],
-            "time": "2023-02-03T13:36:13+00:00"
+            "time": "2023-02-03T23:12:42+00:00"
         },
         {
             "name": "psr/container",
@@ -6336,10 +6341,17 @@
             "version": "dev-allow-sebastian-comparator-5",
             "alias": "1.15",
             "alias_normalized": "1.15.0.0"
+        },
+        {
+            "package": "phpunit/phpunit",
+            "version": "dev-fix-multiple-subscriber-interfaces",
+            "alias": "10.0.2",
+            "alias_normalized": "10.0.2.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpunit/phpunit": 20,
         "phpspec/prophecy": 20,
         "phpspec/prophecy-phpunit": 20
     },

@@ -29,7 +29,7 @@
         "jean85/pretty-package-versions": "^1.5.1||^2.0.1",
         "phpunit/php-code-coverage": "^10.0",
         "phpunit/php-file-iterator": "^4.0",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "dev-fix-multiple-subscriber-interfaces as 10.0.2",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^4.4||^5.0||^6.0",
         "symfony/dependency-injection": "^4.4||^5.0||^6.0",
@@ -56,6 +56,10 @@
         "composer/package-versions-deprecated": "<1.11.99"
     },
     "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/Jean85/phpunit"
+        },
         {
             "type": "github",
             "url": "https://github.com/Jean85/prophecy"
