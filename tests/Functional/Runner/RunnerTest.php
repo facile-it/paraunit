@@ -113,7 +113,7 @@ class RunnerTest extends BaseIntegrationTestCase
         );
     }
 
-    public function testWarning(): never
+    public function testWarning(): void
     {
         $this->setTextFilter('IntentionalWarningTestStub.php');
         $this->loadContainer();
@@ -121,7 +121,6 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->executeRunner();
 
         $output = $this->getConsoleOutput()->getOutput();
-        $this->markTestIncomplete('Warning handling has changed');
         $this->assertMatchesRegularExpression('/\nW\s+1\n/', $output, 'Missing W output');
         $this->assertStringContainsString(
             '1 files with WARNINGS:',
@@ -156,7 +155,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString(ThreeGreenTestStub::class, $output);
     }
 
-    public function testWarningsToStdout(): never
+    public function testWarningsToStdout(): void
     {
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();
@@ -164,24 +163,24 @@ class RunnerTest extends BaseIntegrationTestCase
         $output = $this->getConsoleOutput();
 
         $this->assertEquals(0, $this->executeRunner());
-        $this->markTestIncomplete();
-        $this->assertStringContainsString('RRR', $output->getOutput());
+        // TODO -- test for W + success, W + fail, W + error
+        $this->assertStringContainsString('WWW', $output->getOutput());
         $this->assertOutputOrder($output, [
-            'Risky Outcome output',
+            'Warnings output',
             SessionTestStub::class . '::testOne',
             'session_id',
             SessionTestStub::class . '::testTwo',
             'session_id',
             SessionTestStub::class . '::testThree',
             'session_id',
-            'files with RISKY OUTCOME',
+            'files with WARNINGS',
             'SessionTestStub',
         ]);
 
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
 
-    public function testSessionStderr(): never
+    public function testSessionStderr(): void
     {
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();
@@ -197,7 +196,6 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertSame(0, $this->executeRunner(), $output->getOutput());
 
         $this->assertStringNotContainsString('Coverage', $output->getOutput());
-        $this->markTestIncomplete();
         $this->assertOutputOrder($output, [
             'PARAUNIT',
             Paraunit::getVersion(),

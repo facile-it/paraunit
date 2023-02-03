@@ -13,12 +13,11 @@ use Paraunit\Logs\TestHook\Incomplete;
 use Paraunit\Logs\TestHook\Passed;
 use Paraunit\Logs\TestHook\Risky;
 use Paraunit\Logs\TestHook\Skipped;
+use Paraunit\Logs\TestHook\TestWarning;
 use Paraunit\Logs\TestHook\Warning;
 use PHPUnit\Event\Facade;
 
-// TODO - wait for feedback and refactor accordingly
-// see https://github.com/sebastianbergmann/phpunit/issues/4807
-// or  https://github.com/sebastianbergmann/phpunit/issues/4676
+// TODO - use extensions - https://github.com/facile-it/paraunit/issues/179
 Facade::registerSubscriber(new BeforeTest());
 Facade::registerSubscriber(new Error());
 Facade::registerSubscriber(new Failure());
@@ -28,4 +27,5 @@ Facade::registerSubscriber(new Risky());
 Facade::registerSubscriber(new Deprecation());
 Facade::registerSubscriber(new Skipped());
 Facade::registerSubscriber(new Passed());
+Facade::registerSubscriber(new TestWarning());
 Facade::registerSubscriber(new Warning());
