@@ -6,8 +6,8 @@ namespace Tests\Functional\Logs;
 
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Logs\JSON\LogParser;
-use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\TestResult\TestResult;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;

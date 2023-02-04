@@ -6,10 +6,10 @@ namespace Paraunit\Logs\JSON;
 
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\TestStatus;
-use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\TestResult;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 
 class RetryParser
 {

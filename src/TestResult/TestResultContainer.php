@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\TestResult;
 
 use Paraunit\Logs\ValueObject\TestMethod;
-use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 
 class TestResultContainer
 {

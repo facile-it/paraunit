@@ -8,8 +8,8 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

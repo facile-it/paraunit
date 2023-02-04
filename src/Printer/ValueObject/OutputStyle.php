@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer\ValueObject;
 
+use Paraunit\TestResult\ValueObject\TestOutcome;
+
 enum OutputStyle: string
 {
     case Ok = 'ok';

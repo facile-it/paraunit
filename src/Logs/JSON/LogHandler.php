@@ -7,12 +7,12 @@ namespace Paraunit\Logs\JSON;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestStatus;
-use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\TestResult;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultWithMessage;
 use Paraunit\TestResult\TestWithAbnormalTermination;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 
 final class LogHandler
 {

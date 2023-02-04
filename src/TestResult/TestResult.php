@@ -6,7 +6,7 @@ namespace Paraunit\TestResult;
 
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 
 class TestResult
 {

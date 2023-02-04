@@ -2,34 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Paraunit\Printer\ValueObject;
+namespace Paraunit\TestResult\ValueObject;
 
 use Paraunit\Logs\ValueObject\TestStatus;
 
-enum TestOutcome: string
+enum TestOutcome: string implements PrintableTestStatus
 {
     case AbnormalTermination = 'AbnormalTermination';
-    case CoverageFailure = 'CoverageFailure';
     case Error = 'Error';
     case Failure = 'Failure';
-    case Warning = 'Warning';
-    case Deprecation = 'Deprecation';
     case NoTestExecuted = 'NoTestExecuted';
-    case Risky = 'Risky';
     case Skipped = 'Skipped';
     case Incomplete = 'Incomplete';
     case Retry = 'Retry';
     case Passed = 'Passed';
 
+    // TODO - move elsewhere
     public const PRINT_ORDER = [
         self::AbnormalTermination,
-        self::CoverageFailure,
+        //        self::CoverageFailure,
         self::Error,
         self::Failure,
-        self::Warning,
-        self::Deprecation,
+        //        self::Warning,
+        //        self::Deprecation,
         self::NoTestExecuted,
-        self::Risky,
+        //        self::Risky,
         self::Skipped,
         self::Incomplete,
         self::Retry,
@@ -45,11 +42,8 @@ enum TestOutcome: string
             TestStatus::Errored => self::Error,
             TestStatus::Failed => self::Failure,
             TestStatus::MarkedIncomplete => self::Incomplete,
-            TestStatus::ConsideredRisky => self::Risky,
-            TestStatus::Deprecation => self::Deprecation,
             TestStatus::Skipped => self::Skipped,
             TestStatus::Passed => self::Passed,
-            TestStatus::WarningTriggered => self::Warning,
             TestStatus::Unknown => self::AbnormalTermination,
         };
     }
@@ -60,14 +54,10 @@ enum TestOutcome: string
             self::AbnormalTermination => 'abnormal terminations (fatal errors, segfaults)',
             self::Error => 'errors',
             self::Failure => 'failures',
-            self::Warning => 'warnings',
-            self::Deprecation => 'deprecations',
             self::NoTestExecuted => 'no tests executed',
-            self::Risky => 'risky outcome',
             self::Skipped => 'skipped',
             self::Incomplete => 'incomplete',
             self::Retry => 'retried',
-            self::CoverageFailure => 'coverage not fetched',
             self::Passed => 'passed',
         };
     }
@@ -75,14 +65,10 @@ enum TestOutcome: string
     public function getSymbol(): string
     {
         return match ($this) {
-            self::CoverageFailure,
             self::NoTestExecuted => throw new \InvalidArgumentException('Outcome does not expect symbol: ' . $this->value),
             self::AbnormalTermination => 'X',
             self::Error => 'E',
             self::Failure => 'F',
-            self::Warning => 'W',
-            self::Deprecation => 'D',
-            self::Risky => 'R',
             self::Skipped => 'S',
             self::Incomplete => 'I',
             self::Retry => 'A',
