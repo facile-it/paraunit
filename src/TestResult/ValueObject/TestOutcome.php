@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\ValueObject;
 
-use Paraunit\Logs\ValueObject\TestStatus;
-
 enum TestOutcome: string implements PrintableTestStatus
 {
     case AbnormalTermination = 'AbnormalTermination';
@@ -17,7 +15,6 @@ enum TestOutcome: string implements PrintableTestStatus
     case Retry = 'Retry';
     case Passed = 'Passed';
 
-    // TODO - move elsewhere
     public const PRINT_ORDER = [
         self::AbnormalTermination,
         //        self::CoverageFailure,
@@ -33,19 +30,9 @@ enum TestOutcome: string implements PrintableTestStatus
         self::Passed,
     ];
 
-    public static function fromStatus(TestStatus $status): self
+    public function getValue(): string
     {
-        return match ($status) {
-            TestStatus::Prepared,
-            TestStatus::Started,
-            TestStatus::LogTerminated => throw new \InvalidArgumentException('Unexpected status as outcome: ' . $status->value),
-            TestStatus::Errored => self::Error,
-            TestStatus::Failed => self::Failure,
-            TestStatus::MarkedIncomplete => self::Incomplete,
-            TestStatus::Skipped => self::Skipped,
-            TestStatus::Passed => self::Passed,
-            TestStatus::Unknown => self::AbnormalTermination,
-        };
+        return $this->value;
     }
 
     public function getTitle(): string

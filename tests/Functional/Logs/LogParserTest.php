@@ -6,8 +6,8 @@ namespace Tests\Functional\Logs;
 
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Logs\JSON\LogParser;
-use Paraunit\TestResult\TestResult;
 use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -32,7 +32,7 @@ class LogParserTest extends BaseFunctionalTestCase
         $textResults = '';
 
         foreach ($results as $singleResult) {
-            $textResults .= $singleResult->outcome->getSymbol();
+            $textResults .= $singleResult->status->getSymbol();
         }
 
         $this->assertEquals($expectedResult, $textResults);
@@ -76,6 +76,6 @@ class LogParserTest extends BaseFunctionalTestCase
         $results = $process->getTestResults();
         $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
         $this->assertCount(1, $results);
-        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->outcome);
+        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->status);
     }
 }

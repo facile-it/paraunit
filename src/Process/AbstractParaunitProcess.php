@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Process;
 
 use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
-use Paraunit\TestResult\TestResult;
+use Paraunit\TestResult\ValueObject\TestResult;
 
 abstract class AbstractParaunitProcess extends AbstractInfo
 {

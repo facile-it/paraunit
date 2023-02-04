@@ -24,7 +24,7 @@ use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
-use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestOutcomeContainer;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
@@ -96,7 +96,7 @@ class ParallelContainerDefinition
 
     private function configurePrinter(ContainerBuilder $container): void
     {
-        $container->setDefinition(TestResultContainer::class, new Definition(TestResultContainer::class, [
+        $container->setDefinition(TestOutcomeContainer::class, new Definition(TestOutcomeContainer::class, [
             new Reference(ChunkSize::class),
         ]));
 
@@ -115,12 +115,12 @@ class ParallelContainerDefinition
 
         $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, [
             new Reference(OutputInterface::class),
-            new Reference(TestResultContainer::class),
+            new Reference(TestOutcomeContainer::class),
         ]));
 
         $container->setDefinition(FilesRecapPrinter::class, new Definition(FilesRecapPrinter::class, [
             new Reference(OutputInterface::class),
-            new Reference(TestResultContainer::class),
+            new Reference(TestOutcomeContainer::class),
             new Reference(ChunkSize::class),
         ]));
 

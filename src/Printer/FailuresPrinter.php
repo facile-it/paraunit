@@ -7,7 +7,7 @@ namespace Paraunit\Printer;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestOutcomeContainer;
 use Paraunit\TestResult\TestResultWithMessage;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,7 +17,7 @@ class FailuresPrinter implements EventSubscriberInterface
 {
     public function __construct(
         private readonly OutputInterface $output,
-        private readonly TestResultContainer $testResultContainer
+        private readonly TestOutcomeContainer $testResultContainer
     ) {
     }
 

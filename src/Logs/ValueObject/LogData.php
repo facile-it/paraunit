@@ -7,7 +7,7 @@ namespace Paraunit\Logs\ValueObject;
 class LogData implements \JsonSerializable
 {
     public function __construct(
-        public readonly TestStatus $status,
+        public readonly LogStatus $status,
         public readonly Test $test,
         public readonly ?string $message
     ) {
@@ -88,20 +88,20 @@ class LogData implements \JsonSerializable
                 self::validateLogFormat($log);
 
                 $logs[] = new self(
-                    TestStatus::from($log['status']),
+                    LogStatus::from($log['status']),
                     $lastTest = new Test($log['test']),
                     $log['message'] ?? null,
                 );
             }
         } catch (\Throwable $e) {
             $logs[] = new self(
-                TestStatus::Unknown,
+                LogStatus::Unknown,
                 Test::unknown(),
                 'Error while parsing Paraunit logs: ' . $e->getMessage(),
             );
         }
 
-        $logs[] = new self(TestStatus::LogTerminated, $lastTest ?? Test::unknown(), null);
+        $logs[] = new self(LogStatus::LogTerminated, $lastTest ?? Test::unknown(), null);
 
         return $logs;
     }

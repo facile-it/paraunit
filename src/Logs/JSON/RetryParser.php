@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Paraunit\Logs\JSON;
 
 use Paraunit\Logs\ValueObject\LogData;
-use Paraunit\Logs\ValueObject\TestStatus;
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestResult;
-use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestOutcomeContainer;
 use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 
 class RetryParser
 {
     private readonly string $regexPattern;
 
     public function __construct(
-        private readonly TestResultContainer $testResultContainer,
+        private readonly TestOutcomeContainer $testResultContainer,
         private readonly int $maxRetryCount = 3
     ) {
         $patterns = [
@@ -59,7 +59,7 @@ class RetryParser
 
     private function containsRetryableError(LogData $log): bool
     {
-        return $log->status === TestStatus::Errored
+        return $log->status === LogStatus::Errored
             && $log->message
             && 1 === preg_match($this->regexPattern, $log->message);
     }

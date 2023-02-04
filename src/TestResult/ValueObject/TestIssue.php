@@ -11,6 +11,11 @@ enum TestIssue: string implements PrintableTestStatus
     case Risky = 'Risky';
     case Warning = 'Warning';
 
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
     public function getTitle(): string
     {
         return match ($this) {

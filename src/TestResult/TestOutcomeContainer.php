@@ -6,8 +6,9 @@ namespace Paraunit\TestResult;
 
 use Paraunit\Logs\ValueObject\TestMethod;
 use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 
-class TestResultContainer
+class TestOutcomeContainer
 {
     /** @var array<value-of<TestOutcome>, array<string, string>> */
     private array $filenames = [];
@@ -20,7 +21,7 @@ class TestResultContainer
         $this->addToFilenames($testResult);
 
         if ($testResult instanceof TestResultWithMessage) {
-            $this->testResults[$testResult->outcome->value][] = $testResult;
+            $this->testResults[$testResult->status->value][] = $testResult;
         }
     }
 
@@ -31,7 +32,7 @@ class TestResultContainer
             : $testResult->test->name;
 
         // trick for unique
-        $this->filenames[$testResult->outcome->value][$name] = $name;
+        $this->filenames[$testResult->status->value][$name] = $name;
     }
 
     /**

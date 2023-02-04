@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Logs\TestHook;
 
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Logs\ValueObject\TestStatus;
 use PHPUnit\Event\TestRunner\ExecutionStarted as TestSuiteExecutionStarted;
 use PHPUnit\Event\TestRunner\ExecutionStartedSubscriber;
 use PHPUnit\Event\TestSuite\TestSuiteForTestClass;
@@ -15,7 +15,7 @@ class ExecutionStarted extends AbstractTestHook implements ExecutionStartedSubsc
 {
     public function notify(TestSuiteExecutionStarted $event): void
     {
-        $this->write(TestStatus::Started, $this->createTest($event), (string) $event->testSuite()->count());
+        $this->write(LogStatus::Started, $this->createTest($event), (string) $event->testSuite()->count());
     }
 
     private function createTest(TestSuiteExecutionStarted $event): Test
