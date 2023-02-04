@@ -6,10 +6,10 @@ namespace Tests\Unit\TestResult;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Parser\ValueObject\Test;
+use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultWithAbnormalTermination;
+use Paraunit\TestResult\TestWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -30,15 +30,15 @@ class TestResultContainerTest extends BaseUnitTestCase
         $functionalTestProcess = new StubbedParaunitProcess('phpunit Functional/ClassTest.php');
         $functionalTestProcess->setFilename('ClassTest.php');
 
-        $testResultContainer->addProcessToFilenames($unitTestProcess);
-        $testResultContainer->addProcessToFilenames($functionalTestProcess);
+        $testResultContainer->addToFilenames($unitTestProcess);
+        $testResultContainer->addToFilenames($functionalTestProcess);
 
         $this->assertCount(2, $testResultContainer->getFileNames());
     }
 
     public function testHandleLogItemAddsProcessOutputWhenNeeded(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        $testResult = new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('test output');
 
@@ -48,7 +48,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('test output', $testResult->getFailureMessage());
@@ -56,7 +56,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testHandleLogItemAddsMessageWhenProcessOutputIsEmpty(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        $testResult = new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
 
@@ -66,7 +66,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertStringContainsString('Possible abnormal termination', $testResult->getFailureMessage());
         $this->assertStringContainsString('<tag><[NO OUTPUT FOUND]></tag>', $testResult->getFailureMessage());
@@ -74,7 +74,7 @@ class TestResultContainerTest extends BaseUnitTestCase
 
     public function testCountTestResultsCountsOnlyResultsWhichProducesSymbols(): void
     {
-        $testResult = new TestResultWithAbnormalTermination(new Test('function name'));
+        new TestWithAbnormalTermination(new Test('function name'));
         $process = new StubbedParaunitProcess();
         $process->setOutput('');
         $testFormat = $this->prophesize(TestResultFormat::class);
@@ -87,7 +87,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
         );
-        $testResultContainer->handleTestResult($process, $testResult);
+        $testResultContainer->addTestResult($process);
 
         $this->assertSame(0, $testResultContainer->countTestResults());
     }

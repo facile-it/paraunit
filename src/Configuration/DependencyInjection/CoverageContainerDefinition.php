@@ -66,7 +66,6 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
     {
         $container->setDefinition(CoverageFetcher::class, new Definition(CoverageFetcher::class, [
             new Reference(TempFilenameFactory::class),
-            new Reference('paraunit.test_result.coverage_failure_container'),
         ]));
         $container->setDefinition(CoverageMerger::class, new Definition(CoverageMerger::class, [
             new Reference(CoverageFetcher::class),

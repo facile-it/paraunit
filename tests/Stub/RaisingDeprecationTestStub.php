@@ -16,7 +16,7 @@ class RaisingDeprecationTestStub extends TestCase
     public function testDeprecation(): void
     {
         $this->assertTrue(true, 'This avoids the risky status');
-        @trigger_error(self::DEPRECATION_MESSAGE, E_USER_DEPRECATED);
+        trigger_error(self::DEPRECATION_MESSAGE, E_USER_DEPRECATED);
     }
 
     public static function multirunDataprovider(): array

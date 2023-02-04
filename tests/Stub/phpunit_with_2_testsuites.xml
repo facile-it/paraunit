@@ -21,8 +21,8 @@
     </testsuites>
 
     <coverage>
-        <whitelist>
+        <include>
             <file>StubbedParaunitProcess.php</file>
-        </whitelist>
+        </include>
     </coverage>
 </phpunit>

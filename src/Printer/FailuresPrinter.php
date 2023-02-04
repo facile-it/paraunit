@@ -6,14 +6,21 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
-use Paraunit\TestResult\Interfaces\FailureMessageInterface;
-use Paraunit\TestResult\Interfaces\StackTraceInterface;
-use Paraunit\TestResult\Interfaces\TestNameInterface;
+use Paraunit\Printer\ValueObject\OutputStyle;
+use Paraunit\Printer\ValueObject\TestOutcome;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultWithMessage;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInterface
+class FailuresPrinter implements EventSubscriberInterface
 {
+    public function __construct(
+        private readonly OutputInterface $output,
+        private readonly TestResultContainer $testResultContainer
+    ) {
+    }
+
     /**
      * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
      */
@@ -26,44 +33,65 @@ class FailuresPrinter extends AbstractFinalPrinter implements EventSubscriberInt
 
     public function onEngineEnd(): void
     {
-        foreach ($this->testResultList->getTestResultContainers() as $parser) {
-            if ($parser->getTestResultFormat()->shouldPrintTestOutput()) {
-                $this->printFailuresOutput($parser);
+        foreach (TestOutcome::PRINT_ORDER as $outcome) {
+            if ($outcome === TestOutcome::Passed) {
+                continue;
+            }
+
+            $testResults = $this->testResultContainer->getTestResults($outcome);
+
+            if ($testResults === []) {
+                continue;
+            }
+
+            $style = OutputStyle::fromOutcome($outcome);
+            $counter = 1;
+
+            $this->printFailuresHeading($outcome, $style);
+
+            if ($outcome === TestOutcome::Deprecation) {
+                $this->printDeduplicated($style, ...$testResults);
+
+                continue;
+            }
+
+            foreach ($testResults as $testResult) {
+                $this->printFailureOutput($testResult, $style, $counter++);
             }
         }
     }
 
-    private function printFailuresOutput(TestResultContainer $testResultContainer): void
+    private function printFailuresHeading(TestOutcome $outcome, OutputStyle $style): void
     {
-        if (empty($testResultContainer->getTestResults())) {
-            return;
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('<%s>%s output:</%s>', $style->value, ucwords($outcome->getTitle()), $style->value));
+    }
+
+    private function printDeduplicated(OutputStyle $style, TestResultWithMessage ...$results): void
+    {
+        $deduplicated = [];
+        foreach ($results as $result) {
+            $deduplicated[$result->message][$result->test->name] ??= 0;
+            $deduplicated[$result->message][$result->test->name] += 1;
         }
 
-        $tag = $testResultContainer->getTestResultFormat()->getTag();
-        $title = $testResultContainer->getTestResultFormat()->getTitle();
+        foreach ($deduplicated as $message => $tests) {
+            $this->output->writeln(sprintf('<%s>%s</%s>', $style->value, $message, $style->value));
 
-        $output = $this->getOutput();
-        $output->writeln('');
-        $output->writeln(sprintf('<%s>%s output:</%s>', $tag, ucwords($title), $tag));
-
-        $i = 1;
-        foreach ($testResultContainer->getTestResults() as $testResult) {
-            $output->writeln('');
-            $output->write(sprintf('<%s>%d) ', $tag, $i++));
-
-            if ($testResult instanceof TestNameInterface) {
-                $output->writeln($testResult->getTestName());
-            }
-
-            $output->write(sprintf('</%s>', $tag));
-
-            if ($testResult instanceof FailureMessageInterface) {
-                $output->writeln($testResult->getFailureMessage());
-            }
-
-            if ($testResult instanceof StackTraceInterface) {
-                $output->writeln($testResult->getTrace());
+            foreach ($tests as $testName => $count) {
+                $this->output->writeln(sprintf('  %dx %s', $count, $testName));
             }
         }
+    }
+
+    private function printFailureOutput(TestResultWithMessage $testResult, OutputStyle $style, int $counter): void
+    {
+        $this->output->writeln('');
+        $this->output->write(sprintf('<%s>%d) ', $style->value, $counter));
+        $this->output->writeln($testResult->test->name);
+
+        $this->output->write(sprintf('</%s>', $style->value));
+
+        $this->output->writeln($testResult->message);
     }
 }

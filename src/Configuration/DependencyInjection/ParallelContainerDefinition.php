@@ -17,7 +17,6 @@ use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\Printer\ProcessPrinter;
 use Paraunit\Printer\SharkPrinter;
-use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
@@ -25,9 +24,10 @@ use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
-use Paraunit\TestResult\TestResultList;
+use Paraunit\TestResult\TestResultContainer;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
+use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -40,12 +40,9 @@ class ParallelContainerDefinition
 {
     private readonly ParserDefinition $parserDefinition;
 
-    private readonly TestResultDefinition $testResult;
-
     public function __construct()
     {
         $this->parserDefinition = new ParserDefinition();
-        $this->testResult = new TestResultDefinition();
     }
 
     public function configure(ContainerBuilder $container): ContainerBuilder
@@ -60,7 +57,6 @@ class ParallelContainerDefinition
         $this->configureProcess($container);
         $this->configureRunner($container);
         $this->configureServices($container);
-        $this->testResult->configure($container);
 
         return $container;
     }
@@ -100,29 +96,36 @@ class ParallelContainerDefinition
 
     private function configurePrinter(ContainerBuilder $container): void
     {
-        $output = new Reference(OutputInterface::class);
+        $container->setDefinition(TestResultContainer::class, new Definition(TestResultContainer::class, [
+            new Reference(ChunkSize::class),
+        ]));
 
         $container->setDefinition(SharkPrinter::class, new Definition(SharkPrinter::class, [
-            $output,
+            new Reference(OutputInterface::class),
             '%paraunit.show_logo%',
         ]));
         $container->setDefinition(ProcessPrinter::class, new Definition(ProcessPrinter::class, [
-            new Reference(SingleResultFormatter::class),
-            $output,
+            new Reference(OutputInterface::class),
         ]));
 
-        $finalPrinterArguments = [
-            new Reference(TestResultList::class),
-            $output,
+        $container->setDefinition(FinalPrinter::class, new Definition(FinalPrinter::class, [
+            new Reference(OutputInterface::class),
             new Reference(ChunkSize::class),
-        ];
-        $container->setDefinition(FinalPrinter::class, new Definition(FinalPrinter::class, $finalPrinterArguments));
-        $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, $finalPrinterArguments));
-        $container->setDefinition(FilesRecapPrinter::class, new Definition(FilesRecapPrinter::class, $finalPrinterArguments));
+        ]));
 
-        $container->setDefinition(ConsoleFormatter::class, new Definition(ConsoleFormatter::class, [$output]));
-        $container->setDefinition(SingleResultFormatter::class, new Definition(SingleResultFormatter::class, [
-            new Reference(TestResultList::class),
+        $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, [
+            new Reference(OutputInterface::class),
+            new Reference(TestResultContainer::class),
+        ]));
+
+        $container->setDefinition(FilesRecapPrinter::class, new Definition(FilesRecapPrinter::class, [
+            new Reference(OutputInterface::class),
+            new Reference(TestResultContainer::class),
+            new Reference(ChunkSize::class),
+        ]));
+
+        $container->setDefinition(ConsoleFormatter::class, new Definition(ConsoleFormatter::class, [
+            (new Definition(OutputFormatterInterface::class))->setFactory([new Reference(OutputInterface::class), 'getFormatter']),
         ]));
     }
 

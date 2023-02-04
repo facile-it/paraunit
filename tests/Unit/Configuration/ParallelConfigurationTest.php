@@ -9,7 +9,7 @@ use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\File\Cleaner;
-use Paraunit\Parser\JSON\LogParser;
+use Paraunit\Logs\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProcessPrinter;

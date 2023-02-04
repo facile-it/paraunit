@@ -6,6 +6,7 @@ namespace Paraunit\Process\AbstractParaunitProcess;
 
 abstract class AbstractInfo
 {
+    // TODO - convert to interface?
     abstract public function getOutput(): string;
 
     abstract public function getErrorOutput(): string;

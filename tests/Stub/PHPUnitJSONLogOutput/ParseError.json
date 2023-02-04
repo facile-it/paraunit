@@ -1,4 +1,8 @@
 {
+  "status":"Started",
+  "test":"Tests\\Stub\\ThreeGreenTestStub",
+  "message":"51"
+}{
   "status": "Prepared",
   "test": "Tests\\Stub\\ThreeGreenTestStub::testGreenOther"
 }{

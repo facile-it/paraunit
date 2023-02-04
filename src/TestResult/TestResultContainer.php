@@ -4,94 +4,49 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Configuration\ChunkSize;
-use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
+use Paraunit\Logs\ValueObject\TestMethod;
+use Paraunit\Printer\ValueObject\TestOutcome;
 
-class TestResultContainer implements TestResultContainerInterface, TestResultHandlerInterface
+class TestResultContainer
 {
-    /** @var string[] */
+    /** @var array<value-of<TestOutcome>, array<string, string>> */
     private array $filenames = [];
 
-    /** @var PrintableTestResultInterface[] */
+    /** @var array<value-of<TestOutcome>, TestResultWithMessage[]> */
     private array $testResults = [];
 
-    public function __construct(private readonly TestResultFormat $testResultFormat, private readonly PHPUnitConfig $config, private readonly ChunkSize $chunkSize)
+    public function addTestResult(TestResult $testResult): void
     {
-    }
+        $this->addToFilenames($testResult);
 
-    public function handleTestResult(AbstractParaunitProcess $process, TestResultInterface $testResult): void
-    {
-        $this->addProcessToFilenames($process);
-
-        if ($testResult instanceof TestResultWithAbnormalTermination) {
-            $this->addProcessOutputToResult($testResult, $process);
-        }
-
-        if ($testResult instanceof PrintableTestResultInterface) {
-            $testResult->setTestResultFormat($this->testResultFormat);
-            $this->testResults[] = $testResult;
-
-            $process->addTestResult($testResult);
+        if ($testResult instanceof TestResultWithMessage) {
+            $this->testResults[$testResult->outcome->value][] = $testResult;
         }
     }
 
-    public function addProcessToFilenames(AbstractParaunitProcess $process): void
+    private function addToFilenames(TestResult $testResult): void
     {
-        $processFilename = $process->getFilename();
-        if ($this->chunkSize->isChunked()) {
-            $processFilename = basename($processFilename);
-        }
+        $name = $testResult->test instanceof TestMethod
+            ? $testResult->test->className
+            : $testResult->test->name;
 
         // trick for unique
-        $this->filenames[$process->getUniqueId()] = $process->getTestClassName() ?: $processFilename;
-    }
-
-    public function getTestResultFormat(): TestResultFormat
-    {
-        return $this->testResultFormat;
+        $this->filenames[$testResult->outcome->value][$name] = $name;
     }
 
     /**
      * @return string[]
      */
-    public function getFileNames(): array
+    public function getFileNames(TestOutcome $outcome): array
     {
-        return $this->filenames;
+        return $this->filenames[$outcome->value] ?? [];
     }
 
     /**
-     * @return PrintableTestResultInterface[]
+     * @return TestResultWithMessage[]
      */
-    public function getTestResults(): array
+    public function getTestResults(TestOutcome $outcome): array
     {
-        return $this->testResults;
-    }
-
-    public function countTestResults(): int
-    {
-        if (! $this->testResultFormat instanceof TestResultWithSymbolFormat) {
-            return 0;
-        }
-
-        return count($this->testResults);
-    }
-
-    private function addProcessOutputToResult(
-        TestResultWithAbnormalTermination $result,
-        AbstractParaunitProcess $process
-    ): void {
-        $tag = $this->testResultFormat->getTag();
-
-        $output = $this->config->getPhpunitOption('stderr') !== null
-            ? $process->getErrorOutput()
-            : $process->getOutput();
-
-        $output = $output ?: sprintf('<%s><[NO OUTPUT FOUND]></%s>', $tag, $tag);
-        $result->setTestOutput($output);
+        return $this->testResults[$outcome->value] ?? [];
     }
 }

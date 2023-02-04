@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" 
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" 
          backupGlobals="false" 
          cacheResult="false"
          colors="true"
          bootstrap="vendor/autoload.php"
+         failOnWarning="true"
+         failOnRisky="true"
          timeoutForSmallTests="1"
          timeoutForMediumTests="5"
          timeoutForLargeTests="10"

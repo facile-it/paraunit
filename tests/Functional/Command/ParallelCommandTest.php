@@ -38,28 +38,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
     }
 
-    public function testExecutionAllGreenWithRepeatOption(): void
-    {
-        $configurationPath = $this->getConfigForStubs();
-        $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
-
-        $command = $application->find('run');
-        $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute([
-            'command' => $command->getName(),
-            '--configuration' => $configurationPath,
-            '--repeat' => '1',
-            'stringFilter' => 'green',
-        ]);
-
-        $output = $commandTester->getDisplay();
-        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
-        $this->assertStringNotContainsString('Executed: 0 test classes', $output);
-        $this->assertStringNotContainsString('ABNORMAL TERMINATIONS', $output);
-        $this->assertEquals(0, $exitCode);
-    }
-
     public function testExecution(): void
     {
         $configurationPath = $this->getConfigForStubs();
@@ -85,7 +63,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(PostgreSQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertStringContainsString('Executed: 15 test classes (21 retried), 29 tests', $output);
+        $this->assertStringContainsString('Executed: 15 test classes (21 retried), 24 tests', $output);
     }
 
     public function testExecutionWithWarning(): void
@@ -153,7 +131,7 @@ class ParallelCommandTest extends BaseTestCase
         $processRetried = 21;
         $processesCount = $classExecuted + $processRetried;
         $this->assertStringContainsString(
-            sprintf('Executed: %d test classes (%d retried), 29 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 24 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );
@@ -201,10 +179,6 @@ class ParallelCommandTest extends BaseTestCase
 
     public function testExecutionWithDeprecationListener(): void
     {
-        if ('disabled' === getenv('SYMFONY_DEPRECATIONS_HELPER')) {
-            $this->markTestSkipped('Deprecation handler is disabled');
-        }
-
         $application = new Application();
         $application->add(new ParallelCommand(new ParallelConfiguration()));
 
@@ -216,11 +190,10 @@ class ParallelCommandTest extends BaseTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertNotEquals(0, $exitCode);
+        $this->assertEquals(0, $exitCode);
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output, 'Precondition failed');
-        $this->assertStringContainsString('1 files with DEPRECATION WARNINGS:', $output);
+        $this->assertStringContainsString('1 files with DEPRECATIONS:', $output);
         $this->assertStringContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
-        $this->assertStringContainsString('RaisingDeprecationTestStub::testDeprecation', $output);
-        $this->assertStringNotContainsString('2)', $output, 'Deprecations are shown more than once per test file');
+        $this->assertStringContainsString('3x Tests\Stub\RaisingDeprecationTestStub::testDeprecation', $output);
     }
 }

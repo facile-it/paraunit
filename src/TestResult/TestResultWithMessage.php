@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult;
 
-use Paraunit\Parser\ValueObject\Test;
-use Paraunit\TestResult\Interfaces\FailureMessageInterface;
+use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Printer\ValueObject\TestOutcome;
 
-class TestResultWithMessage extends MuteTestResult implements FailureMessageInterface
+class TestResultWithMessage extends TestResult
 {
-    public function __construct(Test $test, private readonly string $failureMessage)
+    public function __construct(Test $test, TestOutcome $outcome, public readonly string $message)
     {
-        parent::__construct($test);
-    }
-
-    public function getFailureMessage(): string
-    {
-        return $this->failureMessage;
+        parent::__construct($test, $outcome);
     }
 }

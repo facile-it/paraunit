@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Process;
 
 use Paraunit\Process\AbstractParaunitProcess\AbstractInfo;
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
+use Paraunit\TestResult\TestResult;
 
 abstract class AbstractParaunitProcess extends AbstractInfo
 {
@@ -18,9 +18,10 @@ abstract class AbstractParaunitProcess extends AbstractInfo
 
     protected ?string $testClassName = null;
 
-    /** @var PrintableTestResultInterface[] */
+    /** @var TestResult[] */
     protected array $testResults = [];
 
+    // TODO - remove?
     private bool $waitingForTestResult = true;
 
     public function __construct(protected string $filename)
@@ -47,7 +48,6 @@ abstract class AbstractParaunitProcess extends AbstractInfo
 
     public function markAsToBeRetried(): void
     {
-        $this->reset();
         $this->increaseRetryCount();
         $this->shouldBeRetried = true;
     }
@@ -79,14 +79,14 @@ abstract class AbstractParaunitProcess extends AbstractInfo
     }
 
     /**
-     * @return PrintableTestResultInterface[]
+     * @return TestResult[]
      */
     public function getTestResults(): array
     {
         return $this->testResults;
     }
 
-    public function addTestResult(PrintableTestResultInterface $testResult): void
+    public function addTestResult(TestResult $testResult): void
     {
         $this->testResults[] = $testResult;
         $this->waitingForTestResult = false;
