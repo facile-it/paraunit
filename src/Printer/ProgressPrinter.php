@@ -6,8 +6,8 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -21,10 +21,8 @@ class ProgressPrinter implements EventSubscriberInterface
 
     private int $singleRowCounter = 0;
 
-    public function __construct(
-        private readonly OutputInterface $output,
-        private readonly FinalPrinter $finalPrinter,
-    ) {
+    public function __construct(private readonly OutputInterface $output)
+    {
     }
 
     /**
@@ -33,6 +31,7 @@ class ProgressPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            TestCompleted::class => 'onTestCompleted',
             EngineEnd::class => ['onEngineEnd', 400],
         ];
     }
@@ -47,10 +46,10 @@ class ProgressPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    public function printOutcome(TestOutcome $outcome): void
+    public function onTestCompleted(TestCompleted $event): void
     {
-        $this->finalPrinter->increaseOutcomeCount();
-        
+        $outcome = $event->outcome;
+
         if ($this->isRowFull()) {
             $this->printCounter();
         }

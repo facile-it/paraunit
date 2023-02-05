@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Paraunit\Logs\JSON;
 
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestWithAbnormalTermination;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class LogHandler
 {
@@ -25,7 +26,7 @@ final class LogHandler
     private int $actuallyPreparedTestCount = 0;
 
     public function __construct(
-        private readonly ProgressPrinter $progressPrinter,
+        private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TestResultContainer $testResultContainer,
     ) {
         $this->reset();
@@ -64,7 +65,7 @@ final class LogHandler
                 return;
             }
 
-            $this->progressPrinter->printOutcome(TestOutcome::AbnormalTermination);
+            $this->dispatchOutcome(TestOutcome::AbnormalTermination);
             // TODO - expose the number of unprepared tests?
             $this->testResultContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
 
@@ -74,8 +75,7 @@ final class LogHandler
         $testStatus = $log->status->toTestStatus();
 
         if ($testStatus instanceof TestOutcome) {
-            $this->progressPrinter->printOutcome($testStatus);
-            $this->currentTestOutcome = $testStatus;
+            $this->dispatchOutcome($testStatus);
         }
 
         $this->testResultContainer->addTestResult(TestResult::from($log));
@@ -87,5 +87,11 @@ final class LogHandler
 
         $process->addTestResult($testResult);
         $this->testResultContainer->addTestResult($testResult);
+    }
+
+    private function dispatchOutcome(TestOutcome $outcome): void
+    {
+        $this->eventDispatcher->dispatch(new TestCompleted($this->currentTest, $outcome));
+        $this->currentTestOutcome = $outcome;
     }
 }

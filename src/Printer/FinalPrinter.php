@@ -8,10 +8,10 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
-use Paraunit\Lifecycle\ProcessTerminated;
+use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\TestResult\ValueObject\TestOutcome;
-use Paraunit\TestResult\ValueObject\TestResult;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -44,7 +44,8 @@ class FinalPrinter implements EventSubscriberInterface
         return [
             EngineStart::class => 'onEngineStart',
             EngineEnd::class => ['onEngineEnd', 300],
-            ProcessTerminated::class => 'onProcessTerminated',
+            TestCompleted::class => 'onTestCompleted',
+            ProcessParsingCompleted::class => 'onProcessParsingCompleted',
             ProcessToBeRetried::class => 'onProcessToBeRetried',
         ];
     }
@@ -62,20 +63,16 @@ class FinalPrinter implements EventSubscriberInterface
         $this->printTestCounters();
     }
 
-    public function onProcessTerminated(ProcessTerminated $event): void
+    public function onTestCompleted(TestCompleted $event): void
+    {
+        if ($event->outcome !== TestOutcome::AbnormalTermination) {
+            ++$this->testsCount;
+        }
+    }
+
+    public function onProcessParsingCompleted(): void
     {
         ++$this->processCompleted;
-
-        $testResults = array_filter(
-            $event->getProcess()->getTestResults(),
-            static fn (TestResult $t): bool => ! in_array($t->status, [
-                TestOutcome::AbnormalTermination,
-                TestOutcome::NoTestExecuted,
-                TestOutcome::Retry,
-            ], true)
-        );
-
-        $this->testsCount += count($testResults);
     }
 
     public function onProcessToBeRetried(): void
@@ -95,7 +92,7 @@ class FinalPrinter implements EventSubscriberInterface
         $this->output->writeln('');
         $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
 
-        $this->output->write(sprintf("Executed: %d $executedTitle", $this->processCompleted - $this->processRetried));
+        $this->output->write(sprintf("Executed: %d $executedTitle", $this->processCompleted));
 
         if ($this->processRetried > 0) {
             $this->output->write(sprintf(' (%d retried)', $this->processRetried));
