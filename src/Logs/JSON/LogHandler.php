@@ -43,6 +43,7 @@ final class LogHandler
     public function processLog(AbstractParaunitProcess $process, LogData $log): void
     {
         if ($log->status === LogStatus::Started) {
+            $this->currentTest = $log->test;
             $this->preparedTestCount += (int) $log->message;
 
             return;
@@ -58,6 +59,10 @@ final class LogHandler
 
         if ($log->status === LogStatus::LogTerminated) {
             if ($process->getExitCode() === 0) {
+                if ($this->actuallyPreparedTestCount === 0) {
+                    $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
+                }
+
                 return;
             }
 

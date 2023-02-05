@@ -6,6 +6,7 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
+use Paraunit\Logs\ValueObject\Test;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
@@ -175,6 +176,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('NO TESTS EXECUTED', $output);
         $this->assertStringContainsString('0 tests', $output);
         $this->assertSame(0, $exitCode);
+        $this->assertStringNotContainsString(Test::unknown()->name, $output);
     }
 
     public function testExecutionWithDeprecationListener(): void
