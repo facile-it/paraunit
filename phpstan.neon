@@ -5,3 +5,4 @@ parameters:
         - tests/
     excludePaths:
         - tests/Stub/
+        - tests/Unit/
