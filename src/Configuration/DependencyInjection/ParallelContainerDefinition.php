@@ -15,7 +15,7 @@ use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\Printer\FinalPrinter;
-use Paraunit\Printer\ProcessPrinter;
+use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
@@ -24,6 +24,7 @@ use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestIssueContainer;
 use Paraunit\TestResult\TestOutcomeContainer;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
@@ -96,15 +97,14 @@ class ParallelContainerDefinition
 
     private function configurePrinter(ContainerBuilder $container): void
     {
-        $container->setDefinition(TestOutcomeContainer::class, new Definition(TestOutcomeContainer::class, [
-            new Reference(ChunkSize::class),
-        ]));
+        $container->autowire(TestOutcomeContainer::class);
+        $container->autowire(TestIssueContainer::class);
 
         $container->setDefinition(SharkPrinter::class, new Definition(SharkPrinter::class, [
             new Reference(OutputInterface::class),
             '%paraunit.show_logo%',
         ]));
-        $container->setDefinition(ProcessPrinter::class, new Definition(ProcessPrinter::class, [
+        $container->setDefinition(ProgressPrinter::class, new Definition(ProgressPrinter::class, [
             new Reference(OutputInterface::class),
         ]));
 

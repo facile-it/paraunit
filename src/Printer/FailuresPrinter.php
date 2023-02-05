@@ -44,7 +44,7 @@ class FailuresPrinter implements EventSubscriberInterface
                 continue;
             }
 
-            $style = OutputStyle::fromOutcome($outcome);
+            $style = OutputStyle::fromStatus($outcome);
             $counter = 1;
 
             $this->printFailuresHeading($outcome, $style);

@@ -19,9 +19,7 @@ class ParserDefinition
 {
     public function configure(ContainerBuilder $container): void
     {
-        $container->setDefinition(LogHandler::class, new Definition(LogHandler::class, [
-            new Reference(TestOutcomeContainer::class),
-        ]));
+        $container->autowire(LogHandler::class);
 
         $container->setDefinition(LogParser::class, new Definition(LogParser::class, [
             new Reference(LogFetcher::class),

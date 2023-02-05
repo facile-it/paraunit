@@ -7,9 +7,9 @@ namespace Paraunit\Logs\JSON;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestOutcomeContainer;
-use Paraunit\TestResult\TestResultWithMessage;
+use Paraunit\TestResult\TestIssueContainer;
 use Paraunit\TestResult\TestWithAbnormalTermination;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
@@ -18,69 +18,67 @@ final class LogHandler
 {
     private Test $currentTest;
 
-    private ?TestResult $lastTestResult = null;
+    private ?TestOutcome $currentTestOutcome = null;
 
     private int $preparedTestCount = 0;
 
-    public function __construct(private readonly TestOutcomeContainer $testResultContainer)
-    {
+    private int $actuallyPreparedTestCount = 0;
+
+    public function __construct(
+        private readonly ProgressPrinter $progressPrinter,
+        private readonly TestIssueContainer $testIssueContainer,
+    ) {
         $this->reset();
     }
 
     public function reset(): void
     {
         $this->currentTest = Test::unknown();
-        $this->lastTestResult = null;
+        $this->currentTestOutcome = null;
         $this->preparedTestCount = 0;
+        $this->actuallyPreparedTestCount = 0;
     }
 
     public function processLog(AbstractParaunitProcess $process, LogData $log): void
     {
         if ($log->status === LogStatus::Started) {
             $this->preparedTestCount += (int) $log->message;
+
+            return;
+        }
+
+        if ($log->status === LogStatus::Prepared) {
+            ++$this->actuallyPreparedTestCount;
             $this->currentTest = $log->test;
+            $this->currentTestOutcome = null;
 
             return;
         }
 
-        if (in_array($log->status, [LogStatus::LogTerminated, LogStatus::Prepared], true)) {
-            $this->flushLastStatus($process, $log);
+        if ($log->status === LogStatus::LogTerminated) {
+            if ($process->getExitCode() === 0) {
+                return;
+            }
+
+            if ($this->currentTestOutcome !== null) {
+                return;
+            }
+
+            $this->progressPrinter->printOutcome(TestOutcome::AbnormalTermination);
+            // TODO - expose the number of unprepared tests?
+            $this->testIssueContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
 
             return;
         }
 
-        $result = TestResult::from($log);
+        $testStatus = $log->status->toTestStatus();
 
-        if ($this->lastTestResult === TestOutcome::Passed) {
-            $this->lastTestResult = $result;
-        }
-    }
-
-    private function flushLastStatus(AbstractParaunitProcess $process, LogData $log): void
-    {
-        if ($this->lastTestResult === null && $log->status === LogStatus::Prepared) {
-            $this->currentTest = $log->test;
-
-            return;
+        if ($testStatus instanceof TestOutcome) {
+            $this->progressPrinter->printOutcome($testStatus);
+            $this->currentTestOutcome = $testStatus;
         }
 
-        if ($log->status === LogStatus::LogTerminated && $this->preparedTestCount === 0) {
-            $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
-
-            return;
-        }
-
-        if ($this->lastTestResult === null) {
-            $this->lastTestResult = new TestWithAbnormalTermination($this->currentTest, $process);
-        }
-
-        $process->addTestResult($this->lastTestResult);
-        if ($this->lastTestResult instanceof TestResultWithMessage) {
-            $this->testResultContainer->addTestResult($this->lastTestResult);
-        }
-
-        $this->currentTest = $log->test;
-        $this->lastTestResult = null;
+        $this->testIssueContainer->addTestResult(TestResult::from($log));
     }
 
     public function processNoLogAvailable(AbstractParaunitProcess $process): void
@@ -88,6 +86,6 @@ final class LogHandler
         $testResult = new TestWithAbnormalTermination(new Test($process->getFilename()), $process);
 
         $process->addTestResult($testResult);
-        $this->testResultContainer->addTestResult($testResult);
+        $this->testIssueContainer->addTestResult($testResult);
     }
 }

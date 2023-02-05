@@ -39,7 +39,7 @@ class FilesRecapPrinter implements EventSubscriberInterface
                 continue;
             }
 
-            $style = OutputStyle::fromOutcome($outcome);
+            $style = OutputStyle::fromStatus($outcome);
             $this->printFileRecap($outcome, $style);
         }
     }
