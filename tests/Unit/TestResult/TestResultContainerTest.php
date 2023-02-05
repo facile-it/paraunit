@@ -7,7 +7,7 @@ namespace Tests\Unit\TestResult;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestWithAbnormalTermination;
 use Tests\BaseUnitTestCase;
@@ -19,7 +19,7 @@ class TestResultContainerTest extends BaseUnitTestCase
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
         $testResultFormat = $this->prophesize(TestResultFormat::class);
-        $testResultContainer = new TestOutcomeContainer(
+        $testResultContainer = new TestResultContainer(
             $testResultFormat->reveal(),
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
@@ -43,7 +43,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process->setOutput('test output');
 
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
-        $testResultContainer = new TestOutcomeContainer(
+        $testResultContainer = new TestResultContainer(
             $this->mockTestFormat(),
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
@@ -61,7 +61,7 @@ class TestResultContainerTest extends BaseUnitTestCase
         $process->setOutput('');
 
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
-        $testResultContainer = new TestOutcomeContainer(
+        $testResultContainer = new TestResultContainer(
             $this->mockTestFormat(),
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)
@@ -82,7 +82,7 @@ class TestResultContainerTest extends BaseUnitTestCase
             ->willReturn('tag');
 
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);
-        $testResultContainer = new TestOutcomeContainer(
+        $testResultContainer = new TestResultContainer(
             $testFormat->reveal(),
             $phpUnitConfig->reveal(),
             $this->mockChunkSize(false)

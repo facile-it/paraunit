@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\ValueObject;
 
-enum TestIssue: string implements PrintableTestStatus
+enum TestIssue: string
 {
     case CoverageFailure = 'CoverageFailure';
     case Deprecation = 'Deprecation';
     case Risky = 'Risky';
     case Warning = 'Warning';
-
-    public function getValue(): string
-    {
-        return $this->value;
-    }
 
     public function getTitle(): string
     {

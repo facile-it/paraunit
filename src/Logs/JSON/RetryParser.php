@@ -7,7 +7,7 @@ namespace Paraunit\Logs\JSON;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 
@@ -16,7 +16,7 @@ class RetryParser
     private readonly string $regexPattern;
 
     public function __construct(
-        private readonly TestOutcomeContainer $testResultContainer,
+        private readonly TestResultContainer $testResultContainer,
         private readonly int $maxRetryCount = 3
     ) {
         $patterns = [

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Logs\ValueObject;
 
-use Paraunit\TestResult\ValueObject\PrintableTestStatus;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 
@@ -23,7 +22,7 @@ enum LogStatus: string
     case Unknown = 'Unknown';
     case Deprecation = 'Deprecation';
 
-    public function toTestStatus(): PrintableTestStatus
+    public function toTestStatus(): TestOutcome|TestIssue
     {
         return match ($this) {
             self::Prepared,

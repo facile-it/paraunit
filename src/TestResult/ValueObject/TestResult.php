@@ -12,7 +12,7 @@ class TestResult
 {
     public function __construct(
         public readonly Test $test,
-        public readonly PrintableTestStatus $status,
+        public readonly TestOutcome|TestIssue $status,
     ) {
     }
 

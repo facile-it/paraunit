@@ -9,7 +9,7 @@ use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestIssueContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestWithAbnormalTermination;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
@@ -26,7 +26,7 @@ final class LogHandler
 
     public function __construct(
         private readonly ProgressPrinter $progressPrinter,
-        private readonly TestIssueContainer $testIssueContainer,
+        private readonly TestResultContainer $testResultContainer,
     ) {
         $this->reset();
     }
@@ -66,7 +66,7 @@ final class LogHandler
 
             $this->progressPrinter->printOutcome(TestOutcome::AbnormalTermination);
             // TODO - expose the number of unprepared tests?
-            $this->testIssueContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
+            $this->testResultContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
 
             return;
         }
@@ -78,7 +78,7 @@ final class LogHandler
             $this->currentTestOutcome = $testStatus;
         }
 
-        $this->testIssueContainer->addTestResult(TestResult::from($log));
+        $this->testResultContainer->addTestResult(TestResult::from($log));
     }
 
     public function processNoLogAvailable(AbstractParaunitProcess $process): void
@@ -86,6 +86,6 @@ final class LogHandler
         $testResult = new TestWithAbnormalTermination(new Test($process->getFilename()), $process);
 
         $process->addTestResult($testResult);
-        $this->testIssueContainer->addTestResult($testResult);
+        $this->testResultContainer->addTestResult($testResult);
     }
 }

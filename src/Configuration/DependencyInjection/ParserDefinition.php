@@ -9,7 +9,7 @@ use Paraunit\Logs\JSON\LogFetcher;
 use Paraunit\Logs\JSON\LogHandler;
 use Paraunit\Logs\JSON\LogParser;
 use Paraunit\Logs\JSON\RetryParser;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -29,7 +29,7 @@ class ParserDefinition
         ]));
 
         $container->setDefinition(RetryParser::class, new Definition(RetryParser::class, [
-            new Reference(TestOutcomeContainer::class),
+            new Reference(TestResultContainer::class),
             '%paraunit.max_retry_count%',
         ]));
 

@@ -6,7 +6,7 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Printer\FilesRecapPrinter;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultFormat;
 use Paraunit\TestResult\TestResultList;
 use Tests\BaseUnitTestCase;
@@ -22,7 +22,7 @@ class FilesRecapPrinterTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn(true);
 
-        $testResultContainer = $this->prophesize(TestOutcomeContainer::class);
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
             ->willReturn(3);
         $testResultContainer->getTestResults()

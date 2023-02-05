@@ -7,8 +7,9 @@ namespace Paraunit\Printer;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultWithMessage;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,7 +18,7 @@ class FailuresPrinter implements EventSubscriberInterface
 {
     public function __construct(
         private readonly OutputInterface $output,
-        private readonly TestOutcomeContainer $testResultContainer
+        private readonly TestResultContainer $testResultContainer
     ) {
     }
 
@@ -33,7 +34,7 @@ class FailuresPrinter implements EventSubscriberInterface
 
     public function onEngineEnd(): void
     {
-        foreach (TestOutcome::PRINT_ORDER as $outcome) {
+        foreach (FilesRecapPrinter::PRINT_ORDER as $outcome) {
             if ($outcome === TestOutcome::Passed) {
                 continue;
             }
@@ -49,7 +50,7 @@ class FailuresPrinter implements EventSubscriberInterface
 
             $this->printFailuresHeading($outcome, $style);
 
-            if ($outcome === TestOutcome::Deprecation) {
+            if ($outcome === TestIssue::Deprecation) {
                 $this->printDeduplicated($style, ...$testResults);
 
                 continue;
@@ -61,7 +62,7 @@ class FailuresPrinter implements EventSubscriberInterface
         }
     }
 
-    private function printFailuresHeading(TestOutcome $outcome, OutputStyle $style): void
+    private function printFailuresHeading(TestOutcome|TestIssue $outcome, OutputStyle $style): void
     {
         $this->output->writeln('');
         $this->output->writeln(sprintf('<%s>%s output:</%s>', $style->value, ucwords($outcome->getTitle()), $style->value));

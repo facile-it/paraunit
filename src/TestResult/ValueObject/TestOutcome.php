@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\ValueObject;
 
-enum TestOutcome: string implements PrintableTestStatus
+enum TestOutcome: string
 {
     case AbnormalTermination = 'AbnormalTermination';
     case Error = 'Error';
@@ -14,26 +14,6 @@ enum TestOutcome: string implements PrintableTestStatus
     case Incomplete = 'Incomplete';
     case Retry = 'Retry';
     case Passed = 'Passed';
-
-    public const PRINT_ORDER = [
-        self::AbnormalTermination,
-        //        self::CoverageFailure,
-        self::Error,
-        self::Failure,
-        //        self::Warning,
-        //        self::Deprecation,
-        self::NoTestExecuted,
-        //        self::Risky,
-        self::Skipped,
-        self::Incomplete,
-        self::Retry,
-        self::Passed,
-    ];
-
-    public function getValue(): string
-    {
-        return $this->value;
-    }
 
     public function getTitle(): string
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Printer;
 
 use Paraunit\Printer\SingleResultFormatter;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseUnitTestCase;
@@ -17,7 +17,7 @@ class SingleResultFormatterTest extends BaseUnitTestCase
         $tag = 'tag';
         $symbol = '.';
         $singleResult = $this->mockPrintableTestResult($symbol);
-        $testResultContainer = $this->prophesize(TestOutcomeContainer::class);
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->getTestResultFormat()
             ->willReturn(new TestResultWithSymbolFormat($symbol, $tag, 'title'));
 

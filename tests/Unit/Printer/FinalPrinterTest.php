@@ -6,7 +6,7 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Printer\FinalPrinter;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestResultList;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -25,7 +25,7 @@ class FinalPrinterTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn(false);
 
-        $testResultContainer = $this->prophesize(TestOutcomeContainer::class);
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
             ->willReturn(3);
         $testResultContainer->getTestResults()
@@ -68,7 +68,7 @@ class FinalPrinterTest extends BaseUnitTestCase
             ->shouldBeCalled()
             ->willReturn(true);
 
-        $testResultContainer = $this->prophesize(TestOutcomeContainer::class);
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
             ->willReturn(3);
         $testResultContainer->getTestResults()
@@ -99,7 +99,7 @@ class FinalPrinterTest extends BaseUnitTestCase
 
     public function testOnEngineEndHandlesEmptyMessagesCorrectly(): void
     {
-        $testResultContainer = $this->prophesize(TestOutcomeContainer::class);
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
         $testResultContainer->countTestResults()
             ->willReturn(3);
         $testResultContainer->getTestResults()

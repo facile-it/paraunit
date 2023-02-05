@@ -21,8 +21,10 @@ class ProgressPrinter implements EventSubscriberInterface
 
     private int $singleRowCounter = 0;
 
-    public function __construct(private readonly OutputInterface $output)
-    {
+    public function __construct(
+        private readonly OutputInterface $output,
+        private readonly FinalPrinter $finalPrinter,
+    ) {
     }
 
     /**
@@ -47,6 +49,8 @@ class ProgressPrinter implements EventSubscriberInterface
 
     public function printOutcome(TestOutcome $outcome): void
     {
+        $this->finalPrinter->increaseOutcomeCount();
+        
         if ($this->isRowFull()) {
             $this->printCounter();
         }

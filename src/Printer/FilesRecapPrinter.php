@@ -8,16 +8,32 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\TestResult\TestOutcomeContainer;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FilesRecapPrinter implements EventSubscriberInterface
 {
+    final public const PRINT_ORDER = [
+        TestOutcome::AbnormalTermination,
+        TestIssue::CoverageFailure,
+        TestOutcome::Error,
+        TestOutcome::Failure,
+        TestIssue::Warning,
+        TestIssue::Deprecation,
+        TestOutcome::NoTestExecuted,
+        TestIssue::Risky,
+        TestOutcome::Skipped,
+        TestOutcome::Incomplete,
+        TestOutcome::Retry,
+        TestOutcome::Passed,
+    ];
+
     public function __construct(
         private readonly OutputInterface $output,
-        private readonly TestOutcomeContainer $testResultContainer,
+        private readonly TestResultContainer $testResultContainer,
         private readonly ChunkSize $chunkSize,
     ) {
     }
@@ -34,19 +50,15 @@ class FilesRecapPrinter implements EventSubscriberInterface
 
     public function onEngineEnd(): void
     {
-        foreach (TestOutcome::PRINT_ORDER as $outcome) {
-            if ($outcome === TestOutcome::Passed) {
-                continue;
-            }
-
-            $style = OutputStyle::fromStatus($outcome);
-            $this->printFileRecap($outcome, $style);
+        foreach (self::PRINT_ORDER as $status) {
+            $style = OutputStyle::fromStatus($status);
+            $this->printFileRecap($status, $style);
         }
     }
 
-    private function printFileRecap(TestOutcome $outcome, OutputStyle $style): void
+    private function printFileRecap(TestOutcome|TestIssue $status, OutputStyle $style): void
     {
-        $filenames = $this->testResultContainer->getFileNames($outcome);
+        $filenames = $this->testResultContainer->getFileNames($status);
 
         if ($filenames === []) {
             return;
@@ -60,7 +72,7 @@ class FilesRecapPrinter implements EventSubscriberInterface
                 "<%s>%d $fileTitle with %s:</%s>",
                 $style->value,
                 count($filenames),
-                strtoupper($outcome->getTitle()),
+                strtoupper($status->getTitle()),
                 $style->value
             )
         );
