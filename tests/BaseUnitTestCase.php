@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultWithSymbolFormat;
 use PHPUnit\Framework\AssertionFailedError;
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 
 abstract class BaseUnitTestCase extends BaseTestCase
 {

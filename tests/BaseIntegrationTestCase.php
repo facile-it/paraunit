@@ -123,6 +123,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         $service = $this->container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
 
         $this->assertInstanceOf($serviceName, $service, 'Service not found: ' . $serviceName);
+        /** @var T $service */
 
         return $service;
     }
