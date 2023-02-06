@@ -6,8 +6,11 @@ namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\EngineEnd;
+use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Printer\ValueObject\OutputStyle;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -32,6 +35,7 @@ class ProgressPrinter implements EventSubscriberInterface
     {
         return [
             TestCompleted::class => 'onTestCompleted',
+            ProcessToBeRetried::class => 'onProcessToBeRetried',
             EngineEnd::class => ['onEngineEnd', 400],
         ];
     }
@@ -50,6 +54,16 @@ class ProgressPrinter implements EventSubscriberInterface
     {
         $outcome = $event->outcome;
 
+        $this->printOutcome($outcome);
+    }
+
+    public function onProcessToBeRetried(): void
+    {
+        $this->printOutcome(TestOutcome::Retry);
+    }
+
+    private function printOutcome(TestOutcome|TestIssue $outcome): void
+    {
         if ($this->isRowFull()) {
             $this->printCounter();
         }

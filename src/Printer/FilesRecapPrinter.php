@@ -28,7 +28,6 @@ class FilesRecapPrinter implements EventSubscriberInterface
         TestOutcome::Skipped,
         TestOutcome::Incomplete,
         TestOutcome::Retry,
-        TestOutcome::Passed,
     ];
 
     public function __construct(

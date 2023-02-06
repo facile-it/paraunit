@@ -11,6 +11,7 @@ use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestWithAbnormalTermination;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -19,11 +20,13 @@ final class LogHandler
 {
     private Test $currentTest;
 
-    private ?TestOutcome $currentTestOutcome = null;
+    private TestOutcome|TestIssue|null $currentTestOutcome = null;
 
     private int $preparedTestCount = 0;
 
     private int $actuallyPreparedTestCount = 0;
+
+    private int $actuallyFinishedTestCount = 0;
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
@@ -38,6 +41,7 @@ final class LogHandler
         $this->currentTestOutcome = null;
         $this->preparedTestCount = 0;
         $this->actuallyPreparedTestCount = 0;
+        $this->actuallyFinishedTestCount = 0;
     }
 
     public function processLog(AbstractParaunitProcess $process, LogData $log): void
@@ -50,40 +54,55 @@ final class LogHandler
         }
 
         if ($log->status === LogStatus::Prepared) {
+            // TODO - handle warnings happening between tests
             ++$this->actuallyPreparedTestCount;
             $this->currentTest = $log->test;
+
+            return;
+        }
+
+        if ($log->status === LogStatus::Finished) {
+            ++$this->actuallyFinishedTestCount;
+            if ($this->currentTestOutcome === null) {
+                throw new \LogicException('No outcome received');
+            }
+
+            $this->dispatchOutcome($this->currentTestOutcome);
             $this->currentTestOutcome = null;
 
             return;
         }
 
         if ($log->status === LogStatus::LogTerminated) {
-            if ($process->getExitCode() === 0) {
-                if ($this->actuallyPreparedTestCount === 0) {
-                    $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
-                }
-
-                return;
-            }
-
-            if ($this->currentTestOutcome !== null) {
-                return;
-            }
-
-            $this->dispatchOutcome(TestOutcome::AbnormalTermination);
-            // TODO - expose the number of unprepared tests?
-            $this->testResultContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
+            $this->handleLogEnding($process, $log);
 
             return;
         }
 
-        $testStatus = $log->status->toTestStatus();
+        $this->testResultContainer->addTestResult(TestResult::from($log));
+        if (in_array($this->currentTestOutcome, [null, TestOutcome::Passed], true)) {
+            $this->currentTestOutcome = $log->status->toTestStatus();
+        }
+    }
 
-        if ($testStatus instanceof TestOutcome) {
-            $this->dispatchOutcome($testStatus);
+    private function handleLogEnding(AbstractParaunitProcess $process, LogData $log): void
+    {
+        if ($process->getExitCode() === 0 && $this->actuallyPreparedTestCount === 0) {
+            $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
         }
 
-        $this->testResultContainer->addTestResult(TestResult::from($log));
+        if ($this->currentTestOutcome !== null) {
+            $this->testResultContainer->addTestResult(TestResult::from($log));
+        }
+
+        if (
+            $this->preparedTestCount > $this->actuallyPreparedTestCount
+            || $this->actuallyPreparedTestCount > $this->actuallyFinishedTestCount
+        ) {
+            // TODO - expose the number of missing tests?
+            $this->testResultContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
+            $this->dispatchOutcome(TestOutcome::AbnormalTermination);
+        }
     }
 
     public function processNoLogAvailable(AbstractParaunitProcess $process): void
@@ -92,11 +111,11 @@ final class LogHandler
 
         $process->addTestResult($testResult);
         $this->testResultContainer->addTestResult($testResult);
+        $this->dispatchOutcome(TestOutcome::AbnormalTermination);
     }
 
-    private function dispatchOutcome(TestOutcome $outcome): void
+    private function dispatchOutcome(TestOutcome|TestIssue $outcome): void
     {
         $this->eventDispatcher->dispatch(new TestCompleted($this->currentTest, $outcome));
-        $this->currentTestOutcome = $outcome;
     }
 }

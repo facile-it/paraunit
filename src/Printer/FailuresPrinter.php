@@ -35,10 +35,6 @@ class FailuresPrinter implements EventSubscriberInterface
     public function onEngineEnd(): void
     {
         foreach (FilesRecapPrinter::PRINT_ORDER as $outcome) {
-            if ($outcome === TestOutcome::Passed) {
-                continue;
-            }
-
             $testResults = $this->testResultContainer->getTestResults($outcome);
 
             if ($testResults === []) {

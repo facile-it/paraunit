@@ -127,7 +127,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
      *
      * @param string|class-string<T> $serviceName
      *
-     * @return ($serviceName is class-string ? T : object)
+     * @phpstan-return ($serviceName is class-string ? T : object)
      */
     public function getService(string $serviceName): object
     {

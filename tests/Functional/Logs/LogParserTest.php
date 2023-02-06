@@ -22,20 +22,11 @@ class LogParserTest extends BaseFunctionalTestCase
         $process = new StubbedParaunitProcess();
         $this->createLogForProcessFromStubbedLog($process, $stubLog);
 
-        /** @var LogParser $parser */
         $parser = $this->getService(LogParser::class);
 
         $parser->onProcessTerminated(new ProcessTerminated($process));
 
-        $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
-        $textResults = '';
-
-        foreach ($results as $singleResult) {
-            $textResults .= $singleResult->status->getSymbol();
-        }
-
-        $this->assertEquals($expectedResult, $textResults);
+        $this->assertEquals($expectedResult, strip_tags($this->getConsoleOutput()->getOutput()));
 
         if ($process->getTestClassName()) {
             $this->assertNotNull($process->getTestClassName(), 'Empty test class name');
@@ -44,11 +35,11 @@ class LogParserTest extends BaseFunctionalTestCase
     }
 
     /**
-     * @return (string|bool)[][]
+     * @return \Generator<array{string, string}>
      */
-    public static function parsableResultsProvider(): array
+    public static function parsableResultsProvider(): \Generator
     {
-        return [
+        $values = [
             [JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'],
             [JSONLogStub::ALL_GREEN, '.........'],
             [JSONLogStub::ONE_ERROR, '.E.'],
@@ -62,6 +53,10 @@ class LogParserTest extends BaseFunctionalTestCase
             [JSONLogStub::PARSE_ERROR, '..................................................X'],
             [JSONLogStub::UNKNOWN, 'X'],
         ];
+
+        foreach ($values as $entry) {
+            yield $entry[0] => $entry;
+        }
     }
 
     public function testParseHandlesMissingLogsAsAbnormalTerminations(): void

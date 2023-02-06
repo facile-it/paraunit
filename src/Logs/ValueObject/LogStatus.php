@@ -10,6 +10,7 @@ use Paraunit\TestResult\ValueObject\TestOutcome;
 enum LogStatus: string
 {
     case Prepared = 'Prepared';
+    case Finished = 'Finished';
     case Errored = 'Errored';
     case Failed = 'Failed';
     case MarkedIncomplete = 'MarkedIncomplete';
@@ -26,6 +27,7 @@ enum LogStatus: string
     {
         return match ($this) {
             self::Prepared,
+            self::Finished,
             self::Started,
             self::LogTerminated => throw new \InvalidArgumentException('Unexpected log status as outcome: ' . $this->value),
             self::Errored => TestOutcome::Error,

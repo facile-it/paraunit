@@ -180,6 +180,24 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
 
+    public function testRisky(): void
+    {
+        $this->setTextFilter('Risky');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertEquals(0, $this->executeRunner());
+        $this->assertStringContainsString('R', $output->getOutput());
+        $this->assertOutputOrder($output, [
+            'Risky output',
+            'files with RISKY',
+            'SessionTestStub',
+        ]);
+
+        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
+    }
+
     public function testSessionStderr(): void
     {
         $this->setTextFilter('SessionTestStub.php');
@@ -199,7 +217,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertOutputOrder($output, [
             'PARAUNIT',
             Paraunit::getVersion(),
-            '...',
+            'WWW',
             '     3',
             'Execution time',
             'Executed: 1 test classes, 3 tests',
