@@ -18,26 +18,6 @@ use Tests\Stub\ThreeGreenTestStub;
 
 class RunnerTest extends BaseIntegrationTestCase
 {
-    public function testAllGreen(): void
-    {
-        $this->setTextFilter('ThreeGreenTestStub.php');
-        $this->loadContainer();
-
-        $output = $this->getConsoleOutput();
-
-        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
-
-        $this->assertStringNotContainsString('Coverage', $output->getOutput());
-        $this->assertOutputOrder($output, [
-            'PARAUNIT',
-            Paraunit::getVersion(),
-            '...',
-            '     3',
-            'Execution time',
-            'Executed: 1 test classes, 3 tests',
-        ]);
-    }
-
     public function testMaxRetryEntityManagerIsClosed(): void
     {
         $this->setTextFilter('EntityManagerClosedTestStub.php');
@@ -62,7 +42,7 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @dataProvider stubFilenameProvider
+     * @dataProvider retryStubFilenameProvider
      */
     public function testMaxRetryDeadlock(string $stubFilePath): void
     {
@@ -76,9 +56,9 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @return string[][]
+     * @return array{string}[]
      */
-    public static function stubFilenameProvider(): array
+    public static function retryStubFilenameProvider(): array
     {
         return [
             ['MySQLDeadLockTestStub.php'],

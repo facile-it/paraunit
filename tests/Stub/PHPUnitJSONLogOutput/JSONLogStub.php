@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Stub\PHPUnitJSONLogOutput;
 
+/**
+ * @deprecated 
+ * TODO - remove this
+ */
 class JSONLogStub
 {
     final public const TWO_ERRORS_TWO_FAILURES = '2Errors2Failures';
