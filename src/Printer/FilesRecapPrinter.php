@@ -25,8 +25,6 @@ class FilesRecapPrinter implements EventSubscriberInterface
         TestIssue::Deprecation,
         TestOutcome::NoTestExecuted,
         TestIssue::Risky,
-        TestOutcome::Skipped,
-        TestOutcome::Incomplete,
         TestOutcome::Retry,
     ];
 

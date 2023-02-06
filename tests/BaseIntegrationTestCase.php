@@ -8,13 +8,15 @@ use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\File\Cleaner;
 use Paraunit\File\TempDirectory;
-use Paraunit\Lifecycle\ProcessTerminated;
-use Paraunit\Logs\JSON\LogParser;
+use Paraunit\Logs\ValueObject\Test;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\TestResultWithMessage;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
 
@@ -94,40 +96,23 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         }
     }
 
-    protected function processAllTheStubLogs(): void
+    protected function populateTestResultContainerWithAllPossibleStatuses(): void
     {
-        /** @var LogParser $logParser */
-        $logParser = $this->getService(LogParser::class);
+        $allPossibleStatuses = [...TestIssue::cases(), ...TestOutcome::cases()];
+        $testResulContainer = $this->getService(TestResultContainer::class);
 
-        $logsToBeProcessed = [
-            JSONLogStub::TWO_ERRORS_TWO_FAILURES,
-            JSONLogStub::ALL_GREEN,
-            JSONLogStub::ONE_ERROR,
-            JSONLogStub::ONE_INCOMPLETE,
-            JSONLogStub::ONE_RISKY,
-            JSONLogStub::ONE_SKIP,
-            JSONLogStub::ONE_WARNING,
-            JSONLogStub::FATAL_ERROR,
-            JSONLogStub::SEGFAULT,
-            JSONLogStub::UNKNOWN,
-        ];
-
-        $process = new StubbedParaunitProcess();
-        $processEvent = new ProcessTerminated($process);
-
-        foreach ($logsToBeProcessed as $logName) {
-            $process->setFilename($logName . '.php');
-            $this->createLogForProcessFromStubbedLog($process, $logName);
-            $logParser->onProcessTerminated($processEvent);
+        foreach ($allPossibleStatuses as $status) {
+            $testResult = new TestResultWithMessage(new Test('FooTest'), $status, 'Stub message per status ' . $status->value);
+            $testResulContainer->addTestResult($testResult);
         }
     }
 
     /**
      * @template T of object
      *
-     * @param string|class-string<T> $serviceName
+     * @param class-string<T> $serviceName
      *
-     * @phpstan-return ($serviceName is class-string ? T : object)
+     * @return T
      */
     public function getService(string $serviceName): object
     {
