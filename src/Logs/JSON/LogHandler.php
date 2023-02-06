@@ -80,8 +80,10 @@ final class LogHandler
         }
 
         $this->testResultContainer->addTestResult(TestResult::from($log));
-        if (in_array($this->currentTestOutcome, [null, TestOutcome::Passed], true)) {
-            $this->currentTestOutcome = $log->status->toTestStatus();
+
+        $testStatus = $log->status->toTestStatus();
+        if ($testStatus->isMoreImportantThan($this->currentTestOutcome)) {
+            $this->currentTestOutcome = $testStatus;
         }
     }
 

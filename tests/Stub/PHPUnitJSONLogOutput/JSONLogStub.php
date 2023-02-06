@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Stub\PHPUnitJSONLogOutput;
 
 /**
- * @deprecated 
+ * @deprecated
  * TODO - remove this
  */
 class JSONLogStub

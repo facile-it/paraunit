@@ -120,11 +120,6 @@ class LogParserTest extends BaseFunctionalTestCase
                 10,
                 'AAAE',
             ],
-            'StubbedParaunitProcess' => [
-                'StubbedParaunitProcess.php',
-                0,
-                'asdasd',
-            ],
         ];
     }
 

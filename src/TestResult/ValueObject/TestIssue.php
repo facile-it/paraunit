@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Paraunit\TestResult\ValueObject;
 
-enum TestIssue: string
+use PHPUnit\Framework\TestStatus\TestStatus;
+
+enum TestIssue: string implements ComparableTestStatus
 {
     case CoverageFailure = 'CoverageFailure';
     case Deprecation = 'Deprecation';
@@ -28,6 +30,25 @@ enum TestIssue: string
             self::Warning => 'W',
             self::Deprecation => 'D',
             self::Risky => 'R',
+        };
+    }
+
+    public function isMoreImportantThan(?ComparableTestStatus $status): bool
+    {
+        if ($status === null) {
+            return true;
+        }
+
+        return $this->toPHPUnit()->isMoreImportantThan($status->toPHPUnit());
+    }
+
+    public function toPHPUnit(): TestStatus
+    {
+        return match ($this) {
+            self::CoverageFailure => throw new \LogicException('Coverage failure is not present in PHPUnit statuses'),
+            self::Warning => TestStatus::warning(),
+            self::Deprecation => TestStatus::deprecation(),
+            self::Risky => TestStatus::risky(),
         };
     }
 }
