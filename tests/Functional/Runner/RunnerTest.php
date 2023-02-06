@@ -10,6 +10,7 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
+use Tests\Stub\IntentionalRiskyTestStub;
 use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
@@ -170,12 +171,12 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertEquals(0, $this->executeRunner());
         $this->assertStringContainsString('R', $output->getOutput());
         $this->assertOutputOrder($output, [
-            'Risky output',
+            'Risky Outcome output',
             'files with RISKY',
-            'SessionTestStub',
+            IntentionalRiskyTestStub::class,
         ]);
 
-        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
+        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output->getOutput());
     }
 
     public function testSessionStderr(): void

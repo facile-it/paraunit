@@ -64,7 +64,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(PostgreSQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertStringContainsString('Executed: 15 test classes (21 retried), 24 tests', $output);
+        $this->assertStringContainsString('Executed: 16 test classes (21 retried), 25 tests', $output);
     }
 
     public function testExecutionWithWarning(): void
@@ -128,11 +128,11 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $classExecuted = 15;
+        $classExecuted = 16;
         $processRetried = 21;
         $processesCount = $classExecuted + $processRetried;
         $this->assertStringContainsString(
-            sprintf('Executed: %d test classes (%d retried), 24 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 25 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );
