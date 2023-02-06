@@ -6,12 +6,12 @@ namespace Paraunit\Logs\TestHook;
 
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use PHPUnit\Event\Test\WarningTriggered;
-use PHPUnit\Event\Test\WarningTriggeredSubscriber;
+use PHPUnit\Event\Test\PhpWarningTriggered;
+use PHPUnit\Event\Test\PhpWarningTriggeredSubscriber;
 
-class TestWarning extends AbstractTestHook implements WarningTriggeredSubscriber
+class PhpWarning extends AbstractTestHook implements PhpWarningTriggeredSubscriber
 {
-    public function notify(WarningTriggered $event): void
+    public function notify(PhpWarningTriggered $event): void
     {
         $this->write(LogStatus::WarningTriggered, Test::fromPHPUnitTest($event->test()), $event->message());
     }
