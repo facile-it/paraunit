@@ -4,7 +4,8 @@ on:
   pull_request: null
   push:
     branches:
-      - master
+      - 1.x
+      - 2.x
 
 jobs:
   Tests:
