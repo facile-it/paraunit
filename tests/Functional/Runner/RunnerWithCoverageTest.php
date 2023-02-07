@@ -30,7 +30,7 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',
-            '...',
+            PHP_EOL . '...',
         ]);
     }
 }
