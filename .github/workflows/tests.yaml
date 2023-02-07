@@ -55,7 +55,7 @@ jobs:
       - uses: ramsey/composer-install@v2
         with:
           dependency-versions: ${{ matrix.dependencies }}
-      - run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
       - uses: codecov/codecov-action@v1
         with:
           file: './coverage.xml'
@@ -89,7 +89,7 @@ jobs:
         with:
           php-version: '8.1'
       - uses: ramsey/composer-install@v2
-      - run: vendor/bin/phpstan analyse
+      - run: vendor/bin/phpstan analyse --ansi
   Psalm:
     runs-on: ubuntu-latest
     name: Psalm
@@ -99,7 +99,7 @@ jobs:
         with:
           php-version: '8.1'
       - uses: ramsey/composer-install@v2
-      - run: vendor/bin/psalm
+      - run: vendor/bin/psalm --ansi
   End2End:
     runs-on: ubuntu-latest
     strategy:
@@ -114,5 +114,5 @@ jobs:
           php-version: '8.1'
           coverage: ${{ matrix.coverage-driver }}
       - uses: ramsey/composer-install@v2
-      - run: src/Bin/paraunit run FakeDriverTest
-      - run: src/Bin/paraunit coverage FakeDriverTest --text
+      - run: src/Bin/paraunit run FakeDriverTest --ansi
+      - run: src/Bin/paraunit coverage FakeDriverTest --text --ansi
