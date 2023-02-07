@@ -33,7 +33,7 @@ class LogParserTest extends BaseFunctionalTestCase
             'PARAUNIT',
             Paraunit::getVersion(),
             $expectedOutput,
-            '     ' . $expectedCount . PHP_EOL,
+            sprintf('%6d', $expectedCount) . PHP_EOL,
             'Execution time',
             'Executed:',
         ]);
