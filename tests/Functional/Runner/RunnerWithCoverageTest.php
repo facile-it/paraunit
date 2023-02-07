@@ -27,10 +27,15 @@ class RunnerWithCoverageTest extends BaseIntegrationTestCase
         $output = $this->getConsoleOutput();
         $this->assertEquals(0, $exitCode, $output->getOutput());
         $this->assertStringNotContainsString('COVERAGE NOT FETCHED', $output->getOutput());
+
+        $resultsOnNewline = PHP_OS_FAMILY !== 'Linux'
+            ? '...'
+            : PHP_EOL . '...';
+
         $this->assertOutputOrder($this->getConsoleOutput(), [
             'PARAUNIT',
             'Coverage driver in use',
-            '...',
+            $resultsOnNewline,
         ]);
     }
 }

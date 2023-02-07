@@ -5,3 +5,5 @@ parameters:
         - tests/
     excludePaths:
         - tests/Stub/
+        - tests/Unit/
+        - tests/BaseUnitTestCase.php

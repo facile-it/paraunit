@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer\ValueObject;
 
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+
 enum OutputStyle: string
 {
     case Ok = 'ok';
@@ -13,16 +16,16 @@ enum OutputStyle: string
     case Error = 'error';
     case Abnormal = 'abnormal';
 
-    public static function fromOutcome(TestOutcome $outcome): self
+    public static function fromStatus(TestOutcome|TestIssue $status): self
     {
-        return match ($outcome) {
+        return match ($status) {
             TestOutcome::AbnormalTermination,
-            TestOutcome::CoverageFailure => self::Abnormal,
+            TestIssue::CoverageFailure => self::Abnormal,
             TestOutcome::Error,
             TestOutcome::Failure => self::Error,
-            TestOutcome::Warning,
-            TestOutcome::Deprecation,
-            TestOutcome::Risky,
+            TestIssue::Warning,
+            TestIssue::Deprecation,
+            TestIssue::Risky,
             TestOutcome::NoTestExecuted => self::Warning,
             TestOutcome::Skipped => self::Skip,
             TestOutcome::Incomplete => self::Incomplete,

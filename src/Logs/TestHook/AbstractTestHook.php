@@ -6,8 +6,8 @@ namespace Paraunit\Logs\TestHook;
 
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Logs\ValueObject\LogData;
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Logs\ValueObject\TestStatus;
 use PHPUnit\Event\Code\Throwable;
 
 abstract class AbstractTestHook
@@ -35,7 +35,7 @@ abstract class AbstractTestHook
             . trim($throwable->stackTrace());
     }
 
-    final protected function write(TestStatus $status, Test $test, ?string $message): void
+    final protected function write(LogStatus $status, Test $test, ?string $message): void
     {
         \fwrite(self::$logFile, json_encode(new LogData($status, $test, $message), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
         \fflush(self::$logFile);

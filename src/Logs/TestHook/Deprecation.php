@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Logs\TestHook;
 
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Logs\ValueObject\TestStatus;
 use PHPUnit\Event\Test\DeprecationTriggered;
 use PHPUnit\Event\Test\DeprecationTriggeredSubscriber;
 use PHPUnit\Event\Test\PhpDeprecationTriggered;
@@ -17,6 +17,6 @@ class Deprecation extends AbstractTestHook implements DeprecationTriggeredSubscr
 {
     public function notify(DeprecationTriggered|PhpDeprecationTriggered|PhpunitDeprecationTriggered $event): void
     {
-        $this->write(TestStatus::Deprecation, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(LogStatus::Deprecation, Test::fromPHPUnitTest($event->test()), $event->message());
     }
 }

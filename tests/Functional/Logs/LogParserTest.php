@@ -4,63 +4,122 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Logs;
 
+use Paraunit\Bin\Paraunit;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Logs\JSON\LogParser;
-use Paraunit\Printer\ValueObject\TestOutcome;
-use Paraunit\TestResult\TestResult;
+use Paraunit\Runner\Runner;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 use Tests\BaseFunctionalTestCase;
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\StubbedParaunitProcess;
 
 class LogParserTest extends BaseFunctionalTestCase
 {
     /**
-     * @dataProvider parsableResultsProvider
+     * @dataProvider genericStubFilenameProvider
      */
-    public function testParse(string $stubLog, string $expectedResult): void
+    public function testLogParsingAgainstStubs(string $textFilter, int $expectedExitCode, string $expectedOutput): void
     {
-        $process = new StubbedParaunitProcess();
-        $this->createLogForProcessFromStubbedLog($process, $stubLog);
+        $expectedCount = strlen($expectedOutput);
+        $this->setTextFilter($textFilter);
+        $this->loadContainer();
 
-        /** @var LogParser $parser */
-        $parser = $this->getService(LogParser::class);
+        $output = $this->getConsoleOutput();
 
-        $parser->onProcessTerminated(new ProcessTerminated($process));
+        $this->assertEquals($expectedExitCode, $this->getService(Runner::class)->run(), $output->getOutput());
 
-        $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
-        $textResults = '';
-
-        foreach ($results as $singleResult) {
-            $textResults .= $singleResult->outcome->getSymbol();
-        }
-
-        $this->assertEquals($expectedResult, $textResults);
-
-        if ($process->getTestClassName()) {
-            $this->assertNotNull($process->getTestClassName(), 'Empty test class name');
-            $this->assertStringStartsWith('Tests\\Stub\\', $process->getTestClassName());
-        }
+        $this->assertStringNotContainsString('Coverage', $output->getOutput());
+        $this->assertOutputOrder($output, [
+            'PARAUNIT',
+            Paraunit::getVersion(),
+            $expectedOutput,
+            sprintf('%6d', $expectedCount) . "\n",
+            'Execution time',
+            'Executed:',
+        ]);
     }
 
     /**
-     * @return (string|bool)[][]
+     * @return array{string, (0|10), string}[]
      */
-    public static function parsableResultsProvider(): array
+    public static function genericStubFilenameProvider(): array
     {
         return [
-            [JSONLogStub::TWO_ERRORS_TWO_FAILURES, 'FF..E...E'],
-            [JSONLogStub::ALL_GREEN, '.........'],
-            [JSONLogStub::ONE_ERROR, '.E.'],
-            [JSONLogStub::ONE_INCOMPLETE, '..I.'],
-            [JSONLogStub::ONE_RISKY, '..R.'],
-            [JSONLogStub::ONE_SKIP, '..S.'],
-            [JSONLogStub::ONE_WARNING, '...W'],
-            [JSONLogStub::ONE_DEPRECATION, '...D'],
-            [JSONLogStub::FATAL_ERROR, 'EEX'],
-            [JSONLogStub::SEGFAULT, '...X'],
-            [JSONLogStub::PARSE_ERROR, '..................................................X'],
-            [JSONLogStub::UNKNOWN, 'X'],
+            'ThreeGreenTestStub' => [
+                'ThreeGreenTestStub.php',
+                0,
+                '...',
+            ],
+            'EntityManagerClosedTestStub' => [
+                'EntityManagerClosedTestStub.php',
+                10,
+                'AAAE',
+            ],
+            'FatalErrorTestStub' => [
+                'FatalErrorTestStub.php',
+                10,
+                'X',
+            ],
+            'IntentionalWarningTestStub' => [
+                'IntentionalWarningTestStub.php',
+                0,
+                'W',
+            ],
+            'MySQLDeadLockTestStub' => [
+                'MySQLDeadLockTestStub.php',
+                10,
+                'AAAE',
+            ],
+            'MySQLLockTimeoutTestStub' => [
+                'MySQLLockTimeoutTestStub.php',
+                10,
+                'AAAE',
+            ],
+            'MySQLSavePointMissingTestStub' => [
+                'MySQLSavePointMissingTestStub.php',
+                10,
+                'AAAE',
+            ],
+            'ParseErrorTestStub' => [
+                'ParseErrorTestStub.php',
+                10,
+                'X',
+            ],
+            'PassThenRetryTestStub' => [
+                'PassThenRetryTestStub.php',
+                10,
+                'AAA.F.E',
+            ],
+            'PostgreSQLDeadLockTestStub' => [
+                'PostgreSQLDeadLockTestStub.php',
+                10,
+                'AAAE',
+            ],
+            'RaisingDeprecationTestStub' => [
+                'RaisingDeprecationTestStub.php',
+                0,
+                'DDD',
+            ],
+            'RaisingNoticeTestStub' => [
+                'RaisingNoticeTestStub.php',
+                10,
+                'FFFF',
+            ],
+            'SegFaultTestStub' => [
+                'SegFaultTestStub.php',
+                10,
+                'X',
+            ],
+            'SessionTestStub' => [
+                'SessionTestStub.php',
+                0,
+                'WWW',
+            ],
+            'SQLiteDeadLockTestStub' => [
+                'SQLiteDeadLockTestStub.php',
+                10,
+                'AAAE',
+            ],
         ];
     }
 
@@ -76,6 +135,6 @@ class LogParserTest extends BaseFunctionalTestCase
         $results = $process->getTestResults();
         $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
         $this->assertCount(1, $results);
-        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->outcome);
+        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->status);
     }
 }

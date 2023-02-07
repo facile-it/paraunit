@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Paraunit\TestResult;
 
 use Paraunit\Logs\ValueObject\TestMethod;
-use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 
 class TestResultContainer
 {
-    /** @var array<value-of<TestOutcome>, array<string, string>> */
+    /** @var array<value-of<TestOutcome|TestIssue>, array<string, string>> */
     private array $filenames = [];
 
-    /** @var array<value-of<TestOutcome>, TestResultWithMessage[]> */
+    /** @var array<value-of<TestOutcome|TestIssue>, TestResultWithMessage[]> */
     private array $testResults = [];
 
     public function addTestResult(TestResult $testResult): void
@@ -20,7 +22,7 @@ class TestResultContainer
         $this->addToFilenames($testResult);
 
         if ($testResult instanceof TestResultWithMessage) {
-            $this->testResults[$testResult->outcome->value][] = $testResult;
+            $this->testResults[$testResult->status->value][] = $testResult;
         }
     }
 
@@ -31,13 +33,13 @@ class TestResultContainer
             : $testResult->test->name;
 
         // trick for unique
-        $this->filenames[$testResult->outcome->value][$name] = $name;
+        $this->filenames[$testResult->status->value][$name] = $name;
     }
 
     /**
      * @return string[]
      */
-    public function getFileNames(TestOutcome $outcome): array
+    public function getFileNames(TestOutcome|TestIssue $outcome): array
     {
         return $this->filenames[$outcome->value] ?? [];
     }
@@ -45,8 +47,8 @@ class TestResultContainer
     /**
      * @return TestResultWithMessage[]
      */
-    public function getTestResults(TestOutcome $outcome): array
+    public function getTestResults(TestOutcome|TestIssue $status): array
     {
-        return $this->testResults[$outcome->value] ?? [];
+        return $this->testResults[$status->value] ?? [];
     }
 }

@@ -6,8 +6,8 @@ namespace Tests\Unit\Logs;
 
 use Paraunit\Logs\JSON\RetryParser;
 use Paraunit\Logs\ValueObject\LogData;
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Logs\ValueObject\TestStatus;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -27,7 +27,7 @@ class RetryParserTest extends BaseUnitTestCase
      */
     public function testParseAndSetRetry(string $testOutput): void
     {
-        $log = new LogData(TestStatus::Errored, new Test('test'), $testOutput);
+        $log = new LogData(LogStatus::Errored, new Test('test'), $testOutput);
 
         $process = new StubbedParaunitProcess();
         $parser = new RetryParser($this->getResultHandlerMock(true), 3);
@@ -53,7 +53,7 @@ class RetryParserTest extends BaseUnitTestCase
     public function testParseAndContinueWithNoRetryAfterLimit(): void
     {
         $process = new StubbedParaunitProcess();
-        $log = new LogData(TestStatus::Errored, new Test('test'), EntityManagerClosedTestStub::OUTPUT);
+        $log = new LogData(LogStatus::Errored, new Test('test'), EntityManagerClosedTestStub::OUTPUT);
         $process->increaseRetryCount();
 
         $this->assertEquals(1, $process->getRetryCount());

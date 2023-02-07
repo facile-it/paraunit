@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Lifecycle\AbstractEvent;
-use Paraunit\Lifecycle\AbstractProcessEvent;
 use Paraunit\Lifecycle\EngineEnd;
-use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Printer\ValueObject\OutputStyle;
-use Paraunit\TestResult\TestResult;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ProcessPrinter implements EventSubscriberInterface
+class ProgressPrinter implements EventSubscriberInterface
 {
     final public const MAX_CHAR_LENGTH = 80;
 
@@ -34,19 +34,10 @@ class ProcessPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessParsingCompleted::class => 'onProcessCompleted',
-            ProcessToBeRetried::class => 'onProcessCompleted',
+            TestCompleted::class => 'onTestCompleted',
+            ProcessToBeRetried::class => 'onProcessToBeRetried',
             EngineEnd::class => ['onEngineEnd', 400],
         ];
-    }
-
-    public function onProcessCompleted(AbstractProcessEvent $processEvent): void
-    {
-        $process = $processEvent->getProcess();
-
-        foreach ($process->getTestResults() as $testResult) {
-            $this->printFormattedWithCounter($testResult);
-        }
     }
 
     public function onEngineEnd(): void
@@ -59,7 +50,19 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->printCounter();
     }
 
-    private function printFormattedWithCounter(TestResult $testResult): void
+    public function onTestCompleted(TestCompleted $event): void
+    {
+        $outcome = $event->outcome;
+
+        $this->printOutcome($outcome);
+    }
+
+    public function onProcessToBeRetried(): void
+    {
+        $this->printOutcome(TestOutcome::Retry);
+    }
+
+    private function printOutcome(TestOutcome|TestIssue $outcome): void
     {
         if ($this->isRowFull()) {
             $this->printCounter();
@@ -68,9 +71,9 @@ class ProcessPrinter implements EventSubscriberInterface
         ++$this->counter;
         ++$this->singleRowCounter;
 
-        $style = OutputStyle::fromOutcome($testResult->outcome)->value;
+        $style = OutputStyle::fromStatus($outcome)->value;
 
-        $this->output->write(sprintf('<%s>%s</%s>', $style, $testResult->outcome->getSymbol(), $style));
+        $this->output->write(sprintf('<%s>%s</%s>', $style, $outcome->getSymbol(), $style));
     }
 
     private function printCounter(): void

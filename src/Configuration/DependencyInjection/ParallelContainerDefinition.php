@@ -15,7 +15,7 @@ use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\Printer\FinalPrinter;
-use Paraunit\Printer\ProcessPrinter;
+use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
@@ -96,15 +96,13 @@ class ParallelContainerDefinition
 
     private function configurePrinter(ContainerBuilder $container): void
     {
-        $container->setDefinition(TestResultContainer::class, new Definition(TestResultContainer::class, [
-            new Reference(ChunkSize::class),
-        ]));
+        $container->autowire(TestResultContainer::class);
 
         $container->setDefinition(SharkPrinter::class, new Definition(SharkPrinter::class, [
             new Reference(OutputInterface::class),
             '%paraunit.show_logo%',
         ]));
-        $container->setDefinition(ProcessPrinter::class, new Definition(ProcessPrinter::class, [
+        $container->setDefinition(ProgressPrinter::class, new Definition(ProgressPrinter::class, [
             new Reference(OutputInterface::class),
         ]));
 

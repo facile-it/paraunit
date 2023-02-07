@@ -11,7 +11,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
 {
     public function testOnEngineEndPrintsInTheRightOrder(): void
     {
-        $this->processAllTheStubLogs();
+        $this->populateTestResultContainerWithAllPossibleStatuses();
 
         $printer = $this->getService(FilesRecapPrinter::class);
         $this->assertInstanceOf(FilesRecapPrinter::class, $printer);
@@ -24,8 +24,8 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->assertStringNotContainsStringIgnoringCase('PASSED output', $output->getOutput());
         $this->assertStringNotContainsStringIgnoringCase('SKIPPED output', $output->getOutput());
         $this->assertStringNotContainsStringIgnoringCase('INCOMPLETE output', $output->getOutput());
+        $this->assertStringNotContainsStringIgnoringCase('RETRY output', $output->getOutput());
         $this->assertStringNotContainsStringIgnoringCase('files with PASSED', $output->getOutput());
-        $this->markTestIncomplete('Depends on fixing all the parsing stuff');
         $this->assertOutputOrder($output, [
             'files with ABNORMAL TERMINATIONS',
             'files with COVERAGE NOT FETCHED',
@@ -34,8 +34,7 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
             'files with WARNING',
             'files with NO TESTS EXECUTED',
             'files with RISKY',
-            'files with SKIP',
-            'files with INCOMPLETE',
+            'files with RETRIED',
         ]);
     }
 }

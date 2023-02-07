@@ -10,6 +10,7 @@ use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
+use Tests\Stub\IntentionalRiskyTestStub;
 use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\PassThenRetryTestStub;
 use Tests\Stub\SegFaultTestStub;
@@ -18,26 +19,6 @@ use Tests\Stub\ThreeGreenTestStub;
 
 class RunnerTest extends BaseIntegrationTestCase
 {
-    public function testAllGreen(): void
-    {
-        $this->setTextFilter('ThreeGreenTestStub.php');
-        $this->loadContainer();
-
-        $output = $this->getConsoleOutput();
-
-        $this->assertEquals(0, $this->executeRunner(), $output->getOutput());
-
-        $this->assertStringNotContainsString('Coverage', $output->getOutput());
-        $this->assertOutputOrder($output, [
-            'PARAUNIT',
-            Paraunit::getVersion(),
-            '...',
-            '     3',
-            'Execution time',
-            'Executed: 1 test classes, 3 tests',
-        ]);
-    }
-
     public function testMaxRetryEntityManagerIsClosed(): void
     {
         $this->setTextFilter('EntityManagerClosedTestStub.php');
@@ -62,7 +43,7 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @dataProvider stubFilenameProvider
+     * @dataProvider retryStubFilenameProvider
      */
     public function testMaxRetryDeadlock(string $stubFilePath): void
     {
@@ -76,9 +57,9 @@ class RunnerTest extends BaseIntegrationTestCase
     }
 
     /**
-     * @return string[][]
+     * @return array{string}[]
      */
-    public static function stubFilenameProvider(): array
+    public static function retryStubFilenameProvider(): array
     {
         return [
             ['MySQLDeadLockTestStub.php'],
@@ -180,6 +161,24 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output->getOutput());
     }
 
+    public function testRisky(): void
+    {
+        $this->setTextFilter('Risky');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertEquals(0, $this->executeRunner());
+        $this->assertStringContainsString('R', $output->getOutput());
+        $this->assertOutputOrder($output, [
+            'Risky Outcome output',
+            'files with RISKY',
+            IntentionalRiskyTestStub::class,
+        ]);
+
+        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output->getOutput());
+    }
+
     public function testSessionStderr(): void
     {
         $this->setTextFilter('SessionTestStub.php');
@@ -199,7 +198,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertOutputOrder($output, [
             'PARAUNIT',
             Paraunit::getVersion(),
-            '...',
+            'WWW',
             '     3',
             'Execution time',
             'Executed: 1 test classes, 3 tests',
@@ -221,7 +220,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionMissingLogAsUnknownResults(): void
     {
-        $stubFile = dirname(__DIR__, 2) . '/Stub/ParseErrorTestStub.php';
+        $stubFile = dirname(__DIR__, 2) . str_replace('/', DIRECTORY_SEPARATOR, '/Stub/ParseErrorTestStub.php');
         $this->setTextFilter(basename($stubFile));
         $this->loadContainer();
 

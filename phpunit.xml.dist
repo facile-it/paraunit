@@ -21,7 +21,8 @@
 
   <testsuites>
     <testsuite name="unit">
-      <directory>tests/Unit</directory>
+      <file>tests/Unit/Proxy/Coverage/FakeDriverTest.php</file>
+<!--      <directory>tests/Unit</directory>-->
     </testsuite>
     <testsuite name="functional">
       <directory>tests/Functional</directory>

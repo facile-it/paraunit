@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
-use Paraunit\TestResult\Interfaces\TestResultInterface;
-use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultWithSymbolFormat;
 use PHPUnit\Framework\AssertionFailedError;
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 
 abstract class BaseUnitTestCase extends BaseTestCase
 {
@@ -21,7 +16,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
     {
         $jsonLogs = JSONLogStub::getCleanOutputFileContent(JSONLogStub::ONE_ERROR);
         /** @var \stdClass[] $logs */
-        $logs = json_decode($jsonLogs, null, 512, JSON_THROW_ON_ERROR);
+        $logs = json_decode((string) $jsonLogs, null, 512, JSON_THROW_ON_ERROR);
         foreach ($logs as $log) {
             if ($log->event === $event) {
                 if ($testOutput) {

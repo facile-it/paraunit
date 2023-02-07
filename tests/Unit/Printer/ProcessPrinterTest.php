@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\ProcessParsingCompleted;
-use Paraunit\Printer\ProcessPrinter;
+use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Printer\SingleResultFormatter;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\Output;
@@ -27,7 +27,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->willReturn('<ok>.</ok>');
 
         $output = new UnformattedOutputStub();
-        $printer = new ProcessPrinter($formatter->reveal(), $output);
+        $printer = new ProgressPrinter($formatter->reveal(), $output);
 
         $printer->onProcessCompleted(new ProcessParsingCompleted($process));
 
@@ -38,12 +38,12 @@ class ProcessPrinterTest extends BaseUnitTestCase
     {
         $formatter = $this->prophesize(SingleResultFormatter::class);
         $output = new UnformattedOutputStub();
-        $printer = new ProcessPrinter($formatter->reveal(), $output);
+        $printer = new ProgressPrinter($formatter->reveal(), $output);
 
         $printer->onEngineEnd();
 
         $consoleOutput = $output->getOutput();
-        $this->assertEquals(ProcessPrinter::MAX_CHAR_LENGTH + 1, strlen($consoleOutput));
+        $this->assertEquals(ProgressPrinter::MAX_CHAR_LENGTH + 1, strlen($consoleOutput));
         $this->assertStringEndsWith(" 0\n", $consoleOutput);
     }
 
@@ -73,7 +73,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->shouldBeCalledTimes($times)
             ->willReturn('<tag>.</tag>');
 
-        $printer = new ProcessPrinter($formatter->reveal(), $output->reveal());
+        $printer = new ProgressPrinter($formatter->reveal(), $output->reveal());
 
         $printer->onProcessCompleted(new ProcessParsingCompleted($process));
     }
@@ -106,14 +106,14 @@ class ProcessPrinterTest extends BaseUnitTestCase
             ->willReturn('.');
 
         $output = new UnformattedOutputStub();
-        $printer = new ProcessPrinter($formatter->reveal(), $output);
+        $printer = new ProgressPrinter($formatter->reveal(), $output);
 
         $printer->onProcessCompleted(new ProcessParsingCompleted($process));
         $printer->onEngineEnd();
 
         $expectedOutput = str_repeat('.', 74) . '    74' . "\n"
             . str_repeat('.', 26)
-            . str_repeat(' ', ProcessPrinter::MAX_CHAR_LENGTH - (26 + 3))
+            . str_repeat(' ', ProgressPrinter::MAX_CHAR_LENGTH - (26 + 3))
             . '100' . "\n";
         $this->assertSame($expectedOutput, $output->getOutput());
     }

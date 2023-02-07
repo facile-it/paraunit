@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Paraunit\Logs\JSON;
 
 use Paraunit\Logs\ValueObject\LogData;
-use Paraunit\Logs\ValueObject\TestStatus;
-use Paraunit\Printer\ValueObject\TestOutcome;
+use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Process\AbstractParaunitProcess;
-use Paraunit\TestResult\TestResult;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 
 class RetryParser
 {
@@ -59,7 +59,7 @@ class RetryParser
 
     private function containsRetryableError(LogData $log): bool
     {
-        return $log->status === TestStatus::Errored
+        return $log->status === LogStatus::Errored
             && $log->message
             && 1 === preg_match($this->regexPattern, $log->message);
     }

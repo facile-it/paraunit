@@ -37,6 +37,6 @@ class CoveragePrinter implements EventSubscriberInterface
             CoverageDriver::PHPDbg => 'PHPDBG',
         };
 
-        $this->output->write('Coverage driver in use: ' . $driver);
+        $this->output->writeln('Coverage driver in use: ' . $driver);
     }
 }

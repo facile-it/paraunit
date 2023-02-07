@@ -4,7 +4,11 @@ on:
   pull_request: null
   push:
     branches:
-      - master
+      - 1.x
+      - 2.x
+
+env:
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.PRIVATE_REPO_ACCESS }}"}}'
 
 jobs:
   Tests:
