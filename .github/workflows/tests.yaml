@@ -51,6 +51,7 @@ jobs:
         if: matrix.dependencies == 'lowest'
       - uses: ramsey/composer-install@v2
         with:
+          composer-options: '-v'
           dependency-versions: ${{ matrix.dependencies }}
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml
       - uses: codecov/codecov-action@v1
