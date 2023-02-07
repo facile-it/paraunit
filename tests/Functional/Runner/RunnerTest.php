@@ -220,7 +220,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionMissingLogAsUnknownResults(): void
     {
-        $stubFile = dirname(__DIR__, 2) . '/Stub/ParseErrorTestStub.php';
+        $stubFile = dirname(__DIR__, 2) . str_replace('/', DIRECTORY_SEPARATOR, '/Stub/ParseErrorTestStub.php');
         $this->setTextFilter(basename($stubFile));
         $this->loadContainer();
 
