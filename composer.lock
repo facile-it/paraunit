@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d0b566224d17b133dd3394461b442c6",
+    "content-hash": "7f24c4649d2267fc3082e6a12aef9c30",
     "packages": [
         {
             "name": "jean85/pretty-package-versions",
@@ -611,16 +611,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.0.5",
+            "version": "10.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5f4a775285c6401693cee39876f3ba764d42cb24"
+                "reference": "6be2d07cce2c7f812db007825a57da3b08972eaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5f4a775285c6401693cee39876f3ba764d42cb24",
-                "reference": "5f4a775285c6401693cee39876f3ba764d42cb24",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6be2d07cce2c7f812db007825a57da3b08972eaf",
+                "reference": "6be2d07cce2c7f812db007825a57da3b08972eaf",
                 "shasum": ""
             },
             "require": {
@@ -691,7 +691,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.0.5"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.0.4"
             },
             "funding": [
                 {
@@ -707,7 +707,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-07T06:06:01+00:00"
+            "time": "2023-02-05T16:23:38+00:00"
         },
         {
             "name": "psr/container",
@@ -4456,16 +4456,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.15",
+            "version": "1.9.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "642f5d78e4bfb9d9bebed898740ca82b53264d9b"
+                "reference": "e5fcc96289cf737304286a9b505fbed091f02e58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/642f5d78e4bfb9d9bebed898740ca82b53264d9b",
-                "reference": "642f5d78e4bfb9d9bebed898740ca82b53264d9b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e5fcc96289cf737304286a9b505fbed091f02e58",
+                "reference": "e5fcc96289cf737304286a9b505fbed091f02e58",
                 "shasum": ""
             },
             "require": {
@@ -4495,7 +4495,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.15"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.14"
             },
             "funding": [
                 {
@@ -4511,7 +4511,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-07T07:49:27+00:00"
+            "time": "2023-01-19T10:47:09+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -4791,16 +4791,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.15.13",
+            "version": "0.15.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "05df336f8e29873ed14c0790fbea68fa5de14f50"
+                "reference": "9b9b8ed4d918abcd999f4a7c2575834a8aede929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/05df336f8e29873ed14c0790fbea68fa5de14f50",
-                "reference": "05df336f8e29873ed14c0790fbea68fa5de14f50",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/9b9b8ed4d918abcd999f4a7c2575834a8aede929",
+                "reference": "9b9b8ed4d918abcd999f4a7c2575834a8aede929",
                 "shasum": ""
             },
             "require": {
@@ -4835,7 +4835,7 @@
             "description": "Instant Upgrade and Automated Refactoring of any PHP code",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.15.13"
+                "source": "https://github.com/rectorphp/rector/tree/0.15.12"
             },
             "funding": [
                 {
@@ -4843,7 +4843,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-07T01:46:29+00:00"
+            "time": "2023-02-03T17:49:48+00:00"
         },
         {
             "name": "spatie/array-to-xml",

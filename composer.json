@@ -57,11 +57,11 @@
     },
     "repositories": [
         {
-            "type": "vcs",
+            "type": "github",
             "url": "https://github.com/Jean85/prophecy"
         },
         {
-            "type": "vcs",
+            "type": "github",
             "url": "https://github.com/Jean85/prophecy-phpunit"
         }
     ],
