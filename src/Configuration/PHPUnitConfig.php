@@ -62,6 +62,46 @@ class PHPUnitConfig
         return false;
     }
 
+    public function installExtension(): void
+    {
+        if ($this->isParaunitExtensionRegistered()) {
+            return;
+        }
+
+        /** @psalm-suppress InternalMethod */
+        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $config->preserveWhiteSpace = false;
+        $config->formatOutput = true;
+
+        $extensionsNode = $this->getExtensionsNode($config);
+        $paraunitExtension = $config->createElement('bootstrap');
+        $paraunitExtension->setAttribute('class', ParaunitExtension::class);
+        $extensionsNode->prepend($paraunitExtension);
+
+        $config->save($this->configFilename);
+    }
+
+    private function getExtensionsNode(\DOMDocument $config): \DOMElement
+    {
+        $nodes = iterator_to_array($config->getElementsByTagName('phpunit')->getIterator());
+        $phpunitNode = array_pop($nodes);
+
+        if (! $phpunitNode instanceof \DOMElement) {
+            throw new \InvalidArgumentException('PHPUnit configuration is malformed - unable to install ParaunitExtension automatically');
+        }
+
+        foreach ($phpunitNode->childNodes->getIterator() as $childNode) {
+            if ($childNode instanceof \DOMElement && $childNode->nodeName === 'extensions') {
+                return $childNode;
+            }
+        }
+
+        $extensionsNode = $config->createElement('extensions');
+        $phpunitNode->prepend($extensionsNode);
+
+        return $extensionsNode;
+    }
+
     /**
      * @return string The full path for this configuration file
      */

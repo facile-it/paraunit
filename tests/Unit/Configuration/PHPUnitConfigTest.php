@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitConfig;
+use PHPUnit\Framework\AssertionFailedError;
 use Tests\BaseUnitTestCase;
 
 class PHPUnitConfigTest extends BaseUnitTestCase
@@ -70,12 +71,29 @@ class PHPUnitConfigTest extends BaseUnitTestCase
      */
     public function testIsParaunitExtensionRegistered(bool $expectedResult, string $configContent): void
     {
-        $configFile = uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test-config-');
-        $this->assertNotFalse(file_put_contents($configFile, $configContent), 'Failed preparing mocked config');
+        $configFile = $this->createMockConfiguration($configContent);
 
         $config = new PHPUnitConfig($configFile);
 
         $this->assertSame($expectedResult, $config->isParaunitExtensionRegistered());
+    }
+
+    /**
+     * @dataProvider configWithExtensionDataProvider
+     */
+    public function testInstallExtension(bool $expectedResult, string $configContent): void
+    {
+        $configFile = $this->createMockConfiguration($configContent);
+        $config = new PHPUnitConfig($configFile);
+        $this->assertSame($expectedResult, $config->isParaunitExtensionRegistered());
+
+        $config->installExtension();
+
+        try {
+            $this->assertTrue($config->isParaunitExtensionRegistered());
+        } catch (\Throwable $throwable) {
+            throw new AssertionFailedError('Configuration broken: ' . PHP_EOL . file_get_contents($config->getFileFullPath()), 500, $throwable);
+        }
     }
 
     /**
@@ -105,5 +123,13 @@ class PHPUnitConfigTest extends BaseUnitTestCase
                 '<?xml version="1.0"?><phpunit><extensions><bootstrap class="Paraunit\Configuration\ParaunitExtension" /></extensions></phpunit>',
             ],
         ];
+    }
+
+    private function createMockConfiguration(string $configContent): string
+    {
+        $configFile = uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test-config-');
+        $this->assertNotFalse(file_put_contents($configFile, $configContent), 'Failed preparing mocked config');
+
+        return $configFile;
     }
 }
