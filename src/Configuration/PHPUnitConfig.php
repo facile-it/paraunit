@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use PHPUnit\Util\Xml\Loader;
+
 class PHPUnitConfig
 {
     final public const DEFAULT_FILE_NAME = 'phpunit.xml';
@@ -15,12 +17,49 @@ class PHPUnitConfig
     /** @var PHPUnitOption[] */
     private array $phpunitOptions = [];
 
+    private readonly Loader $xmlLoader;
+
     /**
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
     {
         $this->configFilename = $this->getConfigFileRealpath($inputPathOrFileName);
+        /** @psalm-suppress InternalClass */
+        $this->xmlLoader = new Loader();
+    }
+
+    public function isParaunitExtensionRegistered(): bool
+    {
+        /** @psalm-suppress InternalMethod */
+        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $xpath = new \DOMXPath($config);
+        $extensions = $xpath->query('extensions/bootstrap');
+
+        if (! $extensions instanceof \DOMNodeList) {
+            return false;
+        }
+
+        $extensionName = ParaunitExtension::class;
+        foreach ($extensions as $extension) {
+            if (! $extension instanceof \DOMElement) {
+                continue;
+            }
+
+            /** @psalm-trace $extension */
+            $class = $extension->attributes?->getNamedItem('class');
+            if (! $class instanceof \DOMAttr) {
+                continue;
+            }
+
+            $className = ltrim($class->value, '\\');
+
+            if ($className === $extensionName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
