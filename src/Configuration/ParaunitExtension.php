@@ -27,6 +27,10 @@ class ParaunitExtension implements Extension
 {
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
     {
+        if (false === getenv(EnvVariables::PROCESS_UNIQUE_ID)) {
+            return;
+        }
+
         $facade->registerSubscribers(
             new TestPrepared(),
             new TestFinished(),

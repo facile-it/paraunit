@@ -26,6 +26,20 @@ class BaseTestCase extends TestCase
         return $filename;
     }
 
+    protected function createConfigWithoutExtension(): string
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'config_');
+        $this->assertNotFalse($filename, 'Error from tmp filesystem');
+        $this->assertTrue(copy($this->getConfigWithoutExtension(), $filename), 'Error while preparing config copy');
+
+        return $filename;
+    }
+
+    protected function getConfigWithoutExtension(): string
+    {
+        return $this->getStubPath() . 'phpunit_without_paraunit_installed.xml';
+    }
+
     protected function getConfigForStubs(): string
     {
         return $this->getStubPath() . 'phpunit_for_stubs.xml';

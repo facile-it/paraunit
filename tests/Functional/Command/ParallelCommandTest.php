@@ -6,6 +6,7 @@ namespace Tests\Functional\Command;
 
 use Paraunit\Command\ParallelCommand;
 use Paraunit\Configuration\ParallelConfiguration;
+use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Logs\ValueObject\Test;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -18,6 +19,48 @@ use Tests\Stub\RaisingNoticeTestStub;
 
 class ParallelCommandTest extends BaseTestCase
 {
+    public function testExecutionFailsWithoutExtension(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Paraunit extension is not registered');
+
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->createConfigWithoutExtension(),
+            'stringFilter' => 'nothing',
+        ]);
+    }
+
+    public function testExecutionUpgradesTheConfig(): void
+    {
+        $configWithoutExtension = $this->createConfigWithoutExtension();
+        $configChecker = new PHPUnitConfig($configWithoutExtension);
+        $this->assertFalse($configChecker->isParaunitExtensionRegistered());
+
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['Y']);
+
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $configWithoutExtension,
+            'stringFilter' => 'nothing',
+        ], ['interactive' => true]);
+
+        $this->assertTrue($configChecker->isParaunitExtensionRegistered(), 'Configuration not updated correctly');
+        $commandTester->assertCommandIsSuccessful();
+        $this->assertStringContainsString('Configuration updated successfully', $commandTester->getDisplay());
+    }
+
     public function testExecutionAllGreen(): void
     {
         $configurationPath = $this->getConfigForStubs();

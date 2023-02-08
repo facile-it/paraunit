@@ -15,6 +15,20 @@ class CoverageCommandTest extends BaseTestCase
 {
     private const COMMAND_NAME = 'coverage';
 
+    public function testExecutionFailsWithoutExtension(): void
+    {
+        $commandTester = $this->createCommandTester();
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Paraunit extension is not registered');
+
+        $commandTester->execute([
+            '--configuration' => $this->createConfigWithoutExtension(),
+            '--text' => null,
+            'stringFilter' => 'nothing',
+        ]);
+    }
+
     public function testExecutionWithTextToFile(): void
     {
         if ($this->isXdebugCoverageDisabled()) {

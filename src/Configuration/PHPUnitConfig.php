@@ -46,7 +46,6 @@ class PHPUnitConfig
                 continue;
             }
 
-            /** @psalm-trace $extension */
             $class = $extension->attributes?->getNamedItem('class');
             if (! $class instanceof \DOMAttr) {
                 continue;
@@ -97,7 +96,7 @@ class PHPUnitConfig
         }
 
         $extensionsNode = $config->createElement('extensions');
-        $phpunitNode->prepend($extensionsNode);
+        $phpunitNode->append($extensionsNode);
 
         return $extensionsNode;
     }
