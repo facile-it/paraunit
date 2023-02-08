@@ -28,7 +28,10 @@ class BaseTestCase extends TestCase
 
     protected function createConfigWithoutExtension(): string
     {
-        $filename = tempnam(sys_get_temp_dir(), 'config_');
+        $tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test';
+        $this->assertTrue(is_dir($tmpDir) || mkdir($tmpDir), 'Failure while creating tmp dir');
+
+        $filename = tempnam($tmpDir, 'config_');
         $this->assertNotFalse($filename, 'Error from tmp filesystem');
         $this->assertTrue(copy($this->getConfigWithoutExtension(), $filename), 'Error while preparing config copy');
 
