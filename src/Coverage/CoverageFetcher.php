@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
+use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Process\Process;
 use Paraunit\Proxy\Coverage\FakeDriver;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestResult;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Filter;
 use Symfony\Component\Process\Process as SymfonyProcess;
@@ -14,6 +18,7 @@ use Symfony\Component\Process\Process as SymfonyProcess;
 class CoverageFetcher
 {
     public function __construct(
+        private readonly TestResultContainer $testResultContainer,
         private readonly TempFilenameFactory $tempFilenameFactory,
     ) {
     }
@@ -33,8 +38,8 @@ class CoverageFetcher
             return $codeCoverage;
         }
 
-        // TODO - rework
-//        $this->resultHandler->handleTestResult($process);
+        $testResult = new TestResult(new Test($process->getFilename()), TestIssue::CoverageFailure);
+        $this->testResultContainer->addTestResult($testResult);
 
         return new CodeCoverage(new FakeDriver(), new Filter());
     }
