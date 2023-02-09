@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Coverage\CoverageDriver;
-use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Process\CommandLineWithCoverage;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,7 +19,7 @@ class CoveragePrinter implements EventSubscriberInterface
     }
 
     /**
-     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
+     * @return array<class-string, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

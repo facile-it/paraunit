@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
@@ -19,7 +18,7 @@ class DebugPrinter implements EventSubscriberInterface
     }
 
     /**
-     * @return array<class-string<AbstractEvent>, string|array{0: string, 1: int}>
+     * @return array<class-string, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
