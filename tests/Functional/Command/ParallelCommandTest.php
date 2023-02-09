@@ -58,7 +58,7 @@ class ParallelCommandTest extends BaseTestCase
         ], ['interactive' => true]);
 
         $this->assertTrue($configChecker->isParaunitExtensionRegistered(), 'Configuration not updated correctly');
-        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode(), 'Command failed with non-zero exit code');
+        $this->assertSame(0, $commandTester->getStatusCode(), 'Command failed with non-zero exit code');
         $this->assertStringContainsString('Configuration updated successfully', $commandTester->getDisplay());
     }
 
