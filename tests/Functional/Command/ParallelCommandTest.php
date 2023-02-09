@@ -9,7 +9,6 @@ use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Logs\ValueObject\Test;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
 use Tests\Stub\IntentionalWarningTestStub;
