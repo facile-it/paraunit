@@ -7,14 +7,13 @@ namespace Tests\Unit\Printer;
 use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Process\CommandLineWithCoverage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
 class CoveragePrinterTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider coverageDriverProvider
-     */
+    #[DataProvider('coverageDriverProvider')]
     public function testOnEngineBeforeStart(CoverageDriver $coverageDriver, string $expected): void
     {
         $output = new UnformattedOutputStub();

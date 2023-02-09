@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Proxy\Coverage;
 
 use Paraunit\Proxy\Coverage\FakeDriver;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FakeDriverTest extends TestCase
@@ -16,9 +17,7 @@ class FakeDriverTest extends TestCase
         $this->assertStringContainsString('Fake', $driver->nameAndVersion());
     }
 
-    /**
-     * @dataProvider methodNameProvider
-     */
+    #[DataProvider('methodNameProvider')]
     public function testUnusableMethods(string $method): void
     {
         $driver = new FakeDriver();

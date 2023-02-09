@@ -7,15 +7,17 @@ namespace Tests\Unit\Runner;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Small;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
-/**
- * @small
- */
+#[Small]
 class PipelineCollectionTest extends BaseUnitTestCase
 {
+    #[DoesNotPerformAssertions]
     public function testInstantiation(): void
     {
         $pipelines = [
@@ -73,9 +75,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $collection->push($newProcess);
     }
 
-    /**
-     * @dataProvider pipelineStateProvider
-     */
+    #[DataProvider('pipelineStateProvider')]
     public function testHasRunningProcesses(bool $isPipeline1Free, bool $isPipeline2Free): void
     {
         $pipeline1 = $this->prophesize(Pipeline::class);
@@ -94,9 +94,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
         $this->assertSame($expectedResult, $pipelineCollection->isEmpty());
     }
 
-    /**
-     * @dataProvider pipelineStateProvider
-     */
+    #[DataProvider('pipelineStateProvider')]
     public function testHasEmptySlots(bool $isPipeline1Empty, bool $isPipeline2Empty): void
     {
         $pipeline1 = $this->prophesize(Pipeline::class);

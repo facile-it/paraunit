@@ -14,14 +14,13 @@ use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 class CommandLineWithCoverageTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider extensionProxiesProvider
-     */
+    #[DataProvider('extensionProxiesProvider')]
     public function testChooseCoverageDriver(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion, CoverageDriver $expected): void
     {
         $cli = new CommandLineWithCoverage(
@@ -37,10 +36,9 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     }
 
     /**
-     * @dataProvider coverageDriverProvider
-     *
      * @param array<string, string> $expected
      */
+    #[DataProvider('coverageDriverProvider')]
     public function testGetExecutableByDriver(CoverageDriver $coverageDriver, array $expected): void
     {
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
@@ -95,10 +93,8 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         );
     }
 
-    /**
-     * @dataProvider extensionProxiesProvider
-     * @dataProvider noExtensionsEnabledProvider
-     */
+    #[DataProvider('extensionProxiesProvider')]
+    #[DataProvider('noExtensionsEnabledProvider')]
     public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);

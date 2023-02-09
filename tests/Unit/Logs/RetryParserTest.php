@@ -9,6 +9,7 @@ use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
@@ -22,9 +23,7 @@ use Tests\Stub\StubbedParaunitProcess;
 
 class RetryParserTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider toBeRetriedTestsProvider
-     */
+    #[DataProvider('toBeRetriedTestsProvider')]
     public function testParseAndSetRetry(string $testOutput): void
     {
         $log = new LogData(LogStatus::Errored, new Test('test'), $testOutput);
@@ -36,9 +35,7 @@ class RetryParserTest extends BaseUnitTestCase
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
     }
 
-    /**
-     * @dataProvider notToBeRetriedTestLogsProvider
-     */
+    #[DataProvider('notToBeRetriedTestLogsProvider')]
     public function testParseAndContinueWithNoRetry(string $stubFilename): void
     {
         $process = new StubbedParaunitProcess();

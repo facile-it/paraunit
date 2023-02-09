@@ -7,6 +7,7 @@ namespace Tests\Unit\Printer;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Printer\SingleResultFormatter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\Output;
 use Tests\BaseUnitTestCase;
@@ -47,9 +48,7 @@ class ProcessPrinterTest extends BaseUnitTestCase
         $this->assertStringEndsWith(" 0\n", $consoleOutput);
     }
 
-    /**
-     * @dataProvider newLineTimesProvider
-     */
+    #[DataProvider('newLineTimesProvider')]
     public function testOnProcessParsingCompletedAddsCounterAndNewlineAtFullRow(int $times, int $newLineTimes): void
     {
         $process = new StubbedParaunitProcess();

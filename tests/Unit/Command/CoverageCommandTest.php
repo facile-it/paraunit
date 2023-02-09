@@ -15,6 +15,7 @@ use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
 use Paraunit\Runner\Runner;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -23,9 +24,7 @@ use Tests\BaseUnitTestCase;
 
 class CoverageCommandTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider validCoverageOptionsProvider
-     */
+    #[DataProvider('validCoverageOptionsProvider')]
     public function testExecute(string $coverageOptionName, bool $hasOptionalValue = false): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);

@@ -8,6 +8,7 @@ use Paraunit\Bin\Paraunit;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseIntegrationTestCase;
 use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\IntentionalRiskyTestStub;
@@ -42,9 +43,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Executed: 1 test classes (3 retried), 1 tests', $output->getOutput());
     }
 
-    /**
-     * @dataProvider retryStubFilenameProvider
-     */
+    #[DataProvider('retryStubFilenameProvider')]
     public function testMaxRetryDeadlock(string $stubFilePath): void
     {
         $this->setTextFilter($stubFilePath);
