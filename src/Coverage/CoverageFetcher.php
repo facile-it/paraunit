@@ -18,8 +18,8 @@ use Symfony\Component\Process\Process as SymfonyProcess;
 class CoverageFetcher
 {
     public function __construct(
-        private readonly TestResultContainer $testResultContainer,
         private readonly TempFilenameFactory $tempFilenameFactory,
+        private readonly TestResultContainer $testResultContainer,
     ) {
     }
 

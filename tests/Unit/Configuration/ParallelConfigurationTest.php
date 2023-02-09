@@ -15,6 +15,7 @@ use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultContainer;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -65,8 +66,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
-            'paraunit.test_result.success_container',
-            'paraunit.test_result.success_format',
+            TestResultContainer::class,
             PHPUnitConfig::class,
         ];
 

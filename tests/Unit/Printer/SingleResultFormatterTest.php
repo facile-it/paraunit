@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Printer;
 
-use Paraunit\Printer\SingleResultFormatter;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultList;
-use Paraunit\TestResult\TestResultWithSymbolFormat;
 use Tests\BaseUnitTestCase;
 
 class SingleResultFormatterTest extends BaseUnitTestCase

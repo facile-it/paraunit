@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Paraunit\Logs\ValueObject\LogData;
+use Paraunit\Logs\ValueObject\LogStatus;
+use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Logs\ValueObject\TestMethod;
+
 abstract class BaseUnitTestCase extends BaseTestCase
 {
     protected function getWrongCoverageStubFilePath(): string
@@ -35,5 +40,18 @@ abstract class BaseUnitTestCase extends BaseTestCase
         }
 
         return rmdir($path);
+    }
+
+    /**
+     * @return LogData
+     */
+    protected function createLogsForOnePassedTest(): array
+    {
+        return [
+            new LogData(LogStatus::Started, new Test('Foo'), '3'),
+            new LogData(LogStatus::Prepared, new TestMethod('Foo', 'bar'), null),
+            new LogData(LogStatus::Passed, new TestMethod('Foo', 'bar'), null),
+            new LogData(LogStatus::Finished, new TestMethod('Foo', 'bar'), null),
+        ];
     }
 }

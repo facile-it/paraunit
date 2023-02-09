@@ -7,7 +7,6 @@ namespace Tests\Unit\Printer;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Printer\FinalPrinter;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultList;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Tests\BaseUnitTestCase;

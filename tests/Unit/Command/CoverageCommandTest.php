@@ -28,6 +28,8 @@ class CoverageCommandTest extends BaseUnitTestCase
     public function testExecute(string $coverageOptionName, bool $hasOptionalValue = false): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
+        $phpunitConfig->isParaunitExtensionRegistered()
+            ->willReturn(true);
 
         $runner = $this->prophesize(Runner::class);
         $runner->run()

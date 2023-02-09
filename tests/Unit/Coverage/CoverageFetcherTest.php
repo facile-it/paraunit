@@ -6,7 +6,10 @@ namespace Tests\Unit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestResult;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -24,11 +27,11 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')
             ->shouldBeCalled()
             ->willReturn($filename);
-        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
-        $missingCoverageContainer->addProcessToFilenames($process)
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->addTestResult(Argument::cetera())
             ->shouldNotBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $testResultContainer->reveal());
 
         $result = $fetcher->fetch($process);
 
@@ -44,11 +47,8 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')
             ->shouldBeCalled()
             ->willReturn('/path/to/missing/file');
-        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
-        $missingCoverageContainer->addProcessToFilenames($process)
-            ->shouldBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $this->mockTestResulContainer($process));
 
         $result = $fetcher->fetch($process);
 
@@ -67,11 +67,8 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $tempFilenameFactory->getFilenameForCoverage('uniqueId')
             ->shouldBeCalled()
             ->willReturn($filename);
-        $missingCoverageContainer = $this->prophesize(TestResultHandlerInterface::class);
-        $missingCoverageContainer->addProcessToFilenames($process)
-            ->shouldBeCalled();
 
-        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $missingCoverageContainer->reveal());
+        $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $this->mockTestResulContainer($process));
 
         $result = $fetcher->fetch($process);
 
@@ -82,5 +79,19 @@ class CoverageFetcherTest extends BaseUnitTestCase
     private function getTempFilename(): string
     {
         return uniqid(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testfile', true) . '.php';
+    }
+
+    private function mockTestResulContainer(StubbedParaunitProcess $process): TestResultContainer
+    {
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->addTestResult(Argument::that(function (TestResult $testResult) use ($process): bool {
+            $this->assertSame(TestIssue::CoverageFailure, $testResult->status);
+            $this->assertSame($process->filename, $testResult->test->name);
+
+            return true;
+        }))
+            ->shouldBeCalled();
+
+        return $testResultContainer->reveal();
     }
 }

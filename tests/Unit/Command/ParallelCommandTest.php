@@ -19,6 +19,9 @@ class ParallelCommandTest extends BaseUnitTestCase
     public function testExecute(): void
     {
         $phpunitConfig = $this->prophesize(PHPUnitConfig::class);
+        $phpunitConfig->isParaunitExtensionRegistered()
+            ->willReturn(true);
+        $phpunitConfig->addPhpunitOption(Argument::cetera());
 
         $runner = $this->prophesize(Runner::class);
         $runner->run()

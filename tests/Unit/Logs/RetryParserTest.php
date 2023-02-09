@@ -8,7 +8,9 @@ use Paraunit\Logs\JSON\RetryParser;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -16,7 +18,6 @@ use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\MySQLDeadLockTestStub;
 use Tests\Stub\MySQLLockTimeoutTestStub;
 use Tests\Stub\MySQLSavePointMissingTestStub;
-use Tests\Stub\PHPUnitJSONLogOutput\JSONLogStub;
 use Tests\Stub\PostgreSQLDeadLockTestStub;
 use Tests\Stub\SQLiteDeadLockTestStub;
 use Tests\Stub\StubbedParaunitProcess;
@@ -29,19 +30,19 @@ class RetryParserTest extends BaseUnitTestCase
         $log = new LogData(LogStatus::Errored, new Test('test'), $testOutput);
 
         $process = new StubbedParaunitProcess();
-        $parser = new RetryParser($this->getResultHandlerMock(true), 3);
+        $parser = new RetryParser($this->getResultContainerMock(true), 3);
 
         $this->assertTrue($parser->processWillBeRetried($process, [$log]), 'Retry not detected');
         $this->assertTrue($process->isToBeRetried(), 'Test should be marked as to be retried!');
     }
 
-    #[DataProvider('notToBeRetriedTestLogsProvider')]
-    public function testParseAndContinueWithNoRetry(string $stubFilename): void
+    public function testParseAndContinueWithNoRetry(): void
     {
+        $log = new LogData(LogStatus::Errored, new Test('test'), 'Some error message that does not match');
         $process = new StubbedParaunitProcess();
-        $parser = new RetryParser($this->getResultHandlerMock(false), 3);
+        $parser = new RetryParser($this->getResultContainerMock(false), 3);
 
-        $result = $parser->processWillBeRetried($process, $this->getArrayOfLogsFromStubFile($stubFilename));
+        $result = $parser->processWillBeRetried($process, [$log]);
 
         $this->assertFalse($result, 'Fake retry detected');
         $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
@@ -51,11 +52,9 @@ class RetryParserTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
         $log = new LogData(LogStatus::Errored, new Test('test'), EntityManagerClosedTestStub::OUTPUT);
-        $process->increaseRetryCount();
+        $process->retryCount = 1;
 
-        $this->assertEquals(1, $process->getRetryCount());
-
-        $parser = new RetryParser($this->getResultHandlerMock(false), 0);
+        $parser = new RetryParser($this->getResultContainerMock(false), 0);
 
         $this->assertFalse($parser->processWillBeRetried($process, [$log]), 'Fake retry detected');
         $this->assertFalse($process->isToBeRetried(), 'Test marked as to be retried');
@@ -76,36 +75,14 @@ class RetryParserTest extends BaseUnitTestCase
         ];
     }
 
-    /**
-     * @return string[][]
-     */
-    public static function notToBeRetriedTestLogsProvider(): array
+    private function getResultContainerMock(bool $shouldBeCalled): TestResultContainer
     {
-        return [
-            [JSONLogStub::TWO_ERRORS_TWO_FAILURES],
-            [JSONLogStub::ALL_GREEN],
-            [JSONLogStub::FATAL_ERROR],
-            [JSONLogStub::SEGFAULT],
-            [JSONLogStub::ONE_ERROR],
-            [JSONLogStub::ONE_INCOMPLETE],
-            [JSONLogStub::ONE_RISKY],
-            [JSONLogStub::ONE_SKIP],
-            [JSONLogStub::ONE_WARNING],
-        ];
-    }
+        $resultHandler = $this->prophesize(TestResultContainer::class);
+        $resultHandler->addTestResult(Argument::that(function (TestResult $testResult): bool {
+            $this->assertSame(TestOutcome::Retry, $testResult->status);
 
-    /**
-     * @return LogData[]
-     */
-    private function getArrayOfLogsFromStubFile(string $filename): array
-    {
-        return LogData::parse(JSONLogStub::getCleanOutputFileContent($filename));
-    }
-
-    private function getResultHandlerMock(bool $shouldBeCalled): TestResultHandlerInterface
-    {
-        $resultHandler = $this->prophesize(TestResultHandlerInterface::class);
-        $resultHandler->handleTestResult(Argument::cetera())
+            return true;
+        }))
             ->shouldBeCalledTimes((int) $shouldBeCalled);
 
         return $resultHandler->reveal();

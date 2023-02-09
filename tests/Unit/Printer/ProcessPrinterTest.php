@@ -6,7 +6,6 @@ namespace Tests\Unit\Printer;
 
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Printer\ProgressPrinter;
-use Paraunit\Printer\SingleResultFormatter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\Output;

@@ -24,6 +24,7 @@ use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -76,8 +77,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
-            'paraunit.test_result.success_container',
-            'paraunit.test_result.success_format',
+            TestResultContainer::class,
 
             CoverageFetcher::class,
             CoverageMerger::class,

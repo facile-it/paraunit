@@ -16,7 +16,7 @@ use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class LogHandler
+class LogHandler
 {
     private Test $currentTest;
 
