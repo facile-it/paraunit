@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-allow-diff-5-on-5@680696a28a199b488d10774bce9698aa9ed11a74">
+<files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
+  <file src="src/Configuration/PHPUnitConfig.php">
+    <DocblockTypeContradiction>
+      <code>$extension-&gt;attributes</code>
+    </DocblockTypeContradiction>
+    <RedundantConditionGivenDocblockType>
+      <code>$extension-&gt;attributes?-&gt;getNamedItem('class')</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
   <file src="src/Configuration/ParallelConfiguration.php">
     <MixedArgument>
       <code>$input-&gt;getArgument('stringFilter')</code>
@@ -30,12 +38,6 @@
     </MixedMethodCall>
   </file>
   <file src="src/Filter/Filter.php">
-    <MixedArgument>
-      <code>$fileName</code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$fileName</code>
-    </MixedAssignment>
     <PossiblyNullOperand>
       <code>$fileNode-&gt;nodeValue</code>
     </PossiblyNullOperand>

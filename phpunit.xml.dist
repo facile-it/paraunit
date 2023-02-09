@@ -1,37 +1,26 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" 
-         backupGlobals="false" 
-         cacheResult="false"
-         colors="true"
-         bootstrap="vendor/autoload.php"
-         failOnWarning="true"
-         failOnRisky="true"
-         timeoutForSmallTests="1"
-         timeoutForMediumTests="5"
-         timeoutForLargeTests="10"
-         beStrictAboutOutputDuringTests="true"
->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" cacheResult="false" colors="true" bootstrap="vendor/autoload.php" failOnWarning="true" failOnRisky="true" timeoutForSmallTests="1" timeoutForMediumTests="5" timeoutForLargeTests="10" beStrictAboutOutputDuringTests="true">
   <php>
     <ini name="error_reporting" value="-1"/>
     <ini name="intl.default_locale" value="en"/>
     <ini name="intl.error_level" value="0"/>
     <ini name="memory_limit" value="-1"/>
   </php>
-
   <testsuites>
     <testsuite name="unit">
       <file>tests/Unit/Proxy/Coverage/FakeDriverTest.php</file>
-<!--      <directory>tests/Unit</directory>-->
+      <!--      <directory>tests/Unit</directory>-->
     </testsuite>
     <testsuite name="functional">
       <directory>tests/Functional</directory>
     </testsuite>
   </testsuites>
-
   <coverage>
     <include>
       <directory>src/</directory>
     </include>
   </coverage>
+  <extensions>
+    <bootstrap class="Paraunit\Configuration\ParaunitExtension"/>
+  </extensions>
 </phpunit>

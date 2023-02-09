@@ -9,10 +9,13 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ParallelCommand extends Command
 {
@@ -95,12 +98,49 @@ class ParallelCommand extends Command
 
         /** @var PHPUnitConfig $config */
         $config = $container->get(PHPUnitConfig::class);
+        $this->checkForExtension($config, $input, $output);
+        $this->assertExtensionIsInstalled($config, $input);
         $this->addPHPUnitOptions($config, $input);
 
         /** @var Runner $runner */
         $runner = $container->get(Runner::class);
 
         return $runner->run();
+    }
+
+    private function checkForExtension(PHPUnitConfig $config, InputInterface $input, OutputInterface $output): void
+    {
+        if ($config->isParaunitExtensionRegistered()) {
+            return;
+        }
+
+        $formatter = $this->getHelper('formatter');
+        if (! $formatter instanceof FormatterHelper) {
+            throw new \InvalidArgumentException();
+        }
+
+        $output->writeln(
+            $formatter->formatBlock([
+                'Paraunit extension is not registered in the current PHPUnit configuration',
+                'Configuration in use: ' . $config->getFileFullPath(),
+                '',
+                'Do you want to update your configuration automatically? [y/N] ',
+            ], 'question', true)
+        );
+
+        $question = new ConfirmationQuestion('> ', false);
+        $questionHelper = $this->getHelper('question');
+        if (! $questionHelper instanceof QuestionHelper) {
+            throw new \InvalidArgumentException();
+        }
+
+        if ($questionHelper->ask($input, $output, $question)) {
+            $config->installExtension();
+
+            $output->writeln(
+                $formatter->formatBlock('Configuration updated successfully', 'info', true)
+            );
+        }
     }
 
     private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
@@ -134,5 +174,18 @@ class ParallelCommand extends Command
         }
 
         return true;
+    }
+
+    protected function assertExtensionIsInstalled(PHPUnitConfig $config, InputInterface $input): void
+    {
+        if (! $config->isParaunitExtensionRegistered()) {
+            $errorMessage = 'Paraunit extension is not registered, unable to proceed';
+
+            if (! $input->isInteractive()) {
+                $errorMessage .= PHP_EOL . 'Re-run command in interactive mode to install it with an automatic procedure';
+            }
+
+            throw new \RuntimeException($errorMessage);
+        }
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration;
 
+use PHPUnit\Util\Xml\Loader;
+
 class PHPUnitConfig
 {
     final public const DEFAULT_FILE_NAME = 'phpunit.xml';
@@ -15,12 +17,88 @@ class PHPUnitConfig
     /** @var PHPUnitOption[] */
     private array $phpunitOptions = [];
 
+    private readonly Loader $xmlLoader;
+
     /**
      * @throws \InvalidArgumentException
      */
     public function __construct(string $inputPathOrFileName)
     {
         $this->configFilename = $this->getConfigFileRealpath($inputPathOrFileName);
+        /** @psalm-suppress InternalClass */
+        $this->xmlLoader = new Loader();
+    }
+
+    public function isParaunitExtensionRegistered(): bool
+    {
+        /** @psalm-suppress InternalMethod */
+        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $xpath = new \DOMXPath($config);
+        $extensions = $xpath->query('extensions/bootstrap');
+
+        if (! $extensions instanceof \DOMNodeList) {
+            return false;
+        }
+
+        $extensionName = ParaunitExtension::class;
+        foreach ($extensions as $extension) {
+            if (! $extension instanceof \DOMElement) {
+                continue;
+            }
+
+            $class = $extension->attributes?->getNamedItem('class');
+            if (! $class instanceof \DOMAttr) {
+                continue;
+            }
+
+            $className = ltrim($class->value, '\\');
+
+            if ($className === $extensionName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function installExtension(): void
+    {
+        if ($this->isParaunitExtensionRegistered()) {
+            return;
+        }
+
+        /** @psalm-suppress InternalMethod */
+        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $config->preserveWhiteSpace = false;
+        $config->formatOutput = true;
+
+        $extensionsNode = $this->getExtensionsNode($config);
+        $paraunitExtension = $config->createElement('bootstrap');
+        $paraunitExtension->setAttribute('class', ParaunitExtension::class);
+        $extensionsNode->prepend($paraunitExtension);
+
+        $config->save($this->configFilename);
+    }
+
+    private function getExtensionsNode(\DOMDocument $config): \DOMElement
+    {
+        $nodes = iterator_to_array($config->getElementsByTagName('phpunit')->getIterator());
+        $phpunitNode = array_pop($nodes);
+
+        if (! $phpunitNode instanceof \DOMElement) {
+            throw new \InvalidArgumentException('PHPUnit configuration is malformed - unable to install ParaunitExtension automatically');
+        }
+
+        foreach ($phpunitNode->childNodes->getIterator() as $childNode) {
+            if ($childNode instanceof \DOMElement && $childNode->nodeName === 'extensions') {
+                return $childNode;
+            }
+        }
+
+        $extensionsNode = $config->createElement('extensions');
+        $phpunitNode->append($extensionsNode);
+
+        return $extensionsNode;
     }
 
     /**

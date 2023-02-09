@@ -26,6 +26,23 @@ class BaseTestCase extends TestCase
         return $filename;
     }
 
+    protected function createConfigWithoutExtension(): string
+    {
+        $tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test';
+        $this->assertTrue(is_dir($tmpDir) || mkdir($tmpDir), 'Failure while creating tmp dir');
+
+        $filename = tempnam($tmpDir, 'config_');
+        $this->assertNotFalse($filename, 'Error from tmp filesystem');
+        $this->assertTrue(copy($this->getConfigWithoutExtension(), $filename), 'Error while preparing config copy');
+
+        return $filename;
+    }
+
+    protected function getConfigWithoutExtension(): string
+    {
+        return $this->getStubPath() . 'phpunit_without_paraunit_installed.xml';
+    }
+
     protected function getConfigForStubs(): string
     {
         return $this->getStubPath() . 'phpunit_for_stubs.xml';

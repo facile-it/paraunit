@@ -16,7 +16,4 @@
       <file>StubbedParaunitProcess.php</file>
     </include>
   </coverage>
-  <extensions>
-    <bootstrap class="Paraunit\Configuration\ParaunitExtension"/>
-  </extensions>
 </phpunit>
