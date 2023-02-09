@@ -64,18 +64,9 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
 
     private function configureCoverage(ContainerBuilder $container): void
     {
-        $container->setDefinition(CoverageFetcher::class, new Definition(CoverageFetcher::class, [
-            new Reference(TempFilenameFactory::class),
-        ]));
-        $container->setDefinition(CoverageMerger::class, new Definition(CoverageMerger::class, [
-            new Reference(CoverageFetcher::class),
-        ]));
-        $container->setDefinition(CoverageResult::class, new Definition(CoverageResult::class, [
-            new Reference(CoverageMerger::class),
-        ]));
-        $container->setDefinition(CoveragePrinter::class, new Definition(CoveragePrinter::class, [
-            new Reference(CommandLineWithCoverage::class),
-            new Reference(OutputInterface::class),
-        ]));
+        $container->autowire(CoverageFetcher::class);
+        $container->autowire(CoverageMerger::class);
+        $container->autowire(CoverageResult::class);
+        $container->autowire(CoveragePrinter::class);
     }
 }

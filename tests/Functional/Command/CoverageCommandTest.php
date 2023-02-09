@@ -76,6 +76,28 @@ class CoverageCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
     }
 
+    public function testExecutionWithNoCoverageFetched(): void
+    {
+        if ($this->isXdebugCoverageDisabled()) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
+        $commandTester = $this->createCommandTester();
+
+        $arguments = $this->prepareArguments([
+            '--text' => null,
+            'stringFilter' => 'ParseError'
+        ]);
+        $exitCode = $commandTester->execute($arguments);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertStringContainsString('Coverage Report', $output);
+        $this->assertStringContainsString('1 files with COVERAGE NOT FETCHED', $output);
+        $this->assertStringContainsString('ParseErrorTestStub.php', $output);
+        $this->assertNotEquals(0, $exitCode);
+    }
+
     public function testExecutionWithTextSummaryToFile(): void
     {
         $coverageFileName = $this->getTempCoverageFilename();
