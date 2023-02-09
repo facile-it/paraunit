@@ -10,9 +10,29 @@ interface Process
 
     public function getErrorOutput(): string;
 
+    /**
+     * @param positive-int $pipelineNumber
+     */
+    public function start(int $pipelineNumber): void;
+
     public function isTerminated(): bool;
 
     public function getCommandLine(): string;
 
     public function getExitCode(): ?int;
+
+    public function getUniqueId(): string;
+
+    public function isToBeRetried(): bool;
+
+    public function markAsToBeRetried(): void;
+
+    public function getFilename(): string;
+
+    public function getRetryCount(): int;
+
+//    public function setWaitingForTestResult(bool $waitingForTestResult): void;
+//
+//
+//    public function isWaitingForTestResult(): bool;
 }

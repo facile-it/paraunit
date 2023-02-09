@@ -12,6 +12,9 @@ class PipelineFactory
     {
     }
 
+    /**
+     * @param positive-int $pipelineNumber
+     */
     public function create(int $pipelineNumber): Pipeline
     {
         return new Pipeline($this->dispatcher, $pipelineNumber);

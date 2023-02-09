@@ -7,16 +7,21 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Exception\RuntimeException;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Process as SymfonyProcess;
 
-class SymfonyProcessWrapper extends AbstractParaunitProcess
+class SymfonyProcessWrapper implements Process
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(private readonly Process $process, string $filename)
-    {
-        parent::__construct($filename);
+    private bool $shouldBeRetried = false;
+
+    protected string $uniqueId;
+
+    private int $retryCount = 0;
+
+    public function __construct(
+        private readonly SymfonyProcess $process,
+        private readonly string $filename,
+    ) {
+        $this->uniqueId = md5($this->filename);
     }
 
     public function isTerminated(): bool
@@ -62,5 +67,36 @@ class SymfonyProcessWrapper extends AbstractParaunitProcess
     public function getCommandLine(): string
     {
         return $this->process->getCommandLine();
+    }
+
+    public function markAsToBeRetried(): void
+    {
+        ++$this->retryCount;
+        $this->shouldBeRetried = true;
+    }
+
+    public function getUniqueId(): string
+    {
+        return $this->uniqueId;
+    }
+
+    public function isToBeRetried(): bool
+    {
+        return $this->shouldBeRetried;
+    }
+
+    private function reset(): void
+    {
+        $this->shouldBeRetried = false;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    public function getRetryCount(): int
+    {
+        return $this->retryCount;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Runner;
 
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use PHPUnit\Util\Xml\Loader;
 
 class ChunkFile
@@ -77,7 +77,7 @@ class ChunkFile
         return $dirname . DIRECTORY_SEPARATOR . "{$baseName}_{$chunkNumber}.{$extension}";
     }
 
-    public function deleteChunkFile(AbstractParaunitProcess $process): void
+    public function deleteChunkFile(Process $process): void
     {
         $filename = $process->getFilename();
         if (file_exists($filename)) {

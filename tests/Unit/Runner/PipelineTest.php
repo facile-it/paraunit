@@ -6,7 +6,7 @@ namespace Tests\Unit\Runner;
 
 use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\Runner\Pipeline;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -19,7 +19,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
-        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process = $this->prophesize(Process::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
         $pipeline->execute($process->reveal());
@@ -33,7 +33,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
-        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process = $this->prophesize(Process::class);
         $pipeline = new Pipeline($eventDispatcher->reveal(), 5);
 
         $pipeline->execute($process->reveal());
@@ -60,7 +60,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::type(ProcessStarted::class))
             ->shouldBeCalledTimes(1);
-        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process = $this->prophesize(Process::class);
         $process->start(5)
             ->shouldBeCalledTimes(1);
         $process->isTerminated()
@@ -81,7 +81,7 @@ class PipelineTest extends BaseUnitTestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
             ->willReturnArgument(0);
-        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process = $this->prophesize(Process::class);
         $process->start(5)
             ->shouldBeCalledTimes(1);
         $process->isTerminated()
@@ -108,7 +108,7 @@ class PipelineTest extends BaseUnitTestCase
             ->shouldBeCalledTimes(1);
         $eventDispatcher->dispatch(Argument::type(ProcessTerminated::class))
             ->shouldNotBeCalled();
-        $process = $this->prophesize(AbstractParaunitProcess::class);
+        $process = $this->prophesize(Process::class);
         $process->start(5)
             ->shouldBeCalledTimes(1);
         $process->isTerminated()

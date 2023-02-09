@@ -6,7 +6,7 @@ namespace Paraunit\Logs\JSON;
 
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
@@ -37,7 +37,7 @@ class RetryParser
     /**
      * @param LogData[] $logs
      */
-    public function processWillBeRetried(AbstractParaunitProcess $process, array $logs): bool
+    public function processWillBeRetried(Process $process, array $logs): bool
     {
         if ($process->getRetryCount() >= $this->maxRetryCount) {
             return false;
@@ -47,7 +47,6 @@ class RetryParser
             if ($this->containsRetryableError($log)) {
                 $testResult = new TestResult($log->test, TestOutcome::Retry);
                 $this->testResultContainer->addTestResult($testResult);
-                $process->addTestResult($testResult);
                 $process->markAsToBeRetried();
 
                 return true;

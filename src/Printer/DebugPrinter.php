@@ -45,7 +45,6 @@ class DebugPrinter implements EventSubscriberInterface
 
         $this->output->writeln('');
         $this->output->writeln('PROCESS TERMINATED: ' . $process->getFilename());
-        $this->output->writeln(' - with class name: ' . ($process->getTestClassName() ?? 'N/A'));
         $this->output->writeln('');
         $this->output->writeln('PROCESS FULL OUTPUT:');
         $this->output->writeln('');

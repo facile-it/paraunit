@@ -11,7 +11,7 @@ use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\Pipeline;
@@ -216,7 +216,7 @@ class RunnerTest extends BaseUnitTestCase
     {
         $processFactory = $this->prophesize(ProcessFactoryInterface::class);
         $processFactory->create(Argument::containingString($ext))
-            ->willReturn($this->prophesize(AbstractParaunitProcess::class)->reveal());
+            ->willReturn($this->prophesize(Process::class)->reveal());
 
         return $processFactory->reveal();
     }

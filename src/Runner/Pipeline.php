@@ -6,20 +6,21 @@ namespace Paraunit\Runner;
 
 use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Pipeline
 {
-    private ?AbstractParaunitProcess $process = null;
+    private ?Process $process = null;
 
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher,
+        /** @var positive-int $number */
         private readonly int $number
     ) {
     }
 
-    public function execute(AbstractParaunitProcess $process): void
+    public function execute(Process $process): void
     {
         if (! $this->isFree()) {
             throw new \RuntimeException('This pipeline is not free');
@@ -65,7 +66,7 @@ class Pipeline
         return $this->number;
     }
 
-    public function getProcess(): ?AbstractParaunitProcess
+    public function getProcess(): ?Process
     {
         return $this->process;
     }

@@ -8,6 +8,8 @@ use Paraunit\Bin\Paraunit;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Logs\JSON\LogParser;
 use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Tests\BaseFunctionalTestCase;
@@ -125,16 +127,27 @@ class LogParserTest extends BaseFunctionalTestCase
 
     public function testParseHandlesMissingLogsAsAbnormalTerminations(): void
     {
-        /** @var LogParser $parser */
         $parser = $this->getService(LogParser::class);
         $process = new StubbedParaunitProcess();
-        $process->setExitCode(139);
+        $process->exitCode = 139;
 
         $parser->onProcessTerminated(new ProcessTerminated($process));
 
-        $results = $process->getTestResults();
-        $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
-        $this->assertCount(1, $results);
-        $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->status);
+        $testResultContainer = $this->getService(TestResultContainer::class);
+        foreach (TestIssue::cases() as $issue) {
+            $this->assertEmpty($testResultContainer->getTestResults($issue));
+        }
+        foreach (TestOutcome::cases() as $outcome) {
+            $results = $testResultContainer->getTestResults($outcome);
+
+            if ($outcome !== TestOutcome::AbnormalTermination) {
+                $this->assertEmpty($results);
+                continue;
+            }
+
+            $this->assertContainsOnlyInstancesOf(TestResult::class, $results);
+            $this->assertCount(1, $results);
+            $this->assertEquals(TestOutcome::AbnormalTermination, $results[0]->status);
+        }
     }
 }

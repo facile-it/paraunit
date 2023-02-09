@@ -13,7 +13,7 @@ use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactoryInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use RuntimeException;
@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Runner implements EventSubscriberInterface
 {
-    /** @var \SplQueue<AbstractParaunitProcess> */
+    /** @var \SplQueue<Process> */
     private readonly \SplQueue $queuedProcesses;
 
     private int $exitCode = 0;

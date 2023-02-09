@@ -4,38 +4,27 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 
-class StubbedParaunitProcess extends AbstractParaunitProcess
+class StubbedParaunitProcess implements Process
 {
-    private ?string $output = null;
+    public bool $shouldBeRetried = false;
 
-    private ?string $errorOutput = null;
+    public ?string $output = null;
 
-    private readonly string $commandLine;
+    public ?string $errorOutput = null;
 
-    private int $exitCode;
+    public int $exitCode = 0;
+
+    public int $retryCount = 0;
 
     /**
      * {@inheritdoc}
      */
     public function __construct(
-        string $filename = 'testFilename',
-        string $uniqueId = null
+        public string $filename = 'testFilename',
+        public string $uniqueId = 'fake-unique-id'
     ) {
-        parent::__construct($filename);
-
-        if (null !== $uniqueId) {
-            $this->uniqueId = $uniqueId;
-        }
-
-        $this->commandLine = 'phpunit /stub/test';
-        $this->exitCode = 0;
-    }
-
-    public function setFilename(string $filename): void
-    {
-        $this->filename = $filename;
     }
 
     public function setIsToBeRetried(bool $isToBeRetried): void
@@ -45,22 +34,7 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
 
     public function getCommandLine(): string
     {
-        return $this->commandLine;
-    }
-
-    public function setOutput(string $output): void
-    {
-        $this->output = $output;
-    }
-
-    public function setErrorOutput(string $errorOutput): void
-    {
-        $this->errorOutput = $errorOutput;
-    }
-
-    public function setExitCode(int $exitCode): void
-    {
-        $this->exitCode = $exitCode;
+        return 'phpunit /stub/test';
     }
 
     public function getOutput(): string
@@ -83,11 +57,37 @@ class StubbedParaunitProcess extends AbstractParaunitProcess
      */
     public function start(int $pipelineNumber): void
     {
-        $this->reset();
+        $this->shouldBeRetried = false;
     }
 
     public function getExitCode(): ?int
     {
         return $this->exitCode;
+    }
+
+    public function getUniqueId(): string
+    {
+        return $this->uniqueId;
+    }
+
+    public function isToBeRetried(): bool
+    {
+        return $this->shouldBeRetried;
+    }
+
+    public function markAsToBeRetried(): void
+    {
+        ++$this->retryCount;
+        $this->shouldBeRetried = true;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    public function getRetryCount(): int
+    {
+        return $this->retryCount;
     }
 }
