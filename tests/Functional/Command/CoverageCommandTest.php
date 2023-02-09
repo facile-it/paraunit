@@ -86,7 +86,7 @@ class CoverageCommandTest extends BaseTestCase
 
         $arguments = $this->prepareArguments([
             '--text' => null,
-            'stringFilter' => 'ParseError'
+            'stringFilter' => 'ParseError',
         ]);
         $exitCode = $commandTester->execute($arguments);
 

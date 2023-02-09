@@ -17,7 +17,6 @@ use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
