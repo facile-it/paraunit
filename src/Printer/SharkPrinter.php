@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Paraunit\Printer;
 
 use Paraunit\Bin\Paraunit;
-use Paraunit\Lifecycle\AbstractEvent;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,7 +18,7 @@ class SharkPrinter implements EventSubscriberInterface
     }
 
     /**
-     * @return array<class-string<AbstractEvent>, array{0: string, 1: int}>
+     * @return array<class-string, array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {

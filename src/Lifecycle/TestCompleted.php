@@ -8,7 +8,7 @@ use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 
-class TestCompleted extends AbstractEvent
+class TestCompleted
 {
     public function __construct(
         public readonly Test $test,
