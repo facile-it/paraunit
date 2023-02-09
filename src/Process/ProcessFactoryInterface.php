@@ -6,5 +6,5 @@ namespace Paraunit\Process;
 
 interface ProcessFactoryInterface
 {
-    public function create(string $testFilePath): AbstractParaunitProcess;
+    public function create(string $testFilePath): Process;
 }

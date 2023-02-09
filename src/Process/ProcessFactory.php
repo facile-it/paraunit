@@ -9,7 +9,7 @@ use Paraunit\Configuration\EnvVariables;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Process as SymfonyProcess;
 
 class ProcessFactory implements ProcessFactoryInterface
 {
@@ -45,7 +45,7 @@ class ProcessFactory implements ProcessFactoryInterface
         return 'coverage';
     }
 
-    public function create(string $testFilePath): AbstractParaunitProcess
+    public function create(string $testFilePath): Process
     {
         if ($this->chunkSize->isChunked()) {
             $command = array_merge(
@@ -60,7 +60,8 @@ class ProcessFactory implements ProcessFactoryInterface
                 $this->cliCommand->getSpecificOptions($testFilePath)
             );
         }
-        $process = new Process(
+
+        $process = new SymfonyProcess(
             $command,
             null,
             $this->environmentVariables

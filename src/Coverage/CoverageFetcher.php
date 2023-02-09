@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\Proxy\Coverage\FakeDriver;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Filter;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Process as SymfonyProcess;
 
 class CoverageFetcher
 {
@@ -18,7 +18,7 @@ class CoverageFetcher
     ) {
     }
 
-    public function fetch(AbstractParaunitProcess $process): CodeCoverage
+    public function fetch(Process $process): CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
         $codeCoverage = null;
@@ -46,7 +46,7 @@ class CoverageFetcher
         }
 
         try {
-            $verificationProcess = new Process(['php', '--syntax-check', $tempFilename]);
+            $verificationProcess = new SymfonyProcess(['php', '--syntax-check', $tempFilename]);
             $verificationProcess->run();
 
             return $verificationProcess->getExitCode() === 0;

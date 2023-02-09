@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 
 class PipelineCollection
 {
@@ -21,7 +21,7 @@ class PipelineCollection
     /**
      * @throws \RuntimeException
      */
-    public function push(AbstractParaunitProcess $process): Pipeline
+    public function push(Process $process): Pipeline
     {
         foreach ($this->pipelines as $pipeline) {
             if ($pipeline->isFree()) {
@@ -57,7 +57,7 @@ class PipelineCollection
     }
 
     /**
-     * @return array<int, AbstractParaunitProcess>
+     * @return array<int, Process>
      */
     public function getRunningProcesses(): array
     {

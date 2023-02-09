@@ -8,7 +8,7 @@ use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\TestWithAbnormalTermination;
 use Paraunit\TestResult\ValueObject\TestIssue;
@@ -44,7 +44,7 @@ final class LogHandler
         $this->actuallyFinishedTestCount = 0;
     }
 
-    public function processLog(AbstractParaunitProcess $process, LogData $log): void
+    public function processLog(Process $process, LogData $log): void
     {
         if ($log->status === LogStatus::Started) {
             $this->currentTest = $log->test;
@@ -87,7 +87,7 @@ final class LogHandler
         }
     }
 
-    private function handleLogEnding(AbstractParaunitProcess $process, LogData $log): void
+    private function handleLogEnding(Process $process, LogData $log): void
     {
         if ($process->getExitCode() === 0 && $this->actuallyPreparedTestCount === 0) {
             $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
@@ -107,11 +107,10 @@ final class LogHandler
         }
     }
 
-    public function processNoLogAvailable(AbstractParaunitProcess $process): void
+    public function processNoLogAvailable(Process $process): void
     {
         $testResult = new TestWithAbnormalTermination(new Test($process->getFilename()), $process);
 
-        $process->addTestResult($testResult);
         $this->testResultContainer->addTestResult($testResult);
         $this->dispatchOutcome(TestOutcome::AbnormalTermination);
     }

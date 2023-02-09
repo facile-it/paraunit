@@ -6,7 +6,7 @@ namespace Paraunit\Logs\JSON;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Logs\ValueObject\LogData;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 
 class LogFetcher
 {
@@ -17,7 +17,7 @@ class LogFetcher
     /**
      * @return list<LogData>
      */
-    public function fetch(AbstractParaunitProcess $process): array
+    public function fetch(Process $process): array
     {
         $filePath = $this->fileName->getFilenameForLog($process->getUniqueId());
 

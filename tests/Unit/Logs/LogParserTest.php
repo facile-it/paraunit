@@ -14,7 +14,7 @@ use Paraunit\Logs\JSON\RetryParser;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use Paraunit\TestResult\Interfaces\TestResultHandlerInterface;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -148,7 +148,7 @@ class LogParserTest extends BaseUnitTestCase
     private function mockNoTestExecutedContainer(bool $noTestExecuted): TestResultHandlerInterface
     {
         $noTestExecutedContainer = $this->prophesize(TestResultHandlerInterface::class);
-        $noTestExecutedContainer->addProcessToFilenames(Argument::type(AbstractParaunitProcess::class))
+        $noTestExecutedContainer->addProcessToFilenames(Argument::type(Process::class))
             ->shouldBeCalledTimes((int) $noTestExecuted);
 
         return $noTestExecutedContainer->reveal();

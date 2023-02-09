@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Coverage;
 
 use Paraunit\Lifecycle\ProcessParsingCompleted;
-use Paraunit\Process\AbstractParaunitProcess;
+use Paraunit\Process\Process;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -37,7 +37,7 @@ class CoverageMerger implements EventSubscriberInterface
         $this->merge($process);
     }
 
-    private function merge(AbstractParaunitProcess $process): void
+    private function merge(Process $process): void
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
