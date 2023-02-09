@@ -8,8 +8,7 @@
   </php>
   <testsuites>
     <testsuite name="unit">
-      <file>tests/Unit/Proxy/Coverage/FakeDriverTest.php</file>
-      <!--      <directory>tests/Unit</directory>-->
+      <directory>tests/Unit</directory>
     </testsuite>
     <testsuite name="functional">
       <directory>tests/Functional</directory>
