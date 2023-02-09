@@ -30,9 +30,4 @@ interface Process
     public function getFilename(): string;
 
     public function getRetryCount(): int;
-
-//    public function setWaitingForTestResult(bool $waitingForTestResult): void;
-//
-//
-//    public function isWaitingForTestResult(): bool;
 }
