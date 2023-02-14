@@ -43,7 +43,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
     }
 
     /**
-     * @return LogData
+     * @return LogData[]
      */
     protected function createLogsForOnePassedTest(): array
     {

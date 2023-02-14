@@ -8,7 +8,6 @@ use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Small;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
@@ -17,7 +16,6 @@ use Tests\Stub\StubbedParaunitProcess;
 #[Small]
 class PipelineCollectionTest extends BaseUnitTestCase
 {
-    #[DoesNotPerformAssertions]
     public function testInstantiation(): void
     {
         $pipelines = [

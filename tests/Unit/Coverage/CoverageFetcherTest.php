@@ -35,7 +35,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertSame(['foo' => 'bar'], $result->getTests());
+        $this->assertSame(['foo' => ['size' => '123', 'status' => 'bar']], $result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
@@ -64,7 +64,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
-        $tempFilenameFactory->getFilenameForCoverage('uniqueId')
+        $tempFilenameFactory->getFilenameForCoverage($process->getUniqueId())
             ->shouldBeCalled()
             ->willReturn($filename);
 

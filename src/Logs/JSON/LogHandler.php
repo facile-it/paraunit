@@ -32,6 +32,7 @@ class LogHandler
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TestResultContainer $testResultContainer,
     ) {
+        $this->currentTest = Test::unknown();
         $this->reset();
     }
 

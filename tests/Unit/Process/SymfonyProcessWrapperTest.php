@@ -7,7 +7,7 @@ namespace Tests\Unit\Process;
 use Paraunit\Configuration\EnvVariables;
 use Paraunit\Process\SymfonyProcessWrapper;
 use Prophecy\Argument;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Process as SymfonyProcess;
 use Tests\BaseUnitTestCase;
 
 class SymfonyProcessWrapperTest extends BaseUnitTestCase
@@ -22,7 +22,7 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
 
     public function testStart(): void
     {
-        $process = $this->prophesize(Process::class);
+        $process = $this->prophesize(SymfonyProcess::class);
         $process->start()
             ->shouldBeCalledTimes(1);
         $process->getEnv()
@@ -42,19 +42,8 @@ class SymfonyProcessWrapperTest extends BaseUnitTestCase
         $processWrapper->start(4);
     }
 
-    public function testAddTestResultShouldResetExpectingFlag(): void
+    private function mockProcess(): SymfonyProcess
     {
-        $process = new SymfonyProcessWrapper($this->mockProcess(), 'Test.php');
-        $process->setWaitingForTestResult(true);
-        $this->assertTrue($process->isWaitingForTestResult());
-
-        $process->addTestResult($this->mockPrintableTestResult());
-
-        $this->assertFalse($process->isWaitingForTestResult());
-    }
-
-    private function mockProcess(): Process
-    {
-        return $this->prophesize(Process::class)->reveal();
+        return $this->prophesize(SymfonyProcess::class)->reveal();
     }
 }
