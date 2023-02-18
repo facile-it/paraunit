@@ -65,6 +65,7 @@ class TestMethod extends Test
      *
      * @param T $property
      * @param mixed[] $data
+     *
      * @psalm-assert array{T: string, ...} $data
      */
     private static function assertPropertyIsString(string $property, array $data): void
