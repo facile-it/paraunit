@@ -11,6 +11,9 @@ use PHPUnit\Event\TestRunner\ExecutionStartedSubscriber;
 use PHPUnit\Event\TestSuite\TestSuiteForTestClass;
 use PHPUnit\Event\TestSuite\TestSuiteForTestMethodWithDataProvider;
 
+/**
+ * @template-extends AbstractTestHook<TestSuiteExecutionStarted>
+ */
 class ExecutionStarted extends AbstractTestHook implements ExecutionStartedSubscriber
 {
     public function notify(TestSuiteExecutionStarted $event): void

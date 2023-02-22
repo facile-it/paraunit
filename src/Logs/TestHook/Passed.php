@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\Passed as PassedEvent;
 use PHPUnit\Event\Test\PassedSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<PassedEvent>
+ */
 class Passed extends AbstractTestHook implements PassedSubscriber
 {
     public function notify(PassedEvent $event): void
