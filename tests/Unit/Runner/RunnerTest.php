@@ -12,7 +12,7 @@ use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\Process;
-use Paraunit\Process\ProcessFactoryInterface;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\Pipeline;
 use Paraunit\Runner\PipelineCollection;
@@ -212,9 +212,9 @@ class RunnerTest extends BaseUnitTestCase
         return $eventDispatcher->reveal();
     }
 
-    private function mockProcessFactory(string $ext = '.php'): ProcessFactoryInterface
+    private function mockProcessFactory(string $ext = '.php'): ProcessFactory
     {
-        $processFactory = $this->prophesize(ProcessFactoryInterface::class);
+        $processFactory = $this->prophesize(ProcessFactory::class);
         $processFactory->create(Argument::containingString($ext))
             ->willReturn($this->prophesize(Process::class)->reveal());
 

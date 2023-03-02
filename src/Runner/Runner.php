@@ -14,7 +14,7 @@ use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Process\Process;
-use Paraunit\Process\ProcessFactoryInterface;
+use Paraunit\Process\ProcessFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -28,7 +28,7 @@ class Runner implements EventSubscriberInterface
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly ProcessFactoryInterface $processFactory,
+        private readonly ProcessFactory $processFactory,
         private readonly Filter $filter,
         private readonly PipelineCollection $pipelineCollection,
         private readonly ChunkSize $chunkSize,

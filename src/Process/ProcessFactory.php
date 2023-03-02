@@ -11,7 +11,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
 use Symfony\Component\Process\Process as SymfonyProcess;
 
-class ProcessFactory implements ProcessFactoryInterface
+class ProcessFactory
 {
     /** @var string[] */
     private readonly array $baseCommandLine;

@@ -12,8 +12,9 @@ class ChunkFile
 {
     private readonly Loader $xmlLoader;
 
-    public function __construct(private readonly PHPUnitConfig $phpunitConfig)
-    {
+    public function __construct(
+        private readonly PHPUnitConfig $phpunitConfig,
+    ) {
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
     }
@@ -63,7 +64,10 @@ class ChunkFile
         }
 
         $chunkFileName = $this->getChunkFileName($fileFullPath, $chunkNumber);
-        $document->save($chunkFileName);
+        $save = $document->save($chunkFileName);
+        if (false === $save) {
+            throw new \RuntimeException('Unable to write chunk configuration file');
+        }
 
         return $chunkFileName;
     }

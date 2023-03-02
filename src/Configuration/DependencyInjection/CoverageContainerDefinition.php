@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Paraunit\Configuration\DependencyInjection;
 
-use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Process\ProcessFactory;
-use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -44,13 +40,8 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
     {
         $container->autowire(CommandLineWithCoverage::class);
 
-        $container->autowire(ProcessFactoryInterface::class, ProcessFactory::class)
-            ->setArguments([
-                new Reference(CommandLineWithCoverage::class),
-                new Reference(PHPUnitConfig::class),
-                new Reference(TempFilenameFactory::class),
-                new Reference(ChunkSize::class),
-            ]);
+        $container->autowire(ProcessFactory::class)
+            ->setArgument('$cliCommand', new Reference(CommandLineWithCoverage::class));
     }
 
     private function configureCoverage(ContainerBuilder $container): void
