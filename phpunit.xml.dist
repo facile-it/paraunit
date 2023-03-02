@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" cacheResult="false" colors="true" bootstrap="vendor/autoload.php" failOnWarning="true" failOnRisky="true" timeoutForSmallTests="1" timeoutForMediumTests="5" timeoutForLargeTests="10" beStrictAboutOutputDuringTests="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" 
+         backupGlobals="false"
+         cacheResult="false"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         timeoutForSmallTests="1"
+         timeoutForMediumTests="5"
+         timeoutForLargeTests="10"
+         beStrictAboutOutputDuringTests="true"
+>
   <php>
     <ini name="error_reporting" value="-1"/>
     <ini name="intl.default_locale" value="en"/>

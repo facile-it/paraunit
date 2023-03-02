@@ -1,0 +1,198 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Functional\Configuration;
+
+use Paraunit\Command\CoverageCommand;
+use Paraunit\Configuration\CoverageConfiguration;
+use Paraunit\Configuration\PassThrough;
+use PHPUnit\Event\Code\Test;
+use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Event\Facade;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\TextUI\Help;
+use Symfony\Component\Console\Input\InputOption;
+use Tests\BaseFunctionalTestCase;
+
+class PassThroughTest extends BaseFunctionalTestCase
+{
+    #[DataProvider('disallowedOptionsDataProvider')]
+    public function testDisallowedOptions(string $disallowedOption): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage($disallowedOption);
+
+        new PassThrough([$disallowedOption]);
+    }
+
+    public function testWarnAboutNewUnsupportedOptions(): void
+    {
+        $remaining = array_values(array_diff(
+            $this->getAllPHPUnitOptions(),
+            array_map(static fn (array $value): string => $value[0], self::allowedOptionsDataProvider()),
+            array_map(static fn (array $value): string => $value[0], self::disallowedOptionsDataProvider()),
+            $this->getAlreadySupportedOptions(),
+            $this->getPossibleFutureOptions(),
+        ));
+
+        if ($remaining !== []) {
+            Facade::emitter()->testTriggeredWarning(
+                TestMethod::fromTestCase($this),
+                count($remaining) . ' unhandled new PHPUnit options: ' . print_r($remaining, true),
+                __FILE__,
+                __LINE__
+            );
+        }
+    }
+
+    public function testAvoidOverlaps(): void
+    {
+        $overlapFutureOptions = array_intersect(
+            $this->getAlreadySupportedOptions(),
+            $this->getPossibleFutureOptions(),
+        );
+
+        $this->assertEmpty($overlapFutureOptions, 'Future option has been implemented: ' . print_r($overlapFutureOptions, true));
+    }
+
+    /**
+     * @return non-empty-list<string>
+     */
+    private function getAllPHPUnitOptions(): array
+    {
+        $helpText = (new Help(null, false))->generate();
+        preg_match_all('/--[\w-]+/', $helpText, $options);
+        $this->assertNotEmpty($options);
+
+        return $options[0];
+    }
+
+    /**
+     * @return non-empty-list<string>
+     */
+    private function getAlreadySupportedOptions(): array
+    {
+        $coverageCommand = new CoverageCommand($this->prophesize(CoverageConfiguration::class)->reveal());
+
+        $supportedOptions = array_map(
+            static fn (InputOption $option): string => '--' . $option->getName(),
+            $coverageCommand->getDefinition()->getOptions(),
+        );
+
+        $supportedOptions[] = '--help';
+        $supportedOptions[] = '--version';
+        // TODO - map coverage modes automatically
+        $supportedOptions[] = '--coverage-clover';
+        $supportedOptions[] = '--coverage-html';
+        $supportedOptions[] = '--coverage-xml';
+        $supportedOptions[] = '--coverage-text';
+        $supportedOptions[] = '--coverage-crap4j';
+
+        return array_values($supportedOptions);
+    }
+
+    /**
+     * @return array{string}[]
+     */
+    public static function disallowedOptionsDataProvider(): array
+    {
+        return [
+            // should be impossible? Paraunit can't identify tests in this way
+            ['--no-configuration'],
+            // Paraunit breaks if you use these
+            ['--no-extensions'],
+            ['--no-logging'],
+            ['--coverage-php'],
+            // not useful - they do not produce meaningful changes
+            ['--teamcity'],
+            ['--testdox'],
+            // not useful - they skip test execution
+            ['--atleast-version'],
+            ['--check-version'],
+            ['--generate-configuration'],
+            ['--migrate-configuration'],
+            ['--list-suites'],
+            ['--list-groups'],
+            ['--list-tests'],
+            ['--list-tests-xml'],
+        ];
+    }
+
+    /**
+     * @return array{0: string, 1?: string}[]
+     */
+    public static function allowedOptionsDataProvider(): array
+    {
+        return [
+            ['--bootstrap', '<file>'],
+            ['--include-path <path(s)>'],
+            ['-d <key[=value]>'],
+            ['--cache-directory', '<dir>'],
+            ['--testsuite', '<name>'],
+            ['--group', '<name>'],
+            ['--exclude-group', '<name>'],
+            ['--covers', '<name>'],
+            ['--uses', '<name>'],
+            ['--process-isolation'],
+            ['--globals-backup'],
+            ['--static-backup'],
+            ['--strict-coverage'],
+            ['--strict-global-state'],
+            ['--disallow-test-output'],
+            ['--enforce-time-limit'],
+            ['--default-time-limit', '<sec>'],
+            ['--cache-result'],
+            ['--do-not-cache-result'],
+            ['--colors', '<flag>'],
+            ['--stderr'],
+            ['--no-progress'],
+            ['--no-output'],
+            ['--log-junit', '<file>'],
+            ['--log-teamcity', '<file>'],
+            ['--testdox-html', '<file>'],
+            ['--testdox-text', '<file>'],
+            ['--log-events-text', '<file>'],
+            ['--log-events-verbose-text', '<file>'],
+            ['--coverage-filter', '<filter>'],
+            ['--path-coverage'],
+            // TODO - add dedicated tests?
+            ['--fail-on-incomplete'],
+            ['--fail-on-risky'],
+            ['--fail-on-skipped'],
+            ['--fail-on-warning'],
+            ['--dont-report-useless-tests'],
+        ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function getPossibleFutureOptions(): array
+    {
+        return [
+            '--coverage-cobertura',
+            '--exclude-testsuite',
+            '--test-suffix',
+            '--columns',
+            '--display-incomplete',
+            '--display-skipped',
+            '--display-deprecations',
+            '--display-errors',
+            '--display-notices',
+            '--display-warnings',
+            '--reverse-list',
+            '--no-results',
+            '--stop-on-defect',
+            '--stop-on-error',
+            '--stop-on-failure',
+            '--stop-on-warning',
+            '--stop-on-risky',
+            '--stop-on-skipped',
+            '--stop-on-incomplete',
+            '--warm-coverage-cache',
+            '--order-by',
+            '--random-order-seed',
+        ];
+    }
+}
