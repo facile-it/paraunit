@@ -6,6 +6,7 @@ namespace Paraunit\Process;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\EnvVariables;
+use Paraunit\Configuration\PassThrough;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
@@ -23,7 +24,8 @@ class ProcessFactory
         private readonly CommandLine $cliCommand,
         PHPUnitConfig $phpunitConfig,
         TempFilenameFactory $tempFilenameFactory,
-        private readonly ChunkSize $chunkSize
+        private readonly ChunkSize $chunkSize,
+        private readonly PassThrough $passThrough,
     ) {
         $this->baseCommandLine = array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($phpunitConfig));
         $this->environmentVariables = [
@@ -57,6 +59,7 @@ class ProcessFactory
             $command = array_merge(
                 $this->baseCommandLine,
                 [$testFilePath],
+                $this->passThrough->options,
                 $this->cliCommand->getSpecificOptions($testFilePath)
             );
         }

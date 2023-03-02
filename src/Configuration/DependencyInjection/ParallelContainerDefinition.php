@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\ChunkSize;
+use Paraunit\Configuration\PassThrough;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
@@ -101,6 +102,9 @@ class ParallelContainerDefinition
 
         $container->autowire(ChunkSize::class)
             ->setArgument('$chunkSize', '%paraunit.chunk_size%');
+
+        $container->register(PassThrough::class)
+            ->setArguments(['%paraunit.pass_through%']);
     }
 
     private function configureEventDispatcher(ContainerBuilder $container): void
