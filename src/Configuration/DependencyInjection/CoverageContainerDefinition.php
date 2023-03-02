@@ -6,7 +6,6 @@ namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
-use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
@@ -14,11 +13,11 @@ use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Process\CommandLineWithCoverage;
+use Paraunit\Process\ProcessFactory;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class CoverageContainerDefinition extends ParallelContainerDefinition
@@ -36,23 +35,16 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
 
     private function configureCoverageConfiguration(ContainerBuilder $container): void
     {
-        $container->setDefinition(PHPDbgBinFile::class, new Definition(PHPDbgBinFile::class));
-        $container->setDefinition(XDebugProxy::class, new Definition(XDebugProxy::class));
-        $container->setDefinition(PcovProxy::class, new Definition(PcovProxy::class));
+        $container->autowire(PHPDbgBinFile::class);
+        $container->autowire(XDebugProxy::class);
+        $container->autowire(PcovProxy::class);
     }
 
     private function configureProcessWithCoverage(ContainerBuilder $container): void
     {
-        $container->setDefinition(CommandLineWithCoverage::class, new Definition(CommandLineWithCoverage::class, [
-            new Reference(PHPUnitBinFile::class),
-            new Reference(ChunkSize::class),
-            new Reference(PcovProxy::class),
-            new Reference(XDebugProxy::class),
-            new Reference(PHPDbgBinFile::class),
-            new Reference(TempFilenameFactory::class),
-        ]));
+        $container->autowire(CommandLineWithCoverage::class);
 
-        $container->getDefinition(ProcessFactoryInterface::class)
+        $container->autowire(ProcessFactoryInterface::class, ProcessFactory::class)
             ->setArguments([
                 new Reference(CommandLineWithCoverage::class),
                 new Reference(PHPUnitConfig::class),

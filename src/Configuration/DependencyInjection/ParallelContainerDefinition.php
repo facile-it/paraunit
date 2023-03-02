@@ -30,7 +30,6 @@ use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -63,23 +62,19 @@ class ParallelContainerDefinition
 
     private function configureConfiguration(ContainerBuilder $container): void
     {
-        $container->setDefinition(PHPUnitBinFile::class, new Definition(PHPUnitBinFile::class));
-        $container->setDefinition(PHPUnitConfig::class, new Definition(PHPUnitConfig::class, [
-            '%paraunit.phpunit_config_filename%',
-        ]))
+        $container->autowire(PHPUnitBinFile::class);
+        $container->autowire(PHPUnitConfig::class)
+            ->setArgument('$inputPathOrFileName', '%paraunit.phpunit_config_filename%')
             ->setPublic(true);
-        $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
-            new Reference(TempDirectory::class),
-        ]));
-        $container->setDefinition(ChunkSize::class, new Definition(ChunkSize::class, [
-            '%paraunit.chunk_size%',
-        ]));
+
+        $container->autowire(TempFilenameFactory::class);
+        $container->autowire(ChunkSize::class)
+            ->setArgument('$chunkSize', '%paraunit.chunk_size%');
     }
 
     private function configureEventDispatcher(ContainerBuilder $container): void
     {
-        $dispatcher = new Definition(EventDispatcher::class);
-        $container->setDefinition(SymfonyEventDispatcherInterface::class, $dispatcher);
+        $container->autowire(SymfonyEventDispatcherInterface::class, EventDispatcher::class);
         $container->setAlias('event_dispatcher', SymfonyEventDispatcherInterface::class);
         $container->setAlias(PsrEventDispatcherInterface::class, SymfonyEventDispatcherInterface::class);
 
@@ -88,82 +83,41 @@ class ParallelContainerDefinition
 
     private function configureFile(ContainerBuilder $container): void
     {
-        $container->setDefinition(TempDirectory::class, new Definition(TempDirectory::class));
-        $container->setDefinition(Cleaner::class, new Definition(Cleaner::class, [
-            new Reference(TempDirectory::class),
-        ]));
+        $container->autowire(TempDirectory::class);
+        $container->autowire(Cleaner::class);
     }
 
     private function configurePrinter(ContainerBuilder $container): void
     {
         $container->autowire(TestResultContainer::class);
 
-        $container->setDefinition(SharkPrinter::class, new Definition(SharkPrinter::class, [
-            new Reference(OutputInterface::class),
-            '%paraunit.show_logo%',
-        ]));
-        $container->setDefinition(ProgressPrinter::class, new Definition(ProgressPrinter::class, [
-            new Reference(OutputInterface::class),
-        ]));
+        $container->autowire(SharkPrinter::class)
+            ->setArgument('$showLogo', '%paraunit.show_logo%');
 
-        $container->setDefinition(FinalPrinter::class, new Definition(FinalPrinter::class, [
-            new Reference(OutputInterface::class),
-            new Reference(ChunkSize::class),
-        ]));
+        $container->autowire(ProgressPrinter::class);
+        $container->autowire(FinalPrinter::class);
+        $container->autowire(FailuresPrinter::class);
+        $container->autowire(FilesRecapPrinter::class);
 
-        $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, [
-            new Reference(OutputInterface::class),
-            new Reference(TestResultContainer::class),
-        ]));
-
-        $container->setDefinition(FilesRecapPrinter::class, new Definition(FilesRecapPrinter::class, [
-            new Reference(OutputInterface::class),
-            new Reference(TestResultContainer::class),
-            new Reference(ChunkSize::class),
-        ]));
-
-        $container->setDefinition(ConsoleFormatter::class, new Definition(ConsoleFormatter::class, [
-            (new Definition(OutputFormatterInterface::class))->setFactory([new Reference(OutputInterface::class), 'getFormatter']),
-        ]));
+        $container->autowire(ConsoleFormatter::class);
+        $container->autowire(OutputFormatterInterface::class)
+            ->setFactory([new Reference(OutputInterface::class), 'getFormatter']);
     }
 
     private function configureProcess(ContainerBuilder $container): void
     {
-        $container->setDefinition(CommandLine::class, new Definition(CommandLine::class, [
-            new Reference(PHPUnitBinFile::class),
-            new Reference(ChunkSize::class),
-        ]));
-
-        $container->setDefinition(ProcessFactoryInterface::class, new Definition(ProcessFactory::class, [
-            new Reference(CommandLine::class),
-            new Reference(PHPUnitConfig::class),
-            new Reference(TempFilenameFactory::class),
-            new Reference(ChunkSize::class),
-        ]));
+        $container->autowire(CommandLine::class);
+        $container->autowire(ProcessFactoryInterface::class, ProcessFactory::class);
     }
 
     private function configureRunner(ContainerBuilder $container): void
     {
-        $container->setDefinition(PipelineFactory::class, new Definition(PipelineFactory::class, [
-            new Reference(PsrEventDispatcherInterface::class),
-        ]));
-        $container->setDefinition(PipelineCollection::class, new Definition(PipelineCollection::class, [
-            new Reference(PipelineFactory::class),
-            '%paraunit.max_process_count%',
-        ]));
-        $container->setDefinition(Runner::class, new Definition(Runner::class, [
-            new Reference(PsrEventDispatcherInterface::class),
-            new Reference(ProcessFactoryInterface::class),
-            new Reference(Filter::class),
-            new Reference(PipelineCollection::class),
-            new Reference(ChunkSize::class),
-            new Reference(ChunkFile::class),
-        ]))
+        $container->autowire(PipelineFactory::class);
+        $container->autowire(PipelineCollection::class)
+            ->setArgument('$maxProcessNumber', '%paraunit.max_process_count%');
+        $container->autowire(Runner::class)
             ->setPublic(true);
-
-        $container->setDefinition(ChunkFile::class, new Definition(ChunkFile::class, [
-            new Reference(PHPUnitConfig::class),
-        ]));
+        $container->autowire(ChunkFile::class);
     }
 
     private function configureServices(ContainerBuilder $container): void
@@ -171,12 +125,10 @@ class ParallelContainerDefinition
         $container->register(OutputInterface::class, OutputInterface::class)
             ->setPublic(true)
             ->setSynthetic(true);
-        $container->setDefinition(Facade::class, new Definition(Facade::class));
-        $container->setDefinition(Filter::class, new Definition(Filter::class, [
-            new Reference(Facade::class),
-            new Reference(PHPUnitConfig::class),
-            '%paraunit.testsuite%',
-            '%paraunit.string_filter%',
-        ]));
+
+        $container->autowire(Facade::class);
+        $container->autowire(Filter::class)
+            ->setArgument('$testSuiteFilter', '%paraunit.testsuite%')
+            ->setArgument('$stringFilter', '%paraunit.string_filter%');
     }
 }

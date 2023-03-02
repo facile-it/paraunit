@@ -12,9 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParallelConfiguration
@@ -80,10 +78,8 @@ class ParallelConfiguration
 
     private function enableDebugMode(ContainerBuilder $containerBuilder): void
     {
-        $definition = new Definition(DebugPrinter::class, [new Reference(OutputInterface::class)]);
-        $definition->addTag(self::TAG_EVENT_SUBSCRIBER);
-
-        $containerBuilder->setDefinition(DebugPrinter::class, $definition);
+        $containerBuilder->autowire(DebugPrinter::class)
+            ->addTag(self::TAG_EVENT_SUBSCRIBER);
     }
 
     private function createPublicAliases(ContainerBuilder $containerBuilder): void
