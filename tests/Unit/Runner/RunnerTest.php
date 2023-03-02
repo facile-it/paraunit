@@ -129,7 +129,7 @@ class RunnerTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
         $process->setIsToBeRetried(false);
-        $process->setExitCode(1);
+        $process->exitCode = 1;
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())
@@ -162,7 +162,7 @@ class RunnerTest extends BaseUnitTestCase
     {
         $process = new StubbedParaunitProcess();
         $process->setIsToBeRetried(true);
-        $process->setExitCode(1);
+        $process->exitCode = 1;
 
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher->dispatch(Argument::cetera())

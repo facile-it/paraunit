@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\Prepared;
 use PHPUnit\Event\Test\PreparedSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<Prepared>
+ */
 class TestPrepared extends AbstractTestHook implements PreparedSubscriber
 {
     public function notify(Prepared $event): void

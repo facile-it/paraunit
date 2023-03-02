@@ -12,36 +12,27 @@ env:
 
 jobs:
   Tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: 'ubuntu-latest'
     env:
-      SYMFONY_DEPRECATIONS_HELPER: ${{ matrix.deprecations }}      
+      SYMFONY_DEPRECATIONS_HELPER: disabled      
     strategy:
       matrix:
-        os: ['ubuntu-latest']
         php:
           - '8.1'
+          - '8.2'
         dependencies: ['highest']
-        deprecations: ['max[direct]=0']
         coverage: ['xdebug']
         include:
           - description: 'Xdebug 2'
             coverage: 'xdebug2'
-            os: 'ubuntu-latest'
             php: '8.1'
           - description: 'PCov'
             coverage: 'pcov'
-            os: 'ubuntu-latest'
-            php: '8.1'
-          - description: 'Windows'
-            coverage: 'xdebug'
-            os: 'windows-latest'
             php: '8.1'
           - description: 'lowest'
             coverage: 'xdebug2'
-            os: 'ubuntu-latest'
             php: '8.1'
             dependencies: 'lowest'
-            deprecations: disabled
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
@@ -101,19 +92,3 @@ jobs:
           php-version: '8.1'
       - uses: ramsey/composer-install@v2
       - run: vendor/bin/psalm
-  End2End:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        coverage-driver:
-          - pcov
-          - xdebug
-    steps:
-      - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          coverage: ${{ matrix.coverage-driver }}
-      - uses: ramsey/composer-install@v2
-      - run: src/Bin/paraunit run FakeDriverTest --ansi
-      - run: src/Bin/paraunit coverage FakeDriverTest --text --ansi

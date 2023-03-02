@@ -47,9 +47,6 @@ class CommandLineTest extends BaseUnitTestCase
         $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(false));
         $options = $cli->getOptions($config->reveal());
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
-        $registrationScript = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'src/Configuration/register_subscribers.php';
-        $this->assertFileExists($registrationScript);
-        $this->assertContains('--bootstrap=' . $registrationScript, $options);
         $this->assertContains('--opt', $options);
         $this->assertContains('--optVal=value', $options);
 

@@ -24,6 +24,8 @@ use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Process\ProcessFactoryInterface;
 use Paraunit\Runner\Runner;
+use Paraunit\TestResult\TestResultContainer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -75,8 +77,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             ProcessFactoryInterface::class,
             Runner::class,
             EventDispatcherInterface::class,
-            'paraunit.test_result.success_container',
-            'paraunit.test_result.success_format',
+            TestResultContainer::class,
 
             CoverageFetcher::class,
             CoverageMerger::class,
@@ -113,9 +114,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
     }
 
-    /**
-     * @dataProvider cliOptionsProvider
-     */
+    #[DataProvider('cliOptionsProvider')]
     public function testBuildContainerWithCoverageSettings(string $inputOption, string $processorClass): void
     {
         $paraunit = new CoverageConfiguration(true);

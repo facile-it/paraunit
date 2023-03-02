@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\ConsideredRisky;
 use PHPUnit\Event\Test\ConsideredRiskySubscriber;
 
+/**
+ * @template-extends AbstractTestHook<ConsideredRisky>
+ */
 class Risky extends AbstractTestHook implements ConsideredRiskySubscriber
 {
     public function notify(ConsideredRisky $event): void

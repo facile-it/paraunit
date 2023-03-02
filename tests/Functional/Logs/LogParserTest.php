@@ -12,14 +12,13 @@ use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseFunctionalTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
 class LogParserTest extends BaseFunctionalTestCase
 {
-    /**
-     * @dataProvider genericStubFilenameProvider
-     */
+    #[DataProvider('genericStubFilenameProvider')]
     public function testLogParsingAgainstStubs(string $textFilter, int $expectedExitCode, string $expectedOutput): void
     {
         $expectedCount = strlen($expectedOutput);

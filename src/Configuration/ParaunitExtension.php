@@ -10,6 +10,8 @@ use Paraunit\Logs\TestHook\ExecutionStarted;
 use Paraunit\Logs\TestHook\Failure;
 use Paraunit\Logs\TestHook\Incomplete;
 use Paraunit\Logs\TestHook\Passed;
+use Paraunit\Logs\TestHook\PhpDeprecation;
+use Paraunit\Logs\TestHook\PhpUnitDeprecation;
 use Paraunit\Logs\TestHook\PhpUnitWarning;
 use Paraunit\Logs\TestHook\PhpWarning;
 use Paraunit\Logs\TestHook\Risky;
@@ -40,6 +42,8 @@ class ParaunitExtension implements Extension
             new Incomplete(),
             new Risky(),
             new Deprecation(),
+            new PhpDeprecation(),
+            new PhpUnitDeprecation(),
             new Skipped(),
             new Passed(),
             new PhpWarning(),

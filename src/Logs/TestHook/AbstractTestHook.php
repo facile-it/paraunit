@@ -9,7 +9,11 @@ use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Code\Throwable;
+use PHPUnit\Event\Event;
 
+/**
+ * @template E of Event
+ */
 abstract class AbstractTestHook
 {
     /** @var resource */

@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\PhpunitWarningTriggered;
 use PHPUnit\Event\Test\PhpunitWarningTriggeredSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<PhpunitWarningTriggered>
+ */
 class PhpUnitWarning extends AbstractTestHook implements PhpunitWarningTriggeredSubscriber
 {
     public function notify(PhpunitWarningTriggered $event): void

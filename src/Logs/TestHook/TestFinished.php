@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<Finished>
+ */
 class TestFinished extends AbstractTestHook implements FinishedSubscriber
 {
     public function notify(Finished $event): void

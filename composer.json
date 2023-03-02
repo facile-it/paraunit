@@ -41,15 +41,16 @@
         "facile-it/facile-coding-standard": "^0.5.1",
         "jangregor/phpstan-prophecy": "^1.0.0",
         "phpspec/prophecy": "dev-allow-sebastian-comparator-5 as 1.15",
-        "phpspec/prophecy-phpunit": "dev-phpunit-10-support",
+        "phpspec/prophecy-phpunit": "dev-phpunit-10.0-support#459dde0071709a16c8e7b5fa1801c0441aa6e830",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^1.7",
+        "phpstan/phpstan": "~1.9.18",
         "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^4.0",
         "psalm/plugin-phpunit": "^0.18",
         "psalm/plugin-symfony": "^5.0",
         "rector/rector": "^0.15",
         "symfony/expression-language": "^4.4||^5.0||^6.0",
+        "symfony/phpunit-bridge": "^6.2",
         "vimeo/psalm": "^5.5.0"
     },
     "conflict": {

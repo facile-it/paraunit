@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<Failed>
+ */
 class Failure extends AbstractTestHook implements FailedSubscriber
 {
     public function notify(Failed $event): void

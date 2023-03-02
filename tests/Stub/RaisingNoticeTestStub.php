@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RaisingNoticeTestStub extends TestCase
 {
-    /**
-     * @dataProvider errorProvider
-     */
+    #[DataProvider('errorProvider')]
     public function testRaise(string $errorMessage, int $errorLevel): never
     {
         trigger_error($errorMessage, $errorLevel);

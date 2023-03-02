@@ -6,15 +6,14 @@ namespace Tests\Unit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use Paraunit\Coverage\Processor\Text;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tests\BaseUnitTestCase;
 
 class TextTest extends BaseUnitTestCase
 {
-    /**
-     * @dataProvider colorProvider
-     */
+    #[DataProvider('colorProvider')]
     public function testWriteToFile(bool $withColors, string $expectedString): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coverage.txt');
@@ -35,9 +34,7 @@ class TextTest extends BaseUnitTestCase
         $this->assertStringContainsString($expectedString, $content);
     }
 
-    /**
-     * @dataProvider colorProvider
-     */
+    #[DataProvider('colorProvider')]
     public function testWriteToOutput(bool $withColors, string $expectedString): void
     {
         $output = $this->prophesize(OutputInterface::class);

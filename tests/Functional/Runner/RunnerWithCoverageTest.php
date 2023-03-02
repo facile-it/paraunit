@@ -6,11 +6,10 @@ namespace Tests\Functional\Runner;
 
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Runner\Runner;
+use PHPUnit\Framework\Attributes\Medium;
 use Tests\BaseIntegrationTestCase;
 
-/**
- * @medium
- */
+#[Medium]
 class RunnerWithCoverageTest extends BaseIntegrationTestCase
 {
     public function testAllGreen(): void

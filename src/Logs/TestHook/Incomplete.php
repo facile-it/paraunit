@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\MarkedIncomplete;
 use PHPUnit\Event\Test\MarkedIncompleteSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<MarkedIncomplete>
+ */
 class Incomplete extends AbstractTestHook implements MarkedIncompleteSubscriber
 {
     public function notify(MarkedIncomplete $event): void

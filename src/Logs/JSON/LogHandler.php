@@ -16,7 +16,7 @@ use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class LogHandler
+class LogHandler
 {
     private Test $currentTest;
 
@@ -32,6 +32,7 @@ final class LogHandler
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TestResultContainer $testResultContainer,
     ) {
+        $this->currentTest = Test::unknown();
         $this->reset();
     }
 

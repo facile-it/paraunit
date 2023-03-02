@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Printer;
 
 use Paraunit\Configuration\ChunkSize;
+use Paraunit\Logs\ValueObject\TestMethod;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\TestResult\TestResultContainer;
-use Paraunit\TestResult\TestResultFormat;
-use Paraunit\TestResult\TestResultList;
+use Paraunit\TestResult\ValueObject\TestOutcome;
+use Paraunit\TestResult\ValueObject\TestResult;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\UnformattedOutputStub;
 
@@ -23,33 +25,24 @@ class FilesRecapPrinterTest extends BaseUnitTestCase
             ->willReturn(true);
 
         $testResultContainer = $this->prophesize(TestResultContainer::class);
-        $testResultContainer->countTestResults()
-            ->willReturn(3);
-        $testResultContainer->getTestResults()
-            ->willReturn([$this->mockTestResult()]);
+        $testResultContainer->getTestResults(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getTestResults(TestOutcome::Failure)
+            ->willReturn([
+                new TestResult(new TestMethod('FooTest', 'test1'), TestOutcome::Failure),
+                new TestResult(new TestMethod('FooTest', 'test2'), TestOutcome::Failure),
+                new TestResult(new TestMethod('FooTest', 'test3'), TestOutcome::Failure),
+            ]);
 
-        $testResultFormat = $this->prophesize(TestResultFormat::class);
-        $testResultFormat->getTag()
-            ->willReturn('tag');
-        $testResultFormat->getTitle()
-            ->willReturn('title');
-        $testResultFormat->shouldPrintFilesRecap()
-            ->shouldBeCalled()
-            ->willReturn(true);
+        $testResultContainer->getFileNames(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getFileNames(TestOutcome::Failure)
+            ->willReturn(['FooTest.php']);
 
-        $testResultContainer->getTestResultFormat()
-            ->willReturn($testResultFormat->reveal());
-        $testResultContainer->getFileNames()
-            ->willReturn(['Test.php']);
-
-        $testResultList = $this->prophesize(TestResultList::class);
-        $testResultList->getTestResultContainers()
-            ->willReturn([$testResultContainer->reveal()]);
-
-        $printer = new FilesRecapPrinter($testResultList->reveal(), $output, $chunkSize->reveal());
+        $printer = new FilesRecapPrinter($output, $testResultContainer->reveal(), $chunkSize->reveal());
 
         $printer->onEngineEnd();
 
-        $this->assertStringContainsString('1 chunks with TITLE:', $output->getOutput());
+        $this->assertStringContainsString('1 chunks with FAILURES:', $output->getOutput());
     }
 }

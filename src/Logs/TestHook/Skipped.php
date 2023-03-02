@@ -9,6 +9,9 @@ use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Test\Skipped as PHPUnitSkipped;
 use PHPUnit\Event\Test\SkippedSubscriber;
 
+/**
+ * @template-extends AbstractTestHook<PHPUnitSkipped>
+ */
 class Skipped extends AbstractTestHook implements SkippedSubscriber
 {
     public function notify(PHPUnitSkipped $event): void

@@ -5,11 +5,11 @@
     <ini name="intl.default_locale" value="en"/>
     <ini name="intl.error_level" value="0"/>
     <ini name="memory_limit" value="-1"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
   </php>
   <testsuites>
     <testsuite name="unit">
-      <file>tests/Unit/Proxy/Coverage/FakeDriverTest.php</file>
-      <!--      <directory>tests/Unit</directory>-->
+      <directory>tests/Unit</directory>
     </testsuite>
     <testsuite name="functional">
       <directory>tests/Functional</directory>

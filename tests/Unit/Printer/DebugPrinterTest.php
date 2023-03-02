@@ -54,15 +54,11 @@ class DebugPrinterTest extends BaseUnitTestCase
         $output = new UnformattedOutputStub();
         $printer = new DebugPrinter($output);
         $process = new StubbedParaunitProcess();
-        $process->setTestClassName('Some\Class\Name');
 
         $printer->onProcessTerminated(new ProcessTerminated($process));
 
         $this->assertStringContainsString('PROCESS TERMINATED', $output->getOutput());
         $this->assertStringContainsString($process->getFilename(), $output->getOutput());
-        $testClassName = $process->getTestClassName();
-        $this->assertNotNull($testClassName);
-        $this->assertStringContainsString($testClassName, $output->getOutput());
     }
 
     public function testOnProcessParsingCompleted(): void

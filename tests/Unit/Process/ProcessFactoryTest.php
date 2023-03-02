@@ -13,6 +13,7 @@ use Paraunit\Process\CommandLine;
 use Paraunit\Process\CommandLineWithCoverage;
 use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
 
 class ProcessFactoryTest extends BaseUnitTestCase
@@ -61,9 +62,7 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
     }
 
-    /**
-     * @dataProvider coverageDriverDataProvider
-     */
+    #[DataProvider('coverageDriverDataProvider')]
     public function testCreateProcessWithCoverageDriver(CoverageDriver $coverageDriver, string $expectedXdebugMode): void
     {
         $phpUnitConfig = $this->prophesize(PHPUnitConfig::class);

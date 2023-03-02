@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Stub;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RaisingDeprecationTestStub extends TestCase
 {
     final public const DEPRECATION_MESSAGE = 'This "Foo" method is deprecated';
 
-    /**
-     * @dataProvider multirunDataprovider
-     */
+    #[DataProvider('multirunDataprovider')]
     public function testDeprecation(): void
     {
         $this->assertTrue(true, 'This avoids the risky status');

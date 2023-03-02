@@ -6,6 +6,7 @@ namespace Tests\Unit\Configuration;
 
 use Paraunit\Configuration\PHPUnitConfig;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
 
 class PHPUnitConfigTest extends BaseUnitTestCase
@@ -66,9 +67,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         new PHPUnitConfig($dir);
     }
 
-    /**
-     * @dataProvider configWithExtensionDataProvider
-     */
+    #[DataProvider('configWithExtensionDataProvider')]
     public function testIsParaunitExtensionRegistered(bool $expectedResult, string $configContent): void
     {
         $configFile = $this->createMockConfiguration($configContent);
@@ -78,9 +77,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $this->assertSame($expectedResult, $config->isParaunitExtensionRegistered());
     }
 
-    /**
-     * @dataProvider configWithExtensionDataProvider
-     */
+    #[DataProvider('configWithExtensionDataProvider')]
     public function testInstallExtension(bool $expectedResult, string $configContent): void
     {
         $configFile = $this->createMockConfiguration($configContent);
