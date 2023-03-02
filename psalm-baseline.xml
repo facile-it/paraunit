@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
+<files psalm-version="5.7.7@e028ba46ba0d7f9a78bc3201c251e137383e145f">
   <file src="src/Configuration/PHPUnitConfig.php">
     <DocblockTypeContradiction>
-      <code>$extension-&gt;attributes</code>
+      <code><![CDATA[$extension->attributes]]></code>
     </DocblockTypeContradiction>
     <RedundantConditionGivenDocblockType>
-      <code>$extension-&gt;attributes?-&gt;getNamedItem('class')</code>
+      <code><![CDATA[$extension->attributes?->getNamedItem('class')]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Configuration/ParallelConfiguration.php">
     <MixedArgument>
-      <code>$input-&gt;getArgument('stringFilter')</code>
-      <code>$input-&gt;getOption('chunk-size')</code>
-      <code>$input-&gt;getOption('configuration') ?? '.'</code>
-      <code>$input-&gt;getOption('logo')</code>
-      <code>$input-&gt;getOption('parallel')</code>
-      <code>$input-&gt;getOption('testsuite')</code>
+      <code><![CDATA[$input->getArgument('stringFilter')]]></code>
+      <code><![CDATA[$input->getOption('chunk-size')]]></code>
+      <code><![CDATA[$input->getOption('configuration') ?? '.']]></code>
+      <code><![CDATA[$input->getOption('logo')]]></code>
+      <code><![CDATA[$input->getOption('parallel')]]></code>
+      <code><![CDATA[$input->getOption('pass-through')]]></code>
+      <code><![CDATA[$input->getOption('testsuite')]]></code>
     </MixedArgument>
   </file>
   <file src="src/Coverage/CoverageFetcher.php">
@@ -25,8 +26,8 @@
   </file>
   <file src="src/File/Cleaner.php">
     <MixedArgument>
-      <code>$file-&gt;getRealPath()</code>
-      <code>$file-&gt;getRealPath()</code>
+      <code><![CDATA[$file->getRealPath()]]></code>
+      <code><![CDATA[$file->getRealPath()]]></code>
     </MixedArgument>
     <MixedAssignment>
       <code>$file</code>
@@ -39,12 +40,12 @@
   </file>
   <file src="src/Filter/Filter.php">
     <PossiblyNullOperand>
-      <code>$fileNode-&gt;nodeValue</code>
+      <code><![CDATA[$fileNode->nodeValue]]></code>
     </PossiblyNullOperand>
   </file>
   <file src="src/Process/CommandLine.php">
     <PossiblyNullOperand>
-      <code>$option-&gt;getValue()</code>
+      <code><![CDATA[$option->getValue()]]></code>
     </PossiblyNullOperand>
   </file>
   <file src="src/Process/SymfonyProcessWrapper.php">

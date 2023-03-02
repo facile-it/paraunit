@@ -6,6 +6,7 @@ namespace Tests\Unit\Process;
 
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\EnvVariables;
+use Paraunit\Configuration\PassThrough;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
@@ -44,7 +45,8 @@ class ProcessFactoryTest extends BaseUnitTestCase
             $cliCommand->reveal(),
             $phpUnitConfig->reveal(),
             $tempFilenameFactory->reveal(),
-            $this->mockChunkSize(false)
+            $this->mockChunkSize(false),
+            new PassThrough(['--one', '--two=yes']),
         );
 
         $processWrapper = $factory->create('TestTest.php');
@@ -60,6 +62,8 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('TestTest2.php', $commandLine);
         $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
+        $this->assertStringContainsString('--one', $commandLine);
+        $this->assertStringContainsString('--two=yes', $commandLine);
     }
 
     #[DataProvider('coverageDriverDataProvider')]
@@ -84,6 +88,7 @@ class ProcessFactoryTest extends BaseUnitTestCase
             $phpUnitConfig->reveal(),
             $tempFilenameFactory->reveal(),
             $this->prophesize(ChunkSize::class)->reveal(),
+            new PassThrough(),
         );
 
         $this->assertEquals([
@@ -126,7 +131,8 @@ class ProcessFactoryTest extends BaseUnitTestCase
             $cliCommand->reveal(),
             $phpUnitConfig->reveal(),
             $tempFilenameFactory->reveal(),
-            $this->mockChunkSize(true)
+            $this->mockChunkSize(true),
+            new PassThrough(),
         );
 
         $processWrapper = $factory->create('phpunit.xml');
