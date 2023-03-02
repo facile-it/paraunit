@@ -43,7 +43,7 @@
         "phpspec/prophecy": "dev-allow-sebastian-comparator-5 as 1.15",
         "phpspec/prophecy-phpunit": "dev-phpunit-10.0-support#459dde0071709a16c8e7b5fa1801c0441aa6e830",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^1.7",
+        "phpstan/phpstan": "~1.9.18",
         "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^4.0",
         "psalm/plugin-phpunit": "^0.18",
