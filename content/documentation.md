@@ -21,12 +21,12 @@ To use this package, use Composer:
  * from CLI: `composer require --dev facile-it/paraunit`
  * or, directly in your `composer.json`:
 
-``` 
-{
-    "require-dev": {
-        "facile-it/paraunit": "^1.1"
-    }
-}
+```json
+ {
+     "require-dev": {
+         "facile-it/paraunit": "^2.0"
+     }
+ }
 ```
 
 # Usage
@@ -34,7 +34,7 @@ To use this package, use Composer:
 The `run` command is the main functionality of Paraunit; it launches all the tests in all your configured test suites in parallel; you can run it like this: (assuming your composer's bin dir is `vendor/bin`)
 
 ```bash
-vendor/bin/paraunit run
+ vendor/bin/paraunit run
 ```
 
 This is possible because Paraunit starts as a Symfony console command, and it’s provided through a bin launcher.
@@ -42,27 +42,32 @@ This is possible because Paraunit starts as a Symfony console command, and it’
 ## `coverage` command
 The `coverage` command is used to generate the test coverage in parallel. It supports all the same options of the `run` command (documented below) but it requires **at least one of those options** to choose the coverage output format:
  
- Option | Description
- -------|------------
-`--html=dir` | Coverage in HTML format, inside the specified directory
-`--clover=filename.xml` | Coverage in XML-clover format, with the specified filename
-`--xml=dir` | Coverage in PHPUnit XML format, inside the specified directory
-`--text=filename.txt` | Coverage in text format, into the specified filename
-`--text` | Coverage in text format, printed directly in the console, at the end of the process
-`--text-summary=filename.txt` | Coverage summary in text format, into the specified filename
-`--text-summary` | Coverage in text format, printed directly in the console, at the end of the process
+| Option                        | Description                                                                         |
+|-------------------------------|-------------------------------------------------------------------------------------|
+| `--html=dir`                  | Coverage in HTML format, inside the specified directory                             |
+| `--clover=filename.xml`       | Coverage in XML-clover format, with the specified filename                          |
+| `--xml=dir`                   | Coverage in PHPUnit XML format, inside the specified directory                      |
+| `--text=filename.txt`         | Coverage in text format, into the specified filename                                |
+| `--text`                      | Coverage in text format, printed directly in the console, at the end of the process |
+| `--text-summary=filename.txt` | Coverage summary in text format, into the specified filename                        |
+| `--text-summary`              | Coverage in text format, printed directly in the console, at the end of the process |
 
 Example:
 
 ```bash
-vendor/bin/paraunit coverage --html=./coverage
+ vendor/bin/paraunit coverage --html=./coverage
 ```
 
-Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146) and in conjunction with PHPUnit 8), [xDebug](https://xdebug.org/) and [PHPDBG](https://www.php.net/manual/en/book.phpdbg.php). 
+Paraunit detects automatically which coverage driver can use to fetch test coverage data; supported drivers are:
+* [Xdebug](https://xdebug.org/) 3.x since  [1.3](https://github.com/facile-it/paraunit/pull/170)
+* [ext-pcov](https://github.com/krakjoe/pcov) (only since [1.0.0-beta2](https://github.com/facile-it/paraunit/pull/146))
+* [Xdebug](https://xdebug.org/) 2.x
+* [PHPDBG](https://www.php.net/manual/en/book.phpdbg.php) 
 
-Paraunit checks if `ext-pcov` is installed and uses it as the preferred driver, since it's the fastest; the extensions can remain installed but disabled (`pcov.enabled=0`), and Paraunit will take care of enabling it when launching PHPUnit processes.
- 
-If that's not available, it will try to detect the presence of Xdebug; as a last resource, it will use PHPDbg, which should be always available since it's built into PHP core since 5.6.
+Paraunit checks the presence of those drivers, and uses them with that order of preference. **Both Xdebug 3 and Pcov can be installed but stay disabled** when launching Paraunit, since it will take care on its own to enable them when launching PHPUnit processes.
+As a last resource, it will use PHPDbg, which should be always available since it's built into PHP core since 5.6.
+
+Please note that if you want to use Pcov, you'll need at least PHPUnit 8, or add [`krakjoe/pcov-clobber`](https://github.com/krakjoe/pcov-clobber) on older PHPUnit versions.
 
 If you have issues or random failures when using the `coverage` command, you can try to use the `--parallel 1` option: this executes just one test at a time, but you will still benefit from the process splitting, that will avoid any memory issue.
 
@@ -99,7 +104,7 @@ As the snippet shows, the name of the environment variables are available as con
 Like with PHPUnit, you can run a subset of your tests passing a path as the first argument of the command:
 
 ```bash
-vendor/bin/paraunit run path/to/my/tests
+ vendor/bin/paraunit run path/to/my/tests
 ```
 In Paraunit this functionality is more powerful, since:
 
@@ -110,7 +115,7 @@ In Paraunit this functionality is more powerful, since:
 Let's use an example to show how powerful this feature is. You are working on the `MyApp\SpecialPanel\SomeClass` class, and you want to run all the tests of the `MyApp\SpecialPanel` namespace. Those tests are in the `tests/Unit/SpecialPanel/` and `tests/Functional/SpecialPanel/` directories. You can run both dir at the same time with
 
 ```bash
-vendor/bin/paraunit run specialpanel
+ vendor/bin/paraunit run specialpanel
 ```
 
 You don't have to bother about the fact that the tests are splitted into different subdirectories, and about the uppercase letters too.
@@ -119,19 +124,19 @@ You don't have to bother about the fact that the tests are splitted into differe
 If your `phpunit.xml.dist` file is not in the default base dir, you can specify it by:
 
 ```bash
-vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist
+ vendor/bin/paraunit run --configuration=relPath/to/phpunit.xml.dist
 ```
 
 or with the short version:
 
 ```bash
-vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist
+ vendor/bin/paraunit run -c=relPath/to/phpunit.xml.dist
 ```
 
-Also it's possible to provide only a directory, in such case Paraunit will look a file with the default name, `phpunit.xml.dist`:
+It's also possible to provide only a directory, in such case Paraunit will look a file with the default name, `phpunit.xml.dist`:
 
 ```bash
-vendor/bin/paraunit run -c=relPath/to/xml/file/
+ vendor/bin/paraunit run -c=relPath/to/xml/file/
 ```
 
 ### Parallel
@@ -160,7 +165,21 @@ You can run a single test suite (as defined in your configuration file) using:
 vendor/bin/paraunit run --testsuite=testSuiteName
 ```
 
+### Pass Through
+
+**NEW**: introduced in 2.0
+
+If you want to use one of the many native PHPUnit options, you can pass them directly to it using the `--pass-through` option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interefere with how Paraunit works, or either will not produce any meaningful change.
+
+```bash
+ vendor/bin/paraunit run \
+    --pass-through="--group=foo" \
+    --pass-through="--process-isolation" 
+```
+
 ### PHPUnit inherited options
+
+**DEPRECATED**: no longer present in Paraunit 2.0, use `--pass-through` instead.
 
 A large number of PHPUnit options (apart from the aforementioned `--testsuite`) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options' behavior, see the [PHPUnit CLI documentation](https://phpunit.de/manual/current/en/textui.html#textui.clioptions).
 
@@ -194,7 +213,7 @@ This is the complete list of supported options:
 If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:
 
 ```bash
-vendor/bin/paraunit run --debug
+ vendor/bin/paraunit run --debug
 ```
 
 It will show a verbose output with the full running test queue.
