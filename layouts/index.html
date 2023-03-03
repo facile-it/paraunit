@@ -24,7 +24,7 @@
 
 <div class="content">
   {{ range ( .Paginate (where .Site.RegularPages "Type" "news")).Pages }}
-    {{ .Render "summary"}}
+  {{ .Render "summary"}}
   {{ end }}
 
   {{ partial "pagination.html" . }}

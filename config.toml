@@ -1,6 +1,6 @@
 baseurl = "https://engineering.facile.it/paraunit/"
 title = "Paraunit"
-theme = "blackburn-master"
+theme = "blackburn"
 canonifyurls = true
 paginate = 5
 
