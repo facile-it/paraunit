@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name="generator" content="Hugo 0.111.1">
 
   <title>Paraunit</title>
 
@@ -32,13 +32,14 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
   
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
   
@@ -47,8 +48,8 @@
   
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/androidstudio.min.css">
+  <script async src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
   
   <script>hljs.initHighlightingOnLoad();</script>
   
@@ -111,10 +112,8 @@
     
     <li class="pure-menu-item">
       <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/index.xml'><i
-          class="fas fa-rss"></i>RSS</a>
+          class="fas fa-rss fa-fw"></i>RSS</a>
     </li>
-    
-
     
 
     
@@ -235,7 +234,7 @@
 
 <div class="content">
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.3.0/">Paraunit 1.3.0: new chunk size feature, Symfony 6 support</a></h2>
 
@@ -280,7 +279,7 @@ Here&rsquo;s the full changelog of the release:
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.1/">Paraunit 1.2.1: allow jean85/pretty-package-versions v2</a></h2>
 
@@ -314,14 +313,14 @@ Here&rsquo;s the full changelog of the release:
   <p>
   This small patch is just to allow a dependency bump for end users.
 Here&rsquo;s the full changelog of the release:
-Added  Allow jean85/pretty-package-versions v2 90f84b5  
+Added Allow jean85/pretty-package-versions v2 90f84b5 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.0/">Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</a></h2>
 
@@ -355,14 +354,14 @@ Added  Allow jean85/pretty-package-versions v2 90f84b5
   <p>
   This release contains only support for newer versions of PHP &amp; PHPUnit; due to PHPUnit 9.3 requiring a new major version of phpunit/php-code-coverage, I&rsquo;m forced to drop support to all PHPUnit versions below 9.3. Usage of Paraunit is unchanged.
 Here&rsquo;s the full changelog of the release:
-Added  Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153  Removed  Drop support for PHPUnit &lt; 9.3 #153  
+Added Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153 Removed Drop support for PHPUnit &lt; 9.3 #153 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.1/">Paraunit 1.1.1: PostgreSQL retry support</a></h2>
 
@@ -396,14 +395,14 @@ Added  Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153  Removed  D
   <p>
   This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.
 Here&rsquo;s the full changelog of the release:
-Added  Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma  
+Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</a></h2>
 
@@ -468,6 +467,8 @@ Added  Add support for deadlock detection on PostgreSQL #152, thanks @elernonelm
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
 <script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
 
 
 

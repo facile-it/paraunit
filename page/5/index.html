@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name="generator" content="Hugo 0.111.1">
 
   <title>Paraunit</title>
 
@@ -32,13 +32,14 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
   
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
   
@@ -47,8 +48,8 @@
   
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/androidstudio.min.css">
+  <script async src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
   
   <script>hljs.initHighlightingOnLoad();</script>
   
@@ -111,10 +112,8 @@
     
     <li class="pure-menu-item">
       <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/index.xml'><i
-          class="fas fa-rss"></i>RSS</a>
+          class="fas fa-rss fa-fw"></i>RSS</a>
     </li>
-    
-
     
 
     
@@ -235,7 +234,7 @@
 
 <div class="content">
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.1/">Paraunit 0.8.1: fixed regression with Symfony</a></h2>
 
@@ -268,14 +267,14 @@
 
   <p>
   Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project:
-Fixed  Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir  
+Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
 
@@ -319,7 +318,7 @@ Next phase will be the 1.0 stable release milestone, which is probably just a li
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.4/">Paraunit 0.7.4: PHAR release</a></h2>
 
@@ -353,14 +352,14 @@ Next phase will be the 1.0 stable release milestone, which is probably just a li
   <p>
   Paraunit 0.7.4 has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.
 Full changelog text:
-Changed  Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&rsquo;t rely on paths, so it doesn&rsquo;t have to be a full or relative path; it can also be used in conjunction with the --testsuite option  
+Changed Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&rsquo;t rely on paths, so it doesn&rsquo;t have to be a full or relative path; it can also be used in conjunction with the --testsuite option 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.3/">Paraunit 0.7.3: PHAR release</a></h2>
 
@@ -394,14 +393,14 @@ Changed  Add optional argument to both commands to filter tests filenames; the f
   <p>
   Paraunit 0.7.3 has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the latest GitHub release page.
 Full changelog text:
-Changed  Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too!  
+Changed Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too! 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.1/">Paraunit 0.7.1: coverage in text format</a></h2>
 
@@ -467,6 +466,8 @@ In the next versions, I will work to implement the other missing formats, PHP an
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
 <script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
 
 
 

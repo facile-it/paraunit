@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name="generator" content="Hugo 0.111.1">
 
   <title>Paraunit</title>
 
@@ -32,13 +32,14 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
   
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
   
@@ -47,8 +48,8 @@
   
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/androidstudio.min.css">
+  <script async src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
   
   <script>hljs.initHighlightingOnLoad();</script>
   
@@ -111,10 +112,8 @@
     
     <li class="pure-menu-item">
       <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/index.xml'><i
-          class="fas fa-rss"></i>RSS</a>
+          class="fas fa-rss fa-fw"></i>RSS</a>
     </li>
-    
-
     
 
     
@@ -235,7 +234,7 @@
 
 <div class="content">
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.2/">Paraunit 0.7.2: coverage in text format</a></h2>
 
@@ -269,14 +268,14 @@
   <p>
   Paraunit 0.7.2 has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.
 Full changelog text:
-Fixed  Disable colored output in text coverage to console, to avoid issues with GitLab integration.  
+Fixed Disable colored output in text coverage to console, to avoid issues with GitLab integration. 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7/">Paraunit 0.7: test coverage in parallel</a></h2>
 
@@ -320,7 +319,7 @@ Along with this new huge feature, here comes a lot of new fixes and changes: for
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6.2/">Paraunit 0.6.2</a></h2>
 
@@ -365,7 +364,7 @@ Unfortunately, the coverage feature is still in the works, but it&rsquo;s slowly
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6.1/">Paraunit 0.6.1</a></h2>
 
@@ -399,7 +398,7 @@ Unfortunately, the coverage feature is still in the works, but it&rsquo;s slowly
   <p>
   Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint, to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it this summer.
 Here&rsquo;s the full 0.6.1 changelog:
-Changed  Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 has been released; we will rely on their BC promise A new approach for dockerfiles, now they will be based on the standard Docker PHP library.
+Changed Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 has been released; we will rely on their BC promise A new approach for dockerfiles, now they will be based on the standard Docker PHP library.
   </p>
 
   
@@ -410,7 +409,7 @@ Changed  Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 h
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6/">Paraunit 0.6</a></h2>
 
@@ -444,7 +443,7 @@ Changed  Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 h
   <p>
   Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have it working soon and release it in 0.7.
 Here&rsquo;s what&rsquo;s changed in 0.6:
-Changed  MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the tests' results using PHPUnit&rsquo;s --log-json option (thanks to @taueres for the idea). This grants a lot of new features:  Parsing of tests results is more robust, it should never fail!
+Changed MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the tests&rsquo; results using PHPUnit&rsquo;s --log-json option (thanks to @taueres for the idea). This grants a lot of new features: Parsing of tests results is more robust, it should never fail!
   </p>
 
   
@@ -477,6 +476,8 @@ Changed  MASSIVE refactoring of the result output parsing (#31, #33) and the res
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
 <script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
 
 
 

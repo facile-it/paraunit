@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name="generator" content="Hugo 0.111.1">
 
   <title>Paraunit</title>
 
@@ -32,13 +32,14 @@
   <link rel="stylesheet" href="https://engineering.facile.it/paraunit/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
   
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
   
@@ -47,8 +48,8 @@
   
 
   
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/androidstudio.min.css">
+  <script async src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
   
   <script>hljs.initHighlightingOnLoad();</script>
   
@@ -111,10 +112,8 @@
     
     <li class="pure-menu-item">
       <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/index.xml'><i
-          class="fas fa-rss"></i>RSS</a>
+          class="fas fa-rss fa-fw"></i>RSS</a>
     </li>
-    
-
     
 
     
@@ -235,7 +234,7 @@
 
 <div class="content">
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.10/">Paraunit 0.10: small fixes and improvements</a></h2>
 
@@ -269,7 +268,7 @@
   <p>
   With this release, I&rsquo;m grouping a few fixes and improvements that I collected in the past month. Mainly, I&rsquo;ve fixed the --debug option and the --text-to-console coverage output. Also, now the logo is optional, and at the end of each line it&rsquo;s printed a partial count of executed tests.
 Here&rsquo;s the full changelog:
-Added  Add official support to PHP 7.2 (added to Travis CI matrix) Add executed tests counter at the end of each line in output (#91)  Changed  The Shark logo is now optional; to show it at the top, use the --logo option The --debug output has been completely rewritten and now is more useful than ever!
+Added Add official support to PHP 7.2 (added to Travis CI matrix) Add executed tests counter at the end of each line in output (#91) Changed The Shark logo is now optional; to show it at the top, use the --logo option The --debug output has been completely rewritten and now is more useful than ever!
   </p>
 
   
@@ -280,7 +279,7 @@ Added  Add official support to PHP 7.2 (added to Travis CI matrix) Add executed 
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
 
@@ -312,7 +311,7 @@ Added  Add official support to PHP 7.2 (added to Travis CI matrix) Add executed 
   </header>
 
   <p>
-  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius' package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future.
+  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&rsquo; package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future.
 So I decided to release an OSS package for this usage, Jean85/pretty-package-versions, available here: https://github.com/Jean85/pretty-package-versions/. Feel free to use it in your projects, as I&rsquo;ve done inside Paraunit.
   </p>
 
@@ -324,7 +323,7 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.2/">Paraunit 0.9.2 and 0.8.3: missing dependencies</a></h2>
 
@@ -359,14 +358,14 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   Paraunit 0.9.2 and Paraunit 0.8.3 has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies.
 I fixed that and backported the fix to the 0.8 series, since it was very easy to do.
 Here&rsquo;s the full changelog:
-Fixed  Add missing dependencies: symfony/yaml and symfony/stopwatch  
+Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch 
   </p>
 
   
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9/">Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</a></h2>
 
@@ -410,7 +409,7 @@ All these changes brought along a lot of refactoring, and I took the occasion to
 </article>
 
   
-    <article>
+  <article>
   <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.2/">Paraunit 0.8.2: avoid failures due to warnings</a></h2>
 
@@ -443,7 +442,7 @@ All these changes brought along a lot of refactoring, and I took the occasion to
 
   <p>
   Paraunit 0.8.2 has been released to fix an issued caused by an unwanted overwrite of the write() method in the LogWriter class. Full changelog:
-Fixed  Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures)  
+Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures) 
   </p>
 
   
@@ -472,6 +471,8 @@ Fixed  Fix the signature of LogPrinter, to avoid warnings (this would lead to no
 </div>
 <script src="https://engineering.facile.it/paraunit/js/ui.js"></script>
 <script src="https://engineering.facile.it/paraunit/js/menus.js"></script>
+
+
 
 
 
