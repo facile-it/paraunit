@@ -146,12 +146,31 @@ class ParallelCommandTest extends BaseTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--logo' => $configurationPath,
-            '--filter' => 'doNotExecuteAnyTestSoItsFaster',
+            '--configuration' => $configurationPath,
+            '--logo' => true,
+            'stringFilter' => 'doNotExecuteAnyTestSoItsFaster',
         ]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('BBBBbBBBBBBB', $output, 'Shark logo missing');
+    }
+
+    public function testRegressionExecutionWithStringFilter(): void
+    {
+        $configurationPath = $this->getConfigForStubs();
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $configurationPath,
+            'stringFilter' => 'doNotExecuteAnyTestSoItsFaster',
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString(' 0 tests', $output, 'Filter is not working');
     }
 
     public function testExecutionWithDebugEnabled(): void
@@ -197,7 +216,7 @@ class ParallelCommandTest extends BaseTestCase
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
             'stringFilter' => 'green',
-            '--dont-report-useless-tests' => true,
+            '--pass-through' => ['--dont-report-useless-tests'],
         ]);
 
         $this->assertSame(0, $exitCode);
@@ -212,7 +231,7 @@ class ParallelCommandTest extends BaseTestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute([
             'command' => $command->getName(),
-            '--filter' => 'do_not_execute_anything',
+            '--pass-through' => ['--filter=do_not_execute_anything'],
         ]);
 
         $output = $commandTester->getDisplay();

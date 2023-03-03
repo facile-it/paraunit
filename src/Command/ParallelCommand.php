@@ -6,7 +6,6 @@ namespace Paraunit\Command;
 
 use Paraunit\Configuration\ParallelConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\FormatterHelper;
@@ -19,52 +18,8 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ParallelCommand extends Command
 {
-    /** @var PHPUnitOption[] */
-    private readonly array $phpunitOptions;
-
     public function __construct(protected ParallelConfiguration $configuration)
     {
-        $this->phpunitOptions = [
-            new PHPUnitOption('whitelist'),
-            new PHPUnitOption('disable-coverage-ignore', false),
-            new PHPUnitOption('no-coverage', false),
-
-            new PHPUnitOption('filter'),
-            new PHPUnitOption('testsuite'),
-            new PHPUnitOption('group'),
-            new PHPUnitOption('exclude-group'),
-            new PHPUnitOption('test-suffix'),
-
-            new PHPUnitOption('dont-report-useless-tests', false),
-            new PHPUnitOption('strict-coverage', false),
-            new PHPUnitOption('strict-global-state', false),
-            new PHPUnitOption('disallow-test-output', false),
-            new PHPUnitOption('disallow-resource-usage', false),
-            new PHPUnitOption('enforce-time-limit', false),
-            new PHPUnitOption('disallow-todo-tests', false),
-
-            new PHPUnitOption('fail-on-warning', false),
-            new PHPUnitOption('fail-on-risky', false),
-
-            new PHPUnitOption('process-isolation', false),
-            new PHPUnitOption('globals-backup', false),
-            new PHPUnitOption('static-backup', false),
-
-            new PHPUnitOption('loader'),
-            new PHPUnitOption('repeat'),
-            new PHPUnitOption('printer'),
-
-            new PHPUnitOption('do-not-cache-result', false),
-
-            new PHPUnitOption('prepend'),
-            new PHPUnitOption('bootstrap'),
-            new PHPUnitOption('no-configuration', false),
-            new PHPUnitOption('no-logging', false),
-            new PHPUnitOption('no-extensions', false),
-            new PHPUnitOption('include-path'),
-            new PHPUnitOption('stderr', false),
-        ];
-
         parent::__construct();
     }
 
@@ -79,15 +34,7 @@ class ParallelCommand extends Command
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
         $this->addOption('logo', null, InputOption::VALUE_NONE, 'Print the Shark logo at the top');
         $this->addOption('pass-through', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Inject options to be passed directly to the underlying PHPUnit processes');
-
-        foreach ($this->phpunitOptions as $option) {
-            $this->addOption(
-                $option->getName(),
-                $option->getShortName(),
-                $option->hasValue() ? InputOption::VALUE_OPTIONAL : InputOption::VALUE_NONE,
-                'Option carried over to every single PHPUnit process, see PHPUnit docs for usage'
-            );
-        }
+        $this->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Only run tests from the specified test suite');
     }
 
     /**
@@ -101,7 +48,6 @@ class ParallelCommand extends Command
         $config = $container->get(PHPUnitConfig::class);
         $this->checkForExtension($config, $input, $output);
         $this->assertExtensionIsInstalled($config, $input);
-        $this->addPHPUnitOptions($config, $input);
 
         /** @var Runner $runner */
         $runner = $container->get(Runner::class);
@@ -142,39 +88,6 @@ class ParallelCommand extends Command
                 $formatter->formatBlock('Configuration updated successfully', 'info', true)
             );
         }
-    }
-
-    private function addPHPUnitOptions(PHPUnitConfig $config, InputInterface $input): PHPUnitConfig
-    {
-        foreach ($this->phpunitOptions as $option) {
-            $cliOption = $input->getOption($option->getName());
-
-            if (\is_bool($cliOption)) {
-                $cliOption = null;
-            }
-
-            if (null !== $cliOption && ! \is_string($cliOption)) {
-                throw new \InvalidArgumentException('Invalid option format for CLI option ' . $option->getName() . ': ' . gettype($cliOption));
-            }
-
-            if ($this->setOptionValue($option, $cliOption)) {
-                $config->addPhpunitOption($option);
-            }
-        }
-
-        return $config;
-    }
-
-    private function setOptionValue(PHPUnitOption $option, ?string $cliOption): bool
-    {
-        if (! $cliOption) {
-            return false;
-        }
-        if ($option->hasValue()) {
-            $option->setValue($cliOption);
-        }
-
-        return true;
     }
 
     protected function assertExtensionIsInstalled(PHPUnitConfig $config, InputInterface $input): void

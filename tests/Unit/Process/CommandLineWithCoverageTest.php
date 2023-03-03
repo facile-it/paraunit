@@ -8,7 +8,6 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Process\CommandLineWithCoverage;
@@ -98,15 +97,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
-        $config->getPhpunitOption('stderr')->willReturn(null);
         $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
-        $optionWithValue = new PHPUnitOption('optVal');
-        $optionWithValue->setValue('value');
-        $config->getPhpunitOptions()
-            ->willReturn([
-                new PHPUnitOption('opt', false),
-                $optionWithValue,
-            ]);
 
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
 
@@ -122,8 +113,6 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
 
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
-        $this->assertContains('--opt', $options);
-        $this->assertContains('--optVal=value', $options);
 
         $extensions = array_filter($options, static fn (string $a): bool => str_starts_with($a, '--extensions'));
         $this->assertCount(0, $extensions, '--extensions should no longer be used');
@@ -132,15 +121,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     public function testGetOptionsChunkedNotContainsConfiguration(): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
-        $config->getPhpunitOption('stderr')->willReturn(null);
         $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
-        $optionWithValue = new PHPUnitOption('optVal');
-        $optionWithValue->setValue('value');
-        $config->getPhpunitOptions()
-            ->willReturn([
-                new PHPUnitOption('opt', false),
-                $optionWithValue,
-            ]);
 
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
 

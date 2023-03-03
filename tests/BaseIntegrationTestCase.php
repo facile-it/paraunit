@@ -140,7 +140,10 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         throw new \RuntimeException('Container not ready');
     }
 
-    protected function loadContainer(): void
+    /**
+     * @param list<string> $passThrough
+     */
+    protected function loadContainer(array $passThrough = []): void
     {
         $input = $this->prophesize(InputInterface::class);
         $input->getArgument('stringFilter')
@@ -151,6 +154,8 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             ->willReturn(1);
         $input->getOption('logo')
             ->willReturn(false);
+        $input->getOption('pass-through')
+            ->willReturn($passThrough);
         $input->getOption(Argument::cetera())
             ->willReturn(null);
         $input->hasParameterOption(Argument::cetera())
