@@ -6,3 +6,6 @@ composer.*
 vendor
 bin
 gpg
+*.cache
+docker-compose.*
+.hugo_build.lock
