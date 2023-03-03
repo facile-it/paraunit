@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\Runner;
 
 use Paraunit\Bin\Paraunit;
-use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Runner\Runner;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseIntegrationTestCase;
@@ -117,13 +115,7 @@ class RunnerTest extends BaseIntegrationTestCase
     public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination(): void
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
-        $this->loadContainer();
-
-        /** @var PHPUnitConfig $phpunitConfig */
-        $phpunitConfig = $this->getService(PHPUnitConfig::class);
-        $option = new PHPUnitOption('group');
-        $option->setValue('emptyGroup');
-        $phpunitConfig->addPhpunitOption($option);
+        $this->loadContainer(['--group=emptyGroup']);
 
         $this->assertEquals(0, $this->executeRunner());
 
@@ -181,13 +173,7 @@ class RunnerTest extends BaseIntegrationTestCase
     public function testSessionStderr(): void
     {
         $this->setTextFilter('SessionTestStub.php');
-        $this->loadContainer();
-
-        /** @var PHPUnitConfig $phpunitConfig */
-        $phpunitConfig = $this->getService(PHPUnitConfig::class);
-        $option = new PHPUnitOption('stderr');
-        $option->setValue('');
-        $phpunitConfig->addPhpunitOption($option);
+        $this->loadContainer(['--stderr']);
 
         $output = $this->getConsoleOutput();
 

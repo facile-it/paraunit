@@ -14,9 +14,6 @@ class PHPUnitConfig
 
     private readonly string $configFilename;
 
-    /** @var PHPUnitOption[] */
-    private array $phpunitOptions = [];
-
     private readonly Loader $xmlLoader;
 
     /**
@@ -115,25 +112,6 @@ class PHPUnitConfig
     public function getBaseDirectory(): string
     {
         return dirname($this->configFilename);
-    }
-
-    public function addPhpunitOption(PHPUnitOption $option): void
-    {
-        $name = $option->getName();
-        $this->phpunitOptions[$name] = $option;
-    }
-
-    /**
-     * @return PHPUnitOption[]
-     */
-    public function getPhpunitOptions(): array
-    {
-        return $this->phpunitOptions;
-    }
-
-    public function getPhpunitOption(string $name): ?PHPUnitOption
-    {
-        return $this->phpunitOptions[$name] ?? null;
     }
 
     /**

@@ -80,6 +80,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             $coverageCommand->getDefinition()->getOptions(),
         );
 
+        $supportedOptions[] = '--filter';
         $supportedOptions[] = '--help';
         $supportedOptions[] = '--version';
         // TODO - map coverage modes automatically
@@ -155,7 +156,10 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--log-events-text', '<file>'],
             ['--log-events-verbose-text', '<file>'],
             ['--coverage-filter', '<filter>'],
+            ['--disable-coverage-ignore'],
             ['--path-coverage'],
+            ['--no-coverage'],
+            ['--include-path'],
             // TODO - add dedicated tests?
             ['--fail-on-incomplete'],
             ['--fail-on-risky'],

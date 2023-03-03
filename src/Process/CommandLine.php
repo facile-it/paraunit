@@ -7,7 +7,6 @@ namespace Paraunit\Process;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
-use Paraunit\Configuration\PHPUnitOption;
 
 class CommandLine
 {
@@ -38,21 +37,7 @@ class CommandLine
             $options[] = '--configuration=' . $config->getFileFullPath();
         }
 
-        foreach ($config->getPhpunitOptions() as $phpunitOption) {
-            $options[] = $this->buildPhpunitOptionString($phpunitOption);
-        }
-
         return $options;
-    }
-
-    private function buildPhpunitOptionString(PHPUnitOption $option): string
-    {
-        $optionString = '--' . $option->getName();
-        if ($option->hasValue()) {
-            $optionString .= '=' . $option->getValue();
-        }
-
-        return $optionString;
     }
 
     /**
