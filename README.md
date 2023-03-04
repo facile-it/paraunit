@@ -5,7 +5,7 @@
 [![Unstable release][Last unstable image]][Packagist link]
 [![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
 
-[![Build status](https://img.shields.io/github/workflow/status/facile-it/paraunit/CI)](https://github.com/facile-it/paraunit/actions)
+[![Build status](https://img.shields.io/github/actions/workflow/status/facile-it/paraunit/tests.yaml?branch=2.x)](https://github.com/facile-it/paraunit/actions)
 [![Coverage Status][Master coverage image]][Master coverage link]
 
 Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible by launching multiple test in parallel with single PHPUnit processes.
