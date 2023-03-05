@@ -3,7 +3,15 @@ All notable changes to this project will be documented in this file. For previou
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
-## Unreleased
+
+## [2.0.0] - Unreleased
+### Added
+ * Support for PHPUnit 10
+ * `--pass-through` option [#194](https://github.com/facile-it/paraunit/pull/194)
+### Changed
+ * The integration mechanic with PHPUnit has now changed, and it now leverages the new [event system](https://github.com/sebastianbergmann/phpunit/issues/4676); to do that, Paraunit will need a bootstrap extension registered in the PHPUnit XML config; at the first run without it, Paraunit will ask if you want to add it automatically [#186](https://github.com/facile-it/paraunit/pull/186)
+### Removed
+ * Drop support for PHPUnit < 10 
 
 ## [1.3.0] - 2022-06-15
 ### Added
