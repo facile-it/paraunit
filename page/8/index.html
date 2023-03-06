@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.4.1/">Paraunit 0.4.1</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>03 Apr 2020</time>
+    <time>23 Sep 2015</time>
   </div>
 
   
@@ -266,186 +266,10 @@
   </header>
 
   <p>
-  As reported in the previous release, I was working on supporting PHPUnit 9. Today, PHPUnit 9.1 was released, and so I&rsquo;ve released Paraunit 1.1.0, which supports only PHPUnit 9.1 and forward: this is due to the fact that the --printer option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using TestHook, and opted for a small refactor of how Paraunit fetches PHPUnit test results.
+  Paraunit 0.4.1 has been released! Here&rsquo;s what&rsquo;s changed:
+Changed Improved: --configuration parameter now has the -c shortcut Fixed Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results 
   </p>
 
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.1/">Paraunit 1.0.1: two small fixes</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Mar 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  While I&rsquo;m actively working on a big refactor toward supporting PHPUnit 9, I&rsquo;ve found two small fixes that have to be released as the first stable patch since the 1.0 release.
-Here&rsquo;s the changelog:
-Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small issue in checking coverage data syntax 8f70c 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Paraunit 1.0.0: the stable release</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>11 Mar 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Today I decided to release facile-it/paraunit 1.0.0! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.
-The main reason behind this is that I&rsquo;m currently working on PHPUnit 9 support, and this will force me to release a new minor that will drop support for previous PHPUnit version altogether. This decision was in reality forced onto me due to the fact that PHUnit 9 drops support for the --printer CLI option and the relative extension point, which Paraunit was using as a way to extract test results.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta2/">Paraunit 1.0.0-beta2: Pcov support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>26 Feb 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  I returned to develop some more on Paraunit in the last months, initially to add a few new compatibilities (PHP 7.4, Symfony 5), but then I spent some time to add support for Pcov as a coverage driver. This new addition is pretty interesting, since it speeds up test execution with coverage collection a lot, making it nearly as fast as without coverage. Try it out!
-This is the full changelog for this second beta release:
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/">Paraunit 1.0.0-beta1: the first approach to a stable release</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>08 Apr 2019</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  After a long hiatus, I decided to start working in the first stable release of Paraunit; the package is good and running smoothly for years, so we no longer have any reason to delay the 1.0 further. This will also be the occasion to force some static analysis onto the codebase.
-This is the full changelog for this first beta release; the following changes are in comparison to the previous, unstable release (0.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
   
 </article>
 
@@ -456,11 +280,11 @@ This is the full changelog for this first beta release; the following changes ar
 
 <nav class="pagination" role="pagination">
   
-  <a href="https://engineering.facile.it/paraunit/"><i class="fa fa-chevron-left"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/7/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;2 / 8&nbsp;</span>
+  <span>&nbsp;8 / 8&nbsp;</span>
   
-  <a href="https://engineering.facile.it/paraunit/page/3/"><i class="fa fa-chevron-right"></i></a>
+  <i class="fa fa-chevron-right"></i>
   
 </nav>
 

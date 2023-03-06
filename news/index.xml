@@ -5,7 +5,17 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 15 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paraunit 2.0.0: PHPUnit 10 support and a big internal refactor</title>
+      <link>https://engineering.facile.it/paraunit/news/release/2.0.0/</link>
+      <pubDate>Mon, 06 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/2.0.0/</guid>
+      <description>This new major version has seen its inception a long time ago, on October 2021, and it went to sleep for a long time, since PHPUnit development was doing the same. After some additional attempts, I was finally able to complete this alongside the long-awaited release of PHPUnit 10.
+All the changes in PHPUnit allowed me to finally bump the minimum PHP version to 8.1 (so that enums are now usable!</description>
+    </item>
+    
     <item>
       <title>Paraunit 1.3.0: new chunk size feature, Symfony 6 support</title>
       <link>https://engineering.facile.it/paraunit/news/release/1.3.0/</link>
