@@ -9,8 +9,8 @@ use Paraunit\Logs\TestHook\AbstractTestHook;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
-use PHPUnit\Event\Code\TestMethod as PHPUnitTestMethod;
 use PHPUnit\Event\Event;
+use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
 use PHPUnit\Event\Telemetry\Info;
 use PHPUnit\Event\Telemetry\MemoryUsage;
@@ -122,6 +122,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
             HRTime::fromSecondsAndNanoseconds(1, 0),
             $memoryUsage,
             $memoryUsage,
+            new GarbageCollectorStatus(0, 0, 0, 0, false, false, false, 0),
         );
         $duration = $current->time()->duration($current->time());
 
@@ -132,11 +133,6 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
             $duration,
             $memoryUsage,
         );
-    }
-
-    final protected function createPHPUnitTest(): PHPUnitTestMethod
-    {
-        return PHPUnitTestMethod::fromTestCase($this);
     }
 
     protected function updatesLastTest(): bool

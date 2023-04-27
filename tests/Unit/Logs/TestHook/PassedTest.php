@@ -27,7 +27,7 @@ class PassedTest extends AbstractTestHookTestCase
     {
         return new PassedEvent(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
         );
     }
 

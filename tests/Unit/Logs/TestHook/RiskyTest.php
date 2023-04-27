@@ -27,7 +27,7 @@ class RiskyTest extends AbstractTestHookTestCase
     {
         return new ConsideredRisky(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
         );
     }

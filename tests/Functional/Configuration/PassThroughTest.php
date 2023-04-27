@@ -8,7 +8,6 @@ use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PassThrough;
 use PHPUnit\Event\Code\Test;
-use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Facade;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\TextUI\Help;
@@ -38,7 +37,7 @@ class PassThroughTest extends BaseFunctionalTestCase
 
         if ($remaining !== []) {
             Facade::emitter()->testTriggeredWarning(
-                TestMethod::fromTestCase($this),
+                $this->createPHPUnitTestMethod(),
                 count($remaining) . ' unhandled new PHPUnit options: ' . print_r($remaining, true),
                 __FILE__,
                 __LINE__

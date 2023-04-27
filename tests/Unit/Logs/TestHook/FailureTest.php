@@ -6,7 +6,6 @@ namespace Tests\Unit\Logs\TestHook;
 
 use Paraunit\Logs\TestHook\Failure;
 use Paraunit\Logs\ValueObject\LogStatus;
-use PHPUnit\Event\Code\Throwable;
 use PHPUnit\Event\Test\Failed;
 
 /**
@@ -28,8 +27,8 @@ class FailureTest extends AbstractTestHookTestCase
     {
         return new Failed(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
-            Throwable::from(new \Exception($this->getExpectedMessage()[0])),
+            $this->createPHPUnitTestMethod(),
+            $this->createPHPUnitThrowable(new \Exception($this->getExpectedMessage()[0])),
             null,
         );
     }
