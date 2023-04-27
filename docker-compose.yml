@@ -13,6 +13,7 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       PHP_IDE_CONFIG: "serverName=Paraunit"
+      SYMFONY_DEPRECATIONS_HELPER: disabled
     volumes:
       - .:/home/paraunit/projects
       - ~/.composer:/home/paraunit/.composer
