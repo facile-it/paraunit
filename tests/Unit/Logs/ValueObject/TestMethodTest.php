@@ -6,7 +6,6 @@ namespace Tests\Unit\Logs\ValueObject;
 
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestMethod;
-use PHPUnit\Event\Code\TestMethod as PHPUnitTestMethod;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
 
@@ -28,7 +27,7 @@ class TestMethodTest extends BaseUnitTestCase
 
     public function testFromPHPUnitTest(): void
     {
-        $phpunitTest = PHPUnitTestMethod::fromTestCase($this);
+        $phpunitTest = $this->createPHPUnitTestMethod();
 
         $test = Test::fromPHPUnitTest($phpunitTest);
 
@@ -41,7 +40,7 @@ class TestMethodTest extends BaseUnitTestCase
     #[DataProvider('dataSetProvider')]
     public function testWithDataProvider(string $expectedEnding): void
     {
-        $phpunitTest = PHPUnitTestMethod::fromTestCase($this);
+        $phpunitTest = $this->createPHPUnitTestMethod();
 
         $test = Test::fromPHPUnitTest($phpunitTest);
 

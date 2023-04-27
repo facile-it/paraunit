@@ -27,7 +27,7 @@ class PhpUnitWarningTest extends AbstractTestHookTestCase
     {
         return new PhpunitWarningTriggered(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
         );
     }

@@ -27,7 +27,7 @@ class DeprecationTest extends AbstractTestHookTestCase
     {
         return new DeprecationTriggered(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
             'testFile.php',
             123

@@ -27,7 +27,7 @@ class SkippedTest extends AbstractTestHookTestCase
     {
         return new PHPUnitSkipped(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
         );
     }

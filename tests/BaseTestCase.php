@@ -14,6 +14,7 @@ use SebastianBergmann\CodeCoverage\Filter;
 
 class BaseTestCase extends TestCase
 {
+    use PHPUnitPolyfillTrait;
     use ProphecyTrait;
 
     private ?string $randomTempDir = null;

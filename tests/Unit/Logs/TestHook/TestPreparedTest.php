@@ -27,7 +27,7 @@ class TestPreparedTest extends AbstractTestHookTestCase
     {
         return new Prepared(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
+            $this->createPHPUnitTestMethod(),
         );
     }
 

@@ -28,8 +28,8 @@ class IncompleteTest extends AbstractTestHookTestCase
     {
         return new MarkedIncomplete(
             $this->createTelemetryInfo(),
-            $this->createPHPUnitTest(),
-            Throwable::from(new \Exception($this->getExpectedMessage()))
+            $this->createPHPUnitTestMethod(),
+            new Throwable(\Exception::class, $this->getExpectedMessage(), 'Description', 'stack trace', null)
         );
     }
 
