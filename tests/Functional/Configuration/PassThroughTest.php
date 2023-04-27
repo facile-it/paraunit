@@ -164,6 +164,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--fail-on-risky'],
             ['--fail-on-skipped'],
             ['--fail-on-warning'],
+            ['--fail-on-deprecation'],
+            ['--fail-on-notice'],
             ['--dont-report-useless-tests'],
         ];
     }
@@ -193,6 +195,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--stop-on-risky',
             '--stop-on-skipped',
             '--stop-on-incomplete',
+            '--stop-on-deprecation',
+            '--stop-on-notice',
             '--warm-coverage-cache',
             '--order-by',
             '--random-order-seed',
