@@ -9,9 +9,9 @@ use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
-use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -23,20 +23,45 @@ class LogHandlerTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess();
         $test = new Test($process->filename);
 
-        $testResultContainer = $this->prophesize(TestResultContainer::class);
-        $testResultContainer->addTestResult(Argument::that(function (TestResult $testResult) use ($test): bool {
-            $this->assertEquals(TestOutcome::NoTestExecuted, $testResult->status);
-            $this->assertEquals($test, $testResult->test);
-
-            return true;
-        }));
-
         $logHandler = new LogHandler(
             $this->prophesize(EventDispatcherInterface::class)->reveal(),
-            $testResultContainer->reveal(),
+            $this->mockTestResultContainer($test, [TestOutcome::NoTestExecuted]),
         );
 
         $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '0'));
         $logHandler->processLog($process, new LogData(LogStatus::LogTerminated, $test, ''));
+    }
+
+    public function testRegressionDoubleOutcomeWithSecondMoreImportant(): void
+    {
+        $process = new StubbedParaunitProcess();
+        $test = new Test($process->filename);
+
+        $logHandler = new LogHandler(
+            $this->prophesize(EventDispatcherInterface::class)->reveal(),
+            $this->mockTestResultContainer($test, [TestOutcome::Passed, TestIssue::Deprecation])
+        );
+
+        $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));
+        $logHandler->processLog($process, new LogData(LogStatus::Prepared, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Passed, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Deprecation, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Finished, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::LogTerminated, $test, ''));
+    }
+
+    /**
+     * @param array<TestOutcome|TestIssue> $expectedStatuses
+     */
+    private function mockTestResultContainer(Test $test, array $expectedStatuses): TestResultContainer
+    {
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+
+        foreach ($expectedStatuses as $expectedStatus) {
+            $testResultContainer->addTestResult(new EqualsToken(new TestResult($test, $expectedStatus)))
+                ->shouldBeCalledOnce();
+        }
+
+        return $testResultContainer->reveal();
     }
 }
