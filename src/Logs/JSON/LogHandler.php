@@ -75,7 +75,7 @@ class LogHandler
         }
 
         if ($log->status === LogStatus::LogTerminated) {
-            $this->handleLogEnding($process, $log);
+            $this->handleLogEnding($process);
 
             return;
         }
@@ -88,14 +88,14 @@ class LogHandler
         }
     }
 
-    private function handleLogEnding(Process $process, LogData $log): void
+    private function handleLogEnding(Process $process): void
     {
         if ($process->getExitCode() === 0 && $this->actuallyPreparedTestCount === 0) {
             $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
         }
 
         if ($this->currentTestOutcome !== null) {
-            $this->testResultContainer->addTestResult(TestResult::from($log));
+            $this->testResultContainer->addTestResult(new TestResult($this->currentTest, $this->currentTestOutcome));
         }
 
         if (

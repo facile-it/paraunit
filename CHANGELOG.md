@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [2.0.1] - 2023-04-28
+## Fixed
+ * Fix handling of second outcome on last test of class (i.e. deprecation emitted after the last test has passed) [#204](https://github.com/facile-it/paraunit/pull/204)
+
 ## [2.0.0] - 2023-03-06
 ### Added
  * Support for PHPUnit 10
