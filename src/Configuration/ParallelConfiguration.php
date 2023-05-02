@@ -6,6 +6,7 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Configuration\DependencyInjection\ParallelContainerDefinition;
 use Paraunit\Filter\Filter;
+use Paraunit\Filter\RandomizeList;
 use Paraunit\Filter\TestList;
 use Paraunit\Printer\DebugPrinter;
 use Psr\Container\ContainerInterface;
@@ -14,7 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParallelConfiguration
@@ -74,6 +77,7 @@ class ParallelConfiguration
         $containerBuilder->setParameter('paraunit.string_filter', $input->getArgument('stringFilter'));
         $containerBuilder->setParameter('paraunit.show_logo', $input->getOption('logo'));
         $containerBuilder->setParameter('paraunit.pass_through', $input->getOption('pass-through'));
+        $containerBuilder->setParameter('paraunit.sort_order', $input->getOption('sort'));
 
         if ($input->getOption('debug')) {
             $this->enableDebugMode($containerBuilder);
@@ -119,9 +123,9 @@ class ParallelConfiguration
                 throw new \InvalidArgumentException('Unexpected value for --sort option: ' . $sortOrder);
             }
 
-        // TODO
-        //            $filter->setDecoratedService();
-        //            $container->setAlias(TestList::class, Filter::class);
+            $container->setDefinition(TestList::class, new Definition(RandomizeList::class, [
+                new Reference(Filter::class),
+            ]));
         } else {
             $container->setAlias(TestList::class, Filter::class);
         }

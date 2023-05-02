@@ -260,4 +260,23 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
         $this->assertStringContainsString('3x Tests\Stub\RaisingDeprecationTestStub::testDeprecation', $output);
     }
+
+    public function testExecutionWithRandomOrder(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForStubs(),
+            '--sort' => 'random',
+            'stringFilter' => 'Green',
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertEquals(0, $exitCode);
+        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output);
+    }
 }
