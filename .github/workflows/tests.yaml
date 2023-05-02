@@ -7,9 +7,6 @@ on:
       - 1.x
       - 2.x
 
-env:
-  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.PRIVATE_REPO_ACCESS }}"}}'
-
 jobs:
   Tests:
     runs-on: 'ubuntu-latest'
