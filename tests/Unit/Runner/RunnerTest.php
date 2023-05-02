@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Runner;
 
 use Paraunit\Configuration\ChunkSize;
-use Paraunit\Filter\Filter;
+use Paraunit\Filter\TestList;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
@@ -26,8 +26,8 @@ class RunnerTest extends BaseUnitTestCase
 {
     public function testRunEmptyTestSuite(): void
     {
-        $filter = $this->prophesize(Filter::class);
-        $filter->filterTestFiles()
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
         $pipelineCollection->triggerProcessTermination()
@@ -43,7 +43,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessFactory(),
-            $filter->reveal(),
+            $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
             $chunkFile->reveal()
@@ -54,8 +54,8 @@ class RunnerTest extends BaseUnitTestCase
 
     public function testRunWithSomeGreenTests(): void
     {
-        $filter = $this->prophesize(Filter::class);
-        $filter->filterTestFiles()
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
             ->willReturn([
                 'Test1.php',
                 'Test2.php',
@@ -77,7 +77,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessFactory(),
-            $filter->reveal(),
+            $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
             $chunkFile->reveal()
@@ -88,8 +88,8 @@ class RunnerTest extends BaseUnitTestCase
 
     public function testRunWithChunkedSomeGreenTests(): void
     {
-        $filter = $this->prophesize(Filter::class);
-        $filter->filterTestFiles()
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
             ->willReturn([
                 'Test1.php',
                 'Test2.php',
@@ -116,7 +116,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner = new Runner(
             $this->mockEventDispatcher(),
             $this->mockProcessFactory('.xml'),
-            $filter->reveal(),
+            $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(true),
             $chunkFile->reveal()
@@ -135,8 +135,8 @@ class RunnerTest extends BaseUnitTestCase
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
 
-        $filter = $this->prophesize(Filter::class);
-        $filter->filterTestFiles()
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
         $pipelineCollection->push($process)
@@ -149,7 +149,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner = new Runner(
             $eventDispatcher->reveal(),
             $this->mockProcessFactory(),
-            $filter->reveal(),
+            $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
             $chunkFile->reveal()
@@ -168,8 +168,8 @@ class RunnerTest extends BaseUnitTestCase
         $eventDispatcher->dispatch(Argument::cetera())
             ->shouldNotBeCalled();
 
-        $filter = $this->prophesize(Filter::class);
-        $filter->filterTestFiles()
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
             ->willReturn([]);
         $pipelineCollection = $this->prophesize(PipelineCollection::class);
         $pipelineCollection->push($process)
@@ -182,7 +182,7 @@ class RunnerTest extends BaseUnitTestCase
         $runner = new Runner(
             $eventDispatcher->reveal(),
             $this->mockProcessFactory(),
-            $filter->reveal(),
+            $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
             $chunkFile->reveal()

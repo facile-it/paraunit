@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Paraunit\Configuration;
 
 use Paraunit\Configuration\DependencyInjection\ParallelContainerDefinition;
+use Paraunit\Filter\Filter;
+use Paraunit\Filter\TestList;
 use Paraunit\Printer\DebugPrinter;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,6 +41,7 @@ class ParallelConfiguration
         $this->containerDefinition->configure($containerBuilder);
         $this->loadCommandLineOptions($containerBuilder, $input);
         $this->tagEventSubscribers($containerBuilder);
+        $this->postProcessConfiguration($containerBuilder);
 
         $this->createPublicAliases($containerBuilder);
         $containerBuilder->compile();
@@ -102,6 +105,25 @@ class ParallelConfiguration
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
                 new Alias($serviceName, true)
             );
+        }
+    }
+
+    private function postProcessConfiguration(ContainerBuilder $container): void
+    {
+        $sortOrder = $container->hasParameter('paraunit.sort_order')
+            ? $container->getParameter('paraunit.sort_order')
+            : null;
+
+        if (is_string($sortOrder)) {
+            if ($sortOrder !== 'random') {
+                throw new \InvalidArgumentException('Unexpected value for --sort option: ' . $sortOrder);
+            }
+
+        // TODO
+        //            $filter->setDecoratedService();
+        //            $container->setAlias(TestList::class, Filter::class);
+        } else {
+            $container->setAlias(TestList::class, Filter::class);
         }
     }
 }

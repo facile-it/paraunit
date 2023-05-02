@@ -8,7 +8,7 @@ use Paraunit\Configuration\PHPUnitConfig;
 use PHPUnit\Util\Xml\Loader;
 use SebastianBergmann\FileIterator\Facade;
 
-class Filter
+class Filter implements TestList
 {
     private readonly Loader $xmlLoader;
 
@@ -23,6 +23,11 @@ class Filter
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
+    }
+
+    public function getTests(): array
+    {
+        return $this->filterTestFiles();
     }
 
     /**
