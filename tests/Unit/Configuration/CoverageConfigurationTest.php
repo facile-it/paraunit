@@ -134,6 +134,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'logo',
             'chunk-size',
             'pass-through',
+            'sort',
         ];
 
         foreach ($options as $optionName) {
@@ -199,6 +200,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'php',
             'chunk-size',
             'pass-through',
+            'sort',
         ];
 
         foreach ($options as $optionName) {

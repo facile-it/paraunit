@@ -6,7 +6,7 @@ namespace Paraunit\Runner;
 
 use function function_exists;
 use Paraunit\Configuration\ChunkSize;
-use Paraunit\Filter\Filter;
+use Paraunit\Filter\TestList;
 use Paraunit\Lifecycle\BeforeEngineStart;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\EngineStart;
@@ -29,7 +29,7 @@ class Runner implements EventSubscriberInterface
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ProcessFactory $processFactory,
-        private readonly Filter $filter,
+        private readonly TestList $testList,
         private readonly PipelineCollection $pipelineCollection,
         private readonly ChunkSize $chunkSize,
         private readonly ChunkFile $chunkFile
@@ -99,7 +99,7 @@ class Runner implements EventSubscriberInterface
 
     private function createProcessQueue(): void
     {
-        foreach ($this->filter->filterTestFiles() as $file) {
+        foreach ($this->testList->getTests() as $file) {
             $this->queuedProcesses->enqueue(
                 $this->processFactory->create($file)
             );
@@ -108,7 +108,7 @@ class Runner implements EventSubscriberInterface
 
     private function createChunkedProcessQueue(): void
     {
-        $files = $this->filter->filterTestFiles();
+        $files = $this->testList->getTests();
         foreach (array_chunk($files, $this->chunkSize->getChunkSize()) as $chunkNumber => $filesChunk) {
             $chunkFileName = $this->chunkFile->createChunkFile($chunkNumber, $filesChunk);
             $this->queuedProcesses->enqueue(

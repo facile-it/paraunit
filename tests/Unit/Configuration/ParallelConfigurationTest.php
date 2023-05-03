@@ -9,6 +9,8 @@ use Paraunit\Configuration\PHPDbgBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\File\Cleaner;
+use Paraunit\Filter\RandomizeList;
+use Paraunit\Filter\TestList;
 use Paraunit\Logs\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
@@ -98,6 +100,39 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $service = $this->getService($container, DebugPrinter::class);
         $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
+    }
+
+    public function testBuildContainerWithSortRandom(): void
+    {
+        $paraunit = new ParallelConfiguration(true);
+        $input = $this->prophesize(InputInterface::class);
+        $input->getArgument('stringFilter')
+            ->willReturn('text');
+        $input->getOption('sort')
+            ->willReturn('random');
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
+
+        $container = $paraunit->buildContainer($input->reveal(), $this->prophesize(OutputInterface::class)->reveal());
+
+        $service = $this->getService($container, TestList::class);
+        $this->assertInstanceOf(RandomizeList::class, $service);
+    }
+
+    public function testBuildContainerWithSortInvalid(): void
+    {
+        $paraunit = new ParallelConfiguration(true);
+        $input = $this->prophesize(InputInterface::class);
+        $input->getArgument('stringFilter')
+            ->willReturn('text');
+        $input->getOption('sort')
+            ->willReturn('foo');
+        $input->getOption(Argument::cetera())
+            ->willReturn(null);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $paraunit->buildContainer($input->reveal(), $this->prophesize(OutputInterface::class)->reveal());
     }
 
     private function getService(ContainerBuilder $container, string $serviceName): ?object
