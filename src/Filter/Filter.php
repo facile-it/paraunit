@@ -151,11 +151,9 @@ class Filter implements TestList
         string $defaultValue = null
     ): string {
         /** @psalm-suppress RedundantCondition */
-        if ($testSuiteNode->attributes !== null) {
-            foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
-                if ($attrName === $nodeName) {
-                    return $attrNode->value;
-                }
+        foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
+            if ($attrName === $nodeName) {
+                return $attrNode->value;
             }
         }
 

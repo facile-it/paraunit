@@ -164,11 +164,12 @@ class CoverageCommandTest extends BaseTestCase
      */
     private function prepareArguments(array $additionalArguments = []): array
     {
-        return array_merge([
+        return [
             'command' => self::COMMAND_NAME,
             '--configuration' => $this->getConfigForStubs(),
             'stringFilter' => 'green',
-        ], $additionalArguments);
+            ...$additionalArguments,
+        ];
     }
 
     private function isXdebugCoverageDisabled(): bool

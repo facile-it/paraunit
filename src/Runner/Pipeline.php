@@ -34,12 +34,12 @@ class Pipeline
 
     public function isFree(): bool
     {
-        return $this->process === null;
+        return ! $this->process instanceof Process;
     }
 
     public function isTerminated(): bool
     {
-        if ($this->process !== null) {
+        if ($this->process instanceof Process) {
             return $this->process->isTerminated();
         }
 
@@ -48,7 +48,7 @@ class Pipeline
 
     public function triggerTermination(): bool
     {
-        if (null === $this->process) {
+        if (! $this->process instanceof Process) {
             return false;
         }
 
@@ -73,7 +73,7 @@ class Pipeline
 
     private function handleProcessTermination(): void
     {
-        if ($this->process !== null) {
+        if ($this->process instanceof Process) {
             $this->dispatcher->dispatch(new ProcessTerminated($this->process));
             $this->process = null;
         }
