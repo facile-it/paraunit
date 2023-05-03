@@ -64,7 +64,7 @@ class PipelineCollection
         $processes = [];
         foreach ($this->pipelines as $pipeline) {
             $process = $pipeline->getProcess();
-            if ($process !== null) {
+            if ($process instanceof Process) {
                 $processes[] = $process;
             }
         }

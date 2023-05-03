@@ -43,7 +43,7 @@ class PHPUnitConfig
                 continue;
             }
 
-            $class = $extension->attributes?->getNamedItem('class');
+            $class = $extension->attributes->getNamedItem('class');
             if (! $class instanceof \DOMAttr) {
                 continue;
             }

@@ -47,7 +47,7 @@ enum TestOutcome: string implements ComparableTestStatus
 
     public function isMoreImportantThan(?ComparableTestStatus $status): bool
     {
-        if ($status === null) {
+        if (! $status instanceof ComparableTestStatus) {
             return true;
         }
 
