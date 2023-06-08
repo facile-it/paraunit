@@ -236,6 +236,86 @@
   
   <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.0/">Paraunit 2.2.0: add Cobertura coverage report format</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>08 Jun 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new minor versions adds support for the Cobertura coverage report, which is supported by many services and tool, with GitLab as a prominent one.
+Added Add --cobertura coverage report format, useful for GitLab test code coverage visualization 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.1.0/">Paraunit 2.1.0: add --sort=random option</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 May 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new minor versions adds a new, small feature to support one small sorting option, the random one. This is useful to mix test execution, if you&rsquo;re encountering deadlocks and performance bottlenecks due to the concentration of certain tests in some areas of your test suite.
+Added Add --sort=random option to execute test classes in random order 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/2.0.0/">Paraunit 2.0.0: PHPUnit 10 support and a big internal refactor</a></h2>
 
     <div class="post-meta">
@@ -358,88 +438,6 @@ Here&rsquo;s the full changelog of the release:
   This small patch is just to allow a dependency bump for end users.
 Here&rsquo;s the full changelog of the release:
 Added Allow jean85/pretty-package-versions v2 90f84b5 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.0/">Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>15 Sep 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This release contains only support for newer versions of PHP &amp; PHPUnit; due to PHPUnit 9.3 requiring a new major version of phpunit/php-code-coverage, I&rsquo;m forced to drop support to all PHPUnit versions below 9.3. Usage of Paraunit is unchanged.
-Here&rsquo;s the full changelog of the release:
-Added Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153 Removed Drop support for PHPUnit &lt; 9.3 #153 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.1/">Paraunit 1.1.1: PostgreSQL retry support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>06 May 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.
-Here&rsquo;s the full changelog of the release:
-Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma 
   </p>
 
   

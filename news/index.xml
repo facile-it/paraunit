@@ -5,7 +5,27 @@
     <link>https://engineering.facile.it/paraunit/news/</link>
     <description>Recent content in News on Paraunit</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 06 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://engineering.facile.it/paraunit/news/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paraunit 2.2.0: add Cobertura coverage report format</title>
+      <link>https://engineering.facile.it/paraunit/news/release/2.2.0/</link>
+      <pubDate>Thu, 08 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/2.2.0/</guid>
+      <description>This new minor versions adds support for the Cobertura coverage report, which is supported by many services and tool, with GitLab as a prominent one.
+Added Add --cobertura coverage report format, useful for GitLab test code coverage visualization </description>
+    </item>
+    
+    <item>
+      <title>Paraunit 2.1.0: add --sort=random option</title>
+      <link>https://engineering.facile.it/paraunit/news/release/2.1.0/</link>
+      <pubDate>Wed, 03 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineering.facile.it/paraunit/news/release/2.1.0/</guid>
+      <description>This new minor versions adds a new, small feature to support one small sorting option, the random one. This is useful to mix test execution, if you&amp;rsquo;re encountering deadlocks and performance bottlenecks due to the concentration of certain tests in some areas of your test suite.
+Added Add --sort=random option to execute test classes in random order </description>
+    </item>
+    
     <item>
       <title>Paraunit 2.0.0: PHPUnit 10 support and a big internal refactor</title>
       <link>https://engineering.facile.it/paraunit/news/release/2.0.0/</link>
