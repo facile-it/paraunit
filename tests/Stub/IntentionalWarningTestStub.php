@@ -16,6 +16,6 @@ class IntentionalWarningTestStub extends TestCase
     {
         $this->assertTrue(true);
 
-        Facade::emitter()->testTriggeredWarning($this->createPHPUnitTestMethod(), 'This is an intentional warning', __FILE__, __LINE__);
+        Facade::emitter()->testTriggeredWarning($this->createPHPUnitTestMethod(), 'This is an intentional warning', __FILE__, __LINE__, false);
     }
 }

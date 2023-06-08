@@ -135,7 +135,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $paraunit->buildContainer($input->reveal(), $this->prophesize(OutputInterface::class)->reveal());
     }
 
-    private function getService(ContainerBuilder $container, string $serviceName): ?object
+    private function getService(ContainerBuilder $container, string $serviceName): object
     {
         return $container->get(sprintf(ParallelConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
     }

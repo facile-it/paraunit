@@ -30,7 +30,8 @@ class TestWarningTest extends AbstractTestHookTestCase
             $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
             __FILE__,
-            1
+            1,
+            false,
         );
     }
 

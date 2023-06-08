@@ -30,7 +30,8 @@ class DeprecationTest extends AbstractTestHookTestCase
             $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
             'testFile.php',
-            123
+            123,
+            false,
         );
     }
 

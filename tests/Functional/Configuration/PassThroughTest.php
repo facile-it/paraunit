@@ -40,7 +40,8 @@ class PassThroughTest extends BaseFunctionalTestCase
                 $this->createPHPUnitTestMethod(),
                 count($remaining) . ' unhandled new PHPUnit options: ' . print_r($remaining, true),
                 __FILE__,
-                __LINE__
+                __LINE__,
+                false,
             );
         }
     }
