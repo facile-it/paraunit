@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [2.2.0] - 2023-06-08
+ * Add `--cobertura` coverage report format, useful for [GitLab test code coverage visualization](https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html#php-example) [#206](https://github.com/facile-it/paraunit/pull/206)
+
 ## [2.1.0] - 2023-05-03
  * Add `--sort=random` option to execute test classes in random order
 
