@@ -7,6 +7,7 @@ namespace Paraunit\Configuration;
 use Paraunit\Configuration\DependencyInjection\CoverageContainerDefinition;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
@@ -42,6 +43,7 @@ class CoverageConfiguration extends ParallelConfiguration
         $this->addFileOrOutputProcessor($coverageResult, $input, TextSummary::class);
         $this->addFileProcessor($coverageResult, $input, Crap4j::class);
         $this->addFileProcessor($coverageResult, $input, Php::class);
+        $this->addFileProcessor($coverageResult, $input, Cobertura::class);
     }
 
     /**

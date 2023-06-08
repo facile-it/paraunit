@@ -6,6 +6,7 @@ namespace Paraunit\Command;
 
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
@@ -32,6 +33,7 @@ class CoverageCommand extends ParallelCommand
             TextSummary::getConsoleOptionName(),
             Crap4j::getConsoleOptionName(),
             Php::getConsoleOptionName(),
+            Cobertura::getConsoleOptionName(),
         ];
     }
 
@@ -48,6 +50,7 @@ class CoverageCommand extends ParallelCommand
         $this->addOption(TextSummary::getConsoleOptionName(), null, InputOption::VALUE_OPTIONAL, 'Output text coverage summary only', false);
         $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
         $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
+        $this->addOption(Cobertura::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Cobertura coverage result');
     }
 
     /**

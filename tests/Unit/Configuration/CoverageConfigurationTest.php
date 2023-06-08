@@ -12,6 +12,7 @@ use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\AbstractText;
 use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
@@ -130,6 +131,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'text-summary',
             'crap4j',
             'php',
+            'cobertura',
             'ansi',
             'logo',
             'chunk-size',
@@ -174,13 +176,14 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     public static function cliOptionsProvider(): array
     {
         return [
-            ['clover', Clover::class],
-            ['xml', Xml::class],
-            ['html', Html::class],
-            ['text', Text::class],
-            ['text-summary', TextSummary::class],
-            ['crap4j', Crap4j::class],
-            ['php', Php::class],
+            'clover' => ['clover', Clover::class],
+            'xml' => ['xml', Xml::class],
+            'html' => ['html', Html::class],
+            'text' => ['text', Text::class],
+            'text-summary' => ['text-summary', TextSummary::class],
+            'crap4j' => ['crap4j', Crap4j::class],
+            'php' => ['php', Php::class],
+            'cobertura' => ['cobertura', Cobertura::class],
         ];
     }
 
@@ -198,6 +201,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'text',
             'crap4j',
             'php',
+            'cobertura',
             'chunk-size',
             'pass-through',
             'sort',

@@ -8,6 +8,7 @@ use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Coverage\Processor\Clover;
+use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
@@ -67,15 +68,16 @@ class CoverageCommandTest extends BaseUnitTestCase
     public static function validCoverageOptionsProvider(): array
     {
         return [
-            [Clover::getConsoleOptionName()],
-            [Xml::getConsoleOptionName()],
-            [Html::getConsoleOptionName()],
-            [Text::getConsoleOptionName(), true],
-            [Text::getConsoleOptionName()],
-            [TextSummary::getConsoleOptionName(), true],
-            [TextSummary::getConsoleOptionName()],
-            [Crap4j::getConsoleOptionName()],
-            [Php::getConsoleOptionName()],
+            'Clover' => [Clover::getConsoleOptionName()],
+            'Xml' => [Xml::getConsoleOptionName()],
+            'Html' => [Html::getConsoleOptionName()],
+            'Text (no value)' => [Text::getConsoleOptionName(), true],
+            'Text' => [Text::getConsoleOptionName()],
+            'TextSummary (no value)' => [TextSummary::getConsoleOptionName(), true],
+            'TextSummary' => [TextSummary::getConsoleOptionName()],
+            'Crap4j' => [Crap4j::getConsoleOptionName()],
+            'Php' => [Php::getConsoleOptionName()],
+            'Cobertura' => [Cobertura::getConsoleOptionName()],
         ];
     }
 

@@ -89,6 +89,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         $supportedOptions[] = '--coverage-xml';
         $supportedOptions[] = '--coverage-text';
         $supportedOptions[] = '--coverage-crap4j';
+        $supportedOptions[] = '--coverage-cobertura';
 
         return array_values($supportedOptions);
     }
@@ -177,7 +178,6 @@ class PassThroughTest extends BaseFunctionalTestCase
     private function getPossibleFutureOptions(): array
     {
         return [
-            '--coverage-cobertura',
             '--exclude-testsuite',
             '--test-suffix',
             '--columns',
