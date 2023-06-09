@@ -12,6 +12,7 @@ use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\TestResult\Interfaces\TestResultContainerInterface;
 use Paraunit\TestResult\TestResultList;
+use Paraunit\Util\Log\JUnit\JUnit;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -33,9 +34,10 @@ class FinalPrinter extends AbstractFinalPrinter implements EventSubscriberInterf
     public function __construct(
         TestResultList $testResultList,
         OutputInterface $output,
-        ChunkSize $chunkSize
+        ChunkSize $chunkSize,
+        JUnit $log
     ) {
-        parent::__construct($testResultList, $output, $chunkSize);
+        parent::__construct($testResultList, $output, $chunkSize, $log);
 
         $this->stopWatch = new Stopwatch();
         $this->processCompleted = 0;

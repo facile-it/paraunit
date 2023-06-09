@@ -9,6 +9,7 @@ use Paraunit\Configuration\PHPUnitBinFile;
 use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Parser\JSON\TestHook as Hooks;
+use Paraunit\Util\Log\JUnit\JUnit;
 
 class CommandLine
 {
@@ -18,12 +19,20 @@ class CommandLine
     /** @var ChunkSize */
     protected $chunkSize;
 
+    /** @var JUnit  */
+    private $log;
+
+    /** @var bool  */
+    private $generateJunitLog = false;
+
     public function __construct(
         PHPUnitBinFile $phpUnitBin,
-        ChunkSize $chunkSize
+        ChunkSize $chunkSize,
+        JUnit $log
     ) {
         $this->phpUnitBin = $phpUnitBin;
         $this->chunkSize = $chunkSize;
+        $this->log = $log;
     }
 
     /**
@@ -68,6 +77,13 @@ class CommandLine
     private function buildPhpunitOptionString(PHPUnitOption $option): string
     {
         $optionString = '--' . $option->getName();
+
+        // This is creating log-junit output -> merges multiple log-junit files into one report
+        if ($option->getName() === 'log-junit' && $option->getValue() !== null) {
+            $this->generateJunitLog = true;
+            $this->log->setInputFileName($option->getValue());
+        }
+
         if ($option->hasValue()) {
             $optionString .= '=' . $option->getValue();
         }
@@ -80,6 +96,12 @@ class CommandLine
      */
     public function getSpecificOptions(string $testFilename): array
     {
-        return [];
+        $options = array();
+
+        if ($this->generateJunitLog) {
+            $options[] = $this->log->generateLogForTest($testFilename);
+        }
+
+        return $options;
     }
 }
