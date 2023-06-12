@@ -76,6 +76,7 @@ class ParallelConfiguration
         $containerBuilder->setParameter('paraunit.testsuite', $input->getOption('testsuite'));
         $containerBuilder->setParameter('paraunit.string_filter', $input->getArgument('stringFilter'));
         $containerBuilder->setParameter('paraunit.show_logo', $input->getOption('logo'));
+        $containerBuilder->setParameter('paraunit.print_failed_early', $input->getOption('print-failed-early'));
 
         if ($input->getOption('debug')) {
             $this->enableDebugMode($containerBuilder);

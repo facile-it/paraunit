@@ -125,6 +125,7 @@ class ParallelContainerDefinition
         $container->setDefinition(ConsoleFormatter::class, new Definition(ConsoleFormatter::class, [$output]));
         $container->setDefinition(SingleResultFormatter::class, new Definition(SingleResultFormatter::class, [
             new Reference(TestResultList::class),
+            '%paraunit.print_failed_early%',
         ]));
     }
 
