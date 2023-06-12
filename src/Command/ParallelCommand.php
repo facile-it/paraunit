@@ -79,6 +79,7 @@ class ParallelCommand extends Command
         $this->addOption('chunk-size', null, InputOption::VALUE_REQUIRED, 'Number of test files in chunk', 1);
         $this->addOption('debug', null, InputOption::VALUE_NONE, 'Print verbose debug output');
         $this->addOption('logo', null, InputOption::VALUE_NONE, 'Print the Shark logo at the top');
+        $this->addOption('print-failed-early', null, InputOption::VALUE_NONE, 'Print failed tests early');
 
         foreach ($this->phpunitOptions as $option) {
             $this->addOption(

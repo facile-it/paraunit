@@ -13,8 +13,15 @@ class SingleResultFormatter
     /** @var array<string, string> */
     private $tagMap;
 
-    public function __construct(TestResultList $testResultList)
+    /** @var bool */
+    private $printFailedEarly;
+
+    public function __construct(
+        TestResultList $testResultList,
+        bool $printFailedEarly
+    )
     {
+        $this->printFailedEarly = $printFailedEarly;
         $this->tagMap = [];
 
         foreach ($testResultList->getTestResultContainers() as $parser) {
@@ -42,5 +49,10 @@ class SingleResultFormatter
     private function addToMap(TestResultWithSymbolFormat $format): void
     {
         $this->tagMap[$format->getTestResultSymbol()] = $format->getTag();
+    }
+
+    public function shouldPrintFailedEarly(): bool
+    {
+        return $this->printFailedEarly;
     }
 }

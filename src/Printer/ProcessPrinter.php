@@ -9,6 +9,7 @@ use Paraunit\Lifecycle\AbstractProcessEvent;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\TestResult\Interfaces\FailureMessageInterface;
 use Paraunit\TestResult\Interfaces\PrintableTestResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -82,6 +83,21 @@ class ProcessPrinter implements EventSubscriberInterface
         $this->output->write(
             $this->singleResultFormatter->formatSingleResult($testResult)
         );
+
+        if ($this->singleResultFormatter->shouldPrintFailedEarly() && $testResult instanceof FailureMessageInterface) {
+            $this->output->writeln('');
+            $this->output->write(
+                sprintf(
+                    '<%s>%s</%s>',
+                    $testResult->getTestResultFormat()->getTag(),
+                    $testResult->getTestName(),
+                    $testResult->getTestResultFormat()->getTag()
+                )
+            );
+            $this->output->writeln('');
+            $this->output->writeln($testResult->getFailureMessage());
+            $this->output->writeln('');
+        }
     }
 
     private function printCounter(): void
