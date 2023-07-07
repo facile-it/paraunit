@@ -33,7 +33,7 @@ composer install
 phpunit
 ```
  
-And now your're ready! You should always use git commands (pull/commit/push) outside the container, since it does not 
+And now you're ready! You should always use git commands (pull/commit/push) outside the container, since it does not 
 have your GitHub credentials available.
 
 ## Coding Standard
