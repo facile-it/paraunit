@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../src/Bin/paraunit';
 --ARGS--
 run FakeDriverTest --no-ansi
 --EXPECTF--
-PARAUNIT v%s
+PARAUNIT v%s (PHPUnit v%s)
 by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it
 ... %w 3
 

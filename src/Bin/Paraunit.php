@@ -33,6 +33,6 @@ class Paraunit
 
     public static function getPHPUnitVersion(): string
     {
-       return PrettyVersions::getVersion('phpunit/phpunit')->getPrettyVersion();
+        return PrettyVersions::getVersion('phpunit/phpunit')->getPrettyVersion();
     }
 }

@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../src/Bin/paraunit';
 --ARGS--
 run IntentionalWarningTestStub -c tests/Stub/phpunit_for_stubs.xml --pass-through=--stop-on-warning
 --EXPECTF--
-PARAUNIT v%s
+PARAUNIT v%s (PHPUnit v%s)
 by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it
 W %w 1
 
