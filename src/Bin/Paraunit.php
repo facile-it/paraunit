@@ -31,7 +31,7 @@ class Paraunit
         return PrettyVersions::getVersion('facile-it/paraunit')->getPrettyVersion();
     }
 
-    public static function getPHPUnitVersion()
+    public static function getPHPUnitVersion(): string
     {
        return PrettyVersions::getVersion('phpunit/phpunit')->getPrettyVersion();
     }
