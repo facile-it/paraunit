@@ -29,8 +29,6 @@ class SharkPrinter implements EventSubscriberInterface
 
     public function onEngineBeforeStart(): void
     {
-        $phpUnitVersion = \PHPUnit\Runner\Version::id();
-
         if ($this->showLogo) {
             $this->output->writeln('                                                   B>                           ');
             $this->output->writeln('                                                   B "Bp                        ');
