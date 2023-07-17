@@ -52,7 +52,7 @@ class SharkPrinter extends AbstractPrinter implements EventSubscriberInterface
         }
 
         $output->writeln('');
-        $output->writeln('PARAUNIT v.' . Paraunit::getVersion());
+        $output->writeln('PARAUNIT v.' . Paraunit::getVersion() . ' (PHPUnit v.' . Paraunit::getPHPUnitVersion() . ')');
         $output->writeln('by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it');
     }
 }
