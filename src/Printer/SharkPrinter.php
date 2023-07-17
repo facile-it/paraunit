@@ -29,6 +29,8 @@ class SharkPrinter implements EventSubscriberInterface
 
     public function onEngineBeforeStart(): void
     {
+        $phpUnitVersion = \PHPUnit\Runner\Version::id();
+
         if ($this->showLogo) {
             $this->output->writeln('                                                   B>                           ');
             $this->output->writeln('                                                   B "Bp                        ');
@@ -45,7 +47,7 @@ class SharkPrinter implements EventSubscriberInterface
         }
 
         $this->output->writeln('');
-        $this->output->writeln('PARAUNIT v.' . Paraunit::getVersion());
+        $this->output->writeln('PARAUNIT v.' . Paraunit::getVersion() . ' (PHPUnit v.' . Paraunit::getPHPUnitVersion() . ')');
         $this->output->writeln('by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it');
     }
 }

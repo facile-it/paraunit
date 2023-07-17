@@ -11,5 +11,6 @@ build/
 swiftmailer/
 docker-compose.override.yml
 .vscode/
+.idea/
 .hugo_build.lock
 themes
