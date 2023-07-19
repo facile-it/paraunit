@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  * ...
 
 ## [2.2.1] - 2023-07-19
- * Add PHPUnit current version info [#213](https://github.com/facile-it/paraunit/pull/213)
+ * Add PHPUnit version info [#213](https://github.com/facile-it/paraunit/pull/213)
 
 ## [2.2.0] - 2023-06-08
  * Add `--cobertura` coverage report format, useful for [GitLab test code coverage visualization](https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html#php-example) [#206](https://github.com/facile-it/paraunit/pull/206)
