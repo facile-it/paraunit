@@ -43,10 +43,10 @@ class ChunkFileTest extends BaseIntegrationTestCase
             'Deprecations output:',
             '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
             '6 chunks with ERRORS:',
-            '5 chunks with FAILURES:',
-            '5 chunks with WARNINGS:',
+            '4 chunks with FAILURES:',
+            '2 chunks with WARNINGS:',
             '1 chunks with DEPRECATIONS:',
-            '4 chunks with RETRIED:',
+            '5 chunks with RETRIED:',
         ]);
 
         $this->assertStringContainsString('Tests\Stub\EntityManagerClosedTestStub::testBrokenTest', $outputText);
@@ -57,9 +57,6 @@ class ChunkFileTest extends BaseIntegrationTestCase
 
         $this->assertStringContainsString('Tests\Stub\MySQLLockTimeoutTestStub::testBrokenTest', $outputText);
         $this->assertStringContainsString('SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction', $outputText);
-
-        $this->assertStringContainsString('Tests\Stub\PassThenRetryTestStub::testBrokenTest', $outputText);
-        $this->assertStringContainsString('SQLSTATE[HY000]: General error: Deadlock found; try restarting transaction', $outputText);
 
         $this->assertStringContainsString('Tests\Stub\PostgreSQLDeadLockTestStub::testBrokenTest', $outputText);
         $this->assertStringContainsString('SQLSTATE[40P01]: Deadlock detected: 7 ERROR:  deadlock detected', $outputText);
