@@ -122,7 +122,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
             HRTime::fromSecondsAndNanoseconds(1, 0),
             $memoryUsage,
             $memoryUsage,
-            new GarbageCollectorStatus(0, 0, 0, 0, false, false, false, 0),
+            $this->createGarbageCollectorStatus(),
         );
         $duration = $current->time()->duration($current->time());
 
@@ -138,5 +138,25 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     protected function updatesLastTest(): bool
     {
         return true;
+    }
+
+    private function createGarbageCollectorStatus(): GarbageCollectorStatus
+    {
+        $status = gc_status();
+        $status['running'] = null;
+        $status['protected'] = null;
+        $status['full'] = null;
+        $status['buffer_size'] = null;
+
+        return new GarbageCollectorStatus(
+            $status['runs'],
+            $status['collected'],
+            $status['threshold'],
+            $status['roots'],
+            $status['running'],
+            $status['protected'],
+            $status['full'],
+            $status['buffer_size'],
+        );
     }
 }
