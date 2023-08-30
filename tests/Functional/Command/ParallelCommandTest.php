@@ -279,4 +279,23 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output);
     }
+
+    public function testRegressionWithPHPUnitError(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForStubs(),
+            'stringFilter' => 'PHPUnitError',
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertNotEquals(0, $exitCode, 'Expecting test failure, got exit code 0');
+        $this->assertStringContainsString('Executed: 1 test classes, 0 tests', $output);
+        $this->assertStringContainsStringIgnoringCase('1 files with ERRORS', $output);
+    }
 }
