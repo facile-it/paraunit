@@ -42,7 +42,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
             'Warnings output:',
             'Deprecations output:',
             '3 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
-            '6 chunks with ERRORS:',
+            '7 chunks with ERRORS:',
             '4 chunks with FAILURES:',
             '2 chunks with WARNINGS:',
             '1 chunks with DEPRECATIONS:',

@@ -22,6 +22,7 @@ enum LogStatus: string
     case LogTerminated = 'ParaunitLogTerminated';
     case Unknown = 'Unknown';
     case Deprecation = 'Deprecation';
+    case ErrorTriggered = 'ErrorTriggered';
 
     public function toTestStatus(): TestOutcome|TestIssue
     {
@@ -30,6 +31,7 @@ enum LogStatus: string
             self::Finished,
             self::Started,
             self::LogTerminated => throw new \InvalidArgumentException('Unexpected log status as outcome: ' . $this->value),
+            self::ErrorTriggered,
             self::Errored => TestOutcome::Error,
             self::Failed => TestOutcome::Failure,
             self::MarkedIncomplete => TestOutcome::Incomplete,
