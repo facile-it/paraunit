@@ -32,6 +32,9 @@ class RiskyTest extends AbstractTestHookTestCase
         );
     }
 
+    /**
+     * @return non-empty-string
+     */
     protected function getExpectedMessage(): string
     {
         return 'risky test message';

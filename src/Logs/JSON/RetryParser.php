@@ -13,6 +13,7 @@ use Paraunit\TestResult\ValueObject\TestResult;
 
 class RetryParser
 {
+    /** @var non-empty-string */
     private readonly string $regexPattern;
 
     public function __construct(
@@ -65,6 +66,8 @@ class RetryParser
 
     /**
      * @param string[] $patterns
+     *
+     * @return non-empty-string
      */
     private function buildRegexPattern(array $patterns): string
     {

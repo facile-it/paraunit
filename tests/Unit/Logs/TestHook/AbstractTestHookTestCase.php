@@ -14,6 +14,8 @@ use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
 use PHPUnit\Event\Telemetry\Info;
 use PHPUnit\Event\Telemetry\MemoryUsage;
+use PHPUnit\Event\Telemetry\Php81GarbageCollectorStatusProvider;
+use PHPUnit\Event\Telemetry\Php83GarbageCollectorStatusProvider;
 use PHPUnit\Event\Telemetry\Snapshot;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\TestHookStub;
@@ -49,7 +51,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     abstract protected function getExpectedStatus(): LogStatus;
 
     /**
-     * @return string|string[]|null
+     * @return non-empty-string|non-empty-string[]|null
      */
     abstract protected function getExpectedMessage(): string|array|null;
 
@@ -142,21 +144,14 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
 
     private function createGarbageCollectorStatus(): GarbageCollectorStatus
     {
-        $status = gc_status();
-        $status['running'] = null;
-        $status['protected'] = null;
-        $status['full'] = null;
-        $status['buffer_size'] = null;
+        static $factory;
 
-        return new GarbageCollectorStatus(
-            $status['runs'],
-            $status['collected'],
-            $status['threshold'],
-            $status['roots'],
-            $status['running'],
-            $status['protected'],
-            $status['full'],
-            $status['buffer_size'],
-        );
+        if (PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 3) {
+            $factory ??= new Php83GarbageCollectorStatusProvider();
+        } else {
+            $factory ??= new Php81GarbageCollectorStatusProvider();
+        }
+
+        return $factory->status();
     }
 }
