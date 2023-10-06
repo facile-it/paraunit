@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [2.2.2] - 2023-10-06
+ * Add support for PHPUnit 10.4 [#218](https://github.com/facile-it/paraunit/pull/218)
+
 ## [2.2.1] - 2023-08-30
  * Add output when failing due to PHPUnit runner errors (i.e. with an empty data provider) [#217](https://github.com/facile-it/paraunit/pull/217)
 
