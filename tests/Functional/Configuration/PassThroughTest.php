@@ -42,6 +42,7 @@ class PassThroughTest extends BaseFunctionalTestCase
                 __FILE__,
                 __LINE__,
                 false,
+                false,
             );
         }
     }
@@ -118,6 +119,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--list-groups'],
             ['--list-tests'],
             ['--list-tests-xml'],
+            // not useful - baseline cannot be merged
+            ['--generate-baseline'],
         ];
     }
 
@@ -169,6 +172,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--fail-on-deprecation'],
             ['--fail-on-notice'],
             ['--dont-report-useless-tests'],
+            ['--use-baseline'],
+            ['--ignore-baseline'],
         ];
     }
 
