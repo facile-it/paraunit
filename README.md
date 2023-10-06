@@ -52,7 +52,7 @@ Paraunit is also able to **collect the test coverage in parallel**, like this:
 vendor/bin/paraunit coverage --html=./dir
 ```
 
-It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
+It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, Cobertura, XML, Crap4j, PHP, text file and text to console.
 
 ## Documentation
 For more details about Paraunit and its usage, see the [documentation](https://engineering.facile.it/paraunit/documentation/)
