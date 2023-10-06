@@ -12,6 +12,7 @@ class Filter implements TestList
 {
     private readonly Loader $xmlLoader;
 
+    /** @var non-empty-string */
     private readonly string $relativePath;
 
     public function __construct(
@@ -91,13 +92,18 @@ class Filter implements TestList
     }
 
     /**
-     * @return list<string>
+     * @return list<non-empty-string>
      */
     private function getExcludesArray(\DOMElement $testSuiteNode): array
     {
         $excludes = [];
         foreach ($testSuiteNode->getElementsByTagName('exclude') as $excludeNode) {
-            $excludes[] = (string) $excludeNode->nodeValue;
+            $nodeValue = (string) $excludeNode->nodeValue;
+            if ($nodeValue === '') {
+                throw new \InvalidArgumentException('Invalid PHPUnit config: empty string in exclude tag');
+            }
+
+            $excludes[] = $nodeValue;
         }
 
         return $excludes;
@@ -105,7 +111,7 @@ class Filter implements TestList
 
     /**
      * @param string[] $aggregatedFiles
-     * @param list<string> $excludes
+     * @param list<non-empty-string> $excludes
      */
     private function addTestsFromDirectoryNodes(\DOMElement $testSuiteNode, array &$aggregatedFiles, array $excludes): void
     {
