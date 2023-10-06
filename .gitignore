@@ -4,6 +4,7 @@
 .*.cache
 .php_cs
 bin
+composer.lock
 gpg
 public
 vendor
