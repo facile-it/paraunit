@@ -16,6 +16,7 @@ class PassThrough
         '--atleast-version',
         '--check-version',
         '--generate-configuration',
+        '--generate-baseline',
         '--migrate-configuration',
         '--list-suites',
         '--list-groups',
@@ -32,7 +33,7 @@ class PassThrough
     public function __construct(?array $options = [])
     {
         foreach ($options ?? [] as $option) {
-            if (in_array($option, self::DISALLOWED_OPTIONS)) {
+            if (in_array($option, self::DISALLOWED_OPTIONS, true)) {
                 throw new \InvalidArgumentException('Invalid passed-through option: ' . $option);
             }
         }

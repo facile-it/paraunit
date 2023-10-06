@@ -32,6 +32,7 @@ class PhpWarningTest extends AbstractTestHookTestCase
             __FILE__,
             1,
             false,
+            false,
         );
     }
 

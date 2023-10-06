@@ -32,6 +32,7 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             'testFile.php',
             123,
             false,
+            false,
         );
     }
 
