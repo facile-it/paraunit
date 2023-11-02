@@ -30,7 +30,7 @@ You can use Paraunit with many versions of PHPUnit or Symfony, following this co
 
 | Paraunit version | Compatible PHPUnit Version | Compatible Symfony Version |
 |------------------|----------------------------|----------------------------|
-| 2.0              | 10+                        | 4.4, 5, 6                  |
+| 2.0              | 10+                        | 4.4, 5, 6, 7               |
 | 1.3              | 9.3+                       | 4.4, 5, 6                  |
 | 1.2              | 9.3+                       | 3.4, 4, 5                  |
 | 1.1              | 9.1, 9.2                   | 3.4, 4, 5                  |
