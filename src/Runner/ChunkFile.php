@@ -45,7 +45,7 @@ class ChunkFile
         }
 
         $nameAttribute = $document->createAttribute('name');
-        $nameAttribute->value = "Tests Suite $chunkNumber";
+        $nameAttribute->value = "Tests Suite {$chunkNumber}";
 
         $newTestSuiteNode = $document->createElement('testsuite');
         $newTestSuiteNode->appendChild($nameAttribute);

@@ -174,7 +174,7 @@ class Filter implements TestList
     private function filterByString(array $aggregatedFiles, ?string $stringFilter): array
     {
         if ($stringFilter !== null) {
-            $aggregatedFiles = array_filter($aggregatedFiles, fn ($value): bool => stripos($value, $stringFilter) !== false);
+            $aggregatedFiles = array_filter($aggregatedFiles, fn($value): bool => stripos($value, $stringFilter) !== false);
         }
 
         return array_values($aggregatedFiles);

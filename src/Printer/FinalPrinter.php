@@ -91,7 +91,7 @@ class FinalPrinter implements EventSubscriberInterface
         $this->output->writeln('');
         $executedTitle = $this->chunkSize->isChunked() ? 'chunks' : 'test classes';
 
-        $this->output->write(sprintf("Executed: %d $executedTitle", $this->processCompleted));
+        $this->output->write(sprintf("Executed: %d {$executedTitle}", $this->processCompleted));
 
         if ($this->processRetried > 0) {
             $this->output->write(sprintf(' (%d retried)', $this->processRetried));

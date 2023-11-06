@@ -16,7 +16,7 @@ class UnformattedOutputStub extends Output
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function doWrite($message, $newline)
     {

@@ -13,8 +13,7 @@ class TestResult
     public function __construct(
         public readonly Test $test,
         public readonly TestOutcome|TestIssue $status,
-    ) {
-    }
+    ) {}
 
     public static function from(LogData $log): self
     {

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Runner;
 
-use function function_exists;
 use Paraunit\Bin\Paraunit;
 use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\Runner;
 use Tests\BaseIntegrationTestCase;
+
+use function function_exists;
 
 class ChunkFileTest extends BaseIntegrationTestCase
 {
@@ -115,7 +116,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
             Paraunit::getVersion(),
             '     3',
             'Execution time',
-            "Executed: $chunkCount chunks, 3 tests",
+            "Executed: {$chunkCount} chunks, 3 tests",
             'Risky Outcome output:',
             '2 chunks with RISKY OUTCOME:',
         ]);

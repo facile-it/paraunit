@@ -8,9 +8,7 @@ use Paraunit\Process\Process;
 
 abstract class AbstractProcessEvent
 {
-    public function __construct(private readonly Process $process)
-    {
-    }
+    public function __construct(private readonly Process $process) {}
 
     public function getProcess(): Process
     {
