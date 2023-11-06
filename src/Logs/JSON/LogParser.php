@@ -17,8 +17,7 @@ class LogParser implements EventSubscriberInterface
         private readonly LogHandler $logHandler,
         private readonly RetryParser $retryParser,
         private readonly EventDispatcherInterface $eventDispatcher,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, string>

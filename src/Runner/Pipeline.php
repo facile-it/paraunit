@@ -17,8 +17,7 @@ class Pipeline
         private readonly EventDispatcherInterface $dispatcher,
         /** @var positive-int $number */
         private readonly int $number
-    ) {
-    }
+    ) {}
 
     public function execute(Process $process): void
     {

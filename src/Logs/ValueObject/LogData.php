@@ -10,8 +10,7 @@ class LogData implements \JsonSerializable
         public readonly LogStatus $status,
         public readonly Test $test,
         public readonly ?string $message
-    ) {
-    }
+    ) {}
 
     /**
      * @psalm-assert array{status: string, test: string, message?: string|null} $log
@@ -109,7 +108,7 @@ class LogData implements \JsonSerializable
     /**
      * @param string $jsonString The dirty output
      *
-     * @return non-empty-string  The normalized log, as an array of JSON objects
+     * @return non-empty-string The normalized log, as an array of JSON objects
      */
     private static function cleanLog(string $jsonString): string
     {

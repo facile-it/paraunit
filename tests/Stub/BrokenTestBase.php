@@ -6,6 +6,4 @@ namespace Tests\Stub;
 
 use PHPUnit\Framework\TestCase;
 
-abstract class BrokenTestBase extends TestCase implements BrokenTestInterface
-{
-}
+abstract class BrokenTestBase extends TestCase implements BrokenTestInterface {}

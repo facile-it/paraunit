@@ -13,9 +13,7 @@ class CoverageMerger implements EventSubscriberInterface
 {
     private ?CodeCoverage $coverageData = null;
 
-    public function __construct(private readonly CoverageFetcher $coverageFetcher)
-    {
-    }
+    public function __construct(private readonly CoverageFetcher $coverageFetcher) {}
 
     /**
      * @return array<string, string>

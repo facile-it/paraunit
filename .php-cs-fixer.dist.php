@@ -2,11 +2,9 @@
 
 $additionalRules = [
     'declare_strict_types' => true,
-    'no_superfluous_phpdoc_tags' => true,
     'php_unit_construct' => true,
     'php_unit_dedicate_assert' => true,
     'phpdoc_to_comment' => false,
-    'phpdoc_trim_consecutive_blank_line_separation' => true,
     'random_api_migration' => true,
     'self_accessor' => true,
 ];

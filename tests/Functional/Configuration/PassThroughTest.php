@@ -29,8 +29,8 @@ class PassThroughTest extends BaseFunctionalTestCase
     {
         $remaining = array_values(array_diff(
             $this->getAllPHPUnitOptions(),
-            array_map(static fn (array $value): string => $value[0], self::allowedOptionsDataProvider()),
-            array_map(static fn (array $value): string => $value[0], self::disallowedOptionsDataProvider()),
+            array_map(static fn(array $value): string => $value[0], self::allowedOptionsDataProvider()),
+            array_map(static fn(array $value): string => $value[0], self::disallowedOptionsDataProvider()),
             $this->getAlreadySupportedOptions(),
             $this->getPossibleFutureOptions(),
         ));
@@ -77,7 +77,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         $coverageCommand = new CoverageCommand($this->prophesize(CoverageConfiguration::class)->reveal());
 
         $supportedOptions = array_map(
-            static fn (InputOption $option): string => '--' . $option->getName(),
+            static fn(InputOption $option): string => '--' . $option->getName(),
             $coverageCommand->getDefinition()->getOptions(),
         );
 

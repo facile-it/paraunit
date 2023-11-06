@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Runner;
 
-use function function_exists;
 use Paraunit\Configuration\ChunkSize;
 use Paraunit\Filter\TestList;
 use Paraunit\Lifecycle\BeforeEngineStart;
@@ -18,6 +17,8 @@ use Paraunit\Process\ProcessFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+use function function_exists;
 
 class Runner implements EventSubscriberInterface
 {
@@ -144,7 +145,7 @@ class Runner implements EventSubscriberInterface
                 try {
                     $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
                 } catch (RuntimeException) {
-                    //pass
+                    // pass
                 }
             } while (! $this->queuedProcesses->isEmpty());
         }
