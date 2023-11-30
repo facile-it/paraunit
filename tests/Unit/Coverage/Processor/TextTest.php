@@ -39,8 +39,7 @@ class TextTest extends BaseUnitTestCase
     {
         $output = $this->prophesize(OutputInterface::class);
         $output->writeln(Argument::containingString($expectedString))
-            ->shouldBeCalledTimes(1)
-            ->willReturn();
+            ->shouldBeCalledTimes(1);
         $text = new Text($output->reveal(), $withColors);
 
         $text->process($this->createCodeCoverage());

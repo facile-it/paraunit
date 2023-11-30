@@ -50,7 +50,6 @@ class ProgressPrinterTest extends BaseUnitTestCase
 
             return true;
         }))
-            ->willReturn()
             ->shouldBeCalledTimes($newLineTimes);
 
         $printer = new ProgressPrinter($output->reveal());
