@@ -57,7 +57,7 @@ class CoverageCommand extends ParallelCommand
      * @throws \Exception
      * @throws \InvalidArgumentException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (! $this->hasChosenCoverageMethod($input)) {
             $coverageMethods = implode(', ', $this->coverageMethods);

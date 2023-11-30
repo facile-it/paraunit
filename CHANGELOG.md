@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
- * ...
+ * Add support for Symfony 7
 
 ## [2.2.2] - 2023-10-06
  * Add support for PHPUnit 10.4 [#218](https://github.com/facile-it/paraunit/pull/218)

@@ -41,7 +41,7 @@ class ParallelCommand extends Command
     /**
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $container = $this->configuration->buildContainer($input, $output);
 
