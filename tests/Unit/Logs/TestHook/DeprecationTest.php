@@ -33,6 +33,7 @@ class DeprecationTest extends AbstractTestHookTestCase
             123,
             false,
             false,
+            false,
         );
     }
 
