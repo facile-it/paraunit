@@ -5,11 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [2.3.0] - 2024-02-02
- * Add support for PHPUnit 11
- * Bump PHPUnit requirement to a minimum of 10.5.4
+ * Add support for PHPUnit 11 [#225](https://github.com/facile-it/paraunit/pull/225)
+ * Bump PHPUnit requirement to a minimum of 10.5.4 [#227](https://github.com/facile-it/paraunit/pull/227)
 
 ## [2.2.3] - 2023-11-30
- * Add support for Symfony 7
+ * Add support for Symfony 7 [#2220](https://github.com/facile-it/paraunit/pull/220)
 
 ## [2.2.2] - 2023-10-06
  * Add support for PHPUnit 10.4 [#218](https://github.com/facile-it/paraunit/pull/218)
