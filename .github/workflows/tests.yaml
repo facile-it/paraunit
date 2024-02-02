@@ -6,6 +6,8 @@ on:
     branches:
       - 1.x
       - 2.x
+  schedule:
+    - cron: "42 7 * * 1"
 
 jobs:
   Tests:
