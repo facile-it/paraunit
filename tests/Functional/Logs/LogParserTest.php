@@ -104,7 +104,7 @@ class LogParserTest extends BaseFunctionalTestCase
             'RaisingNoticeTestStub' => [
                 'RaisingNoticeTestStub.php',
                 10,
-                'FFFF',
+                'FFEF',
             ],
             'SegFaultTestStub' => [
                 'SegFaultTestStub.php',
