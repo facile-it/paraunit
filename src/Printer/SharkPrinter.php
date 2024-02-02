@@ -22,7 +22,7 @@ class SharkPrinter implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            BeforeEngineStart::class => ['onEngineBeforeStart', 1000],
+            BeforeEngineStart::class => ['onEngineBeforeStart', 1_000],
         ];
     }
 

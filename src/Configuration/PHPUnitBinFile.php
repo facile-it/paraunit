@@ -53,7 +53,7 @@ class PHPUnitBinFile
     private function setPhpUnitBin(string $phpUnitBin): void
     {
         $realpath = realpath($phpUnitBin);
-        if (! $realpath) {
+        if (false === $realpath) {
             throw new \RuntimeException('Unable set PHPUnit binary real path');
         }
 

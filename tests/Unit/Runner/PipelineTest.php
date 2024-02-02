@@ -126,8 +126,8 @@ class PipelineTest extends BaseUnitTestCase
     public function testGetNumber(): void
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $pipeline = new Pipeline($eventDispatcher->reveal(), 123456);
+        $pipeline = new Pipeline($eventDispatcher->reveal(), 123_456);
 
-        $this->assertSame(123456, $pipeline->getNumber());
+        $this->assertSame(123_456, $pipeline->getNumber());
     }
 }

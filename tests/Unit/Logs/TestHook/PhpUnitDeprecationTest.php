@@ -32,6 +32,9 @@ class PhpUnitDeprecationTest extends AbstractTestHookTestCase
         );
     }
 
+    /**
+     * @return non-empty-string
+     */
     protected function getExpectedMessage(): string
     {
         return 'test message';
