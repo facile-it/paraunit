@@ -60,7 +60,7 @@ class RetryParser
     private function containsRetryableError(LogData $log): bool
     {
         return $log->status === LogStatus::Errored
-            && $log->message
+            && null !== $log->message
             && 1 === preg_match($this->regexPattern, $log->message);
     }
 

@@ -48,7 +48,7 @@ class LogData implements \JsonSerializable
             'test' => $this->test->name,
         ];
 
-        if ($this->message) {
+        if (null !== $this->message) {
             $data['message'] = $this->message;
         }
 
@@ -58,6 +58,7 @@ class LogData implements \JsonSerializable
 
     private function convertToUtf8(string $string): string
     {
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (! \mb_detect_encoding($string, 'UTF-8', true)) {
             return \mb_convert_encoding($string, 'UTF-8');
         }
