@@ -33,6 +33,10 @@ jobs:
             coverage: 'xdebug2'
             php: '8.1'
             dependencies: 'lowest'
+          - description: 'PHPUnit 11 special'
+            coverage: 'none'
+            php: '8.3'
+            phpunit_11_special: 'yes'
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
@@ -41,8 +45,8 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
-        # @TODO: remove line below when vimeo/psalm allow nikic/php-parser:^5
-      - run: composer remove --dev vimeo/psalm --no-update
+      - run: ./.github/workflows/phpunit_11_special.sh
+        if: matrix.phpunit_11_special == 'yes'
       - run: composer remove --dev facile-it/facile-coding-standard --no-update
         if: matrix.dependencies == 'lowest'
       - uses: ramsey/composer-install@v2
