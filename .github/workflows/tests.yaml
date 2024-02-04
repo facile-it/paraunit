@@ -48,8 +48,8 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
-      - run: composer remove --dev facile-it/facile-coding-standard --no-update
-        if: matrix.dependencies == 'lowest'
+      - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
+        if: matrix.dependencies == 'lowest' || matrix.phpunit
       - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
         if: matrix.phpunit
       - uses: ramsey/composer-install@v2
