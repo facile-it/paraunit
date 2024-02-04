@@ -53,6 +53,16 @@
         "symfony/phpunit-bridge": "^6.4||^7.0",
         "vimeo/psalm": "^5.5.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jean85/prophecy-phpunit"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/jean85/prophecy"
+        }
+    ],
     "conflict": {
         "composer/package-versions-deprecated": "<1.11.99"
     },
