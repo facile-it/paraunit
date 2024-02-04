@@ -52,6 +52,7 @@ jobs:
       - uses: ramsey/composer-install@v2
         with:
           dependency-versions: ${{ matrix.dependencies }}
+      - run: vendor/bin/phpunit --version
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
       - uses: codecov/codecov-action@v3
         with:
