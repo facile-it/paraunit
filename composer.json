@@ -27,7 +27,7 @@
         "ext-dom": "*",
         "ext-json": "*",
         "jean85/pretty-package-versions": "^1.5.1||^2.0.1",
-        "phpunit/php-code-coverage": "^10.0",
+        "phpunit/php-code-coverage": "^10.0||^11.0",
         "phpunit/php-file-iterator": "^4.0",
         "phpunit/phpunit": "^10.5.4||^11.0",
         "psr/event-dispatcher": "^1.0",
@@ -85,5 +85,9 @@
     "suggest": {
         "ext-pcov": "A coverage driver for faster collection",
         "dama/doctrine-test-bundle": "Useful for Symfony+Doctrine functional testing, providing DB isolation"
+    },
+    "scripts": {
+        "cs-check": "php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix --diff"
     }
 }
