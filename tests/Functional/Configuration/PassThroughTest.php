@@ -183,6 +183,7 @@ class PassThroughTest extends BaseFunctionalTestCase
     private function getPossibleFutureOptions(): array
     {
         return [
+            '--exclude-filter',
             '--exclude-testsuite',
             '--test-suffix',
             '--columns',
@@ -192,6 +193,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--display-errors',
             '--display-notices',
             '--display-warnings',
+            '--list-test-files',
             '--reverse-list',
             '--no-results',
             '--stop-on-defect',
