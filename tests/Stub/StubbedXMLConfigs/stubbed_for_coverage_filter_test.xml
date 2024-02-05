@@ -1,19 +1,19 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
         >
 
-    <coverage includeUncoveredFiles="true">
+    <source>
         <include>
-            <directory suffix=".php">/path/to/files</directory>
+            <directory>/path/to/files</directory>
             <file>/path/to/file</file>
         </include>
         <exclude>
-            <directory suffix=".php">/path/to/files</directory>
+            <directory>/path/to/files</directory>
             <file>/path/to/file</file>
         </exclude>
-    </coverage>
+    </source>
 
 </phpunit>
