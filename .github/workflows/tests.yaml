@@ -25,6 +25,7 @@ jobs:
           - '8.3'
         dependencies: ['highest']
         coverage: ['xdebug']
+        phpunit: [false]
         include:
           - description: 'PHPUnit 11'
             coverage: 'xdebug3'
