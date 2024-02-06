@@ -32,9 +32,13 @@ class PhpWarningTest extends AbstractTestHookTestCase
             __FILE__,
             1,
             false,
+            false,
         );
     }
 
+    /**
+     * @return non-empty-string
+     */
     protected function getExpectedMessage(): string
     {
         return 'test warning message';

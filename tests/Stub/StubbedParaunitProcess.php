@@ -19,7 +19,7 @@ class StubbedParaunitProcess implements Process
     public int $retryCount = 0;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __construct(
         public string $filename = 'testFilename',
@@ -56,7 +56,7 @@ class StubbedParaunitProcess implements Process
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function start(int $pipelineNumber): void
     {

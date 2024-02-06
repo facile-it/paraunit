@@ -29,7 +29,7 @@ class TestATestStubSigInt extends BrokenTestBase implements BrokenTestInterface
         int $time
     ): void {
         for ($i = 1; $i <= $time * 20; ++$i) {
-            usleep(50000);
+            usleep(50_000);
             if (! file_exists($fileName)) {
                 break;
             }

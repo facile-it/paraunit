@@ -3,7 +3,6 @@
 ![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.1-blue)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
-[![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
 
 [![Build status](https://img.shields.io/github/actions/workflow/status/facile-it/paraunit/tests.yaml?branch=2.x)](https://github.com/facile-it/paraunit/actions)
 [![Coverage Status][Master coverage image]][Master coverage link]
@@ -31,7 +30,8 @@ You can use Paraunit with many versions of PHPUnit or Symfony, following this co
 
 | Paraunit version | Compatible PHPUnit Version | Compatible Symfony Version |
 |------------------|----------------------------|----------------------------|
-| 2.0              | 10+                        | 4.4, 5, 6                  |
+| 2.3              | 10.5.4+, 11+               | 4.4, 5, 6, 7               |
+| 2.0              | 10+                        | 4.4, 5, 6, 7               |
 | 1.3              | 9.3+                       | 4.4, 5, 6                  |
 | 1.2              | 9.3+                       | 3.4, 4, 5                  |
 | 1.1              | 9.1, 9.2                   | 3.4, 4, 5                  |
@@ -52,7 +52,7 @@ Paraunit is also able to **collect the test coverage in parallel**, like this:
 vendor/bin/paraunit coverage --html=./dir
 ```
 
-It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, XML, Crap4j, PHP, text file and text to console.
+It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, Cobertura, XML, Crap4j, PHP, text file and text to console.
 
 ## Documentation
 For more details about Paraunit and its usage, see the [documentation](https://engineering.facile.it/paraunit/documentation/)

@@ -20,8 +20,7 @@ class CoverageFetcher
     public function __construct(
         private readonly TempFilenameFactory $tempFilenameFactory,
         private readonly TestResultContainer $testResultContainer,
-    ) {
-    }
+    ) {}
 
     public function fetch(Process $process): CodeCoverage
     {

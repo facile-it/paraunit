@@ -13,6 +13,5 @@ class TestCompleted
     public function __construct(
         public readonly Test $test,
         public readonly TestOutcome|TestIssue $outcome,
-    ) {
-    }
+    ) {}
 }

@@ -38,6 +38,6 @@ class ExecutionStartedTest extends AbstractTestHookTestCase
 
     protected function getExpectedMessage(): ?string
     {
-        return null;
+        return '0';
     }
 }

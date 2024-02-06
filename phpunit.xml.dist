@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" 
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" 
          backupGlobals="false"
-         cacheResult="false"
+         cacheResult="false" 
          colors="true"
          bootstrap="vendor/autoload.php"
          displayDetailsOnTestsThatTriggerWarnings="true"
@@ -27,11 +27,11 @@
       <directory>tests/Functional</directory>
     </testsuite>
   </testsuites>
-  <coverage>
+  <source>
     <include>
       <directory>src/</directory>
     </include>
-  </coverage>
+  </source>
   <extensions>
     <bootstrap class="Paraunit\Configuration\ParaunitExtension"/>
   </extensions>

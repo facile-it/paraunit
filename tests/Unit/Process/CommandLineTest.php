@@ -37,7 +37,7 @@ class CommandLineTest extends BaseUnitTestCase
         $options = $cli->getOptions($config->reveal());
         $this->assertContains('--configuration=/path/to/phpunit.xml', $options);
 
-        $extensions = array_filter($options, static fn (string $a): bool => str_starts_with($a, '--extensions'));
+        $extensions = array_filter($options, static fn(string $a): bool => str_starts_with($a, '--extensions'));
         $this->assertCount(0, $extensions, '--extensions should no longer be used');
     }
 

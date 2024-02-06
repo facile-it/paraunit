@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Paraunit\Lifecycle;
 
-class BeforeEngineStart
-{
-}
+class BeforeEngineStart {}

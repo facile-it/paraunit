@@ -13,12 +13,11 @@ class TestResult
     public function __construct(
         public readonly Test $test,
         public readonly TestOutcome|TestIssue $status,
-    ) {
-    }
+    ) {}
 
     public static function from(LogData $log): self
     {
-        if ($log->message) {
+        if (null !== $log->message && '' !== $log->message) {
             return new TestResultWithMessage($log->test, $log->status->toTestStatus(), $log->message);
         }
 

@@ -9,9 +9,7 @@ use PHPUnit\Event\Code\TestMethod as PHPUnitTestMethod;
 
 class Test implements \JsonSerializable
 {
-    public function __construct(public readonly string $name)
-    {
-    }
+    public function __construct(public readonly string $name) {}
 
     final public static function fromPHPUnitTest(PHPUnitTest $test): self
     {

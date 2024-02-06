@@ -13,9 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DebugPrinter implements EventSubscriberInterface
 {
-    public function __construct(private readonly OutputInterface $output)
-    {
-    }
+    public function __construct(private readonly OutputInterface $output) {}
 
     /**
      * @return array<class-string, string|array{0: string, 1: int}>

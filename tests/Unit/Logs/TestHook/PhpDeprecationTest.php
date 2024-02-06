@@ -32,9 +32,14 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             'testFile.php',
             123,
             false,
+            false,
+            false,
         );
     }
 
+    /**
+     * @return non-empty-string
+     */
     protected function getExpectedMessage(): string
     {
         return 'test message';

@@ -29,8 +29,8 @@ class PassThroughTest extends BaseFunctionalTestCase
     {
         $remaining = array_values(array_diff(
             $this->getAllPHPUnitOptions(),
-            array_map(static fn (array $value): string => $value[0], self::allowedOptionsDataProvider()),
-            array_map(static fn (array $value): string => $value[0], self::disallowedOptionsDataProvider()),
+            array_map(static fn(array $value): string => $value[0], self::allowedOptionsDataProvider()),
+            array_map(static fn(array $value): string => $value[0], self::disallowedOptionsDataProvider()),
             $this->getAlreadySupportedOptions(),
             $this->getPossibleFutureOptions(),
         ));
@@ -41,6 +41,7 @@ class PassThroughTest extends BaseFunctionalTestCase
                 count($remaining) . ' unhandled new PHPUnit options: ' . print_r($remaining, true),
                 __FILE__,
                 __LINE__,
+                false,
                 false,
             );
         }
@@ -76,7 +77,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         $coverageCommand = new CoverageCommand($this->prophesize(CoverageConfiguration::class)->reveal());
 
         $supportedOptions = array_map(
-            static fn (InputOption $option): string => '--' . $option->getName(),
+            static fn(InputOption $option): string => '--' . $option->getName(),
             $coverageCommand->getDefinition()->getOptions(),
         );
 
@@ -118,6 +119,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--list-groups'],
             ['--list-tests'],
             ['--list-tests-xml'],
+            // not useful - baseline cannot be merged
+            ['--generate-baseline'],
         ];
     }
 
@@ -169,6 +172,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--fail-on-deprecation'],
             ['--fail-on-notice'],
             ['--dont-report-useless-tests'],
+            ['--use-baseline'],
+            ['--ignore-baseline'],
         ];
     }
 
@@ -178,6 +183,7 @@ class PassThroughTest extends BaseFunctionalTestCase
     private function getPossibleFutureOptions(): array
     {
         return [
+            '--exclude-filter',
             '--exclude-testsuite',
             '--test-suffix',
             '--columns',
@@ -187,6 +193,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--display-errors',
             '--display-notices',
             '--display-warnings',
+            '--list-test-files',
             '--reverse-list',
             '--no-results',
             '--stop-on-defect',

@@ -45,6 +45,9 @@ enum TestOutcome: string implements ComparableTestStatus
         };
     }
 
+    /**
+     * @psalm-suppress InternalMethod
+     */
     public function isMoreImportantThan(?ComparableTestStatus $status): bool
     {
         if (! $status instanceof ComparableTestStatus) {
@@ -54,6 +57,9 @@ enum TestOutcome: string implements ComparableTestStatus
         return $this->toPHPUnit()->isMoreImportantThan($status->toPHPUnit());
     }
 
+    /**
+     * @psalm-suppress InternalClass, InternalMethod
+     */
     public function toPHPUnit(): TestStatus
     {
         return match ($this) {

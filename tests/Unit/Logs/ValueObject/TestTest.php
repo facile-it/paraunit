@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Logs\ValueObject;
 
 use Paraunit\Logs\ValueObject\Test;
-use PHPUnit\Event\Code\Test as PHPUnitTest;
+use PHPUnit\Event\Code\TestMethodBuilder;
 use Tests\BaseUnitTestCase;
 
 class TestTest extends BaseUnitTestCase
@@ -22,12 +22,10 @@ class TestTest extends BaseUnitTestCase
 
     public function testFromPHPUnitTest(): void
     {
-        $phpunitTest = $this->prophesize(PHPUnitTest::class);
-        $phpunitTest->name()
-            ->willReturn('Foo');
+        $phpunitTest = TestMethodBuilder::fromTestCase($this);
 
-        $test = Test::fromPHPUnitTest($phpunitTest->reveal());
+        $test = Test::fromPHPUnitTest($phpunitTest);
 
-        $this->assertSame('Foo', $test->name);
+        $this->assertSame(__METHOD__, $test->name);
     }
 }

@@ -31,8 +31,7 @@ class FilesRecapPrinter implements EventSubscriberInterface
         private readonly OutputInterface $output,
         private readonly TestResultContainer $testResultContainer,
         private readonly ChunkSize $chunkSize,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<class-string, string|array{0: string, 1: int}>
@@ -65,7 +64,7 @@ class FilesRecapPrinter implements EventSubscriberInterface
         $this->output->writeln('');
         $this->output->writeln(
             sprintf(
-                "<%s>%d $fileTitle with %s:</%s>",
+                "<%s>%d {$fileTitle} with %s:</%s>",
                 $style->value,
                 count($filenames),
                 strtoupper($status->getTitle()),

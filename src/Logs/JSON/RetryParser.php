@@ -13,6 +13,7 @@ use Paraunit\TestResult\ValueObject\TestResult;
 
 class RetryParser
 {
+    /** @var non-empty-string */
     private readonly string $regexPattern;
 
     public function __construct(
@@ -59,12 +60,14 @@ class RetryParser
     private function containsRetryableError(LogData $log): bool
     {
         return $log->status === LogStatus::Errored
-            && $log->message
+            && null !== $log->message
             && 1 === preg_match($this->regexPattern, $log->message);
     }
 
     /**
      * @param string[] $patterns
+     *
+     * @return non-empty-string
      */
     private function buildRegexPattern(array $patterns): string
     {
