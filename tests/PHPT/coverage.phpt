@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../src/Bin/paraunit';
 --ARGS--
 coverage FakeDriverTest --text --no-ansi
 --EXPECTF--
-PARAUNIT v%s
+PARAUNIT v%s (PHPUnit v%s)
 by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it
 Coverage driver in use: %s
 ... %w 3

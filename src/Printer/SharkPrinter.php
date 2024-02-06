@@ -44,7 +44,7 @@ class SharkPrinter implements EventSubscriberInterface
         }
 
         $this->output->writeln('');
-        $this->output->writeln('PARAUNIT v.' . Paraunit::getVersion());
+        $this->output->writeln('PARAUNIT v.' . Paraunit::getVersion() . ' (PHPUnit v.' . Paraunit::getPHPUnitVersion() . ')');
         $this->output->writeln('by Francesco Panina, Alessandro Lai & Shark Dev Team @ Facile.it');
     }
 }
