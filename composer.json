@@ -40,8 +40,8 @@
     "require-dev": {
         "facile-it/facile-coding-standard": "^1.0",
         "jangregor/phpstan-prophecy": "^1.0.0",
-        "phpspec/prophecy": "dev-allow-phpunit-11 as 1.19",
-        "phpspec/prophecy-phpunit": "dev-allow-phpunit-11 as 2.2.0",
+        "phpspec/prophecy": "dev-master as 1.19",
+        "phpspec/prophecy-phpunit": "dev-master as 2.2.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.10.4",
         "phpstan/phpstan-phpunit": "^1.1",
@@ -53,16 +53,6 @@
         "symfony/phpunit-bridge": "^6.4||^7.0",
         "vimeo/psalm": "^5.5.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jean85/prophecy-phpunit"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/jean85/prophecy"
-        }
-    ],
     "conflict": {
         "composer/package-versions-deprecated": "<1.11.99"
     },
