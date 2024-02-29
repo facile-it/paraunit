@@ -193,6 +193,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--display-errors',
             '--display-notices',
             '--display-warnings',
+            '--fail-on-empty-test-suite',
             '--list-test-files',
             '--reverse-list',
             '--no-results',
