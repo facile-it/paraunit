@@ -46,7 +46,7 @@
         "phpstan/phpstan": "1.10.62",
         "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^4.0||^5.0",
-        "psalm/plugin-phpunit": "^0.18",
+        "psalm/plugin-phpunit": "^0.19",
         "psalm/plugin-symfony": "^5.0",
         "rector/rector": "1.0.3",
         "symfony/expression-language": "^4.4||^5.0||^6.0||^7.0",
