@@ -25,6 +25,9 @@ return RectorConfig::configure()
     ->withSets([
         PHPUnitSetList::PHPUNIT_100,
     ])
+    ->withSkipPath(
+        __DIR__ . '/tests/Stub/ParseErrorTestStub.php',
+    )
     ->withSkip([
         ReturnNeverTypeRector::class,
     ]);
