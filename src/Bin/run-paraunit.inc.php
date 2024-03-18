@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Paraunit\Bin;
 
-/** @psalm-suppress RiskyTruthyFalsyComparison */
-if (! ini_get('date.timezone')) {
+if (ini_get('date.timezone') === '' || ini_get('date.timezone') === '0') {
     date_default_timezone_set('UTC');
 }
 // HOTFIX -- needed to fool the Symfony's WebTestCase

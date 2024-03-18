@@ -45,7 +45,7 @@ class ProgressPrinterTest extends BaseUnitTestCase
         $output = $this->prophesize(Output::class);
         $output->write(Argument::any())
             ->shouldBeCalledTimes($times);
-        $output->writeln(Argument::that(function ($input): bool {
+        $output->writeln(Argument::that(function (string $input): bool {
             $this->assertEquals(6, strlen($input), 'Wrong output: ' . $input);
 
             return true;
