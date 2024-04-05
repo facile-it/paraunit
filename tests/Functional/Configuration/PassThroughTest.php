@@ -209,6 +209,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--warm-coverage-cache',
             '--order-by',
             '--random-order-seed',
+            '--only-summary-for-coverage-text',
+            '--show-uncovered-for-coverage-text',
         ];
     }
 }

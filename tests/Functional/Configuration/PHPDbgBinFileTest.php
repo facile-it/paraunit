@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Tests\Functional\Configuration;
 
 use Paraunit\Configuration\PHPDbgBinFile;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystemFamily;
 use Tests\BaseFunctionalTestCase;
 
-/**
- * @requires OS Linux
- */
+#[RequiresOperatingSystemFamily('Linux')]
 class PHPDbgBinFileTest extends BaseFunctionalTestCase
 {
     public function testIsAvailable(): void
