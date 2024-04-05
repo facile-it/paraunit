@@ -6,6 +6,7 @@ namespace Tests\Unit\Logs\TestHook;
 
 use Paraunit\Logs\TestHook\Deprecation;
 use Paraunit\Logs\ValueObject\LogStatus;
+use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
 use PHPUnit\Event\Test\DeprecationTriggered;
 
 /**
@@ -25,7 +26,7 @@ class DeprecationTest extends AbstractTestHookTestCase
 
     protected function createEvent(): DeprecationTriggered
     {
-        return new DeprecationTriggered(
+        $args = [
             $this->createTelemetryInfo(),
             $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
@@ -34,7 +35,13 @@ class DeprecationTest extends AbstractTestHookTestCase
             false,
             false,
             false,
-        );
+        ];
+
+        if (class_exists(IssueTrigger::class)) {
+            $args[] = IssueTrigger::unknown();
+        }
+
+        return new DeprecationTriggered(...$args);
     }
 
     /**
