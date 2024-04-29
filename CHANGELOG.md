@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
-## [2.3.1] - 2024-04-29
+## [2.3.2] - 2024-04-29
  * Add PHPUnit version info [#213](https://github.com/facile-it/paraunit/pull/213)
  * Deduplicate correctly the test files recap at the end of the execution [#241](https://github.com/facile-it/paraunit/pull/241)
 
