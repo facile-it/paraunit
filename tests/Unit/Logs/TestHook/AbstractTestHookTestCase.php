@@ -9,6 +9,7 @@ use Paraunit\Logs\TestHook\AbstractTestHook;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
+use Paraunit\Logs\ValueObject\TestMethod;
 use PHPUnit\Event\Event;
 use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
@@ -72,7 +73,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
         $this->assertEquals($this->getExpectedStatus(), $logData[0]->status);
 
         if ($this->updatesLastTest()) {
-            $this->assertEquals(new Test(static::class . '::testNotify'), $logData[0]->test);
+            $this->assertEquals($this->getExpectedTestObject(), $logData[0]->test);
         } else {
             $this->assertEquals(Test::unknown(), $logData[0]->test);
         }
@@ -153,5 +154,10 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
         }
 
         return $factory->status();
+    }
+
+    protected function getExpectedTestObject(): Test
+    {
+        return new TestMethod(static::class, 'testNotify');
     }
 }

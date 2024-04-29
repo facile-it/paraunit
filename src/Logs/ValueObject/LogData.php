@@ -13,7 +13,7 @@ class LogData implements \JsonSerializable
     ) {}
 
     /**
-     * @psalm-assert array{status: string, test: string, message?: string|null} $log
+     * @psalm-assert array{status: string, test: string|array, message?: string|null} $log
      */
     private static function validateLogFormat(mixed $log): void
     {
@@ -29,31 +29,30 @@ class LogData implements \JsonSerializable
             throw new \InvalidArgumentException('Invalid field status in Paraunit logs');
         }
 
-        if (! is_string($log['test'])) {
-            throw new \InvalidArgumentException('Invalid field test in Paraunit logs');
-        }
-
         if (! is_string($log['message'] ?? '')) {
             throw new \InvalidArgumentException('Invalid field message in Paraunit logs');
         }
     }
 
     /**
-     * @return array{status: string, test: string, message?: string}
+     * @psalm-suppress MixedReturnTypeCoercion
+     *
+     * @return array{status: string, test: string|array<string, scalar>, message?: string}
      */
     public function jsonSerialize(): array
     {
         $data = [
             'status' => $this->status->value,
-            'test' => $this->test->name,
+            'test' => $this->test->jsonSerialize(),
         ];
 
         if (null !== $this->message) {
             $data['message'] = $this->message;
         }
 
-        // TODO: test UTF8 conversion
-        return array_map($this->convertToUtf8(...), $data);
+        array_walk_recursive($data, $this->convertToUtf8(...));
+
+        return $data;
     }
 
     private function convertToUtf8(string $string): string
@@ -89,7 +88,7 @@ class LogData implements \JsonSerializable
 
                 $logs[] = new self(
                     LogStatus::from($log['status']),
-                    $lastTest = new Test($log['test']),
+                    $lastTest = Test::deserialize($log['test']),
                     $log['message'] ?? null,
                 );
             }

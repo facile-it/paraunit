@@ -6,6 +6,7 @@ namespace Tests\Unit\Logs\TestHook;
 
 use Paraunit\Logs\TestHook\ExecutionStarted;
 use Paraunit\Logs\ValueObject\LogStatus;
+use Paraunit\Logs\ValueObject\Test;
 use PHPUnit\Event\Code\TestCollection;
 use PHPUnit\Event\TestRunner\ExecutionStarted as TestSuiteExecutionStarted;
 use PHPUnit\Event\TestSuite\TestSuiteForTestClass;
@@ -27,13 +28,15 @@ class ExecutionStartedTest extends AbstractTestHookTestCase
 
     protected function createEvent(): TestSuiteExecutionStarted
     {
-        /** @var class-string $name */
-        $name = self::class . '::testNotify';
-
         return new TestSuiteExecutionStarted(
             $this->createTelemetryInfo(),
-            new TestSuiteForTestClass($name, 0, TestCollection::fromArray([]), __FILE__, 0),
+            new TestSuiteForTestClass(self::class, 0, TestCollection::fromArray([]), __FILE__, 0),
         );
+    }
+
+    protected function getExpectedTestObject(): Test
+    {
+        return new Test(static::class);
     }
 
     protected function getExpectedMessage(): ?string

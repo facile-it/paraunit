@@ -45,7 +45,7 @@ class LogDataTest extends TestCase
         $this->assertSame(self::class . '::testMethod', $logData->test->name);
     }
 
-    public function testSerialization(): void
+    public function testSerializationWithSimpleTest(): void
     {
         $logData = new LogData(LogStatus::Passed, new Test('Foo'), 'Test message');
 
@@ -55,6 +55,22 @@ class LogDataTest extends TestCase
         $this->assertInstanceOf(LogData::class, $parsedResult[0]);
         $this->assertEquals($logData, $parsedResult[0]);
         $this->assertSame('Foo', $parsedResult[0]->test->name);
+    }
+
+    public function testSerializationWithTestMethod(): void
+    {
+        $logData = new LogData(LogStatus::Passed, new TestMethod('Foo', 'bar'), 'Test message');
+
+        $parsedResult = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
+
+        $this->assertCount(2, $parsedResult);
+        $this->assertInstanceOf(LogData::class, $parsedResult[0]);
+        $this->assertEquals($logData, $parsedResult[0]);
+        $this->assertObjectHasProperty('className', $parsedResult[0]->test);
+        $this->assertObjectHasProperty('methodName', $parsedResult[0]->test);
+        $this->assertSame('Foo', $parsedResult[0]->test->className);
+        $this->assertSame('bar', $parsedResult[0]->test->methodName);
+        $this->assertSame('Foo::bar', $parsedResult[0]->test->name);
     }
 
     public function testSerializationError(): void
