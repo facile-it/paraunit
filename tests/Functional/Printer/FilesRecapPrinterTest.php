@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\FilesRecapPrinter;
+use Paraunit\Runner\Runner;
 use Tests\BaseFunctionalTestCase;
+use Tests\Stub\PassThenRetryTestStub;
 
 class FilesRecapPrinterTest extends BaseFunctionalTestCase
 {
@@ -35,6 +37,29 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
             'files with NO TESTS EXECUTED',
             'files with RISKY',
             'files with RETRIED',
+        ]);
+    }
+
+    public function testRegressionDuplicateFilesDueToMethodNames(): void
+    {
+        $this->setTextFilter('PassThenRetryTestStub.php');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+        $runner = $this->getService(Runner::class);
+        $this->assertInstanceOf(Runner::class, $runner);
+        $this->assertNotEquals(0, $runner->run());
+
+        $this->assertOutputOrder($output, [
+            'Errors output',
+            PassThenRetryTestStub::class . '::testBrokenTest',
+            PassThenRetryTestStub::class . '::testFail',
+            'files with ERRORS',
+            PassThenRetryTestStub::class . PHP_EOL,
+            'files with FAILURES',
+            PassThenRetryTestStub::class . PHP_EOL,
+            'files with RETRIED',
+            PassThenRetryTestStub::class . PHP_EOL,
         ]);
     }
 }
