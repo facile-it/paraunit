@@ -1,5 +1,5 @@
 # Makefile for Insight Core Project
-setup: build composer-install
+setup: build composer-update
 
 shell: build
 	docker-compose run --rm php zsh
@@ -10,8 +10,8 @@ build:
 start:
 	docker-compose up -d php
 
-composer-install: start
-	docker-compose exec php composer install
+composer-update: start
+	docker-compose exec php composer update
 
 pre-commit-check: rector cs-fix psalm phpstan tests
 
