@@ -43,7 +43,7 @@
         "phpspec/prophecy": "dev-master as 1.19",
         "phpspec/prophecy-phpunit": "dev-master#0604e27 as 2.2.1",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "1.11.0",
+        "phpstan/phpstan": "1.11.1",
         "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/php-invoker": "^4.0||^5.0",
         "psalm/plugin-phpunit": "^0.19",
