@@ -52,7 +52,7 @@ abstract class AbstractTestHook
     private function getLogFilename(): string
     {
         $logDir = $this->getLogDirectory();
-        if (! @mkdir($logDir, 0o777, true) && ! is_dir($logDir)) {
+        if (! is_dir($logDir) && ! @mkdir($logDir, 0o777, true) && ! is_dir($logDir)) {
             throw new \RuntimeException('Cannot create folder for JSON logs');
         }
 
