@@ -104,6 +104,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             // should be impossible? Paraunit can't identify tests in this way
             ['--no-configuration'],
             // Paraunit breaks if you use these
+            ['--extension'],
             ['--no-extensions'],
             ['--no-logging'],
             ['--coverage-php'],
@@ -157,6 +158,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--log-teamcity', '<file>'],
             ['--testdox-html', '<file>'],
             ['--testdox-text', '<file>'],
+            ['--testdox-summary'],
             ['--log-events-text', '<file>'],
             ['--log-events-verbose-text', '<file>'],
             ['--coverage-filter', '<filter>'],

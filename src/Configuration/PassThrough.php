@@ -8,6 +8,7 @@ class PassThrough
 {
     private const DISALLOWED_OPTIONS = [
         '--no-configuration',
+        '--extension',
         '--no-extensions',
         '--no-logging',
         '--coverage-php',
