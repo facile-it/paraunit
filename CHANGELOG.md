@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
  * ...
 
+## [2.3.4] - 2024-08-07
+ * Fix PHPUnit 11.3 compat [#260](https://github.com/facile-it/paraunit/pull/260), thanks @kubawerlos
+ * Reduce package footprint by updating .gitattributes [#261](https://github.com/facile-it/paraunit/pull/261), thanks @kubawerlos
+
 ## [2.3.3] - 2024-06-06
  * Avoid generating a warning when writing test logs [#250](https://github.com/facile-it/paraunit/pull/250)
 
