@@ -44,7 +44,6 @@ class ParallelContainerDefinition
     public function configure(ContainerBuilder $container): ContainerBuilder
     {
         $container->setParameter('paraunit.max_retry_count', 3);
-        $container->setParameter('kernel.root_dir', 'src');
 
         foreach ($this->getAutowirableClasses() as $class) {
             $container->autowire($class);
