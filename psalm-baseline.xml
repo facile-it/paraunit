@@ -17,7 +17,9 @@
       <code><![CDATA[$input->getOption('parallel')]]></code>
       <code><![CDATA[$input->getOption('pass-through')]]></code>
       <code><![CDATA[$input->getOption('testsuite')]]></code>
+      <code><![CDATA[$input->getOption('exclude-testsuite')]]></code>
       <code><![CDATA[$input->getOption('sort')]]></code>
+      <code><![CDATA[$input->getOption('test-suffix')]]></code>
     </MixedArgument>
   </file>
   <file src="src/Coverage/CoverageFetcher.php">

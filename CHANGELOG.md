@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
- * ...
+### Added
+* `--exclude-testsuite` option [#273](https://github.com/facile-it/paraunit/pull/273)
+* `--test-suffix` option [#273](https://github.com/facile-it/paraunit/pull/273)
 
 ## [2.3.4] - 2024-08-07
  * Fix PHPUnit 11.3 compat [#260](https://github.com/facile-it/paraunit/pull/260), thanks @kubawerlos

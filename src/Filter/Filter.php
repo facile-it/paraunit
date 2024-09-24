@@ -19,7 +19,9 @@ class Filter implements TestList
         private readonly Facade $fileIteratorFacade,
         private readonly PHPUnitConfig $configFile,
         private readonly ?string $testSuiteFilter = null,
-        private readonly ?string $stringFilter = null
+        private readonly ?string $stringFilter = null,
+        private readonly ?string $excludeTestSuiteFilter = null,
+        private readonly ?string $testSuffix = null
     ) {
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
@@ -55,12 +57,17 @@ class Filter implements TestList
                 throw new \InvalidArgumentException('Invalid DOM subtype in PHPUnit configuration, expeding \DOMElement, got ' . $testSuiteNode::class);
             }
 
-            if ($this->testSuitePassFilter($testSuiteNode, $this->testSuiteFilter)) {
+            if (
+                $this->testSuitePassFilter($testSuiteNode, $this->testSuiteFilter)
+                && ! $this->testSuiteExcludeFilter($testSuiteNode, $this->excludeTestSuiteFilter)
+            ) {
                 $this->addTestsFromTestSuite($testSuiteNode, $aggregatedFiles);
             }
         }
 
-        return $this->filterByString($aggregatedFiles, $this->stringFilter);
+        $aggregatedFiles = $this->filterByString($aggregatedFiles, $this->stringFilter);
+
+        return $this->filterBySuffix($aggregatedFiles, $this->testSuffix);
     }
 
     private function testSuitePassFilter(\DOMElement $testSuiteNode, string $testSuiteFilter = null): bool
@@ -178,5 +185,40 @@ class Filter implements TestList
         }
 
         return array_values($aggregatedFiles);
+    }
+
+    /**
+     * @param string[] $aggregatedFiles
+     *
+     * @return string[]
+     */
+    private function filterBySuffix(array $aggregatedFiles, ?string $suffix): array
+    {
+        if ($suffix !== null) {
+            $suffixes = explode(',', $suffix);
+            $filteredFiles = [];
+            foreach ($suffixes as $s) {
+                $filteredFiles[] = array_filter($aggregatedFiles, fn($value): bool => stripos($value, trim($s)) !== false);
+            }
+
+            $filteredFiles = array_merge(...$filteredFiles);
+
+            $aggregatedFiles = $filteredFiles;
+        }
+
+        return array_values($aggregatedFiles);
+    }
+
+    private function testSuiteExcludeFilter(\DOMElement $testSuiteNode, ?string $excludeTestSuiteFilter): bool
+    {
+        if ($excludeTestSuiteFilter === null) {
+            return false;
+        }
+
+        return \in_array(
+            $this->getDOMNodeAttribute($testSuiteNode, 'name'),
+            explode(',', $excludeTestSuiteFilter),
+            true
+        );
     }
 }

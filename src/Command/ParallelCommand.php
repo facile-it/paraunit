@@ -35,6 +35,8 @@ class ParallelCommand extends Command
         $this->addOption('logo', null, InputOption::VALUE_NONE, 'Print the Shark logo at the top');
         $this->addOption('pass-through', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Inject options to be passed directly to the underlying PHPUnit processes');
         $this->addOption('testsuite', null, InputOption::VALUE_REQUIRED, 'Only run tests from the specified test suite');
+        $this->addOption('exclude-testsuite', null, InputOption::VALUE_REQUIRED, 'Exclude test suite from running');
+        $this->addOption('test-suffix', null, InputOption::VALUE_REQUIRED, 'Only run tests from the specified suffix');
         $this->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Choose in which order to execute the test classes (values: "random" only for now)');
     }
 

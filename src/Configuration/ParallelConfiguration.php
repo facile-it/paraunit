@@ -78,6 +78,8 @@ class ParallelConfiguration
         $containerBuilder->setParameter('paraunit.show_logo', $input->getOption('logo'));
         $containerBuilder->setParameter('paraunit.pass_through', $input->getOption('pass-through'));
         $containerBuilder->setParameter('paraunit.sort_order', $input->getOption('sort'));
+        $containerBuilder->setParameter('paraunit.exclude_testsuite', $input->getOption('exclude-testsuite'));
+        $containerBuilder->setParameter('paraunit.test_suffix', $input->getOption('test-suffix'));
 
         if ($input->getOption('debug')) {
             $this->enableDebugMode($containerBuilder);
