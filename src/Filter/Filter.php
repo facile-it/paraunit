@@ -192,21 +192,44 @@ class Filter implements TestList
      *
      * @return string[]
      */
-    private function filterBySuffix(array $aggregatedFiles, ?string $suffix): array
+    private function filterBySuffix(array $aggregatedFiles, ?string $suffixes): array
     {
-        if ($suffix !== null) {
-            $suffixes = explode(',', $suffix);
-            $filteredFiles = [];
-            foreach ($suffixes as $s) {
-                $filteredFiles[] = array_filter($aggregatedFiles, fn($value): bool => stripos($value, trim($s)) !== false);
-            }
-
-            $filteredFiles = array_merge(...$filteredFiles);
-
-            $aggregatedFiles = $filteredFiles;
+        if ($suffixes !== null) {
+            $suffixArray = $this->getSuffixArray($suffixes);
+            $aggregatedFiles = $this->filterFilesBySuffixArray($aggregatedFiles, $suffixArray);
         }
 
         return array_values($aggregatedFiles);
+    }
+
+    /**
+     * Converts the comma-separated suffixes string to an array of trimmed suffixes.
+     *
+     * @param string $suffixes
+     * @return string[]
+     */
+    private function getSuffixArray(string $suffixes): array
+    {
+        return array_map('trim', explode(',', $suffixes));
+    }
+
+    /**
+     * Filters the files based on the array of suffixes.
+     *
+     * @param string[] $files
+     * @param string[] $suffixArray
+     * @return string[]
+     */
+    private function filterFilesBySuffixArray(array $files, array $suffixArray): array
+    {
+        $filteredFiles = [];
+
+        foreach ($suffixArray as $suffix) {
+            $filterCallback = static fn($file): bool => stripos($file, $suffix) !== false;
+            $filteredFiles[] = array_filter($files, $filterCallback);
+        }
+
+        return array_merge(...$filteredFiles);
     }
 
     private function testSuiteExcludeFilter(\DOMElement $testSuiteNode, ?string $excludeTestSuiteFilter): bool
