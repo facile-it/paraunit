@@ -207,6 +207,7 @@ class Filter implements TestList
      *
      * @param string[] $files
      * @param string[] $suffixArray
+     *
      * @return string[]
      */
     private function filterFilesBySuffixArray(array $files, array $suffixArray): array
@@ -214,7 +215,7 @@ class Filter implements TestList
         $filteredFiles = [];
 
         foreach ($suffixArray as $suffix) {
-            $filterCallback = static fn($file): bool => stripos($file, $suffix) !== false;
+            $filterCallback = static fn(string $file): bool => stripos($file, $suffix) !== false;
             $filteredFiles[] = array_filter($files, $filterCallback);
         }
 
@@ -237,7 +238,6 @@ class Filter implements TestList
     /**
      * Converts the comma-separated string to an array of trimmed elements.
      *
-     * @param string $string
      * @return string[]
      */
     private function getTrimmedArray(string $string): array
