@@ -137,6 +137,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'chunk-size',
             'pass-through',
             'sort',
+            'exclude-testsuite',
+            'test-suffix',
         ];
 
         foreach ($options as $optionName) {
@@ -205,6 +207,8 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'chunk-size',
             'pass-through',
             'sort',
+            'exclude-testsuite',
+            'test-suffix',
         ];
 
         foreach ($options as $optionName) {

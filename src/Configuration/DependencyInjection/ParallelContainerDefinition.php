@@ -140,7 +140,9 @@ class ParallelContainerDefinition
 
         $container->autowire(Filter::class)
             ->setArgument('$testSuiteFilter', '%paraunit.testsuite%')
-            ->setArgument('$stringFilter', '%paraunit.string_filter%');
+            ->setArgument('$stringFilter', '%paraunit.string_filter%')
+            ->setArgument('$excludeTestSuiteFilter', '%paraunit.exclude_testsuite%')
+            ->setArgument('$testSuffix', '%paraunit.test_suffix%');
 
         $container->autowire(RetryParser::class)
             ->setArgument('$maxRetryCount', '%paraunit.max_retry_count%');
