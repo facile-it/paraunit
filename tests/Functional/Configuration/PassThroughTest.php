@@ -176,6 +176,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--dont-report-useless-tests'],
             ['--use-baseline'],
             ['--ignore-baseline'],
+            ['--test-suffix'],
+            ['--exclude-testsuite'],
         ];
     }
 
