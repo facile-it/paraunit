@@ -17,8 +17,13 @@ class ExcludeTest extends BaseFunctionalTestCase
         parent::setup();
     }
 
-    public function testExcludeTestSuites(): void
+    public function testExcludeTestSingleSuite(): void
     {
+        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_with_2_testsuites.xml');
+        $this->setOption('exclude-testsuite', 'suite2');
+
+        $this->loadContainer();
+
         /** @var Filter $filter */
         $filter = $this->getService(Filter::class);
 
@@ -29,5 +34,20 @@ class ExcludeTest extends BaseFunctionalTestCase
         $fileExploded = explode('/', $files[0]);
 
         $this->assertSame('ThreeGreenTestStub.php', end($fileExploded));
+    }
+
+    public function testExcludeTestCommaSeparatedSuites(): void
+    {
+        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_with_2_testsuites.xml');
+        $this->setOption('exclude-testsuite', 'suite2, suite1');
+
+        $this->loadContainer();
+
+        /** @var Filter $filter */
+        $filter = $this->getService(Filter::class);
+
+        $files = $filter->filterTestFiles();
+
+        $this->assertCount(0, $files);
     }
 }

@@ -195,22 +195,11 @@ class Filter implements TestList
     private function filterBySuffix(array $aggregatedFiles, ?string $suffixes): array
     {
         if ($suffixes !== null) {
-            $suffixArray = $this->getSuffixArray($suffixes);
+            $suffixArray = $this->getTrimmedArray($suffixes);
             $aggregatedFiles = $this->filterFilesBySuffixArray($aggregatedFiles, $suffixArray);
         }
 
         return array_values($aggregatedFiles);
-    }
-
-    /**
-     * Converts the comma-separated suffixes string to an array of trimmed suffixes.
-     *
-     * @param string $suffixes
-     * @return string[]
-     */
-    private function getSuffixArray(string $suffixes): array
-    {
-        return array_map('trim', explode(',', $suffixes));
     }
 
     /**
@@ -240,8 +229,19 @@ class Filter implements TestList
 
         return \in_array(
             $this->getDOMNodeAttribute($testSuiteNode, 'name'),
-            explode(',', $excludeTestSuiteFilter),
+            $this->getTrimmedArray($excludeTestSuiteFilter),
             true
         );
+    }
+
+    /**
+     * Converts the comma-separated string to an array of trimmed elements.
+     *
+     * @param string $string
+     * @return string[]
+     */
+    private function getTrimmedArray(string $string): array
+    {
+        return array_map('trim', explode(',', $string));
     }
 }
