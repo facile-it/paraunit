@@ -35,6 +35,8 @@ class CommandLine
     }
 
     /**
+     * @param string[] $excludedPhpunitOptions
+     *
      * @throws \RuntimeException When the config handling fails
      *
      * @return string[]
@@ -59,7 +61,7 @@ class CommandLine
         ]);
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
-            if(! in_array($phpunitOption->getName(), $excludedPhpunitOptions, true)) {
+            if (! in_array($phpunitOption->getName(), $excludedPhpunitOptions, true)) {
                 $options[] = $this->buildPhpunitOptionString($phpunitOption);
             }
         }
