@@ -12,6 +12,20 @@ use Tests\BaseIntegrationTestCase;
 
 class ChunkFileTest extends BaseIntegrationTestCase
 {
+    public function testChunkedPlusTestSuiteOptions(): void
+    {
+        $this->setOption('chunk-size', '2');
+        $this->setOption('testsuite', 'stubs');
+        $this->setOption('debug', '1');
+        $this->loadContainer();
+
+        $this->executeRunner();
+
+        $output = $this->getConsoleOutput();
+        $this->assertStringNotContainsString('--testsuite', $output->getOutput());
+        $this->assertStringContainsString('--configuration', $output->getOutput());
+    }
+
     public function testChunkedAllStubsSuite(): void
     {
         $chunkCount = 8;
