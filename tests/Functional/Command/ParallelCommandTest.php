@@ -107,6 +107,26 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('BBBBbBBBBBBB', $output, 'Shark logo missing');
     }
 
+    public function testExecutionWithChunks(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForStubs(),
+            '--testsuite' => 'stubs',
+            '--chunk-size' => 2,
+            '--debug' => true,
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringNotContainsString('--testsuite', $output);
+        $this->assertStringContainsString('--configuration', $output);
+    }
+
     public function testExecutionWithDebugEnabled(): void
     {
         $configurationPath = $this->getConfigForStubs();
