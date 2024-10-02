@@ -39,7 +39,7 @@ class CommandLine
      *
      * @return string[]
      */
-    public function getOptions(PHPUnitConfig $config): array
+    public function getOptions(PHPUnitConfig $config, array $excludedPhpunitOptions = []): array
     {
         $options = [];
 
@@ -59,7 +59,9 @@ class CommandLine
         ]);
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
-            $options[] = $this->buildPhpunitOptionString($phpunitOption);
+            if(! in_array($phpunitOption->getName(), $excludedPhpunitOptions, true)) {
+                $options[] = $this->buildPhpunitOptionString($phpunitOption);
+            }
         }
 
         return $options;

@@ -10,6 +10,7 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Process\AbstractParaunitProcess;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\ProcessFactory;
+use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 
 class ProcessFactoryTest extends BaseUnitTestCase
@@ -64,7 +65,7 @@ class ProcessFactoryTest extends BaseUnitTestCase
         $cliCommand = $this->prophesize(CommandLine::class);
         $cliCommand->getExecutable()->willReturn(['sapi', 'executable']);
         $cliCommand
-            ->getOptions($phpUnitConfig->reveal())
+            ->getOptions($phpUnitConfig->reveal(), Argument::is(['testsuite']))
             ->shouldBeCalled()
             ->willReturn([]);
         $cliCommand

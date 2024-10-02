@@ -16,13 +16,13 @@ class ProcessFactory implements ProcessFactoryInterface
     private $cliCommand;
 
     /** @var string[] */
-    private $baseCommandLine;
-
-    /** @var string[] */
     private $environmentVariables;
 
     /** @var ChunkSize */
     private $chunkSize;
+
+    /** @var PHPUnitConfig */
+    private $phpunitConfig;
 
     public function __construct(
         CommandLine $cliCommand,
@@ -31,24 +31,24 @@ class ProcessFactory implements ProcessFactoryInterface
         ChunkSize $chunkSize
     ) {
         $this->cliCommand = $cliCommand;
-        $this->baseCommandLine = array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($phpunitConfig));
         $this->environmentVariables = [
             EnvVariables::LOG_DIR => $tempFilenameFactory->getPathForLog(),
         ];
         $this->chunkSize = $chunkSize;
+        $this->phpunitConfig = $phpunitConfig;
     }
 
     public function create(string $testFilePath): AbstractParaunitProcess
     {
         if ($this->chunkSize->isChunked()) {
             $command = array_merge(
-                $this->baseCommandLine,
+                array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($this->phpunitConfig, ['testsuite'])),
                 ['--configuration=' . $testFilePath],
                 $this->cliCommand->getSpecificOptions($testFilePath)
             );
         } else {
             $command = array_merge(
-                $this->baseCommandLine,
+                array_merge($this->cliCommand->getExecutable(), $this->cliCommand->getOptions($this->phpunitConfig)),
                 [$testFilePath],
                 $this->cliCommand->getSpecificOptions($testFilePath)
             );
