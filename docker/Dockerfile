@@ -13,7 +13,7 @@ RUN apk --no-cache add \
         nano \
         libzip-dev \
     && docker-php-ext-install -j5 zip pcntl \
-    && pecl install xdebug \
+    && pecl install xdebug-2.9.0 \
     && docker-php-ext-enable xdebug
 
 #COMPOSER
