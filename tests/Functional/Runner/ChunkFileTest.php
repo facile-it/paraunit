@@ -16,6 +16,20 @@ class ChunkFileTest extends BaseIntegrationTestCase
     // TODO: test chunk output with normal outcomes -- test name is now available!
     // TODO: test chunk output with abnormal termination
 
+    public function testChunkedPlusTestSuiteOptions(): void
+    {
+        $this->setOption('chunk-size', '2');
+        $this->setOption('testsuite', 'stubs');
+        $this->setOption('debug', '1');
+        $this->loadContainer();
+
+        $this->executeRunner();
+
+        $output = $this->getConsoleOutput();
+        $this->assertStringNotContainsString('--testsuite', $output->getOutput());
+        $this->assertStringContainsString('--configuration', $output->getOutput());
+    }
+
     public function testChunkedAllStubsSuite(): void
     {
         $chunkCount = 8;

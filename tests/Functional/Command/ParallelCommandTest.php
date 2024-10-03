@@ -173,6 +173,27 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(' 0 tests', $output, 'Filter is not working');
     }
 
+    public function testExecutionWithChunksAndTestsuiteOption(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForStubs(),
+            '--testsuite' => 'stubs',
+            '--chunk-size' => 2,
+            '--debug' => true,
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringNotContainsString('--testsuite', $output);
+        $this->assertStringNotContainsString('No tests executed', $output);
+        $this->assertStringContainsString('--configuration', $output);
+    }
+
     public function testExecutionWithDebugEnabled(): void
     {
         $configurationPath = $this->getConfigForStubs();
