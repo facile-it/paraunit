@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
 
+## [1.3.1] - 2024-10-03
+ * Avoid passing `--testsuite` option to PHPUnit when running with chunks [#276](https://github.com/facile-it/paraunit/pull/276)   
+
 ## [1.3.0] - 2022-06-15
 ### Added
  * Add `--chunk-size` option [#164](https://github.com/facile-it/paraunit/pull/164)

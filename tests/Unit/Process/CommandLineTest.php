@@ -82,8 +82,51 @@ class CommandLineTest extends BaseUnitTestCase
         $phpunit = $this->prophesize(PHPUnitBinFile::class);
 
         $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(true));
-        $options = $cli->getOptions($config->reveal());
-        $this->assertNotContains('--configuration=/path/to/phpunit.xml', $options);
+        foreach ($cli->getOptions($config->reveal()) as $option) {
+            $this->assertStringStartsNotWith('--configuration', $option);
+        }
+    }
+
+    public function testGetOptionsChunkedNotContainsTestsuite(): void
+    {
+        $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')
+            ->willReturn(null);
+
+        $config->getFileFullPath()
+            ->willReturn('/path/to/phpunit.xml');
+
+        $incompatibleOption = new PHPUnitOption('testsuite');
+        $incompatibleOption->setValue('foo');
+        $config->getPhpunitOptions()
+            ->willReturn([$incompatibleOption]);
+
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
+
+        $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(true));
+        foreach ($cli->getOptions($config->reveal()) as $option) {
+            $this->assertStringStartsNotWith('--testsuite', $option);
+        }
+    }
+
+    public function testGetOptionsNotChunkedContainsTestsuite(): void
+    {
+        $config = $this->prophesize(PHPUnitConfig::class);
+        $config->getPhpunitOption('stderr')
+            ->willReturn(null);
+
+        $config->getFileFullPath()
+            ->willReturn('/path/to/phpunit.xml');
+
+        $incompatibleOption = new PHPUnitOption('testsuite');
+        $incompatibleOption->setValue('foo');
+        $config->getPhpunitOptions()
+            ->willReturn([$incompatibleOption]);
+
+        $phpunit = $this->prophesize(PHPUnitBinFile::class);
+
+        $cli = new CommandLine($phpunit->reveal(), $this->mockChunkSize(false));
+        $this->assertContains('--testsuite=foo', $cli->getOptions($config->reveal()));
     }
 
     private function mockChunkSize(bool $enabled): ChunkSize
