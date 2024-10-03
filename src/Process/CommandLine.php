@@ -59,6 +59,10 @@ class CommandLine
         ]);
 
         foreach ($config->getPhpunitOptions() as $phpunitOption) {
+            if ($this->chunkSize->isChunked() && $phpunitOption->getName() === 'testsuite') {
+                continue;
+            }
+
             $options[] = $this->buildPhpunitOptionString($phpunitOption);
         }
 
