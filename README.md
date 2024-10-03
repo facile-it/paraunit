@@ -3,7 +3,6 @@
 ![PHP Version](https://img.shields.io/badge/php-%5E7.0%7C%5E8.0-blue)
 [![Stable release][Last stable image]][Packagist link]
 [![Unstable release][Last unstable image]][Packagist link]
-[![composer.lock](https://poser.pugx.org/facile-it/paraunit/composerlock)](https://packagist.org/packages/facile-it/paraunit)
 
 [![Build status](https://img.shields.io/github/workflow/status/facile-it/paraunit/CI)](https://github.com/facile-it/paraunit/actions)
 [![Coverage Status][Master coverage image]][Master coverage link]

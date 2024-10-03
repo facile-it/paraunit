@@ -4,7 +4,8 @@ on:
   pull_request: null
   push:
     branches:
-      - master
+      - 1.x
+      - 2.x
 
 jobs:
   Tests:
@@ -15,6 +16,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest']
         php:
+          - '8.2'
           - '8.1'
           - '8.0'
           - '7.4'
