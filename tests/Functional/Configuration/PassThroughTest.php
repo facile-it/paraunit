@@ -166,6 +166,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--path-coverage'],
             ['--no-coverage'],
             ['--include-path'],
+            ['--requires-php-extension'],
             // TODO - add dedicated tests?
             ['--fail-on-incomplete'],
             ['--fail-on-risky'],
