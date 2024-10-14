@@ -17,7 +17,7 @@ class TestMethod extends Test
     public function __construct(
         public readonly string $className,
         public readonly string $methodName,
-        string $fullName = null,
+        ?string $fullName = null,
     ) {
         parent::__construct($fullName ?? $this->className . '::' . $this->methodName);
     }

@@ -23,9 +23,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CoverageConfiguration extends ParallelConfiguration
 {
-    public function __construct(bool $createPublicServiceAliases = false)
+    public function __construct(?bool $createPublicServiceAliases = false)
     {
-        parent::__construct($createPublicServiceAliases);
+        parent::__construct($createPublicServiceAliases ?? false);
         $this->containerDefinition = new CoverageContainerDefinition();
     }
 

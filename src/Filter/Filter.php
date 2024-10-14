@@ -70,7 +70,7 @@ class Filter implements TestList
         return $this->filterBySuffix($aggregatedFiles, $this->testSuffix);
     }
 
-    private function testSuitePassFilter(\DOMElement $testSuiteNode, string $testSuiteFilter = null): bool
+    private function testSuitePassFilter(\DOMElement $testSuiteNode, ?string $testSuiteFilter = null): bool
     {
         if ($testSuiteFilter === null) {
             return true;
@@ -161,7 +161,7 @@ class Filter implements TestList
     private function getDOMNodeAttribute(
         \DOMElement $testSuiteNode,
         string $nodeName,
-        string $defaultValue = null
+        ?string $defaultValue = null
     ): string {
         /** @psalm-suppress RedundantCondition */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
