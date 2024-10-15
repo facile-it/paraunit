@@ -20,10 +20,14 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         dependencies: ['highest']
         coverage: ['xdebug']
         phpunit: [false]
         include:
+          - description: 'PHP 8.4'
+            php: '8.4'
+            composer_options: '--ignore-platform-req=php'
           - description: 'PHPUnit 11'
             coverage: 'xdebug3'
             php: '8.3'
@@ -53,6 +57,7 @@ jobs:
       - uses: ramsey/composer-install@v3
         with:
           dependency-versions: ${{ matrix.dependencies }}
+          composer-options: ${{ matrix.composer_options }}
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
       - uses: codecov/codecov-action@v4
         with:

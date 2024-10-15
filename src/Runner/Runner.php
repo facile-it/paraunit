@@ -118,7 +118,7 @@ class Runner implements EventSubscriberInterface
         }
     }
 
-    public function pushToPipeline(ProcessTerminated $event = null): void
+    public function pushToPipeline(?ProcessTerminated $event = null): void
     {
         if ($event && $this->chunkSize->isChunked()) {
             $process = $event->getProcess();

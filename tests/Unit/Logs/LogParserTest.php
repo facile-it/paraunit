@@ -81,7 +81,7 @@ class LogParserTest extends BaseUnitTestCase
     /**
      * @param LogData[]|null $logs
      */
-    private function mockLogFetcher(array $logs = null): LogFetcher
+    private function mockLogFetcher(?array $logs = null): LogFetcher
     {
         $logs ??= $this->createLogsForOnePassedTest();
         $logLocator = $this->prophesize(LogFetcher::class);
@@ -95,7 +95,7 @@ class LogParserTest extends BaseUnitTestCase
     /**
      * @param class-string|null $eventToBeDispatched
      */
-    private function mockEventDispatcher(string $eventToBeDispatched = null): EventDispatcherInterface
+    private function mockEventDispatcher(?string $eventToBeDispatched = null): EventDispatcherInterface
     {
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
 
