@@ -27,7 +27,7 @@ jobs:
         include:
           - description: 'PHP 8.4'
             php: '8.4'
-            composer_options: '--ignore-platform-req=php'
+            composer_options: '--ignore-platform-req=php+'
           - description: 'PHPUnit 11'
             coverage: 'xdebug3'
             php: '8.3'

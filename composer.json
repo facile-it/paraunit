@@ -40,7 +40,7 @@
     "require-dev": {
         "facile-it/facile-coding-standard": "^1.0",
         "jangregor/phpstan-prophecy": "dev-master as 1.1.0",
-        "phpspec/prophecy": "dev-master as 1.19",
+        "phpspec/prophecy": "dev-master as 1.20",
         "phpspec/prophecy-phpunit": "dev-master#0604e27 as 2.2.1",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "1.12.7",
