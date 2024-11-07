@@ -9,14 +9,12 @@ use Prophecy\Util\StringUtil;
 
 class EqualsToken implements TokenInterface, \Stringable
 {
-    private readonly StringUtil $util;
-
     private string $string;
 
-    public function __construct(private readonly mixed $value, StringUtil $util = null)
-    {
-        $this->util = $util ?? new StringUtil();
-    }
+    public function __construct(
+        private readonly mixed $value,
+        private readonly StringUtil $util = new StringUtil()
+    ) {}
 
     /**
      * Scores 11 if argument matches preset value.

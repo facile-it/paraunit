@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TextSummary extends AbstractText
 {
-    public function __construct(OutputInterface $output, bool $showColors, OutputFile $targetFile = null)
+    public function __construct(OutputInterface $output, bool $showColors, ?OutputFile $targetFile = null)
     {
         parent::__construct($output, $showColors, true, $targetFile);
     }

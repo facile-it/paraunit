@@ -1,4 +1,5 @@
-FROM php:8.2-alpine
+ARG PHP_VERSION=8.2
+FROM php:${PHP_VERSION}-alpine
 
 RUN apk --no-cache add \
         $PHPIZE_DEPS \

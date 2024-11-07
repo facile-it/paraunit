@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
-* ...
+* Add PHP 8.4 support [#279](https://github.com/facile-it/paraunit/pull/279)
 
 ## [2.4.0] - 2024-09-25
 ### Added

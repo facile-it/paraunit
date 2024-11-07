@@ -21,7 +21,7 @@ class RaisingNoticeTestStub extends TestCase
         return [
             ['YOU SHOULD NOT SEE THIS -- E_USER_NOTICE', E_USER_NOTICE],
             ['YOU SHOULD NOT SEE THIS -- E_USER_WARNING', E_USER_WARNING],
-            ['YOU SHOULD NOT SEE THIS -- E_USER_ERROR', E_USER_ERROR],
+            ['YOU SHOULD NOT SEE THIS -- E_USER_DEPRECATED', E_USER_DEPRECATED],
         ];
     }
 

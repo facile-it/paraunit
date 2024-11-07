@@ -11,7 +11,7 @@ start:
 	docker compose up -d php
 
 composer-update: start
-	docker compose exec php composer update
+	docker compose exec php composer update --ignore-platform-req=php+
 
 pre-commit-check: rector cs-fix psalm phpstan tests
 
