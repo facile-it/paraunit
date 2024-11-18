@@ -59,7 +59,7 @@ jobs:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: './coverage.xml'
