@@ -51,6 +51,7 @@ class ParallelCommand extends Command
             new PHPUnitOption('static-backup', false),
 
             new PHPUnitOption('loader'),
+            new PHPUnitOption('log-junit'),
             new PHPUnitOption('repeat'),
             new PHPUnitOption('printer'),
 

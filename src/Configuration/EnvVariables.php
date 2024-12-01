@@ -11,4 +11,6 @@ class EnvVariables
     public const PIPELINE_NUMBER = 'PARAUNIT_PIPELINE_NUMBER';
 
     public const PROCESS_UNIQUE_ID = 'PARAUNIT_PROCESS_UNIQUE_ID';
+
+    public const LOG_JUNIT_DIR = 'PARAUNIT_LOG_JUNIT_DIR';
 }

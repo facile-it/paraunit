@@ -10,6 +10,7 @@ use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Configuration\PHPUnitOption;
 use Paraunit\Parser\JSON\TestHook as Hooks;
 use Paraunit\Process\CommandLine;
+use Paraunit\Util\Log\JUnit\JUnit;
 use Tests\BaseUnitTestCase;
 
 class CommandLineTest extends BaseUnitTestCase

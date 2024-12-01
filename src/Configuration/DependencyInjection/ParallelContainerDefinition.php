@@ -26,6 +26,7 @@ use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
 use Paraunit\TestResult\TestResultList;
+use Paraunit\Util\Log\JUnit\JUnit;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -74,6 +75,8 @@ class ParallelContainerDefinition
             '%paraunit.phpunit_config_filename%',
         ]))
             ->setPublic(true);
+        $container->setDefinition(JUnit::class, new Definition(JUnit::class));
+
         $container->setDefinition(TempFilenameFactory::class, new Definition(TempFilenameFactory::class, [
             new Reference(TempDirectory::class),
         ]));
@@ -117,6 +120,7 @@ class ParallelContainerDefinition
             new Reference(TestResultList::class),
             $output,
             new Reference(ChunkSize::class),
+            new Reference(JUnit::class),
         ];
         $container->setDefinition(FinalPrinter::class, new Definition(FinalPrinter::class, $finalPrinterArguments));
         $container->setDefinition(FailuresPrinter::class, new Definition(FailuresPrinter::class, $finalPrinterArguments));
@@ -133,6 +137,7 @@ class ParallelContainerDefinition
         $container->setDefinition(CommandLine::class, new Definition(CommandLine::class, [
             new Reference(PHPUnitBinFile::class),
             new Reference(ChunkSize::class),
+            new Reference(JUnit::class)
         ]));
 
         $container->setDefinition(ProcessFactoryInterface::class, new Definition(ProcessFactory::class, [

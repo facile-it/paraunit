@@ -35,7 +35,8 @@
         "symfony/dependency-injection": "^4.4||^5.0||^6.0",
         "symfony/event-dispatcher": "^4.4||^5.0||^6.0",
         "symfony/process": "^4.4||^5.0||^6.0",
-        "symfony/stopwatch": "^4.4||^5.0||^6.0"
+        "symfony/stopwatch": "^4.4||^5.0||^6.0",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^0.5.1",
