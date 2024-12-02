@@ -140,7 +140,6 @@ class CoverageCommandTest extends BaseTestCase
 
     private function getTempCoverageFilename(): string
     {
-        /** @var string $filename */
         $filename = tempnam(sys_get_temp_dir(), 'coverage.txt');
         $this->assertNotFalse($filename);
 

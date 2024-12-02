@@ -147,7 +147,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         static $factory;
 
-        if (PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 3) {
+        if (PHP_VERSION_ID >= 8_03_00) {
             $factory ??= new Php83GarbageCollectorStatusProvider();
         } else {
             $factory ??= new Php81GarbageCollectorStatusProvider();

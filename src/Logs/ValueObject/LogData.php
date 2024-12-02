@@ -13,7 +13,7 @@ class LogData implements \JsonSerializable
     ) {}
 
     /**
-     * @psalm-assert array{status: string, test: string|array, message?: string|null} $log
+     * @psalm-assert array{status: string, test: string|array<mixed>, message?: string|null} $log
      */
     private static function validateLogFormat(mixed $log): void
     {

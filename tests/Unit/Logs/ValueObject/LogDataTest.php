@@ -32,7 +32,6 @@ class LogDataTest extends TestCase
         $logStubEntry = $parsedResult[0];
         $this->assertEquals($logData, $logStubEntry);
         $logEndingEntry = $parsedResult[1];
-        $this->assertInstanceOf(LogData::class, $logEndingEntry);
         $this->assertEquals($logData->test, $logEndingEntry->test);
         $this->assertEquals(LogStatus::LogTerminated, $logEndingEntry->status);
         $this->assertNull($logEndingEntry->message);
@@ -52,7 +51,6 @@ class LogDataTest extends TestCase
         $parsedResult = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
 
         $this->assertCount(2, $parsedResult);
-        $this->assertInstanceOf(LogData::class, $parsedResult[0]);
         $this->assertEquals($logData, $parsedResult[0]);
         $this->assertSame('Foo', $parsedResult[0]->test->name);
     }
@@ -64,7 +62,6 @@ class LogDataTest extends TestCase
         $parsedResult = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
 
         $this->assertCount(2, $parsedResult);
-        $this->assertInstanceOf(LogData::class, $parsedResult[0]);
         $this->assertEquals($logData, $parsedResult[0]);
         $this->assertObjectHasProperty('className', $parsedResult[0]->test);
         $this->assertObjectHasProperty('methodName', $parsedResult[0]->test);
@@ -78,7 +75,6 @@ class LogDataTest extends TestCase
         $parsedResult = LogData::parse('{}');
 
         $this->assertCount(2, $parsedResult);
-        $this->assertInstanceOf(LogData::class, $parsedResult[0]);
         $this->assertEquals(LogStatus::Unknown, $parsedResult[0]->status);
         $this->assertEquals(Test::unknown(), $parsedResult[0]->test);
         $this->assertIsString($parsedResult[0]->message);

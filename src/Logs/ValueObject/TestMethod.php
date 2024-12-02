@@ -55,22 +55,17 @@ class TestMethod extends Test
             throw self::invalidDeserializeInput($data);
         }
 
-        self::assertPropertyIsString(self::CLASS_NAME, $data);
-        self::assertPropertyIsString(self::METHOD_NAME, $data);
-        self::assertPropertyIsString(self::FULL_NAME, $data);
-    }
+        $properties = [
+            self::CLASS_NAME,
+            self::METHOD_NAME,
+            self::FULL_NAME,
+        ];
 
-    /**
-     * @template T of string
-     *
-     * @param T $property
-     * @param mixed[] $data
-     *
-     * @psalm-assert array{T: string, ...} $data
-     */
-    private static function assertPropertyIsString(string $property, array $data): void
-    {
-        if (! is_string($data[$property] ?? false)) {
+        foreach ($properties as $property) {
+            if (is_string($data[$property] ?? null)) {
+                continue;
+            }
+
             throw new \InvalidArgumentException($property . ' field missing or invalid');
         }
     }
