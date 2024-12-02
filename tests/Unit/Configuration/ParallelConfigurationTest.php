@@ -98,8 +98,8 @@ class ParallelConfigurationTest extends BaseUnitTestCase
 
         // test instantiation, to prevent misconfiguration
         $service = $this->getService($container, DebugPrinter::class);
-        $this->assertInstanceOf(DebugPrinter::class, $service);
         $this->assertInstanceOf(EventSubscriberInterface::class, $service);
+        $this->assertInstanceOf(DebugPrinter::class, $service);
     }
 
     public function testBuildContainerWithSortRandom(): void

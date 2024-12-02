@@ -25,7 +25,6 @@ class LogFetcherTest extends BaseUnitTestCase
 
         $logs = $fetcher->fetch($process);
 
-        $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertEmpty($logs);
     }
 
@@ -42,12 +41,10 @@ class LogFetcherTest extends BaseUnitTestCase
 
         $logs = $fetcher->fetch($process);
 
-        $this->assertNotNull($logs, 'Fetcher returning a non-array');
         $this->assertCount(4 + 1, $logs, 'Log ending missing');
         $this->assertContainsOnlyInstancesOf(LogData::class, $logs);
 
         $endingLog = end($logs);
-        $this->assertInstanceOf(LogData::class, $endingLog);
         $this->assertEquals(LogStatus::LogTerminated, $endingLog->status);
 
         $this->assertFileDoesNotExist($filename, 'Log file should be deleted to preserve memory');

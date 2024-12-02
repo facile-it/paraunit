@@ -17,9 +17,6 @@ class OutputPath
         $this->path = $path;
     }
 
-    /**
-     * @throws \RuntimeException
-     */
     public function getPath(): string
     {
         return $this->path;

@@ -32,7 +32,6 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 
 class CoverageConfigurationTest extends BaseUnitTestCase
@@ -110,9 +109,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
-        $service = $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfiguration
-        $this->assertInstanceOf(DebugPrinter::class, $service);
-        $this->assertInstanceOf(EventSubscriberInterface::class, $service);
+        $this->getService($container, DebugPrinter::class); // test instantiation, to prevent misconfiguration
     }
 
     #[DataProvider('cliOptionsProvider')]
@@ -257,10 +254,17 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $this->assertTrue($property->getValue($processor));
     }
 
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $serviceName
+     *
+     * @return T
+     */
     private function getService(ContainerBuilder $container, string $serviceName): object
     {
         $service = $container->get(sprintf(CoverageConfiguration::PUBLIC_ALIAS_FORMAT, $serviceName));
-        $this->assertNotNull($service);
+        $this->assertInstanceOf($serviceName, $service);
 
         return $service;
     }

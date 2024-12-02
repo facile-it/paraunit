@@ -16,7 +16,6 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
         $this->populateTestResultContainerWithAllPossibleStatuses();
 
         $printer = $this->getService(FilesRecapPrinter::class);
-        $this->assertInstanceOf(FilesRecapPrinter::class, $printer);
 
         $printer->onEngineEnd();
 
@@ -47,7 +46,6 @@ class FilesRecapPrinterTest extends BaseFunctionalTestCase
 
         $output = $this->getConsoleOutput();
         $runner = $this->getService(Runner::class);
-        $this->assertInstanceOf(Runner::class, $runner);
         $this->assertNotEquals(0, $runner->run());
 
         $this->assertOutputOrder($output, [

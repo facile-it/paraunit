@@ -12,7 +12,6 @@ use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageDriver;
 use Paraunit\Process\CommandLine;
 use Paraunit\Process\CommandLineWithCoverage;
-use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\BaseUnitTestCase;
@@ -51,14 +50,12 @@ class ProcessFactoryTest extends BaseUnitTestCase
 
         $processWrapper = $factory->create('TestTest.php');
 
-        $this->assertInstanceOf(Process::class, $processWrapper);
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('TestTest.php', $commandLine);
         $this->assertStringContainsString('--specific=value-for-TestTest.php', $commandLine);
 
         $processWrapper = $factory->create('TestTest2.php');
 
-        $this->assertInstanceOf(Process::class, $processWrapper);
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('TestTest2.php', $commandLine);
         $this->assertStringContainsString('--specific=value-for-TestTest2.php', $commandLine);
@@ -137,7 +134,6 @@ class ProcessFactoryTest extends BaseUnitTestCase
 
         $processWrapper = $factory->create('phpunit.xml');
 
-        $this->assertInstanceOf(Process::class, $processWrapper);
         $commandLine = $processWrapper->getCommandLine();
         $this->assertStringContainsString('--configuration=phpunit.xml', $commandLine);
         $this->assertStringContainsString('--specific=value-for-phpunit.xml', $commandLine);

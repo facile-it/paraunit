@@ -9,7 +9,6 @@ use Paraunit\Lifecycle\ProcessStarted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
 use Paraunit\Printer\DebugPrinter;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 use Tests\Stub\UnformattedOutputStub;
@@ -18,11 +17,6 @@ class DebugPrinterTest extends BaseUnitTestCase
 {
     public function testIsSubscribedToAllProcessEvents(): void
     {
-        $this->assertTrue(
-            is_subclass_of(DebugPrinter::class, EventSubscriberInterface::class),
-            DebugPrinter::class . ' is not an EventSubscriber!'
-        );
-
         $subscribedEvents = array_keys(DebugPrinter::getSubscribedEvents());
         $processEvents = [
             ProcessParsingCompleted::class,
