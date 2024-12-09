@@ -8,6 +8,7 @@ use Paraunit\Logs\TestHook\Deprecation;
 use Paraunit\Logs\ValueObject\LogStatus;
 use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
 use PHPUnit\Event\Test\DeprecationTriggered;
+use PHPUnit\Framework\Assert;
 
 /**
  * @template-extends AbstractTestHookTestCase<Deprecation, DeprecationTriggered>
@@ -39,6 +40,11 @@ class DeprecationTest extends AbstractTestHookTestCase
 
         if (class_exists(IssueTrigger::class)) {
             $args[] = IssueTrigger::unknown();
+
+            if (method_exists(Assert::class, 'assertContainsOnlyArray')) {
+                // $stacktrace arg added in 11.5.0
+                $args[] = '\fake\stacktrace:123';
+            }
         }
 
         return new DeprecationTriggered(...$args);
