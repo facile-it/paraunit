@@ -22,6 +22,20 @@
             "email": "alessandro.lai85@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/jean85/phpstan-prophecy"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/jean85/prophecy"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/jean85/prophecy-phpunit"
+        }
+    ],
     "require": {
         "php": "^8.1",
         "ext-dom": "*",
@@ -29,7 +43,7 @@
         "jean85/pretty-package-versions": "^1.5.1||^2.0.1",
         "phpunit/php-code-coverage": "^10.0||^11.0",
         "phpunit/php-file-iterator": "^4.0||^5.0",
-        "phpunit/phpunit": "^10.5.4||^11.0",
+        "phpunit/phpunit": "^10.5.4||^11.0||^12.0",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^4.4||^5.0||^6.0||^7.0",
         "symfony/dependency-injection": "^4.4||^5.0||^6.0||^7.0",
@@ -39,9 +53,9 @@
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^1.0",
-        "jangregor/phpstan-prophecy": "^2.0.0",
-        "phpspec/prophecy": "^1.20",
-        "phpspec/prophecy-phpunit": "^2.3.0",
+        "jangregor/phpstan-prophecy": "^2.0.0||dev-phpunit-12-support as 2.1.0",
+        "phpspec/prophecy": "^1.20||dev-allow-sebastian-comparator-7 as 1.21",
+        "phpspec/prophecy-phpunit": "^2.3.0||dev-phpunit-12-support as 2.4.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "2.1.2",
         "phpstan/phpstan-phpunit": "^2.0",
