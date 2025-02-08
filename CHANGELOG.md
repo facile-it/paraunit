@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 * ...
 
-## [2.5.0] - 2025-02-07
+## [2.5.0] - 2025-02-08
 * Add PHPUnit 12 support [#297](https://github.com/facile-it/paraunit/pull/297)
 * Add PHP 8.4 support [#279](https://github.com/facile-it/paraunit/pull/279)
 
