@@ -9,6 +9,11 @@ on:
   schedule:
     - cron: "42 7 * * 1"
 
+permissions:
+  repository-projects: read
+env:
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'  
+
 jobs:
   Tests:
     runs-on: 'ubuntu-latest'
