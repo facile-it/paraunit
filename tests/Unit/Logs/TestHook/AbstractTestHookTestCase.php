@@ -18,6 +18,7 @@ use PHPUnit\Event\Telemetry\MemoryUsage;
 use PHPUnit\Event\Telemetry\Php81GarbageCollectorStatusProvider;
 use PHPUnit\Event\Telemetry\Php83GarbageCollectorStatusProvider;
 use PHPUnit\Event\Telemetry\Snapshot;
+use PHPUnit\Event\Telemetry\SystemGarbageCollectorStatusProvider;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\TestHookStub;
 
@@ -147,7 +148,9 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         static $factory;
 
-        if (PHP_VERSION_ID >= 8_03_00) {
+        if (class_exists(SystemGarbageCollectorStatusProvider::class)) {
+            $factory ??= new SystemGarbageCollectorStatusProvider();
+        } elseif (PHP_VERSION_ID >= 8_03_00) {
             $factory ??= new Php83GarbageCollectorStatusProvider();
         } else {
             $factory ??= new Php81GarbageCollectorStatusProvider();
