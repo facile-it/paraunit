@@ -59,7 +59,7 @@ class LogData implements \JsonSerializable
     {
         /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (! \mb_detect_encoding($string, 'UTF-8', true)) {
-            return \mb_convert_encoding($string, 'UTF-8');
+            return \mb_convert_encoding($string, 'UTF-8') ?: '';
         }
 
         return $string;
