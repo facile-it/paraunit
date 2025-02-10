@@ -29,10 +29,6 @@
         },
         {
             "type": "github",
-            "url": "https://github.com/jean85/prophecy"
-        },
-        {
-            "type": "github",
             "url": "https://github.com/jean85/prophecy-phpunit"
         }
     ],
