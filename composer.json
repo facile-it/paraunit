@@ -29,10 +29,6 @@
         },
         {
             "type": "github",
-            "url": "https://github.com/jean85/prophecy"
-        },
-        {
-            "type": "github",
             "url": "https://github.com/jean85/prophecy-phpunit"
         }
     ],
@@ -54,7 +50,7 @@
     "require-dev": {
         "facile-it/facile-coding-standard": "^1.0",
         "jangregor/phpstan-prophecy": "^2.0.0||dev-phpunit-12-support as 2.1.0",
-        "phpspec/prophecy": "^1.20||dev-allow-sebastian-comparator-7 as 1.21",
+        "phpspec/prophecy": "^1.20||dev-master#53ab8ce as 1.21",
         "phpspec/prophecy-phpunit": "^2.3.0||dev-phpunit-12-support as 2.4.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "2.1.2",
