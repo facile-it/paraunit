@@ -83,7 +83,7 @@ class FinalPrinter implements EventSubscriberInterface
     {
         $this->output->writeln('');
         $this->output->writeln('');
-        $this->output->writeln('Execution time -- ' . gmdate('H:i:s', (int) ((int)$stopEvent->getDuration() / 1_000)));
+        $this->output->writeln('Execution time -- ' . gmdate('H:i:s', (int) ((int) $stopEvent->getDuration() / 1_000)));
     }
 
     private function printTestCounters(): void
