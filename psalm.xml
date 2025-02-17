@@ -19,4 +19,8 @@
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
     </plugins>
+    
+    <issueHandlers>
+        <ClassMustBeFinal errorLevel="suppress"/> 
+    </issueHandlers>
 </psalm>
