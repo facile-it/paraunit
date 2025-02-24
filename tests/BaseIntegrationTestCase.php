@@ -26,8 +26,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
 
     protected ParallelConfiguration $configuration;
 
-    /** @var string */
-    protected $textFilter;
+    protected ?string $textFilter = null;
 
     /** @var string[] */
     private array $options = [];
@@ -36,8 +35,11 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->configuration = new ParallelConfiguration(true);
-        $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
+        $this->configuration ??= new ParallelConfiguration(true);
+        
+        if (! isset($this->options['configuration'])) {
+            $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
+        }
 
         $this->cleanUpTempDirForThisExecution();
     }
