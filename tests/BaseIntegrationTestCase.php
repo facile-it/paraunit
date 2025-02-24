@@ -36,7 +36,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
         parent::setUp();
 
         $this->configuration ??= new ParallelConfiguration(true);
-        
+
         if (! isset($this->options['configuration'])) {
             $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_stubs.xml');
         }
