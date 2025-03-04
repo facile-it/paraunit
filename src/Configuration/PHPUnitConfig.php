@@ -26,7 +26,7 @@ class PHPUnitConfig
         $this->xmlLoader = new Loader();
     }
 
-    public function getRootAttribute(string $name): ?string
+    public function getRootAttributeValue(string $name): ?string
     {
         /** @psalm-suppress InternalMethod */
         $config = $this->xmlLoader->loadFile($this->configFilename);

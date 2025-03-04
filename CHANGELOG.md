@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
-* ...
+* Deprecations details are now shown according to the value of the `displayDetailsOnTestsThatTriggerDeprecations`
+  attribute in the PhpUnit configuration. Since this value is `false` by default, in this version the deprecations
+  will be hidden. If you want to replicate the previous behavior, set the attribute to `true` in your configuration.
 
 ## [2.5.0] - 2025-02-08
 * Add PHPUnit 12 support [#297](https://github.com/facile-it/paraunit/pull/297)

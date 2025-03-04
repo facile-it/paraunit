@@ -47,8 +47,7 @@ class FailuresPrinter implements EventSubscriberInterface
             $this->printFailuresHeading($outcome, $style);
 
             if ($outcome === TestIssue::Deprecation) {
-                $display = filter_var($this->config->getRootAttribute('displayDetailsOnTestsThatTriggerDeprecations'), FILTER_VALIDATE_BOOLEAN);
-                if (! $display) {
+                if ($this->shouldSkipPrinting()) {
                     continue;
                 }
 
@@ -61,6 +60,11 @@ class FailuresPrinter implements EventSubscriberInterface
                 $this->printFailureOutput($testResult, $style, $counter++);
             }
         }
+    }
+
+    private function shouldSkipPrinting(): bool
+    {
+        return ! filter_var($this->config->getRootAttributeValue('displayDetailsOnTestsThatTriggerDeprecations'), FILTER_VALIDATE_BOOLEAN);
     }
 
     private function printFailuresHeading(TestOutcome|TestIssue $outcome, OutputStyle $style): void

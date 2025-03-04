@@ -262,6 +262,27 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringNotContainsString(Test::unknown()->name, $output);
     }
 
+    public function testExecutionWithDeprecationHidden(): void
+    {
+        $application = new Application();
+        $application->add(new ParallelCommand(new ParallelConfiguration()));
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $this->getConfigForDeprecationHidden(),
+        ]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertEquals(0, $exitCode);
+        $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output, 'Precondition failed');
+        $this->assertStringContainsString('1 files with DEPRECATIONS:', $output);
+        $this->assertStringContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
+        $this->assertStringNotContainsString('3x Tests\Stub\RaisingDeprecationTestStub::testDeprecation', $output);
+
+    }
+
     public function testExecutionWithDeprecationListener(): void
     {
         $application = new Application();
