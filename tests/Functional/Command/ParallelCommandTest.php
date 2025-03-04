@@ -280,7 +280,6 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('1 files with DEPRECATIONS:', $output);
         $this->assertStringNotContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
         $this->assertStringNotContainsString('3x Tests\Stub\RaisingDeprecationTestStub::testDeprecation', $output);
-
     }
 
     public function testExecutionWithDeprecationListener(): void
