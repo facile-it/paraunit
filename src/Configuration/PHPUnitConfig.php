@@ -26,6 +26,16 @@ class PHPUnitConfig
         $this->xmlLoader = new Loader();
     }
 
+    public function getRootAttributeValue(string $name): ?string
+    {
+        /** @psalm-suppress InternalMethod */
+        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $xpath = new \DOMXPath($config);
+        $root = $xpath->document->getElementsByTagName('phpunit');
+
+        return $root->item(0)?->getAttribute($name);
+    }
+
     public function isParaunitExtensionRegistered(): bool
     {
         /** @psalm-suppress InternalMethod */
