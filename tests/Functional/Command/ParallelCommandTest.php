@@ -278,7 +278,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertEquals(0, $exitCode);
         $this->assertStringContainsString('Executed: 1 test classes, 3 tests', $output, 'Precondition failed');
         $this->assertStringContainsString('1 files with DEPRECATIONS:', $output);
-        $this->assertStringContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
+        $this->assertStringNotContainsString(RaisingDeprecationTestStub::DEPRECATION_MESSAGE, $output);
         $this->assertStringNotContainsString('3x Tests\Stub\RaisingDeprecationTestStub::testDeprecation', $output);
 
     }
