@@ -48,7 +48,7 @@ class FailuresPrinter implements EventSubscriberInterface
 
             if ($outcome === TestIssue::Deprecation) {
                 $display = filter_var($this->config->getRootAttribute('displayDetailsOnTestsThatTriggerDeprecations'), FILTER_VALIDATE_BOOLEAN);
-                if (!$display) {
+                if (! $display) {
                     continue;
                 }
 
