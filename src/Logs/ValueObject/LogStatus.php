@@ -24,6 +24,7 @@ enum LogStatus: string
     case Deprecation = 'Deprecation';
     case PHPUnitDeprecation = 'PHPUnitDeprecation';
     case ErrorTriggered = 'ErrorTriggered';
+    case Notice = 'Notice';
 
     public function toTestStatus(): TestOutcome|TestIssue
     {
@@ -43,6 +44,7 @@ enum LogStatus: string
             self::WarningTriggered => TestIssue::Warning,
             self::Deprecation => TestIssue::Deprecation,
             self::PHPUnitDeprecation => TestIssue::PHPUnitDeprecation,
+            self::Notice => TestIssue::Notice,
         };
     }
 }

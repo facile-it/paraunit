@@ -61,6 +61,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
             ' chunks with FAILURES:',
             ' chunks with WARNINGS:',
             ' chunks with DEPRECATIONS:',
+            ' chunks with NOTICES:',
             ' chunks with RETRIED:',
         ]);
 

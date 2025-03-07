@@ -190,6 +190,27 @@ class RunnerTest extends BaseIntegrationTestCase
         ]);
     }
 
+    public function testNotice(): void
+    {
+        $this->setTextFilter('Stub/Notice');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertSame(0, $this->executeRunner(), $output->getOutput());
+
+        $this->assertOutputOrder($output, [
+            'PARAUNIT',
+            Paraunit::getVersion(),
+            'N',
+            '     1',
+            'Execution time',
+            'Executed: 1 test classes, 1 tests',
+            'files with NOTICES',
+            'NoticeTestStub',
+        ]);
+    }
+
     public function testRegressionFatalErrorsRecognizedAsUnknownResults(): void
     {
         $this->setTextFilter('FatalErrorTestStub.php');

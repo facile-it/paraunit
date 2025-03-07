@@ -13,6 +13,7 @@ enum TestIssue: string implements ComparableTestStatus
     case PHPUnitDeprecation = 'PHPUnitDeprecation';
     case Risky = 'Risky';
     case Warning = 'Warning';
+    case Notice = 'Notice';
 
     public function getTitle(): string
     {
@@ -22,6 +23,7 @@ enum TestIssue: string implements ComparableTestStatus
             self::PHPUnitDeprecation => 'PHPUnit deprecations',
             self::Risky => 'risky outcome',
             self::CoverageFailure => 'coverage not fetched',
+            self::Notice => 'notices',
         };
     }
 
@@ -33,6 +35,7 @@ enum TestIssue: string implements ComparableTestStatus
             self::Deprecation,
             self::PHPUnitDeprecation=> 'D',
             self::Risky => 'R',
+            self::Notice => 'N',
         };
     }
 
@@ -59,6 +62,7 @@ enum TestIssue: string implements ComparableTestStatus
             self::Deprecation,
             self::PHPUnitDeprecation => TestStatus::deprecation(),
             self::Risky => TestStatus::risky(),
+            self::Notice => TestStatus::notice(),
         };
     }
 }

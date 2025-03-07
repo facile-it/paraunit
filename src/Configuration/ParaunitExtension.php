@@ -9,6 +9,7 @@ use Paraunit\Logs\TestHook\Error;
 use Paraunit\Logs\TestHook\ExecutionStarted;
 use Paraunit\Logs\TestHook\Failure;
 use Paraunit\Logs\TestHook\Incomplete;
+use Paraunit\Logs\TestHook\Notice;
 use Paraunit\Logs\TestHook\Passed;
 use Paraunit\Logs\TestHook\PhpDeprecation;
 use Paraunit\Logs\TestHook\PhpUnitDeprecation;
@@ -35,23 +36,24 @@ class ParaunitExtension implements Extension
         }
 
         $facade->registerSubscribers(
-            new TestPrepared(),
-            new TestFinished(),
-            new Error(),
-            new Failure(),
-            new ExecutionStarted(),
-            new Incomplete(),
-            new Risky(),
             new Deprecation(),
+            new Error(),
+            new ExecutionStarted(),
+            new Failure(),
+            new Incomplete(),
+            new Notice(),
+            new Passed(),
             new PhpDeprecation(),
             new PhpUnitDeprecation(),
-            new Skipped(),
-            new Passed(),
-            new PhpWarning(),
             new PhpUnitError(),
             new PhpUnitWarning(),
-            new TestWarning(),
+            new PhpWarning(),
+            new Risky(),
+            new Skipped(),
+            new TestFinished(),
+            new TestPrepared(),
             new TestRunnerWarning(),
+            new TestWarning(),
         );
     }
 }

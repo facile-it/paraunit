@@ -28,6 +28,7 @@ enum OutputStyle: string
             TestIssue::PHPUnitDeprecation,
             TestIssue::Risky,
             TestOutcome::NoTestExecuted => self::Warning,
+            TestIssue::Notice,
             TestOutcome::Skipped => self::Skip,
             TestOutcome::Incomplete => self::Incomplete,
             TestOutcome::Retry,
