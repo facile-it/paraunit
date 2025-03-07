@@ -150,10 +150,12 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
 
         if (class_exists(SystemGarbageCollectorStatusProvider::class)) {
             $factory ??= new SystemGarbageCollectorStatusProvider();
-        } elseif (PHP_VERSION_ID >= 8_03_00) {
+        } elseif (PHP_VERSION_ID >= 8_03_00 && class_exists(Php83GarbageCollectorStatusProvider::class)) {
             $factory ??= new Php83GarbageCollectorStatusProvider();
-        } else {
+        } elseif (PHP_VERSION_ID < 8_03_00 && class_exists(Php81GarbageCollectorStatusProvider::class)) {
             $factory ??= new Php81GarbageCollectorStatusProvider();
+        } else {
+            throw new \InvalidArgumentException('Unable to create GarbageCollectorStatus');
         }
 
         return $factory->status();

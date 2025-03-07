@@ -25,6 +25,7 @@ enum OutputStyle: string
             TestOutcome::Failure => self::Error,
             TestIssue::Warning,
             TestIssue::Deprecation,
+            TestIssue::PHPUnitDeprecation,
             TestIssue::Risky,
             TestOutcome::NoTestExecuted => self::Warning,
             TestOutcome::Skipped => self::Skip,

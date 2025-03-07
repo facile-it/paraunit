@@ -10,6 +10,7 @@ enum TestIssue: string implements ComparableTestStatus
 {
     case CoverageFailure = 'CoverageFailure';
     case Deprecation = 'Deprecation';
+    case PHPUnitDeprecation = 'PHPUnitDeprecation';
     case Risky = 'Risky';
     case Warning = 'Warning';
 
@@ -18,6 +19,7 @@ enum TestIssue: string implements ComparableTestStatus
         return match ($this) {
             self::Warning => 'warnings',
             self::Deprecation => 'deprecations',
+            self::PHPUnitDeprecation => 'PHPUnit deprecations',
             self::Risky => 'risky outcome',
             self::CoverageFailure => 'coverage not fetched',
         };
@@ -28,7 +30,8 @@ enum TestIssue: string implements ComparableTestStatus
         return match ($this) {
             self::CoverageFailure,
             self::Warning => 'W',
-            self::Deprecation => 'D',
+            self::Deprecation,
+            self::PHPUnitDeprecation=> 'D',
             self::Risky => 'R',
         };
     }
@@ -53,7 +56,8 @@ enum TestIssue: string implements ComparableTestStatus
         return match ($this) {
             self::CoverageFailure => throw new \LogicException('Coverage failure is not present in PHPUnit statuses'),
             self::Warning => TestStatus::warning(),
-            self::Deprecation => TestStatus::deprecation(),
+            self::Deprecation,
+            self::PHPUnitDeprecation => TestStatus::deprecation(),
             self::Risky => TestStatus::risky(),
         };
     }

@@ -20,7 +20,7 @@ class PhpUnitDeprecationTest extends AbstractTestHookTestCase
 
     protected function getExpectedStatus(): LogStatus
     {
-        return LogStatus::Deprecation;
+        return LogStatus::PHPUnitDeprecation;
     }
 
     protected function createEvent(): PhpUnitDeprecationTriggered

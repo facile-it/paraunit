@@ -25,10 +25,14 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
         $this->assertStringNotContainsStringIgnoringCase('files with PASSED', $output->getOutput());
         $this->assertOutputOrder($output, [
             'Abnormal Terminations (fatal Errors, Segfaults) output:',
+            'Coverage Not Fetched output:',
             'Errors output:',
             'Failures output:',
             'Warnings output:',
+            'Deprecations output:',
+            'PHPUnit Deprecations output:',
             'Risky Outcome output:',
+            'Retried output:',
         ]);
     }
 }

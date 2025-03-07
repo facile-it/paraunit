@@ -16,6 +16,6 @@ class PhpUnitDeprecation extends AbstractTestHook implements PhpunitDeprecationT
 {
     public function notify(PhpunitDeprecationTriggered $event): void
     {
-        $this->write(LogStatus::Deprecation, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(LogStatus::PHPUnitDeprecation, Test::fromPHPUnitTest($event->test()), $event->message());
     }
 }
