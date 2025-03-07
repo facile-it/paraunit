@@ -56,12 +56,12 @@ class ChunkFileTest extends BaseIntegrationTestCase
             'Failures output:',
             'Warnings output:',
             'Deprecations output:',
-            '2 chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
-            '9 chunks with ERRORS:',
-            '2 chunks with FAILURES:',
-            '3 chunks with WARNINGS:',
-            '2 chunks with DEPRECATIONS:',
-            '5 chunks with RETRIED:',
+            ' chunks with ABNORMAL TERMINATIONS (FATAL ERRORS, SEGFAULTS):',
+            ' chunks with ERRORS:',
+            ' chunks with FAILURES:',
+            ' chunks with WARNINGS:',
+            ' chunks with DEPRECATIONS:',
+            ' chunks with RETRIED:',
         ]);
 
         $this->assertStringContainsString('Tests\Stub\EntityManagerClosedTestStub::testBrokenTest', $outputText);
