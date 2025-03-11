@@ -207,7 +207,30 @@ class RunnerTest extends BaseIntegrationTestCase
             'Execution time',
             'Executed: 1 test classes, 1 tests',
             'files with NOTICES',
-            'NoticeTestStub',
+            '\NoticeTestStub',
+        ]);
+    }
+
+    public function testPhpNotice(): void
+    {
+        $this->setTextFilter('RaisingNotice');
+        $this->loadContainer();
+
+        $output = $this->getConsoleOutput();
+
+        $this->assertSame(10, $this->executeRunner(), $output->getOutput());
+
+        $this->assertOutputOrder($output, [
+            'PARAUNIT',
+            Paraunit::getVersion(),
+            'FFFF',
+            '     4',
+            'Execution time',
+            'Executed: 1 test classes, 4 tests',
+            '1 files with FAILURES',
+            'RaisingNoticeTestStub',
+            '1 files with NOTICES',
+            'RaisingNoticeTestStub',
         ]);
     }
 
