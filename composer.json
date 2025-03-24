@@ -53,7 +53,7 @@
         "phpspec/prophecy": "^1.20||dev-master#53ab8ce as 1.21",
         "phpspec/prophecy-phpunit": "^2.3.0||dev-phpunit-12-support as 2.4.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "2.1.8",
+        "phpstan/phpstan": "2.1.11",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/php-invoker": "^4.0||^5.0||^6.0",
         "psalm/plugin-phpunit": "^0.19",
