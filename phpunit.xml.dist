@@ -31,6 +31,9 @@
     <include>
       <directory>src/</directory>
     </include>
+    <exclude>
+      <file>src/Configuration/ParaunitExtension.php</file>
+    </exclude>
   </source>
   <extensions>
     <bootstrap class="Paraunit\Configuration\ParaunitExtension"/>
