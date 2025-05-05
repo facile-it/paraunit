@@ -190,6 +190,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         return [
             '--exclude-filter',
             '--columns',
+            '--display-all-issues',
             '--display-incomplete',
             '--display-skipped',
             '--display-deprecations',
@@ -198,6 +199,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--display-phpunit-deprecations',
             '--display-phpunit-notices',
             '--display-warnings',
+            '--fail-on-all-issues',
             '--fail-on-empty-test-suite',
             '--fail-on-phpunit-deprecation',
             '--fail-on-phpunit-notice',
