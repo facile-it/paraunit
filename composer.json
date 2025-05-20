@@ -22,12 +22,6 @@
             "email": "alessandro.lai85@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "github",
-            "url": "https://github.com/jean85/phpstan-prophecy"
-        }
-    ],
     "require": {
         "php": "^8.1",
         "ext-dom": "*",
@@ -45,7 +39,7 @@
     },
     "require-dev": {
         "facile-it/facile-coding-standard": "^1.0",
-        "jangregor/phpstan-prophecy": "^2.0.0||dev-phpunit-12-support as 2.1.0",
+        "jangregor/phpstan-prophecy": "^2.0.0||dev-master#d37c233 as 2.1.0",
         "phpspec/prophecy": "^1.20",
         "phpspec/prophecy-phpunit": "^2.3.0||dev-master#d3c2804 as 2.4.0",
         "phpstan/extension-installer": "^1.0",
