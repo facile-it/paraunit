@@ -220,6 +220,9 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--random-order-seed',
             '--only-summary-for-coverage-text',
             '--show-uncovered-for-coverage-text',
+            '--with-telemetry',
+            '--log-otr',
+            '--coverage-openclover',
         ];
     }
 }

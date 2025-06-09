@@ -94,7 +94,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
 
     #[DataProvider('extensionProxiesProvider')]
     #[DataProvider('noExtensionsEnabledProvider')]
-    public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion): void
+    public function testGetOptions(bool $enablePcov, bool $enableXdebug, ?int $xdebugVersion, ?CoverageDriver $unusedParameter = null): void
     {
         $config = $this->prophesize(PHPUnitConfig::class);
         $config->getFileFullPath()->willReturn('/path/to/phpunit.xml');
