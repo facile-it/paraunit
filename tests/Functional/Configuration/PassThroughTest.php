@@ -223,6 +223,18 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--with-telemetry',
             '--log-otr',
             '--coverage-openclover',
+            '--do-not-report-useless-tests',
+            '--fail-on-phpunit-warning',
+            '--do-not-fail-on-empty-test-suite',
+            '--do-not-fail-on-warning',
+            '--do-not-fail-on-risky',
+            '--do-not-fail-on-deprecation',
+            '--do-not-fail-on-phpunit-deprecation',
+            '--do-not-fail-on-phpunit-notice',
+            '--do-not-fail-on-phpunit-warning',
+            '--do-not-fail-on-notice',
+            '--do-not-fail-on-skipped',
+            '--do-not-fail-on-incomplete',
         ];
     }
 }
