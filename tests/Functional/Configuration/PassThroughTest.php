@@ -235,6 +235,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--do-not-fail-on-notice',
             '--do-not-fail-on-skipped',
             '--do-not-fail-on-incomplete',
+            '--include-git-information',
         ];
     }
 }
