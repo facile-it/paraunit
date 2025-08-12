@@ -120,6 +120,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--list-groups'],
             ['--list-tests'],
             ['--list-tests-xml'],
+            ['--check-php-configuration'],
             // not useful - baseline cannot be merged
             ['--generate-baseline'],
         ];
