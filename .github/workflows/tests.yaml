@@ -59,6 +59,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
       - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
         if: matrix.dependencies == 'lowest' || matrix.phpunit
       - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
