@@ -30,8 +30,8 @@ jobs:
         coverage: ['xdebug']
         phpunit: [false]
         include:
-          - description: 'PHP 8.4'
-            php: '8.4'
+          - description: 'PHP 8.5'
+            php: '8.5'
             composer_options: '--ignore-platform-req=php+'
           - description: 'PHPUnit 12'
             coverage: 'xdebug3'
