@@ -30,8 +30,7 @@ jobs:
         coverage: ['xdebug']
         phpunit: [false]
         include:
-          - description: 'PHP 8.5'
-            php: '8.5'
+          - php: '8.5'
             composer_options: '--ignore-platform-req=php+'
           - description: 'PHPUnit 12'
             coverage: 'xdebug3'
@@ -57,7 +56,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.php == '8.5' && '8.4' || matrix.php }}
           coverage: ${{ matrix.coverage }}
           ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
       - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
@@ -68,6 +67,13 @@ jobs:
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
+      - name: "Re-install PHP with 8.5"
+        uses: shivammathur/setup-php@v2
+        if: ${{ matrix.php == '8.5' }}
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: ${{ matrix.coverage }}
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
       - run: vendor/bin/phpunit --check-php-configuration
         if: matrix.dependencies != 'lowest'
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
