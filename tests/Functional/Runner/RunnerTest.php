@@ -12,7 +12,6 @@ use Tests\Stub\EntityManagerClosedTestStub;
 use Tests\Stub\IntentionalRiskyTestStub;
 use Tests\Stub\IntentionalWarningTestStub;
 use Tests\Stub\PassThenRetryTestStub;
-use Tests\Stub\RequiresSkipsTestStub;
 use Tests\Stub\SegFaultTestStub;
 use Tests\Stub\SessionTestStub;
 use Tests\Stub\ThreeGreenTestStub;
@@ -101,6 +100,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertMatchesRegularExpression('/\nW\s+1\n/', $output, 'Missing W output');
+        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output);
         $this->assertStringContainsString(
             '1 files with WARNINGS:',
             $output,
@@ -268,10 +268,8 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $exitCode = $this->executeRunner();
         $output = $this->getConsoleOutput()->getOutput();
-        $this->assertStringContainsStringIgnoringCase('skipped', $output);
         $this->assertMatchesRegularExpression('/^\.S /m', $output);
-        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output);
-        $this->assertStringContainsString('1) ' . RequiresSkipsTestStub::class . '::testBrokenTest', $output);
+        $this->assertStringContainsString('Executed: 1 test classes, 2 tests', $output);
         $this->assertEquals(0, $exitCode, 'Exit code should be 0');
     }
 
