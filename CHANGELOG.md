@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
-* Report PHPUnit deprecations as a separately [#304](https://github.com/facile-it/paraunit/pull/304)
+* Fix and improve detection of abnormal terminations [#330](https://github.com/facile-it/paraunit/pull/330)
+* Report PHPUnit deprecations as a separate test issue [#304](https://github.com/facile-it/paraunit/pull/304)
 * Reject --check-php-configuration option since it doesn't run any test [#325](https://github.com/facile-it/paraunit/pull/325)
 
 ## [2.6.0] - 2025-03-04
