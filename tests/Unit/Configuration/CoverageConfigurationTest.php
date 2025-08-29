@@ -161,7 +161,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
-        $property->setAccessible(true);
         $processors = $property->getValue($coverageResult);
 
         $this->assertCount(1, $processors, 'Wrong count of coverage processors');
@@ -241,7 +240,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
         $coverageResult = $this->getService($container, CoverageResult::class);
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
-        $property->setAccessible(true);
         $processors = $property->getValue($coverageResult);
 
         $this->assertCount(1, $processors, 'Wrong count of coverage processors');
@@ -250,7 +248,6 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $reflection = new \ReflectionClass(AbstractText::class);
         $property = $reflection->getProperty('showColors');
-        $property->setAccessible(true);
         $this->assertTrue($property->getValue($processor));
     }
 
