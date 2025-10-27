@@ -242,6 +242,6 @@ class Filter implements TestList
      */
     private function getTrimmedArray(string $string): array
     {
-        return array_map('trim', explode(',', $string));
+        return array_map(trim(...), explode(',', $string));
     }
 }
