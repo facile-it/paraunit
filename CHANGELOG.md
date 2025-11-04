@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 * ...
 
+## [2.7.1] - 2025-11-04
+* Add support for Symfony 8 [#344](https://github.com/facile-it/paraunit/pull/344), thanks @Kocal
+
 ## [2.7.0] - 2025-08-23
 * Fix and improve detection of abnormal terminations [#330](https://github.com/facile-it/paraunit/pull/330)
 * Report PHPUnit deprecations as a separate test issue [#304](https://github.com/facile-it/paraunit/pull/304)
