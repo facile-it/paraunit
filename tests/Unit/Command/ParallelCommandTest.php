@@ -40,7 +40,7 @@ class ParallelCommandTest extends BaseUnitTestCase
 
         $command = new ParallelCommand($configuration->reveal());
         $application = new Application();
-        $application->add($command);
+        $application->addCommands([$command]);
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
 

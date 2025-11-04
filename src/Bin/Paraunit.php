@@ -18,10 +18,8 @@ class Paraunit
         $application = new Application('Paraunit', self::getVersion());
 
         $parallelCommand = new ParallelCommand(new ParallelConfiguration());
-        $application->add($parallelCommand);
-
         $coverageCommand = new CoverageCommand(new CoverageConfiguration());
-        $application->add($coverageCommand);
+        $application->addCommands([$parallelCommand, $coverageCommand]);
 
         return $application;
     }
