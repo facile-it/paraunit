@@ -149,7 +149,7 @@ class CoverageCommandTest extends BaseTestCase
     private function createCommandTester(): CommandTester
     {
         $application = new Application();
-        $application->add(new CoverageCommand(new CoverageConfiguration()));
+        $application->addCommand([new CoverageCommand(new CoverageConfiguration())]);
 
         $command = $application->find(self::COMMAND_NAME);
 

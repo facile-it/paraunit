@@ -50,7 +50,7 @@ class CoverageCommandTest extends BaseUnitTestCase
 
         $command = new CoverageCommand($configuration->reveal());
         $application = new Application();
-        $application->add($command);
+        $application->addCommands([$command]);
         $command = $application->find('coverage');
         $commandTester = new CommandTester($command);
 
@@ -89,7 +89,7 @@ class CoverageCommandTest extends BaseUnitTestCase
 
         $command = new CoverageCommand($configuration->reveal());
         $application = new Application();
-        $application->add($command);
+        $application->addCommands([$command]);
         $command = $application->find('coverage');
         $commandTester = new CommandTester($command);
 
