@@ -4,6 +4,8 @@
          cacheResult="false" 
          colors="true"
          bootstrap="vendor/autoload.php"
+         displayDetailsOnPhpunitDeprecations="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          failOnWarning="true"
          failOnRisky="true"
