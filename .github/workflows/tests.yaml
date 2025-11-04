@@ -12,13 +12,13 @@ on:
 permissions:
   repository-projects: read
 env:
-  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'  
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
 
 jobs:
   Tests:
     runs-on: 'ubuntu-latest'
     env:
-      SYMFONY_DEPRECATIONS_HELPER: disabled      
+      SYMFONY_DEPRECATIONS_HELPER: disabled
     strategy:
       matrix:
         php:
@@ -51,6 +51,12 @@ jobs:
             coverage: 'xdebug2'
             php: '8.1'
             dependencies: 'lowest'
+          - description: 'Symfony 8'
+            php: '8.4'
+            composer_options: '--ignore-platform-req=php+'
+            dependencies: highest
+            minimum-stability: dev
+            symfony-version: '8.0.x-dev'
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
@@ -60,6 +66,14 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
           ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
+      - name: Configure Composer minimum-stability
+        if: matrix.composer-minimum-stability
+        run: composer config minimum-stability ${{ matrix.composer-minimum-stability }}
+      - name: Install Symfony Flex
+        if: matrix.symfony-version
+        run: |
+            composer global config --no-plugins allow-plugins.symfony/flex true
+            composer global require --no-progress --no-scripts --no-plugins symfony/flex
       - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
         if: matrix.dependencies == 'lowest' || matrix.phpunit
       - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
@@ -68,6 +82,8 @@ jobs:
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
+        env:
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
       - run: vendor/bin/phpunit --check-php-configuration
         if: matrix.dependencies != 'lowest'
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
