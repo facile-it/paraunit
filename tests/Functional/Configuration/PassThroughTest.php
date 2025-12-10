@@ -108,6 +108,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--no-extensions'],
             ['--no-logging'],
             ['--coverage-php'],
+            ['--all'],
             // not useful - they do not produce meaningful changes
             ['--teamcity'],
             ['--testdox'],
@@ -237,6 +238,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--do-not-fail-on-skipped',
             '--do-not-fail-on-incomplete',
             '--include-git-information',
+            '--exclude-source-from-xml-coverage',
         ];
     }
 }
