@@ -12,13 +12,13 @@ on:
 permissions:
   repository-projects: read
 env:
-  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'  
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
 
 jobs:
   Tests:
     runs-on: 'ubuntu-latest'
     env:
-      SYMFONY_DEPRECATIONS_HELPER: disabled      
+      SYMFONY_DEPRECATIONS_HELPER: disabled
     strategy:
       matrix:
         php:
@@ -30,8 +30,8 @@ jobs:
         coverage: ['xdebug']
         phpunit: [false]
         include:
-          - description: 'PHP 8.4'
-            php: '8.4'
+          - description: 'PHP 8.5'
+            php: '8.5'
             composer_options: '--ignore-platform-req=php+'
           - description: 'PHPUnit 12'
             coverage: 'xdebug3'
@@ -51,22 +51,35 @@ jobs:
             coverage: 'xdebug2'
             php: '8.1'
             dependencies: 'lowest'
+          - description: 'Symfony 8'
+            php: '8.4'
+            composer-minimum-stability: 'beta'
+            composer_options: '--ignore-platform-req=php+'
+            symfony-version: '^8.0.0-BETA-1'
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
+          tools: flex
       - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
-        if: matrix.dependencies == 'lowest' || matrix.phpunit
+      - name: Configure Composer minimum-stability
+        if: matrix.composer-minimum-stability
+        run: composer config minimum-stability ${{ matrix.composer-minimum-stability }}
       - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
         if: matrix.phpunit
       - uses: ramsey/composer-install@v3
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
+        env:
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
+      - run: vendor/bin/phpunit --check-php-configuration
+        if: matrix.dependencies != 'lowest'
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
       - uses: codecov/codecov-action@v5
         with:
@@ -77,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Rector
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
@@ -89,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Code style
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
@@ -101,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     name: PHPStan
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
@@ -113,7 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Psalm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'

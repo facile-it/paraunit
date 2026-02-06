@@ -23,6 +23,8 @@ class PassThrough
         '--list-groups',
         '--list-tests',
         '--list-tests-xml',
+        '--check-php-configuration',
+        '--all',
     ];
 
     /** @var list<string> */

@@ -22,7 +22,7 @@ class BaseTestCase extends TestCase
     protected function getCoverageStubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/Coverage4Stub.php';
-        static::assertFileExists($filename, 'CoverageStub file missing!');
+        self::assertFileExists($filename, 'CoverageStub file missing!');
 
         return $filename;
     }

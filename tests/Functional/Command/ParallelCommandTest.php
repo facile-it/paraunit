@@ -22,7 +22,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionFailsWithoutExtension(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -44,7 +44,7 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertFalse($configChecker->isParaunitExtensionRegistered());
 
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -65,7 +65,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -86,7 +86,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -107,13 +107,13 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString(MySQLDeadLockTestStub::class, $output);
         $this->assertStringContainsString(PostgreSQLDeadLockTestStub::class, $output);
         $this->assertNotEquals(0, $exitCode);
-        $this->assertStringContainsString('Executed: 19 test classes (21 retried), 28 tests', $output);
+        $this->assertStringContainsString('Executed: 20 test classes (21 retried), 30 tests', $output);
     }
 
     public function testExecutionWithWarning(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -140,7 +140,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -159,7 +159,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -176,7 +176,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionWithChunksAndTestsuiteOption(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -198,7 +198,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -211,11 +211,11 @@ class ParallelCommandTest extends BaseTestCase
         $output = $commandTester->getDisplay();
         $this->assertNotEquals(0, $exitCode);
 
-        $classExecuted = 19;
+        $classExecuted = 20;
         $processRetried = 21;
         $processesCount = $classExecuted + $processRetried;
         $this->assertStringContainsString(
-            sprintf('Executed: %d test classes (%d retried), 28 tests', $classExecuted, $processRetried),
+            sprintf('Executed: %d test classes (%d retried), 30 tests', $classExecuted, $processRetried),
             $output,
             'Precondition failed'
         );
@@ -229,7 +229,7 @@ class ParallelCommandTest extends BaseTestCase
     {
         $configurationPath = $this->getConfigForStubs();
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -246,7 +246,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionWithoutConfiguration(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -265,7 +265,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionWithDeprecationHidden(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -285,7 +285,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionWithDeprecationListener(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -305,7 +305,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionWithRandomOrder(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
@@ -324,7 +324,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testRegressionWithPHPUnitError(): void
     {
         $application = new Application();
-        $application->add(new ParallelCommand(new ParallelConfiguration()));
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);

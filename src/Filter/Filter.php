@@ -181,7 +181,7 @@ class Filter implements TestList
     private function filterByString(array $aggregatedFiles, ?string $stringFilter): array
     {
         if ($stringFilter !== null) {
-            $aggregatedFiles = array_filter($aggregatedFiles, fn($value): bool => stripos($value, $stringFilter) !== false);
+            $aggregatedFiles = array_filter($aggregatedFiles, fn(string $value): bool => stripos($value, $stringFilter) !== false);
         }
 
         return array_values($aggregatedFiles);
@@ -242,6 +242,6 @@ class Filter implements TestList
      */
     private function getTrimmedArray(string $string): array
     {
-        return array_map('trim', explode(',', $string));
+        return array_map(trim(...), explode(',', $string));
     }
 }

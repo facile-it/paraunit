@@ -108,6 +108,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--no-extensions'],
             ['--no-logging'],
             ['--coverage-php'],
+            ['--all'],
             // not useful - they do not produce meaningful changes
             ['--teamcity'],
             ['--testdox'],
@@ -120,6 +121,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--list-groups'],
             ['--list-tests'],
             ['--list-tests-xml'],
+            ['--check-php-configuration'],
             // not useful - baseline cannot be merged
             ['--generate-baseline'],
         ];
@@ -190,6 +192,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         return [
             '--exclude-filter',
             '--columns',
+            '--display-all-issues',
             '--display-incomplete',
             '--display-skipped',
             '--display-deprecations',
@@ -198,6 +201,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--display-phpunit-deprecations',
             '--display-phpunit-notices',
             '--display-warnings',
+            '--fail-on-all-issues',
             '--fail-on-empty-test-suite',
             '--fail-on-phpunit-deprecation',
             '--fail-on-phpunit-notice',
@@ -218,6 +222,23 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--random-order-seed',
             '--only-summary-for-coverage-text',
             '--show-uncovered-for-coverage-text',
+            '--with-telemetry',
+            '--log-otr',
+            '--coverage-openclover',
+            '--do-not-report-useless-tests',
+            '--fail-on-phpunit-warning',
+            '--do-not-fail-on-empty-test-suite',
+            '--do-not-fail-on-warning',
+            '--do-not-fail-on-risky',
+            '--do-not-fail-on-deprecation',
+            '--do-not-fail-on-phpunit-deprecation',
+            '--do-not-fail-on-phpunit-notice',
+            '--do-not-fail-on-phpunit-warning',
+            '--do-not-fail-on-notice',
+            '--do-not-fail-on-skipped',
+            '--do-not-fail-on-incomplete',
+            '--include-git-information',
+            '--exclude-source-from-xml-coverage',
         ];
     }
 }

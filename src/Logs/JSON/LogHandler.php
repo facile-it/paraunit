@@ -22,11 +22,11 @@ class LogHandler
 
     private TestOutcome|TestIssue|null $currentTestOutcome = null;
 
+    private int $startedTestCount = 0;
+
     private int $preparedTestCount = 0;
 
-    private int $actuallyPreparedTestCount = 0;
-
-    private int $actuallyFinishedTestCount = 0;
+    private int $finishedTestCount = 0;
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
@@ -40,30 +40,30 @@ class LogHandler
     {
         $this->currentTest = Test::unknown();
         $this->currentTestOutcome = null;
+        $this->startedTestCount = 0;
         $this->preparedTestCount = 0;
-        $this->actuallyPreparedTestCount = 0;
-        $this->actuallyFinishedTestCount = 0;
+        $this->finishedTestCount = 0;
     }
 
     public function processLog(Process $process, LogData $log): void
     {
         if ($log->status === LogStatus::Started) {
             $this->currentTest = $log->test;
-            $this->preparedTestCount += (int) $log->message;
+            $this->startedTestCount += (int) $log->message;
 
             return;
         }
 
         if ($log->status === LogStatus::Prepared) {
             // TODO - handle warnings happening between tests
-            ++$this->actuallyPreparedTestCount;
+            ++$this->preparedTestCount;
             $this->currentTest = $log->test;
 
             return;
         }
 
         if ($log->status === LogStatus::Finished) {
-            ++$this->actuallyFinishedTestCount;
+            ++$this->finishedTestCount;
             if ($this->currentTestOutcome === null) {
                 throw new \LogicException('No outcome received');
             }
@@ -90,18 +90,18 @@ class LogHandler
 
     private function handleLogEnding(Process $process): void
     {
-        if ($process->getExitCode() === 0 && $this->actuallyPreparedTestCount === 0) {
+        if ($process->getExitCode() === 0 && $this->preparedTestCount === 0) {
             $this->testResultContainer->addTestResult(new TestResult($this->currentTest, TestOutcome::NoTestExecuted));
         }
 
         if ($this->currentTestOutcome !== null) {
             $this->testResultContainer->addTestResult(new TestResult($this->currentTest, $this->currentTestOutcome));
+            if ($this->currentTestOutcome instanceof TestOutcome) {
+                $this->dispatchOutcome($this->currentTestOutcome);
+            }
         }
 
-        if (
-            $this->preparedTestCount > $this->actuallyPreparedTestCount
-            || $this->actuallyPreparedTestCount > $this->actuallyFinishedTestCount
-        ) {
+        if ($this->preparedTestCount > $this->finishedTestCount) {
             // TODO - expose the number of missing tests?
             $this->testResultContainer->addTestResult(new TestWithAbnormalTermination($this->currentTest, $process));
             $this->dispatchOutcome(TestOutcome::AbnormalTermination);

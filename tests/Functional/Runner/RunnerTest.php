@@ -100,6 +100,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
         $output = $this->getConsoleOutput()->getOutput();
         $this->assertMatchesRegularExpression('/\nW\s+1\n/', $output, 'Missing W output');
+        $this->assertStringContainsString('Executed: 1 test classes, 1 tests', $output);
         $this->assertStringContainsString(
             '1 files with WARNINGS:',
             $output,
@@ -302,6 +303,18 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString('Executed: 1 test classes (3 retried), 4 tests', $output);
         $this->assertStringContainsString('1) ' . PassThenRetryTestStub::class . '::testFail', $output);
         $this->assertStringNotContainsString('2) ' . PassThenRetryTestStub::class . '::testFail', $output, 'Failure reported more than once');
+    }
+
+    public function testRegressionTestWithNoStartedEventShouldNotCountAsAbnormalTermination(): void
+    {
+        $this->setTextFilter('RequiresSkipsTestStub');
+        $this->loadContainer();
+
+        $exitCode = $this->executeRunner();
+        $output = $this->getConsoleOutput()->getOutput();
+        $this->assertMatchesRegularExpression('/^\.S /m', $output);
+        $this->assertStringContainsString('Executed: 1 test classes, 2 tests', $output);
+        $this->assertEquals(0, $exitCode, 'Exit code should be 0');
     }
 
     private function executeRunner(): int
