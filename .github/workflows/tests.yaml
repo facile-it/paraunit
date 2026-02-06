@@ -33,6 +33,10 @@ jobs:
           - description: 'PHP 8.5'
             php: '8.5'
             composer_options: '--ignore-platform-req=php+'
+          - description: 'PHPUnit 13'
+            coverage: 'xdebug3'
+            php: '8.5'
+            phpunit: "^13"
           - description: 'PHPUnit 12'
             coverage: 'xdebug3'
             php: '8.3'
