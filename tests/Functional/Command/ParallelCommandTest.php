@@ -237,10 +237,10 @@ class ParallelCommandTest extends BaseTestCase
             'command' => $command->getName(),
             '--configuration' => $configurationPath,
             'stringFilter' => 'green',
-            '--pass-through' => ['--dont-report-useless-tests'],
+            '--pass-through' => ['--no-coverage'],
         ]);
 
-        $this->assertSame(0, $exitCode);
+        $this->assertSame(0, $exitCode, $commandTester->getDisplay());
     }
 
     public function testExecutionWithoutConfiguration(): void
