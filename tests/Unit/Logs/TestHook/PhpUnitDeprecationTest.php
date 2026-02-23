@@ -23,9 +23,9 @@ class PhpUnitDeprecationTest extends AbstractTestHookTestCase
         return LogStatus::PHPUnitDeprecation;
     }
 
-    protected function createEvent(): PhpUnitDeprecationTriggered
+    protected function createEvent(): PhpunitDeprecationTriggered
     {
-        return new PhpUnitDeprecationTriggered(
+        return new PhpunitDeprecationTriggered(
             $this->createTelemetryInfo(),
             $this->createPHPUnitTestMethod(),
             $this->getExpectedMessage(),
