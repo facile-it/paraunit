@@ -239,6 +239,7 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--do-not-fail-on-incomplete',
             '--include-git-information',
             '--exclude-source-from-xml-coverage',
+            '--test-files-file',
         ];
     }
 }
