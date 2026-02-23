@@ -1,11 +1,55 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to function method_exists\\(\\) with 'PHPUnit\\\\\\\\Event\\\\\\\\Code\\\\\\\\TestMethod' and 'fromTestCase' will always evaluate to false\\.$#"
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\TestMethod'' and ''fromTestCase'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
 			count: 1
 			path: tests/BaseTestCase.php
 
 		-
-			message: "#^Call to function method_exists\\(\\) with 'PHPUnit\\\\\\\\Event\\\\\\\\Code\\\\\\\\Throwable' and 'from' will always evaluate to false\\.$#"
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\Throwable'' and ''from'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
 			count: 1
 			path: tests/BaseTestCase.php
+
+		-
+			message: '#^Call to an undefined static method PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger\:\:unknown\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\IssueTrigger\\\\IssueTrigger'' and ''from'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Framework\\\\Assert'' and ''assertContainsOnlyA…'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\Test\\DeprecationTriggered constructor invoked with 8 parameters, 10 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Call to an undefined static method PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger\:\:unknown\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\IssueTrigger\\\\IssueTrigger'' and ''from'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\Test\\PhpDeprecationTriggered constructor invoked with 8 parameters, 9 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
