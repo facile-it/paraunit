@@ -1,11 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to function method_exists\\(\\) with 'PHPUnit\\\\\\\\Event\\\\\\\\Code\\\\\\\\TestMethod' and 'fromTestCase' will always evaluate to false\\.$#"
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\TestMethod'' and ''fromTestCase'' will always evaluate to#'
 			count: 1
 			path: tests/BaseTestCase.php
 
 		-
-			message: "#^Call to function method_exists\\(\\) with 'PHPUnit\\\\\\\\Event\\\\\\\\Code\\\\\\\\Throwable' and 'from' will always evaluate to false\\.$#"
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\Throwable'' and ''from'' will always evaluate to#'
 			count: 1
 			path: tests/BaseTestCase.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\IssueTrigger\\\\IssueTrigger'' and ''\w+'' will always evaluate to#'
+			count: 2
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Code\\\\IssueTrigger\\\\IssueTrigger'' and ''\w+'' will always evaluate to#'
+			count: 2
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php

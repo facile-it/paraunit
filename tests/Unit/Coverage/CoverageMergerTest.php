@@ -47,7 +47,7 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $coverageData1 = $this->createCodeCoverage();
         $coverageData2 = $this->createCodeCoverage();
-        $coverageData2->setTests(['foo' => ['size' => '123', 'status' => 'bar']]);
+        $coverageData2->setTests(['foo' => ['size' => '123', 'status' => 'bar', 'time' => 1.23]]);
 
         $fetcher = $this->prophesize(CoverageFetcher::class);
         $fetcher->fetch($process1)
@@ -66,6 +66,6 @@ class CoverageMergerTest extends BaseUnitTestCase
         $merger->onProcessParsingCompleted(new ProcessParsingCompleted($process2));
 
         $this->assertSame($coverageData1, $merger->getCoverageData());
-        $this->assertSame(['foo' => ['size' => '123', 'status' => 'bar']], $merger->getCoverageData()->getTests());
+        $this->assertSame(['foo' => ['size' => '123', 'status' => 'bar', 'time' => 1.23]], $merger->getCoverageData()->getTests());
     }
 }
