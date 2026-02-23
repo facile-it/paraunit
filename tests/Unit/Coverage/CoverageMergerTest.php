@@ -47,7 +47,7 @@ class CoverageMergerTest extends BaseUnitTestCase
 
         $coverageData1 = $this->createCodeCoverage();
         $coverageData2 = $this->createCodeCoverage();
-        $coverageData2->setTests(['foo' => ['size' => '123', 'status' => 'bar']]);
+        $coverageData2->setTests(['foo' => ['size' => '123', 'status' => 'bar', 'time' => 1.23]]);
 
         $fetcher = $this->prophesize(CoverageFetcher::class);
         $fetcher->fetch($process1)

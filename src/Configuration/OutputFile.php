@@ -6,6 +6,7 @@ namespace Paraunit\Configuration;
 
 class OutputFile
 {
+    /** @var non-empty-string */
     private readonly string $filePath;
 
     public function __construct(string $filePath)
@@ -17,6 +18,9 @@ class OutputFile
         $this->filePath = $filePath;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function getFilePath(): string
     {
         return $this->filePath;
