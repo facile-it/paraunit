@@ -45,7 +45,7 @@
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "2.1.39",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/php-invoker": "^4.0||^5.0||^6.0",
+        "phpunit/php-invoker": "^4.0||^5.0||^6.0||^7.0",
         "psalm/plugin-phpunit": "^0.19",
         "psalm/plugin-symfony": "^5.0",
         "rector/rector": "2.3.6",
