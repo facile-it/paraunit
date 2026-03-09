@@ -27,9 +27,9 @@
         "ext-dom": "*",
         "ext-json": "*",
         "jean85/pretty-package-versions": "^1.5.1||^2.0.1",
-        "phpunit/php-code-coverage": "^10.1.11||^11.0||^12.0||^13.0",
+        "phpunit/php-code-coverage": "^10.1.11||^11.0||^12.0||^13.0||14.0.x-dev as 14.0",
         "phpunit/php-file-iterator": "^4.0||^5.0||^6.0||^7.0",
-        "phpunit/phpunit": "^10.5.4||^11.0||^12.0||^13.0",
+        "phpunit/phpunit": "^10.5.4||^11.0||^12.0||^13.0||13.1.x-dev as 13.1",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^4.4||^5.0||^6.0||^7.0||^8.0",
         "symfony/dependency-injection": "^4.4||^5.0||^6.0||^7.0||^8.0",
@@ -59,6 +59,8 @@
     "bin": [
         "src/Bin/paraunit"
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
