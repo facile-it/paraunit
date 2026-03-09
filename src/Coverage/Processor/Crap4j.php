@@ -6,6 +6,7 @@ namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Data\ProcessedCodeCoverageData;
 use SebastianBergmann\CodeCoverage\Report\Crap4j as PHPUnitCrap4j;
 
 class Crap4j implements CoverageProcessorInterface
@@ -22,7 +23,11 @@ class Crap4j implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->crap4j->process($codeCoverage, $this->targetFile->getFilePath());
+        if (class_exists(ProcessedCodeCoverageData::class)) {
+            $this->crap4j->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
+        } else {
+            $this->crap4j->process($codeCoverage, $this->targetFile->getFilePath());
+        }
     }
 
     public static function getConsoleOptionName(): string

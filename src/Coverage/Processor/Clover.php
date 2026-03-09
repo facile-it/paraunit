@@ -6,6 +6,7 @@ namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Data\ProcessedCodeCoverageData;
 use SebastianBergmann\CodeCoverage\Report\Clover as PHPUnitClover;
 
 class Clover implements CoverageProcessorInterface
@@ -22,7 +23,11 @@ class Clover implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->clover->process($codeCoverage, $this->targetFile->getFilePath());
+        if (class_exists(ProcessedCodeCoverageData::class)) {
+            $this->clover->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
+        } else {
+            $this->clover->process($codeCoverage, $this->targetFile->getFilePath());
+        }
     }
 
     public static function getConsoleOptionName(): string
