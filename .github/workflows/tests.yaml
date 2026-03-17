@@ -76,7 +76,7 @@ jobs:
         run: composer config minimum-stability ${{ matrix.composer-minimum-stability }}
       - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
         if: matrix.phpunit
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
@@ -98,7 +98,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
         with:
           dependency-versions: highest
       - run: vendor/bin/rector --ansi --dry-run
@@ -110,7 +110,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
         with:
           dependency-versions: highest
       - run: vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run
@@ -122,7 +122,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
         with:
           dependency-versions: highest
       - run: vendor/bin/phpstan analyse --ansi
@@ -134,7 +134,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
         with:
           dependency-versions: highest
       - run: vendor/bin/psalm
