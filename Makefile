@@ -8,12 +8,12 @@ build:
 	docker compose build php
 
 start:
-	docker compose up -d php
+	docker compose up --wait php
 
 composer-update: start
 	docker compose exec php composer update --ignore-platform-req=php+
 
-pre-commit-check: rector cs-fix psalm phpstan tests
+pre-commit-check: rector cs-fix psalm phpstan tests composer-check
 
 rector: start
 	docker compose exec php vendor/bin/rector --ansi
@@ -29,3 +29,11 @@ phpstan: start
 
 tests: start
 	docker compose exec php vendor/bin/phpunit --colors=always
+
+composer-check: composer-dependency-analyzer
+
+composer-dependency-analyzer: start
+	docker compose exec php vendor/bin/composer-dependency-analyser
+
+composer-validate: start
+	docker compose exec php composer validate --strict --ansi

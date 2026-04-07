@@ -90,6 +90,19 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: './coverage.xml'
           fail_ci_if_error: true
+  composer:
+    runs-on: ubuntu-latest
+    name: Composer.json checks
+    steps:
+      - uses: actions/checkout@v6
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: highest
+      - run: vendor/bin/composer-dependency-analyser
+      - run: composer validate --strict
   Rector:
     runs-on: ubuntu-latest
     name: Rector
