@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. For previou
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## Unreleased
-* ...
+* Fix transient dependencies [#373](https://github.com/facile-it/paraunit/pull/373)
 
 ## [2.8.0] - 2026-02-23
 * Support PHPUnit 13 [#356](https://github.com/facile-it/paraunit/pull/356)
