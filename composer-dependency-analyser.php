@@ -1,38 +1,33 @@
 <?php
 
+use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
+use PHPUnit\Event\Telemetry\SystemGarbageCollectorStatusProvider;
 use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
-use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 $config = new Configuration();
 
-$config->ignoreUnknownClassesRegex('/Php81|3GarbageCollectorStatusProvider/');
+if (class_exists(SystemGarbageCollectorStatusProvider::class)) {
+    /**
+     * Compatibility with PHPUnit ^10.1 || ^11
+     * @see \Tests\Unit\Logs\TestHook\AbstractTestHookTestCase::createGarbageCollectorStatus()
+     */
+    $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Telemetry\\\Php81|3GarbageCollectorStatusProvider/');
+} else {
+    /**
+     * Compatibility with PHPUnit >= 12.0.0
+     * @see \Tests\Unit\Logs\TestHook\AbstractTestHookTestCase::createGarbageCollectorStatus()
+     */
+    $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Telemetry\\\SystemGarbageCollectorStatusProvider/');
+}
 
-/**  eErrorsOnPackages([
-    'symfony/dotenv',
-    'symfony/http-client',
-], [ErrorType::PROD_DEPENDENCY_ONLY_IN_DEV]);
-
-$config->ignoreErrorsOnPackages([
-    'dama/doctrine-test-bundle',
-    'doctrine/doctrine-fixtures-bundle',
-    'symfony/web-profiler-bundle',
-], [ErrorType::DEV_DEPENDENCY_IN_PROD]);
-
-$config->ignoreErrorsOnPackages([
-    'facile-it/doctrine-mysql-come-back',
-    'league/flysystem-aws-s3-v3',
-    'league/flysystem-ftp',
-    'symfony/amqp-messenger',
-    'symfony/asset-mapper',
-    'symfony/doctrine-messenger',
-    'symfony/flex',
-    'symfony/runtime',
-    'symfony/translation',
-    'symfony/yaml',
-    'twig/intl-extra', // for format_currency filter
-    'twig/string-extra', // for u.truncate filter in SOAP XMLs fields
-], [ErrorType::UNUSED_DEPENDENCY]);
-
-*/
+if (! class_exists(IssueTrigger::class)) {
+    /**
+     * Compatibility with PHPUnit >= 11.0.0
+     * @see \Tests\Unit\Logs\TestHook\DeprecationTest
+     * @see \Tests\Unit\Logs\TestHook\PhpDeprecationTest
+     */
+    $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Code\\\IssueTrigger\\\Code/');
+    $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Code\\\IssueTrigger\\\IssueTrigger/');
+}
 
 return $config;
