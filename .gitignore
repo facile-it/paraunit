@@ -14,4 +14,5 @@ docker-compose.override.yml
 .vscode/
 .idea/
 .hugo_build.lock
+.phpunit_cache/
 themes
