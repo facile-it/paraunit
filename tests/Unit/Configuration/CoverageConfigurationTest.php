@@ -13,12 +13,14 @@ use Paraunit\Coverage\CoverageResult;
 use Paraunit\Coverage\Processor\AbstractText;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Cobertura;
+use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
+use Paraunit\Coverage\V14;
 use Paraunit\Logs\JSON\LogParser;
 use Paraunit\Printer\CoveragePrinter;
 use Paraunit\Printer\DebugPrinter;
@@ -29,6 +31,8 @@ use Paraunit\TestResult\TestResultContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use SebastianBergmann\CodeCoverage\Node\Directory;
+use SebastianBergmann\CodeCoverage\Report\PHP as PHPUnitPHPCoverageFormat;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -79,14 +83,21 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             EventDispatcherInterface::class,
             TestResultContainer::class,
 
-            CoverageFetcher::class,
-            CoverageMerger::class,
-            CoverageResult::class,
             PHPDbgBinFile::class,
             CoveragePrinter::class,
             PHPUnitConfig::class,
         ];
 
+        if (class_exists(Directory::class)) {
+            $requiredDefinitions[] = V14\CoverageFetcher::class;
+            $requiredDefinitions[] = V14\CoverageMerger::class;
+            $requiredDefinitions[] = V14\CoverageResult::class;
+        } else {
+            $requiredDefinitions[] = CoverageFetcher::class;
+            $requiredDefinitions[] = CoverageMerger::class;
+            $requiredDefinitions[] = CoverageResult::class;
+        }
+        
         foreach ($requiredDefinitions as $definitionName) {
             // test instantiation, to prevent misconfiguration
             $this->getService($container, $definitionName);
@@ -158,7 +169,12 @@ class CoverageConfigurationTest extends BaseUnitTestCase
 
         $container = $paraunit->buildContainer($input->reveal(), $output->reveal());
 
-        $coverageResult = $this->getService($container, CoverageResult::class);
+        if (class_exists(Directory::class)) {
+            $coverageResult = $this->getService($container, V14\CoverageResult::class);
+        } else {
+            $coverageResult = $this->getService($container, CoverageResult::class);
+        }
+
         $reflection = new \ReflectionObject($coverageResult);
         $property = $reflection->getProperty('coverageProcessors');
         $processors = $property->getValue($coverageResult);
@@ -169,20 +185,23 @@ class CoverageConfigurationTest extends BaseUnitTestCase
     }
 
     /**
-     * @return string[][]
+     * @return \Generator<array{string,class-string<CoverageProcessorInterface>}
      */
-    public static function cliOptionsProvider(): array
+    public static function cliOptionsProvider(): \Generator
     {
-        return [
+        yield from [
             'clover' => ['clover', Clover::class],
             'xml' => ['xml', Xml::class],
             'html' => ['html', Html::class],
             'text' => ['text', Text::class],
             'text-summary' => ['text-summary', TextSummary::class],
             'crap4j' => ['crap4j', Crap4j::class],
-            'php' => ['php', Php::class],
             'cobertura' => ['cobertura', Cobertura::class],
         ];
+        
+        if (class_exists(PHPUnitPHPCoverageFormat::class)) {
+            yield 'php' => ['php', Php::class];
+        }
     }
 
     public function testBuildContainerWithColoredTextToConsoleCoverage(): void

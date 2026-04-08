@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CoverageMerger implements EventSubscriberInterface
 {
-    private CodeCoverage $coverageData;
+    private readonly CodeCoverage $coverageData;
 
     public function __construct(private readonly CoverageFetcher $coverageFetcher)
     {

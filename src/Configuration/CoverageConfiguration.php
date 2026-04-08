@@ -15,6 +15,7 @@ use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
+use Paraunit\Coverage\V14;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,7 +34,11 @@ class CoverageConfiguration extends ParallelConfiguration
     {
         parent::loadCommandLineOptions($containerBuilder, $input);
 
-        $coverageResult = $containerBuilder->getDefinition(CoverageResult::class);
+        if ($containerBuilder->has(V14\CoverageResult::class)) {
+            $coverageResult = $containerBuilder->getDefinition(V14\CoverageResult::class);
+        } else {
+            $coverageResult = $containerBuilder->getDefinition(CoverageResult::class);
+        }
 
         $this->addPathProcessor($coverageResult, $input, Xml::class);
         $this->addPathProcessor($coverageResult, $input, Html::class);

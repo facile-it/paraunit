@@ -12,9 +12,19 @@ use SebastianBergmann\CodeCoverage\Driver\Driver;
  */
 class FakeDriver extends Driver
 {
+    public function name(): string
+    {
+        return 'FakeDriver';
+    }
+
+    public function version(): string
+    {
+        return 'v.0.0';
+    }
+
     public function nameAndVersion(): string
     {
-        return 'FakeDriver v.0.0';
+        return $this->name() . ' ' . $this->version();
     }
 
     public function start(bool $determineUnusedAndDead = true): void

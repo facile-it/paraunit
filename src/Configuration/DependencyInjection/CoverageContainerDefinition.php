@@ -15,6 +15,7 @@ use Paraunit\Process\ProcessFactory;
 use Paraunit\Proxy\PcovProxy;
 use Paraunit\Proxy\XDebugProxy;
 use SebastianBergmann\CodeCoverage\Node\Directory;
+use SebastianBergmann\CodeCoverage\Serialization\Unserializer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -55,6 +56,7 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
             $container->autowire(V14\CoverageFetcher::class);
             $container->autowire(V14\CoverageMerger::class);
             $container->autowire(V14\CoverageResult::class);
+            $container->autowire(Unserializer::class);
         } else {
             // PHPUnit 13.0 with phpunit/php-code-coverage v13 and below
             $container->autowire(CoverageFetcher::class);

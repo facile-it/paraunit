@@ -7,6 +7,7 @@ namespace Paraunit\Coverage\Processor;
 use Paraunit\Configuration\OutputPath;
 use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Node\Directory;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
 class Xml implements CoverageProcessorInterface
@@ -15,7 +16,11 @@ class Xml implements CoverageProcessorInterface
 
     public function __construct(private readonly OutputPath $targetPath)
     {
-        $this->xml = new Facade(Version::id());
+        if (class_exists(Directory::class)) {
+            $this->xml = new Facade();
+        } else {
+            $this->xml = new Facade(Version::id());
+        }
     }
 
     /**
