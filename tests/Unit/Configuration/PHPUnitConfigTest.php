@@ -67,6 +67,38 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         new PHPUnitConfig($dir);
     }
 
+    #[DataProvider('isCoverageCacheEnabledDataProvider')]
+    public function testIsCoverageCacheEnabled(bool $expected, string $configRelativePath): void
+    {
+        $dir = $this->getStubPath() . $configRelativePath;
+        $config = new PHPUnitConfig($dir);
+
+        $this->assertSame($expected, $config->isCoverageCacheEnabled());
+    }
+
+    /**
+     * @return array<string, array{bool, string}>
+     */
+    public static function isCoverageCacheEnabledDataProvider(): array
+    {
+        $base = 'StubbedXMLConfigs';
+
+        return [
+            'cache directory absent' => [
+                false,
+                $base,
+            ],
+            'cache directory set' => [
+                true,
+                $base . DIRECTORY_SEPARATOR . 'WithCacheDirectory',
+            ],
+            'cache directory empty string' => [
+                false,
+                $base . DIRECTORY_SEPARATOR . 'WithEmptyCacheDirectory',
+            ],
+        ];
+    }
+
     #[DataProvider('configWithExtensionDataProvider')]
     public function testIsParaunitExtensionRegistered(bool $expectedResult, string $configContent): void
     {

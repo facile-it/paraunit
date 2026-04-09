@@ -40,11 +40,7 @@ class PHPUnitConfig
 
     public function isCoverageCacheEnabled(): bool
     {
-        return '' !== (string) $this->getXPath()
-            ->document
-            ->attributes
-            ?->getNamedItem('cacheDirectory')
-            ?->nodeValue;
+        return '' !== (string) $this->getRootAttributeValue('cacheDirectory');
     }
 
     public function isParaunitExtensionRegistered(): bool

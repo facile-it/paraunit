@@ -40,8 +40,7 @@ class ParallelCommandTest extends BaseTestCase
     public function testExecutionUpgradesTheConfig(): void
     {
         $configWithoutExtension = $this->createConfigWithoutExtension();
-        $configChecker = new PHPUnitConfig($configWithoutExtension);
-        $this->assertFalse($configChecker->isParaunitExtensionRegistered());
+        $this->assertFalse((new PHPUnitConfig($configWithoutExtension))->isParaunitExtensionRegistered());
 
         $application = new Application();
         $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
@@ -56,7 +55,7 @@ class ParallelCommandTest extends BaseTestCase
             'stringFilter' => 'nothing',
         ], ['interactive' => true]);
 
-        $this->assertTrue($configChecker->isParaunitExtensionRegistered(), 'Configuration not updated correctly');
+        $this->assertTrue((new PHPUnitConfig($configWithoutExtension))->isParaunitExtensionRegistered());
         $this->assertSame(0, $commandTester->getStatusCode(), 'Command failed with non-zero exit code');
         $this->assertStringContainsString('Configuration updated successfully', $commandTester->getDisplay());
     }
