@@ -240,6 +240,10 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--include-git-information',
             '--exclude-source-from-xml-coverage',
             '--test-files-file',
+            '--resolve-dependencies',
+            '--ignore-dependencies',
+            '--random-order',
+            '--reverse-order',
         ];
     }
 }
