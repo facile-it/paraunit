@@ -116,7 +116,10 @@ class RunnerTest extends BaseIntegrationTestCase
     public function testNoTestExecutedDoesntGetMistakenAsAbnormalTermination(): void
     {
         $this->setTextFilter('ThreeGreenTestStub.php');
-        $this->loadContainer(['--group=emptyGroup']);
+        $this->loadContainer([
+            '--group=emptyGroup',
+            '--do-not-fail-on-empty-test-suite',
+        ]);
 
         $this->assertEquals(0, $this->executeRunner());
 
