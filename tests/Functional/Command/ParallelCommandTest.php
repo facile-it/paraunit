@@ -252,7 +252,10 @@ class ParallelCommandTest extends BaseTestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute([
             'command' => $command->getName(),
-            '--pass-through' => ['--filter=do_not_execute_anything'],
+            '--pass-through' => [
+                '--filter=do_not_execute_anything',
+                '--do-not-fail-on-empty-test-suite',
+            ],
         ]);
 
         $output = $commandTester->getDisplay();
