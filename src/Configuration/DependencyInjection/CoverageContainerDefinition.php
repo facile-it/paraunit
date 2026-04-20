@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Paraunit\Configuration\DependencyInjection;
 
 use Paraunit\Configuration\PHPDbgBinFile;
+use Paraunit\Coverage\CoverageCacheWarmer;
 use Paraunit\Coverage\CoverageFetcher;
 use Paraunit\Coverage\CoverageMerger;
 use Paraunit\Coverage\CoverageResult;
@@ -50,5 +51,6 @@ class CoverageContainerDefinition extends ParallelContainerDefinition
         $container->autowire(CoverageMerger::class);
         $container->autowire(CoverageResult::class);
         $container->autowire(CoveragePrinter::class);
+        $container->autowire(CoverageCacheWarmer::class);
     }
 }
