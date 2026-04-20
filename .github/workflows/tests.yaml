@@ -27,44 +27,21 @@ jobs:
     strategy:
       matrix:
         php:
-          - '8.1'
-          - '8.2'
-          - '8.3'
           - '8.4'
+          - '8.5'
         dependencies: ['highest']
         coverage: ['xdebug']
         phpunit: [false]
         include:
           - description: 'PHP 8.5'
             php: '8.5'
-            composer_options: '--ignore-platform-req=php+'
-          - description: 'PHPUnit 13'
-            coverage: 'xdebug3'
-            php: '8.5'
-            phpunit: "^13"
-          - description: 'PHPUnit 12'
-            coverage: 'xdebug3'
-            php: '8.3'
-            phpunit: "^12"
-          - description: 'PHPUnit 11'
-            coverage: 'xdebug3'
-            php: '8.3'
-            phpunit: "^11"
-          - description: 'Xdebug 2'
-            coverage: 'xdebug2'
-            php: '8.1'
           - description: 'PCov'
             coverage: 'pcov'
             php: '8.1'
           - description: 'lowest'
-            coverage: 'xdebug2'
-            php: '8.1'
-            dependencies: 'lowest'
-          - description: 'Symfony 8'
+            coverage: 'xdebug3'
             php: '8.4'
-            composer-minimum-stability: 'beta'
-            composer_options: '--ignore-platform-req=php+'
-            symfony-version: '^8.0.0-BETA-1'
+            dependencies: 'lowest'
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
@@ -111,7 +88,7 @@ jobs:
           persist-credentials: false
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
-          php-version: '8.1'
+          php-version: '8.4'
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
@@ -126,7 +103,7 @@ jobs:
           persist-credentials: false
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
-          php-version: '8.1'
+          php-version: '8.4'
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
@@ -140,7 +117,7 @@ jobs:
           persist-credentials: false
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
-          php-version: '8.1'
+          php-version: '8.4'
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
@@ -154,7 +131,7 @@ jobs:
           persist-credentials: false
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
-          php-version: '8.1'
+          php-version: '8.4'
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
