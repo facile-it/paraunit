@@ -16,6 +16,10 @@ class PHPUnitConfig
 
     private readonly Loader $xmlLoader;
 
+    private ?\DOMDocument $cachedConfigDocument = null;
+
+    private ?\DOMXPath $cachedConfigXpath = null;
+
     /**
      * @throws \InvalidArgumentException
      */
@@ -28,19 +32,20 @@ class PHPUnitConfig
 
     public function getRootAttributeValue(string $name): ?string
     {
-        /** @psalm-suppress InternalMethod */
-        $config = $this->xmlLoader->loadFile($this->configFilename);
-        $xpath = new \DOMXPath($config);
+        $xpath = $this->getXPath();
         $root = $xpath->document->getElementsByTagName('phpunit');
 
         return $root->item(0)?->getAttribute($name);
     }
 
+    public function isCoverageCacheEnabled(): bool
+    {
+        return '' !== (string) $this->getRootAttributeValue('cacheDirectory');
+    }
+
     public function isParaunitExtensionRegistered(): bool
     {
-        /** @psalm-suppress InternalMethod */
-        $config = $this->xmlLoader->loadFile($this->configFilename);
-        $xpath = new \DOMXPath($config);
+        $xpath = $this->getXPath();
         $extensions = $xpath->query('extensions/bootstrap');
 
         if (! $extensions instanceof \DOMNodeList) {
@@ -74,8 +79,7 @@ class PHPUnitConfig
             return;
         }
 
-        /** @psalm-suppress InternalMethod */
-        $config = $this->xmlLoader->loadFile($this->configFilename);
+        $config = $this->loadConfigFile();
         $config->preserveWhiteSpace = false;
         $config->formatOutput = true;
 
@@ -136,7 +140,7 @@ class PHPUnitConfig
         }
 
         if (is_dir($configFile)) {
-            $configFile .= DIRECTORY_SEPARATOR . $this->getConfigFile($configFile);
+            $configFile .= DIRECTORY_SEPARATOR . $this->getConfigFilePath($configFile);
         }
 
         if (! is_file($configFile) || ! is_readable($configFile)) {
@@ -146,12 +150,23 @@ class PHPUnitConfig
         return $configFile;
     }
 
-    private function getConfigFile(string $path): string
+    private function getConfigFilePath(string $path): string
     {
         if (file_exists($path . DIRECTORY_SEPARATOR . self::DEFAULT_FILE_NAME)) {
             return self::DEFAULT_FILE_NAME;
         }
 
         return self::FALLBACK_CONFIG_FILE_NAME;
+    }
+
+    private function loadConfigFile(): \DOMDocument
+    {
+        /** @psalm-suppress InternalMethod */
+        return $this->cachedConfigDocument ??= $this->xmlLoader->loadFile($this->configFilename);
+    }
+
+    private function getXPath(): \DOMXPath
+    {
+        return $this->cachedConfigXpath ??= new \DOMXPath($this->loadConfigFile());
     }
 }

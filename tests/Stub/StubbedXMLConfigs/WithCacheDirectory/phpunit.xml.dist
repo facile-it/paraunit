@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="../../../../vendor/autoload.php"
+         cacheDirectory="/tmp/paraunit/coverage-cache-folder"
+>
+    <testsuites>
+        <testsuite name="stubs">
+            <directory suffix="TestStub.php">../../</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <file>../../StubbedParaunitProcess.php</file>
+        </include>
+    </source>
+    <extensions>
+        <bootstrap class="Paraunit\Configuration\ParaunitExtension"/>
+    </extensions>
+</phpunit>
