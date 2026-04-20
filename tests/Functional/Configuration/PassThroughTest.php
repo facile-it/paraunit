@@ -61,7 +61,7 @@ class PassThroughTest extends BaseFunctionalTestCase
      */
     private function getAllPHPUnitOptions(): array
     {
-        $helpText = (new Help(null, false))->generate();
+        $helpText = new Help(null, false)->generate();
         preg_match_all('/--[\w-]+/', $helpText, $options);
         $this->assertNotEmpty($options[0]);
 

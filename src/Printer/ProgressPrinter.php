@@ -15,9 +15,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressPrinter implements EventSubscriberInterface
 {
-    final public const MAX_CHAR_LENGTH = 80;
+    final public const int MAX_CHAR_LENGTH = 80;
 
-    private const COUNTER_CHAR_LENGTH = 5;
+    private const int COUNTER_CHAR_LENGTH = 5;
 
     private int $counter = 0;
 
