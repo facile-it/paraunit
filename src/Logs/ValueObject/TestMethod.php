@@ -8,11 +8,11 @@ use PHPUnit\Event\Code\TestMethod as PHPUnitTestMethod;
 
 class TestMethod extends Test
 {
-    private const CLASS_NAME = 'className';
+    private const string CLASS_NAME = 'className';
 
-    private const METHOD_NAME = 'methodName';
+    private const string METHOD_NAME = 'methodName';
 
-    private const FULL_NAME = 'fullName';
+    private const string FULL_NAME = 'fullName';
 
     public function __construct(
         public readonly string $className,

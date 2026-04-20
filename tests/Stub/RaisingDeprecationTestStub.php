@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class RaisingDeprecationTestStub extends TestCase
 {
-    final public const DEPRECATION_MESSAGE = 'This "Foo" method is deprecated';
+    final public const string DEPRECATION_MESSAGE = 'This "Foo" method is deprecated';
 
     #[DataProvider('multirunDataprovider')]
     public function testDeprecation(): void

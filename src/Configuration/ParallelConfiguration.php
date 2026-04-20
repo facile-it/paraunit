@@ -26,9 +26,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParallelConfiguration
 {
-    final public const TAG_EVENT_SUBSCRIBER = 'kernel.event_subscriber';
+    final public const string TAG_EVENT_SUBSCRIBER = 'kernel.event_subscriber';
 
-    final public const PUBLIC_ALIAS_FORMAT = '%s_public_alias';
+    final public const string PUBLIC_ALIAS_FORMAT = '%s_public_alias';
 
     protected ParallelContainerDefinition $containerDefinition;
 

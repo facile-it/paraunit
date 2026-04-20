@@ -13,7 +13,7 @@ use Tests\BaseTestCase;
 
 class CoverageCommandTest extends BaseTestCase
 {
-    private const COMMAND_NAME = 'coverage';
+    private const string COMMAND_NAME = 'coverage';
 
     public function testExecutionFailsWithoutExtension(): void
     {

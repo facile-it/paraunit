@@ -36,24 +36,12 @@ class PipelineCollection
 
     public function hasEmptySlots(): bool
     {
-        foreach ($this->pipelines as $pipeline) {
-            if ($pipeline->isFree()) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($this->pipelines, static fn($pipeline) => $pipeline->isFree());
     }
 
     public function isEmpty(): bool
     {
-        foreach ($this->pipelines as $pipeline) {
-            if (! $pipeline->isFree()) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all($this->pipelines, static fn($pipeline) => $pipeline->isFree());
     }
 
     /**
