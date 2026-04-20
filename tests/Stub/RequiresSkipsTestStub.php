@@ -14,7 +14,7 @@ class RequiresSkipsTestStub extends BrokenTestBase implements BrokenTestInterfac
         $this->assertTrue(true);
     }
 
-    #[RequiresPhp('<8')]
+    #[RequiresPhp('<8.0.0')]
     public function testBrokenTest(): void
     {
         $this->fail('This test should never be executed, it requires an old PHP version');
