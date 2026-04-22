@@ -9,11 +9,29 @@ class LogData implements \JsonSerializable
     public function __construct(
         public readonly LogStatus $status,
         public readonly Test $test,
-        public readonly ?string $message
+        public readonly ?string $message,
+        private readonly ?bool $ignoredByTest = null,
+        private readonly ?bool $ignoredByBaseline = null,
     ) {}
 
+    public function isIgnoredByTest(): bool
+    {
+        return $this->ignoredByTest ?? false;
+    }
+
+    public function isIgnoredByBaseline(): bool
+    {
+        return $this->ignoredByBaseline ?? false;
+    }
+
     /**
-     * @psalm-assert array{status: string, test: string|array<mixed>, message?: string|null} $log
+     * @psalm-assert array{
+     *     status: string,
+     *     test: string|array<mixed>,
+     *     message?: string|null,
+     *     ignoredByTest: bool|null,
+     *     ignoredByBaseline: bool|null,
+     * } $log
      */
     private static function validateLogFormat(mixed $log): void
     {
@@ -21,8 +39,10 @@ class LogData implements \JsonSerializable
             throw new \InvalidArgumentException('Expecting array from log entry, got ' . get_debug_type($log));
         }
 
-        if (! isset($log['status'], $log['test'])) {
-            throw new \InvalidArgumentException('Missing fields in Paraunit logs');
+        foreach (['status', 'test', 'ignoredByTest', 'ignoredByBaseline'] as $requiredKey) {
+            if (! array_key_exists($requiredKey, $log)) {
+                throw new \InvalidArgumentException('Missing fields in Paraunit logs');
+            }
         }
 
         if (! is_string($log['status'])) {
@@ -30,6 +50,14 @@ class LogData implements \JsonSerializable
         }
 
         if (! is_string($log['message'] ?? '')) {
+            throw new \InvalidArgumentException('Invalid field message in Paraunit logs');
+        }
+
+        if (! is_null($log['ignoredByTest']) && ! is_bool($log['ignoredByTest'])) {
+            throw new \InvalidArgumentException('Invalid field message in Paraunit logs');
+        }
+
+        if (! is_null($log['ignoredByBaseline']) && ! is_bool($log['ignoredByBaseline'])) {
             throw new \InvalidArgumentException('Invalid field message in Paraunit logs');
         }
     }
@@ -44,6 +72,8 @@ class LogData implements \JsonSerializable
         $data = [
             'status' => $this->status->value,
             'test' => $this->test->jsonSerialize(),
+            'ignoredByTest' => $this->ignoredByTest,
+            'ignoredByBaseline' => $this->ignoredByBaseline,
         ];
 
         if (null !== $this->message) {
@@ -55,8 +85,12 @@ class LogData implements \JsonSerializable
         return $data;
     }
 
-    private function convertToUtf8(string $string): string
+    private function convertToUtf8(?string $string): ?string
     {
+        if ($string === null) {
+            return null;
+        }
+
         /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (! \mb_detect_encoding($string, 'UTF-8', true)) {
             return \mb_convert_encoding($string, 'UTF-8') ?: '';
@@ -90,6 +124,8 @@ class LogData implements \JsonSerializable
                     LogStatus::from($log['status']),
                     $lastTest = Test::deserialize($log['test']),
                     $log['message'] ?? null,
+                    $log['ignoredByTest'] ?? null,
+                    $log['ignoredByBaseline'] ?? null,
                 );
             }
         } catch (\Throwable $e) {

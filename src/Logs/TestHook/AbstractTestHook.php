@@ -39,9 +39,16 @@ abstract class AbstractTestHook
             . trim($throwable->stackTrace());
     }
 
-    final protected function write(LogStatus $status, Test $test, ?string $message): void
-    {
-        \fwrite(self::$logFile, json_encode(new LogData($status, $test, $message), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
+    final protected function write(
+        LogStatus $status,
+        Test $test,
+        ?string $message,
+        bool $ignoredByTest = false,
+        bool $ignoredByBaseline = false,
+    ): void {
+        $logData = new LogData($status, $test, $message, $ignoredByTest, $ignoredByBaseline);
+
+        \fwrite(self::$logFile, json_encode($logData, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
         \fflush(self::$logFile);
     }
 

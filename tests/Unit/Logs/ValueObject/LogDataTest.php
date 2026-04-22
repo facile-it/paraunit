@@ -70,6 +70,17 @@ class LogDataTest extends TestCase
         $this->assertSame('Foo::bar', $parsedResult[0]->test->name);
     }
 
+    public function testSerializeWithNoAdditionalParams(): void
+    {
+        $logData = new LogData(LogStatus::Passed, new Test('Foo'), 'Test message');
+
+        $unserialized = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
+
+        $this->assertCount(2, $unserialized);
+        $this->assertFalse($unserialized[0]->isIgnoredByTest());
+        $this->assertFalse($unserialized[0]->isIgnoredByBaseline());
+    }
+
     public function testSerializationError(): void
     {
         $parsedResult = LogData::parse('{}');
