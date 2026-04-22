@@ -52,19 +52,8 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             false,
             $ignoredByBaseline,
             $ignoredByTest,
+            IssueTrigger::from(Code::FirstParty, Code::FirstParty),
         ];
-
-        if (class_exists(IssueTrigger::class)) {
-            if (method_exists(IssueTrigger::class, 'from') && class_exists(Code::class)) {
-                // trigger of issue categorized by callee & caller from 11.5.54 etc.
-                // see https://github.com/sebastianbergmann/phpunit/issues/6434
-                $args[] = IssueTrigger::from(Code::FirstParty, Code::FirstParty);
-            } elseif (method_exists(IssueTrigger::class, 'unknown')) {
-                $args[] = IssueTrigger::unknown();
-            } else {
-                $this->fail('Unable to work with IssueTrigger, did PHPUnit change something?');
-            }
-        }
 
         return new PhpDeprecationTriggered(...$args);
     }
