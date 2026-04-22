@@ -13,6 +13,14 @@ use PHPUnit\Event\Test\WarningTriggered;
  */
 class TestWarningTest extends AbstractTestHookTestCase
 {
+    public function testIgnoredByBaseline(): void
+    {
+        $this->createSubscriber()->notify($this->createEvent(ignoredByBaseline: true));
+
+        $logData = $this->getDeserializedLogData();
+        $this->assertTrue($logData->isIgnoredByBaseline(), 'ignoredByBaseline flag should be true');
+    }
+
     protected function createSubscriber(): TestWarning
     {
         return new TestWarning();
@@ -23,7 +31,7 @@ class TestWarningTest extends AbstractTestHookTestCase
         return LogStatus::WarningTriggered;
     }
 
-    protected function createEvent(): WarningTriggered
+    protected function createEvent(bool $ignoredByBaseline = false): WarningTriggered
     {
         return new WarningTriggered(
             $this->createTelemetryInfo(),
@@ -32,7 +40,7 @@ class TestWarningTest extends AbstractTestHookTestCase
             __FILE__,
             1,
             false,
-            false,
+            $ignoredByBaseline,
         );
     }
 

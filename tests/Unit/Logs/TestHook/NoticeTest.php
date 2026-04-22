@@ -8,11 +8,21 @@ use Paraunit\Logs\TestHook\Notice;
 use Paraunit\Logs\ValueObject\LogStatus;
 use PHPUnit\Event\Test\NoticeTriggered;
 
+use const false;
+
 /**
  * @template-extends AbstractTestHookTestCase<Notice, NoticeTriggered>
  */
 class NoticeTest extends AbstractTestHookTestCase
 {
+    public function testIgnoredByBaseline(): void
+    {
+        $this->createSubscriber()->notify($this->createEvent(ignoredByBaseline: true));
+
+        $logData = $this->getDeserializedLogData();
+        $this->assertTrue($logData->isIgnoredByBaseline(), 'ignoredByBaseline flag should be true');
+    }
+
     protected function createSubscriber(): Notice
     {
         return new Notice();
@@ -23,7 +33,7 @@ class NoticeTest extends AbstractTestHookTestCase
         return LogStatus::Notice;
     }
 
-    protected function createEvent(): NoticeTriggered
+    protected function createEvent(bool $ignoredByBaseline = false): NoticeTriggered
     {
         return new NoticeTriggered(
             $this->createTelemetryInfo(),
@@ -32,7 +42,7 @@ class NoticeTest extends AbstractTestHookTestCase
             'testFile.php',
             123,
             false,
-            false,
+            $ignoredByBaseline,
         );
     }
 

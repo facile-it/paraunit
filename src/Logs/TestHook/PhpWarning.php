@@ -16,6 +16,11 @@ class PhpWarning extends AbstractTestHook implements PhpWarningTriggeredSubscrib
 {
     public function notify(PhpWarningTriggered $event): void
     {
-        $this->write(LogStatus::WarningTriggered, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(
+            LogStatus::WarningTriggered,
+            Test::fromPHPUnitTest($event->test()),
+            $event->message(),
+            ignoredByBaseline: $event->ignoredByBaseline(),
+        );
     }
 }

@@ -13,6 +13,14 @@ use PHPUnit\Event\Test\PhpNoticeTriggered;
  */
 class PhpNoticeTest extends AbstractTestHookTestCase
 {
+    public function testIgnoredByBaseline(): void
+    {
+        $this->createSubscriber()->notify($this->createEvent(ignoredByBaseline: true));
+
+        $logData = $this->getDeserializedLogData();
+        $this->assertTrue($logData->isIgnoredByBaseline(), 'ignoredByBaseline flag should be true');
+    }
+
     protected function createSubscriber(): PhpNotice
     {
         return new PhpNotice();
@@ -23,7 +31,7 @@ class PhpNoticeTest extends AbstractTestHookTestCase
         return LogStatus::Notice;
     }
 
-    protected function createEvent(): PhpNoticeTriggered
+    protected function createEvent(bool $ignoredByBaseline = false): PhpNoticeTriggered
     {
         return new PhpNoticeTriggered(
             $this->createTelemetryInfo(),
@@ -32,7 +40,7 @@ class PhpNoticeTest extends AbstractTestHookTestCase
             'testFile.php',
             123,
             false,
-            false,
+            $ignoredByBaseline,
         );
     }
 
