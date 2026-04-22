@@ -82,6 +82,9 @@ class LogDataTest extends TestCase
         $this->assertFalse($unserialized[0]->isIgnoredByBaseline());
     }
 
+    /**
+     * @param array<string, mixed> $invalidSerializedData
+     */
     #[DataProvider('invalidSerializedDataProvider')]
     public function testSerializationError(array $invalidSerializedData): void
     {
