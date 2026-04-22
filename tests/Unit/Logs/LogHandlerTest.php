@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Logs;
 
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Logs\JSON\LogHandler;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
@@ -12,6 +13,7 @@ use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
+use Prophecy\Argument;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
@@ -24,7 +26,7 @@ class LogHandlerTest extends BaseUnitTestCase
         $test = new Test($process->filename);
 
         $logHandler = new LogHandler(
-            $this->prophesize(EventDispatcherInterface::class)->reveal(),
+            $this->mockEventDispatcher(null),
             $this->mockTestResultContainer($test, [TestOutcome::NoTestExecuted]),
         );
 
@@ -38,7 +40,7 @@ class LogHandlerTest extends BaseUnitTestCase
         $test = new Test($process->filename);
 
         $logHandler = new LogHandler(
-            $this->prophesize(EventDispatcherInterface::class)->reveal(),
+            $this->mockEventDispatcher(new TestCompleted($test, TestIssue::Deprecation)),
             $this->mockTestResultContainer($test, [TestOutcome::Passed, TestIssue::Deprecation])
         );
 
@@ -50,12 +52,50 @@ class LogHandlerTest extends BaseUnitTestCase
         $logHandler->processLog($process, new LogData(LogStatus::LogTerminated, $test, ''));
     }
 
+    public function testLogIgnoredByTestIsSkipped(): void
+    {
+        $process = new StubbedParaunitProcess();
+        $test = new Test($process->filename);
+
+        $logHandler = new LogHandler(
+            $this->mockEventDispatcher(new TestCompleted($test, TestOutcome::Passed)),
+            $this->mockTestResultContainer($test, [TestOutcome::Passed])
+        );
+
+        $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));
+        $logHandler->processLog($process, new LogData(LogStatus::Prepared, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Passed, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Deprecation, $test, '', true));
+        $logHandler->processLog($process, new LogData(LogStatus::Finished, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::LogTerminated, $test, ''));
+    }
+
+    public function testLogIgnoredByBaselineIsCounted(): void
+    {
+        $process = new StubbedParaunitProcess();
+        $test = new Test($process->filename);
+
+        $logHandler = new LogHandler(
+            $this->mockEventDispatcher(new TestCompleted($test, TestOutcome::Passed)),
+            $this->mockTestResultContainer($test, [TestOutcome::Passed], 1)
+        );
+
+        $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));
+        $logHandler->processLog($process, new LogData(LogStatus::Prepared, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Passed, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::Deprecation, $test, '', ignoredByBaseline: true));
+        $logHandler->processLog($process, new LogData(LogStatus::Finished, $test, ''));
+        $logHandler->processLog($process, new LogData(LogStatus::LogTerminated, $test, ''));
+    }
+
     /**
      * @param array<TestOutcome|TestIssue> $expectedStatuses
      */
-    private function mockTestResultContainer(Test $test, array $expectedStatuses): TestResultContainer
+    private function mockTestResultContainer(Test $test, array $expectedStatuses, int $ignoredByBaseline = 0): TestResultContainer
     {
         $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->addIgnoredByBaseline(Argument::cetera())
+            ->shouldBeCalledTimes($ignoredByBaseline);
 
         foreach ($expectedStatuses as $expectedStatus) {
             $testResultContainer->addTestResult(new EqualsToken(new TestResult($test, $expectedStatus)))
@@ -63,5 +103,20 @@ class LogHandlerTest extends BaseUnitTestCase
         }
 
         return $testResultContainer->reveal();
+    }
+
+    private function mockEventDispatcher(?object $expectedEvent): EventDispatcherInterface
+    {
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+
+        if ($expectedEvent) {
+            $eventDispatcher->dispatch($expectedEvent)
+                ->shouldBeCalledOnce();
+        } else {
+            $eventDispatcher->dispatch()
+                ->shouldNotBeCalled();
+        }
+
+        return $eventDispatcher->reveal();
     }
 }

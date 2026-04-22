@@ -47,6 +47,10 @@ class LogHandler
 
     public function processLog(Process $process, LogData $log): void
     {
+        if ($log->isIgnoredByTest()) {
+            return;
+        }
+
         if ($log->status === LogStatus::Started) {
             $this->currentTest = $log->test;
             $this->startedTestCount += (int) $log->message;
@@ -76,6 +80,12 @@ class LogHandler
 
         if ($log->status === LogStatus::LogTerminated) {
             $this->handleLogEnding($process);
+
+            return;
+        }
+
+        if ($log->isIgnoredByBaseline()) {
+            $this->testResultContainer->addIgnoredByBaseline($log->status->toTestStatus());
 
             return;
         }
