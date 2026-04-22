@@ -71,7 +71,7 @@ class CoverageCommand extends ParallelCommand
     private function hasChosenCoverageMethod(InputInterface $input): bool
     {
         return array_any(
-            $this->coverageMethods, 
+            $this->coverageMethods,
             fn($coverageMethod): bool => $input->hasParameterOption('--' . $coverageMethod)
         );
     }
