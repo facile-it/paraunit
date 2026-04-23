@@ -8,6 +8,7 @@ use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestMethod;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -70,14 +71,53 @@ class LogDataTest extends TestCase
         $this->assertSame('Foo::bar', $parsedResult[0]->test->name);
     }
 
-    public function testSerializationError(): void
+    public function testSerializeWithNoAdditionalParams(): void
     {
-        $parsedResult = LogData::parse('{}');
+        $logData = new LogData(LogStatus::Passed, new Test('Foo'), 'Test message');
+
+        $unserialized = LogData::parse(json_encode($logData, JSON_THROW_ON_ERROR));
+
+        $this->assertCount(2, $unserialized);
+        $this->assertFalse($unserialized[0]->isIgnoredByTest());
+        $this->assertFalse($unserialized[0]->isIgnoredByBaseline());
+    }
+
+    /**
+     * @param array<string, mixed> $invalidSerializedData
+     */
+    #[DataProvider('invalidSerializedDataProvider')]
+    public function testSerializationError(array $invalidSerializedData): void
+    {
+        $parsedResult = LogData::parse(json_encode($invalidSerializedData, JSON_THROW_ON_ERROR));
 
         $this->assertCount(2, $parsedResult);
         $this->assertEquals(LogStatus::Unknown, $parsedResult[0]->status);
         $this->assertEquals(Test::unknown(), $parsedResult[0]->test);
         $this->assertIsString($parsedResult[0]->message);
         $this->assertStringStartsWith('Error while parsing Paraunit logs: ', $parsedResult[0]->message);
+    }
+
+    /**
+     * @return \Generator<array{array<string, mixed>}>
+     */
+    public static function invalidSerializedDataProvider(): \Generator
+    {
+        yield 'empty array' => [[]];
+
+        $validLogData = (new LogData(LogStatus::Passed, new Test('Foo'), 'Test message'))->jsonSerialize();
+
+        foreach (['status', 'test', 'ignoredByTest', 'ignoredByBaseline'] as $requiredKey) {
+            $invalidLogData = $validLogData;
+            unset($invalidLogData[$requiredKey]);
+            yield 'without ' . $requiredKey => [$invalidLogData];
+
+            $invalidLogData = $validLogData;
+            $invalidLogData[$requiredKey] = 123.456;
+            yield 'invalid format for ' . $requiredKey => [$invalidLogData];
+        }
+
+        $invalidLogData = $validLogData;
+        $invalidLogData['message'] = 123.456;
+        yield 'invalid format for message' => [$invalidLogData];
     }
 }

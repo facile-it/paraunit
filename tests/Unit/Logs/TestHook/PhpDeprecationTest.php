@@ -15,6 +15,22 @@ use PHPUnit\Event\Test\PhpDeprecationTriggered;
  */
 class PhpDeprecationTest extends AbstractTestHookTestCase
 {
+    public function testIgnoredByTest(): void
+    {
+        $this->createSubscriber()->notify($this->createEvent(ignoredByTest: true));
+
+        $logData = $this->getDeserializedLogData();
+        $this->assertTrue($logData->isIgnoredByTest(), 'ignoredByTest flag should be true');
+    }
+
+    public function testIgnoredByBaseline(): void
+    {
+        $this->createSubscriber()->notify($this->createEvent(ignoredByBaseline: true));
+
+        $logData = $this->getDeserializedLogData();
+        $this->assertTrue($logData->isIgnoredByBaseline(), 'ignoredByBaseline flag should be true');
+    }
+
     protected function createSubscriber(): PhpDeprecation
     {
         return new PhpDeprecation();
@@ -25,7 +41,7 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
         return LogStatus::Deprecation;
     }
 
-    protected function createEvent(): PhpDeprecationTriggered
+    protected function createEvent(bool $ignoredByBaseline = false, bool $ignoredByTest = false): PhpDeprecationTriggered
     {
         $args = [
             $this->createTelemetryInfo(),
@@ -34,8 +50,8 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             'testFile.php',
             123,
             false,
-            false,
-            false,
+            $ignoredByBaseline,
+            $ignoredByTest,
         ];
 
         if (class_exists(IssueTrigger::class)) {

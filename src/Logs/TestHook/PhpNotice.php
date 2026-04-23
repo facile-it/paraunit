@@ -16,6 +16,11 @@ class PhpNotice extends AbstractTestHook implements PhpNoticeTriggeredSubscriber
 {
     public function notify(PhpNoticeTriggered $event): void
     {
-        $this->write(LogStatus::Notice, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(
+            LogStatus::Notice,
+            Test::fromPHPUnitTest($event->test()),
+            $event->message(),
+            ignoredByBaseline: $event->ignoredByBaseline(),
+        );
     }
 }

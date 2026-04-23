@@ -16,6 +16,12 @@ class PhpDeprecation extends AbstractTestHook implements PhpDeprecationTriggered
 {
     public function notify(PhpDeprecationTriggered $event): void
     {
-        $this->write(LogStatus::Deprecation, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(
+            LogStatus::Deprecation,
+            Test::fromPHPUnitTest($event->test()),
+            $event->message(),
+            $event->ignoredByTest(),
+            $event->ignoredByBaseline(),
+        );
     }
 }

@@ -56,8 +56,9 @@ class FilesRecapPrinter implements EventSubscriberInterface
     private function printFileRecap(TestOutcome|TestIssue $status, OutputStyle $style): void
     {
         $filenames = $this->testResultContainer->getFileNames($status);
+        $ignored = $this->testResultContainer->getIgnoredByBaseline($status);
 
-        if ($filenames === []) {
+        if ($filenames === [] && $ignored === 0) {
             return;
         }
 
@@ -76,6 +77,16 @@ class FilesRecapPrinter implements EventSubscriberInterface
 
         foreach ($filenames as $fileName) {
             $this->output->writeln(sprintf(' <%s>%s</%s>', $style->value, $fileName, $style->value));
+        }
+
+        if ($ignored > 0) {
+            $this->output->writeln(sprintf(
+                ' <%s>(%d %s ignored by baseline)</%s>',
+                $style->value,
+                $ignored,
+                $status->getTitle(),
+                $style->value,
+            ));
         }
     }
 }

@@ -64,32 +64,29 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
 
         $subscriber->notify($this->createEvent());
 
-        $logFile = $this->getRandomTempDir() . '123.json.log';
-        $this->assertFileExists($logFile);
-        $logContent = file_get_contents($logFile);
-        $this->assertNotFalse($logContent);
-
-        $logData = LogData::parse($logContent);
-        $this->assertCount(2, $logData);
-        $this->assertEquals($this->getExpectedStatus(), $logData[0]->status);
+        $deserializedlogData = $this->getDeserializedLogData();
+        $this->assertEquals($this->getExpectedStatus(), $deserializedlogData->status);
 
         if ($this->updatesLastTest()) {
-            $this->assertEquals($this->getExpectedTestObject(), $logData[0]->test);
+            $this->assertEquals($this->getExpectedTestObject(), $deserializedlogData->test);
         } else {
-            $this->assertEquals(Test::unknown(), $logData[0]->test);
+            $this->assertEquals(Test::unknown(), $deserializedlogData->test);
         }
 
         $expectedMessage = $this->getExpectedMessage();
         if (is_array($expectedMessage)) {
             $this->assertNotEmpty($expectedMessage, 'Wrong data provider, empty expected message list');
-            $this->assertNotNull($logData[0]->message, 'Missing log message');
+            $this->assertNotNull($deserializedlogData->message, 'Missing log message');
 
             foreach ($expectedMessage as $substring) {
-                $this->assertStringContainsString($substring, $logData[0]->message);
+                $this->assertStringContainsString($substring, $deserializedlogData->message);
             }
         } else {
-            $this->assertEquals($expectedMessage, $logData[0]->message);
+            $this->assertEquals($expectedMessage, $deserializedlogData->message);
         }
+
+        $this->assertFalse($deserializedlogData->isIgnoredByTest(), 'IgnoredByTest flag should be false by default');
+        $this->assertFalse($deserializedlogData->isIgnoredByBaseline(), 'IgnoredByBaseline flag should be false by default');
     }
 
     public function testLogDirNotWritable(): void
@@ -164,5 +161,18 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     protected function getExpectedTestObject(): Test
     {
         return new TestMethod(static::class, 'testNotify');
+    }
+
+    protected function getDeserializedLogData(): LogData
+    {
+        $logFile = $this->getRandomTempDir() . '123.json.log';
+        $this->assertFileExists($logFile);
+        $logContent = file_get_contents($logFile);
+        $this->assertNotFalse($logContent);
+
+        $logData = LogData::parse($logContent);
+        $this->assertCount(2, $logData);
+
+        return $logData[0];
     }
 }

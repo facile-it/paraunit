@@ -16,6 +16,11 @@ class TestWarning extends AbstractTestHook implements WarningTriggeredSubscriber
 {
     public function notify(WarningTriggered $event): void
     {
-        $this->write(LogStatus::WarningTriggered, Test::fromPHPUnitTest($event->test()), $event->message());
+        $this->write(
+            LogStatus::WarningTriggered,
+            Test::fromPHPUnitTest($event->test()),
+            $event->message(),
+            ignoredByBaseline: $event->ignoredByBaseline(),
+        );
     }
 }

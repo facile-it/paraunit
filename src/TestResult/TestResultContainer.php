@@ -17,6 +17,20 @@ class TestResultContainer
     /** @var array<value-of<TestOutcome|TestIssue>, TestResultWithMessage[]> */
     private array $testResults = [];
 
+    /** @var array<value-of<TestOutcome|TestIssue>, 0|positive-int> */
+    private array $ignoredByBaseline = [];
+
+    public function addIgnoredByBaseline(TestOutcome|TestIssue $status): void
+    {
+        $this->ignoredByBaseline[$status->value] ??= 0;
+        ++$this->ignoredByBaseline[$status->value];
+    }
+
+    public function getIgnoredByBaseline(TestOutcome|TestIssue $status): int
+    {
+        return $this->ignoredByBaseline[$status->value] ?? 0;
+    }
+
     public function addTestResult(TestResult $testResult): void
     {
         $this->addToFilenames($testResult);

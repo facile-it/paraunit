@@ -8,6 +8,7 @@ use Paraunit\Configuration\ChunkSize;
 use Paraunit\Logs\ValueObject\TestMethod;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\TestResult\TestResultContainer;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestOutcome;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Prophecy\Argument;
@@ -16,6 +17,48 @@ use Tests\Stub\UnformattedOutputStub;
 
 class FilesRecapPrinterTest extends BaseUnitTestCase
 {
+    public function testOnEngineEndDoesNotPrintCountOfIgnoredIssuesIfThereAreNone(): void
+    {
+        $output = new UnformattedOutputStub();
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->getTestResults(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getFileNames(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getIgnoredByBaseline(Argument::cetera())
+            ->willReturn(0);
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()->willReturn(false);
+
+        $printer = new FilesRecapPrinter($output, $testResultContainer->reveal(), $chunkSize->reveal());
+
+        $printer->onEngineEnd();
+
+        $this->assertStringNotContainsStringIgnoringCase('ignored by baseline', $output->getOutput());
+    }
+
+    public function testOnEngineEndPrintsCountOfIgnoredIssues(): void
+    {
+        $output = new UnformattedOutputStub();
+        $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->getTestResults(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getFileNames(Argument::cetera())
+            ->willReturn([]);
+        $testResultContainer->getIgnoredByBaseline(Argument::cetera())
+            ->willReturn(0);
+        $testResultContainer->getIgnoredByBaseline(TestIssue::Deprecation)
+            ->willReturn(3);
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()->willReturn(false);
+
+        $printer = new FilesRecapPrinter($output, $testResultContainer->reveal(), $chunkSize->reveal());
+
+        $printer->onEngineEnd();
+
+        $this->assertStringContainsString('3 deprecations ignored by baseline', $output->getOutput());
+    }
+
     public function testOnEngineEndPrintsTheRightChunkedCountSummary(): void
     {
         $output = new UnformattedOutputStub();
@@ -25,6 +68,8 @@ class FilesRecapPrinterTest extends BaseUnitTestCase
             ->willReturn(true);
 
         $testResultContainer = $this->prophesize(TestResultContainer::class);
+        $testResultContainer->getIgnoredByBaseline(Argument::cetera())
+            ->willReturn(0);
         $testResultContainer->getTestResults(Argument::cetera())
             ->willReturn([]);
         $testResultContainer->getTestResults(TestOutcome::Failure)
@@ -44,5 +89,6 @@ class FilesRecapPrinterTest extends BaseUnitTestCase
         $printer->onEngineEnd();
 
         $this->assertStringContainsString('1 chunks with FAILURES:', $output->getOutput());
+        $this->assertStringNotContainsStringIgnoringCase('ignored by baseline', $output->getOutput());
     }
 }
