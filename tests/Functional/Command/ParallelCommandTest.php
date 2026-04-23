@@ -120,6 +120,7 @@ class ParallelCommandTest extends BaseTestCase
             'command' => $command->getName(),
             'stringFilter' => 'warning',
             '--configuration' => $this->getConfigForStubs(),
+            '--display-warnings' => true,
         ]);
 
         $output = $commandTester->getDisplay();

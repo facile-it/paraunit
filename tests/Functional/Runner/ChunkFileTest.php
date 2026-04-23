@@ -35,6 +35,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
         $chunkCount = 8;
 
         $this->setOption('chunk-size', '2');
+        $this->setOption('display-all-issues', 'true');
         $this->loadContainer();
 
         $output = $this->getConsoleOutput();
@@ -116,6 +117,7 @@ class ChunkFileTest extends BaseIntegrationTestCase
         $chunkCount = 2;
 
         $this->setOption('configuration', $this->getStubPath() . DIRECTORY_SEPARATOR . 'phpunit_for_sigint_stubs.xml');
+        $this->setOption('display-all-issues', 'true');
         $this->setTextFilter('TestStubSigInt.php');
         $this->setOption('chunk-size', '2');
         $this->loadContainer();

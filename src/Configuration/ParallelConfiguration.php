@@ -98,9 +98,7 @@ class ParallelConfiguration
         $printerConfiguration = $containerBuilder->getDefinition(PrinterConfiguration::class);
 
         if ($input->getOption('display-all-issues')) {
-            foreach (TestIssue::cases() as $testIssue) {
-                $printerConfiguration->addMethodCall('setShouldPrint', [$testIssue, true]);
-            }
+            $printerConfiguration->addMethodCall('setAllShouldPrint');
 
             return;
         }

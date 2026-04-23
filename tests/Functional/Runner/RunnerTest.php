@@ -133,6 +133,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testWarningsToStdout(): void
     {
+        $this->setOption('display-warnings', 'true');
         $this->setTextFilter('SessionTestStub.php');
         $this->loadContainer();
 
@@ -158,6 +159,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRisky(): void
     {
+        $this->setOption('display-all-issues', 'true');
         $this->setTextFilter('Risky');
         $this->loadContainer();
 
@@ -271,6 +273,7 @@ class RunnerTest extends BaseIntegrationTestCase
 
     public function testRegressionFatalErrorsShouldNotLeakToOutput(): void
     {
+        $this->setOption('display-all-issues', 'true');
         $this->setTextFilter('RaisingNoticeTestStub.php');
         $this->loadContainer();
 

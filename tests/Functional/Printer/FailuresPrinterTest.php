@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Printer;
 
 use Paraunit\Printer\FailuresPrinter;
+use Paraunit\Printer\PrinterConfiguration;
 use Tests\BaseFunctionalTestCase;
 
 class FailuresPrinterTest extends BaseFunctionalTestCase
@@ -12,6 +13,7 @@ class FailuresPrinterTest extends BaseFunctionalTestCase
     public function testOnEngineEndPrintsInTheRightOrder(): void
     {
         $this->populateTestResultContainerWithAllPossibleStatuses();
+        $this->getService(PrinterConfiguration::class)->setAllShouldPrint();
 
         $printer = $this->getService(FailuresPrinter::class);
         $printer->onEngineEnd();
