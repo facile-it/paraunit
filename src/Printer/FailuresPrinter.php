@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Paraunit\Printer;
 
-use Paraunit\Configuration\PHPUnitConfig;
 use Paraunit\Lifecycle\EngineEnd;
 use Paraunit\Printer\ValueObject\OutputStyle;
 use Paraunit\TestResult\TestResultContainer;
@@ -19,7 +18,7 @@ class FailuresPrinter implements EventSubscriberInterface
     public function __construct(
         private readonly OutputInterface $output,
         private readonly TestResultContainer $testResultContainer,
-        private readonly PHPUnitConfig $config,
+        private readonly PrinterConfiguration $config,
     ) {}
 
     /**
@@ -35,6 +34,10 @@ class FailuresPrinter implements EventSubscriberInterface
     public function onEngineEnd(): void
     {
         foreach (PrinterConfiguration::PRINT_ORDER as $outcome) {
+            if ($outcome instanceof TestIssue && ! $this->config->shouldPrint($outcome)) {
+                continue;
+            }
+
             $testResults = $this->testResultContainer->getTestResults($outcome);
 
             if ($testResults === []) {
@@ -47,10 +50,6 @@ class FailuresPrinter implements EventSubscriberInterface
             $this->printFailuresHeading($outcome, $style);
 
             if ($outcome === TestIssue::Deprecation) {
-                if ($this->shouldSkipPrinting()) {
-                    continue;
-                }
-
                 $this->printDeduplicated($style, ...$testResults);
 
                 continue;
@@ -60,11 +59,6 @@ class FailuresPrinter implements EventSubscriberInterface
                 $this->printFailureOutput($testResult, $style, $counter++);
             }
         }
-    }
-
-    private function shouldSkipPrinting(): bool
-    {
-        return ! filter_var($this->config->getRootAttributeValue('displayDetailsOnTestsThatTriggerDeprecations'), FILTER_VALIDATE_BOOLEAN);
     }
 
     private function printFailuresHeading(TestOutcome|TestIssue $outcome, OutputStyle $style): void
