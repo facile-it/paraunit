@@ -38,6 +38,14 @@ class ParallelCommand extends Command
         $this->addOption('exclude-testsuite', null, InputOption::VALUE_REQUIRED, 'Exclude test suite from running');
         $this->addOption('test-suffix', null, InputOption::VALUE_REQUIRED, 'Only run tests from the specified suffix');
         $this->addOption('sort', null, InputOption::VALUE_REQUIRED, 'Choose in which order to execute the test classes (values: "random" only for now)');
+
+        // display options
+        $this->addOption('display-deprecations', null, InputOption::VALUE_NONE, 'Display details for deprecations triggered by tests');
+        $this->addOption('display-phpunit-deprecations', null, InputOption::VALUE_NONE, 'Display details for PHPUnit deprecations');
+        $this->addOption('display-errors', null, InputOption::VALUE_NONE, 'Display details for errors triggered by tests');
+        $this->addOption('display-notices', null, InputOption::VALUE_NONE, 'Display details for notices triggered by tests');
+        $this->addOption('display-warnings', null, InputOption::VALUE_NONE, 'Display details for warnings triggered by tests');
+        $this->addOption('display-all-issues', null, InputOption::VALUE_NONE, 'Display details for all issues that are triggered');
     }
 
     /**

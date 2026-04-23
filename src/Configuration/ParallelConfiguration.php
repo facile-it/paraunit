@@ -9,6 +9,8 @@ use Paraunit\Filter\Filter;
 use Paraunit\Filter\RandomizeList;
 use Paraunit\Filter\TestList;
 use Paraunit\Printer\DebugPrinter;
+use Paraunit\Printer\PrinterConfiguration;
+use Paraunit\TestResult\ValueObject\TestIssue;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -86,6 +88,34 @@ class ParallelConfiguration
 
         if ($input->getOption('debug')) {
             $this->enableDebugMode($containerBuilder);
+        }
+
+        $this->setPrinterConfiguration($containerBuilder, $input);
+    }
+
+    private function setPrinterConfiguration(ContainerBuilder $containerBuilder, InputInterface $input): void
+    {
+        $printerConfiguration = $containerBuilder->getDefinition(PrinterConfiguration::class);
+
+        if ($input->getOption('display-all-issues')) {
+            foreach (TestIssue::cases() as $testIssue) {
+                $printerConfiguration->addMethodCall('setShouldPrint', [$testIssue, true]);
+            }
+
+            return;
+        }
+
+        $shouldPrintIssueMap = [
+            'display-deprecations' => TestIssue::Deprecation,
+            'display-notices' => TestIssue::Notice,
+            'display-phpunit-deprecations' => TestIssue::PHPUnitDeprecation,
+            'display-warnings' => TestIssue::Warning,
+        ];
+
+        foreach ($shouldPrintIssueMap as $cliOption => $testIssue) {
+            if ($input->getOption($cliOption)) {
+                $printerConfiguration->addMethodCall('setShouldPrint', [$testIssue, true]);
+            }
         }
     }
 

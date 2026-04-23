@@ -124,6 +124,11 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--check-php-configuration'],
             // not useful - baseline cannot be merged
             ['--generate-baseline'],
+            // not useful - files recap is always useful
+            ['--display-incomplete'],
+            ['--display-skipped'],
+            // not useful - seems noop on PHPUnit too
+            ['--display-errors'],
         ];
     }
 
@@ -192,15 +197,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         return [
             '--exclude-filter',
             '--columns',
-            '--display-all-issues',
-            '--display-incomplete',
-            '--display-skipped',
-            '--display-deprecations',
-            '--display-errors',
-            '--display-notices',
-            '--display-phpunit-deprecations',
-            '--display-phpunit-notices',
-            '--display-warnings',
+            '--display-phpunit-notices', // TODO - map issue
             '--fail-on-all-issues',
             '--fail-on-empty-test-suite',
             '--fail-on-phpunit-deprecation',

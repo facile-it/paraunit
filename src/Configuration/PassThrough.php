@@ -25,6 +25,9 @@ class PassThrough
         '--list-tests-xml',
         '--check-php-configuration',
         '--all',
+        '--display-incomplete',
+        '--display-skipped',
+        '--display-errors',
     ];
 
     /** @var list<string> */

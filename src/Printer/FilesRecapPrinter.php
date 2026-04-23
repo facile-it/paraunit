@@ -15,19 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FilesRecapPrinter implements EventSubscriberInterface
 {
-    final public const PRINT_ORDER = [
-        TestOutcome::AbnormalTermination,
-        TestIssue::CoverageFailure,
-        TestOutcome::Error,
-        TestOutcome::Failure,
-        TestIssue::Warning,
-        TestIssue::Deprecation,
-        TestIssue::PHPUnitDeprecation,
-        TestOutcome::NoTestExecuted,
-        TestIssue::Risky,
-        TestIssue::Notice,
-        TestOutcome::Retry,
-    ];
+    /** @deprecated Use PrinterConfiguration::PRINT_ORDER instead */
+    final public const PRINT_ORDER = PrinterConfiguration::PRINT_ORDER;
 
     public function __construct(
         private readonly OutputInterface $output,
@@ -47,7 +36,7 @@ class FilesRecapPrinter implements EventSubscriberInterface
 
     public function onEngineEnd(): void
     {
-        foreach (self::PRINT_ORDER as $status) {
+        foreach (PrinterConfiguration::PRINT_ORDER as $status) {
             $style = OutputStyle::fromStatus($status);
             $this->printFileRecap($status, $style);
         }

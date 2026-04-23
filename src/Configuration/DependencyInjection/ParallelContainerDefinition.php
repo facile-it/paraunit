@@ -20,6 +20,7 @@ use Paraunit\Printer\ConsoleFormatter;
 use Paraunit\Printer\FailuresPrinter;
 use Paraunit\Printer\FilesRecapPrinter;
 use Paraunit\Printer\FinalPrinter;
+use Paraunit\Printer\PrinterConfiguration;
 use Paraunit\Printer\ProgressPrinter;
 use Paraunit\Printer\SharkPrinter;
 use Paraunit\Process\CommandLine;
@@ -83,6 +84,7 @@ class ParallelContainerDefinition
             PHPUnitConfig::class,
             PipelineFactory::class,
             PipelineCollection::class,
+            PrinterConfiguration::class,
             ProcessFactory::class,
             ProgressPrinter::class,
             RetryParser::class,
