@@ -170,6 +170,8 @@ vendor/bin/paraunit run --testsuite=testSuiteName
 
 ### Exclude testsuite
 
+**NEW**: introduced in 2.4.0.
+
 You can skip one or more test suites (by their `name` attribute in `phpunit.xml`) while keeping the rest. Values are comma-separated and matched case-sensitively, like `--testsuite`.
 
 ```bash
@@ -177,6 +179,8 @@ vendor/bin/paraunit run --exclude-testsuite=slow,integration
 ```
 
 ### Test file suffix (`--test-suffix`)
+
+**NEW**: introduced in 2.4.0.
 
 Restrict which test files Paraunit schedules by filename suffix. The value is a comma-separated list; a file is kept if its path contains any of the suffixes (case-insensitive), after the usual testsuite and string-filter logic.
 
@@ -188,6 +192,8 @@ This is a Paraunit-level filter on the discovered file list. For PHPUnit’s own
 
 ### Test execution order (`--sort`)
 
+**NEW**: introduced in 2.1.0.
+
 You can shuffle the order of test classes before they are assigned to pipelines. Only `random` is accepted (for now).
 
 ```bash
@@ -195,6 +201,8 @@ vendor/bin/paraunit run --sort=random
 ```
 
 ### Display and issue details
+
+**NEW**: introduced in 2.11.0.
 
 These options mirror PHPUnit's, and apply to **Paraunit’s final output**. They are available on both `run` and `coverage`.
 
@@ -261,6 +269,8 @@ The following options were among those previously forwarded (pass them with `--p
   * `include-path`
 
 ### Debug mode
+
+**NEW**: introduced in 1.3.0.
 
 If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:
 
