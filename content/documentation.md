@@ -168,6 +168,56 @@ You can run a single test suite (as defined in your configuration file) using:
 vendor/bin/paraunit run --testsuite=testSuiteName
 ```
 
+### Exclude testsuite
+
+You can skip one or more test suites (by their `name` attribute in `phpunit.xml`) while keeping the rest. Values are comma-separated and matched case-sensitively, like `--testsuite`.
+
+```bash
+vendor/bin/paraunit run --exclude-testsuite=slow,integration
+```
+
+### Test file suffix (`--test-suffix`)
+
+Restrict which test files Paraunit schedules by filename suffix. The value is a comma-separated list; a file is kept if its path contains any of the suffixes (case-insensitive), after the usual testsuite and string-filter logic.
+
+```bash
+vendor/bin/paraunit run --test-suffix=Test.php,TestCase.php
+```
+
+This is a Paraunit-level filter on the discovered file list. For PHPUnit’s own `--test-suffix` behaviour inside each process, use [`--pass-through`](#pass-through).
+
+### Test execution order (`--sort`)
+
+You can shuffle the order of test classes before they are assigned to pipelines. Only `random` is accepted (for now).
+
+```bash
+vendor/bin/paraunit run --sort=random
+```
+
+### Display and issue details
+
+These options mirror PHPUnit's, and apply to **Paraunit’s final output**. They are available on both `run` and `coverage`.
+
+| Option                           | Effect                                           |
+|----------------------------------|--------------------------------------------------|
+| `--display-deprecations`         | Show details for deprecations triggered by tests |
+| `--display-phpunit-deprecations` | Show details for PHPUnit deprecations            |
+| `--display-notices`              | Show details for notices triggered by tests      |
+| `--display-warnings`             | Show details for warnings triggered by tests     |
+| `--display-all-issues`           | Show details for all test issue types            |
+
+If you do **not** pass these options, Paraunit still loads defaults from the root `<phpunit>` element of your configuration file, mirroring again PHPUnit's behavior:
+
+| PHPUnit root attribute                         | Equivalent CLI option            |
+|------------------------------------------------|----------------------------------|
+| `displayDetailsOnAllIssues`                    | `--display-all-issues`           |
+| `displayDetailsOnTestsThatTriggerDeprecations` | `--display-deprecations`         |
+| `displayDetailsOnPhpunitDeprecations`          | `--display-phpunit-deprecations` |
+| `displayDetailsOnTestsThatTriggerNotices`      | `--display-notices`              |
+| `displayDetailsOnTestsThatTriggerWarnings`     | `--display-warnings`             |
+
+CLI flags above add printing for the matching categories on top of those XML defaults. Compared to PHPUnit, there is no `--display-errors` option; errors and failures are always surfaced in the summary.
+
 ### Pass Through
 
 **NEW**: introduced in 2.0
@@ -182,16 +232,15 @@ If you want to use one of the many native PHPUnit options, you can pass them dir
 
 ### PHPUnit inherited options
 
-**DEPRECATED**: no longer present in Paraunit 2.0, use `--pass-through` instead.
+**DEPRECATED**: Paraunit 2.x no longer forwards a long list of PHPUnit flags by default. Use [`--pass-through`](#pass-through) for native PHPUnit options you need in each worker process.
 
-A large number of PHPUnit options (apart from the aforementioned `--testsuite`) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options' behavior, see the [PHPUnit CLI documentation](https://phpunit.de/manual/current/en/textui.html#textui.clioptions).
+Historically, many PHPUnit CLI options were forwarded automatically. That behaviour was removed in favour of explicit `--pass-through`. For up-to-date PHPUnit behaviour, see the [PHPUnit command-line documentation](https://docs.phpunit.de/en/13.0/textui.html#command-line-options).
 
-This is the complete list of supported options:
+The following options were among those previously forwarded (pass them with `--pass-through="--option"` when still supported by your PHPUnit version):
 
   * `filter`
   * `group`
   * `exclude-group`
-  * `test-suffix`
   * `dont-report-useless-tests`
   * `strict-coverage`
   * `strict-global-state`
