@@ -42,7 +42,6 @@ class ParallelCommand extends Command
         // display options
         $this->addOption('display-deprecations', null, InputOption::VALUE_NONE, 'Display details for deprecations triggered by tests');
         $this->addOption('display-phpunit-deprecations', null, InputOption::VALUE_NONE, 'Display details for PHPUnit deprecations');
-        $this->addOption('display-errors', null, InputOption::VALUE_NONE, 'Display details for errors triggered by tests');
         $this->addOption('display-notices', null, InputOption::VALUE_NONE, 'Display details for notices triggered by tests');
         $this->addOption('display-warnings', null, InputOption::VALUE_NONE, 'Display details for warnings triggered by tests');
         $this->addOption('display-all-issues', null, InputOption::VALUE_NONE, 'Display details for all issues that are triggered');
