@@ -344,21 +344,98 @@ As a last resource, it will use PHPDbg, which should be always available since i
 </span></span></code></pre></div><h3 id="testsuite">Testsuite</h3>
 <p>You can run a single test suite (as defined in your configuration file) using:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vendor/bin/paraunit run --testsuite<span style="color:#f92672">=</span>testSuiteName
-</span></span></code></pre></div><h3 id="pass-through">Pass Through</h3>
+</span></span></code></pre></div><h3 id="exclude-testsuite">Exclude testsuite</h3>
+<p><strong>NEW</strong>: introduced in 2.4.0.</p>
+<p>You can skip one or more test suites (by their <code>name</code> attribute in <code>phpunit.xml</code>) while keeping the rest. Values are comma-separated and matched case-sensitively, like <code>--testsuite</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vendor/bin/paraunit run --exclude-testsuite<span style="color:#f92672">=</span>slow,integration
+</span></span></code></pre></div><h3 id="test-file-suffix---test-suffix">Test file suffix (<code>--test-suffix</code>)</h3>
+<p><strong>NEW</strong>: introduced in 2.4.0.</p>
+<p>Restrict which test files Paraunit schedules by filename suffix. The value is a comma-separated list; a file is kept if its path contains any of the suffixes (case-insensitive), after the usual testsuite and string-filter logic.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vendor/bin/paraunit run --test-suffix<span style="color:#f92672">=</span>Test.php,TestCase.php
+</span></span></code></pre></div><p>This is a Paraunit-level filter on the discovered file list. For PHPUnit’s own <code>--test-suffix</code> behaviour inside each process, use <a href="#pass-through"><code>--pass-through</code></a>.</p>
+<h3 id="test-execution-order---sort">Test execution order (<code>--sort</code>)</h3>
+<p><strong>NEW</strong>: introduced in 2.1.0.</p>
+<p>You can shuffle the order of test classes before they are assigned to pipelines. Only <code>random</code> is accepted (for now).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vendor/bin/paraunit run --sort<span style="color:#f92672">=</span>random
+</span></span></code></pre></div><h3 id="display-and-issue-details">Display and issue details</h3>
+<p><strong>NEW</strong>: introduced in 2.11.0.</p>
+<p>These options mirror PHPUnit&rsquo;s, and apply to <strong>Paraunit’s final output</strong>. They are available on both <code>run</code> and <code>coverage</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--display-deprecations</code></td>
+<td>Show details for deprecations triggered by tests</td>
+</tr>
+<tr>
+<td><code>--display-phpunit-deprecations</code></td>
+<td>Show details for PHPUnit deprecations</td>
+</tr>
+<tr>
+<td><code>--display-notices</code></td>
+<td>Show details for notices triggered by tests</td>
+</tr>
+<tr>
+<td><code>--display-warnings</code></td>
+<td>Show details for warnings triggered by tests</td>
+</tr>
+<tr>
+<td><code>--display-all-issues</code></td>
+<td>Show details for all test issue types</td>
+</tr>
+</tbody>
+</table>
+<p>If you do <strong>not</strong> pass these options, Paraunit still loads defaults from the root <code>&lt;phpunit&gt;</code> element of your configuration file, mirroring again PHPUnit&rsquo;s behavior:</p>
+<table>
+<thead>
+<tr>
+<th>PHPUnit root attribute</th>
+<th>Equivalent CLI option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>displayDetailsOnAllIssues</code></td>
+<td><code>--display-all-issues</code></td>
+</tr>
+<tr>
+<td><code>displayDetailsOnTestsThatTriggerDeprecations</code></td>
+<td><code>--display-deprecations</code></td>
+</tr>
+<tr>
+<td><code>displayDetailsOnPhpunitDeprecations</code></td>
+<td><code>--display-phpunit-deprecations</code></td>
+</tr>
+<tr>
+<td><code>displayDetailsOnTestsThatTriggerNotices</code></td>
+<td><code>--display-notices</code></td>
+</tr>
+<tr>
+<td><code>displayDetailsOnTestsThatTriggerWarnings</code></td>
+<td><code>--display-warnings</code></td>
+</tr>
+</tbody>
+</table>
+<p>CLI flags above add printing for the matching categories on top of those XML defaults. Compared to PHPUnit, there is no <code>--display-errors</code> option; errors and failures are always surfaced in the summary.</p>
+<h3 id="pass-through">Pass Through</h3>
 <p><strong>NEW</strong>: introduced in 2.0</p>
 <p>If you want to use one of the many native PHPUnit options, you can pass them directly to it using the <code>--pass-through</code> option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interefere with how Paraunit works, or either will not produce any meaningful change.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> vendor/bin/paraunit run <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --pass-through<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--group=foo&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --pass-through<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--process-isolation&#34;</span> 
 </span></span></code></pre></div><h3 id="phpunit-inherited-options">PHPUnit inherited options</h3>
-<p><strong>DEPRECATED</strong>: no longer present in Paraunit 2.0, use <code>--pass-through</code> instead.</p>
-<p>A large number of PHPUnit options (apart from the aforementioned <code>--testsuite</code>) are compatible with Paraunit, and they will be passed along to each single PHPUnit spawned process. For a more complete documentation of those options&rsquo; behavior, see the <a href="https://phpunit.de/manual/current/en/textui.html#textui.clioptions">PHPUnit CLI documentation</a>.</p>
-<p>This is the complete list of supported options:</p>
+<p><strong>DEPRECATED</strong>: Paraunit 2.x no longer forwards a long list of PHPUnit flags by default. Use <a href="#pass-through"><code>--pass-through</code></a> for native PHPUnit options you need in each worker process.</p>
+<p>Historically, many PHPUnit CLI options were forwarded automatically. That behaviour was removed in favour of explicit <code>--pass-through</code>. For up-to-date PHPUnit behaviour, see the <a href="https://docs.phpunit.de/en/13.0/textui.html#command-line-options">PHPUnit command-line documentation</a>.</p>
+<p>The following options were among those previously forwarded (pass them with <code>--pass-through=&quot;--option&quot;</code> when still supported by your PHPUnit version):</p>
 <ul>
 <li><code>filter</code></li>
 <li><code>group</code></li>
 <li><code>exclude-group</code></li>
-<li><code>test-suffix</code></li>
 <li><code>dont-report-useless-tests</code></li>
 <li><code>strict-coverage</code></li>
 <li><code>strict-global-state</code></li>
@@ -379,6 +456,7 @@ As a last resource, it will use PHPDbg, which should be always available since i
 <li><code>include-path</code></li>
 </ul>
 <h3 id="debug-mode">Debug mode</h3>
+<p><strong>NEW</strong>: introduced in 1.3.0.</p>
 <p>If you have problem running the tests, or the execution stops before the results are printed out, you can launch Paraunit in debug mode, with:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> vendor/bin/paraunit run --debug
 </span></span></code></pre></div><p>It will show a verbose output with the full running test queue.</p>
