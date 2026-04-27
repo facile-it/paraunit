@@ -45,5 +45,6 @@ $config->ignoreErrorsOnPackages([
     'psalm/plugin-symfony',
     'vimeo/psalm',
 ], [ErrorType::UNUSED_DEPENDENCY]);
+$config->ignoreErrorsOnExtension('ext-pcntl', [ErrorType::DEV_DEPENDENCY_IN_PROD]);
 
 return $config;
