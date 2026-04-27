@@ -3,6 +3,7 @@
 use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
 use PHPUnit\Event\Telemetry\SystemGarbageCollectorStatusProvider;
 use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
+use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 $config = new Configuration();
 
@@ -29,5 +30,21 @@ if (! class_exists(IssueTrigger::class)) {
     $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Code\\\IssueTrigger\\\Code/');
     $config->ignoreUnknownClassesRegex('/PHPUnit\\\Event\\\Code\\\IssueTrigger\\\IssueTrigger/');
 }
+
+$config->addPathToScan(__DIR__ . '/.php-cs-fixer.dist.php', true);
+$config->addPathToScan(__DIR__ . '/rector.php', true);
+$config->addPathToScan(__FILE__, true);
+$config->enableAnalysisOfUnusedDevDependencies();
+$config->ignoreErrorsOnPackages([
+    'jangregor/phpstan-prophecy',
+    'phpstan/extension-installer',
+    'phpstan/phpstan',
+    'phpstan/phpstan-phpunit',
+    'phpunit/php-invoker', // for test timeouts
+    'psalm/plugin-phpunit',
+    'psalm/plugin-symfony',
+    'vimeo/psalm',
+], [ErrorType::UNUSED_DEPENDENCY]);
+$config->ignoreErrorsOnExtension('ext-pcntl', [ErrorType::DEV_DEPENDENCY_IN_PROD]);
 
 return $config;
