@@ -45,6 +45,17 @@ class ParallelCommand extends Command
         $this->addOption('display-notices', null, InputOption::VALUE_NONE, 'Display details for notices triggered by tests');
         $this->addOption('display-warnings', null, InputOption::VALUE_NONE, 'Display details for warnings triggered by tests');
         $this->addOption('display-all-issues', null, InputOption::VALUE_NONE, 'Display details for all issues that are triggered');
+
+        // stop-on-* options
+        $this->addOption('stop-on-defect', null, InputOption::VALUE_NONE, 'Stop after first error, failure, warning, or risky test');
+        $this->addOption('stop-on-error', null, InputOption::VALUE_NONE, 'Stop after first error');
+        $this->addOption('stop-on-failure', null, InputOption::VALUE_NONE, 'Stop after first failure');
+        $this->addOption('stop-on-warning', null, InputOption::VALUE_NONE, 'Stop after first warning');
+        $this->addOption('stop-on-risky', null, InputOption::VALUE_NONE, 'Stop after first risky test');
+        $this->addOption('stop-on-deprecation', null, InputOption::VALUE_NONE, 'Stop after first test that triggered a deprecation');
+        $this->addOption('stop-on-notice', null, InputOption::VALUE_NONE, 'Stop after first test that triggered a notice');
+        $this->addOption('stop-on-skipped', null, InputOption::VALUE_NONE, 'Stop after first skipped test');
+        $this->addOption('stop-on-incomplete', null, InputOption::VALUE_NONE, 'Stop after first incomplete test');
     }
 
     /**
