@@ -7,7 +7,7 @@
 [![Build status](https://img.shields.io/github/actions/workflow/status/facile-it/paraunit/tests.yaml?branch=2.x)](https://github.com/facile-it/paraunit/actions)
 [![Coverage Status][Master coverage image]][Master coverage link]
 
-Paraunit is a tool for faster executions of PHPUnit test suites. It makes this possible by launching multiple test in parallel with single PHPUnit processes.
+Paraunit is a tool for faster execution of PHPUnit test suites. It makes this possible by launching multiple tests in parallel with single PHPUnit processes.
 
 Paraunit is developed using Symfony components.
 
@@ -47,7 +47,7 @@ Paraunit starts as a Symfony console command, but it's provided through a bin la
 ```
 vendor/bin/paraunit run
 ```
-This command will launch all the tests in all your configured testsuites.
+This command will launch all the tests in all your configured test suites.
 
 ### Collect test coverage
 Paraunit is also able to **collect the test coverage in parallel**, like this:
@@ -55,7 +55,7 @@ Paraunit is also able to **collect the test coverage in parallel**, like this:
 vendor/bin/paraunit coverage --html=./dir
 ```
 
-It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither are available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in PHP core, so it should be always present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, Cobertura, XML, Crap4j, PHP, text file and text to console.
+It **automatically uses the best coverage driver available**: it tries to use [Pcov](https://github.com/krakjoe/pcov) if available (since it's the fastest), otherwise it uses [Xdebug](https://xdebug.org/). If neither is available, it should always be able to use [PHPDbg](https://www.php.net/manual/en/book.phpdbg.php), which is bundled in the PHP core, so it should always be present. It can produce coverage in the same formats that PHPUnit provides: HTML, Clover, Cobertura, XML, Crap4j, PHP, text file and text to console.
 
 ## Documentation
 For more details about Paraunit and its usage, see the [documentation](https://engineering.facile.it/paraunit/documentation/)
@@ -66,3 +66,4 @@ For more details about Paraunit and its usage, see the [documentation](https://e
 
 [Packagist link]: https://packagist.org/packages/facile-it/paraunit
 [Master coverage link]: https://codecov.io/gh/facile-it/paraunit
+
