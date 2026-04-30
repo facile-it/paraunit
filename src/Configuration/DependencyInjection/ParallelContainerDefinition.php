@@ -29,6 +29,7 @@ use Paraunit\Runner\ChunkFile;
 use Paraunit\Runner\PipelineCollection;
 use Paraunit\Runner\PipelineFactory;
 use Paraunit\Runner\Runner;
+use Paraunit\Runner\RunnerConfiguration;
 use Paraunit\TestResult\TestResultContainer;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use SebastianBergmann\FileIterator\Facade;
@@ -88,6 +89,8 @@ class ParallelContainerDefinition
             ProcessFactory::class,
             ProgressPrinter::class,
             RetryParser::class,
+            Runner::class,
+            RunnerConfiguration::class,
             SharkPrinter::class,
             TempDirectory::class,
             TempFilenameFactory::class,
@@ -130,7 +133,7 @@ class ParallelContainerDefinition
     {
         $container->autowire(PipelineCollection::class)
             ->setArgument('$maxProcessNumber', '%paraunit.max_process_count%');
-        $container->autowire(Runner::class)
+        $container->getDefinition(Runner::class)
             ->setPublic(true);
     }
 

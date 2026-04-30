@@ -53,6 +53,7 @@ class ParallelCommand extends Command
         $this->addOption('stop-on-warning', null, InputOption::VALUE_NONE, 'Stop after first warning');
         $this->addOption('stop-on-risky', null, InputOption::VALUE_NONE, 'Stop after first risky test');
         $this->addOption('stop-on-deprecation', null, InputOption::VALUE_NONE, 'Stop after first test that triggered a deprecation');
+        $this->addOption('stop-on-phpunit-deprecation', null, InputOption::VALUE_NONE, 'Stop after first test that triggered a PHPUnit deprecation');
         $this->addOption('stop-on-notice', null, InputOption::VALUE_NONE, 'Stop after first test that triggered a notice');
         $this->addOption('stop-on-skipped', null, InputOption::VALUE_NONE, 'Stop after first skipped test');
         $this->addOption('stop-on-incomplete', null, InputOption::VALUE_NONE, 'Stop after first incomplete test');

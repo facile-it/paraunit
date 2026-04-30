@@ -12,6 +12,7 @@ use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -28,6 +29,7 @@ class Runner implements EventSubscriberInterface
     private int $exitCode = 0;
 
     public function __construct(
+        private readonly RunnerConfiguration $runnerConfiguration,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ProcessFactory $processFactory,
         private readonly TestList $testList,
@@ -57,6 +59,7 @@ class Runner implements EventSubscriberInterface
             ProcessTerminated::class => 'pushToPipeline',
             ProcessToBeRetried::class => 'onProcessToBeRetried',
             ProcessParsingCompleted::class => 'onProcessParsingCompleted',
+            TestCompleted::class => 'onTestCompleted',
         ];
     }
 
@@ -132,6 +135,13 @@ class Runner implements EventSubscriberInterface
         }
     }
 
+    public function onTestCompleted(TestCompleted $event): void
+    {
+        if ($this->runnerConfiguration->shouldStopOn($event->outcome)) {
+            $this->purgeQueue();
+        }
+    }
+
     public function onShutdown(): void
     {
         $this->pipelineCollection->triggerProcessTermination();
@@ -148,6 +158,13 @@ class Runner implements EventSubscriberInterface
                     // pass
                 }
             } while (! $this->queuedProcesses->isEmpty());
+        }
+    }
+
+    private function purgeQueue(): void
+    {
+        while (! $this->queuedProcesses->isEmpty()) {
+            $this->queuedProcesses->dequeue();
         }
     }
 }

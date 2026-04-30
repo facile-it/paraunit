@@ -141,6 +141,16 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'sort',
             'exclude-testsuite',
             'test-suffix',
+            'stop-on-defect',
+            'stop-on-error',
+            'stop-on-failure',
+            'stop-on-warning',
+            'stop-on-risky',
+            'stop-on-deprecation',
+            'stop-on-phpunit-deprecation',
+            'stop-on-notice',
+            'stop-on-skipped',
+            'stop-on-incomplete',
         ];
 
         foreach ($options as $optionName) {
@@ -216,6 +226,16 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'sort',
             'exclude-testsuite',
             'test-suffix',
+            'stop-on-defect',
+            'stop-on-error',
+            'stop-on-failure',
+            'stop-on-warning',
+            'stop-on-risky',
+            'stop-on-deprecation',
+            'stop-on-phpunit-deprecation',
+            'stop-on-notice',
+            'stop-on-skipped',
+            'stop-on-incomplete',
         ];
 
         foreach ($options as $optionName) {
