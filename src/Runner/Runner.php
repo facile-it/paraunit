@@ -12,10 +12,10 @@ use Paraunit\Lifecycle\EngineStart;
 use Paraunit\Lifecycle\ProcessParsingCompleted;
 use Paraunit\Lifecycle\ProcessTerminated;
 use Paraunit\Lifecycle\ProcessToBeRetried;
+use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use function function_exists;
@@ -28,6 +28,7 @@ class Runner implements EventSubscriberInterface
     private int $exitCode = 0;
 
     public function __construct(
+        private readonly RunnerConfiguration $runnerConfiguration,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ProcessFactory $processFactory,
         private readonly TestList $testList,
@@ -49,14 +50,18 @@ class Runner implements EventSubscriberInterface
     }
 
     /**
-     * @return array<string, string>
+     * {@see ProcessTerminated} uses a low priority so {@see \Paraunit\Logs\JSON\LogParser} runs first and
+     * stop-on handling can empty the queue before the next process is dequeued.
+     *
+     * @return array<class-string, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessTerminated::class => 'pushToPipeline',
+            ProcessTerminated::class => ['pushToPipeline', -10],
             ProcessToBeRetried::class => 'onProcessToBeRetried',
             ProcessParsingCompleted::class => 'onProcessParsingCompleted',
+            TestCompleted::class => 'onTestCompleted',
         ];
     }
 
@@ -132,8 +137,16 @@ class Runner implements EventSubscriberInterface
         }
     }
 
+    public function onTestCompleted(TestCompleted $event): void
+    {
+        if ($this->runnerConfiguration->shouldStopOn($event->outcome)) {
+            $this->purgeQueue();
+        }
+    }
+
     public function onShutdown(): void
     {
+        $this->purgeQueue();
         $this->pipelineCollection->triggerProcessTermination();
 
         if ($this->chunkSize->isChunked()) {
@@ -141,13 +154,16 @@ class Runner implements EventSubscriberInterface
             foreach ($processes as $process) {
                 $this->chunkFile->deleteChunkFile($process);
             }
-            do {
-                try {
-                    $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
-                } catch (RuntimeException) {
-                    // pass
-                }
-            } while (! $this->queuedProcesses->isEmpty());
+        }
+    }
+
+    private function purgeQueue(): void
+    {
+        while (! $this->queuedProcesses->isEmpty()) {
+            $process = $this->queuedProcesses->dequeue();
+            if ($this->chunkSize->isChunked()) {
+                $this->chunkFile->deleteChunkFile($process);
+            }
         }
     }
 }

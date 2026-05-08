@@ -109,6 +109,36 @@ class ParallelCommandTest extends BaseTestCase
         $this->assertStringContainsString('Executed: 20 test classes (21 retried), 30 tests', $output);
     }
 
+    public function testExecutionWithStopOnFailure(): void
+    {
+        $configurationPath = $this->getStubPath() . 'phpunit_stop_on_two_files.xml';
+        $application = new Application();
+        $application->addCommands([new ParallelCommand(new ParallelConfiguration())]);
+
+        $command = $application->find('run');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--configuration' => $configurationPath,
+            '--parallel' => 1,
+        ]);
+        $baselineDisplay = $commandTester->getDisplay();
+        $this->assertStringContainsString('Executed: 2 test classes', $baselineDisplay);
+
+        $commandTester2 = new CommandTester($command);
+        $exitCode = $commandTester2->execute([
+            'command' => $command->getName(),
+            '--configuration' => $configurationPath,
+            '--parallel' => 1,
+            '--stop-on-failure' => true,
+        ]);
+
+        $output = $commandTester2->getDisplay();
+        $this->assertNotEquals(0, $exitCode, $output);
+        $this->assertStringContainsString('Executed: 1 test classes', $output);
+        $this->assertMatchesRegularExpression('/F +\d\n\n/', $output, 'Test failure should have been the last executed test');
+    }
+
     public function testExecutionWithWarning(): void
     {
         $application = new Application();

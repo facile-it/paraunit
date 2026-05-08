@@ -20,12 +20,15 @@ class LogParser implements EventSubscriberInterface
     ) {}
 
     /**
-     * @return array<string, string>
+     * Run before {@see \Paraunit\Runner\Runner::pushToPipeline} on {@see ProcessTerminated} so log-driven
+     * {@see \Paraunit\Lifecycle\TestCompleted} events (including stop-on outcomes) can purge the queue before the next process starts.
+     *
+     * @return array<class-string, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessTerminated::class => 'onProcessTerminated',
+            ProcessTerminated::class => ['onProcessTerminated', 10],
         ];
     }
 

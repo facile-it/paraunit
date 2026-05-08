@@ -10,7 +10,9 @@ use Paraunit\Filter\RandomizeList;
 use Paraunit\Filter\TestList;
 use Paraunit\Printer\DebugPrinter;
 use Paraunit\Printer\PrinterConfiguration;
+use Paraunit\Runner\RunnerConfiguration;
 use Paraunit\TestResult\ValueObject\TestIssue;
+use Paraunit\TestResult\ValueObject\TestOutcome;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -91,6 +93,7 @@ class ParallelConfiguration
         }
 
         $this->setPrinterConfiguration($containerBuilder, $input);
+        $this->setRunnerConfiguration($containerBuilder, $input);
     }
 
     private function setPrinterConfiguration(ContainerBuilder $containerBuilder, InputInterface $input): void
@@ -113,6 +116,47 @@ class ParallelConfiguration
         foreach ($shouldPrintIssueMap as $cliOption => $testIssue) {
             if ($input->getOption($cliOption)) {
                 $printerConfiguration->addMethodCall('setShouldPrint', [$testIssue, true]);
+            }
+        }
+    }
+
+    private function setRunnerConfiguration(ContainerBuilder $containerBuilder, InputInterface $input): void
+    {
+        $runnerConfiguration = $containerBuilder->getDefinition(RunnerConfiguration::class);
+
+        if ($input->getOption('stop-on-defect')) {
+            $defects = [
+                TestIssue::Deprecation,
+                TestIssue::Risky,
+                TestIssue::Warning,
+                TestOutcome::AbnormalTermination,
+                TestOutcome::Error,
+                TestOutcome::Failure,
+            ];
+
+            foreach ($defects as $defect) {
+                $runnerConfiguration->addMethodCall('setStopOn', [$defect]);
+            }
+        }
+
+        $possibleResults = [...TestIssue::cases(), ...TestOutcome::cases()];
+        foreach ($possibleResults as $result) {
+            $option = match ($result) {
+                TestIssue::Deprecation => 'stop-on-deprecation',
+                TestIssue::PHPUnitDeprecation => 'stop-on-phpunit-deprecation',
+                TestIssue::Risky => 'stop-on-risky',
+                TestIssue::Warning => 'stop-on-warning',
+                TestIssue::Notice => 'stop-on-notice',
+                TestOutcome::AbnormalTermination,
+                TestOutcome::Error => 'stop-on-error',
+                TestOutcome::Failure => 'stop-on-failure',
+                TestOutcome::Skipped => 'stop-on-skipped',
+                TestOutcome::Incomplete => 'stop-on-incomplete',
+                default => null,
+            };
+
+            if ($option && $input->getOption($option)) {
+                $runnerConfiguration->addMethodCall('setStopOn', [$result]);
             }
         }
     }

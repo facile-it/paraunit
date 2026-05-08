@@ -108,6 +108,25 @@ class ChunkFileTest extends BaseIntegrationTestCase
         }
     }
 
+    public function testStopOnFailureChunkedRemovesQueuedChunkFiles(): void
+    {
+        $configPath = $this->getStubPath() . 'phpunit_stop_on_two_files.xml';
+        $this->setOption('configuration', $configPath);
+        $this->setOption('chunk-size', '1');
+        $this->setOption('parallel', '1');
+        $this->setOption('stop-on-failure', 'true');
+        $this->loadContainer();
+
+        $this->assertNotEquals(0, $this->executeRunner(), $this->getConsoleOutput()->getOutput());
+
+        $chunkFileService = $this->getService(ChunkFile::class);
+        $this->assertFileExists($configPath);
+        foreach (range(0, 1) as $chunkNumber) {
+            $chunkFileName = $chunkFileService->getChunkFileName($configPath, $chunkNumber);
+            $this->assertFileDoesNotExist($chunkFileName);
+        }
+    }
+
     public function testChunkedSigIntHandling(): void
     {
         if (! function_exists('posix_kill')) {
