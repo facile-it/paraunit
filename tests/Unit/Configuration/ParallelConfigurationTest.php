@@ -159,7 +159,6 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             TestOutcome::AbnormalTermination,
             TestOutcome::Error,
             TestOutcome::Failure,
-            TestOutcome::Retry,
         ];
 
         $this->assertEqualsCanonicalizing($expected, $this->getSetStopOnArguments($container));
@@ -229,7 +228,6 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             TestOutcome::AbnormalTermination,
             TestOutcome::Error,
             TestOutcome::Failure,
-            TestOutcome::Retry,
             TestOutcome::Skipped,
         ];
 

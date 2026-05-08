@@ -132,7 +132,6 @@ class ParallelConfiguration
                 TestOutcome::AbnormalTermination,
                 TestOutcome::Error,
                 TestOutcome::Failure,
-                TestOutcome::Retry,
             ];
 
             foreach ($defects as $defect) {
