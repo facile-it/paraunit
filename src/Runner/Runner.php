@@ -144,6 +144,7 @@ class Runner implements EventSubscriberInterface
 
     public function onShutdown(): void
     {
+        $this->purgeQueue();
         $this->pipelineCollection->triggerProcessTermination();
 
         if ($this->chunkSize->isChunked()) {
