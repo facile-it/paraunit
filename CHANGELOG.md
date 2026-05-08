@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     * `--display-phpunit-deprecations`
     * `--display-notices`
     * `--display-all-issues`
+* Implement `--stop-on-*` options, mimicking PHPUnit's; all options affect both Paraunit and the underlying PHPUnit process: [#388](https://github.com/facile-it/paraunit/pull/388)
+    * `--stop-on-defect`
+    * `--stop-on-error`
+    * `--stop-on-failure`
+    * `--stop-on-warning`
+    * `--stop-on-risky`
+    * `--stop-on-deprecation`
+    * `--stop-on-phpunit-deprecation`
+    * `--stop-on-notice`
+    * `--stop-on-skipped`
+    * `--stop-on-incomplete`
 
 ## [2.10.0] - 2026-04-23
 * Suppress output for test issues that are ignored [#381](https://github.com/facile-it/paraunit/pull/381)
