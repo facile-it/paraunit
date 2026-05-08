@@ -234,6 +234,51 @@ class ParallelConfigurationTest extends BaseUnitTestCase
         $this->assertEqualsCanonicalizing($expected, $this->getSetStopOnArguments($container));
     }
 
+    public function testRunnerConfigurationCombinesMultipleGranularOptions(): void
+    {
+        $container = $this->buildContainerForRunnerConfigurationAssertions([
+            'stop-on-error' => true,
+            'stop-on-skipped' => true,
+        ]);
+
+        $expected = [
+            TestOutcome::AbnormalTermination,
+            TestOutcome::Error,
+            TestOutcome::Skipped,
+        ];
+
+        $this->assertEqualsCanonicalizing($expected, $this->getSetStopOnArguments($container));
+    }
+
+    public function testRunnerConfigurationIgnoresNonMappedOutcomes(): void
+    {
+        $container = $this->buildContainerForRunnerConfigurationAssertions([
+            'stop-on-deprecation' => true,
+            'stop-on-phpunit-deprecation' => true,
+            'stop-on-risky' => true,
+            'stop-on-warning' => true,
+            'stop-on-notice' => true,
+            'stop-on-error' => true,
+            'stop-on-failure' => true,
+            'stop-on-skipped' => true,
+            'stop-on-incomplete' => true,
+        ]);
+
+        $args = $this->getSetStopOnArguments($container);
+        foreach ([
+            TestIssue::CoverageFailure,
+            TestOutcome::NoTestExecuted,
+            TestOutcome::Passed,
+            TestOutcome::Retry,
+        ] as $neverMapped) {
+            $this->assertNotContains(
+                $neverMapped,
+                $args,
+                'Non-CLI-mapped outcome must not receive setStopOn from granular flags'
+            );
+        }
+    }
+
     /**
      * Builds an uncompiled {@see ContainerBuilder} with the same CLI wiring as
      * {@see ParallelConfiguration::buildContainer()} up to and including {@see ParallelConfiguration::loadCommandLineOptions()}.

@@ -323,6 +323,24 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertEquals(0, $exitCode, 'Exit code should be 0');
     }
 
+    public function testStopOnFailureHaltsFurtherTests(): void
+    {
+        $this->setOption('configuration', $this->getStubPath() . 'phpunit_stop_on_two_files.xml');
+        $this->setOption('parallel', '1');
+
+        $this->loadContainer();
+        $this->executeRunner();
+        $baselineOutput = $this->getConsoleOutput()->getOutput();
+        $this->assertStringContainsString('Executed: 2 test classes', $baselineOutput);
+
+        $this->cleanUpTempDirForThisExecution();
+        $this->setOption('stop-on-failure', 'true');
+        $this->loadContainer();
+        $this->executeRunner();
+        $stoppedOutput = $this->getConsoleOutput()->getOutput();
+        $this->assertStringContainsString('Executed: 1 test classes', $stoppedOutput);
+    }
+
     private function executeRunner(): int
     {
         /** @var Runner $runner */

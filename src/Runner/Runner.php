@@ -16,7 +16,6 @@ use Paraunit\Lifecycle\TestCompleted;
 use Paraunit\Process\Process;
 use Paraunit\Process\ProcessFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use function function_exists;
@@ -51,12 +50,15 @@ class Runner implements EventSubscriberInterface
     }
 
     /**
-     * @return array<string, string>
+     * {@see ProcessTerminated} uses a low priority so {@see \Paraunit\Logs\JSON\LogParser} runs first and
+     * stop-on handling can empty the queue before the next process is dequeued.
+     *
+     * @return array<class-string, string|array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
         return [
-            ProcessTerminated::class => 'pushToPipeline',
+            ProcessTerminated::class => ['pushToPipeline', -10],
             ProcessToBeRetried::class => 'onProcessToBeRetried',
             ProcessParsingCompleted::class => 'onProcessParsingCompleted',
             TestCompleted::class => 'onTestCompleted',
@@ -152,20 +154,16 @@ class Runner implements EventSubscriberInterface
             foreach ($processes as $process) {
                 $this->chunkFile->deleteChunkFile($process);
             }
-            do {
-                try {
-                    $this->chunkFile->deleteChunkFile($this->queuedProcesses->dequeue());
-                } catch (RuntimeException) {
-                    // pass
-                }
-            } while (! $this->queuedProcesses->isEmpty());
         }
     }
 
     private function purgeQueue(): void
     {
         while (! $this->queuedProcesses->isEmpty()) {
-            $this->queuedProcesses->dequeue();
+            $process = $this->queuedProcesses->dequeue();
+            if ($this->chunkSize->isChunked()) {
+                $this->chunkFile->deleteChunkFile($process);
+            }
         }
     }
 }

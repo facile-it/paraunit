@@ -54,4 +54,15 @@ class RunnerConfigurationTest extends BaseUnitTestCase
             $this->assertSame($other === $result, $config->shouldStopOn($other));
         }
     }
+
+    #[DataProvider('issueCasesProvider')]
+    #[DataProvider('outcomeCasesProvider')]
+    public function testSetStopOnFalseDisables(TestOutcome|TestIssue $result): void
+    {
+        $config = new RunnerConfiguration();
+        $config->setStopOn($result, true);
+        $config->setStopOn($result, false);
+
+        $this->assertFalse($config->shouldStopOn($result));
+    }
 }

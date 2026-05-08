@@ -306,6 +306,136 @@ class RunnerTest extends BaseUnitTestCase
         $runner->onProcessToBeRetried(new ProcessToBeRetried($process));
     }
 
+    public function testOnShutdownPurgesQueueInNonChunkedMode(): void
+    {
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
+            ->willReturn([]);
+
+        $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->triggerProcessTermination()
+            ->shouldBeCalledOnce();
+        $pipelineCollection->hasEmptySlots()
+            ->willReturn(true);
+        $pipelineCollection->push(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->willReturn(false);
+
+        $chunkFile = $this->prophesize(ChunkFile::class);
+        $chunkFile->createChunkFile(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $runner = new Runner(
+            $this->mockRunnerConfiguration(),
+            $eventDispatcher->reveal(),
+            $this->mockProcessFactory(),
+            $testList->reveal(),
+            $pipelineCollection->reveal(),
+            $chunkSize->reveal(),
+            $chunkFile->reveal()
+        );
+
+        $runner->onProcessToBeRetried(new ProcessToBeRetried(new StubbedParaunitProcess('a.php')));
+        $runner->onProcessToBeRetried(new ProcessToBeRetried(new StubbedParaunitProcess('b.php')));
+        $runner->onShutdown();
+        $runner->pushToPipeline();
+    }
+
+    public function testOnShutdownChunkedDeletesChunkFilesForRunningAndQueuedProcesses(): void
+    {
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
+            ->willReturn([]);
+
+        $running = new StubbedParaunitProcess('running.xml');
+        $queuedA = new StubbedParaunitProcess('queued-a.xml');
+        $queuedB = new StubbedParaunitProcess('queued-b.xml');
+
+        $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->triggerProcessTermination()
+            ->shouldBeCalledOnce();
+        $pipelineCollection->getRunningProcesses()
+            ->shouldBeCalledOnce()
+            ->willReturn([$running]);
+
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->willReturn(true);
+
+        $chunkFile = $this->prophesize(ChunkFile::class);
+        $chunkFile->createChunkFile(Argument::cetera())
+            ->shouldNotBeCalled();
+        $chunkFile->deleteChunkFile(Argument::any())
+            ->shouldBeCalledTimes(3);
+
+        $runner = new Runner(
+            $this->mockRunnerConfiguration(),
+            $eventDispatcher->reveal(),
+            $this->mockProcessFactory(),
+            $testList->reveal(),
+            $pipelineCollection->reveal(),
+            $chunkSize->reveal(),
+            $chunkFile->reveal()
+        );
+
+        $runner->onProcessToBeRetried(new ProcessToBeRetried($queuedA));
+        $runner->onProcessToBeRetried(new ProcessToBeRetried($queuedB));
+        $runner->onShutdown();
+    }
+
+    public function testOnShutdownChunkedWithEmptyQueue(): void
+    {
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
+
+        $testList = $this->prophesize(TestList::class);
+        $testList->getTests()
+            ->willReturn([]);
+
+        $running = new StubbedParaunitProcess('running.xml');
+
+        $pipelineCollection = $this->prophesize(PipelineCollection::class);
+        $pipelineCollection->triggerProcessTermination()
+            ->shouldBeCalledOnce();
+        $pipelineCollection->getRunningProcesses()
+            ->shouldBeCalledOnce()
+            ->willReturn([$running]);
+
+        $chunkSize = $this->prophesize(ChunkSize::class);
+        $chunkSize->isChunked()
+            ->willReturn(true);
+
+        $chunkFile = $this->prophesize(ChunkFile::class);
+        $chunkFile->createChunkFile()
+            ->shouldNotBeCalled();
+        $chunkFile->deleteChunkFile($running)
+            ->shouldBeCalledOnce();
+
+        $runner = new Runner(
+            $this->mockRunnerConfiguration(),
+            $eventDispatcher->reveal(),
+            $this->mockProcessFactory(),
+            $testList->reveal(),
+            $pipelineCollection->reveal(),
+            $chunkSize->reveal(),
+            $chunkFile->reveal()
+        );
+
+        $runner->onShutdown();
+    }
+
     private function mockRunnerConfiguration(): RunnerConfiguration
     {
         $runnerConfiguration = $this->prophesize(RunnerConfiguration::class);
