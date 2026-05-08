@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7/">Paraunit 0.7: test coverage in parallel</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
+    <time>12 Dec 2016</time>
   </div>
 
   
@@ -266,13 +266,13 @@
   </header>
 
   <p>
-  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&rsquo; package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future.
-So I decided to release an OSS package for this usage, Jean85/pretty-package-versions, available here: https://github.com/Jean85/pretty-package-versions/. Feel free to use it in your projects, as I&rsquo;ve done inside Paraunit.
+  Finally, Paraunit 0.7 has been released! This version includes the long awaited coverage feature: now you can collect your test coverage running your tests in parallel!
+Along with this new huge feature, here comes a lot of new fixes and changes: for example, now a lot of default PHPUnit options can be used and they will be passed along to the single PHPUnit processes that Paraunit spawns; also, now we officially support Windows, and we added an Appveyor CI build to do that.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.7/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -280,13 +280,13 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.2/">Paraunit 0.9.2 and 0.8.3: missing dependencies</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6.2/">Paraunit 0.6.2</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
+    <time>24 Oct 2016</time>
   </div>
 
   
@@ -310,55 +310,14 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   </header>
 
   <p>
-  Paraunit 0.9.2 and Paraunit 0.8.3 has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies.
-I fixed that and backported the fix to the 0.8 series, since it was very easy to do.
-Here&rsquo;s the full changelog:
-Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9/">Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>05 Jul 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  After a long time and a lot of work, Paraunit 0.9 has been released. This release is a big step ahead: now Paraunit runs with PHPUnit 6, and support to older versions is dropped; this also means that the minimum supported PHP version is now 7.0, and the minimum version of the Symfony components is bumped to 2.7, since older versions are out of support since may.
-All these changes brought along a lot of refactoring, and I took the occasion to sprinkle scalar and return types everywhere in the code (see #93); this was also behind a blog post of mine that I wrote in response to the &ldquo;visual debt&rdquo; controversy.
+  Paraunit 0.6.2 has been released! This version include a fix in the choice of the dir for the partial test results, that caused issues while on non-Linux systems. Some minor fix are present too, and now Paraunit shows the right version when launched.
+Also, since this release, all commits by me will be GPG signed!
+Unfortunately, the coverage feature is still in the works, but it&rsquo;s slowly going on; the feature is working, but release 0.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.6.2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -366,13 +325,13 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.2/">Paraunit 0.8.2: avoid failures due to warnings</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6.1/">Paraunit 0.6.1</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>26 Jan 2017</time>
+    <time>10 Jun 2016</time>
   </div>
 
   
@@ -396,23 +355,28 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   </header>
 
   <p>
-  Paraunit 0.8.2 has been released to fix an issued caused by an unwanted overwrite of the write() method in the LogWriter class. Full changelog:
-Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures) 
+  Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint, to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it this summer.
+Here&rsquo;s the full 0.6.1 changelog:
+Changed Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 has been released; we will rely on their BC promise A new approach for dockerfiles, now they will be based on the standard Docker PHP library.
   </p>
 
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.6.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
   
 </article>
 
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.1/">Paraunit 0.8.1: fixed regression with Symfony</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6/">Paraunit 0.6</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>25 Jan 2017</time>
+    <time>20 Mar 2016</time>
   </div>
 
   
@@ -436,8 +400,53 @@ Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no 
   </header>
 
   <p>
-  Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project:
-Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir 
+  Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have it working soon and release it in 0.7.
+Here&rsquo;s what&rsquo;s changed in 0.6:
+Changed MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the tests&rsquo; results using PHPUnit&rsquo;s --log-json option (thanks to @taueres for the idea). This grants a lot of new features: Parsing of tests results is more robust, it should never fail!
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.5/">Paraunit 0.5</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>08 Dec 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.5 has been released! Here&rsquo;s what&rsquo;s changed:
+Changed SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux) Travis is testing on PHP 7.0, no more nightlies or allowed failures Symfony 3.0 components are now supported and compatible with Paraunit Retry parsing and management is improved Fixed Removed double generation of MD5 hash of process 
   </p>
 
   
@@ -450,11 +459,11 @@ Fixed Fix #88: write the temporary configuration file in the same dir of the ori
 
 <nav class="pagination" role="pagination">
   
-  <a href="https://engineering.facile.it/paraunit/page/7/"><i class="fa fa-chevron-left"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/9/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;8 / 11&nbsp;</span>
+  <span>&nbsp;10 / 11&nbsp;</span>
   
-  <a href="https://engineering.facile.it/paraunit/page/9/"><i class="fa fa-chevron-right"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/11/"><i class="fa fa-chevron-right"></i></a>
   
 </nav>
 

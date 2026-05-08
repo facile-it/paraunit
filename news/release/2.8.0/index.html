@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.8.0: PHPUnit 13 support &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,18 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.8.0: PHPUnit 13 support</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>With this new minor, we&rsquo;re finally able to support the newly released PHPUnit 13 with Paraunit. This basically required no code changes apart from the <code>composer.json</code> constraints and a couple of tests adjustments, as a testament of the reliable integration strategy that I chose when integrating with it.</p>
+<p>This release also includes a small PR about notices being reported as specific issues when running tests, which was pending for a while.</p>
+<p>This is the full changelog:</p>
+<ul>
+<li>Support PHPUnit 13 <a href="https://github.com/facile-it/paraunit/pull/356">#356</a></li>
+<li>Map notices as new test issues <a href="https://github.com/facile-it/paraunit/pull/305">#305</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +233,4 @@
 
 </body>
 </html>
+

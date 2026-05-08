@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.2.2: PHPUnit 10.4 support &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,16 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.2.2: PHPUnit 10.4 support</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>This is a small patch to smooth the compatibility with the new release of PHPUnit, 10.4. Previous versions would still work fine, but I took the time to fix all the tests (that were broken due to reliance on <code>@internal</code> code such as PHPUnit events) and to add support for the new CLI options regarding the errors baseline.</p>
+<h3 id="added">Added</h3>
+<ul>
+<li>Add support for PHPUnit 10.4 <a href="https://github.com/facile-it/paraunit/pull/218">#218</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +231,4 @@
 
 </body>
 </html>
+

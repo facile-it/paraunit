@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.3.1: fix PHPUnit 11 support &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,18 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.3.1: fix PHPUnit 11 support</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>I may have jumped the gun while releasing the PHPUnit 11 compat, and I didn&rsquo;t check that the CI was actually installing it. Unfortunately there were multiple dependencies still conflicting with it, and Prophecy needed some PRs to be compatible. I filed them and used them in my CI, so that now the compatibility is checked.</p>
+<p>I needed to do multiple changes to make the CI green, but still no code changes was needed, only a widening of <code>composer.json</code> constraints and some tests &amp; CI fixes.</p>
+<p>This is the full changelog</p>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix support for PHPUnit 11, due to dependency conflicts <a href="https://github.com/facile-it/paraunit/pull/230">#230</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +233,4 @@
 
 </body>
 </html>
+

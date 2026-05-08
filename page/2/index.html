@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.0/">Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Paraunit 2.6.0: hide deprecations by configuration</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>15 Sep 2020</time>
+    <time>04 Mar 2025</time>
   </div>
 
   
@@ -266,94 +266,15 @@
   </header>
 
   <p>
-  This release contains only support for newer versions of PHP &amp; PHPUnit; due to PHPUnit 9.3 requiring a new major version of phpunit/php-code-coverage, I&rsquo;m forced to drop support to all PHPUnit versions below 9.3. Usage of Paraunit is unchanged.
-Here&rsquo;s the full changelog of the release:
-Added Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153 Removed Drop support for PHPUnit &lt; 9.3 #153 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.1/">Paraunit 1.1.1: PostgreSQL retry support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>06 May 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.
-Here&rsquo;s the full changelog of the release:
-Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>03 Apr 2020</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  As reported in the previous release, I was working on supporting PHPUnit 9. Today, PHPUnit 9.1 was released, and so I&rsquo;ve released Paraunit 1.1.0, which supports only PHPUnit 9.1 and forward: this is due to the fact that the --printer option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using TestHook, and opted for a small refactor of how Paraunit fetches PHPUnit test results.
+  This new release includes the resolution of a long-standing issue, which polluted Paraunit&rsquo;s output when too many deprecations were detected. In this new version, Paraunit respects PHPUnit&rsquo;s configuration, which by default does not show the full deprecation text.
+Deprecations are detected anyway, so you will still get yellow Ds and the list of affected tests when appropriate.
+This is the full changelog
+Added Deprecations details are now shown according to the PHPUnit config #303, thanks @garak NB: the config attribute in the PhpUnit configuration is displayDetailsOnTestsThatTriggerDeprecations.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -361,13 +282,13 @@ Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.1/">Paraunit 1.0.1: two small fixes</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.5.0/">Paraunit 2.5.0: PHPUnit 12 &amp; PHP 8.4 support</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Mar 2020</time>
+    <time>08 Feb 2025</time>
   </div>
 
   
@@ -391,9 +312,9 @@ Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma
   </header>
 
   <p>
-  While I&rsquo;m actively working on a big refactor toward supporting PHPUnit 9, I&rsquo;ve found two small fixes that have to be released as the first stable patch since the 1.0 release.
-Here&rsquo;s the changelog:
-Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small issue in checking coverage data syntax 8f70c 
+  This new release includes the official support to PHPUnit 12, which did not need any code changes, just some CI fixes and the common Composer constraint widening. The biggest amount of work came just from upgrading (and pulling the forks) from the Prophecy toolchain, to make the CI work without waiting for their releases.
+This is the full changelog
+Added Add PHPUnit 12 support #297 Add PHP 8.4 support #279 
   </p>
 
   
@@ -402,13 +323,13 @@ Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small i
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Paraunit 1.0.0: the stable release</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.4.0/">Paraunit 2.4.0: add two new options</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>11 Mar 2020</time>
+    <time>25 Sep 2024</time>
   </div>
 
   
@@ -432,13 +353,98 @@ Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small i
   </header>
 
   <p>
-  Today I decided to release facile-it/paraunit 1.0.0! In reality the package was pretty stable and widely used at Facile.it for a long time, but right now I wanted to step forward and declare it officially stable.
-The main reason behind this is that I&rsquo;m currently working on PHPUnit 9 support, and this will force me to release a new minor that will drop support for previous PHPUnit version altogether. This decision was in reality forced onto me due to the fact that PHUnit 9 drops support for the --printer CLI option and the relative extension point, which Paraunit was using as a way to extract test results.
+  This new release comes thanks to a new contributor: thanks @raffaelecarelle!
+He contributed the support of two native PHPUnit options with a single pull request: --exclude-testsuite and --test-suffix. Both these options allow the user to filter and exclude tests from the execution.
+This is the full changelog
+Added --exclude-testsuite option #273, thanks @raffaelecarelle --test-suffix option #273, thanks @raffaelecarelle 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.4/">Paraunit 2.3.4: fix PHPUnit 11.3 compat</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>07 Aug 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This small patch release is fully due to external contributions: thanks @kubawerlos!
+He contributed two different patches, one to update the .gitattributes exclusion list, the second to fix some constraint on some dependencies that where preventing PHPUnit 11.3 from being installed.
+This is the full changelog
+Fix PHPUnit 11.3 compat #260, thanks @kubawerlos Reduce package footprint by updating .gitattributes #261, thanks @kubawerlos 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.3/">Paraunit 2.3.3: fix warning</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Jun 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I got a bug report saying that the Symfony PHPUnit Bridge 6.4.8 and 7.0.8 and higher made test runs with Paraunit fail due to a warning. At first I thought that the Symfony error handler was messing with PHPUnit&rsquo;s again, but in reality it was just making explicit a warning that was already there for ages.
+This simple patch avoids generating that warning, and makes your CI green again!
+This is the full changelog
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.3/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -452,7 +458,7 @@ The main reason behind this is that I&rsquo;m currently working on PHPUnit 9 sup
   
   <a href="https://engineering.facile.it/paraunit/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;2 / 8&nbsp;</span>
+  <span>&nbsp;2 / 11&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/3/"><i class="fa fa-chevron-right"></i></a>
   

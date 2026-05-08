@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.3.2: fix files recap &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,19 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.3.2: fix files recap</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>I noticed that, since Paraunit 2, the recap at the end of the execution got very long. This was due to an improper serialization of the logs, where the test name was treated as a generic <code>Test</code> value object instead of a specific <code>TestMethod</code> one, where the class name is shown split form the method name.</p>
+<p>This had the unintended consequence of not deduplicating the list of files which are printed at the end of Paraunit&rsquo;s execution, so in case an error or failure was repeated many times (i.e. with a data provider) inside the same test class, the test recap would get very long.</p>
+<p>This patch includes a fix for this, and also a small addition that shows the PHPUnit version in use.</p>
+<p>This is the full changelog</p>
+<ul>
+<li>Add PHPUnit version info <a href="https://github.com/facile-it/paraunit/pull/213">#213</a></li>
+<li>Deduplicate correctly the test files recap at the end of the execution <a href="https://github.com/facile-it/paraunit/pull/241">#241</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +234,4 @@
 
 </body>
 </html>
+

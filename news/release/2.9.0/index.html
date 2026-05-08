@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.9.0: coverage cache warmup &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,18 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.9.0: coverage cache warmup</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>With this new minor, we&rsquo;re adding a small performance improvement for test coverage, by running <code>phpunit --</code> before running all tests. This small feature should reduce tests execution time and avoid race conditions when the first batch of tests runs (and find the cache not ready).</p>
+<p>Credits to Sebastian for pointing this out to me!</p>
+<p>This is the full changelog:</p>
+<ul>
+<li>Add coverage cache warmup <a href="https://github.com/facile-it/paraunit/pull/379">#379</a></li>
+<li>Fix transient dependencies <a href="https://github.com/facile-it/paraunit/pull/373">#373</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +233,4 @@
 
 </body>
 </html>
+

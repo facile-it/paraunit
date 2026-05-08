@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
+    <time>24 Jan 2017</time>
   </div>
 
   
@@ -266,13 +266,13 @@
   </header>
 
   <p>
-  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&rsquo; package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future.
-So I decided to release an OSS package for this usage, Jean85/pretty-package-versions, available here: https://github.com/Jean85/pretty-package-versions/. Feel free to use it in your projects, as I&rsquo;ve done inside Paraunit.
+  Paraunit 0.8 has been released! With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to Andreas Heigl that made this not only possible, but very straightforward to implement.
+Next phase will be the 1.0 stable release milestone, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -280,13 +280,13 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.2/">Paraunit 0.9.2 and 0.8.3: missing dependencies</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.4/">Paraunit 0.7.4: PHAR release</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
+    <time>11 Jan 2017</time>
   </div>
 
   
@@ -310,10 +310,9 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   </header>
 
   <p>
-  Paraunit 0.9.2 and Paraunit 0.8.3 has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies.
-I fixed that and backported the fix to the 0.8 series, since it was very easy to do.
-Here&rsquo;s the full changelog:
-Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch 
+  Paraunit 0.7.4 has just been released. This patch version add a simple but very useful functionality, the string filtering of tests.
+Full changelog text:
+Changed Add optional argument to both commands to filter tests filenames; the filter is case insensitive and doesn&rsquo;t rely on paths, so it doesn&rsquo;t have to be a full or relative path; it can also be used in conjunction with the --testsuite option 
   </p>
 
   
@@ -322,13 +321,13 @@ Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9/">Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.3/">Paraunit 0.7.3: PHAR release</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>05 Jul 2017</time>
+    <time>30 Dec 2016</time>
   </div>
 
   
@@ -352,13 +351,54 @@ Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch
   </header>
 
   <p>
-  After a long time and a lot of work, Paraunit 0.9 has been released. This release is a big step ahead: now Paraunit runs with PHPUnit 6, and support to older versions is dropped; this also means that the minimum supported PHP version is now 7.0, and the minimum version of the Symfony components is bumped to 2.7, since older versions are out of support since may.
-All these changes brought along a lot of refactoring, and I took the occasion to sprinkle scalar and return types everywhere in the code (see #93); this was also behind a blog post of mine that I wrote in response to the &ldquo;visual debt&rdquo; controversy.
+  Paraunit 0.7.3 has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the latest GitHub release page.
+Full changelog text:
+Changed Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too! 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.1/">Paraunit 0.7.1: coverage in text format</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>28 Dec 2016</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.7.1 has just been released; this is just a minor release that adds a new useful feature: the text format for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.
+In the next versions, I will work to implement the other missing formats, PHP and Crap4j.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.7.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -366,13 +406,13 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.2/">Paraunit 0.8.2: avoid failures due to warnings</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.2/">Paraunit 0.7.2: coverage in text format</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>26 Jan 2017</time>
+    <time>28 Dec 2016</time>
   </div>
 
   
@@ -396,48 +436,9 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   </header>
 
   <p>
-  Paraunit 0.8.2 has been released to fix an issued caused by an unwanted overwrite of the write() method in the LogWriter class. Full changelog:
-Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures) 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.1/">Paraunit 0.8.1: fixed regression with Symfony</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>25 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project:
-Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir 
+  Paraunit 0.7.2 has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.
+Full changelog text:
+Fixed Disable colored output in text coverage to console, to avoid issues with GitLab integration. 
   </p>
 
   
@@ -450,11 +451,11 @@ Fixed Fix #88: write the temporary configuration file in the same dir of the ori
 
 <nav class="pagination" role="pagination">
   
-  <a href="https://engineering.facile.it/paraunit/page/7/"><i class="fa fa-chevron-left"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/8/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;8 / 11&nbsp;</span>
+  <span>&nbsp;9 / 11&nbsp;</span>
   
-  <a href="https://engineering.facile.it/paraunit/page/9/"><i class="fa fa-chevron-right"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/10/"><i class="fa fa-chevron-right"></i></a>
   
 </nav>
 

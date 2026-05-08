@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.12.1/">Paraunit 0.12.1: a small fix</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.1/">Paraunit 2.2.1: report PHPUnit errors</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>05 Apr 2018</time>
+    <time>30 Aug 2023</time>
   </div>
 
   
@@ -266,9 +266,8 @@
   </header>
 
   <p>
-  I had to release a fast fix for a problem introduced in the 0.12 release, due to the new behavior of the --text and --text-summary options. At first, it seemed that having an option with an optional argument was impossible, but I was able to do that anyway, and it spured a PR to the Symfony Docs too!
-Here&rsquo;s the full changelog:
-Fixed Fix the behavior of the new --text and --text-summary options (#121) 
+  I discovered this bug while trying to upgrade a work project to PHPUnit 10. The issue was caused by an empty data provider.
+Added Add output when failing due to PHPUnit runner errors (i.e. with an empty data provider) #217 
   </p>
 
   
@@ -277,13 +276,13 @@ Fixed Fix the behavior of the new --text and --text-summary options (#121)
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.11/">Paraunit 0.11: add Symfony 4 support, some refactoring and a fix</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.0/">Paraunit 2.2.0: add Cobertura coverage report format</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>13 Dec 2017</time>
+    <time>08 Jun 2023</time>
   </div>
 
   
@@ -307,14 +306,93 @@ Fixed Fix the behavior of the new --text and --text-summary options (#121)
   </header>
 
   <p>
-  This releases has nothing big on the outside, but a lot of code rework under the hood. The DI has been completely migrated from YAML to PHP (so no more symfony/yaml) and support for Symfony 4 has been added; also, a small bug has been fixed.
-Here&rsquo;s the full changelog:
-Added Added support for Symfony 4 Changed Migrated the whole DI configuration from YAML to PHP Require at least jean85/pretty-package-versions 1.
+  This new minor versions adds support for the Cobertura coverage report, which is supported by many services and tool, with GitLab as a prominent one.
+Added Add --cobertura coverage report format, useful for GitLab test code coverage visualization 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.1.0/">Paraunit 2.1.0: add --sort=random option</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 May 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new minor versions adds a new, small feature to support one small sorting option, the random one. This is useful to mix test execution, if you&rsquo;re encountering deadlocks and performance bottlenecks due to the concentration of certain tests in some areas of your test suite.
+Added Add --sort=random option to execute test classes in random order 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.0.0/">Paraunit 2.0.0: PHPUnit 10 support and a big internal refactor</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Mar 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new major version has seen its inception a long time ago, on October 2021, and it went to sleep for a long time, since PHPUnit development was doing the same. After some additional attempts, I was finally able to complete this alongside the long-awaited release of PHPUnit 10.
+All the changes in PHPUnit allowed me to finally bump the minimum PHP version to 8.1 (so that enums are now usable!
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.11/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.0.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -322,13 +400,13 @@ Added Added support for Symfony 4 Changed Migrated the whole DI configuration fr
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.10.1/">Paraunit 0.10.1: report deprecations</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.3.0/">Paraunit 1.3.0: new chunk size feature, Symfony 6 support</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>19 Oct 2017</time>
+    <time>15 Jun 2022</time>
   </div>
 
   
@@ -352,99 +430,14 @@ Added Added support for Symfony 4 Changed Migrated the whole DI configuration fr
   </header>
 
   <p>
-  With this release, Paraunit replaces the suggestion of facile-it/paraunit-testcase with dama/doctrine-test-bundle; also there&rsquo;s a new feature that will report any test failure due to deprecation warnings catched by the Symfony PHPUnit Bridge.
-Here&rsquo;s the full changelog:
-Added Add support for deprecation warnings found by symfony/phpunit-bridge: failures and tests output are now reported Changed Start suggesting dama/doctrine-test-bundle instead of facile-it/paraunit-testcase, since it has been abandoned. 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.10/">Paraunit 0.10: small fixes and improvements</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Sep 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  With this release, I&rsquo;m grouping a few fixes and improvements that I collected in the past month. Mainly, I&rsquo;ve fixed the --debug option and the --text-to-console coverage output. Also, now the logo is optional, and at the end of each line it&rsquo;s printed a partial count of executed tests.
-Here&rsquo;s the full changelog:
-Added Add official support to PHP 7.2 (added to Travis CI matrix) Add executed tests counter at the end of each line in output (#91) Changed The Shark logo is now optional; to show it at the top, use the --logo option The --debug output has been completely rewritten and now is more useful than ever!
+  This new minor release comes after more than a year since the last tag.
+It actually comes with a couple of new interesting features, one of which is a new behavior for tests parallelization. The new --chunk-size option, when set at a value higher that 1, will execute more than one test class per single process, making the execution faster for test suites where the class setup is expensive.
+Here&rsquo;s the full changelog of the release:
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.10/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Paraunit 0.9.1: a small fix in the header</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.9.1 has been released with a really small improvement: I wnated to show a pretty, short version string in the header, when launching Paraunit. I recently started using Ocramius&rsquo; package to do it, but it didn&rsquo;t provide that feature, and he was adamant about not implementing it in the future.
-So I decided to release an OSS package for this usage, Jean85/pretty-package-versions, available here: https://github.com/Jean85/pretty-package-versions/. Feel free to use it in your projects, as I&rsquo;ve done inside Paraunit.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/1.3.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -458,7 +451,7 @@ So I decided to release an OSS package for this usage, Jean85/pretty-package-ver
   
   <a href="https://engineering.facile.it/paraunit/page/3/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;4 / 8&nbsp;</span>
+  <span>&nbsp;4 / 11&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/5/"><i class="fa fa-chevron-right"></i></a>
   

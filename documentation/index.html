@@ -422,9 +422,66 @@ As a last resource, it will use PHPDbg, which should be always available since i
 </tbody>
 </table>
 <p>CLI flags above add printing for the matching categories on top of those XML defaults. Compared to PHPUnit, there is no <code>--display-errors</code> option; errors and failures are always surfaced in the summary.</p>
+<h3 id="stop-on---stop-on-">Stop on (<code>--stop-on-*</code>)</h3>
+<p><strong>NEW</strong>: introduced in 2.11.0</p>
+<p>These flags mirror PHPUnit’s “stop on …” behaviour. Each option applies <strong>both</strong> to Paraunit’s parallel orchestration and to the underlying PHPUnit worker processes, so the run stops in line with PHPUnit’s semantics, not only inside a single process. Parallel PHPUnit executions which are already running have to finish anyway, to avoid inconsistencies in test execution and, more crucially, missing cleanup steps.</p>
+<p>These are all the optins, which are available on both <code>run</code> and <code>coverage</code> commands.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Stops when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--stop-on-defect</code></td>
+<td>An error, failure, or warning is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-error</code></td>
+<td>An error is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-failure</code></td>
+<td>A failure is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-warning</code></td>
+<td>A warning is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-risky</code></td>
+<td>A test is considered risky</td>
+</tr>
+<tr>
+<td><code>--stop-on-deprecation</code></td>
+<td>A deprecation is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-phpunit-deprecation</code></td>
+<td>A PHPUnit deprecation is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-notice</code></td>
+<td>A notice is encountered</td>
+</tr>
+<tr>
+<td><code>--stop-on-skipped</code></td>
+<td>A test is skipped</td>
+</tr>
+<tr>
+<td><code>--stop-on-incomplete</code></td>
+<td>A test is incomplete</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vendor/bin/paraunit run --stop-on-failure --stop-on-risky
+</span></span></code></pre></div><p>Paraunit also will respect PHPUnit&rsquo;s XML configuration settings for this behavior. For the exact meaning of each flag and interaction with <code>phpunit.xml</code> attributes (e.g. <code>stopOnFailure</code>), see PHPUnit’s <a href="https://docs.phpunit.de/en/13.0/textui.html#command-line-options">command-line documentation</a>.</p>
 <h3 id="pass-through">Pass Through</h3>
 <p><strong>NEW</strong>: introduced in 2.0</p>
-<p>If you want to use one of the many native PHPUnit options, you can pass them directly to it using the <code>--pass-through</code> option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interefere with how Paraunit works, or either will not produce any meaningful change.</p>
+<p>If you want to use one of the many native PHPUnit options, you can pass them directly to it using the <code>--pass-through</code> option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interfere with how Paraunit works, or either will not produce any meaningful change.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> vendor/bin/paraunit run <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --pass-through<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--group=foo&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --pass-through<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--process-isolation&#34;</span> 

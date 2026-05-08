@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9.2/">Paraunit 0.9.2 and 0.8.3: missing dependencies</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.1/">Paraunit 1.2.1: allow jean85/pretty-package-versions v2</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Jul 2017</time>
+    <time>25 Mar 2021</time>
   </div>
 
   
@@ -266,10 +266,9 @@
   </header>
 
   <p>
-  Paraunit 0.9.2 and Paraunit 0.8.3 has been released to fix a nasty little bug that I got reported to me: two dependencies were missing and the CI missed that due to the fact that both were required by dev dependencies.
-I fixed that and backported the fix to the 0.8 series, since it was very easy to do.
-Here&rsquo;s the full changelog:
-Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch 
+  This small patch is just to allow a dependency bump for end users.
+Here&rsquo;s the full changelog of the release:
+Added Allow jean85/pretty-package-versions v2 90f84b5 
   </p>
 
   
@@ -278,13 +277,13 @@ Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.9/">Paraunit 0.9: PHP 7, PHPUnit 6 and the pipelines</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.2.0/">Paraunit 1.2.0: PHP 8 &amp; PHPUnit 9.3 support</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>05 Jul 2017</time>
+    <time>15 Sep 2020</time>
   </div>
 
   
@@ -308,13 +307,94 @@ Fixed Add missing dependencies: symfony/yaml and symfony/stopwatch
   </header>
 
   <p>
-  After a long time and a lot of work, Paraunit 0.9 has been released. This release is a big step ahead: now Paraunit runs with PHPUnit 6, and support to older versions is dropped; this also means that the minimum supported PHP version is now 7.0, and the minimum version of the Symfony components is bumped to 2.7, since older versions are out of support since may.
-All these changes brought along a lot of refactoring, and I took the occasion to sprinkle scalar and return types everywhere in the code (see #93); this was also behind a blog post of mine that I wrote in response to the &ldquo;visual debt&rdquo; controversy.
+  This release contains only support for newer versions of PHP &amp; PHPUnit; due to PHPUnit 9.3 requiring a new major version of phpunit/php-code-coverage, I&rsquo;m forced to drop support to all PHPUnit versions below 9.3. Usage of Paraunit is unchanged.
+Here&rsquo;s the full changelog of the release:
+Added Add support for PHP 8.0 #154 Add support for PHPUnit 9.3 #153 Removed Drop support for PHPUnit &lt; 9.3 #153 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.1/">Paraunit 1.1.1: PostgreSQL retry support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 May 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.
+Here&rsquo;s the full changelog of the release:
+Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 Apr 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  As reported in the previous release, I was working on supporting PHPUnit 9. Today, PHPUnit 9.1 was released, and so I&rsquo;ve released Paraunit 1.1.0, which supports only PHPUnit 9.1 and forward: this is due to the fact that the --printer option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using TestHook, and opted for a small refactor of how Paraunit fetches PHPUnit test results.
   </p>
 
   
   <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.9/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    <a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
   </footer>
   
 </article>
@@ -322,13 +402,13 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.2/">Paraunit 0.8.2: avoid failures due to warnings</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.1/">Paraunit 1.0.1: two small fixes</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>26 Jan 2017</time>
+    <time>23 Mar 2020</time>
   </div>
 
   
@@ -352,94 +432,11 @@ All these changes brought along a lot of refactoring, and I took the occasion to
   </header>
 
   <p>
-  Paraunit 0.8.2 has been released to fix an issued caused by an unwanted overwrite of the write() method in the LogWriter class. Full changelog:
-Fixed Fix the signature of LogPrinter, to avoid warnings (this would lead to no test execution when considering warnings as test failures) 
+  While I&rsquo;m actively working on a big refactor toward supporting PHPUnit 9, I&rsquo;ve found two small fixes that have to be released as the first stable patch since the 1.0 release.
+Here&rsquo;s the changelog:
+Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small issue in checking coverage data syntax 8f70c 
   </p>
 
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8.1/">Paraunit 0.8.1: fixed regression with Symfony</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>25 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8.1 has been released to fix a small regression that happens when running functional tests in a Symfony project:
-Fixed Fix #88: write the temporary configuration file in the same dir of the original, to avoid issue with Symfony when it guesses its kernel dir 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.8/">Paraunit 0.8: PHAR continuous delivery</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>24 Jan 2017</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.8 has been released! With this release I added the continuous integration: at each Git tag, the Travis build prepares, signs and uploads to the GitHub releases page Paraunit&rsquo;s PHAR. Thanks to Andreas Heigl that made this not only possible, but very straightforward to implement.
-Next phase will be the 1.0 stable release milestone, which is probably just a little away. This release paved the way to the PHPUnit 6 support, with the new LogPrinter brought from PHPUnit.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
   
 </article>
 
@@ -452,7 +449,7 @@ Next phase will be the 1.0 stable release milestone, which is probably just a li
   
   <a href="https://engineering.facile.it/paraunit/page/4/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;5 / 8&nbsp;</span>
+  <span>&nbsp;5 / 11&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/6/"><i class="fa fa-chevron-right"></i></a>
   

@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.6.0: hide deprecations by configuration &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,19 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.6.0: hide deprecations by configuration</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>This new release includes the resolution of a <a href="https://github.com/facile-it/paraunit/issues/224">long-standing issue</a>, which polluted Paraunit&rsquo;s output when too many deprecations were detected. In this new version, Paraunit respects PHPUnit&rsquo;s configuration, which by default does not show the full deprecation text.</p>
+<p>Deprecations are detected anyway, so you will still get yellow <code>D</code>s and the list of affected tests when appropriate.</p>
+<p>This is the full changelog</p>
+<h3 id="added">Added</h3>
+<ul>
+<li>Deprecations details are now shown according to the PHPUnit config <a href="https://github.com/facile-it/paraunit/pull/303">#303</a>, thanks @garak</li>
+</ul>
+<p>NB: the config attribute in the PhpUnit configuration is <code>displayDetailsOnTestsThatTriggerDeprecations</code>. Since this value is <code>false</code> by default, in this version the deprecations will be hidden. If you want to replicate the previous behavior, set the attribute to <code>true</code> in your configuration.</p>
+
 </div>
 
 </div>
@@ -241,3 +234,4 @@
 
 </body>
 </html>
+

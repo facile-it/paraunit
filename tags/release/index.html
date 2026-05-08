@@ -218,6 +218,689 @@
   
     <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.10.0/">Paraunit 2.10.0: respect ignored test issues</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>23 Apr 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  With this new minor, we&rsquo;re adding a new usability feature: we&rsquo;re respecting PHPUnit suppression of issues, either if that happens via attributes or via baseline. Such information was already being propagated by PHPUnit&rsquo;s event system, onto which Paraunit latches to work its magic.
+Credits to @keradus, the maintainer of PHP-CS-Fixer (which uses Paraunit it its CI), for bringing this to my attention.
+The obvious next step would be to support similar options for output coming from PHPUnit config of from –-display-* CLI options.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.10.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.9.0/">Paraunit 2.9.0: coverage cache warmup</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>20 Apr 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  With this new minor, we&rsquo;re adding a small performance improvement for test coverage, by running phpunit -- before running all tests. This small feature should reduce tests execution time and avoid race conditions when the first batch of tests runs (and find the cache not ready).
+Credits to Sebastian for pointing this out to me!
+This is the full changelog:
+Add coverage cache warmup #379 Fix transient dependencies #373 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.8.0/">Paraunit 2.8.0: PHPUnit 13 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>23 Feb 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  With this new minor, we&rsquo;re finally able to support the newly released PHPUnit 13 with Paraunit. This basically required no code changes apart from the composer.json constraints and a couple of tests adjustments, as a testament of the reliable integration strategy that I chose when integrating with it.
+This release also includes a small PR about notices being reported as specific issues when running tests, which was pending for a while.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.8.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.7.1/">Paraunit 2.7.1: Symfony 8 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>04 Nov 2025</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This small new patch was triggered by a PR from a new contributor, Kocal, thank you! The fixes needed to make Paraunit compatible with Symfony 8 was a single line change (plus some more in the unit tests), which is impressive since now we support 5 different major versions, all across from 4.4 (which is EOL) up to 8.0!
+This is the full changelog:
+Add support for Symfony 8 #344, thanks @Kocal 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.7.0/">Paraunit 2.7.0: fix abnormal termination detection and add PHPUnit deprecation reporting</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>23 Aug 2025</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new release includes a couple of improvements: the first one is the addition of PHPUnit deprecation as separate test issues, so that those will be reported in a separate category, as with PHPUnit itself; the second one stems from some issues detected by PHP-CS-Fixer under PHP 8.5, where some skipped tests were marked erroneously as &ldquo;abnormal terminations&rdquo;. I discovered that, when using the requires attribute, PHPUnit would report only a Skipped event, without the TestStarted, TestPrepared and TestFinished events, which would trigger this issue.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.7.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Paraunit 2.6.0: hide deprecations by configuration</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>04 Mar 2025</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new release includes the resolution of a long-standing issue, which polluted Paraunit&rsquo;s output when too many deprecations were detected. In this new version, Paraunit respects PHPUnit&rsquo;s configuration, which by default does not show the full deprecation text.
+Deprecations are detected anyway, so you will still get yellow Ds and the list of affected tests when appropriate.
+This is the full changelog
+Added Deprecations details are now shown according to the PHPUnit config #303, thanks @garak NB: the config attribute in the PhpUnit configuration is displayDetailsOnTestsThatTriggerDeprecations.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.5.0/">Paraunit 2.5.0: PHPUnit 12 &amp; PHP 8.4 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>08 Feb 2025</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new release includes the official support to PHPUnit 12, which did not need any code changes, just some CI fixes and the common Composer constraint widening. The biggest amount of work came just from upgrading (and pulling the forks) from the Prophecy toolchain, to make the CI work without waiting for their releases.
+This is the full changelog
+Added Add PHPUnit 12 support #297 Add PHP 8.4 support #279 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.4.0/">Paraunit 2.4.0: add two new options</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>25 Sep 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This new release comes thanks to a new contributor: thanks @raffaelecarelle!
+He contributed the support of two native PHPUnit options with a single pull request: --exclude-testsuite and --test-suffix. Both these options allow the user to filter and exclude tests from the execution.
+This is the full changelog
+Added --exclude-testsuite option #273, thanks @raffaelecarelle --test-suffix option #273, thanks @raffaelecarelle 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.4/">Paraunit 2.3.4: fix PHPUnit 11.3 compat</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>07 Aug 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This small patch release is fully due to external contributions: thanks @kubawerlos!
+He contributed two different patches, one to update the .gitattributes exclusion list, the second to fix some constraint on some dependencies that where preventing PHPUnit 11.3 from being installed.
+This is the full changelog
+Fix PHPUnit 11.3 compat #260, thanks @kubawerlos Reduce package footprint by updating .gitattributes #261, thanks @kubawerlos 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.3/">Paraunit 2.3.3: fix warning</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Jun 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I got a bug report saying that the Symfony PHPUnit Bridge 6.4.8 and 7.0.8 and higher made test runs with Paraunit fail due to a warning. At first I thought that the Symfony error handler was messing with PHPUnit&rsquo;s again, but in reality it was just making explicit a warning that was already there for ages.
+This simple patch avoids generating that warning, and makes your CI green again!
+This is the full changelog
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.3/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.2/">Paraunit 2.3.2: fix files recap</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>29 Apr 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I noticed that, since Paraunit 2, the recap at the end of the execution got very long. This was due to an improper serialization of the logs, where the test name was treated as a generic Test value object instead of a specific TestMethod one, where the class name is shown split form the method name.
+This had the unintended consequence of not deduplicating the list of files which are printed at the end of Paraunit&rsquo;s execution, so in case an error or failure was repeated many times (i.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.1/">Paraunit 2.3.1: fix PHPUnit 11 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Feb 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I may have jumped the gun while releasing the PHPUnit 11 compat, and I didn&rsquo;t check that the CI was actually installing it. Unfortunately there were multiple dependencies still conflicting with it, and Prophecy needed some PRs to be compatible. I filed them and used them in my CI, so that now the compatibility is checked.
+I needed to do multiple changes to make the CI green, but still no code changes was needed, only a widening of composer.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.0/">Paraunit 2.3.0: PHPUnit 11 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>02 Feb 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  On the same day of PHPUnit 11.0.0 release, I&rsquo;m able to release a minor version of Paraunit that supports it, and no code change was necessary! You may still be impacted by PHPUnit&rsquo;s breaking changes and require to adjust your tests accordingly, but Paraunit can be upgraded before with no hassle (provided that you have at least PHPUnit 10.5.4 already installed), since it&rsquo;s cross-compatible between the two major versions.
+This is the full changelog
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.2/">Paraunit 2.2.2: PHPUnit 10.4 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Oct 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This is a small patch to smooth the compatibility with the new release of PHPUnit, 10.4. Previous versions would still work fine, but I took the time to fix all the tests (that were broken due to reliance on @internal code such as PHPUnit events) and to add support for the new CLI options regarding the errors baseline.
+Added Add support for PHPUnit 10.4 #218 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.3/">Paraunit 2.2.3: Symfony 7 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Oct 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This another small patch is to allow using Paraunit with Symfony 7, which was released just yesterday. The related PR needed just to fix a couple of return types. Paraunit should work flawlessly with PHP 8.3 too, which was released a couple of day prior, but I had to revert the additional CI job because Prophecy is not ready yet.
+Added Add support for PHPUnit 10.4 #218 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.1/">Paraunit 2.2.1: report PHPUnit errors</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>30 Aug 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I discovered this bug while trying to upgrade a work project to PHPUnit 10. The issue was caused by an empty data provider.
+Added Add output when failing due to PHPUnit runner errors (i.e. with an empty data provider) #217 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.0/">Paraunit 2.2.0: add Cobertura coverage report format</a></h2>
 
     <div class="post-meta">

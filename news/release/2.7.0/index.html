@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.7.0: fix abnormal termination detection and add PHPUnit deprecation reporting &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,18 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.7.0: fix abnormal termination detection and add PHPUnit deprecation reporting</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;54&#41;</span>
-    </li>
-  
-  </ul>
+  <p>This new release includes a couple of improvements: the first one is the addition of PHPUnit deprecation as separate test issues, so that those will be reported in a separate category, as with PHPUnit itself; the second one stems from <a href="https://github.com/facile-it/paraunit/issues/326">some issues detected by PHP-CS-Fixer under PHP 8.5</a>, where some skipped tests were marked erroneously as &ldquo;abnormal terminations&rdquo;. I discovered that, when using the <code>requires</code> attribute, PHPUnit would report only a <code>Skipped</code> event, without the <code>TestStarted</code>, <code>TestPrepared</code> and <code>TestFinished</code> events, which would trigger this issue.</p>
+<p>This is the full changelog:</p>
+<ul>
+<li>Fix and improve detection of abnormal terminations <a href="https://github.com/facile-it/paraunit/pull/330">#330</a></li>
+<li>Report PHPUnit deprecations as a separate test issue <a href="https://github.com/facile-it/paraunit/pull/304">#304</a></li>
+<li>Reject <code>--check-php-configuration</code> PHPUnit option since it doesn&rsquo;t run any test <a href="https://github.com/facile-it/paraunit/pull/325">#325</a></li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +233,4 @@
 
 </body>
 </html>
+
