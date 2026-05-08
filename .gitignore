@@ -9,3 +9,4 @@ gpg
 *.cache
 docker-compose.*
 .hugo_build.lock
+.phpunit_cache
