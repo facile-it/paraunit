@@ -226,11 +226,40 @@ If you do **not** pass these options, Paraunit still loads defaults from the roo
 
 CLI flags above add printing for the matching categories on top of those XML defaults. Compared to PHPUnit, there is no `--display-errors` option; errors and failures are always surfaced in the summary.
 
+### Stop on (`--stop-on-*`)
+
+**NEW**: introduced in 2.11.0
+
+These flags mirror PHPUnit’s “stop on …” behaviour. Each option applies **both** to Paraunit’s parallel orchestration and to the underlying PHPUnit worker processes, so the run stops in line with PHPUnit’s semantics, not only inside a single process. Parallel PHPUnit executions which are already running have to finish anyway, to avoid inconsistencies in test execution and, more crucially, missing cleanup steps.
+
+These are all the optins, which are available on both `run` and `coverage` commands.
+
+| Option                          | Stops when |
+|---------------------------------|------------|
+| `--stop-on-defect`              | An error, failure, or warning is encountered |
+| `--stop-on-error`               | An error is encountered |
+| `--stop-on-failure`             | A failure is encountered |
+| `--stop-on-warning`             | A warning is encountered |
+| `--stop-on-risky`               | A test is considered risky |
+| `--stop-on-deprecation`         | A deprecation is encountered |
+| `--stop-on-phpunit-deprecation` | A PHPUnit deprecation is encountered |
+| `--stop-on-notice`              | A notice is encountered |
+| `--stop-on-skipped`             | A test is skipped |
+| `--stop-on-incomplete`          | A test is incomplete |
+
+Example:
+
+```bash
+vendor/bin/paraunit run --stop-on-failure --stop-on-risky
+```
+
+Paraunit also will respect PHPUnit's XML configuration settings for this behavior. For the exact meaning of each flag and interaction with `phpunit.xml` attributes (e.g. `stopOnFailure`), see PHPUnit’s [command-line documentation](https://docs.phpunit.de/en/13.0/textui.html#command-line-options).
+
 ### Pass Through
 
 **NEW**: introduced in 2.0
 
-If you want to use one of the many native PHPUnit options, you can pass them directly to it using the `--pass-through` option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interefere with how Paraunit works, or either will not produce any meaningful change.
+If you want to use one of the many native PHPUnit options, you can pass them directly to it using the `--pass-through` option. That option can be appended multiple times to pass multiple options; keep in mind that some native options are not usable in this way and will trigger a failure, because they will otherwise interfere with how Paraunit works, or either will not produce any meaningful change.
 
 ```bash
  vendor/bin/paraunit run \
