@@ -15,8 +15,6 @@ use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
 use PHPUnit\Event\Telemetry\Info;
 use PHPUnit\Event\Telemetry\MemoryUsage;
-use PHPUnit\Event\Telemetry\Php81GarbageCollectorStatusProvider;
-use PHPUnit\Event\Telemetry\Php83GarbageCollectorStatusProvider;
 use PHPUnit\Event\Telemetry\Snapshot;
 use PHPUnit\Event\Telemetry\SystemGarbageCollectorStatusProvider;
 use Tests\BaseUnitTestCase;

@@ -10,7 +10,7 @@ use Paraunit\TestResult\ValueObject\TestOutcome;
 
 class PrinterConfiguration
 {
-    final public const PRINT_ORDER = [
+    final public const array PRINT_ORDER = [
         TestOutcome::AbnormalTermination,
         TestIssue::CoverageFailure,
         TestOutcome::Error,

@@ -104,7 +104,7 @@ class LogDataTest extends TestCase
     {
         yield 'empty array' => [[]];
 
-        $validLogData = (new LogData(LogStatus::Passed, new Test('Foo'), 'Test message'))->jsonSerialize();
+        $validLogData = new LogData(LogStatus::Passed, new Test('Foo'), 'Test message')->jsonSerialize();
 
         foreach (['status', 'test', 'ignoredByTest', 'ignoredByBaseline'] as $requiredKey) {
             $invalidLogData = $validLogData;

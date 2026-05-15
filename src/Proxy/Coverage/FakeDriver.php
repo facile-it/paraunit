@@ -9,9 +9,14 @@ use SebastianBergmann\CodeCoverage\Driver\Driver;
 
 class FakeDriver extends Driver
 {
-    public function nameAndVersion(): string
+    public function name(): string
     {
-        return 'FakeDriver v.0.0';
+        return 'FakeDriver';
+    }
+
+    public function version(): string
+    {
+        return 'v.0.0';
     }
 
     public function start(bool $determineUnusedAndDead = true): void
