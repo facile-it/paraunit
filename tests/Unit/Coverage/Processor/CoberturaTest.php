@@ -13,7 +13,7 @@ class CoberturaTest extends BaseUnitTestCase
     public function testWriteToFile(): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'cobertura.xml');
-        $text = new Cobertura($targetFile);
+        $text = new Cobertura($this->createPhpUnitFacadeFactory(), $targetFile);
 
         $this->assertFileDoesNotExist($targetFile->getFilePath());
 

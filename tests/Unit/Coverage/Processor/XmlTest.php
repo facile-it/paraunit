@@ -13,7 +13,7 @@ class XmlTest extends BaseUnitTestCase
     public function testWriteToFile(): void
     {
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'xml');
-        $text = new Xml($targetPath);
+        $text = new Xml($this->createPhpUnitFacadeFactory(), $targetPath);
 
         $this->assertDirectoryDoesNotExist($targetPath->getPath());
 

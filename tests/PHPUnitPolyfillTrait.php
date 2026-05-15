@@ -13,27 +13,11 @@ trait PHPUnitPolyfillTrait
 {
     protected function createPHPUnitTestMethod(): TestMethod
     {
-        if (class_exists(TestMethodBuilder::class)) {
-            return TestMethodBuilder::fromTestCase($this);
-        }
-
-        if (method_exists(TestMethod::class, 'fromTestCase')) {
-            return TestMethod::fromTestCase($this);
-        }
-
-        throw new \RuntimeException('Cannot create PHPUnit TestMethod class');
+        return TestMethodBuilder::fromTestCase($this);
     }
 
     protected function createPHPUnitThrowable(\Throwable $throwable): Throwable
     {
-        if (class_exists(ThrowableBuilder::class)) {
-            return ThrowableBuilder::from($throwable);
-        }
-
-        if (method_exists(Throwable::class, 'from')) {
-            return Throwable::from($throwable);
-        }
-
-        throw new \RuntimeException('Cannot create PHPUnit Throwable class');
+        return ThrowableBuilder::from($throwable);
     }
 }

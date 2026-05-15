@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Paraunit\Coverage\PhpUnitFacadeFactory;
 use Paraunit\Logs\ValueObject\LogData;
 use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
@@ -11,6 +12,11 @@ use Paraunit\Logs\ValueObject\TestMethod;
 
 abstract class BaseUnitTestCase extends BaseTestCase
 {
+    protected function createPhpUnitFacadeFactory(): PhpUnitFacadeFactory
+    {
+        return new PhpUnitFacadeFactory();
+    }
+
     protected function getWrongCoverageStubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/WrongCoverageStub.php';

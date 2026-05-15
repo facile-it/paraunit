@@ -13,7 +13,7 @@ class HtmlTest extends BaseUnitTestCase
     public function testWriteToDir(): void
     {
         $targetPath = new OutputPath(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'html');
-        $text = new Html($targetPath);
+        $text = new Html($this->createPhpUnitFacadeFactory(), $targetPath);
 
         $this->assertDirectoryDoesNotExist($targetPath->getPath());
 

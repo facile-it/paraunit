@@ -13,7 +13,7 @@ class CloverTest extends BaseUnitTestCase
     public function testWriteToFile(): void
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'clover.xml');
-        $text = new Clover($targetFile);
+        $text = new Clover($this->createPhpUnitFacadeFactory(), $targetFile);
 
         $this->assertFileDoesNotExist($targetFile->getFilePath());
 
