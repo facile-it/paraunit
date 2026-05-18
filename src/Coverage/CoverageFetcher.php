@@ -12,6 +12,7 @@ use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestResult;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Data\ProcessedCodeCoverageData;
 use SebastianBergmann\CodeCoverage\Filter;
 use Symfony\Component\Process\Process as SymfonyProcess;
 
@@ -25,14 +26,28 @@ class CoverageFetcher
     public function fetch(Process $process): CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
-        $codeCoverage = null;
+        $codeCoverageData = null;
 
         if ($this->coverageFileIsValid($tempFilename)) {
-            $codeCoverage = require $tempFilename;
+            $codeCoverageData = require $tempFilename;
             unlink($tempFilename);
         }
 
-        if ($codeCoverage instanceof CodeCoverage) {
+        if (
+            is_array($codeCoverageData)
+            && array_key_exists('codeCoverage', $codeCoverageData)
+            && $codeCoverageData['codeCoverage'] instanceof ProcessedCodeCoverageData
+        ) {
+            $codeCoverage = new CodeCoverage(new FakeDriver(), new Filter());
+            $codeCoverage->setData($codeCoverageData['codeCoverage']);
+
+            if (array_key_exists('testResults', $codeCoverageData)
+                && is_array($codeCoverageData['testResults'])
+            ) {
+                /** @psalm-suppress MixedArgumentTypeCoercion */
+                $codeCoverage->setTests($codeCoverageData['testResults']);
+            }
+
             return $codeCoverage;
         }
 

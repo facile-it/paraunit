@@ -12,6 +12,7 @@ use Paraunit\TestResult\ValueObject\TestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
+use Tests\Stub\ThreeGreenTestStub;
 
 class CoverageFetcherTest extends BaseUnitTestCase
 {
@@ -35,7 +36,14 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertSame(['foo' => ['size' => '123', 'status' => 'bar']], $result->getTests());
+        $expectedTests = [
+            ThreeGreenTestStub::class . '::testGreenOne' => [
+                'size' => 'unknown',
+                'status' => 'success',
+                'time' => 0.001_389_284,
+            ],
+        ];
+        $this->assertSame($expectedTests, $result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 
