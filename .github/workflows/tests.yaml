@@ -37,7 +37,7 @@ jobs:
             php: '8.5'
           - description: 'PCov'
             coverage: 'pcov'
-            php: '8.1'
+            php: '8.4'
           - description: 'lowest'
             coverage: 'xdebug3'
             php: '8.4'
