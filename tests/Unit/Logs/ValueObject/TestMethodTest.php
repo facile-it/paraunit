@@ -16,11 +16,11 @@ class TestMethodTest extends BaseUnitTestCase
         $test = new TestMethod('Foo', 'method');
 
         $encoded = json_encode($test, JSON_THROW_ON_ERROR);
-        $decoded = Test::deserialize(json_decode($encoded, true, JSON_THROW_ON_ERROR, JSON_THROW_ON_ERROR));
+        $decoded = Test::deserialize(json_decode($encoded, true, flags: JSON_THROW_ON_ERROR));
 
         $this->assertEquals($test, $decoded);
 
-        $decoded = TestMethod::deserialize(json_decode($encoded, true, JSON_THROW_ON_ERROR, JSON_THROW_ON_ERROR));
+        $decoded = TestMethod::deserialize(json_decode($encoded, true, flags: JSON_THROW_ON_ERROR));
 
         $this->assertEquals($test, $decoded);
     }
