@@ -21,7 +21,7 @@ class Filter implements TestList
         private readonly ?string $testSuiteFilter = null,
         private readonly ?string $stringFilter = null,
         private readonly ?string $excludeTestSuiteFilter = null,
-        private readonly ?string $testSuffix = null
+        private readonly ?string $testSuffix = null,
     ) {
         /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
@@ -79,7 +79,7 @@ class Filter implements TestList
         return \in_array(
             $this->getDOMNodeAttribute($testSuiteNode, 'name'),
             explode(',', $testSuiteFilter),
-            true
+            true,
         );
     }
 
@@ -129,7 +129,7 @@ class Filter implements TestList
                 $this->relativePath . $directory,
                 $this->getDOMNodeAttribute($directoryNode, 'suffix', 'Test.php'),
                 $this->getDOMNodeAttribute($directoryNode, 'prefix', ''),
-                $excludes
+                $excludes,
             );
 
             foreach ($files as $fileName) {
@@ -161,7 +161,7 @@ class Filter implements TestList
     private function getDOMNodeAttribute(
         \DOMElement $testSuiteNode,
         string $nodeName,
-        ?string $defaultValue = null
+        ?string $defaultValue = null,
     ): string {
         /** @psalm-suppress RedundantCondition */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
@@ -231,7 +231,7 @@ class Filter implements TestList
         return \in_array(
             $this->getDOMNodeAttribute($testSuiteNode, 'name'),
             $this->getTrimmedArray($excludeTestSuiteFilter),
-            true
+            true,
         );
     }
 

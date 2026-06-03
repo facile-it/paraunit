@@ -85,7 +85,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase
             $this->assertGreaterThan(
                 $previousPosition,
                 $position,
-                'Failed asserting that "' . $string . '" comes after "' . $previousString . '"' . $output->getOutput()
+                'Failed asserting that "' . $string . '" comes after "' . $previousString . '"' . $output->getOutput(),
             );
             $previousString = $string;
             $previousPosition = $position;

@@ -12,8 +12,9 @@ class Cobertura implements CoverageProcessorInterface
 {
     private readonly PHPUnitCobertura $cobertura;
 
-    public function __construct(private readonly OutputFile $targetFile)
-    {
+    public function __construct(
+        private readonly OutputFile $targetFile,
+    ) {
         $this->cobertura = new PHPUnitCobertura();
     }
 

@@ -28,7 +28,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->mockPcov($enablePcov),
             $this->mockXdebug($enableXdebug, $xdebugVersion),
             $this->mockPhpDbg(),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
 
         $this->assertEquals($expected, $cli->getCoverageDriver());
@@ -51,7 +51,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->mockPcov($coverageDriver === CoverageDriver::Pcov),
             $this->mockXdebug($coverageDriver === CoverageDriver::Xdebug),
             $this->mockPhpDbg(),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
 
         $this->assertEquals($expected, $cli->getExecutable());
@@ -65,7 +65,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->mockPcov(false),
             $this->mockXdebug(false),
             $this->mockPhpDbg(true),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
 
         $expected = [
@@ -88,7 +88,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->mockPcov(false),
             $this->mockXdebug(false),
             $this->mockPhpDbg(false),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
     }
 
@@ -107,7 +107,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->mockPcov($enablePcov),
             $this->mockXdebug($enableXdebug, $xdebugVersion),
             $this->mockPhpDbg(),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
 
         $options = $cli->getOptions($config->reveal());
@@ -131,7 +131,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->prophesize(PcovProxy::class)->reveal(),
             $this->mockXdebug(true),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
-            $this->prophesize(TempFilenameFactory::class)->reveal()
+            $this->prophesize(TempFilenameFactory::class)->reveal(),
         );
 
         $options = $cli->getOptions($config->reveal());
@@ -154,7 +154,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
             $this->prophesize(PcovProxy::class)->reveal(),
             $this->mockXdebug(true),
             $this->prophesize(PHPDbgBinFile::class)->reveal(),
-            $fileNameFactory->reveal()
+            $fileNameFactory->reveal(),
         );
 
         $options = $cli->getSpecificOptions($testFilename);

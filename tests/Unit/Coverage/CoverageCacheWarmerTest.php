@@ -27,7 +27,7 @@ class CoverageCacheWarmerTest extends BaseUnitTestCase
         $warmer = new CoverageCacheWarmer(
             $commandLine->reveal(),
             $phpunitConfig->reveal(),
-            $output
+            $output,
         );
 
         try {

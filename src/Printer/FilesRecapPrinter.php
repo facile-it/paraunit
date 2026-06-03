@@ -60,8 +60,8 @@ class FilesRecapPrinter implements EventSubscriberInterface
                 $style->value,
                 count($filenames),
                 strtoupper($status->getTitle()),
-                $style->value
-            )
+                $style->value,
+            ),
         );
 
         foreach ($filenames as $fileName) {

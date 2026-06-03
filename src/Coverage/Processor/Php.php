@@ -12,8 +12,9 @@ class Php implements CoverageProcessorInterface
 {
     private readonly PHPUnitPhp $php;
 
-    public function __construct(private readonly OutputFile $targetFile)
-    {
+    public function __construct(
+        private readonly OutputFile $targetFile,
+    ) {
         $this->php = new PHPUnitPhp();
     }
 

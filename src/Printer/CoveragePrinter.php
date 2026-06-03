@@ -14,7 +14,7 @@ class CoveragePrinter implements EventSubscriberInterface
 {
     public function __construct(
         private readonly CommandLineWithCoverage $commandLine,
-        private readonly OutputInterface $output
+        private readonly OutputInterface $output,
     ) {}
 
     /**

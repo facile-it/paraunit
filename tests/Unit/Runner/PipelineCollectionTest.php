@@ -47,7 +47,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
         $collection = new PipelineCollection(
             $this->mockPipelineFactory([$occupiedPipeline->reveal(), $freePipeline->reveal()]),
-            2
+            2,
         );
 
         $collection->push($newProcess);
@@ -65,7 +65,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
         $collection = new PipelineCollection(
             $this->mockPipelineFactory([$occupiedPipeline->reveal()]),
-            1
+            1,
         );
 
         $this->expectException(\RuntimeException::class);
@@ -85,7 +85,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
         $pipelineCollection = new PipelineCollection(
             $this->mockPipelineFactory([$pipeline1->reveal(), $pipeline2->reveal()]),
-            2
+            2,
         );
 
         $expectedResult = $isPipeline1Free && $isPipeline2Free;
@@ -104,7 +104,7 @@ class PipelineCollectionTest extends BaseUnitTestCase
 
         $pipelineCollection = new PipelineCollection(
             $this->mockPipelineFactory([$pipeline1->reveal(), $pipeline2->reveal()]),
-            2
+            2,
         );
 
         $this->assertSame($isPipeline1Empty || $isPipeline2Empty, $pipelineCollection->hasEmptySlots());

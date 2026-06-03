@@ -18,8 +18,9 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ParallelCommand extends Command
 {
-    public function __construct(protected ParallelConfiguration $configuration)
-    {
+    public function __construct(
+        protected ParallelConfiguration $configuration,
+    ) {
         parent::__construct();
     }
 
@@ -94,7 +95,7 @@ class ParallelCommand extends Command
                 'Configuration in use: ' . $config->getFileFullPath(),
                 '',
                 'Do you want to update your configuration automatically? [y/N] ',
-            ], 'question', true)
+            ], 'question', true),
         );
 
         $question = new ConfirmationQuestion('> ', false);
@@ -107,7 +108,7 @@ class ParallelCommand extends Command
             $config->installExtension();
 
             $output->writeln(
-                $formatter->formatBlock('Configuration updated successfully', 'info', true)
+                $formatter->formatBlock('Configuration updated successfully', 'info', true),
             );
         }
     }

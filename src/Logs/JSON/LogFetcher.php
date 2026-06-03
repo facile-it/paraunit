@@ -10,7 +10,9 @@ use Paraunit\Process\Process;
 
 class LogFetcher
 {
-    public function __construct(private readonly TempFilenameFactory $fileName) {}
+    public function __construct(
+        private readonly TempFilenameFactory $fileName,
+    ) {}
 
     /**
      * @return list<LogData>

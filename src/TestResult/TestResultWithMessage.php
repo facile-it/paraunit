@@ -11,8 +11,11 @@ use Paraunit\TestResult\ValueObject\TestResult;
 
 class TestResultWithMessage extends TestResult
 {
-    public function __construct(Test $test, TestOutcome|TestIssue $status, public readonly string $message)
-    {
+    public function __construct(
+        Test $test,
+        TestOutcome|TestIssue $status,
+        public readonly string $message,
+    ) {
         parent::__construct($test, $status);
     }
 }

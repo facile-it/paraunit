@@ -6,7 +6,9 @@ namespace Paraunit\Filter;
 
 class RandomizeList implements TestList
 {
-    public function __construct(private readonly TestList $testList) {}
+    public function __construct(
+        private readonly TestList $testList,
+    ) {}
 
     public function getTests(): array
     {

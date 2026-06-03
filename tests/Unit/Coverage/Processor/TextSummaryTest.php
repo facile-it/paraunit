@@ -20,7 +20,7 @@ class TextSummaryTest extends BaseUnitTestCase
         $text = new TextSummary(
             $this->prophesize(OutputInterface::class)->reveal(),
             $withColors,
-            $targetFile
+            $targetFile,
         );
 
         $this->assertFileDoesNotExist($targetFile->getFilePath());

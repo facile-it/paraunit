@@ -32,8 +32,9 @@ class ParallelConfiguration
 
     protected ParallelContainerDefinition $containerDefinition;
 
-    public function __construct(private readonly bool $createPublicServiceAliases = false)
-    {
+    public function __construct(
+        private readonly bool $createPublicServiceAliases = false,
+    ) {
         $this->containerDefinition = new ParallelContainerDefinition();
     }
 
@@ -184,7 +185,7 @@ class ParallelConfiguration
 
             $containerBuilder->setAlias(
                 sprintf(self::PUBLIC_ALIAS_FORMAT, $serviceName),
-                new Alias($serviceName, true)
+                new Alias($serviceName, true),
             );
         }
     }

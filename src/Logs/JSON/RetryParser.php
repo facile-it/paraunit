@@ -18,7 +18,7 @@ class RetryParser
 
     public function __construct(
         private readonly TestResultContainer $testResultContainer,
-        private readonly int $maxRetryCount = 3
+        private readonly int $maxRetryCount = 3,
     ) {
         $patterns = [
             'The EntityManager is closed',

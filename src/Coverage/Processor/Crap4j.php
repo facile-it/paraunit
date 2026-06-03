@@ -12,8 +12,9 @@ class Crap4j implements CoverageProcessorInterface
 {
     private readonly PHPUnitCrap4j $crap4j;
 
-    public function __construct(private readonly OutputFile $targetFile)
-    {
+    public function __construct(
+        private readonly OutputFile $targetFile,
+    ) {
         $this->crap4j = new PHPUnitCrap4j();
     }
 

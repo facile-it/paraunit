@@ -13,7 +13,7 @@ class EqualsToken implements TokenInterface, \Stringable
 
     public function __construct(
         private readonly mixed $value,
-        private readonly StringUtil $util = new StringUtil()
+        private readonly StringUtil $util = new StringUtil(),
     ) {}
 
     /**

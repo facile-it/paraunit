@@ -18,7 +18,7 @@ class TestWithAbnormalTermination extends TestResultWithMessage
             'Possible abnormal termination, last prepared test was '
             . $test->name
             . PHP_EOL . PHP_EOL
-            . $process->getOutput()
+            . $process->getOutput(),
         );
     }
 }

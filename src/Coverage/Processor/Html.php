@@ -12,8 +12,9 @@ class Html implements CoverageProcessorInterface
 {
     private readonly Facade $html;
 
-    public function __construct(private readonly OutputPath $targetPath)
-    {
+    public function __construct(
+        private readonly OutputPath $targetPath,
+    ) {
         $this->html = new Facade();
     }
 

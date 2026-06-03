@@ -8,7 +8,9 @@ use Paraunit\File\TempDirectory;
 
 class TempFilenameFactory
 {
-    public function __construct(private readonly TempDirectory $tempDirectory) {}
+    public function __construct(
+        private readonly TempDirectory $tempDirectory,
+    ) {}
 
     /**
      * @phpstan-return non-empty-string

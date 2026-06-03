@@ -19,7 +19,7 @@ class PrinterConfigurationTest extends TestCase
     public function testSetShouldPrintWithAllCases(): void
     {
         $printerConfiguration = new PrinterConfiguration(
-            $this->prophesize(PHPUnitConfig::class)->reveal()
+            $this->prophesize(PHPUnitConfig::class)->reveal(),
         );
 
         foreach (TestIssue::cases() as $testIssue) {
@@ -34,7 +34,7 @@ class PrinterConfigurationTest extends TestCase
     public function testSetAllShouldPrint(): void
     {
         $printerConfiguration = new PrinterConfiguration(
-            $this->prophesize(PHPUnitConfig::class)->reveal()
+            $this->prophesize(PHPUnitConfig::class)->reveal(),
         );
 
         $printerConfiguration->setAllShouldPrint();
@@ -48,7 +48,7 @@ class PrinterConfigurationTest extends TestCase
     public function testDefaultSettings(bool $expected, TestIssue $testIssue): void
     {
         $printerConfiguration = new PrinterConfiguration(
-            $this->prophesize(PHPUnitConfig::class)->reveal()
+            $this->prophesize(PHPUnitConfig::class)->reveal(),
         );
 
         $this->assertSame($expected, $printerConfiguration->shouldPrint($testIssue));
@@ -79,7 +79,7 @@ class PrinterConfigurationTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($configValue);
         $printerConfiguration = new PrinterConfiguration(
-            $phpunitConfiguration->reveal()
+            $phpunitConfiguration->reveal(),
         );
 
         $this->assertTrue($printerConfiguration->shouldPrint($issue));
@@ -107,7 +107,7 @@ class PrinterConfigurationTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($configValue);
         $printerConfiguration = new PrinterConfiguration(
-            $phpunitConfiguration->reveal()
+            $phpunitConfiguration->reveal(),
         );
 
         $this->assertFalse($printerConfiguration->shouldPrint($issue));
@@ -136,7 +136,7 @@ class PrinterConfigurationTest extends TestCase
         $xpath = new \DOMXPath($document);
         foreach (array_keys(self::getConfigAttributesNames()) as $attributeName) {
             $nodes = $xpath->query(
-                "//xs:attributeGroup[@name='configAttributeGroup']/xs:attribute[@name='" . $attributeName . "']"
+                "//xs:attributeGroup[@name='configAttributeGroup']/xs:attribute[@name='" . $attributeName . "']",
             );
 
             $this->assertNotFalse($nodes);
