@@ -26,7 +26,7 @@ class TestATestStubSigInt extends BrokenTestBase implements BrokenTestInterface
 
     private function waitIfFileExist(
         string $fileName,
-        int $time
+        int $time,
     ): void {
         for ($i = 1; $i <= $time * 20; ++$i) {
             usleep(50_000);

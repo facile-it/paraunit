@@ -34,7 +34,7 @@ class Runner implements EventSubscriberInterface
         private readonly TestList $testList,
         private readonly PipelineCollection $pipelineCollection,
         private readonly ChunkSize $chunkSize,
-        private readonly ChunkFile $chunkFile
+        private readonly ChunkFile $chunkFile,
     ) {
         /**
          * @psalm-suppress MixedPropertyTypeCoercion
@@ -107,7 +107,7 @@ class Runner implements EventSubscriberInterface
     {
         foreach ($this->testList->getTests() as $file) {
             $this->queuedProcesses->enqueue(
-                $this->processFactory->create($file)
+                $this->processFactory->create($file),
             );
         }
     }
@@ -118,7 +118,7 @@ class Runner implements EventSubscriberInterface
         foreach (array_chunk($files, $this->chunkSize->getChunkSize()) as $chunkNumber => $filesChunk) {
             $chunkFileName = $this->chunkFile->createChunkFile($chunkNumber, $filesChunk);
             $this->queuedProcesses->enqueue(
-                $this->processFactory->create($chunkFileName)
+                $this->processFactory->create($chunkFileName),
             );
         }
     }

@@ -12,7 +12,7 @@ class CommandLine
 {
     public function __construct(
         protected PHPUnitBinFile $phpUnitBin,
-        protected ChunkSize $chunkSize
+        protected ChunkSize $chunkSize,
     ) {}
 
     /**

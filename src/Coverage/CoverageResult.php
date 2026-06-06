@@ -13,7 +13,9 @@ class CoverageResult implements EventSubscriberInterface
     /** @var CoverageProcessorInterface[] */
     private array $coverageProcessors = [];
 
-    public function __construct(private readonly CoverageMerger $coverageMerger) {}
+    public function __construct(
+        private readonly CoverageMerger $coverageMerger,
+    ) {}
 
     /**
      * @return array<string, string>

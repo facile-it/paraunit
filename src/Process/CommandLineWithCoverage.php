@@ -22,7 +22,7 @@ class CommandLineWithCoverage extends CommandLine
         private readonly PcovProxy $pcovProxy,
         private readonly XDebugProxy $xdebugProxy,
         private readonly PHPDbgBinFile $phpDbgBinFile,
-        private readonly TempFilenameFactory $filenameFactory
+        private readonly TempFilenameFactory $filenameFactory,
     ) {
         parent::__construct($phpUnitBin, $chunkSize);
 

@@ -20,7 +20,7 @@ class TextTest extends BaseUnitTestCase
         $text = new Text(
             $this->prophesize(OutputInterface::class)->reveal(),
             $withColors,
-            $targetFile
+            $targetFile,
         );
 
         $this->assertFileDoesNotExist($targetFile->getFilePath());

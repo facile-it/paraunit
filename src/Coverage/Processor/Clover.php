@@ -12,8 +12,9 @@ class Clover implements CoverageProcessorInterface
 {
     private readonly PHPUnitClover $clover;
 
-    public function __construct(private readonly OutputFile $targetFile)
-    {
+    public function __construct(
+        private readonly OutputFile $targetFile,
+    ) {
         $this->clover = new PHPUnitClover();
     }
 

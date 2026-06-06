@@ -71,7 +71,7 @@ class BaseTestCase extends TestCase
 
         $this->assertTrue(
             putenv(EnvVariables::LOG_DIR . '=' . $this->randomTempDir),
-            'Failed setting env variable for log dir'
+            'Failed setting env variable for log dir',
         );
     }
 

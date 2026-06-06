@@ -15,7 +15,7 @@ class TestTest extends BaseUnitTestCase
         $test = new Test('Foo');
 
         $encoded = json_encode($test, JSON_THROW_ON_ERROR);
-        $decoded = Test::deserialize(json_decode($encoded, true, JSON_THROW_ON_ERROR, JSON_THROW_ON_ERROR));
+        $decoded = Test::deserialize(json_decode($encoded, flags: JSON_THROW_ON_ERROR));
 
         $this->assertEquals($test, $decoded);
     }

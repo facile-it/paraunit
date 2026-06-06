@@ -12,7 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleFormatter implements EventSubscriberInterface
 {
-    public function __construct(private readonly OutputFormatterInterface $outputFormatter) {}
+    public function __construct(
+        private readonly OutputFormatterInterface $outputFormatter,
+    ) {}
 
     /**
      * @return array<class-string, string|array{0: string, 1: int}>

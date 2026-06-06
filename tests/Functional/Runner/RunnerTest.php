@@ -77,17 +77,17 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
-            'Missing recap title'
+            'Missing recap title',
         );
         $this->assertStringContainsString(
             SegFaultTestStub::class,
             $output,
-            'Missing failing filename'
+            'Missing failing filename',
         );
         $this->assertStringContainsString(
             'by Sebastian Bergmann and contributors',
             $output,
-            'Missing general output from the PHPUnit process'
+            'Missing general output from the PHPUnit process',
         );
     }
 
@@ -104,12 +104,12 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString(
             '1 files with WARNINGS:',
             $output,
-            'Missing recap title'
+            'Missing recap title',
         );
         $this->assertStringContainsString(
             IntentionalWarningTestStub::class,
             $output,
-            'Missing warned filename'
+            'Missing warned filename',
         );
     }
 
@@ -267,7 +267,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertStringContainsString(
             '1 files with ABNORMAL TERMINATIONS',
             $output,
-            'Missing abnormal termination recap title'
+            'Missing abnormal termination recap title',
         );
     }
 
@@ -282,7 +282,7 @@ class RunnerTest extends BaseIntegrationTestCase
         $this->assertGreaterThan(
             strpos($output, 'Execution time'),
             strpos($output, 'YOU SHOULD NOT SEE THIS'),
-            'REGRESSION: garbage output during tests execution (PHP warnings, var_dumps...)'
+            'REGRESSION: garbage output during tests execution (PHP warnings, var_dumps...)',
         );
     }
 

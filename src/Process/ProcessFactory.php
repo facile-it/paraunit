@@ -53,21 +53,21 @@ class ProcessFactory
             $command = array_merge(
                 $this->baseCommandLine,
                 ['--configuration=' . $testFilePath],
-                $this->cliCommand->getSpecificOptions($testFilePath)
+                $this->cliCommand->getSpecificOptions($testFilePath),
             );
         } else {
             $command = array_merge(
                 $this->baseCommandLine,
                 [$testFilePath],
                 $this->passThrough->options,
-                $this->cliCommand->getSpecificOptions($testFilePath)
+                $this->cliCommand->getSpecificOptions($testFilePath),
             );
         }
 
         $process = new SymfonyProcess(
             $command,
             null,
-            $this->environmentVariables
+            $this->environmentVariables,
         );
 
         return new SymfonyProcessWrapper($process, $testFilePath);

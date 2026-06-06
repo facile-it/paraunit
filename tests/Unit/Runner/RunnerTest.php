@@ -80,7 +80,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried(new StubbedParaunitProcess()));
@@ -125,7 +125,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried(new StubbedParaunitProcess()));
@@ -157,7 +157,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $this->assertSame(0, $runner->run());
@@ -192,7 +192,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(false),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $this->assertSame(0, $runner->run());
@@ -232,7 +232,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $this->mockChunkSize(true),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $this->assertSame(0, $runner->run());
@@ -266,7 +266,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessParsingCompleted(new ProcessParsingCompleted($process));
@@ -300,7 +300,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried($process));
@@ -339,7 +339,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried(new StubbedParaunitProcess('a.php')));
@@ -386,7 +386,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onProcessToBeRetried(new ProcessToBeRetried($queuedA));
@@ -430,7 +430,7 @@ class RunnerTest extends BaseUnitTestCase
             $testList->reveal(),
             $pipelineCollection->reveal(),
             $chunkSize->reveal(),
-            $chunkFile->reveal()
+            $chunkFile->reveal(),
         );
 
         $runner->onShutdown();

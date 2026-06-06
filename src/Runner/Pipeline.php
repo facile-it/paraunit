@@ -16,7 +16,7 @@ class Pipeline
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher,
         /** @var positive-int $number */
-        private readonly int $number
+        private readonly int $number,
     ) {}
 
     public function execute(Process $process): void

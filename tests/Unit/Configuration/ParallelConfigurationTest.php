@@ -274,7 +274,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
             $this->assertNotContains(
                 $neverMapped,
                 $args,
-                'Non-CLI-mapped outcome must not receive setStopOn from granular flags'
+                'Non-CLI-mapped outcome must not receive setStopOn from granular flags',
             );
         }
     }

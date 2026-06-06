@@ -23,7 +23,7 @@ abstract class BaseUnitTestCase extends BaseTestCase
     {
         $files = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
+            \RecursiveIteratorIterator::CHILD_FIRST,
         );
 
         /** @var \SplFileInfo $file */

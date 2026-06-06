@@ -57,7 +57,7 @@ class CoverageConfiguration extends ParallelConfiguration
     private function addFileProcessor(
         Definition $coverageResult,
         InputInterface $input,
-        string $processorClass
+        string $processorClass,
     ): void {
         $optionName = $this->getOptionName($processorClass);
 
@@ -72,7 +72,7 @@ class CoverageConfiguration extends ParallelConfiguration
     private function addFileOrOutputProcessor(
         Definition $coverageResult,
         InputInterface $input,
-        string $processorClass
+        string $processorClass,
     ): void {
         $optionName = $this->getOptionName($processorClass);
 
@@ -88,7 +88,7 @@ class CoverageConfiguration extends ParallelConfiguration
     private function addPathProcessor(
         Definition $coverageResult,
         InputInterface $input,
-        string $processorClass
+        string $processorClass,
     ): void {
         $optionName = $this->getOptionName($processorClass);
 

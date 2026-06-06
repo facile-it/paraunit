@@ -28,7 +28,7 @@ class TestFinishedTest extends AbstractTestHookTestCase
         return new Finished(
             $this->createTelemetryInfo(),
             $this->createPHPUnitTestMethod(),
-            1
+            1,
         );
     }
 

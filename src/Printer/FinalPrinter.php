@@ -30,7 +30,7 @@ class FinalPrinter implements EventSubscriberInterface
 
     public function __construct(
         private readonly OutputInterface $output,
-        private readonly ChunkSize $chunkSize
+        private readonly ChunkSize $chunkSize,
     ) {
         $this->stopWatch = new Stopwatch();
     }

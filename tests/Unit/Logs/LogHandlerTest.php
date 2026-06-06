@@ -41,7 +41,7 @@ class LogHandlerTest extends BaseUnitTestCase
 
         $logHandler = new LogHandler(
             $this->mockEventDispatcher(new TestCompleted($test, TestIssue::Deprecation)),
-            $this->mockTestResultContainer($test, [TestOutcome::Passed, TestIssue::Deprecation])
+            $this->mockTestResultContainer($test, [TestOutcome::Passed, TestIssue::Deprecation]),
         );
 
         $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));
@@ -59,7 +59,7 @@ class LogHandlerTest extends BaseUnitTestCase
 
         $logHandler = new LogHandler(
             $this->mockEventDispatcher(new TestCompleted($test, TestOutcome::Passed)),
-            $this->mockTestResultContainer($test, [TestOutcome::Passed])
+            $this->mockTestResultContainer($test, [TestOutcome::Passed]),
         );
 
         $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));
@@ -77,7 +77,7 @@ class LogHandlerTest extends BaseUnitTestCase
 
         $logHandler = new LogHandler(
             $this->mockEventDispatcher(new TestCompleted($test, TestOutcome::Passed)),
-            $this->mockTestResultContainer($test, [TestOutcome::Passed], 1)
+            $this->mockTestResultContainer($test, [TestOutcome::Passed], 1),
         );
 
         $logHandler->processLog($process, new LogData(LogStatus::Started, $test, '1'));

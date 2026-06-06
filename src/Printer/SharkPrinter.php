@@ -13,7 +13,7 @@ class SharkPrinter implements EventSubscriberInterface
 {
     public function __construct(
         private readonly OutputInterface $output,
-        private readonly bool $showLogo
+        private readonly bool $showLogo,
     ) {}
 
     /**

@@ -13,8 +13,9 @@ class Xml implements CoverageProcessorInterface
 {
     private readonly Facade $xml;
 
-    public function __construct(private readonly OutputPath $targetPath)
-    {
+    public function __construct(
+        private readonly OutputPath $targetPath,
+    ) {
         $this->xml = new Facade(Version::id());
     }
 

@@ -18,7 +18,7 @@ abstract class AbstractText implements CoverageProcessorInterface
         private readonly OutputInterface $output,
         private readonly bool $showColors,
         bool $onlySummary,
-        private readonly ?OutputFile $targetFile = null
+        private readonly ?OutputFile $targetFile = null,
     ) {
         $this->text = new PHPUnitText(Thresholds::default(), false, $onlySummary);
     }

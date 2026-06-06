@@ -24,7 +24,7 @@ class ChunkFile
      */
     public function createChunkFile(
         int $chunkNumber,
-        array $files
+        array $files,
     ): string {
         $fileFullPath = $this->phpunitConfig->getFileFullPath();
         /** @psalm-suppress InternalMethod */

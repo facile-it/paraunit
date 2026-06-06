@@ -16,7 +16,7 @@ class CoverageCacheWarmer implements EventSubscriberInterface
     public function __construct(
         private readonly CommandLine $cliCommand,
         private readonly PHPUnitConfig $phpUnitConfig,
-        private readonly OutputInterface $output
+        private readonly OutputInterface $output,
     ) {}
 
     public static function getSubscribedEvents(): array

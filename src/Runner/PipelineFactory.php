@@ -8,7 +8,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PipelineFactory
 {
-    public function __construct(private readonly EventDispatcherInterface $dispatcher) {}
+    public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
+    ) {}
 
     /**
      * @param positive-int $pipelineNumber

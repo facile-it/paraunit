@@ -23,7 +23,7 @@ class CoveragePrinterTest extends BaseUnitTestCase
 
         $printer = new CoveragePrinter(
             $commandLine->reveal(),
-            $output
+            $output,
         );
 
         $printer->onEngineBeforeStart();

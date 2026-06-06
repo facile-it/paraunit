@@ -23,7 +23,7 @@ class StubbedParaunitProcess implements Process
      */
     public function __construct(
         public string $filename = 'testFilename',
-        public string $uniqueId = ''
+        public string $uniqueId = '',
     ) {
         if ($this->uniqueId === '') {
             $this->uniqueId = md5($this->filename);
