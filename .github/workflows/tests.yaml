@@ -9,8 +9,13 @@ on:
   schedule:
     - cron: "42 7 * * 1"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  repository-projects: read
+  contents: read
+
 env:
   COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
 
@@ -63,8 +68,10 @@ jobs:
 
     name: PHP ${{ matrix.php }} ${{ matrix.description }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: ${{ matrix.php }}
           coverage: ${{ matrix.coverage }}
@@ -73,10 +80,15 @@ jobs:
       - run: composer remove --dev facile-it/facile-coding-standard vimeo/psalm psalm/plugin-phpunit psalm/plugin-symfony --no-update
       - name: Configure Composer minimum-stability
         if: matrix.composer-minimum-stability
-        run: composer config minimum-stability ${{ matrix.composer-minimum-stability }}
-      - run: composer require phpunit/phpunit ${{ matrix.phpunit }} --no-update
+        env:
+          COMPOSER_MINIMUM_STABILITY: ${{ matrix.composer-minimum-stability }}
+        run: composer config minimum-stability "$COMPOSER_MINIMUM_STABILITY"
+      - name: Require PHPUnit version
         if: matrix.phpunit
-      - uses: ramsey/composer-install@v4
+        env:
+          PHPUNIT_VERSION: ${{ matrix.phpunit }}
+        run: composer require phpunit/phpunit "$PHPUNIT_VERSION" --no-update
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: ${{ matrix.composer_options }}
@@ -85,7 +97,7 @@ jobs:
       - run: vendor/bin/phpunit --check-php-configuration
         if: matrix.dependencies != 'lowest'
       - run: vendor/bin/phpunit --coverage-clover=coverage.xml --colors=always
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: './coverage.xml'
@@ -94,11 +106,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Composer.json checks
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
       - run: vendor/bin/composer-dependency-analyser
@@ -107,11 +121,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Rector
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
       - run: vendor/bin/rector --ansi --dry-run
@@ -119,11 +135,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Code style
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
       - run: vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run
@@ -131,11 +149,13 @@ jobs:
     runs-on: ubuntu-latest
     name: PHPStan
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
       - run: vendor/bin/phpstan analyse --ansi
@@ -143,11 +163,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Psalm
     steps:
-      - uses: actions/checkout@v6
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.1'
-      - uses: ramsey/composer-install@v4
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           dependency-versions: highest
       - run: vendor/bin/psalm
