@@ -7,7 +7,6 @@ namespace Tests\Functional\Configuration;
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Configuration\PassThrough;
-use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Facade;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\TextUI\Help;
