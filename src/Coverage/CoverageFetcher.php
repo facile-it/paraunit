@@ -28,7 +28,6 @@ class CoverageFetcher
         $codeCoverage = null;
 
         if ($this->coverageFileIsValid($tempFilename)) {
-            /** @psalm-suppress UnresolvableInclude */
             $codeCoverage = require $tempFilename;
             unlink($tempFilename);
         }

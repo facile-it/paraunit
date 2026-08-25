@@ -15,7 +15,6 @@ class ChunkFile
     public function __construct(
         private readonly PHPUnitConfig $phpunitConfig,
     ) {
-        /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
     }
 
@@ -27,7 +26,7 @@ class ChunkFile
         array $files,
     ): string {
         $fileFullPath = $this->phpunitConfig->getFileFullPath();
-        /** @psalm-suppress InternalMethod */
+
         $document = $this->xmlLoader->loadFile($fileFullPath);
         $xpath = new \DOMXPath($document);
 

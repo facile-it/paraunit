@@ -12,9 +12,6 @@ class PHPUnitBinFile
     // I'm using Paraunit standalone (developing)
     private const PHPUNIT_REALPATH_FOR_STANDALONE = '/../../vendor/phpunit/phpunit/phpunit';
 
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
     private string $phpUnitBin;
 
     /**

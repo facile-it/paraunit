@@ -26,7 +26,7 @@ class PHPUnitConfig
     public function __construct(string $inputPathOrFileName)
     {
         $this->configFilename = $this->getConfigFileRealpath($inputPathOrFileName);
-        /** @psalm-suppress InternalClass */
+
         $this->xmlLoader = new Loader();
     }
 
@@ -161,7 +161,6 @@ class PHPUnitConfig
 
     private function loadConfigFile(): \DOMDocument
     {
-        /** @psalm-suppress InternalMethod */
         return $this->cachedConfigDocument ??= $this->xmlLoader->loadFile($this->configFilename);
     }
 

@@ -36,11 +36,6 @@ class Runner implements EventSubscriberInterface
         private readonly ChunkSize $chunkSize,
         private readonly ChunkFile $chunkFile,
     ) {
-        /**
-         * @psalm-suppress MixedPropertyTypeCoercion
-         *
-         * @see https://github.com/vimeo/psalm/issues/8103
-         */
         $this->queuedProcesses = new \SplQueue();
 
         if (function_exists('pcntl_async_signals') && function_exists('pcntl_signal')) {

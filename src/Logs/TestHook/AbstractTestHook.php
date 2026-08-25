@@ -21,7 +21,6 @@ abstract class AbstractTestHook
 
     public function __construct()
     {
-        /** @psalm-suppress DocblockTypeContradiction */
         if (null === self::$logFile) {
             $file = fopen($this->getLogFilename(), 'wt');
             if (! \is_resource($file)) {

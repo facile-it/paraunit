@@ -41,9 +41,6 @@ $config->ignoreErrorsOnPackages([
     'phpstan/phpstan',
     'phpstan/phpstan-phpunit',
     'phpunit/php-invoker', // for test timeouts
-    'psalm/plugin-phpunit',
-    'psalm/plugin-symfony',
-    'vimeo/psalm',
 ], [ErrorType::UNUSED_DEPENDENCY]);
 $config->ignoreErrorsOnExtension('ext-pcntl', [ErrorType::DEV_DEPENDENCY_IN_PROD]);
 

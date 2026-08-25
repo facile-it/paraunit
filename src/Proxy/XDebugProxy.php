@@ -12,7 +12,7 @@ class XDebugProxy
     }
 
     /**
-     * @psalm-return 2|3
+     * @phpstan-return 2|3
      */
     public function getMajorVersion(): int
     {

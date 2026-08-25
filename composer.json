@@ -49,15 +49,12 @@
         "phpspec/prophecy": "^1.20",
         "phpspec/prophecy-phpunit": "^2.3.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "2.2.5",
+        "phpstan/phpstan": "2.2.8",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/php-invoker": "^4.0||^5.0||^6.0||^7.0",
-        "psalm/plugin-phpunit": "^0.19",
-        "psalm/plugin-symfony": "^5.0",
-        "rector/rector": "2.5.7",
+        "rector/rector": "2.6.3",
         "shipmonk/composer-dependency-analyser": "^1.8",
-        "symfony/phpunit-bridge": "^6.4||^7.0||^8.0",
-        "vimeo/psalm": "^5.5.0||^6.0"
+        "symfony/phpunit-bridge": "^6.4||^7.0||^8.0"
     },
     "conflict": {
         "composer/package-versions-deprecated": "<1.11.99"

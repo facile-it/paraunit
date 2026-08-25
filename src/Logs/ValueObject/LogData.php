@@ -25,7 +25,7 @@ class LogData implements \JsonSerializable
     }
 
     /**
-     * @psalm-assert array{
+     * @phpstan-assert array{
      *     status: string,
      *     test: string|array<mixed>,
      *     message?: string|null,
@@ -63,8 +63,6 @@ class LogData implements \JsonSerializable
     }
 
     /**
-     * @psalm-suppress MixedReturnTypeCoercion
-     *
      * @return array{status: string, test: string|array<string, scalar>, message?: string}
      */
     public function jsonSerialize(): array
@@ -91,7 +89,6 @@ class LogData implements \JsonSerializable
             return null;
         }
 
-        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (! \mb_detect_encoding($string, 'UTF-8', true)) {
             return \mb_convert_encoding($string, 'UTF-8') ?: '';
         }

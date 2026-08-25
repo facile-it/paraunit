@@ -24,10 +24,10 @@ return RectorConfig::configure()
         typeDeclarations: true,  
     )
     ->withSets([
-        PHPUnitSetList::PHPUNIT_100,
+        PHPUnitSetList::COMPOSER_BASED,
     ])
     ->withSkipPath(
-        __DIR__ . '/tests/Stub/ParseErrorTestStub.php',
+        __DIR__ . '/tests/Stub/*',
     )
     ->withSkip([
         ParentTestClassConstructorRector::class,
