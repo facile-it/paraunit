@@ -23,7 +23,6 @@ class Filter implements TestList
         private readonly ?string $excludeTestSuiteFilter = null,
         private readonly ?string $testSuffix = null,
     ) {
-        /** @psalm-suppress InternalClass */
         $this->xmlLoader = new Loader();
         $this->relativePath = $configFile->getBaseDirectory() . DIRECTORY_SEPARATOR;
     }
@@ -42,7 +41,6 @@ class Filter implements TestList
     {
         $aggregatedFiles = [];
 
-        /** @psalm-suppress InternalMethod */
         $document = $this->xmlLoader->loadFile($this->configFile->getFileFullPath());
         $xpath = new \DOMXPath($document);
 
@@ -163,7 +161,6 @@ class Filter implements TestList
         string $nodeName,
         ?string $defaultValue = null,
     ): string {
-        /** @psalm-suppress RedundantCondition */
         foreach ($testSuiteNode->attributes as $attrName => $attrNode) {
             if ($attrName === $nodeName) {
                 return $attrNode->value;

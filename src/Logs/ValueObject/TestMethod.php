@@ -47,7 +47,7 @@ class TestMethod extends Test
     }
 
     /**
-     * @psalm-assert array{className: string, methodName: string, fullName: string, ...} $data
+     * @phpstan-assert array{className: string, methodName: string, fullName: string, ...} $data
      */
     private static function validate(mixed $data): void
     {

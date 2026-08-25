@@ -13,16 +13,13 @@ start:
 composer-update: start
 	docker compose exec php composer update --ignore-platform-req=php+
 
-pre-commit-check: rector cs-fix psalm phpstan tests composer-check
+pre-commit-check: rector cs-fix phpstan tests composer-check
 
 rector: start
 	docker compose exec php vendor/bin/rector --ansi
 
 cs-fix: start
 	docker compose exec php vendor/bin/php-cs-fixer fix --verbose --ansi
-
-psalm: start
-	docker compose exec php vendor/bin/psalm
 
 phpstan: start
 	docker compose exec php vendor/bin/phpstan analyse --ansi --memory-limit=-1

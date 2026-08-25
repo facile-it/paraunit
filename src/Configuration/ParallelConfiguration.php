@@ -73,9 +73,6 @@ class ParallelConfiguration
         }
     }
 
-    /**
-     * @psalm-suppress MixedArgument
-     */
     protected function loadCommandLineOptions(ContainerBuilder $containerBuilder, InputInterface $input): void
     {
         $containerBuilder->setParameter('paraunit.max_process_count', $input->getOption('parallel'));
