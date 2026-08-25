@@ -20,13 +20,13 @@ class LogHandler
 {
     private Test $currentTest;
 
-    private TestOutcome|TestIssue|null $currentTestOutcome = null;
+    private TestOutcome|TestIssue|null $currentTestOutcome;
 
-    private int $startedTestCount = 0;
+    private int $startedTestCount;
 
-    private int $preparedTestCount = 0;
+    private int $preparedTestCount;
 
-    private int $finishedTestCount = 0;
+    private int $finishedTestCount;
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
