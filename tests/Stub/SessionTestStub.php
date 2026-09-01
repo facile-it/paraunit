@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class SessionTestStub extends TestCase
 {
-    private const SESSION_ID = '42';
+    private const string SESSION_ID = '42';
 
     public static function setUpBeforeClass(): void
     {

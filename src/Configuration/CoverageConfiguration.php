@@ -6,6 +6,7 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Configuration\DependencyInjection\CoverageContainerDefinition;
 use Paraunit\Coverage\CoverageResult;
+use Paraunit\Coverage\PhpUnitFacadeFactory;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
@@ -15,11 +16,10 @@ use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
 use Paraunit\Coverage\Processor\Xml;
+use SebastianBergmann\CodeCoverage\Serialization\Serializer;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 class CoverageConfiguration extends ParallelConfiguration
 {
@@ -33,69 +33,82 @@ class CoverageConfiguration extends ParallelConfiguration
     {
         parent::loadCommandLineOptions($containerBuilder, $input);
 
-        $coverageResult = $containerBuilder->getDefinition(CoverageResult::class);
+        $containerBuilder->autowire(PhpUnitFacadeFactory::class);
+        $containerBuilder->autowire(Serializer::class);
 
-        $this->addPathProcessor($coverageResult, $input, Xml::class);
-        $this->addPathProcessor($coverageResult, $input, Html::class);
+        $this->addPathProcessor($containerBuilder, $input, Xml::class);
+        $this->addPathProcessor($containerBuilder, $input, Html::class);
 
-        $this->addFileProcessor($coverageResult, $input, Clover::class);
-        $this->addFileOrOutputProcessor($coverageResult, $input, Text::class);
-        $this->addFileOrOutputProcessor($coverageResult, $input, TextSummary::class);
-        $this->addFileProcessor($coverageResult, $input, Crap4j::class);
-        $this->addFileProcessor($coverageResult, $input, Php::class);
-        $this->addFileProcessor($coverageResult, $input, Cobertura::class);
+        $this->addFileProcessor($containerBuilder, $input, Clover::class);
+        $this->addFileOrOutputProcessor($containerBuilder, $input, Text::class);
+        $this->addFileOrOutputProcessor($containerBuilder, $input, TextSummary::class);
+        $this->addFileProcessor($containerBuilder, $input, Crap4j::class);
+        $this->addFileProcessor($containerBuilder, $input, Php::class);
+        $this->addFileProcessor($containerBuilder, $input, Cobertura::class);
     }
 
     /**
-     * @param mixed[] $dependencies
+     * @param class-string<CoverageProcessorInterface> $processorClass
      */
-    private function addProcessor(Definition $coverageResult, string $processorClass, array $dependencies): void
+    private function addProcessor(ContainerBuilder $containerBuilder, string $processorClass): Definition
     {
-        $coverageResult->addMethodCall('addCoverageProcessor', [new Definition($processorClass, $dependencies)]);
+        $coverageResult = $containerBuilder->getDefinition(CoverageResult::class);
+
+        $processor = $containerBuilder->autowire($processorClass);
+        $coverageResult->addMethodCall('addCoverageProcessor', [$processor]);
+
+        return $processor;
     }
 
+    /**
+     * @param class-string<CoverageProcessorInterface> $processorClass
+     */
     private function addFileProcessor(
-        Definition $coverageResult,
+        ContainerBuilder $containerBuilder,
         InputInterface $input,
         string $processorClass,
     ): void {
-        $optionName = $this->getOptionName($processorClass);
+        $optionName = $processorClass::getConsoleOptionName();
 
         if ($input->getOption($optionName)) {
-            $this->addProcessor($coverageResult, $processorClass, [
-                $this->createOutputFileDefinition($input, $optionName),
-                (bool) $input->getOption('ansi'),
-            ]);
+            $this->addProcessor($containerBuilder, $processorClass)
+                ->setArgument('$targetFile', $this->createOutputFileDefinition($input, $optionName))
+            ;
         }
     }
 
+    /**
+     * @param class-string<CoverageProcessorInterface> $processorClass
+     */
     private function addFileOrOutputProcessor(
-        Definition $coverageResult,
+        ContainerBuilder $containerBuilder,
         InputInterface $input,
         string $processorClass,
     ): void {
-        $optionName = $this->getOptionName($processorClass);
+        $optionName = $processorClass::getConsoleOptionName();
 
         if ($this->optionIsEnabled($input, $optionName)) {
-            $this->addProcessor($coverageResult, $processorClass, [
-                new Reference(OutputInterface::class),
-                (bool) $input->getOption('ansi'),
-                $this->createOutputFileDefinition($input, $optionName),
-            ]);
+            $this->addProcessor($containerBuilder, $processorClass)
+                ->setArgument('$targetFile', $this->createOutputFileDefinition($input, $optionName))
+                ->setArgument('$showColors', (bool) $input->getOption('ansi'))
+            ;
         }
     }
 
+    /**
+     * @param class-string<CoverageProcessorInterface> $processorClass
+     */
     private function addPathProcessor(
-        Definition $coverageResult,
+        ContainerBuilder $containerBuilder,
         InputInterface $input,
         string $processorClass,
     ): void {
-        $optionName = $this->getOptionName($processorClass);
+        $optionName = $processorClass::getConsoleOptionName();
 
         if ($this->optionIsEnabled($input, $optionName)) {
-            $this->addProcessor($coverageResult, $processorClass, [
-                new Definition(OutputPath::class, [$input->getOption($optionName)]),
-            ]);
+            $this->addProcessor($containerBuilder, $processorClass)
+                ->setArgument('$targetPath', new Definition(OutputPath::class, [$input->getOption($optionName)]))
+            ;
         }
     }
 
@@ -106,20 +119,6 @@ class CoverageConfiguration extends ParallelConfiguration
         }
 
         return null;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     */
-    private function getOptionName(string $processorClass): string
-    {
-        $implements = class_implements($processorClass);
-        if (is_array($implements) && \in_array(CoverageProcessorInterface::class, $implements, true)) {
-            /** @var class-string<CoverageProcessorInterface> $processorClass */
-            return $processorClass::getConsoleOptionName();
-        }
-
-        throw new \InvalidArgumentException('Expecting FQCN of class implementing ' . CoverageProcessorInterface::class . ', got ' . $processorClass);
     }
 
     private function optionIsEnabled(InputInterface $input, string $optionName): bool

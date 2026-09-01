@@ -15,8 +15,6 @@ use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
 use PHPUnit\Event\Telemetry\Info;
 use PHPUnit\Event\Telemetry\MemoryUsage;
-use PHPUnit\Event\Telemetry\Php81GarbageCollectorStatusProvider;
-use PHPUnit\Event\Telemetry\Php83GarbageCollectorStatusProvider;
 use PHPUnit\Event\Telemetry\Snapshot;
 use PHPUnit\Event\Telemetry\SystemGarbageCollectorStatusProvider;
 use Tests\BaseUnitTestCase;
@@ -93,7 +91,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::LOG_DIR . '=/fake/dir');
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Cannot create folder');
+        $this->expectExceptionMessageIsOrContains('Cannot create folder');
 
         $this->createSubscriber();
     }
@@ -102,7 +100,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::LOG_DIR);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('environment variable not set');
+        $this->expectExceptionMessageIsOrContains('environment variable not set');
 
         $this->createSubscriber();
     }
@@ -111,7 +109,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::PROCESS_UNIQUE_ID);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('environment variable not set');
+        $this->expectExceptionMessageIsOrContains('environment variable not set');
 
         $this->createSubscriber();
     }
@@ -145,15 +143,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         static $factory;
 
-        if (class_exists(SystemGarbageCollectorStatusProvider::class)) {
-            $factory ??= new SystemGarbageCollectorStatusProvider();
-        } elseif (PHP_VERSION_ID >= 8_03_00 && class_exists(Php83GarbageCollectorStatusProvider::class)) {
-            $factory ??= new Php83GarbageCollectorStatusProvider();
-        } elseif (PHP_VERSION_ID < 8_03_00 && class_exists(Php81GarbageCollectorStatusProvider::class)) {
-            $factory ??= new Php81GarbageCollectorStatusProvider();
-        } else {
-            throw new \InvalidArgumentException('Unable to create GarbageCollectorStatus');
-        }
+        $factory ??= new SystemGarbageCollectorStatusProvider();
 
         return $factory->status();
     }

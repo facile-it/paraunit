@@ -288,7 +288,7 @@ class ParallelConfigurationTest extends BaseUnitTestCase
     private function buildContainerForRunnerConfigurationAssertions(array $optionOverrides = []): ContainerBuilder
     {
         $container = new ContainerBuilder();
-        (new ParallelContainerDefinition())->configure($container);
+        new ParallelContainerDefinition()->configure($container);
 
         $input = $this->prophesizeInputForParallelConfigurationBuild($optionOverrides);
 

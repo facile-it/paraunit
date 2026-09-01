@@ -25,7 +25,6 @@ class PhpUnitWarningTest extends AbstractTestHookTestCase
 
     protected function createEvent(): PhpunitWarningTriggered
     {
-        /** @phpstan-ignore arguments.count */
         return new PhpunitWarningTriggered(
             $this->createTelemetryInfo(),
             $this->createPHPUnitTestMethod(),

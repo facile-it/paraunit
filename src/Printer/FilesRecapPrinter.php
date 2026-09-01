@@ -15,8 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FilesRecapPrinter implements EventSubscriberInterface
 {
-    /** @deprecated Use PrinterConfiguration::PRINT_ORDER instead */
-    final public const PRINT_ORDER = PrinterConfiguration::PRINT_ORDER;
+    #[\Deprecated(message: 'Use PrinterConfiguration::PRINT_ORDER instead')]
+    final public const array PRINT_ORDER = PrinterConfiguration::PRINT_ORDER;
 
     public function __construct(
         private readonly OutputInterface $output,

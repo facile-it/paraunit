@@ -6,7 +6,7 @@ namespace Paraunit\Configuration;
 
 class PassThrough
 {
-    private const DISALLOWED_OPTIONS = [
+    private const array DISALLOWED_OPTIONS = [
         '--no-configuration',
         '--extension',
         '--no-extensions',
@@ -28,6 +28,8 @@ class PassThrough
         '--display-incomplete',
         '--display-skipped',
         '--display-errors',
+        '--validate-configuration',
+        '--list-test-ids',
     ];
 
     /** @var list<string> */

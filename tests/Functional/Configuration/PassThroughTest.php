@@ -19,7 +19,7 @@ class PassThroughTest extends BaseFunctionalTestCase
     public function testDisallowedOptions(string $disallowedOption): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage($disallowedOption);
+        $this->expectExceptionMessageIsOrContains($disallowedOption);
 
         new PassThrough([$disallowedOption]);
     }
@@ -61,7 +61,7 @@ class PassThroughTest extends BaseFunctionalTestCase
      */
     private function getAllPHPUnitOptions(): array
     {
-        $helpText = (new Help(null, false))->generate();
+        $helpText = new Help(null, false)->generate();
         preg_match_all('/--[\w-]+/', $helpText, $options);
         $this->assertNotEmpty($options[0]);
 
@@ -121,6 +121,8 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--list-tests'],
             ['--list-tests-xml'],
             ['--check-php-configuration'],
+            ['--validate-configuration'],
+            ['--list-test-ids'],
             // not useful - baseline cannot be merged
             ['--generate-baseline'],
             // not useful - files recap is always useful
@@ -231,6 +233,28 @@ class PassThroughTest extends BaseFunctionalTestCase
             '--ignore-dependencies',
             '--random-order',
             '--reverse-order',
+            // introduced in 13.3 or later
+            '--run-test-id',
+            '--test-id-filter-file',
+            '--require-coverage-contribution',
+            '--fail-on-self-deprecation',
+            '--fail-on-direct-deprecation',
+            '--fail-on-indirect-deprecation',
+            '--do-not-fail-on-self-deprecation',
+            '--do-not-fail-on-direct-deprecation',
+            '--do-not-fail-on-indirect-deprecation',
+            '--record-test-run-history',
+            '--do-not-record-test-run-history',
+            '--warn-when-php-is-not-configured-for-development',
+            '--do-not-warn-when-php-is-not-configured-for-development',
+            '--repeat',
+            '--retry',
+            '--diff-context',
+            '--compact',
+            '--without-class-view',
+            '--without-file-view',
+            '--branch-coverage',
+            '--disable-coverage-targeting',
         ];
     }
 }

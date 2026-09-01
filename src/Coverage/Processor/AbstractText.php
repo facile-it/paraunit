@@ -28,7 +28,7 @@ abstract class AbstractText implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $coverageResults = $this->text->process($codeCoverage, $this->showColors);
+        $coverageResults = $this->text->process($codeCoverage->getReport(), $this->showColors);
 
         if ($this->targetFile instanceof OutputFile) {
             file_put_contents($this->targetFile->getFilePath(), $coverageResults);

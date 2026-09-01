@@ -8,9 +8,9 @@ use PHPUnit\Util\Xml\Loader;
 
 class PHPUnitConfig
 {
-    final public const DEFAULT_FILE_NAME = 'phpunit.xml';
+    final public const string DEFAULT_FILE_NAME = 'phpunit.xml';
 
-    final public const FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
+    final public const string FALLBACK_CONFIG_FILE_NAME = 'phpunit.xml.dist';
 
     private readonly string $configFilename;
 

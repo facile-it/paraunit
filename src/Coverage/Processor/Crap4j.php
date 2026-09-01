@@ -23,7 +23,7 @@ class Crap4j implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->crap4j->process($codeCoverage, $this->targetFile->getFilePath());
+        $this->crap4j->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
     }
 
     public static function getConsoleOptionName(): string
