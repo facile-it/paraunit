@@ -23,7 +23,7 @@ class Cobertura implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->cobertura->process($codeCoverage, $this->targetFile->getFilePath());
+        $this->cobertura->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
     }
 
     public static function getConsoleOptionName(): string
