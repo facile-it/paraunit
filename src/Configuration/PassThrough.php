@@ -28,6 +28,8 @@ class PassThrough
         '--display-incomplete',
         '--display-skipped',
         '--display-errors',
+        '--validate-configuration',
+        '--list-test-ids',
     ];
 
     /** @var list<string> */
