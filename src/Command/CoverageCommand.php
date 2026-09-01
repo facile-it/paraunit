@@ -72,7 +72,7 @@ class CoverageCommand extends ParallelCommand
     {
         return array_any(
             $this->coverageMethods,
-            fn($coverageMethod): bool => $input->hasParameterOption('--' . $coverageMethod)
+            fn(string $coverageMethod): bool => $input->hasParameterOption('--' . $coverageMethod),
         );
     }
 }

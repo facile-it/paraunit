@@ -19,7 +19,7 @@ class OutputFileTest extends BaseUnitTestCase
     public function testIsEmpty(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Empty path provided: not valid');
+        $this->expectExceptionMessageIsOrContains('Empty path provided: not valid');
 
         new OutputFile('');
     }

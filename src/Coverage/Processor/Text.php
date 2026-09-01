@@ -14,7 +14,7 @@ class Text extends AbstractText
         PhpUnitFacadeFactory $facadeFactory,
         OutputInterface $output,
         bool $showColors,
-        ?OutputFile $targetFile = null
+        ?OutputFile $targetFile = null,
     ) {
         parent::__construct($facadeFactory, $output, $showColors, false, $targetFile);
     }

@@ -18,7 +18,7 @@ class XDebugProxyTest extends BaseUnitTestCase
         $proxy = new XDebugProxy();
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Xdebug is not loaded');
+        $this->expectExceptionMessageIsOrContains('Xdebug is not loaded');
 
         $proxy->getMajorVersion();
     }

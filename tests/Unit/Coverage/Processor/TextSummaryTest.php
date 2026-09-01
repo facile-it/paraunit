@@ -44,7 +44,7 @@ class TextSummaryTest extends BaseUnitTestCase
         $text = new TextSummary(
             $this->createPhpUnitFacadeFactory(),
             $output->reveal(),
-            $withColors
+            $withColors,
         );
 
         $text->process($this->createCodeCoverage());

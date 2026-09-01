@@ -45,7 +45,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
         $dir = $this->getStubPath() . 'StubbedXMLConfigs' . DIRECTORY_SEPARATOR . 'MissDefaultAndFallback';
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
+        $this->expectExceptionMessageIsOrContains(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
 
         new PHPUnitConfig($dir);
     }
@@ -53,7 +53,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     public function testGetFileFullPathWithFileDoesNotExistWillThrowException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
+        $this->expectExceptionMessageIsOrContains(PHPUnitConfig::FALLBACK_CONFIG_FILE_NAME . ' does not exist');
 
         new PHPUnitConfig(__DIR__);
     }
@@ -62,7 +62,7 @@ class PHPUnitConfigTest extends BaseUnitTestCase
     {
         $dir = $this->getStubPath() . 'foobar';
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Config path/file provided is not valid');
+        $this->expectExceptionMessageIsOrContains('Config path/file provided is not valid');
 
         new PHPUnitConfig($dir);
     }
