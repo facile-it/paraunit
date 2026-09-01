@@ -18,13 +18,13 @@ class FakeDriverTest extends TestCase
     }
 
     #[DataProvider('methodNameProvider')]
-    public function testUnusableMethods(string $method): void
+    public function testUnusableMethods(string $unusableMethod): void
     {
         $driver = new FakeDriver();
 
         $this->expectException(\RuntimeException::class);
 
-        $driver->$method();
+        $driver->$unusableMethod();
     }
 
     /**

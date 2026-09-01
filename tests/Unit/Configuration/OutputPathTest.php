@@ -19,7 +19,7 @@ class OutputPathTest extends BaseUnitTestCase
     public function testWithEmptyString(): void
     {
         $this->expectException(\Throwable::class);
-        $this->expectExceptionMessage('not valid');
+        $this->expectExceptionMessageIsOrContains('not valid');
 
         new OutputPath('');
     }

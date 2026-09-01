@@ -19,7 +19,7 @@ class PassThroughTest extends BaseFunctionalTestCase
     public function testDisallowedOptions(string $disallowedOption): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage($disallowedOption);
+        $this->expectExceptionMessageIsOrContains($disallowedOption);
 
         new PassThrough([$disallowedOption]);
     }

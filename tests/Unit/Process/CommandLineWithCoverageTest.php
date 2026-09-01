@@ -80,7 +80,7 @@ class CommandLineWithCoverageTest extends BaseUnitTestCase
     public function testGetExecutableWithNoDriverAvailable(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('No coverage driver seems to be available');
+        $this->expectExceptionMessageIsOrContains('No coverage driver seems to be available');
 
         new CommandLineWithCoverage(
             $this->prophesize(PHPUnitBinFile::class)->reveal(),

@@ -20,7 +20,7 @@ class CoverageCommandTest extends BaseTestCase
         $commandTester = $this->createCommandTester();
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Paraunit extension is not registered');
+        $this->expectExceptionMessageIsOrContains('Paraunit extension is not registered');
 
         $commandTester->execute([
             '--configuration' => $this->createConfigWithoutExtension(),

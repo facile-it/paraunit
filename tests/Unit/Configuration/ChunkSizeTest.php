@@ -12,7 +12,7 @@ class ChunkSizeTest extends BaseUnitTestCase
     public function testValidation(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('must be 1 or greater');
+        $this->expectExceptionMessageIsOrContains('must be 1 or greater');
 
         new ChunkSize(0);
     }
