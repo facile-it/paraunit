@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputPath;
-use PHPUnit\Runner\Version;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade;
 
@@ -16,7 +15,7 @@ class Xml implements CoverageProcessorInterface
     public function __construct(
         private readonly OutputPath $targetPath,
     ) {
-        $this->xml = new Facade(Version::id());
+        $this->xml = new Facade();
     }
 
     /**
@@ -24,7 +23,11 @@ class Xml implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->xml->process($codeCoverage, $this->targetPath->getPath());
+        $this->xml->process(
+            $this->targetPath->getPath(),
+            $codeCoverage->getReport(),
+            $codeCoverage->getTests(),
+        );
     }
 
     public static function getConsoleOptionName(): string

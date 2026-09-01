@@ -23,7 +23,7 @@ class Clover implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->clover->process($codeCoverage, $this->targetFile->getFilePath());
+        $this->clover->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
     }
 
     public static function getConsoleOptionName(): string

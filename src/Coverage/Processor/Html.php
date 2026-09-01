@@ -23,7 +23,7 @@ class Html implements CoverageProcessorInterface
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->html->process($codeCoverage, $this->targetPath->getPath());
+        $this->html->process($codeCoverage->getReport(), $this->targetPath->getPath());
     }
 
     public static function getConsoleOptionName(): string
