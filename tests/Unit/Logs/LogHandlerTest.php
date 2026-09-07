@@ -98,7 +98,7 @@ class LogHandlerTest extends BaseUnitTestCase
             ->shouldBeCalledTimes($ignoredByBaseline);
 
         foreach ($expectedStatuses as $expectedStatus) {
-            $testResultContainer->addTestResult(new EqualsToken(new TestResult($test, $expectedStatus)))
+            $testResultContainer->addTestResult(new TestResult($test, $expectedStatus))
                 ->shouldBeCalledOnce();
         }
 
