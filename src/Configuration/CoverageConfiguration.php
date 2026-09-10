@@ -6,7 +6,6 @@ namespace Paraunit\Configuration;
 
 use Paraunit\Configuration\DependencyInjection\CoverageContainerDefinition;
 use Paraunit\Coverage\CoverageResult;
-use Paraunit\Coverage\PhpUnitFacadeFactory;
 use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
@@ -33,7 +32,6 @@ class CoverageConfiguration extends ParallelConfiguration
     {
         parent::loadCommandLineOptions($containerBuilder, $input);
 
-        $containerBuilder->autowire(PhpUnitFacadeFactory::class);
         $containerBuilder->autowire(Serializer::class);
 
         $this->addPathProcessor($containerBuilder, $input, Xml::class);

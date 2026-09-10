@@ -18,7 +18,6 @@ class TextSummaryTest extends BaseUnitTestCase
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coverage.txt');
         $text = new TextSummary(
-            $this->createPhpUnitFacadeFactory(),
             $this->prophesize(OutputInterface::class)->reveal(),
             $withColors,
             $targetFile,
@@ -42,7 +41,6 @@ class TextSummaryTest extends BaseUnitTestCase
         $output->writeln(Argument::containingString($expectedString))
             ->shouldBeCalledTimes(1);
         $text = new TextSummary(
-            $this->createPhpUnitFacadeFactory(),
             $output->reveal(),
             $withColors,
         );

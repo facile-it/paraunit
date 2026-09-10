@@ -52,6 +52,7 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             false,
             $ignoredByBaseline,
             $ignoredByTest,
+            false,
             IssueTrigger::from(Code::FirstParty, Code::FirstParty),
         ];
 

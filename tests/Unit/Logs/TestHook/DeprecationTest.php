@@ -41,7 +41,7 @@ class DeprecationTest extends AbstractTestHookTestCase
         return LogStatus::Deprecation;
     }
 
-    protected function createEvent(bool $ignoredByBaseline = false, bool $ignoredByTest = false): DeprecationTriggered
+    protected function createEvent(bool $ignoredByBaseline = false, bool $ignoredByTest = false, bool $ignoredByFilter = false): DeprecationTriggered
     {
         $args = [
             $this->createTelemetryInfo(),
@@ -52,6 +52,7 @@ class DeprecationTest extends AbstractTestHookTestCase
             false,
             $ignoredByBaseline,
             $ignoredByTest,
+            $ignoredByFilter,
             IssueTrigger::from(Code::FirstParty, Code::FirstParty),
             '\fake\stacktrace:123',
         ];

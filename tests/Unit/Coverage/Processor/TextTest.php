@@ -18,7 +18,6 @@ class TextTest extends BaseUnitTestCase
     {
         $targetFile = new OutputFile(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coverage.txt');
         $text = new Text(
-            $this->createPhpUnitFacadeFactory(),
             $this->prophesize(OutputInterface::class)->reveal(),
             $withColors,
             $targetFile,
@@ -41,7 +40,7 @@ class TextTest extends BaseUnitTestCase
         $output = $this->prophesize(OutputInterface::class);
         $output->writeln(Argument::containingString($expectedString))
             ->shouldBeCalledTimes(1);
-        $text = new Text($this->createPhpUnitFacadeFactory(), $output->reveal(), $withColors);
+        $text = new Text($output->reveal(), $withColors);
 
         $text->process($this->createCodeCoverage());
     }

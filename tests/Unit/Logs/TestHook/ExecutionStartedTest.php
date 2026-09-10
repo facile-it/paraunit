@@ -30,7 +30,14 @@ class ExecutionStartedTest extends AbstractTestHookTestCase
     {
         return new TestSuiteExecutionStarted(
             $this->createTelemetryInfo(),
-            new TestSuiteForTestClass(self::class, 0, TestCollection::fromArray([]), __FILE__, 0),
+            new TestSuiteForTestClass(
+                self::class,
+                0,
+                TestCollection::fromArray([]),
+                self::class,
+                __FILE__,
+                0,
+            ),
         );
     }
 

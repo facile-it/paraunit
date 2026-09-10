@@ -11,6 +11,7 @@ use Paraunit\Logs\ValueObject\LogStatus;
 use Paraunit\Logs\ValueObject\Test;
 use Paraunit\Logs\ValueObject\TestMethod;
 use PHPUnit\Event\Event;
+use PHPUnit\Event\Telemetry\CpuTime;
 use PHPUnit\Event\Telemetry\GarbageCollectorStatus;
 use PHPUnit\Event\Telemetry\HRTime;
 use PHPUnit\Event\Telemetry\Info;
@@ -117,11 +118,16 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     final protected function createTelemetryInfo(): Info
     {
         $memoryUsage = MemoryUsage::fromBytes(0);
+        $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
+
         $current = new Snapshot(
             HRTime::fromSecondsAndNanoseconds(1, 0),
             $memoryUsage,
             $memoryUsage,
             $this->createGarbageCollectorStatus(),
+            $cpuTime,
+            $cpuTime,
+            $cpuTime,
         );
         $duration = $current->time()->duration($current->time());
 
@@ -131,6 +137,12 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
             $memoryUsage,
             $duration,
             $memoryUsage,
+            $cpuTime,
+            $cpuTime,
+            $cpuTime,
+            $cpuTime,
+            $cpuTime,
+            $cpuTime,
         );
     }
 
