@@ -118,7 +118,10 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     final protected function createTelemetryInfo(): Info
     {
         $memoryUsage = MemoryUsage::fromBytes(0);
-        $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
+        $cpuTime = null;
+        if (class_exists(CpuTime::class)) {
+            $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
+        }
 
         $current = new Snapshot(
             HRTime::fromSecondsAndNanoseconds(1, 0),

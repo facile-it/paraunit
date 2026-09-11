@@ -28,16 +28,21 @@ class ExecutionStartedTest extends AbstractTestHookTestCase
 
     protected function createEvent(): TestSuiteExecutionStarted
     {
+        $args = [
+            self::class,
+            0,
+            TestCollection::fromArray([]),
+        ];
+        
+        if (method_exists(TestSuiteForTestClass::class, 'prettifiedName')) {
+            $args[] = self::class;
+        }
+        $args[] = __FILE__;
+        $args[] = 0;
+
         return new TestSuiteExecutionStarted(
             $this->createTelemetryInfo(),
-            new TestSuiteForTestClass(
-                self::class,
-                0,
-                TestCollection::fromArray([]),
-                self::class,
-                __FILE__,
-                0,
-            ),
+            new TestSuiteForTestClass(...$args),
         );
     }
 

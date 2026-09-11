@@ -11,6 +11,18 @@ use Paraunit\Logs\ValueObject\TestMethod;
 
 abstract class BaseUnitTestCase extends BaseTestCase
 {
+    /**
+     * polyfill for expectExceptionMessage deprecation in 13.2
+     */
+    protected function expectExceptionMessageIsOrContains(string $message): void
+    {
+        if (method_exists(parent::class, 'expectExceptionMessageIsOrContains')) {
+            parent::expectExceptionMessageIsOrContains($message);
+        } else {
+            $this->expectExceptionMessage($message);
+        }
+    }
+
     protected function getWrongCoverageStubFilePath(): string
     {
         $filename = __DIR__ . '/Stub/CoverageOutput/WrongCoverageStub.php';

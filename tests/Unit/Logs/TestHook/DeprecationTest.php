@@ -52,10 +52,14 @@ class DeprecationTest extends AbstractTestHookTestCase
             false,
             $ignoredByBaseline,
             $ignoredByTest,
-            $ignoredByFilter,
-            IssueTrigger::from(Code::FirstParty, Code::FirstParty),
-            '\fake\stacktrace:123',
         ];
+        
+        if (method_exists(DeprecationTriggered::class, 'ignoredByFilter')) {
+            $args[] = $ignoredByFilter;
+        }
+
+        $args[] = IssueTrigger::from(Code::FirstParty, Code::FirstParty);
+        $args[] = '\fake\stacktrace:123';
 
         return new DeprecationTriggered(...$args);
     }
