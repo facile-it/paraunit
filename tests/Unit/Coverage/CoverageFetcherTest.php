@@ -12,7 +12,6 @@ use Paraunit\TestResult\ValueObject\TestResult;
 use Prophecy\Argument;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
-use Tests\Stub\ThreeGreenTestStub;
 
 class CoverageFetcherTest extends BaseUnitTestCase
 {
@@ -36,15 +35,16 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $expectedTests = [
-            ThreeGreenTestStub::class . '::testGreenOne' => [
-                'size' => 'unknown',
-                'status' => 'success',
-                'time' => 0.001_389_284,
-            ],
-        ];
-        $this->assertSame($expectedTests, $result->getTests());
+        $this->assertNotNull($result);
+        $this->assertEmpty($result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
+
+        // Assert that covered files are absolute paths (basePath restoration)
+        $coveredFiles = $result->getData()->coveredFiles();
+        $this->assertNotEmpty($coveredFiles, 'No files listed in coverage');
+        foreach ($coveredFiles as $file) {
+            $this->assertStringStartsWith('/', $file, 'Covered files should be absolute paths');
+        }
     }
 
     public function testFetchIgnoresMissingCoverageFiles(): void
@@ -60,7 +60,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertEmpty($result->getTests());
+        $this->assertNull($result);
     }
 
     public function testFetchIgnoresWrongFiles(): void
@@ -80,7 +80,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertEmpty($result->getTests());
+        $this->assertNull($result);
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 

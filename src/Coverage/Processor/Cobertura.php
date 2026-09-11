@@ -6,24 +6,20 @@ namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Report\Cobertura as PHPUnitCobertura;
+use SebastianBergmann\CodeCoverage\Report\Facade;
 
 class Cobertura implements CoverageProcessorInterface
 {
-    private readonly PHPUnitCobertura $cobertura;
-
     public function __construct(
         private readonly OutputFile $targetFile,
-    ) {
-        $this->cobertura = new PHPUnitCobertura();
-    }
+    ) {}
 
     /**
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $this->cobertura->process($codeCoverage->getReport(), $this->targetFile->getFilePath());
+        Facade::fromObject($codeCoverage)->renderCobertura($this->targetFile->getFilePath());
     }
 
     public static function getConsoleOptionName(): string

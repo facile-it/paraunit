@@ -6,29 +6,30 @@ namespace Paraunit\Coverage\Processor;
 
 use Paraunit\Configuration\OutputFile;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Report\Text as PHPUnitText;
-use SebastianBergmann\CodeCoverage\Report\Thresholds;
+use SebastianBergmann\CodeCoverage\Report\Facade;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractText implements CoverageProcessorInterface
 {
-    private readonly PHPUnitText $text;
-
     public function __construct(
         private readonly OutputInterface $output,
         private readonly bool $showColors,
-        bool $onlySummary,
+        private readonly bool $onlySummary,
         private readonly ?OutputFile $targetFile = null,
-    ) {
-        $this->text = new PHPUnitText(Thresholds::default(), false, $onlySummary);
-    }
+    ) {}
 
     /**
      * @throws \RuntimeException
      */
     public function process(CodeCoverage $codeCoverage): void
     {
-        $coverageResults = $this->text->process($codeCoverage->getReport(), $this->showColors);
+        $coverageResults = Facade::fromObject($codeCoverage)->renderText(
+            null,
+            null,
+            false,
+            $this->onlySummary,
+            $this->showColors,
+        );
 
         if ($this->targetFile instanceof OutputFile) {
             file_put_contents($this->targetFile->getFilePath(), $coverageResults);
