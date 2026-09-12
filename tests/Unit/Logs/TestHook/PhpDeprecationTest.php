@@ -53,9 +53,8 @@ class PhpDeprecationTest extends AbstractTestHookTestCase
             $ignoredByBaseline,
             $ignoredByTest,
         ];
-        
-        
-        if (false) {
+
+        if (method_exists(PhpDeprecationTriggered::class, 'ignoredByFilter')) {
             $args[] = false;
         }
 

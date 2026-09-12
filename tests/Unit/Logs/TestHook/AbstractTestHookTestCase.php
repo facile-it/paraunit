@@ -92,7 +92,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::LOG_DIR . '=/fake/dir');
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageIsOrContains('Cannot create folder');
+        $this->expectExceptionMessage('Cannot create folder');
 
         $this->createSubscriber();
     }
@@ -101,7 +101,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::LOG_DIR);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageIsOrContains('environment variable not set');
+        $this->expectExceptionMessage('environment variable not set');
 
         $this->createSubscriber();
     }
@@ -110,7 +110,7 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     {
         putenv(EnvVariables::PROCESS_UNIQUE_ID);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageIsOrContains('environment variable not set');
+        $this->expectExceptionMessage('environment variable not set');
 
         $this->createSubscriber();
     }

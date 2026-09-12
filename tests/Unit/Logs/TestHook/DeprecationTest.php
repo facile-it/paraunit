@@ -53,7 +53,7 @@ class DeprecationTest extends AbstractTestHookTestCase
             $ignoredByBaseline,
             $ignoredByTest,
         ];
-        
+
         if (method_exists(DeprecationTriggered::class, 'ignoredByFilter')) {
             $args[] = $ignoredByFilter;
         }

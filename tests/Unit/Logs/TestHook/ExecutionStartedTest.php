@@ -33,7 +33,7 @@ class ExecutionStartedTest extends AbstractTestHookTestCase
             0,
             TestCollection::fromArray([]),
         ];
-        
+
         if (method_exists(TestSuiteForTestClass::class, 'prettifiedName')) {
             $args[] = self::class;
         }

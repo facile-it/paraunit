@@ -28,7 +28,7 @@ class ParallelCommandTest extends BaseTestCase
         $commandTester = new CommandTester($command);
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageIsOrContains('Paraunit extension is not registered');
+        $this->expectExceptionMessage('Paraunit extension is not registered');
 
         $commandTester->execute([
             'command' => $command->getName(),

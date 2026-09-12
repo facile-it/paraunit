@@ -17,7 +17,7 @@ class CoverageMergerTest extends BaseUnitTestCase
         $merger = new CoverageMerger($this->prophesize(CoverageFetcher::class)->reveal());
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageIsOrContains('not ready');
+        $this->expectExceptionMessage('not ready');
 
         $merger->getCoverageData();
     }
