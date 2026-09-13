@@ -118,35 +118,43 @@ abstract class AbstractTestHookTestCase extends BaseUnitTestCase
     final protected function createTelemetryInfo(): Info
     {
         $memoryUsage = MemoryUsage::fromBytes(0);
-        $cpuTime = null;
-        if (class_exists(CpuTime::class)) {
-            $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
-        }
 
-        $current = new Snapshot(
+        $snapshotArgs = [
             HRTime::fromSecondsAndNanoseconds(1, 0),
             $memoryUsage,
             $memoryUsage,
             $this->createGarbageCollectorStatus(),
-            $cpuTime,
-            $cpuTime,
-            $cpuTime,
-        );
+        ];
+
+        if (class_exists(CpuTime::class)) {
+            $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
+            $snapshotArgs[] = $cpuTime;
+            $snapshotArgs[] = $cpuTime;
+            $snapshotArgs[] = $cpuTime;
+        }
+
+        $current = new Snapshot(...$snapshotArgs);
         $duration = $current->time()->duration($current->time());
 
-        return new Info(
+        $infoArgs = [
             $current,
             $duration,
             $memoryUsage,
             $duration,
             $memoryUsage,
-            $cpuTime,
-            $cpuTime,
-            $cpuTime,
-            $cpuTime,
-            $cpuTime,
-            $cpuTime,
-        );
+        ];
+
+        if (class_exists(CpuTime::class)) {
+            $cpuTime = CpuTime::fromSecondsAndNanoseconds(random_int(0, 1), random_int(0, 10_000_000));
+            $infoArgs[] = $cpuTime;
+            $infoArgs[] = $cpuTime;
+            $infoArgs[] = $cpuTime;
+            $infoArgs[] = $cpuTime;
+            $infoArgs[] = $cpuTime;
+            $infoArgs[] = $cpuTime;
+        }
+
+        return new Info(...$infoArgs);
     }
 
     protected function updatesLastTest(): bool

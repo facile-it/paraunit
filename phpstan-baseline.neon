@@ -1,2 +1,73 @@
 parameters:
 	ignoreErrors:
+		-
+			message: '#^Class PHPUnit\\Event\\Telemetry\\Info constructor invoked with 5 parameters, 11 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/AbstractTestHookTestCase.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\Telemetry\\Snapshot constructor invoked with 4 parameters, 7 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/AbstractTestHookTestCase.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Test\\\\DeprecationTriggered'' and ''ignoredByFilter'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\Test\\DeprecationTriggered constructor invoked with 10 parameters, 11 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Parameter \#10 \$trigger of class PHPUnit\\Event\\Test\\DeprecationTriggered constructor expects PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger, PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Parameter \#9 \$ignoredByFilter of class PHPUnit\\Event\\Test\\DeprecationTriggered constructor expects bool, bool\|PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Logs/TestHook/DeprecationTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\TestSuite\\\\TestSuiteForTestClass'' and ''prettifiedName'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/ExecutionStartedTest.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\TestSuite\\TestSuiteForTestClass constructor invoked with 5 parameters, 6 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/ExecutionStartedTest.php
+
+		-
+			message: '#^Parameter \#5 \$file of class PHPUnit\\Event\\TestSuite\\TestSuiteForTestClass constructor expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Logs/TestHook/ExecutionStartedTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''PHPUnit\\\\Event\\\\Test\\\\PhpDeprecationTriggered'' and ''ignoredByFilter'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
+
+		-
+			message: '#^Class PHPUnit\\Event\\Test\\PhpDeprecationTriggered constructor invoked with 9 parameters, 10 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
+
+		-
+			message: '#^Parameter \#9 \$ignoredByFilter of class PHPUnit\\Event\\Test\\PhpDeprecationTriggered constructor expects bool, PHPUnit\\Event\\Code\\IssueTrigger\\IssueTrigger\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/Logs/TestHook/PhpDeprecationTest.php
