@@ -28,7 +28,7 @@ class CoverageFetcher
         $this->unserializer = new Unserializer();
     }
 
-    public function fetch(Process $process): ?CodeCoverage
+    public function fetch(Process $process): CodeCoverage
     {
         $tempFilename = $this->tempFilenameFactory->getFilenameForCoverage($process->getUniqueId());
 
@@ -47,7 +47,7 @@ class CoverageFetcher
             $testResult = new TestResult(new Test($process->getFilename()), TestIssue::CoverageFailure);
             $this->testResultContainer->addTestResult($testResult);
 
-            return null;
+            return new CodeCoverage(new FakeDriver(), new Filter());
         } finally {
             if (file_exists($tempFilename)) {
                 unlink($tempFilename);

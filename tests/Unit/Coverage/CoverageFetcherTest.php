@@ -35,7 +35,6 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $result = $fetcher->fetch($process);
 
-        $this->assertNotNull($result);
         $this->assertEmpty($result->getTests());
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
 
@@ -58,9 +57,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $this->mockTestResulContainer($process));
 
-        $result = $fetcher->fetch($process);
-
-        $this->assertNull($result);
+        $fetcher->fetch($process);
     }
 
     public function testFetchIgnoresWrongFiles(): void
@@ -78,9 +75,8 @@ class CoverageFetcherTest extends BaseUnitTestCase
 
         $fetcher = new CoverageFetcher($tempFilenameFactory->reveal(), $this->mockTestResulContainer($process));
 
-        $result = $fetcher->fetch($process);
+        $fetcher->fetch($process);
 
-        $this->assertNull($result);
         $this->assertFileDoesNotExist($filename, 'Coverage file should be deleted to preserve memory');
     }
 

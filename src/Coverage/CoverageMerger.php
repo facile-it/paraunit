@@ -41,10 +41,6 @@ class CoverageMerger implements EventSubscriberInterface
     {
         $newCoverageData = $this->coverageFetcher->fetch($process);
 
-        if (! $newCoverageData) {
-            return;
-        }
-
         if ($this->coverageData instanceof CodeCoverage) {
             $this->coverageData->merge($newCoverageData);
         } else {
