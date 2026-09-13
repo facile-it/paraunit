@@ -19,14 +19,6 @@ class BaseTestCase extends TestCase
 
     private ?string $randomTempDir = null;
 
-    protected function getCoverageStubFilePath(): string
-    {
-        $filename = __DIR__ . '/Stub/CoverageOutput/Coverage4Stub.php';
-        self::assertFileExists($filename, 'CoverageStub file missing!');
-
-        return $filename;
-    }
-
     protected function createConfigWithoutExtension(): string
     {
         $tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-test';

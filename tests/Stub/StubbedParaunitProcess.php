@@ -93,4 +93,12 @@ class StubbedParaunitProcess implements Process
     {
         return $this->retryCount;
     }
+
+    /**
+     * @return non-empty-string
+     */
+    public static function getPathForThisClass(): string
+    {
+        return __FILE__;
+    }
 }

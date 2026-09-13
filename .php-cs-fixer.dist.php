@@ -23,7 +23,6 @@ $autoloadPathProvider = new Facile\CodingStandards\AutoloadPathProvider();
 
 $finder = new PhpCsFixer\Finder();
 $finder->in($autoloadPathProvider->getPaths());
-$finder->notName('Coverage4Stub.php');
 $finder->notName('ParseErrorTestStub.php');
 $config->setFinder($finder);
 

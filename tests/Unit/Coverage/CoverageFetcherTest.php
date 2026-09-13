@@ -6,10 +6,15 @@ namespace Tests\Unit\Coverage;
 
 use Paraunit\Configuration\TempFilenameFactory;
 use Paraunit\Coverage\CoverageFetcher;
+use Paraunit\Proxy\Coverage\FakeDriver;
 use Paraunit\TestResult\TestResultContainer;
 use Paraunit\TestResult\ValueObject\TestIssue;
 use Paraunit\TestResult\ValueObject\TestResult;
 use Prophecy\Argument;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Data\ProcessedCodeCoverageData;
+use SebastianBergmann\CodeCoverage\Filter;
+use SebastianBergmann\CodeCoverage\Serialization\Serializer;
 use Tests\BaseUnitTestCase;
 use Tests\Stub\StubbedParaunitProcess;
 
@@ -20,7 +25,7 @@ class CoverageFetcherTest extends BaseUnitTestCase
         $process = new StubbedParaunitProcess('test.php', 'uniqueId');
 
         $filename = $this->getTempFilename();
-        copy($this->getCoverageStubFilePath(), $filename);
+        $this->generateCoverageStub($filename);
         $this->assertFileExists($filename, 'Test malformed, stub log file not found');
 
         $tempFilenameFactory = $this->prophesize(TempFilenameFactory::class);
@@ -97,5 +102,35 @@ class CoverageFetcherTest extends BaseUnitTestCase
             ->shouldBeCalled();
 
         return $testResultContainer->reveal();
+    }
+
+    private function generateCoverageStub(string $filename): void
+    {
+        $this->assertNotEmpty($filename, 'Expecting filename, got empty string');
+
+        $codeCoverageData = new ProcessedCodeCoverageData();
+        $codeCoverageData->setLineCoverage([
+            StubbedParaunitProcess::getPathForThisClass() => [
+                28 => [],
+                29 => [],
+                35 => [],
+                40 => [],
+                45 => [],
+                50 => [],
+                55 => [],
+                63 => [],
+                68 => [],
+                73 => [],
+                78 => [],
+                83 => [],
+                84 => [],
+                89 => [],
+                94 => [],
+            ],
+        ]);
+
+        $codeCoverage = new CodeCoverage(new FakeDriver(), new Filter());
+        $codeCoverage->setData($codeCoverageData);
+        new Serializer()->serialize($filename, $codeCoverage);
     }
 }
