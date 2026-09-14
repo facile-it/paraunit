@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 * ...
 
+## [2.12.0] - 2026-09-14
+* Support PHPUnit 13.1+
+* Drop support for PHPUnit below 13.1
+* Drop support for PHP below 8.4
+
 ## [2.11.0] - 2026-05-09
 * Drop `ext-pcntl` requirement to a suggested dependency [#386](https://github.com/facile-it/paraunit/pull/386)
 * Respect PHPUnit configuration about displaying warning, deprecations, notices and add new CLI options mirroring PHPUnit's: [#383](https://github.com/facile-it/paraunit/pull/383)
