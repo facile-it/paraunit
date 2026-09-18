@@ -120,7 +120,7 @@ class Runner implements EventSubscriberInterface
 
     public function pushToPipeline(?ProcessTerminated $event = null): void
     {
-        if ($event && $this->chunkSize->isChunked()) {
+        if ($event instanceof ProcessTerminated && $this->chunkSize->isChunked()) {
             $process = $event->getProcess();
             if (! $process->isToBeRetried()) {
                 $this->chunkFile->deleteChunkFile($process);
