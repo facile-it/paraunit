@@ -90,6 +90,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         $supportedOptions[] = '--coverage-text';
         $supportedOptions[] = '--coverage-crap4j';
         $supportedOptions[] = '--coverage-cobertura';
+        $supportedOptions[] = '--coverage-jsonl';
 
         return array_values($supportedOptions);
     }

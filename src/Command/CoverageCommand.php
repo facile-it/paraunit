@@ -9,6 +9,7 @@ use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Jsonl;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
@@ -34,6 +35,7 @@ class CoverageCommand extends ParallelCommand
             Crap4j::getConsoleOptionName(),
             Php::getConsoleOptionName(),
             Cobertura::getConsoleOptionName(),
+            Jsonl::getConsoleOptionName(),
         ];
     }
 
@@ -51,6 +53,7 @@ class CoverageCommand extends ParallelCommand
         $this->addOption(Crap4j::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Crap4j coverage result');
         $this->addOption(Php::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for PHP coverage result');
         $this->addOption(Cobertura::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output file for Cobertura coverage result');
+        $this->addOption(Jsonl::getConsoleOptionName(), null, InputOption::VALUE_REQUIRED, 'Output dir for JSONL coverage result');
     }
 
     /**

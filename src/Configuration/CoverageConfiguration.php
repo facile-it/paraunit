@@ -11,6 +11,7 @@ use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\CoverageProcessorInterface;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Jsonl;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
@@ -36,6 +37,7 @@ class CoverageConfiguration extends ParallelConfiguration
 
         $this->addPathProcessor($containerBuilder, $input, Xml::class);
         $this->addPathProcessor($containerBuilder, $input, Html::class);
+        $this->addPathProcessor($containerBuilder, $input, Jsonl::class);
 
         $this->addFileProcessor($containerBuilder, $input, Clover::class);
         $this->addFileOrOutputProcessor($containerBuilder, $input, Text::class);
