@@ -1,6 +1,18 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to function method_exists\(\) with ''SebastianBergmann\\\\CodeCoverage\\\\Report\\\\Facade'' and ''renderJsonl'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Coverage/Processor/Jsonl.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''SebastianBergmann\\\\CodeCoverage\\\\Report\\\\Facade'' and ''renderJsonl'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/Functional/Command/CoverageCommandTest.php
+
+		-
 			message: '#^Class PHPUnit\\Event\\Telemetry\\Info constructor invoked with 5 parameters, 11 required\.$#'
 			identifier: arguments.count
 			count: 1

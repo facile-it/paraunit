@@ -90,6 +90,7 @@ class PassThroughTest extends BaseFunctionalTestCase
         $supportedOptions[] = '--coverage-text';
         $supportedOptions[] = '--coverage-crap4j';
         $supportedOptions[] = '--coverage-cobertura';
+        $supportedOptions[] = '--coverage-jsonl';
 
         return array_values($supportedOptions);
     }
@@ -158,6 +159,9 @@ class PassThroughTest extends BaseFunctionalTestCase
             ['--default-time-limit', '<sec>'],
             ['--cache-result'],
             ['--do-not-cache-result'],
+            ['--timeout'],
+            ['--cache-test-index'],
+            ['--do-not-cache-test-index'],
             ['--colors', '<flag>'],
             ['--stderr'],
             ['--no-progress'],

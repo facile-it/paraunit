@@ -7,6 +7,7 @@ namespace Tests\Functional\Command;
 use Paraunit\Command\CoverageCommand;
 use Paraunit\Configuration\CoverageConfiguration;
 use Paraunit\Proxy\XDebugProxy;
+use SebastianBergmann\CodeCoverage\Report\Facade;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tests\BaseTestCase;
@@ -54,6 +55,44 @@ class CoverageCommandTest extends BaseTestCase
         $this->assertNotFalse($fileContent);
         $this->assertStringContainsString('Coverage Report', $fileContent);
         $this->assertStringContainsString('StubbedParaunitProcess', $fileContent);
+    }
+
+    public function testExecutionWithJsonl(): void
+    {
+        if ($this->isXdebugCoverageDisabled()) {
+            $this->markTestSkipped('Test does not work without Xdebug');
+        }
+
+        if (! method_exists(Facade::class, 'renderJsonl')) {
+            $this->markTestSkipped('JSONL coverage requires phpunit/php-code-coverage 14.4 or newer');
+        }
+
+        $coverageDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'paraunit-jsonl-' . bin2hex(random_bytes(8));
+        $commandTester = $this->createCommandTester();
+
+        $exitCode = $commandTester->execute($this->prepareArguments([
+            '--jsonl' => $coverageDirectory,
+        ]));
+
+        $output = $commandTester->getDisplay();
+        $coverageFile = $coverageDirectory . DIRECTORY_SEPARATOR . 'coverage.jsonl';
+        $metaFile = $coverageDirectory . DIRECTORY_SEPARATOR . 'meta.json';
+        $testsFile = $coverageDirectory . DIRECTORY_SEPARATOR . 'tests.jsonl';
+        $this->assertStringNotContainsString('NO TESTS EXECUTED', $output);
+        $this->assertEquals(0, $exitCode, $output);
+        $this->assertFileExists($coverageFile);
+        $this->assertFileExists($metaFile);
+        $this->assertFileExists($testsFile);
+        $coverage = file_get_contents($coverageFile);
+        $meta = file_get_contents($metaFile);
+        unlink($coverageFile);
+        unlink($metaFile);
+        unlink($testsFile);
+        rmdir($coverageDirectory);
+        $this->assertNotFalse($coverage);
+        $this->assertStringContainsString('StubbedParaunitProcess', $coverage);
+        $this->assertNotFalse($meta);
+        $this->assertStringContainsString('"schemaVersion"', $meta);
     }
 
     public function testExecutionWithTextToConsole(): void

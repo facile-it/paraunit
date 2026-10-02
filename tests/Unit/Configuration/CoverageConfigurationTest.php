@@ -15,6 +15,7 @@ use Paraunit\Coverage\Processor\Clover;
 use Paraunit\Coverage\Processor\Cobertura;
 use Paraunit\Coverage\Processor\Crap4j;
 use Paraunit\Coverage\Processor\Html;
+use Paraunit\Coverage\Processor\Jsonl;
 use Paraunit\Coverage\Processor\Php;
 use Paraunit\Coverage\Processor\Text;
 use Paraunit\Coverage\Processor\TextSummary;
@@ -134,6 +135,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'crap4j',
             'php',
             'cobertura',
+            'jsonl',
             'ansi',
             'logo',
             'chunk-size',
@@ -197,6 +199,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'crap4j' => ['crap4j', Crap4j::class],
             'php' => ['php', Php::class],
             'cobertura' => ['cobertura', Cobertura::class],
+            'jsonl' => ['jsonl', Jsonl::class],
         ];
     }
 
@@ -221,6 +224,7 @@ class CoverageConfigurationTest extends BaseUnitTestCase
             'crap4j',
             'php',
             'cobertura',
+            'jsonl',
             'chunk-size',
             'pass-through',
             'sort',
