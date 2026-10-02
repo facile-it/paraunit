@@ -236,6 +236,131 @@
   
   <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.1/">Paraunit 1.1.1: PostgreSQL retry support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 May 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This small path adds detection for deadlocks during test execution when using PostgreSQL, thanks to an external contributor.
+Here&rsquo;s the full changelog of the release:
+Added Add support for deadlock detection on PostgreSQL #152, thanks @elernonelma 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Paraunit 1.1.0: PHPUnit 9.1 and internal refactor</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 Apr 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  As reported in the previous release, I was working on supporting PHPUnit 9. Today, PHPUnit 9.1 was released, and so I&rsquo;ve released Paraunit 1.1.0, which supports only PHPUnit 9.1 and forward: this is due to the fact that the --printer option got deprecated, so I have to switch approach to have a working solution for the foreseeable future. In this case, I switched to using TestHook, and opted for a small refactor of how Paraunit fetches PHPUnit test results.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/1.1.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.1/">Paraunit 1.0.1: two small fixes</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>23 Mar 2020</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  While I&rsquo;m actively working on a big refactor toward supporting PHPUnit 9, I&rsquo;ve found two small fixes that have to be released as the first stable patch since the 1.0 release.
+Here&rsquo;s the changelog:
+Fixed Fix handling of PHPUnit --stderr option #144, thanks @pczerkas Fix small issue in checking coverage data syntax 8f70c 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0/">Paraunit 1.0.0: the stable release</a></h2>
 
     <div class="post-meta">
@@ -322,132 +447,6 @@ This is the full changelog for this second beta release:
 </article>
 
   
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/">Paraunit 1.0.0-beta1: the first approach to a stable release</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>08 Apr 2019</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  After a long hiatus, I decided to start working in the first stable release of Paraunit; the package is good and running smoothly for years, so we no longer have any reason to delay the 1.0 further. This will also be the occasion to force some static analysis onto the codebase.
-This is the full changelog for this first beta release; the following changes are in comparison to the previous, unstable release (0.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.0.0-beta1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.12.3/">Paraunit 0.12.3: allow phpunit/php-file-iterator 2</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>01 Jun 2018</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Today I released a new small patch for Paraunit, fixing the support for a hidden dependency (phpunit/php-file-iterator) which broke Paraunit with its 2.0 release.
-Here&rsquo;s the full changelog:
-Fixed Allow explicitly phpunit/php-file-iterator 2 #126 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.12.2/">Paraunit 0.12.2: two more fixes</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>18 May 2018</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Today I released a new small patch for Paraunit, fixing an output bug and intercepting a new king of retryable exception.
-Here&rsquo;s the full changelog:
-Fixed Allow multiple, comma-separated values with the --testsuite option, like with PHPUnit 6+ #122 Avoid letting the colored console output blink (dots, errors) #124 thanks to @elegos Add a new exception about MySQL savepoint to the retryable ones #125 
-  </p>
-
-  
-</article>
-
-  
 
   
 
@@ -456,7 +455,7 @@ Fixed Allow multiple, comma-separated values with the --testsuite option, like w
   
   <a href="https://engineering.facile.it/paraunit/page/5/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;6 / 11&nbsp;</span>
+  <span>&nbsp;6 / 12&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/7/"><i class="fa fa-chevron-right"></i></a>
   

@@ -218,6 +218,137 @@
   
     <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.13.0/">Paraunit 2.13.0: JSONL coverage format</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>02 Oct 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 2.13.0 has just been released with support for a new coverage report format: --jsonl, which mirrors PHPUnit&rsquo;s --coverage-jsonl option. It writes coverage.jsonl and tests.jsonl files inside the specified directory and requires phpunit/php-code-coverage 14.4 or newer.
+This is the full changelog:
+Add --jsonl coverage report format, mirroring PHPUnit&rsquo;s --coverage-jsonl option (requires phpunit/php-code-coverage 14.4+) #425 Add --timeout, --cache-test-index and --do-not-cache-test-index to the options allowed with --pass-through #425 
+  </p>
+
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.12.0/">Paraunit 2.12.0: upgrade to PHPUnit 13.1</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>14 Sep 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  I finally had the time to finalize #paraunit 2.12.0, which brings PHPUnit support to 13.1!
+It took a lot of time because I had limited effort, and PHPUnit under the hood bumps php-code-coverage to a new major (v14) that required a bit of rework, along with dropping support for all previous versions&hellip; I tried cross-compat, but it was too complicated!
+Happy testing!
+This is the full changelog:
+Support PHPUnit 13.1+ Drop support for PHPUnit below 13.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.12.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.11.0/">Paraunit 2.11.0: `--stop-on-*` and `--display-*` options</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>09 May 2026</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  With this new minor, I wanted to get out of the door a lot of usability features that I wanted to implement for so long. Now, all --stop-on-* and --display-* CLI options are available in Paraunit. I rushed this out because the next minor will require a huge bump on PHPUnit (13.1 will be the minimum), so I didn&rsquo;t want to gatekeep those behind that update for the end users.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.11.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/2.10.0/">Paraunit 2.10.0: respect ignored test issues</a></h2>
 
     <div class="post-meta">

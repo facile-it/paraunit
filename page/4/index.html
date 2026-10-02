@@ -236,6 +236,130 @@
   
   <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.3.0/">Paraunit 2.3.0: PHPUnit 11 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>02 Feb 2024</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  On the same day of PHPUnit 11.0.0 release, I&rsquo;m able to release a minor version of Paraunit that supports it, and no code change was necessary! You may still be impacted by PHPUnit&rsquo;s breaking changes and require to adjust your tests accordingly, but Paraunit can be upgraded before with no hassle (provided that you have at least PHPUnit 10.5.4 already installed), since it&rsquo;s cross-compatible between the two major versions.
+This is the full changelog
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/2.3.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.2/">Paraunit 2.2.2: PHPUnit 10.4 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Oct 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This is a small patch to smooth the compatibility with the new release of PHPUnit, 10.4. Previous versions would still work fine, but I took the time to fix all the tests (that were broken due to reliance on @internal code such as PHPUnit events) and to add support for the new CLI options regarding the errors baseline.
+Added Add support for PHPUnit 10.4 #218 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.3/">Paraunit 2.2.3: Symfony 7 support</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Oct 2023</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  This another small patch is to allow using Paraunit with Symfony 7, which was released just yesterday. The related PR needed just to fix a couple of return types. Paraunit should work flawlessly with PHP 8.3 too, which was released a couple of day prior, but I had to revert the additional CI job because Prophecy is not ready yet.
+Added Add support for PHPUnit 10.4 #218 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/2.2.1/">Paraunit 2.2.1: report PHPUnit errors</a></h2>
 
     <div class="post-meta">
@@ -314,135 +438,6 @@ Added Add --cobertura coverage report format, useful for GitLab test code covera
 </article>
 
   
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.1.0/">Paraunit 2.1.0: add --sort=random option</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>03 May 2023</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This new minor versions adds a new, small feature to support one small sorting option, the random one. This is useful to mix test execution, if you&rsquo;re encountering deadlocks and performance bottlenecks due to the concentration of certain tests in some areas of your test suite.
-Added Add --sort=random option to execute test classes in random order 
-  </p>
-
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.0.0/">Paraunit 2.0.0: PHPUnit 10 support and a big internal refactor</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>06 Mar 2023</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This new major version has seen its inception a long time ago, on October 2021, and it went to sleep for a long time, since PHPUnit development was doing the same. After some additional attempts, I was finally able to complete this alongside the long-awaited release of PHPUnit 10.
-All the changes in PHPUnit allowed me to finally bump the minimum PHP version to 8.1 (so that enums are now usable!
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/2.0.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/1.3.0/">Paraunit 1.3.0: new chunk size feature, Symfony 6 support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>15 Jun 2022</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This new minor release comes after more than a year since the last tag.
-It actually comes with a couple of new interesting features, one of which is a new behavior for tests parallelization. The new --chunk-size option, when set at a value higher that 1, will execute more than one test class per single process, making the execution faster for test suites where the class setup is expensive.
-Here&rsquo;s the full changelog of the release:
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/1.3.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
 
   
 
@@ -451,7 +446,7 @@ Here&rsquo;s the full changelog of the release:
   
   <a href="https://engineering.facile.it/paraunit/page/3/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;4 / 11&nbsp;</span>
+  <span>&nbsp;4 / 12&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/5/"><i class="fa fa-chevron-right"></i></a>
   

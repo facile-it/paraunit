@@ -3,18 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://engineering.facile.it/paraunit/news/</loc>
-    <lastmod>2026-04-23T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://engineering.facile.it/paraunit/</loc>
-    <lastmod>2026-04-23T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://engineering.facile.it/paraunit/news/release/2.10.0/</loc>
-    <lastmod>2026-04-23T00:00:00+00:00</lastmod>
+    <loc>https://engineering.facile.it/paraunit/news/release/2.13.0/</loc>
+    <lastmod>2026-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://engineering.facile.it/paraunit/tags/release/</loc>
-    <lastmod>2026-04-23T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://engineering.facile.it/paraunit/tags/</loc>
+    <lastmod>2026-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://engineering.facile.it/paraunit/news/release/2.12.0/</loc>
+    <lastmod>2026-09-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://engineering.facile.it/paraunit/news/release/2.11.0/</loc>
+    <lastmod>2026-05-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://engineering.facile.it/paraunit/news/release/2.10.0/</loc>
     <lastmod>2026-04-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://engineering.facile.it/paraunit/news/release/2.9.0/</loc>

@@ -236,6 +236,132 @@
   
   <article>
   <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.3/">Paraunit 0.7.3: PHAR release</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>30 Dec 2016</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.7.3 has just been released, and from now on with a PHAR version too, GPG signed! You will always be able to download it from the latest GitHub release page.
+Full changelog text:
+Changed Add PHAR generation tools (thanks @taueres for the previous PR); from now on, Paraunit is released as a PHAR too! 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.1/">Paraunit 0.7.1: coverage in text format</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>28 Dec 2016</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.7.1 has just been released; this is just a minor release that adds a new useful feature: the text format for the coverage. You can either use it on screen as an integration tool (see Jenkins, GitLab), or save it as a file. Since there is a small limitation in CLI options handling by the Symfony component, this feature is implemented through two separate options.
+In the next versions, I will work to implement the other missing formats, PHP and Crap4j.
+  </p>
+
+  
+  <footer>
+    <a href="https://engineering.facile.it/paraunit/news/release/0.7.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+  <article>
+  <header>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7.2/">Paraunit 0.7.2: coverage in text format</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>28 Dec 2016</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  Paraunit 0.7.2 has just been released with a minor fix: colored output has been disabled from text coverage output to console, since it may cause incompatibilities. I will think of a way to re-enable it if possible in later releases.
+Full changelog text:
+Fixed Disable colored output in text coverage to console, to avoid issues with GitLab integration. 
+  </p>
+
+  
+</article>
+
+  
+  <article>
+  <header>
     <h2><a href="https://engineering.facile.it/paraunit/news/release/0.7/">Paraunit 0.7: test coverage in parallel</a></h2>
 
     <div class="post-meta">
@@ -323,136 +449,6 @@ Unfortunately, the coverage feature is still in the works, but it&rsquo;s slowly
 </article>
 
   
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6.1/">Paraunit 0.6.1</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>10 Jun 2016</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.6.1 has been released! The main improvement on the user side is the extension of the Symfony package constraint, to allow the full 3.x series to be used with! The coverage feature is still in the works, I hope to release 0.7 with it this summer.
-Here&rsquo;s the full 0.6.1 changelog:
-Changed Symfony compatibility has been extended to &lt;4.0, since Symfony 3.1 has been released; we will rely on their BC promise A new approach for dockerfiles, now they will be based on the standard Docker PHP library.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.6.1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.6/">Paraunit 0.6</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>20 Mar 2016</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.6 has been released! In the meantime, the coverage feature is being developed on its branch, I hope to have it working soon and release it in 0.7.
-Here&rsquo;s what&rsquo;s changed in 0.6:
-Changed MASSIVE refactoring of the result output parsing (#31, #33) and the result printing (#37): now Paraunit fetches the tests&rsquo; results using PHPUnit&rsquo;s --log-json option (thanks to @taueres for the idea). This grants a lot of new features: Parsing of tests results is more robust, it should never fail!
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/0.6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.5/">Paraunit 0.5</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>08 Dec 2015</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  Paraunit 0.5 has been released! Here&rsquo;s what&rsquo;s changed:
-Changed SQLite is now supported in the deadlock-recognition fase (issue #26, thanks @Algatux) Travis is testing on PHP 7.0, no more nightlies or allowed failures Symfony 3.0 components are now supported and compatible with Paraunit Retry parsing and management is improved Fixed Removed double generation of MD5 hash of process 
-  </p>
-
-  
-</article>
-
-  
 
   
 
@@ -461,7 +457,7 @@ Changed SQLite is now supported in the deadlock-recognition fase (issue #26, tha
   
   <a href="https://engineering.facile.it/paraunit/page/9/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;10 / 11&nbsp;</span>
+  <span>&nbsp;10 / 12&nbsp;</span>
   
   <a href="https://engineering.facile.it/paraunit/page/11/"><i class="fa fa-chevron-right"></i></a>
   

@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.111.1">
 
-  <title>Tags &middot; Paraunit</title>
+  <title>Paraunit 2.11.0: `--stop-on-*` and `--display-*` options &middot; Paraunit</title>
 
     
 
@@ -42,9 +42,6 @@
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
  
-  
-  <link rel="alternate" type="application/rss+xml" title="Paraunit"
-    href='https://engineering.facile.it/paraunit/tags/index.xml' />
   
 
   
@@ -109,11 +106,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href='https://engineering.facile.it/paraunit/tags/index.xml'><i
-          class="fas fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -211,18 +203,40 @@
 
 
 <div class="header">
-  <h1>Tags</h1>
+  <h1>Paraunit 2.11.0: `--stop-on-*` and `--display-*` options</h1>
+  <h2></h2>
 </div>
 <div class="content">
-  <ul>
-  
-  
-    <li>
-      <a href="release">release</a>
-      <span>&#40;57&#41;</span>
-    </li>
-  
-  </ul>
+  <p>With this new minor, I wanted to get out of the door a lot of usability features that I wanted to implement for so long. Now, all <code>--stop-on-*</code> and <code>--display-*</code> CLI options are available in Paraunit. I rushed this out because the next minor will require a huge bump on PHPUnit (13.1 will be the minimum), so I didn&rsquo;t want to gatekeep those behind that update for the end users.</p>
+<p>In addition, this version relaxes the constraints by no longer requiring <code>ext-pcntl</code> to be installed.</p>
+<p>This is the full changelog:</p>
+<ul>
+<li>Drop <code>ext-pcntl</code> requirement to a suggested dependency <a href="https://github.com/facile-it/paraunit/pull/386">#386</a></li>
+<li>Respect PHPUnit configuration about displaying warning, deprecations, notices and add new CLI options mirroring PHPUnit&rsquo;s: <a href="https://github.com/facile-it/paraunit/pull/383">#383</a>
+<ul>
+<li><code>--display-warnings</code></li>
+<li><code>--display-deprecations</code></li>
+<li><code>--display-phpunit-deprecations</code></li>
+<li><code>--display-notices</code></li>
+<li><code>--display-all-issues</code></li>
+</ul>
+</li>
+<li>Implement <code>--stop-on-*</code> options, mimicking PHPUnit&rsquo;s; all options affect both Paraunit and the underlying PHPUnit process: <a href="https://github.com/facile-it/paraunit/pull/388">#388</a>
+<ul>
+<li><code>--stop-on-defect</code></li>
+<li><code>--stop-on-error</code></li>
+<li><code>--stop-on-failure</code></li>
+<li><code>--stop-on-warning</code></li>
+<li><code>--stop-on-risky</code></li>
+<li><code>--stop-on-deprecation</code></li>
+<li><code>--stop-on-phpunit-deprecation</code></li>
+<li><code>--stop-on-notice</code></li>
+<li><code>--stop-on-skipped</code></li>
+<li><code>--stop-on-incomplete</code></li>
+</ul>
+</li>
+</ul>
+
 </div>
 
 </div>
@@ -241,3 +255,4 @@
 
 </body>
 </html>
+

@@ -236,13 +236,13 @@
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.8.0/">Paraunit 2.8.0: PHPUnit 13 support</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.4.2/">Paraunit 0.4.2</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Feb 2026</time>
+    <time>19 Oct 2015</time>
   </div>
 
   
@@ -266,53 +266,8 @@
   </header>
 
   <p>
-  With this new minor, we&rsquo;re finally able to support the newly released PHPUnit 13 with Paraunit. This basically required no code changes apart from the composer.json constraints and a couple of tests adjustments, as a testament of the reliable integration strategy that I chose when integrating with it.
-This release also includes a small PR about notices being reported as specific issues when running tests, which was pending for a while.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/2.8.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.7.1/">Paraunit 2.7.1: Symfony 8 support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>04 Nov 2025</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This small new patch was triggered by a PR from a new contributor, Kocal, thank you! The fixes needed to make Paraunit compatible with Symfony 8 was a single line change (plus some more in the unit tests), which is impressive since now we support 5 different major versions, all across from 4.4 (which is EOL) up to 8.0!
-This is the full changelog:
-Add support for Symfony 8 #344, thanks @Kocal 
+  Paraunit 0.4.2 has been released! Here&rsquo;s what&rsquo;s changed:
+Changed Unlocked supporto for PHPUnit &gt;= 5.x README changed to suggest stable version of package in composer.json example Fixed Fixed: test stub for fatal errors fixed for HHVM &amp; PHP7 
   </p>
 
   
@@ -321,13 +276,13 @@ Add support for Symfony 8 #344, thanks @Kocal
   
   <article>
   <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.7.0/">Paraunit 2.7.0: fix abnormal termination detection and add PHPUnit deprecation reporting</a></h2>
+    <h2><a href="https://engineering.facile.it/paraunit/news/release/0.4.1/">Paraunit 0.4.1</a></h2>
 
     <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>23 Aug 2025</time>
+    <time>23 Sep 2015</time>
   </div>
 
   
@@ -351,98 +306,8 @@ Add support for Symfony 8 #344, thanks @Kocal
   </header>
 
   <p>
-  This new release includes a couple of improvements: the first one is the addition of PHPUnit deprecation as separate test issues, so that those will be reported in a separate category, as with PHPUnit itself; the second one stems from some issues detected by PHP-CS-Fixer under PHP 8.5, where some skipped tests were marked erroneously as &ldquo;abnormal terminations&rdquo;. I discovered that, when using the requires attribute, PHPUnit would report only a Skipped event, without the TestStarted, TestPrepared and TestFinished events, which would trigger this issue.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/2.7.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Paraunit 2.6.0: hide deprecations by configuration</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>04 Mar 2025</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This new release includes the resolution of a long-standing issue, which polluted Paraunit&rsquo;s output when too many deprecations were detected. In this new version, Paraunit respects PHPUnit&rsquo;s configuration, which by default does not show the full deprecation text.
-Deprecations are detected anyway, so you will still get yellow Ds and the list of affected tests when appropriate.
-This is the full changelog
-Added Deprecations details are now shown according to the PHPUnit config #303, thanks @garak NB: the config attribute in the PhpUnit configuration is displayDetailsOnTestsThatTriggerDeprecations.
-  </p>
-
-  
-  <footer>
-    <a href="https://engineering.facile.it/paraunit/news/release/2.6.0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-  <article>
-  <header>
-    <h2><a href="https://engineering.facile.it/paraunit/news/release/2.5.0/">Paraunit 2.5.0: PHPUnit 12 &amp; PHP 8.4 support</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>08 Feb 2025</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://engineering.facile.it/paraunit/tags/release">release</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  This new release includes the official support to PHPUnit 12, which did not need any code changes, just some CI fixes and the common Composer constraint widening. The biggest amount of work came just from upgrading (and pulling the forks) from the Prophecy toolchain, to make the CI work without waiting for their releases.
-This is the full changelog
-Added Add PHPUnit 12 support #297 Add PHP 8.4 support #279 
+  Paraunit 0.4.1 has been released! Here&rsquo;s what&rsquo;s changed:
+Changed Improved: --configuration parameter now has the -c shortcut Fixed Fixed: test with fatal errors are not mistaken (and printed twice) for unknown results in the final results 
   </p>
 
   
@@ -455,11 +320,11 @@ Added Add PHPUnit 12 support #297 Add PHP 8.4 support #279
 
 <nav class="pagination" role="pagination">
   
-  <a href="https://engineering.facile.it/paraunit/"><i class="fa fa-chevron-left"></i></a>
+  <a href="https://engineering.facile.it/paraunit/page/11/"><i class="fa fa-chevron-left"></i></a>
   
-  <span>&nbsp;2 / 12&nbsp;</span>
+  <span>&nbsp;12 / 12&nbsp;</span>
   
-  <a href="https://engineering.facile.it/paraunit/page/3/"><i class="fa fa-chevron-right"></i></a>
+  <i class="fa fa-chevron-right"></i>
   
 </nav>
 
