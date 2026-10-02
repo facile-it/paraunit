@@ -54,6 +54,7 @@ The `coverage` command is used to generate the test coverage in parallel. It sup
 | `--php=filename.php`          | Coverage in PHP format, into the specified filename (since 0.8.0)                   |
 | `--crap4j=filename.xml`       | Coverage in Crap4J XML format, into the specified filename (since 0.8.0)            |
 | `--cobertura=filename.xml`    | Coverage in Cobertura XML format, into the specified filename (since 2.2.0)         |
+| `--jsonl=dir`                 | Coverage in JSONL format, inside the specified directory (since 2.13.0)             |
 
 Example:
 
